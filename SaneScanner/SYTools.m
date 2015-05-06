@@ -21,4 +21,9 @@
     return [[self documentsPath] stringByAppendingPathComponent:filename];
 }
 
++ (NSString *)hostsFile
+{
+    return [self pathForFile:@"hosts.cfg"];
+}
+
 @end

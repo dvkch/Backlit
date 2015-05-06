@@ -7,6 +7,7 @@
 //
 
 #import "SYAppDelegate.h"
+#import "SYTools.h"
 
 @interface SYAppDelegate ()
 
@@ -14,9 +15,10 @@
 
 @implementation SYAppDelegate
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // needed for Sane-net config file
+    [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools documentsPath]];
     return YES;
 }
 

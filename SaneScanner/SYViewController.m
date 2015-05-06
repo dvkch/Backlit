@@ -8,11 +8,12 @@
 
 #import "SYViewController.h"
 #import "SYTools.h"
-#import "sane.h"
+#import "SYSaneHelper.h"
 
 @interface SYViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *buttonAddHost;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *buttonEditHosts;
 @property (nonatomic, strong) NSArray *devices;
 @property (nonatomic, strong) NSArray *hosts;
 @end
@@ -22,7 +23,35 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.hosts = [NSArray arrayWithContentsOfFile:[SYTools pathForFile:@"hosts.cfg"]];
+    self.hosts = [NSArray arrayWithContentsOfFile:[SYTools hostsFile]];
+    [self updateDevices];
+}
+
+- (void)updateDevices
+{
+    [SYSaneHelper listDevices:^(NSArray *devices, NSString *error) {
+        if(error)
+        {
+            NSString *errorMessage = [NSString stringWithFormat:@"Error while listing devices: %@", error];
+            [[[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil] show];
+        }
+        else
+        {
+            self.devices = [devices copy];
+            [self.tableView reloadData];
+        }
+    }];
+}
+
+- (void)defineNewHosts:(NSArray *)hosts
+{
+    [hosts writeToFile:[SYTools hostsFile] atomically:YES];
+    [SYSaneHelper updateSaneNetConfig];
+    
+    self.hosts = [hosts copy];
+    [self.tableView reloadData];
+    
+    [self updateDevices];
 }
 
 #pragma mark - IBActions
@@ -38,6 +67,11 @@
     [av show];
 }
 
+- (IBAction)buttonEditHostsTap:(id)sender
+{
+    [self.tableView setEditing:!self.tableView.editing];
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -49,10 +83,9 @@
     if(![host length])
         return;
     
-    NSMutableArray *hosts = [NSMutableArray arrayWithArray:self.hosts];
-    [hosts addObject:host];
-    
-    self.hosts = [hosts copy];
+    NSArray *hosts = self.hosts ?: @[];
+    hosts = [hosts arrayByAddingObject:host];
+    [self defineNewHosts:hosts];
 }
 
 #pragma mark - UITableViewDataSource
@@ -88,42 +121,30 @@
     return section == 0 ? @"Hosts" : @"Devices";
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section != 0)
+        return;
+    
+    NSMutableArray *hosts = [self.hosts mutableCopy];
+    [hosts removeObjectAtIndex:indexPath.row];
+    
+    [self defineNewHosts:hosts];
+    
+    if(![self.hosts count])
+        [self.tableView setEditing:NO];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.section == 0 ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Remove";
+}
+
 @end
-/*
-NSString *docs = [[self class] applicationDocumentsDirectory];
-[[NSFileManager defaultManager] changeCurrentDirectoryPath:docs];
-[@"connect_timeout = 30\n192.168.1.42" writeToFile:[docs stringByAppendingPathComponent:@"net.conf"] atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-
-NSLog(@"%@", [[NSFileManager defaultManager] currentDirectoryPath]);
-
-// Override point for customization after application launch.
-dispatch_async(dispatch_get_main_queue(), ^
-               {
-                   SANE_Int version;
-                   SANE_Status s = sane_init(&version, NULL);
-                   if(s == SANE_STATUS_GOOD)
-                       NSLog(@"yo! %d", version);
-                   
-                   const SANE_Device **devices = NULL;
-                   SANE_Handle handle;
-                   //sane_open("net:192.168.1.42", &handle);
-                   sane_get_devices(&devices, SANE_FALSE);
-                   uint i = 0;
-                   while(devices[i]) {
-                       const SANE_Device *d = devices[i];
-                       NSLog(@"Device %d: %s %s %s (%s)", i, d->name, d->vendor, d->model, d->type);
-                       ++i;
-                   }
-                   
-                   
-                   
-                   sane_open("net:192.168.1.42", &handle);
-                   
-                   if (s == SANE_STATUS_GOOD)
-                       NSLog(@"opened");
-                   else
-                       NSLog(@"erro %s", sane_strstatus(s));
-                   
-                   NSLog(@"%d devices", i);
-               });
-*/

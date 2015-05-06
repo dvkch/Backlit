@@ -8,7 +8,6 @@
         <!--SaneScanner-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="SYViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -27,6 +26,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="SaneScanner" id="FfU-fh-RbQ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="Pao-jl-p84">
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="buttonEditHostsTap:" destination="BYZ-38-t0r" id="wUN-yJ-Zwc"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="LIN-Lw-OpQ">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -36,9 +41,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="buttonAddHost" destination="LIN-Lw-OpQ" id="flu-Ya-eLq"/>
+                        <outlet property="buttonEditHosts" destination="Pao-jl-p84" id="CDc-cf-Fmx"/>
                         <outlet property="tableView" destination="Wdb-L9-gKe" id="HCo-ED-0GD"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="627" y="539"/>
         </scene>

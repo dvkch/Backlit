@@ -12,5 +12,6 @@
 
 + (NSString *)documentsPath;
 + (NSString *)pathForFile:(NSString *)filename;
++ (NSString *)hostsFile;
 
 @end

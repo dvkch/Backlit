@@ -8,12 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		F86584861AF9A8290028E039 /* SYTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F86584851AF9A8290028E039 /* SYTools.m */; };
-		F86584901AF9AA370028E039 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F865848D1AF9AA370028E039 /* libsane.a */; };
-		F86584911AF9AA370028E039 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F865848E1AF9AA370028E039 /* libsane-dll.a */; };
-		F86584921AF9AA370028E039 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F865848F1AF9AA370028E039 /* libsane-net.a */; };
-		F86584971AF9AA500028E039 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584941AF9AA500028E039 /* libsane.a */; };
-		F86584981AF9AA500028E039 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584951AF9AA500028E039 /* libsane-dll.a */; };
-		F86584991AF9AA500028E039 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584961AF9AA500028E039 /* libsane-net.a */; };
+		F86584971AF9AA500028E039 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584941AF9AA500028E039 /* libsane.a */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F86584981AF9AA500028E039 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584951AF9AA500028E039 /* libsane-dll.a */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F86584991AF9AA500028E039 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584961AF9AA500028E039 /* libsane-net.a */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C3EE431AF9B163003A991F /* SYSaneHelper.m */; };
 		F8CBD2131AF9A58C00B4C221 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2121AF9A58C00B4C221 /* main.m */; };
 		F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */; };
 		F8CBD2191AF9A58C00B4C221 /* SYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2181AF9A58C00B4C221 /* SYViewController.m */; };
@@ -26,12 +24,11 @@
 		F86584851AF9A8290028E039 /* SYTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTools.m; sourceTree = "<group>"; };
 		F865848B1AF9AA280028E039 /* sane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sane.h; path = "sane-libs/armv7/include/sane/sane.h"; sourceTree = "<group>"; };
 		F865848C1AF9AA280028E039 /* saneopts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = saneopts.h; path = "sane-libs/armv7/include/sane/saneopts.h"; sourceTree = "<group>"; };
-		F865848D1AF9AA370028E039 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/armv7/lib/libsane.a"; sourceTree = "<group>"; };
-		F865848E1AF9AA370028E039 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/armv7/lib/sane/libsane-dll.a"; sourceTree = "<group>"; };
-		F865848F1AF9AA370028E039 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/armv7/lib/sane/libsane-net.a"; sourceTree = "<group>"; };
 		F86584941AF9AA500028E039 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/arm64/lib/libsane.a"; sourceTree = "<group>"; };
 		F86584951AF9AA500028E039 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/arm64/lib/sane/libsane-dll.a"; sourceTree = "<group>"; };
 		F86584961AF9AA500028E039 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/arm64/lib/sane/libsane-net.a"; sourceTree = "<group>"; };
+		F8C3EE421AF9B163003A991F /* SYSaneHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneHelper.h; sourceTree = "<group>"; };
+		F8C3EE431AF9B163003A991F /* SYSaneHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneHelper.m; sourceTree = "<group>"; };
 		F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaneScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8CBD2111AF9A58C00B4C221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8CBD2121AF9A58C00B4C221 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -48,10 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F86584901AF9AA370028E039 /* libsane.a in Frameworks */,
-				F86584921AF9AA370028E039 /* libsane-net.a in Frameworks */,
 				F86584971AF9AA500028E039 /* libsane.a in Frameworks */,
-				F86584911AF9AA370028E039 /* libsane-dll.a in Frameworks */,
 				F86584991AF9AA500028E039 /* libsane-net.a in Frameworks */,
 				F86584981AF9AA500028E039 /* libsane-dll.a in Frameworks */,
 			);
@@ -74,9 +68,6 @@
 		F865848A1AF9AA0A0028E039 /* armv7 */ = {
 			isa = PBXGroup;
 			children = (
-				F865848D1AF9AA370028E039 /* libsane.a */,
-				F865848E1AF9AA370028E039 /* libsane-dll.a */,
-				F865848F1AF9AA370028E039 /* libsane-net.a */,
 			);
 			name = armv7;
 			sourceTree = "<group>";
@@ -120,6 +111,8 @@
 				F8CBD2101AF9A58C00B4C221 /* Supporting Files */,
 				F86584841AF9A8290028E039 /* SYTools.h */,
 				F86584851AF9A8290028E039 /* SYTools.m */,
+				F8C3EE421AF9B163003A991F /* SYSaneHelper.h */,
+				F8C3EE431AF9B163003A991F /* SYSaneHelper.m */,
 			);
 			path = SaneScanner;
 			sourceTree = "<group>";
@@ -203,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */,
 				F8CBD2191AF9A58C00B4C221 /* SYViewController.m in Sources */,
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
 				F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */,
@@ -319,10 +313,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/sane-libs/armv7/lib",
-					"$(PROJECT_DIR)/sane-libs/armv7/lib/sane",
-					"$(PROJECT_DIR)/sane-libs/arm64/lib",
-					"$(PROJECT_DIR)/sane-libs/arm64/lib/sane",
+					"$(PROJECT_DIR)/sane-libs/arm64/lib/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -341,10 +332,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/sane-libs/armv7/lib",
-					"$(PROJECT_DIR)/sane-libs/armv7/lib/sane",
-					"$(PROJECT_DIR)/sane-libs/arm64/lib",
-					"$(PROJECT_DIR)/sane-libs/arm64/lib/sane",
+					"$(PROJECT_DIR)/sane-libs/arm64/lib/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
