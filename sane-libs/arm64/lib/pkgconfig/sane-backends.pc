@@ -1,0 +1,14 @@
+prefix=/Volumes/Data/Dev/iOS/MyApps/Scanner/sane-libs/arm64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+ldflags=-arch arm64 -miphoneos-version-min=8.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk 
+libs= -framework CoreFoundation -framework IOKit -ldl  -lm           
+
+Name: SANE Backends
+Description: Backends for SANE, the universal scanner interface
+Version: 1.0.25git
+Requires:
+Libs: -L${libdir} -lsane
+Libs.private: ${ldflags} ${libs}
+Cflags: -I${includedir}
