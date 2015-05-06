@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SYAppDelegate.h
 //  SaneScanner
 //
 //  Created by rominet on 06/05/15.
@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface SYAppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
 
 
 @end

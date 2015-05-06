@@ -7,39 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F86584861AF9A8290028E039 /* SYTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F86584851AF9A8290028E039 /* SYTools.m */; };
+		F86584901AF9AA370028E039 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F865848D1AF9AA370028E039 /* libsane.a */; };
+		F86584911AF9AA370028E039 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F865848E1AF9AA370028E039 /* libsane-dll.a */; };
+		F86584921AF9AA370028E039 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F865848F1AF9AA370028E039 /* libsane-net.a */; };
+		F86584971AF9AA500028E039 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584941AF9AA500028E039 /* libsane.a */; };
+		F86584981AF9AA500028E039 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584951AF9AA500028E039 /* libsane-dll.a */; };
+		F86584991AF9AA500028E039 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F86584961AF9AA500028E039 /* libsane-net.a */; };
 		F8CBD2131AF9A58C00B4C221 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2121AF9A58C00B4C221 /* main.m */; };
-		F8CBD2161AF9A58C00B4C221 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2151AF9A58C00B4C221 /* AppDelegate.m */; };
-		F8CBD2191AF9A58C00B4C221 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2181AF9A58C00B4C221 /* ViewController.m */; };
+		F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */; };
+		F8CBD2191AF9A58C00B4C221 /* SYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2181AF9A58C00B4C221 /* SYViewController.m */; };
 		F8CBD21C1AF9A58C00B4C221 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21A1AF9A58C00B4C221 /* Main.storyboard */; };
 		F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */; };
-		F8CBD2211AF9A58C00B4C221 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21F1AF9A58C00B4C221 /* LaunchScreen.xib */; };
-		F8CBD22D1AF9A58C00B4C221 /* SaneScannerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD22C1AF9A58C00B4C221 /* SaneScannerTests.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		F8CBD2271AF9A58C00B4C221 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8CBD20C1AF9A58C00B4C221;
-			remoteInfo = SaneScanner;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		F86584841AF9A8290028E039 /* SYTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTools.h; sourceTree = "<group>"; };
+		F86584851AF9A8290028E039 /* SYTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTools.m; sourceTree = "<group>"; };
+		F865848B1AF9AA280028E039 /* sane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sane.h; path = "sane-libs/armv7/include/sane/sane.h"; sourceTree = "<group>"; };
+		F865848C1AF9AA280028E039 /* saneopts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = saneopts.h; path = "sane-libs/armv7/include/sane/saneopts.h"; sourceTree = "<group>"; };
+		F865848D1AF9AA370028E039 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/armv7/lib/libsane.a"; sourceTree = "<group>"; };
+		F865848E1AF9AA370028E039 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/armv7/lib/sane/libsane-dll.a"; sourceTree = "<group>"; };
+		F865848F1AF9AA370028E039 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/armv7/lib/sane/libsane-net.a"; sourceTree = "<group>"; };
+		F86584941AF9AA500028E039 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/arm64/lib/libsane.a"; sourceTree = "<group>"; };
+		F86584951AF9AA500028E039 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/arm64/lib/sane/libsane-dll.a"; sourceTree = "<group>"; };
+		F86584961AF9AA500028E039 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/arm64/lib/sane/libsane-net.a"; sourceTree = "<group>"; };
 		F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaneScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8CBD2111AF9A58C00B4C221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8CBD2121AF9A58C00B4C221 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		F8CBD2141AF9A58C00B4C221 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		F8CBD2151AF9A58C00B4C221 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F8CBD2171AF9A58C00B4C221 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F8CBD2181AF9A58C00B4C221 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F8CBD2141AF9A58C00B4C221 /* SYAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYAppDelegate.h; sourceTree = "<group>"; };
+		F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYAppDelegate.m; sourceTree = "<group>"; };
+		F8CBD2171AF9A58C00B4C221 /* SYViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYViewController.h; sourceTree = "<group>"; };
+		F8CBD2181AF9A58C00B4C221 /* SYViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYViewController.m; sourceTree = "<group>"; };
 		F8CBD21B1AF9A58C00B4C221 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		F8CBD2201AF9A58C00B4C221 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F8CBD2261AF9A58C00B4C221 /* SaneScannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaneScannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8CBD22B1AF9A58C00B4C221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8CBD22C1AF9A58C00B4C221 /* SaneScannerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaneScannerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,24 +48,54 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8CBD2231AF9A58C00B4C221 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				F86584901AF9AA370028E039 /* libsane.a in Frameworks */,
+				F86584921AF9AA370028E039 /* libsane-net.a in Frameworks */,
+				F86584971AF9AA500028E039 /* libsane.a in Frameworks */,
+				F86584911AF9AA370028E039 /* libsane-dll.a in Frameworks */,
+				F86584991AF9AA500028E039 /* libsane-net.a in Frameworks */,
+				F86584981AF9AA500028E039 /* libsane-dll.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F86584871AF9A9FB0028E039 /* sane-libs */ = {
+			isa = PBXGroup;
+			children = (
+				F865848B1AF9AA280028E039 /* sane.h */,
+				F865848C1AF9AA280028E039 /* saneopts.h */,
+				F865848A1AF9AA0A0028E039 /* armv7 */,
+				F86584931AF9AA3B0028E039 /* arm64 */,
+			);
+			name = "sane-libs";
+			sourceTree = "<group>";
+		};
+		F865848A1AF9AA0A0028E039 /* armv7 */ = {
+			isa = PBXGroup;
+			children = (
+				F865848D1AF9AA370028E039 /* libsane.a */,
+				F865848E1AF9AA370028E039 /* libsane-dll.a */,
+				F865848F1AF9AA370028E039 /* libsane-net.a */,
+			);
+			name = armv7;
+			sourceTree = "<group>";
+		};
+		F86584931AF9AA3B0028E039 /* arm64 */ = {
+			isa = PBXGroup;
+			children = (
+				F86584941AF9AA500028E039 /* libsane.a */,
+				F86584951AF9AA500028E039 /* libsane-dll.a */,
+				F86584961AF9AA500028E039 /* libsane-net.a */,
+			);
+			name = arm64;
+			sourceTree = "<group>";
+		};
 		F8CBD2041AF9A58C00B4C221 = {
 			isa = PBXGroup;
 			children = (
+				F86584871AF9A9FB0028E039 /* sane-libs */,
 				F8CBD20F1AF9A58C00B4C221 /* SaneScanner */,
-				F8CBD2291AF9A58C00B4C221 /* SaneScannerTests */,
 				F8CBD20E1AF9A58C00B4C221 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,7 +104,6 @@
 			isa = PBXGroup;
 			children = (
 				F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */,
-				F8CBD2261AF9A58C00B4C221 /* SaneScannerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,14 +111,15 @@
 		F8CBD20F1AF9A58C00B4C221 /* SaneScanner */ = {
 			isa = PBXGroup;
 			children = (
-				F8CBD2141AF9A58C00B4C221 /* AppDelegate.h */,
-				F8CBD2151AF9A58C00B4C221 /* AppDelegate.m */,
-				F8CBD2171AF9A58C00B4C221 /* ViewController.h */,
-				F8CBD2181AF9A58C00B4C221 /* ViewController.m */,
+				F8CBD2141AF9A58C00B4C221 /* SYAppDelegate.h */,
+				F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */,
+				F8CBD2171AF9A58C00B4C221 /* SYViewController.h */,
+				F8CBD2181AF9A58C00B4C221 /* SYViewController.m */,
 				F8CBD21A1AF9A58C00B4C221 /* Main.storyboard */,
 				F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */,
-				F8CBD21F1AF9A58C00B4C221 /* LaunchScreen.xib */,
 				F8CBD2101AF9A58C00B4C221 /* Supporting Files */,
+				F86584841AF9A8290028E039 /* SYTools.h */,
+				F86584851AF9A8290028E039 /* SYTools.m */,
 			);
 			path = SaneScanner;
 			sourceTree = "<group>";
@@ -98,23 +129,6 @@
 			children = (
 				F8CBD2111AF9A58C00B4C221 /* Info.plist */,
 				F8CBD2121AF9A58C00B4C221 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F8CBD2291AF9A58C00B4C221 /* SaneScannerTests */ = {
-			isa = PBXGroup;
-			children = (
-				F8CBD22C1AF9A58C00B4C221 /* SaneScannerTests.m */,
-				F8CBD22A1AF9A58C00B4C221 /* Supporting Files */,
-			);
-			path = SaneScannerTests;
-			sourceTree = "<group>";
-		};
-		F8CBD22A1AF9A58C00B4C221 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F8CBD22B1AF9A58C00B4C221 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -139,39 +153,18 @@
 			productReference = F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F8CBD2251AF9A58C00B4C221 /* SaneScannerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F8CBD2331AF9A58C00B4C221 /* Build configuration list for PBXNativeTarget "SaneScannerTests" */;
-			buildPhases = (
-				F8CBD2221AF9A58C00B4C221 /* Sources */,
-				F8CBD2231AF9A58C00B4C221 /* Frameworks */,
-				F8CBD2241AF9A58C00B4C221 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F8CBD2281AF9A58C00B4C221 /* PBXTargetDependency */,
-			);
-			name = SaneScannerTests;
-			productName = SaneScannerTests;
-			productReference = F8CBD2261AF9A58C00B4C221 /* SaneScannerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		F8CBD2051AF9A58C00B4C221 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = SY;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8CBD20C1AF9A58C00B4C221 = {
 						CreatedOnToolsVersion = 6.3.1;
-					};
-					F8CBD2251AF9A58C00B4C221 = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = F8CBD20C1AF9A58C00B4C221;
 					};
 				};
 			};
@@ -189,7 +182,6 @@
 			projectRoot = "";
 			targets = (
 				F8CBD20C1AF9A58C00B4C221 /* SaneScanner */,
-				F8CBD2251AF9A58C00B4C221 /* SaneScannerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -200,15 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8CBD21C1AF9A58C00B4C221 /* Main.storyboard in Resources */,
-				F8CBD2211AF9A58C00B4C221 /* LaunchScreen.xib in Resources */,
 				F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8CBD2241AF9A58C00B4C221 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,29 +203,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8CBD2191AF9A58C00B4C221 /* ViewController.m in Sources */,
-				F8CBD2161AF9A58C00B4C221 /* AppDelegate.m in Sources */,
+				F8CBD2191AF9A58C00B4C221 /* SYViewController.m in Sources */,
+				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
+				F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */,
 				F8CBD2131AF9A58C00B4C221 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8CBD2221AF9A58C00B4C221 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8CBD22D1AF9A58C00B4C221 /* SaneScannerTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F8CBD2281AF9A58C00B4C221 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8CBD20C1AF9A58C00B4C221 /* SaneScanner */;
-			targetProxy = F8CBD2271AF9A58C00B4C221 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		F8CBD21A1AF9A58C00B4C221 /* Main.storyboard */ = {
@@ -250,14 +219,6 @@
 				F8CBD21B1AF9A58C00B4C221 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		F8CBD21F1AF9A58C00B4C221 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F8CBD2201AF9A58C00B4C221 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -299,7 +260,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -337,7 +298,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -349,8 +310,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/sane-libs/armv7/include/sane",
+				);
 				INFOPLIST_FILE = SaneScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/sane-libs/armv7/lib",
+					"$(PROJECT_DIR)/sane-libs/armv7/lib/sane",
+					"$(PROJECT_DIR)/sane-libs/arm64/lib",
+					"$(PROJECT_DIR)/sane-libs/arm64/lib/sane",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -359,43 +332,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/sane-libs/armv7/include/sane",
+				);
 				INFOPLIST_FILE = SaneScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		F8CBD2341AF9A58C00B4C221 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
+				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/sane-libs/armv7/lib",
+					"$(PROJECT_DIR)/sane-libs/armv7/lib/sane",
+					"$(PROJECT_DIR)/sane-libs/arm64/lib",
+					"$(PROJECT_DIR)/sane-libs/arm64/lib/sane",
 				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SaneScannerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaneScanner.app/SaneScanner";
-			};
-			name = Debug;
-		};
-		F8CBD2351AF9A58C00B4C221 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SaneScannerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaneScanner.app/SaneScanner";
 			};
 			name = Release;
 		};
@@ -418,14 +369,7 @@
 				F8CBD2321AF9A58C00B4C221 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		F8CBD2331AF9A58C00B4C221 /* Build configuration list for PBXNativeTarget "SaneScannerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F8CBD2341AF9A58C00B4C221 /* Debug */,
-				F8CBD2351AF9A58C00B4C221 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
