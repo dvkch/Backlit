@@ -1,0 +1,5 @@
+#include "Pods-MBProgressHUD.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/MBProgressHUD" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BlocksKit" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/NSDate+TimeAgo" "${PODS_ROOT}/Headers/Public/SSPullToRefresh" "${PODS_ROOT}/Headers/Public/SYLogRedirect" "${PODS_ROOT}/Headers/Public/UIImage-Resize" "${PODS_ROOT}/Headers/Public/YapDatabase"
+OTHER_LDFLAGS = ${PODS_MBPROGRESSHUD_OTHER_LDFLAGS} -ObjC
+PODS_ROOT = ${SRCROOT}
