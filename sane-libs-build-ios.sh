@@ -4,8 +4,8 @@ LIB_DIR="`pwd`/sane-libs"
 
 cd sane-backends
 
-OPT_FLAGS="-Os -g3"
-MAKE_JOBS=16
+OPT_FLAGS="-O0 -g3"
+MAKE_JOBS=1
 
 dobuild() {
     export CC="$(xcrun -find -sdk ${SDK} cc)"
@@ -15,7 +15,7 @@ dobuild() {
     export CXXFLAGS="${HOST_FLAGS} ${OPT_FLAGS}"
     export LDFLAGS="${HOST_FLAGS}"
 
-    ./configure --host=${CHOST} --prefix=${PREFIX} --enable-static --disable-shared BACKENDS="net"
+    ./configure --host=${CHOST} --prefix=${PREFIX} --enable-static --disable-shared --disable-libusb --disable-warnings --enable-pthread --disable-local-backends --enable-silent-rules
 
     make clean
     make -j${MAKE_JOBS}
@@ -45,7 +45,7 @@ dobuild
 
 #SDK="iphonesimulator"
 #ARCH_FLAGS="-arch i386"
-#HOST_FLAGS="${ARCH_FLAGS} -mios-simulator-version-min=7.0 -isysroot $(xcrun -sdk ${SDK} --show-sdk-path)"
+#HOST_FLAGS="${ARCH_FLAGS} -mios-simulator-version-min=8.0 -isysroot $(xcrun -sdk ${SDK} --show-sdk-path)"
 #CHOST="i386-apple-darwin"
 #PREFIX="${LIB_DIR}/sim86"
 #dobuild

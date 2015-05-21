@@ -1,5 +1,5 @@
 //
-//  SYViewController.h
+//  SYDeviceVC.h
 //  SaneScanner
 //
 //  Created by rominet on 06/05/15.
@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SYViewController : UIViewController
+@class SYSaneDevice;
 
+@interface SYDeviceVC : UIViewController
+
+@property (nonatomic, strong) SYSaneDevice *device;
 
 @end
-

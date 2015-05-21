@@ -11,12 +11,16 @@
 		F804E0711AFA4AF300CBE307 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06C1AFA4AF300CBE307 /* libsane-dll.a */; };
 		F804E0721AFA4AF300CBE307 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06D1AFA4AF300CBE307 /* libsane-net.a */; };
 		F804E0731AFA4AF300CBE307 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06E1AFA4AF300CBE307 /* libsane.a */; };
+		F804E0761AFA4EC300CBE307 /* SYSaneDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = F804E0751AFA4EC300CBE307 /* SYSaneDevice.m */; };
+		F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F804E0781AFA569B00CBE307 /* SYDeviceVC.m */; };
+		F804E07F1AFA898000CBE307 /* MBProgressHUD+SYAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F804E07E1AFA898000CBE307 /* MBProgressHUD+SYAdditions.m */; };
+		F804E0821AFA8E6B00CBE307 /* SYSaneOptionDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = F804E0811AFA8E6B00CBE307 /* SYSaneOptionDescriptor.m */; };
 		F86584861AF9A8290028E039 /* SYTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F86584851AF9A8290028E039 /* SYTools.m */; };
+		F894F3AB1AFAAFAA00365036 /* SYOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */; };
 		F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C3EE431AF9B163003A991F /* SYSaneHelper.m */; };
 		F8CBD2131AF9A58C00B4C221 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2121AF9A58C00B4C221 /* main.m */; };
 		F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */; };
-		F8CBD2191AF9A58C00B4C221 /* SYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2181AF9A58C00B4C221 /* SYViewController.m */; };
-		F8CBD21C1AF9A58C00B4C221 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21A1AF9A58C00B4C221 /* Main.storyboard */; };
+		F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */; };
 		F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -29,8 +33,18 @@
 		F804E06E1AFA4AF300CBE307 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
 		F804E06F1AFA4AF300CBE307 /* sane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sane.h; path = "sane-libs/all/sane.h"; sourceTree = "<group>"; };
 		F804E0701AFA4AF300CBE307 /* saneopts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = saneopts.h; path = "sane-libs/all/saneopts.h"; sourceTree = "<group>"; };
+		F804E0741AFA4EC300CBE307 /* SYSaneDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneDevice.h; sourceTree = "<group>"; };
+		F804E0751AFA4EC300CBE307 /* SYSaneDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneDevice.m; sourceTree = "<group>"; };
+		F804E0771AFA569B00CBE307 /* SYDeviceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDeviceVC.h; sourceTree = "<group>"; };
+		F804E0781AFA569B00CBE307 /* SYDeviceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDeviceVC.m; sourceTree = "<group>"; };
+		F804E07D1AFA898000CBE307 /* MBProgressHUD+SYAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+SYAdditions.h"; sourceTree = "<group>"; };
+		F804E07E1AFA898000CBE307 /* MBProgressHUD+SYAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+SYAdditions.m"; sourceTree = "<group>"; };
+		F804E0801AFA8E6B00CBE307 /* SYSaneOptionDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionDescriptor.h; sourceTree = "<group>"; };
+		F804E0811AFA8E6B00CBE307 /* SYSaneOptionDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionDescriptor.m; sourceTree = "<group>"; };
 		F86584841AF9A8290028E039 /* SYTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTools.h; sourceTree = "<group>"; };
 		F86584851AF9A8290028E039 /* SYTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTools.m; sourceTree = "<group>"; };
+		F894F3A91AFAAFAA00365036 /* SYOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYOptionCell.h; sourceTree = "<group>"; };
+		F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYOptionCell.m; sourceTree = "<group>"; };
 		F8C3EE421AF9B163003A991F /* SYSaneHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneHelper.h; sourceTree = "<group>"; };
 		F8C3EE431AF9B163003A991F /* SYSaneHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneHelper.m; sourceTree = "<group>"; };
 		F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaneScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,9 +52,8 @@
 		F8CBD2121AF9A58C00B4C221 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F8CBD2141AF9A58C00B4C221 /* SYAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYAppDelegate.h; sourceTree = "<group>"; };
 		F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYAppDelegate.m; sourceTree = "<group>"; };
-		F8CBD2171AF9A58C00B4C221 /* SYViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYViewController.h; sourceTree = "<group>"; };
-		F8CBD2181AF9A58C00B4C221 /* SYViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYViewController.m; sourceTree = "<group>"; };
-		F8CBD21B1AF9A58C00B4C221 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F8CBD2171AF9A58C00B4C221 /* SYDevicesVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYDevicesVC.h; sourceTree = "<group>"; };
+		F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYDevicesVC.m; sourceTree = "<group>"; };
 		F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,6 +87,41 @@
 				3B707C7C94B3F4CD87DAE05B /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F804E07A1AFA56A500CBE307 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F8CBD2171AF9A58C00B4C221 /* SYDevicesVC.h */,
+				F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */,
+				F804E0771AFA569B00CBE307 /* SYDeviceVC.h */,
+				F804E0781AFA569B00CBE307 /* SYDeviceVC.m */,
+				F894F3A91AFAAFAA00365036 /* SYOptionCell.h */,
+				F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */,
+				F804E07D1AFA898000CBE307 /* MBProgressHUD+SYAdditions.h */,
+				F804E07E1AFA898000CBE307 /* MBProgressHUD+SYAdditions.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		F804E07B1AFA56AC00CBE307 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F8C3EE421AF9B163003A991F /* SYSaneHelper.h */,
+				F8C3EE431AF9B163003A991F /* SYSaneHelper.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		F804E07C1AFA56B700CBE307 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F804E0741AFA4EC300CBE307 /* SYSaneDevice.h */,
+				F804E0751AFA4EC300CBE307 /* SYSaneDevice.m */,
+				F804E0801AFA8E6B00CBE307 /* SYSaneOptionDescriptor.h */,
+				F804E0811AFA8E6B00CBE307 /* SYSaneOptionDescriptor.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		F86584871AF9A9FB0028E039 /* sane-libs */ = {
@@ -110,17 +158,15 @@
 		F8CBD20F1AF9A58C00B4C221 /* SaneScanner */ = {
 			isa = PBXGroup;
 			children = (
+				F804E07A1AFA56A500CBE307 /* Views */,
+				F804E07C1AFA56B700CBE307 /* Models */,
+				F804E07B1AFA56AC00CBE307 /* Controllers */,
 				F8CBD2141AF9A58C00B4C221 /* SYAppDelegate.h */,
 				F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */,
-				F8CBD2171AF9A58C00B4C221 /* SYViewController.h */,
-				F8CBD2181AF9A58C00B4C221 /* SYViewController.m */,
-				F8CBD21A1AF9A58C00B4C221 /* Main.storyboard */,
-				F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */,
-				F8CBD2101AF9A58C00B4C221 /* Supporting Files */,
 				F86584841AF9A8290028E039 /* SYTools.h */,
 				F86584851AF9A8290028E039 /* SYTools.m */,
-				F8C3EE421AF9B163003A991F /* SYSaneHelper.h */,
-				F8C3EE431AF9B163003A991F /* SYSaneHelper.m */,
+				F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */,
+				F8CBD2101AF9A58C00B4C221 /* Supporting Files */,
 			);
 			path = SaneScanner;
 			sourceTree = "<group>";
@@ -194,7 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8CBD21C1AF9A58C00B4C221 /* Main.storyboard in Resources */,
 				F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,26 +284,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F894F3AB1AFAAFAA00365036 /* SYOptionCell.m in Sources */,
+				F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */,
+				F804E07F1AFA898000CBE307 /* MBProgressHUD+SYAdditions.m in Sources */,
+				F804E0761AFA4EC300CBE307 /* SYSaneDevice.m in Sources */,
 				F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */,
-				F8CBD2191AF9A58C00B4C221 /* SYViewController.m in Sources */,
+				F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */,
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
 				F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */,
 				F8CBD2131AF9A58C00B4C221 /* main.m in Sources */,
+				F804E0821AFA8E6B00CBE307 /* SYSaneOptionDescriptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		F8CBD21A1AF9A58C00B4C221 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F8CBD21B1AF9A58C00B4C221 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F8CBD22E1AF9A58C00B4C221 /* Debug */ = {
@@ -354,6 +393,7 @@
 					"$(PROJECT_DIR)/sane-libs/all",
 				);
 				INFOPLIST_FILE = SaneScanner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -374,6 +414,7 @@
 					"$(PROJECT_DIR)/sane-libs/all",
 				);
 				INFOPLIST_FILE = SaneScanner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

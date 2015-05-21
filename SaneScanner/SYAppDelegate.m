@@ -8,6 +8,7 @@
 
 #import "SYAppDelegate.h"
 #import "SYTools.h"
+#import "SYDevicesVC.h"
 
 @interface SYAppDelegate ()
 
@@ -15,10 +16,29 @@
 
 @implementation SYAppDelegate
 
++ (instancetype)obtain
+{
+    return [[UIApplication sharedApplication] delegate];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // needed for Sane-net config file
     [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools documentsPath]];
+
+    // creating navigation controller
+    SYDevicesVC *vc = [[SYDevicesVC alloc] init];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    // creating window
+    self.window = [[UIWindow alloc] init];
+    [self.window makeKeyAndVisible];
+    [self.window setFrame:[[UIScreen mainScreen] bounds]];
+    [self.window setRootViewController:nc];
+    [self.window setBackgroundColor:[UIColor whiteColor]];
+    [self.window.layer setMasksToBounds:YES];
+    [self.window.layer setOpaque:NO];
+    
     return YES;
 }
 
