@@ -9,6 +9,7 @@
 #import "SYAppDelegate.h"
 #import "SYTools.h"
 #import "SYDevicesVC.h"
+#import "SYSaneHelper.h"
 
 @interface SYAppDelegate ()
 
@@ -38,6 +39,9 @@
     [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window.layer setMasksToBounds:YES];
     [self.window.layer setOpaque:NO];
+    
+    // populate list for the first time
+    [[SYSaneHelper shared] updateDevices];
     
     return YES;
 }

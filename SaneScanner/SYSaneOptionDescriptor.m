@@ -7,12 +7,31 @@
 //
 
 #import "SYSaneOptionDescriptor.h"
+#import "SYSaneOptionDescriptorBool.h"
+#import "SYSaneOptionDescriptorInt.h"
+#import "SYSaneOptionDescriptorFloat.h"
+#import "SYSaneOptionDescriptorString.h"
+#import "SYSaneOptionDescriptorButton.h"
+#import "SYSaneOptionDescriptorGroup.h"
 #import "SYSaneHelper.h"
 
 @interface SYSaneOptionDescriptor ()
+@property (nonatomic, assign) SANE_Int cap;
 @end
 
 @implementation SYSaneOptionDescriptor
+
++ (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
+{
+    switch (opt->type) {
+        case SANE_TYPE_BOOL:    return [[SYSaneOptionDescriptorBool   alloc] initWithCOpt:opt index:index device:device];
+        case SANE_TYPE_INT:     return [[SYSaneOptionDescriptorInt    alloc] initWithCOpt:opt index:index device:device];
+        case SANE_TYPE_FIXED:   return [[SYSaneOptionDescriptorFloat  alloc] initWithCOpt:opt index:index device:device];
+        case SANE_TYPE_STRING:  return [[SYSaneOptionDescriptorString alloc] initWithCOpt:opt index:index device:device];
+        case SANE_TYPE_BUTTON:  return [[SYSaneOptionDescriptorButton alloc] initWithCOpt:opt index:index device:device];
+        case SANE_TYPE_GROUP:   return [[SYSaneOptionDescriptorGroup  alloc] initWithCOpt:opt index:index device:device];
+    }
+}
 
 - (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
 {
@@ -30,79 +49,74 @@
         self.type   = opt->type;
         self.unit   = opt->unit;
         self.size   = opt->size;
-        if(opt->cap & SANE_CAP_SOFT_SELECT) self.capSet = SYSaneOptionsSet_ViaSoftware;
-        if(opt->cap & SANE_CAP_HARD_SELECT) self.capSet = SYSaneOptionsSet_ViaHardware;
-        self.capReadable        = opt->cap & SANE_CAP_SOFT_DETECT;
-        self.capSetAuto         = opt->cap & SANE_CAP_AUTOMATIC;
-        self.capEmulated        = opt->cap & SANE_CAP_EMULATED;
-        self.capInactive        = opt->cap & SANE_CAP_INACTIVE;
-        self.capAdvanced        = opt->cap & SANE_CAP_ADVANCED;
-        self.constraintType     = opt->constraint_type;
-        
-        if (self.constraintType == SANE_CONSTRAINT_STRING_LIST)
-        {
-            NSMutableArray *values = [NSMutableArray array];
-            uint i = 0;
-            while (opt->constraint.string_list[i]) {
-                [values addObject:[NSString stringWithCString:opt->constraint.string_list[i] encoding:NSUTF8StringEncoding]];
-                ++i;
-            }
-            self.constraintStringValues = [values copy];
-        }
-        
-        if (self.constraintType == SANE_CONSTRAINT_WORD_LIST)
-        {
-            NSMutableArray *values = [NSMutableArray array];
-            for(uint i = 0; i < opt->constraint.word_list[0]; ++i)
-                [values addObject:@(opt->constraint.word_list[i+1])];
-            self.constraintIntValues = [values copy];
-        }
-        
-        if (self.constraintType == SANE_CONSTRAINT_RANGE)
-        {
-            self.constraintMin = @(opt->constraint.range->min);
-            self.constraintMax = @(opt->constraint.range->max);
-            int step = opt->constraint.range->quant;
-            self.constraintStep = step == 0 ? nil : @(step);
-        }
+        self.cap                    = opt->cap;
+        self.capReadable            = opt->cap & SANE_CAP_SOFT_DETECT;
+        self.capSetAuto             = opt->cap & SANE_CAP_AUTOMATIC;
+        self.capEmulated            = opt->cap & SANE_CAP_EMULATED;
+        self.capInactive            = opt->cap & SANE_CAP_INACTIVE;
+        self.capAdvanced            = opt->cap & SANE_CAP_ADVANCED;
+        self.capSettableViaSoftware = opt->cap & SANE_CAP_SOFT_SELECT;
+        self.capSettableViaHardware = opt->cap & SANE_CAP_HARD_SELECT;
+        self.constraintType         = opt->constraint_type;
     }
     return self;
+}
+
+- (BOOL)readOnlyOrSingleOption
+{
+    return (!self.capSettableViaSoftware);
+}
+
+- (void)updateValue:(void(^)(NSString *error))block
+{
+    [NSException raise:@"Not implemented" format:@""];
 }
 
 - (NSString *)descriptionConstraint
 {
     if(self.constraintType == SANE_CONSTRAINT_RANGE) {
-        return [NSString stringWithFormat:@"constrained to range from %@ to %@, %@step%@%@",
-                self.constraintMin,
-                self.constraintMax,
-                self.constraintStep ? @"" : @"no ",
-                self.constraintStep ? @" of " : @"",
-                self.constraintStep ?: @""];
+        return @"Constrained to range";
     }
     else if (self.constraintType == SANE_CONSTRAINT_STRING_LIST) {
-        return [NSString stringWithFormat:@"possible values [%@]",
-                [self.constraintStringValues componentsJoinedByString:@", "]];
+        return @"Constrained to string list";
     }
     else if (self.constraintType == SANE_CONSTRAINT_WORD_LIST) {
-        return [NSString stringWithFormat:@"possible values [%@]",
-                [self.constraintIntValues componentsJoinedByString:@", "]];
+        return @"Constrained to value list";
     }
     return @"not constrained";
 }
 
 - (NSString *)descriptionCapabilities
 {
-    return [NSString stringWithFormat:@"%@readable, %@settable%@%@%@, %@active%@%@%@%@",
-            self.capReadable ? @"" : @"not ",
-            self.capSet == SYSaneOptionsSet_None ? @"not " : @"",
-            self.capSet == SYSaneOptionsSet_None ? @"" : @" via ",
-            self.capSet == SYSaneOptionsSet_ViaHardware ? @"hardware" : (self.capSet == SYSaneOptionsSet_ViaSoftware ? @"software" : @""),
-            self.capSetAuto ? @" or auto" : @"",
-            self.capInactive ? @"in" : @"",
-            self.capEmulated ? @", " : @"",
-            self.capEmulated ? @"emulated" : @"",
-            self.capAdvanced ? @", " : @"",
-            self.capAdvanced ? @"advanced" : @""];
+    NSMutableArray <NSString *> *descriptions = [NSMutableArray array];
+    
+    if (self.capReadable)
+        [descriptions addObject:@"readable"];
+    else
+        [descriptions addObject:@"not readable"];
+    
+    if (self.cap & SANE_CAP_SOFT_SELECT)
+        [descriptions addObject:@"settable via software"];
+    
+    if (self.cap & SANE_CAP_HARD_SELECT)
+        [descriptions addObject:@"settable via hardware"];
+    
+    if (!(self.cap & SANE_CAP_SOFT_SELECT) && !(self.cap & SANE_CAP_HARD_SELECT))
+        [descriptions addObject:@"not settable"];
+    
+    if (self.capSetAuto)
+        [descriptions addObject:@"has auto value"];
+    
+    if (self.capInactive)
+        [descriptions addObject:@"inactive"];
+    
+    if (self.capAdvanced)
+        [descriptions addObject:@"advanced"];
+    
+    if (self.capEmulated)
+        [descriptions addObject:@"emulated"];
+    
+    return [descriptions componentsJoinedByString:@", "];
 }
 
 - (NSString *)descriptionHuman
@@ -118,35 +132,20 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p, %d, %@, %@, %@%@%@>",
+    return [NSString stringWithFormat:@"<%@: %p, %d, %@, %@, %@>",
             [self class],
             self,
             (int)self.index,
             self.title,
             NSStringFromSANE_Value_Type(self.type),
-            NSStringFromSANE_Unit(self.unit),
-            self.groupChildren ? @", " : @"",
-            self.groupChildren ?: @""];
-}
-
-- (void)updateValue:(void(^)(NSString *error))block
-{
-    [[SYSaneHelper shared] getValueForOption:self onDevice:self.device block:^(id value, NSString *error) {
-        if(error) {
-            if(block)
-                block(error);
-        }
-        else {
-            self.value = value;
-        }
-    }];
+            NSStringFromSANE_Unit(self.unit)];
 }
 
 + (NSArray *)groupedElements:(NSArray *)elements
 {
     NSMutableArray *groups = [NSMutableArray array];
     NSMutableArray *groupElements = nil;
-    SYSaneOptionDescriptor *group = nil;
+    SYSaneOptionDescriptorGroup *group = nil;
     
     for(SYSaneOptionDescriptor *item in elements)
     {
@@ -154,19 +153,20 @@
         {
             if(group)
             {
-                group.groupChildren = [groupElements copy];
+                group.items = [groupElements copy];
                 [groups addObject:group];
             }
             
-            group = item;
+            group = (SYSaneOptionDescriptorGroup *)item;
             groupElements = [NSMutableArray array];
             continue;
         }
         [groupElements addObject:item];
     }
 
-    group.groupChildren = [groupElements copy];
-    [groups addObject:group];
+    group.items = [groupElements copy];
+    if (group)
+        [groups addObject:group];
     
     return [groups copy];
 }

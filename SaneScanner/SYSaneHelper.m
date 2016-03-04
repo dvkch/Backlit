@@ -10,9 +10,18 @@
 #import "SYTools.h"
 #import "SYSaneDevice.h"
 #import "SYSaneOptionDescriptor.h"
+#import "SYSaneOptionDescriptorBool.h"
+#import "SYSaneOptionDescriptorInt.h"
+#import "SYSaneOptionDescriptorFloat.h"
+#import "SYSaneOptionDescriptorString.h"
+#import "SYSaneOptionDescriptorButton.h"
+#import "SYSaneOptionDescriptorGroup.h"
+#import "SYSaneScanParameters.h"
 #import "sane.h"
+#import "NSArray+SY.h"
+#import "UIImage+SY.h"
 
-#define ON_MAIN_THREAD (1)
+#define ON_MAIN_THREAD (0)
 
 #if ON_MAIN_THREAD
 
@@ -29,18 +38,16 @@ return; \
 
 #endif
 
-void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *password)
-{
-    NSLog(@"auth needed! %s", resource);
-    username = "yo";
-    password = "yo";
-}
+#define PERF_START() NSDate *perfDate = [NSDate date]
+#define PERF_END()   NSLog(@"%@: %.03lfs", NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSinceDate:perfDate])
+
+void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *password);
 
 @interface SYSaneHelper ()
 @property (atomic, strong) NSThread *thread;
-@property (atomic, strong) NSMutableArray *hosts;
-@property (atomic, strong) NSArray *devices;
-@property (atomic, strong) NSDictionary *openedDevices;
+@property (atomic, strong) NSMutableArray <NSString *> *hosts;
+@property (atomic, strong) NSArray <SYSaneDevice *> *devices;
+@property (atomic, strong) NSDictionary <NSString *, NSValue *> *openedDevices;
 @end
 
 @implementation SYSaneHelper
@@ -68,13 +75,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         [self.thread start];
 #endif
         
-        NSArray *savedHosts = [NSArray arrayWithContentsOfFile:[SYTools hostsFile]];
+        NSArray <NSString *> *savedHosts = [NSArray arrayWithContentsOfFile:[SYTools hostsFile]];
         self.hosts = [NSMutableArray arrayWithArray:savedHosts];
         
 #if !ON_MAIN_THREAD
         [self performSelector:@selector(initSane) onThread:self.thread withObject:nil waitUntilDone:YES];
 #endif
-        [self updateDevices];
     }
     return self;
 }
@@ -103,7 +109,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 #pragma mark - Hosts
 
-- (NSArray *)hostsCopy
+- (NSArray<NSString *> *)hostsCopy
 {
     return [self.hosts copy];
 }
@@ -155,7 +161,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 #pragma mark - Devices
 
-- (NSArray *)devicesCopy
+- (NSArray<SYSaneDevice *> *)devicesCopy
 {
     return [self.devices copy];
 }
@@ -177,20 +183,22 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     @synchronized(self.thread) {
         self->_isUpdatingDevices = isUpdatingDevices;
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(isUpdatingDevices && self.startingDevicesUpdateBlock)
-                self.startingDevicesUpdateBlock();
-            if(!isUpdatingDevices && self.endedDevicesUpdateBlock)
-                self.endedDevicesUpdateBlock();
+            if(isUpdatingDevices)
+                [self.delegate saneHelperDidStartUpdatingDevices:self];
+            if(!isUpdatingDevices)
+                [self.delegate saneHelperDidEndUpdatingDevices:self];
         });
     }
 }
 
 - (void)updateDevices
 {
-    ENSURE_RUNNING_ON_SANE_THREAD(nil, nil);
-    
     if(self.isUpdatingDevices)
         return;
+    
+    ENSURE_RUNNING_ON_SANE_THREAD(nil, nil);
+    
+    PERF_START();
     
     self.isUpdatingDevices = YES;
     
@@ -231,6 +239,8 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     self.devices = [devicesObjects copy];
     self.saneLastGetDevicesError = nil;
     self.isUpdatingDevices = NO;
+    
+    PERF_END();
 }
 
 - (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSString *error))block
@@ -245,7 +255,10 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     ENSURE_RUNNING_ON_SANE_THREAD(@selector(openDevice:), args);
     
     SANE_Handle h = NULL;
+    
+    PERF_START();
     SANE_Status s = sane_open([device.name cStringUsingEncoding:NSUTF8StringEncoding], &h);
+    PERF_END();
     
     if(s != SANE_STATUS_GOOD)
     {
@@ -270,7 +283,8 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 // for performSelector: invocation
 - (void)openDevice:(NSArray *)args
 {
-    [self openDevice:args[0] block:([args count] == 2 ? args[1] : nil)];
+    [self openDevice:[args realObjectAtIndex:0]
+               block:[args realObjectAtIndex:1]];
 }
 
 - (void)closeDevice:(SYSaneDevice *)device
@@ -282,7 +296,9 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     NSValue *value = self.openedDevices[device.name];
     SANE_Handle h = [value pointerValue];
+    PERF_START();
     sane_close(h);
+    PERF_END();
 
     NSMutableDictionary *openedDevices = [NSMutableDictionary dictionaryWithDictionary:self.openedDevices];
     [openedDevices removeObjectForKey:device.name];
@@ -297,6 +313,11 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     return [[self.openedDevices allKeys] containsObject:device.name];
 }
 
+- (void)askAuthForDevice:(NSString *)device outUsername:(NSString **)username outPassword:(NSString **)password
+{
+    [self.delegate saneHelper:self needsAuthForDevice:device outUsername:username outPassword:password];
+}
+
 #pragma mark - Options
 
 - (void)listOptionsForDevice:(SYSaneDevice *)device block:(void(^)(void))block
@@ -304,8 +325,10 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     if(![self isDeviceOpen:device])
         return;
     
-    NSArray *args = block ? @[device, block] : @[device];
+    NSArray *args = [NSArray arrayWithNullableObjects:2, device, [block copy]];
     ENSURE_RUNNING_ON_SANE_THREAD(@selector(listOptionsForDevice:), args);
+    
+    PERF_START();
     
     NSValue *value = self.openedDevices[device.name];
     SANE_Handle h = [value pointerValue];
@@ -313,19 +336,22 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     SANE_Int count;
     NSMutableArray *opts = [NSMutableArray array];
     
+#warning check why unused value
     const SANE_Option_Descriptor *dn = sane_get_option_descriptor(h, 0);
     sane_control_option(h, 0, SANE_ACTION_GET_VALUE, &count, NULL);
     
     for(uint i = 1; i < count; ++i)
     {
         dn = sane_get_option_descriptor(h, i);
-        [opts addObject:[[SYSaneOptionDescriptor alloc] initWithCOpt:dn index:i device:device]];
+        [opts addObject:[SYSaneOptionDescriptor initWithCOpt:dn index:i device:device]];
     }
     
     for(SYSaneOptionDescriptor *d in opts)
     {
         [d updateValue:nil];
     }
+    
+    PERF_END();
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [device setGroupedOptions:[SYSaneOptionDescriptor groupedElements:opts]];
@@ -336,7 +362,8 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 - (void)listOptionsForDevice:(NSArray *)args
 {
-    [self listOptionsForDevice:args[0] block:([args count] == 2 ? args[1] : nil)];
+    [self listOptionsForDevice:[args realObjectAtIndex:0]
+                         block:[args realObjectAtIndex:1]];
 }
 
 - (void)getValueForOption:(SYSaneOptionDescriptor *)option
@@ -344,34 +371,40 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
                     block:(void(^)(id value, NSString *error))block
 {
     if(![self isDeviceOpen:device]) {
-        block(nil, @"Device not opened");
+        if (block)
+            block(nil, @"Device not opened");
         return;
     }
     
     if(option.type == SANE_TYPE_GROUP) {
-        block(nil, @"No value for type GROUP");
+        if (block)
+            block(nil, @"No value for type GROUP");
         return;
     }
     
     if(option.type == SANE_TYPE_BUTTON) {
-        block(nil, @"No value for type BUTTON");
+        if (block)
+            block(nil, @"No value for type BUTTON");
         return;
     }
     
-    NSArray *args = block ? @[option, device, block] : @[option, device];
+    NSArray *args = [NSArray arrayWithNullableObjects:3, option, device, [block copy]];
     ENSURE_RUNNING_ON_SANE_THREAD(@selector(getValueForOptionOnDevice:), args);
-    
+
     NSValue *handle = self.openedDevices[device.name];
     SANE_Handle h = [handle pointerValue];
     
     void *value = malloc(option.size);
+    PERF_START();
     SANE_Status s = sane_control_option(h, option.index, SANE_ACTION_GET_VALUE, value, NULL);
+    PERF_END();
 
     if(s != SANE_STATUS_GOOD)
     {
         NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
         dispatch_async(dispatch_get_main_queue(), ^{
-            block(nil, status);
+            if (block)
+                block(nil, status);
         });
         return;
     }
@@ -393,19 +426,198 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     free(value);
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        block(castedValue, nil);
+        if (block)
+            block(castedValue, nil);
     });
 }
 
 - (void)getValueForOptionOnDevice:(NSArray *)args
 {
-    [self getValueForOption:args[0] onDevice:args[1] block:([args count] > 2 ? args[2] : nil)];
+    [self getValueForOption:[args realObjectAtIndex:0]
+                   onDevice:[args realObjectAtIndex:1]
+                      block:[args realObjectAtIndex:2]];
 }
 
-- (void)scanWithDevice:(SYSaneDevice *)device block:(void(^)(UIImage *image, NSString *error))block
+- (void)setValue:(id)value
+     orAutoValue:(BOOL)autoValue
+       forOption:(SYSaneOptionDescriptor *)option
+        onDevice:(SYSaneDevice *)device
+           block:(void(^)(BOOL reloadAllOptions, NSString *error))block
 {
+    if(![self isDeviceOpen:device]) {
+        if (block)
+            block(NO, @"Device not opened");
+        return;
+    }
     
+    if(option.type == SANE_TYPE_GROUP) {
+        if (block)
+            block(NO, @"No value for type GROUP");
+        return;
+    }
+    
+    NSArray *args = [NSArray arrayWithNullableObjects:5, value, @(autoValue), option, device, [block copy]];
+    ENSURE_RUNNING_ON_SANE_THREAD(@selector(setValueForOptionOnDevice:), args);
+    
+    NSValue *handle = self.openedDevices[device.name];
+    SANE_Handle h = [handle pointerValue];
+    
+    void *byteValue = NULL;
+    
+    if (!autoValue) {
+        if(option.type == SANE_TYPE_BOOL) {
+            byteValue = malloc(option.size);
+            ((SANE_Bool *)byteValue)[0] = [value boolValue];
+        }
+        else if(option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED) {
+            byteValue = malloc(option.size);
+            ((SANE_Int *)byteValue)[0] = [value intValue];
+        }
+        else if(option.type == SANE_TYPE_STRING) {
+            byteValue = (SANE_String)[value cStringUsingEncoding:NSUTF8StringEncoding];
+        }
+    }
+    
+    PERF_START();
+    SANE_Int info;
+    SANE_Status s = sane_control_option(h, option.index, SANE_ACTION_SET_VALUE, byteValue, &info);
+    BOOL reloadAllOptions = (info & SANE_INFO_RELOAD_OPTIONS || info & SANE_INFO_RELOAD_PARAMS);
+    PERF_END();
+
+    if (byteValue)
+        free(byteValue);
+    
+    if(s != SANE_STATUS_GOOD)
+    {
+        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(NO, status);
+        });
+        return;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (block)
+            block(reloadAllOptions, nil);
+    });
 }
 
+- (void)setValueForOptionOnDevice:(NSArray *)args
+{
+    [self setValue:[args realObjectAtIndex:0]
+       orAutoValue:[[args realObjectAtIndex:1] boolValue]
+         forOption:[args realObjectAtIndex:2]
+          onDevice:[args realObjectAtIndex:3]
+             block:[args realObjectAtIndex:4]];
+}
+
+- (void)scanWithDevice:(SYSaneDevice *)device
+         progressBlock:(void (^)(float))progressBlock
+          successBlock:(void (^)(UIImage *, NSString *))successBlock
+{
+    if(![self isDeviceOpen:device]) {
+        if (successBlock)
+            successBlock(nil, @"Device not opened");
+        return;
+    }
+    
+    NSArray *args = [NSArray arrayWithNullableObjects:3, device, [progressBlock copy], [successBlock copy]];
+    ENSURE_RUNNING_ON_SANE_THREAD(@selector(scanWithDevice:), args);
+    
+    NSValue *handle = self.openedDevices[device.name];
+    SANE_Handle h = [handle pointerValue];
+    
+    PERF_START();
+    SANE_Status s = sane_start(h);
+    PERF_END();
+    
+    if(s != SANE_STATUS_GOOD)
+    {
+        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (successBlock)
+                successBlock(nil, status);
+        });
+        return;
+    }
+    
+    s = sane_set_io_mode(h, NO);
+    if(s != SANE_STATUS_GOOD)
+    {
+        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (successBlock)
+                successBlock(nil, status);
+        });
+        return;
+    }
+    
+    NSMutableData *data = [NSMutableData data];
+    SANE_Int bufferMaxSize = 32000;
+    SANE_Byte *bytes = malloc(bufferMaxSize);
+    SANE_Int bufferActualSize = 0;
+    SYSaneScanParameters *parameters = 0;
+    while (s == SANE_STATUS_GOOD)
+    {
+        if (progressBlock && parameters.fileSize) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                progressBlock((double)data.length / (double)parameters.fileSize);
+            });
+        }
+        
+        [data appendData:[NSData dataWithBytes:bytes length:bufferActualSize]];
+        s = sane_read(h, bytes, bufferMaxSize, &bufferActualSize);
+        
+        if (!parameters)
+        {
+            SANE_Parameters params;
+            sane_get_parameters(h, &params);
+            parameters = [[SYSaneScanParameters alloc] initWithCParams:params];
+        }
+    }
+    
+    free(bytes);
+
+    if(s != SANE_STATUS_EOF)
+    {
+        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (successBlock)
+                successBlock(nil, status);
+        });
+        return;
+    }
+
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIImage *image = [UIImage imageFromRGBData:data saneParameters:parameters];
+        
+        if (successBlock)
+            successBlock(image, nil);
+    });
+}
+
+- (void)scanWithDevice:(NSArray *)args
+{
+    [self scanWithDevice:[args realObjectAtIndex:0]
+           progressBlock:[args realObjectAtIndex:1]
+            successBlock:[args realObjectAtIndex:2]];
+}
 
 @end
+
+void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *password)
+{
+    NSString *outUsername;
+    NSString *outPassword;
+    
+    [[SYSaneHelper shared] askAuthForDevice:[NSString stringWithCString:resource encoding:NSUTF8StringEncoding]
+                                outUsername:&outUsername
+                                outPassword:&outPassword];
+    
+    if (outUsername)
+        *username = (SANE_Char)[outUsername cStringUsingEncoding:NSUTF8StringEncoding];
+    
+    if (outPassword)
+        *password = (SANE_Char)[outPassword cStringUsingEncoding:NSUTF8StringEncoding];
+}

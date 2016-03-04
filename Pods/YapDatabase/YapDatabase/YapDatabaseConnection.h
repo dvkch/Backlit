@@ -4,6 +4,9 @@
 @class YapDatabase;
 @class YapDatabaseReadTransaction;
 @class YapDatabaseReadWriteTransaction;
+@class YapDatabaseExtensionConnection;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Welcome to YapDatabase!
@@ -65,17 +68,18 @@ typedef NS_OPTIONS(NSUInteger, YapDatabasePermittedTransactions) {
 #endif
 
 typedef NS_OPTIONS(NSUInteger, YapDatabaseConnectionFlushMemoryFlags) {
-    YapDatabaseConnectionFlushMemoryFlags_None       = 0,
-    YapDatabaseConnectionFlushMemoryFlags_Caches     = 1 << 0,
-    YapDatabaseConnectionFlushMemoryFlags_Statements = 1 << 1,
-    YapDatabaseConnectionFlushMemoryFlags_All        = (YapDatabaseConnectionFlushMemoryFlags_Caches |
-                                                        YapDatabaseConnectionFlushMemoryFlags_Statements),
+	YapDatabaseConnectionFlushMemoryFlags_None       = 0,
+	YapDatabaseConnectionFlushMemoryFlags_Caches     = 1 << 0,
+	YapDatabaseConnectionFlushMemoryFlags_Statements = 1 << 1,
+	YapDatabaseConnectionFlushMemoryFlags_Internal   = 1 << 2,
+	YapDatabaseConnectionFlushMemoryFlags_All        = (YapDatabaseConnectionFlushMemoryFlags_Caches     |
+	                                                    YapDatabaseConnectionFlushMemoryFlags_Statements |
+	                                                    YapDatabaseConnectionFlushMemoryFlags_Internal   ),
 };
 
 
 
 @interface YapDatabaseConnection : NSObject
-NS_ASSUME_NONNULL_BEGIN
 
 /**
  * A database connection maintains a strong reference to its parent.
@@ -131,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
  * To disable the metadata cache entirely, set metadataCacheEnabled to NO.
  * To use an inifinite cache size, set the metadataCacheLimit to zero.
  * 
- * By default the metadataCache is enabled and has a limit of 500.
+ * By default the metadataCache is enabled and has a limit of 250.
  * 
  * New connections will inherit the default values set by the parent database object.
  * Thus the default values for new connection instances are configurable.
@@ -345,36 +349,6 @@ NS_ASSUME_NONNULL_BEGIN
            completionBlock:(nullable dispatch_block_t)completionBlock;
 
 /**
- * DEPRECATED in v2.5
- *
- * The syntax has been changed in order to make the code easier to read.
- * In the past the code would end up looking like this:
- * 
- * [databaseConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction){
- *     // 100 lines of code here
- * } completionBlock:^{
- *     // 50 lines of code here
- * }
- * completionQueue:importantQueue]; <-- Very hidden in code. Often overlooked.
- * 
- * The new syntax puts the completionQueue declaration before the completionBlock declaration.
- * Since the two are intricately linked, they should be next to each other in code.
- * Then end result is much easier to read:
- * 
- * [databaseConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction){
- *     // 100 lines of code here
- * }
- * completionQueue:importantQueue <-- Easier to see
- * completionBlock:^{
- *     // 50 lines of code here
- * }];
-**/
-- (void)asyncReadWithBlock:(void (^)(YapDatabaseReadTransaction *transaction))block
-           completionBlock:(dispatch_block_t)completionBlock
-           completionQueue:(dispatch_queue_t)completionQueue
-__attribute((deprecated("Use method asyncReadWithBlock:completionQueue:completionBlock: instead")));
-
-/**
  * Read-write access to the database.
  * 
  * Only a single read-write block can execute among all sibling connections.
@@ -416,36 +390,6 @@ __attribute((deprecated("Use method asyncReadWithBlock:completionQueue:completio
                 completionQueue:(nullable dispatch_queue_t)completionQueue
                 completionBlock:(nullable dispatch_block_t)completionBlock;
 
-/**
- * DEPRECATED in v2.5
- *
- * The syntax has been changed in order to make the code easier to read.
- * In the past the code would end up looking like this:
- *
- * [databaseConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction){
- *     // 100 lines of code here
- * } completionBlock:^{
- *     // 50 lines of code here
- * }
- * completionQueue:importantQueue]; <-- Very hidden in code. Often overlooked.
- *
- * The new syntax puts the completionQueue declaration before the completionBlock declaration.
- * Since the two are intricately linked, they should be next to each other in code.
- * Then end result is much easier to read:
- *
- * [databaseConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction){
- *     // 100 lines of code here
- * }
- * completionQueue:importantQueue <-- Easier to see
- * completionBlock:^{
- *     // 50 lines of code here
- * }];
-**/
-- (void)asyncReadWriteWithBlock:(void (^)(YapDatabaseReadWriteTransaction *transaction))block
-                completionBlock:(dispatch_block_t)completionBlock
-                completionQueue:(dispatch_queue_t)completionQueue
-__attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:completionBlock: instead")));
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Long-Lived Transactions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -458,8 +402,8 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
  * For a complete discussion, please see the wiki page:
  * https://github.com/yapstudios/YapDatabase/wiki/LongLivedReadTransactions
 **/
-- (NSArray *)beginLongLivedReadTransaction;
-- (NSArray *)endLongLivedReadTransaction;
+- (NSArray<NSNotification *> *)beginLongLivedReadTransaction;
+- (NSArray<NSNotification *> *)endLongLivedReadTransaction;
 
 - (BOOL)isInLongLivedReadTransaction;
 
@@ -499,37 +443,37 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
 
 // Query for any change to a collection
 
-- (BOOL)hasChangeForCollection:(NSString *)collection inNotifications:(NSArray *)notifications;
-- (BOOL)hasObjectChangeForCollection:(NSString *)collection inNotifications:(NSArray *)notifications;
-- (BOOL)hasMetadataChangeForCollection:(NSString *)collection inNotifications:(NSArray *)notifications;
+- (BOOL)hasChangeForCollection:(NSString *)collection inNotifications:(NSArray<NSNotification *> *)notifications;
+- (BOOL)hasObjectChangeForCollection:(NSString *)collection inNotifications:(NSArray<NSNotification *> *)notifications;
+- (BOOL)hasMetadataChangeForCollection:(NSString *)collection inNotifications:(NSArray<NSNotification *> *)notifications;
 
 // Query for a change to a particular key/collection tuple
 
 - (BOOL)hasChangeForKey:(NSString *)key
            inCollection:(NSString *)collection
-        inNotifications:(NSArray *)notifications;
+        inNotifications:(NSArray<NSNotification *> *)notifications;
 
 - (BOOL)hasObjectChangeForKey:(NSString *)key
                  inCollection:(NSString *)collection
-              inNotifications:(NSArray *)notifications;
+              inNotifications:(NSArray<NSNotification *> *)notifications;
 
 - (BOOL)hasMetadataChangeForKey:(NSString *)key
                    inCollection:(NSString *)collection
-                inNotifications:(NSArray *)notifications;
+                inNotifications:(NSArray<NSNotification *> *)notifications;
 
 // Query for a change to a particular set of keys in a collection
 
 - (BOOL)hasChangeForAnyKeys:(NSSet *)keys
                inCollection:(NSString *)collection
-            inNotifications:(NSArray *)notifications;
+            inNotifications:(NSArray<NSNotification *> *)notifications;
 
 - (BOOL)hasObjectChangeForAnyKeys:(NSSet *)keys
                      inCollection:(NSString *)collection
-                  inNotifications:(NSArray *)notifications;
+                  inNotifications:(NSArray<NSNotification *> *)notifications;
 
 - (BOOL)hasMetadataChangeForAnyKeys:(NSSet *)keys
                        inCollection:(NSString *)collection
-                    inNotifications:(NSArray *)notifications;
+                    inNotifications:(NSArray<NSNotification *> *)notifications;
 
 // Advanced query techniques
 
@@ -544,7 +488,7 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
  * This method is designed to be used in conjunction with the enumerateChangedKeys.... methods (below).
  * The hasChange... methods (above) already take this into account.
 **/
-- (BOOL)didClearCollection:(NSString *)collection inNotifications:(NSArray *)notifications;
+- (BOOL)didClearCollection:(NSString *)collection inNotifications:(NSArray<NSNotification *> *)notifications;
 
 /**
  * Returns YES if [transaction removeAllObjectsInAllCollections] was invoked
@@ -556,7 +500,7 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
  * This method is designed to be used in conjunction with the enumerateChangedKeys.... methods (below).
  * The hasChange... methods (above) already take this into account.
 **/
-- (BOOL)didClearAllCollectionsInNotifications:(NSArray *)notifications;
+- (BOOL)didClearAllCollectionsInNotifications:(NSArray<NSNotification *> *)notifications;
 
 /**
  * Allows you to enumerate all the changed keys in the given collection, for the given commits.
@@ -565,25 +509,30 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
  * or [transaction removeAllObjectsInAllCollections] was invoked
  * during any of the commits represented by the given notifications,
  * then the key may not be included in the enumeration.
- * You must use didClearCollection:inNotifications: if you need to handle that case.
+ * You must use didClearCollection:inNotifications: or didClearAllCollectionsInNotifications:
+ * if you need to handle that case.
  * 
  * @see didClearCollection:inNotifications:
+ * @see didClearAllCollectionsInNotifications:
 **/
 - (void)enumerateChangedKeysInCollection:(NSString *)collection
-                         inNotifications:(NSArray *)notifications
+                         inNotifications:(NSArray<NSNotification *> *)notifications
                               usingBlock:(void (^)(NSString *key, BOOL *stop))block;
 
 /**
  * Allows you to enumerate all the changed collection/key tuples for the given commits.
  * 
- * Keep in mind that if [transaction removeAllObjectsInAllCollections] was invoked
+ * Keep in mind that if [transaction removeAllObjectsInCollection:] was invoked on the given collection
+ * or [transaction removeAllObjectsInAllCollections] was invoked
  * during any of the commits represented by the given notifications,
  * then the collection/key tuple may not be included in the enumeration.
- * You must use didClearAllCollectionsInNotifications: if you need to handle that case.
+ * You must use didClearCollection:inNotifications: or didClearAllCollectionsInNotifications:
+ * if you need to handle that case.
  * 
+ * @see didClearCollection:inNotifications:
  * @see didClearAllCollectionsInNotifications:
 **/
-- (void)enumerateChangedCollectionKeysInNotifications:(NSArray *)notifications
+- (void)enumerateChangedCollectionKeysInNotifications:(NSArray<NSNotification *> *)notifications
                                            usingBlock:(void (^)(YapCollectionKey *ck, BOOL *stop))block;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -603,8 +552,8 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
  * 
  * @see YapDatabase registerExtension:withName:
 **/
-- (id)extension:(NSString *)extensionName;
-- (id)ext:(NSString *)extensionName; // <-- Shorthand (same as extension: method)
+- (__kindof YapDatabaseExtensionConnection *)extension:(NSString *)extensionName;
+- (__kindof YapDatabaseExtensionConnection *)ext:(NSString *)extensionName; // <-- Shorthand (same as extension: method)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Memory
@@ -625,8 +574,12 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
  * YapDatabaseConnectionFlushMemoryFlags_Statements:
  *     Flushes all pre-compiled sqlite statements.
  * 
+ * YapDatabaseConnectionFlushMemoryFlags_Internal
+ *     Flushes internal memory used by sqlite instance via sqlite_db_release_memory.
+ *     Generally this means cached database pages.
+ * 
  * YapDatabaseConnectionFlushMemoryFlags_All:
- *     Full flush of all caches and pre-compiled sqlite statements.
+ *     Full flush of everything (caches, statements, internal)
 **/
 - (void)flushMemoryWithFlags:(YapDatabaseConnectionFlushMemoryFlags)flags;
 
@@ -643,8 +596,29 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Vacuum
+#pragma mark Pragma
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns the current synchronous configuration via "PRAGMA synchronous;".
+ * Allows you to verify that sqlite accepted your synchronous configuration request.
+**/
+- (NSString *)pragmaSynchronous;
+
+/**
+ * Returns the current page_size configuration via "PRAGMA page_size;".
+ * Allows you to verify that sqlite accepted your page_size configuration request.
+**/
+- (NSInteger)pragmaPageSize;
+
+/**
+ * Returns the currently memory mapped I/O configureation via "PRAGMA mmap_size;".
+ * Allows you to verify that sqlite accepted your mmap_size configuration request.
+ *
+ * Memory mapping may be disabled by sqlite's compile-time options.
+ * Or it may restrict the mmap_size to something smaller than requested.
+**/
+- (NSInteger)pragmaMMapSize;
 
 /**
  * Upgrade Notice:
@@ -681,6 +655,10 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
  * }];
 **/
 - (NSString *)pragmaAutoVacuum;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Vacuum
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Performs a VACUUM on the sqlite database.
@@ -735,5 +713,79 @@ __attribute((deprecated("Use method asyncReadWriteWithBlock:completionQueue:comp
 - (void)asyncVacuumWithCompletionQueue:(nullable dispatch_queue_t)completionQueue
                        completionBlock:(nullable dispatch_block_t)completionBlock;
 
-NS_ASSUME_NONNULL_END
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Backup
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * This method backs up the database by exporting all the tables to another sqlite database.
+ * 
+ * This method operates as a synchronous ReadWrite "transaction".
+ * That is, it behaves in a similar fashion, and you may treat it as if it is a ReadWrite transaction.
+ * 
+ * The database will be backed up as it exists at the moment this transaction operates.
+ * That is, it will backup everything in the sqlite file, as well as everything in the WAL file.
+ *
+ * For more information on the BACKUP operation, see the sqlite docs:
+ * https://www.sqlite.org/c3ref/backup_finish.html
+ * 
+ * As stated in the sqlite docs, it is your responsibilty to ensure that nothing else is
+ * currently using the backupDatabase.
+**/
+- (NSError *)backupToPath:(NSString *)backupDatabasePath;
+
+/**
+ * This method backs up the database by exporting all the tables to another sqlite database.
+ *
+ * This method operates as an asynchronous readWrite "transaction".
+ * That is, it behaves in a similar fashion, and you may treat it as if it is a ReadWrite transaction.
+ * 
+ * The database will be backed up as it exists at the moment this transaction operates.
+ * That is, it will backup everything in the sqlite file, as well as everything in the WAL file.
+ * 
+ * An optional completion block may be used.
+ * The completionBlock will be invoked on the main thread (dispatch_get_main_queue()).
+ *
+ * For more information on the BACKUP operation, see the sqlite docs:
+ * https://www.sqlite.org/c3ref/backup_finish.html
+ *
+ * As stated in the sqlite docs, it is your responsibilty to ensure that nothing else is
+ * currently using the backupDatabase.
+ *
+ * @return
+ *   A NSProgress instance that may be used to track the backup progress.
+ *   The progress in cancellable, meaning that invoking [progress cancel] will abort the backup operation.
+**/
+- (NSProgress *)asyncBackupToPath:(NSString *)backupDatabasePath
+                  completionBlock:(nullable void (^)(NSError *error))completionBlock;
+
+/**
+ * This method backs up the database by exporting all the tables to another sqlite database.
+ *
+ * This method operates as an asynchronous readWrite "transaction".
+ * That is, it behaves in a similar fashion, and you may treat it as if it is a ReadWrite transaction.
+ *
+ * The database will be backed up as it exists at the moment this transaction operates.
+ * That is, it will backup everything in the sqlite file, as well as everything in the WAL file.
+ *
+ * An optional completion block may be used.
+ * Additionally the dispatch_queue to invoke the completion block may also be specified.
+ * If NULL, dispatch_get_main_queue() is automatically used.
+ *
+ * For more information on the BACKUP operation, see the sqlite docs:
+ * https://www.sqlite.org/c3ref/backup_finish.html
+ *
+ * As stated in the sqlite docs, it is your responsibilty to ensure that nothing else is
+ * currently using the backupDatabase.
+ *
+ * @return
+ *   A NSProgress instance that may be used to track the backup progress.
+ *   The progress in cancellable, meaning that invoking [progress cancel] will abort the backup operation.
+**/
+- (NSProgress *)asyncBackupToPath:(NSString *)backupDatabasePath
+                  completionQueue:(nullable dispatch_queue_t)completionQueue
+                  completionBlock:(nullable void (^)(NSError *))completionBlock;
+
 @end
+
+NS_ASSUME_NONNULL_END

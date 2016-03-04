@@ -10,24 +10,35 @@
 
 @class SYSaneDevice;
 @class SYSaneOptionDescriptor;
+@class SYSaneHelper;
+
+@protocol SYSaneHelperDelegate <NSObject>
+
+- (void)saneHelperDidStartUpdatingDevices:(SYSaneHelper *)saneHelper;
+- (void)saneHelperDidEndUpdatingDevices:(SYSaneHelper *)saneHelper;
+- (void)saneHelper:(SYSaneHelper *)saneHelper
+needsAuthForDevice:(NSString *)device
+       outUsername:(NSString **)username
+       outPassword:(NSString **)password;
+
+@end
 
 @interface SYSaneHelper : NSObject
 
+@property (nonatomic, weak) id<SYSaneHelperDelegate> delegate;
 @property (nonatomic, assign) BOOL isUpdatingDevices;
 @property (atomic, strong) NSString *saneInitError;
 @property (atomic, strong) NSString *saneLastGetDevicesError;
-@property (atomic, copy) void(^startingDevicesUpdateBlock)(void);
-@property (atomic, copy) void(^endedDevicesUpdateBlock)(void);
 
 + (instancetype)shared;
 
-- (NSArray *)hostsCopy;
+- (NSArray <NSString *> *)hostsCopy;
 - (NSUInteger)hostsCount;
 - (NSString *)hostAtIndex:(NSUInteger)index;
 - (NSArray *)addHost:(NSString *)host;
 - (NSArray *)removeHostAtIndex:(NSUInteger)index;
 
-- (NSArray *)devicesCopy;
+- (NSArray <SYSaneDevice *> *)devicesCopy;
 - (NSUInteger)devicesCount;
 - (SYSaneDevice *)deviceAtIndex:(NSUInteger)index;
 - (void)updateDevices;
@@ -41,6 +52,14 @@
                  onDevice:(SYSaneDevice *)device
                     block:(void(^)(id value, NSString *error))block;
 
-- (void)scanWithDevice:(SYSaneDevice *)device block:(void(^)(UIImage *image, NSString *error))block;
+- (void)setValue:(id)value
+     orAutoValue:(BOOL)autoValue
+       forOption:(SYSaneOptionDescriptor *)option
+        onDevice:(SYSaneDevice *)device
+           block:(void(^)(BOOL reloadAllOptions, NSString *error))block;
+
+- (void)scanWithDevice:(SYSaneDevice *)device
+         progressBlock:(void(^)(float progress))progressBlock
+          successBlock:(void(^)(UIImage *image, NSString *error))successBlock;
 
 @end

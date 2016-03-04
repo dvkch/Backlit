@@ -19,6 +19,7 @@
 #else
   static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 #endif
+#pragma unused(ydbLogLevel)
 
 
 @implementation YapDatabaseRelationship
@@ -112,7 +113,7 @@
 
 - (YapDatabaseExtensionConnection *)newConnection:(YapDatabaseConnection *)databaseConnection
 {
-	return [[YapDatabaseRelationshipConnection alloc] initWithRelationship:self databaseConnection:databaseConnection];
+	return [[YapDatabaseRelationshipConnection alloc] initWithParent:self databaseConnection:databaseConnection];
 }
 
 - (NSString *)tableName

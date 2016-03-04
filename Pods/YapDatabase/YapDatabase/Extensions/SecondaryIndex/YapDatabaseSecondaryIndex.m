@@ -19,6 +19,7 @@
 #else
   static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 #endif
+#pragma unused(ydbLogLevel)
 
 
 @implementation YapDatabaseSecondaryIndex
@@ -111,9 +112,7 @@
 	if ((self = [super init]))
 	{
 		setup = [inSetup copy];
-		
-		block = inHandler.block;
-		blockType = inHandler.blockType;
+		handler = inHandler;
 		
 		columnNamesSharedKeySet = [NSDictionary sharedKeySetForKeys:[setup columnNames]];
 		
@@ -124,56 +123,9 @@
 	return self;
 }
 
-/**
- * DEPRECATED
- * Use method initWithSetup:handler: instead.
-**/
-- (id)initWithSetup:(YapDatabaseSecondaryIndexSetup *)inSetup
-              block:(YapDatabaseSecondaryIndexBlock)inBlock
-          blockType:(YapDatabaseSecondaryIndexBlockType)inBlockType
-{
-	YapDatabaseSecondaryIndexHandler *handler =
-	  [YapDatabaseSecondaryIndexHandler withBlock:inBlock blockType:inBlockType];
-	
-	return [self initWithSetup:inSetup handler:handler];
-}
-
-/**
- * DEPRECATED
- * Use method initWithSetup:handler:versionTag: instead.
-**/
-- (id)initWithSetup:(YapDatabaseSecondaryIndexSetup *)inSetup
-              block:(YapDatabaseSecondaryIndexBlock)inBlock
-          blockType:(YapDatabaseSecondaryIndexBlockType)inBlockType
-         versionTag:(NSString *)inVersionTag
-{
-	YapDatabaseSecondaryIndexHandler *handler =
-	  [YapDatabaseSecondaryIndexHandler withBlock:inBlock blockType:inBlockType];
-	
-	return [self initWithSetup:inSetup handler:handler versionTag:inVersionTag];
-}
-
-/**
- * DEPRECATED
- * Use method initWithSetup:handler:versionTag:options: instead.
-**/
-- (id)initWithSetup:(YapDatabaseSecondaryIndexSetup *)inSetup
-              block:(YapDatabaseSecondaryIndexBlock)inBlock
-          blockType:(YapDatabaseSecondaryIndexBlockType)inBlockType
-         versionTag:(NSString *)inVersionTag
-            options:(YapDatabaseSecondaryIndexOptions *)inOptions
-{
-	YapDatabaseSecondaryIndexHandler *handler =
-	  [YapDatabaseSecondaryIndexHandler withBlock:inBlock blockType:inBlockType];
-	
-	return [self initWithSetup:inSetup handler:handler versionTag:inVersionTag options:inOptions];
-}
-
 - (YapDatabaseExtensionConnection *)newConnection:(YapDatabaseConnection *)databaseConnection
 {
-	return [[YapDatabaseSecondaryIndexConnection alloc]
-	           initWithSecondaryIndex:self
-	               databaseConnection:databaseConnection];
+	return [[YapDatabaseSecondaryIndexConnection alloc] initWithParent:self databaseConnection:databaseConnection];
 }
 
 - (NSString *)tableName

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+BOOL NSObjectIsBlock(id object);
+
 @interface SYTools : NSObject
 
 + (NSString *)documentsPath;

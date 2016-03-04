@@ -8,6 +8,21 @@
 
 #import "SYTools.h"
 
+// https://gist.github.com/steipete/6ee378bd7d87f276f6e0
+BOOL NSObjectIsBlock(id object)
+{
+    static Class blockClass;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        blockClass = [^{} class];
+        while ([blockClass superclass] != NSObject.class) {
+            blockClass = [blockClass superclass];
+        }
+    });
+    
+    return [object isKindOfClass:blockClass];
+}
+
 @implementation SYTools
 
 + (NSString *)documentsPath

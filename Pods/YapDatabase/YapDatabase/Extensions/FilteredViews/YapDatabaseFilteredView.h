@@ -6,6 +6,7 @@
 #import "YapDatabaseFilteredViewConnection.h"
 #import "YapDatabaseFilteredViewTransaction.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface YapDatabaseFilteredView : YapDatabaseView
 
@@ -42,35 +43,18 @@
 
 - (id)initWithParentViewName:(NSString *)viewName
                    filtering:(YapDatabaseViewFiltering *)filtering
-                  versionTag:(NSString *)versionTag;
+                  versionTag:(nullable NSString *)versionTag;
 
 - (id)initWithParentViewName:(NSString *)viewName
                    filtering:(YapDatabaseViewFiltering *)filtering
-                  versionTag:(NSString *)versionTag
-                     options:(YapDatabaseViewOptions *)options;
+                  versionTag:(nullable NSString *)versionTag
+                     options:(nullable YapDatabaseViewOptions *)options;
 
-
-- (id)initWithParentViewName:(NSString *)viewName
-              filteringBlock:(YapDatabaseViewFilteringBlock)filteringBlock
-          filteringBlockType:(YapDatabaseViewBlockType)filteringBlockType
-__attribute((deprecated("Use method initWithParentViewName:filtering: instead")));
-
-- (id)initWithParentViewName:(NSString *)viewName
-              filteringBlock:(YapDatabaseViewFilteringBlock)filteringBlock
-          filteringBlockType:(YapDatabaseViewBlockType)filteringBlockType
-                  versionTag:(NSString *)versionTag
-__attribute((deprecated("Use method initWithParentViewName:filtering:versionTag: instead")));
-
-- (id)initWithParentViewName:(NSString *)viewName
-              filteringBlock:(YapDatabaseViewFilteringBlock)filteringBlock
-          filteringBlockType:(YapDatabaseViewBlockType)filteringBlockType
-                  versionTag:(NSString *)versionTag
-                     options:(YapDatabaseViewOptions *)options
-__attribute((deprecated("Use method initWithParentViewName:filtering:versionTag:options: instead")));
 
 @property (nonatomic, strong, readonly) NSString *parentViewName;
 
-@property (nonatomic, strong, readonly) YapDatabaseViewFilteringBlock filteringBlock;
-@property (nonatomic, assign, readonly) YapDatabaseViewBlockType filteringBlockType;
+@property (nonatomic, strong, readonly) YapDatabaseViewFiltering *filtering;
 
 @end
+
+NS_ASSUME_NONNULL_END

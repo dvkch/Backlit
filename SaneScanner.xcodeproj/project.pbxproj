@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		4D5EFD6B3082C499709140AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79433720B786F7579199C998 /* libPods.a */; };
+		971F98881C88AC5900562A21 /* NSObject+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971F98871C88AC5900562A21 /* NSObject+SY.m */; };
+		97521E6A1C88E8BA00C77209 /* SYSaneOptionDescriptorBool.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E5F1C88E8BA00C77209 /* SYSaneOptionDescriptorBool.m */; };
+		97521E6B1C88E8BA00C77209 /* SYSaneOptionDescriptorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E611C88E8BA00C77209 /* SYSaneOptionDescriptorButton.m */; };
+		97521E6C1C88E8BA00C77209 /* SYSaneOptionDescriptorFloat.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E631C88E8BA00C77209 /* SYSaneOptionDescriptorFloat.m */; };
+		97521E6D1C88E8BA00C77209 /* SYSaneOptionDescriptorGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E651C88E8BA00C77209 /* SYSaneOptionDescriptorGroup.m */; };
+		97521E6E1C88E8BA00C77209 /* SYSaneOptionDescriptorInt.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E671C88E8BA00C77209 /* SYSaneOptionDescriptorInt.m */; };
+		97521E6F1C88E8BA00C77209 /* SYSaneOptionDescriptorString.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E691C88E8BA00C77209 /* SYSaneOptionDescriptorString.m */; };
+		97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E721C8912CA00C77209 /* NSArray+SY.m */; };
+		97586E941C89272300C37931 /* UIImage+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97586E931C89272300C37931 /* UIImage+SY.m */; };
+		97BB76F41C89169F00A0823A /* SYSaneScanParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */; };
 		F804E0711AFA4AF300CBE307 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06C1AFA4AF300CBE307 /* libsane-dll.a */; };
 		F804E0721AFA4AF300CBE307 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06D1AFA4AF300CBE307 /* libsane-net.a */; };
 		F804E0731AFA4AF300CBE307 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06E1AFA4AF300CBE307 /* libsane.a */; };
@@ -27,6 +37,26 @@
 /* Begin PBXFileReference section */
 		3B707C7C94B3F4CD87DAE05B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		79433720B786F7579199C998 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		971F98861C88AC5900562A21 /* NSObject+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SY.h"; sourceTree = "<group>"; };
+		971F98871C88AC5900562A21 /* NSObject+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SY.m"; sourceTree = "<group>"; };
+		97521E5E1C88E8BA00C77209 /* SYSaneOptionDescriptorBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionDescriptorBool.h; sourceTree = "<group>"; };
+		97521E5F1C88E8BA00C77209 /* SYSaneOptionDescriptorBool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionDescriptorBool.m; sourceTree = "<group>"; };
+		97521E601C88E8BA00C77209 /* SYSaneOptionDescriptorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionDescriptorButton.h; sourceTree = "<group>"; };
+		97521E611C88E8BA00C77209 /* SYSaneOptionDescriptorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionDescriptorButton.m; sourceTree = "<group>"; };
+		97521E621C88E8BA00C77209 /* SYSaneOptionDescriptorFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionDescriptorFloat.h; sourceTree = "<group>"; };
+		97521E631C88E8BA00C77209 /* SYSaneOptionDescriptorFloat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionDescriptorFloat.m; sourceTree = "<group>"; };
+		97521E641C88E8BA00C77209 /* SYSaneOptionDescriptorGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionDescriptorGroup.h; sourceTree = "<group>"; };
+		97521E651C88E8BA00C77209 /* SYSaneOptionDescriptorGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionDescriptorGroup.m; sourceTree = "<group>"; };
+		97521E661C88E8BA00C77209 /* SYSaneOptionDescriptorInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionDescriptorInt.h; sourceTree = "<group>"; };
+		97521E671C88E8BA00C77209 /* SYSaneOptionDescriptorInt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionDescriptorInt.m; sourceTree = "<group>"; };
+		97521E681C88E8BA00C77209 /* SYSaneOptionDescriptorString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionDescriptorString.h; sourceTree = "<group>"; };
+		97521E691C88E8BA00C77209 /* SYSaneOptionDescriptorString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionDescriptorString.m; sourceTree = "<group>"; };
+		97521E711C8912CA00C77209 /* NSArray+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+SY.h"; sourceTree = "<group>"; };
+		97521E721C8912CA00C77209 /* NSArray+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+SY.m"; sourceTree = "<group>"; };
+		97586E921C89272300C37931 /* UIImage+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SY.h"; sourceTree = "<group>"; };
+		97586E931C89272300C37931 /* UIImage+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SY.m"; sourceTree = "<group>"; };
+		97BB76F21C89169F00A0823A /* SYSaneScanParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneScanParameters.h; sourceTree = "<group>"; };
+		97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneScanParameters.m; sourceTree = "<group>"; };
 		BD5626431CEA71F0459153C5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F804E06C1AFA4AF300CBE307 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/libsane-dll.a"; sourceTree = "<group>"; };
 		F804E06D1AFA4AF300CBE307 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/all/libsane-net.a"; sourceTree = "<group>"; };
@@ -89,6 +119,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		97521E701C8912BD00C77209 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				97521E711C8912CA00C77209 /* NSArray+SY.h */,
+				97521E721C8912CA00C77209 /* NSArray+SY.m */,
+				97586E921C89272300C37931 /* UIImage+SY.h */,
+				97586E931C89272300C37931 /* UIImage+SY.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		F804E07A1AFA56A500CBE307 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +150,8 @@
 			children = (
 				F8C3EE421AF9B163003A991F /* SYSaneHelper.h */,
 				F8C3EE431AF9B163003A991F /* SYSaneHelper.m */,
+				971F98861C88AC5900562A21 /* NSObject+SY.h */,
+				971F98871C88AC5900562A21 /* NSObject+SY.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -120,6 +163,20 @@
 				F804E0751AFA4EC300CBE307 /* SYSaneDevice.m */,
 				F804E0801AFA8E6B00CBE307 /* SYSaneOptionDescriptor.h */,
 				F804E0811AFA8E6B00CBE307 /* SYSaneOptionDescriptor.m */,
+				97521E5E1C88E8BA00C77209 /* SYSaneOptionDescriptorBool.h */,
+				97521E5F1C88E8BA00C77209 /* SYSaneOptionDescriptorBool.m */,
+				97521E661C88E8BA00C77209 /* SYSaneOptionDescriptorInt.h */,
+				97521E671C88E8BA00C77209 /* SYSaneOptionDescriptorInt.m */,
+				97521E621C88E8BA00C77209 /* SYSaneOptionDescriptorFloat.h */,
+				97521E631C88E8BA00C77209 /* SYSaneOptionDescriptorFloat.m */,
+				97521E681C88E8BA00C77209 /* SYSaneOptionDescriptorString.h */,
+				97521E691C88E8BA00C77209 /* SYSaneOptionDescriptorString.m */,
+				97521E601C88E8BA00C77209 /* SYSaneOptionDescriptorButton.h */,
+				97521E611C88E8BA00C77209 /* SYSaneOptionDescriptorButton.m */,
+				97521E641C88E8BA00C77209 /* SYSaneOptionDescriptorGroup.h */,
+				97521E651C88E8BA00C77209 /* SYSaneOptionDescriptorGroup.m */,
+				97BB76F21C89169F00A0823A /* SYSaneScanParameters.h */,
+				97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -158,6 +215,7 @@
 		F8CBD20F1AF9A58C00B4C221 /* SaneScanner */ = {
 			isa = PBXGroup;
 			children = (
+				97521E701C8912BD00C77209 /* Categories */,
 				F804E07A1AFA56A500CBE307 /* Views */,
 				F804E07C1AFA56B700CBE307 /* Models */,
 				F804E07B1AFA56AC00CBE307 /* Controllers */,
@@ -192,6 +250,7 @@
 				F8CBD20A1AF9A58C00B4C221 /* Frameworks */,
 				F8CBD20B1AF9A58C00B4C221 /* Resources */,
 				35119201CF2F9D572299E80F /* Copy Pods Resources */,
+				AE133C1AD8192617C1FF9ACD /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -209,7 +268,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8CBD20C1AF9A58C00B4C221 = {
@@ -277,6 +336,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AE133C1AD8192617C1FF9ACD /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -284,16 +358,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97BB76F41C89169F00A0823A /* SYSaneScanParameters.m in Sources */,
+				97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */,
 				F894F3AB1AFAAFAA00365036 /* SYOptionCell.m in Sources */,
 				F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */,
+				97521E6A1C88E8BA00C77209 /* SYSaneOptionDescriptorBool.m in Sources */,
 				F804E07F1AFA898000CBE307 /* MBProgressHUD+SYAdditions.m in Sources */,
 				F804E0761AFA4EC300CBE307 /* SYSaneDevice.m in Sources */,
+				971F98881C88AC5900562A21 /* NSObject+SY.m in Sources */,
 				F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */,
+				97521E6C1C88E8BA00C77209 /* SYSaneOptionDescriptorFloat.m in Sources */,
 				F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */,
+				97586E941C89272300C37931 /* UIImage+SY.m in Sources */,
+				97521E6D1C88E8BA00C77209 /* SYSaneOptionDescriptorGroup.m in Sources */,
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
 				F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */,
+				97521E6E1C88E8BA00C77209 /* SYSaneOptionDescriptorInt.m in Sources */,
 				F8CBD2131AF9A58C00B4C221 /* main.m in Sources */,
+				97521E6F1C88E8BA00C77209 /* SYSaneOptionDescriptorString.m in Sources */,
 				F804E0821AFA8E6B00CBE307 /* SYSaneOptionDescriptor.m in Sources */,
+				97521E6B1C88E8BA00C77209 /* SYSaneOptionDescriptorButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +404,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -364,6 +450,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -399,6 +486,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/sane-libs/all/**",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -420,6 +508,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/sane-libs/all/**",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

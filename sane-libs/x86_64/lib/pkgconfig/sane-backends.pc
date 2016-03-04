@@ -1,0 +1,14 @@
+prefix=/Volumes/Data/Dev/iOS/MyApps/FullApps/SaneScanner/sane-libs/x86_64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+ldflags=-arch x86_64 -mios-simulator-version-min=7.0 -isysroot /Applications/Xcode72.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator9.2.sdk 
+libs= -framework CoreFoundation -framework IOKit -ldl  -lm           
+
+Name: SANE Backends
+Description: Backends for SANE, the universal scanner interface
+Version: 1.0.25
+Requires:
+Libs: -L${libdir} -lsane
+Libs.private: ${ldflags} ${libs}
+Cflags: -I${includedir}

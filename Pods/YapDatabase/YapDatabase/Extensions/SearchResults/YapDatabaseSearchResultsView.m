@@ -19,6 +19,7 @@
 #else
   static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 #endif
+#pragma unused(ydbLogLevel)
 
 
 @implementation YapDatabaseSearchResultsView
@@ -87,8 +88,8 @@
 
 - (id)initWithFullTextSearchName:(NSString *)inFullTextSearchName
                   parentViewName:(NSString *)inParentViewName
-					  versionTag:(NSString *)inVersionTag
-						 options:(YapDatabaseSearchResultsViewOptions *)inOptions
+                      versionTag:(NSString *)inVersionTag
+                         options:(YapDatabaseSearchResultsViewOptions *)inOptions
 {
 	NSAssert(inFullTextSearchName != nil, @"Invalid fullTextSearchName");
 	NSAssert(inParentViewName != nil, @"Invalid parentViewName");
@@ -106,53 +107,28 @@
 }
 
 - (id)initWithFullTextSearchName:(NSString *)inFullTextSearchName
-                        grouping:(YapDatabaseViewGrouping *)grouping
-                         sorting:(YapDatabaseViewSorting *)sorting
+                        grouping:(YapDatabaseViewGrouping *)inGrouping
+                         sorting:(YapDatabaseViewSorting *)inSorting
                       versionTag:(NSString *)inVersionTag
                          options:(YapDatabaseSearchResultsViewOptions *)inOptions
 {
 	NSAssert(inFullTextSearchName != nil, @"Invalid parameter: fullTextSearchName == nil");
 	
-	NSAssert(grouping != NULL, @"Invalid parameter: grouping == nil");
-	NSAssert(sorting != NULL, @"Invalid parameter: sorting == nil");
+	NSAssert([inGrouping isKindOfClass:[YapDatabaseViewGrouping class]], @"Invalid parameter: grouping");
+	NSAssert([inSorting isKindOfClass:[YapDatabaseViewSorting class]], @"Invalid parameter: sorting");
 	
 	if ((self = [super init]))
 	{
 		fullTextSearchName = [inFullTextSearchName copy];
 		
-		groupingBlock = grouping.groupingBlock;
-		groupingBlockType = grouping.groupingBlockType;
-		
-		sortingBlock = sorting.sortingBlock;
-		sortingBlockType = sorting.sortingBlockType;
+		grouping = inGrouping;
+		sorting = inSorting;
 		
 		versionTag = inVersionTag ? [inVersionTag copy] : @"";
 		
 		options = inOptions ? [inOptions copy] : [[YapDatabaseSearchResultsViewOptions alloc] init];
 	}
 	return self;
-}
-
-/**
- * DEPRECATED
- * Use method initWithFullTextSearchName:grouping:sorting:versionTag:options: instead.
-**/
-- (id)initWithFullTextSearchName:(NSString *)inFullTextSearchName
-                   groupingBlock:(YapDatabaseViewGroupingBlock)grpBlock
-               groupingBlockType:(YapDatabaseViewBlockType)grpBlockType
-                    sortingBlock:(YapDatabaseViewSortingBlock)srtBlock
-                sortingBlockType:(YapDatabaseViewBlockType)srtBlockType
-                      versionTag:(NSString *)inVersionTag
-                         options:(YapDatabaseSearchResultsViewOptions *)inOptions
-{
-	YapDatabaseViewGrouping *grouping = [YapDatabaseViewGrouping withBlock:grpBlock blockType:grpBlockType];
-	YapDatabaseViewSorting *sorting = [YapDatabaseViewSorting withBlock:srtBlock blockType:srtBlockType];
-	
-	return [self initWithFullTextSearchName:inFullTextSearchName
-	                               grouping:grouping
-	                                sorting:sorting
-	                             versionTag:inVersionTag
-	                                options:inOptions];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,11 +173,8 @@
 		
 		__unsafe_unretained YapDatabaseView *parentView = (YapDatabaseView *)ext;
 		
-		groupingBlock = parentView->groupingBlock;
-		groupingBlockType = parentView->groupingBlockType;
-		
-		sortingBlock = parentView->sortingBlock;
-		sortingBlockType = parentView->sortingBlockType;
+		grouping = parentView->grouping;
+		sorting = parentView->sorting;
 	}
 	
 	return YES;

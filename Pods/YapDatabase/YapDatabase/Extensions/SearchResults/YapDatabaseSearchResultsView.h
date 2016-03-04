@@ -5,6 +5,8 @@
 #import "YapDatabaseSearchResultsViewConnection.h"
 #import "YapDatabaseSearchResultsViewTransaction.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * Welcome to YapDatabase!
  *
@@ -50,8 +52,8 @@
 **/
 - (id)initWithFullTextSearchName:(NSString *)fullTextSearchName
                   parentViewName:(NSString *)parentViewName
-                      versionTag:(NSString *)versionTag
-                         options:(YapDatabaseSearchResultsViewOptions *)options;
+                      versionTag:(nullable NSString *)versionTag
+                         options:(nullable YapDatabaseSearchResultsViewOptions *)options;
 
 /**
  * In this configuration, you want to pipe search results directly into a new YapDatabaseView.
@@ -88,18 +90,8 @@
 - (id)initWithFullTextSearchName:(NSString *)fullTextSearchName
                         grouping:(YapDatabaseViewGrouping *)grouping
                          sorting:(YapDatabaseViewSorting *)sorting
-                      versionTag:(NSString *)versionTag
-                         options:(YapDatabaseSearchResultsViewOptions *)options;
-
-
-- (id)initWithFullTextSearchName:(NSString *)fullTextSearchName
-                   groupingBlock:(YapDatabaseViewGroupingBlock)groupingBlock
-               groupingBlockType:(YapDatabaseViewBlockType)groupingBlockType
-                    sortingBlock:(YapDatabaseViewSortingBlock)sortingBlock
-                sortingBlockType:(YapDatabaseViewBlockType)sortingBlockType
-                      versionTag:(NSString *)versionTag
-                         options:(YapDatabaseSearchResultsViewOptions *)options
-__attribute((deprecated("Use method initWithFullTextSearchName:grouping:sorting:versionTag:options: instead")));
+                      versionTag:(nullable NSString *)versionTag
+                         options:(nullable YapDatabaseSearchResultsViewOptions *)options;
 
 
 @property (nonatomic, strong, readonly) NSString *fullTextSearchName;
@@ -107,3 +99,5 @@ __attribute((deprecated("Use method initWithFullTextSearchName:grouping:sorting:
 @property (nonatomic, strong, readonly) NSString *parentViewName;
 
 @end
+
+NS_ASSUME_NONNULL_END

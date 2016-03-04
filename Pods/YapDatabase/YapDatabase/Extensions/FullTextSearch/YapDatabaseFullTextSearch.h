@@ -5,6 +5,8 @@
 #import "YapDatabaseFullTextSearchConnection.h"
 #import "YapDatabaseFullTextSearchTransaction.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * Welcome to YapDatabase!
  *
@@ -18,36 +20,17 @@
 **/
 @interface YapDatabaseFullTextSearch : YapDatabaseExtension
 
-- (id)initWithColumnNames:(NSArray *)columnNames
+- (id)initWithColumnNames:(NSArray<NSString *> *)columnNames
                   handler:(YapDatabaseFullTextSearchHandler *)handler;
 
-- (id)initWithColumnNames:(NSArray *)columnNames
+- (id)initWithColumnNames:(NSArray<NSString *> *)columnNames
                     handler:(YapDatabaseFullTextSearchHandler *)handler
-               versionTag:(NSString *)versionTag;
+               versionTag:(nullable NSString *)versionTag;
 
-- (id)initWithColumnNames:(NSArray *)columnNames
-                  options:(NSDictionary *)options
+- (id)initWithColumnNames:(NSArray<NSString *> *)columnNames
+                  options:(nullable NSDictionary *)options
                   handler:(YapDatabaseFullTextSearchHandler *)handler
-               versionTag:(NSString *)versionTag;
-
-
-- (id)initWithColumnNames:(NSArray *)columnNames
-                    block:(YapDatabaseFullTextSearchBlock)block
-                blockType:(YapDatabaseFullTextSearchBlockType)blockType
-__attribute((deprecated("Use method initWithColumnNames:handler: instead")));
- 
-- (id)initWithColumnNames:(NSArray *)columnNames
-                    block:(YapDatabaseFullTextSearchBlock)block
-                blockType:(YapDatabaseFullTextSearchBlockType)blockType
-                versionTag:(NSString *)versionTag
-__attribute((deprecated("Use method initWithColumnNames:handler:versionTag: instead")));
- 
-- (id)initWithColumnNames:(NSArray *)columnNames
-                  options:(NSDictionary *)options
-                    block:(YapDatabaseFullTextSearchBlock)block
-                blockType:(YapDatabaseFullTextSearchBlockType)blockType
-                versionTag:(NSString *)versionTag
-__attribute((deprecated("Use method initWithColumnNames:options:handler:versionTag: instead")));
+               versionTag:(nullable NSString *)versionTag;
 
 
 /* Inherited from YapDatabaseExtension
@@ -56,8 +39,7 @@ __attribute((deprecated("Use method initWithColumnNames:options:handler:versionT
  
 */
 
-@property (nonatomic, strong, readonly) YapDatabaseFullTextSearchBlock block;
-@property (nonatomic, assign, readonly) YapDatabaseFullTextSearchBlockType blockType;
+@property (nonatomic, strong, readonly) YapDatabaseFullTextSearchHandler *handler;
 
 /**
  * The versionTag assists in making changes to the extension.
@@ -66,6 +48,8 @@ __attribute((deprecated("Use method initWithColumnNames:options:handler:versionT
  * then simply pass a different versionTag during the init method,
  * and the FTS extension will automatically update itself.
 **/
-@property (nonatomic, copy, readonly) NSString *versionTag;
+@property (nonatomic, copy, readonly, nullable) NSString *versionTag;
 
 @end
+
+NS_ASSUME_NONNULL_END

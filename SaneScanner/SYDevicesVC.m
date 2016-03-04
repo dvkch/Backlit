@@ -15,7 +15,7 @@
 #import "SYDeviceVC.h"
 #import "MBProgressHUD+SYAdditions.h"
 
-@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate>
+@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIBarButtonItem *buttonAddHost;
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
@@ -23,9 +23,9 @@
 
 @implementation SYDevicesVC
 
-- (void)loadView
+- (void)viewDidLoad
 {
-    [super loadView];
+    [super viewDidLoad];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
@@ -39,22 +39,14 @@
     [self.buttonAddHost setTintColor:[UIColor darkGrayColor]];
     
     [self.navigationItem setRightBarButtonItems:@[self.buttonAddHost]];
+    
+    [[SYSaneHelper shared] setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self setTitle:@"SaneScanner"];
-    
-    __weak SYDevicesVC *wSelf = self;
-    [[SYSaneHelper shared] setStartingDevicesUpdateBlock:^{
-        [wSelf.pullToRefreshView startLoadingAndExpand:YES animated:YES];
-    }];
-    [[SYSaneHelper shared] setEndedDevicesUpdateBlock:^{
-        [wSelf.tableView reloadData];
-        [wSelf.pullToRefreshView finishLoading];
-    }];
-
     [self.tableView reloadData];
 }
 
@@ -96,6 +88,54 @@
     }];
     
     [av show];
+}
+
+#pragma mark - SYSaneHelperDelegate
+
+- (void)saneHelperDidStartUpdatingDevices:(SYSaneHelper *)saneHelper
+{
+    [self.pullToRefreshView startLoadingAndExpand:YES animated:YES];
+}
+
+- (void)saneHelperDidEndUpdatingDevices:(SYSaneHelper *)saneHelper
+{
+    [self.tableView reloadData];
+    [self.pullToRefreshView finishLoading];
+}
+
+- (void)saneHelper:(SYSaneHelper *)saneHelper
+needsAuthForDevice:(NSString *)device
+       outUsername:(NSString **)username
+       outPassword:(NSString **)password
+{
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
+    __block NSString *outUsername;
+    __block NSString *outPassword;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *message = [NSString stringWithFormat:@"Please enter the username and password for %@", device];
+        UIAlertView *alertView = [[UIAlertView alloc] init];
+        [alertView setTitle:@"Authentication needed"];
+        [alertView setMessage:message];
+        [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+        [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^{
+            dispatch_semaphore_signal(semaphore);
+        }];
+        [alertView bk_addButtonWithTitle:@"Continue" handler:^{
+            outUsername = [alertView textFieldAtIndex:0].text;
+            outPassword = [alertView textFieldAtIndex:1].text;
+            dispatch_semaphore_signal(semaphore);
+        }];
+    });
+    
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    if (username)
+        *username = outUsername;
+    
+    if (password)
+        *password = outPassword;
 }
 
 #pragma mark - UITableViewDataSource

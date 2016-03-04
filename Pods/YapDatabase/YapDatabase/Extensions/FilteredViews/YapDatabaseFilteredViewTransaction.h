@@ -4,6 +4,7 @@
 #import "YapDatabaseFilteredViewTypes.h"
 #import "YapDatabaseFilteredView.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface YapDatabaseFilteredViewTransaction : YapDatabaseViewTransaction
 
@@ -33,11 +34,8 @@
  * Note: You must pass a different versionTag, or this method does nothing.
 **/
 - (void)setFiltering:(YapDatabaseViewFiltering *)filtering
-          versionTag:(NSString *)tag;
-
-- (void)setFilteringBlock:(YapDatabaseViewFilteringBlock)filteringBlock
-       filteringBlockType:(YapDatabaseViewBlockType)filteringBlockType
-               versionTag:(NSString *)tag
-__attribute((deprecated("Use method setFiltering:versionTag: instead")));
+          versionTag:(nullable NSString *)tag;
 
 @end
+
+NS_ASSUME_NONNULL_END

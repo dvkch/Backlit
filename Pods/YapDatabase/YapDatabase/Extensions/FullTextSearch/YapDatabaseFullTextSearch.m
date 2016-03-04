@@ -19,6 +19,8 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 #else
 static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 #endif
+#pragma unused(ydbLogLevel)
+
 
 @implementation YapDatabaseFullTextSearch
 
@@ -55,8 +57,7 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 #pragma mark Instance
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@synthesize block = block;
-@synthesize blockType = blockType;
+@synthesize handler = handler;
 @synthesize versionTag = versionTag;
 
 - (id)initWithColumnNames:(NSArray *)inColumnNames
@@ -111,63 +112,16 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 		
 		options = [inOptions copy];
 		
-		block = inHandler.block;
-		blockType = inHandler.blockType;
+		handler = inHandler;
 		
 		versionTag = inVersionTag ? [inVersionTag copy] : @"";
 	}
 	return self;
 }
 
-/**
- * DEPRECATED
- * Use method initWithColumnNames:handler: instead.
-**/
-- (id)initWithColumnNames:(NSArray *)inColumnNames
-                    block:(YapDatabaseFullTextSearchBlock)inBlock
-                blockType:(YapDatabaseFullTextSearchBlockType)inBlockType
-{
-	YapDatabaseFullTextSearchHandler *handler =
-	  [YapDatabaseFullTextSearchHandler withBlock:inBlock blockType:inBlockType];
-	
-	return [self initWithColumnNames:inColumnNames handler:handler];
-}
-
-/**
- * DEPRECATED
- * Use method initWithColumnNames:handler:versionTag: instead.
-**/
-- (id)initWithColumnNames:(NSArray *)inColumnNames
-                    block:(YapDatabaseFullTextSearchBlock)inBlock
-                blockType:(YapDatabaseFullTextSearchBlockType)inBlockType
-                versionTag:(NSString *)inVersionTag
-{
-	YapDatabaseFullTextSearchHandler *handler =
-	  [YapDatabaseFullTextSearchHandler withBlock:inBlock blockType:inBlockType];
-	
-	return [self initWithColumnNames:inColumnNames handler:handler versionTag:inVersionTag];
-}
-
-/**
- * DEPRECATED
- * Use method initWithColumnNames:options:handler:versionTag: instead.
-**/
-- (id)initWithColumnNames:(NSArray *)inColumnNames
-                  options:(NSDictionary *)inOptions
-                    block:(YapDatabaseFullTextSearchBlock)inBlock
-                blockType:(YapDatabaseFullTextSearchBlockType)inBlockType
-                versionTag:(NSString *)inVersionTag
-{
-	YapDatabaseFullTextSearchHandler *handler =
-	  [YapDatabaseFullTextSearchHandler withBlock:inBlock blockType:inBlockType];
-	
-	return [self initWithColumnNames:inColumnNames options:inOptions handler:handler versionTag:inVersionTag];
-}
-
-
 - (YapDatabaseExtensionConnection *)newConnection:(YapDatabaseConnection *)databaseConnection
 {
-	return [[YapDatabaseFullTextSearchConnection alloc] initWithFTS:self databaseConnection:databaseConnection];
+	return [[YapDatabaseFullTextSearchConnection alloc] initWithParent:self databaseConnection:databaseConnection];
 }
 
 - (NSString *)tableName

@@ -17,10 +17,12 @@
  * See YapDatabaseLogging.h for more information.
  **/
 #if DEBUG
-static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
+  static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 #else
-static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
+  static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 #endif
+#pragma unused(ydbLogLevel)
+
 
 @implementation YapDatabaseSecondaryIndexConnection
 {
@@ -30,14 +32,14 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 	sqlite3_stmt *removeAllStatement;
 }
 
-@synthesize secondaryIndex = secondaryIndex;
+@synthesize secondaryIndex = parent;
 
-- (id)initWithSecondaryIndex:(YapDatabaseSecondaryIndex *)inSecondaryIndex
-          databaseConnection:(YapDatabaseConnection *)inDatabaseConnection
+- (id)initWithParent:(YapDatabaseSecondaryIndex *)inParent
+  databaseConnection:(YapDatabaseConnection *)inDatabaseConnection
 {
 	if ((self = [super init]))
 	{
-		secondaryIndex = inSecondaryIndex;
+		parent = inParent;
 		databaseConnection = inDatabaseConnection;
 		
 		queryCacheLimit = 10;
@@ -87,7 +89,7 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 **/
 - (YapDatabaseExtension *)extension
 {
-	return secondaryIndex;
+	return parent;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -177,9 +179,8 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 - (id)newReadTransaction:(YapDatabaseReadTransaction *)databaseTransaction
 {
 	YapDatabaseSecondaryIndexTransaction *transaction =
-	    [[YapDatabaseSecondaryIndexTransaction alloc]
-	        initWithSecondaryIndexConnection:self
-	                     databaseTransaction:databaseTransaction];
+	    [[YapDatabaseSecondaryIndexTransaction alloc] initWithParentConnection:self
+	                                                       databaseTransaction:databaseTransaction];
 	
 	return transaction;
 }
@@ -190,19 +191,38 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 - (id)newReadWriteTransaction:(YapDatabaseReadWriteTransaction *)databaseTransaction
 {
 	YapDatabaseSecondaryIndexTransaction *transaction =
-	    [[YapDatabaseSecondaryIndexTransaction alloc]
-	        initWithSecondaryIndexConnection:self
-	                     databaseTransaction:databaseTransaction];
+	    [[YapDatabaseSecondaryIndexTransaction alloc] initWithParentConnection:self
+	                                                       databaseTransaction:databaseTransaction];
 	
-	if (blockDict == nil)
-		blockDict = [NSMutableDictionary dictionaryWithSharedKeySet:secondaryIndex->columnNamesSharedKeySet];
-	
+	[self prepareForReadWriteTransaction];
 	return transaction;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Changeset
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Initializes any ivars that a read-write transaction may need.
+**/
+- (void)prepareForReadWriteTransaction
+{
+	if (blockDict == nil)
+		blockDict = [NSMutableDictionary dictionaryWithSharedKeySet:parent->columnNamesSharedKeySet];
+	
+	if (mutationStack == nil)
+		mutationStack = [[YapMutationStack_Bool alloc] init];
+}
+
+- (void)postCommitCleanup
+{
+	[mutationStack clear];
+}
+
+- (void)postRollbackCleanup
+{
+	[mutationStack clear];
+}
 
 /**
  * Required override method from YapDatabaseExtension
@@ -253,16 +273,16 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 	if (*statement == NULL)
 	{
 		NSMutableString *string = [NSMutableString stringWithCapacity:100];
-		[string appendFormat:@"INSERT INTO \"%@\" (\"rowid\"", [secondaryIndex tableName]];
+		[string appendFormat:@"INSERT INTO \"%@\" (\"rowid\"", [parent tableName]];
 		
-		for (YapDatabaseSecondaryIndexColumn *column in secondaryIndex->setup)
+		for (YapDatabaseSecondaryIndexColumn *column in parent->setup)
 		{
 			[string appendFormat:@", \"%@\"", column.name];
 		}
 		
 		[string appendString:@") VALUES (?"];
 		
-		NSUInteger count = [secondaryIndex->setup count];
+		NSUInteger count = [parent->setup count];
 		NSUInteger i;
 		for (i = 0; i < count; i++)
 		{
@@ -283,16 +303,16 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 	if (*statement == NULL)
 	{
 		NSMutableString *string = [NSMutableString stringWithCapacity:100];
-		[string appendFormat:@"INSERT OR REPLACE INTO \"%@\" (\"rowid\"", [secondaryIndex tableName]];
+		[string appendFormat:@"INSERT OR REPLACE INTO \"%@\" (\"rowid\"", [parent tableName]];
 		
-		for (YapDatabaseSecondaryIndexColumn *column in secondaryIndex->setup)
+		for (YapDatabaseSecondaryIndexColumn *column in parent->setup)
 		{
 			[string appendFormat:@", \"%@\"", column.name];
 		}
 		
 		[string appendString:@") VALUES (?"];
 		
-		NSUInteger count = [secondaryIndex->setup count];
+		NSUInteger count = [parent->setup count];
 		NSUInteger i;
 		for (i = 0; i < count; i++)
 		{
@@ -313,7 +333,7 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 	if (*statement == NULL)
 	{
 		NSString *string = [NSString stringWithFormat:
-		  @"DELETE FROM \"%@\" WHERE \"rowid\" = ?;", [secondaryIndex tableName]];
+		  @"DELETE FROM \"%@\" WHERE \"rowid\" = ?;", [parent tableName]];
 		
 		[self prepareStatement:statement withString:string caller:_cmd];
 	}
@@ -327,7 +347,7 @@ static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
 	if (*statement == NULL)
 	{
 		NSString *string = [NSString stringWithFormat:
-		  @"DELETE FROM \"%@\";", [secondaryIndex tableName]];
+		  @"DELETE FROM \"%@\";", [parent tableName]];
 		
 		[self prepareStatement:statement withString:string caller:_cmd];
 	}

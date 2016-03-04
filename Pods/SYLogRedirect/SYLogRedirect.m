@@ -2,8 +2,8 @@
 //  SYLogRedirect.m
 //  Syan
 //
-//  Created by rominet on 05/07/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Stanislas Chevallier on 05/07/12.
+//  Copyright (c) 2012 Syan. All rights reserved.
 //
 
 #import "SYLogRedirect.h"
