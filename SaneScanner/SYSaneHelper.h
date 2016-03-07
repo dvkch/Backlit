@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class SYSaneDevice;
-@class SYSaneOptionDescriptor;
+@class SYSaneOption;
 @class SYSaneHelper;
 
 @protocol SYSaneHelperDelegate <NSObject>
@@ -48,14 +48,13 @@ needsAuthForDevice:(NSString *)device
 
 - (void)listOptionsForDevice:(SYSaneDevice *)device block:(void(^)(void))block;
 
-- (void)getValueForOption:(SYSaneOptionDescriptor *)option
-                 onDevice:(SYSaneDevice *)device
+- (void)getValueForOption:(SYSaneOption *)option
                     block:(void(^)(id value, NSString *error))block;
 
 - (void)setValue:(id)value
      orAutoValue:(BOOL)autoValue
-       forOption:(SYSaneOptionDescriptor *)option
-        onDevice:(SYSaneDevice *)device
+       forOption:(SYSaneOption *)option
+ thenReloadValue:(BOOL)reloadValue
            block:(void(^)(BOOL reloadAllOptions, NSString *error))block;
 
 - (void)scanWithDevice:(SYSaneDevice *)device

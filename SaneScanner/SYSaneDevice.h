@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "sane.h"
-#import "SYSaneOptionDescriptorGroup.h"
+#import "SYSaneOptionGroup.h"
 
 @interface SYSaneDevice : NSObject
 
@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *vendor;
 @property (nonatomic, strong) NSString *model;
-@property (nonatomic, strong) NSArray <SYSaneOptionDescriptorGroup *> *groupedOptions;
+@property (nonatomic, strong) NSArray <SYSaneOptionGroup *> *groupedOptions;
 
 - (instancetype)initWithCDevice:(const SANE_Device *)device;
 

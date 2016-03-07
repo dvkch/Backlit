@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "sane.h"
 
+NSString *NSStringFromSANE_Frame(SANE_Frame frame);
+
 @interface SYSaneScanParameters : NSObject
 
 @property (nonatomic, assign) SANE_Frame currentlyAcquiredChannel;
@@ -21,5 +23,6 @@
 - (instancetype)initWithCParams:(SANE_Parameters)params;
 
 - (int)fileSize;
+- (int)numberOfChannels;
 
 @end

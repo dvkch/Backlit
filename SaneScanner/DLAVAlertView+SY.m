@@ -1,0 +1,96 @@
+//
+//  DLAVAlertView+SY.m
+//  SaneScanner
+//
+//  Created by Stan Chevallier on 06/03/2016.
+//  Copyright © 2016 Syan. All rights reserved.
+//
+
+#import "DLAVAlertView+SY.h"
+#import <objc/runtime.h>
+
+@interface DLAVAlertView (SY_SuperPrivate)
+@property (nonatomic, readonly, strong) NSArray <UIButton *> *buttons;
+@end
+
+@implementation DLAVAlertView (SY)
+
+- (void)setText:(NSString *)text forButtonAtIndex:(NSUInteger)index
+{
+    if (index >= self.buttons.count)
+        return;
+    
+    [self.buttons[index] setTitle:text forState:UIControlStateNormal];
+}
+
+- (NSUInteger)lastOtherButtonIndex
+{
+    // Consider 2 other buttons.
+    //
+    // With cancel button :
+    //  - cancel  : 0
+    //  - button1 : 1
+    //  - button2 : 2
+    // => nbOfButtons - 1
+    // => 3 - 1
+    // => 2 -> OK
+    //
+    // Without cancel button :
+    //  - button1 : 0
+    //  - button2 : 1
+    // => nbOfButtons - 1
+    // => 2 - 1
+    // => 1 -> OK
+    
+    return self.numberOfButtons - 1;
+}
+
+- (void)setSliderUpdateBlock:(void(^)(DLAVAlertView *alertView, float value))block {
+    objc_setAssociatedObject(self, @selector(sliderUpdateBlock), [block copy], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void(^)(DLAVAlertView *alertView, float value))sliderUpdateBlock {
+    return objc_getAssociatedObject(self, @selector(sliderUpdateBlock));
+}
+
+
+- (void)addSliderWithMin:(float)min
+                     max:(float)max
+                 current:(float)current
+             updateBlock:(void(^)(DLAVAlertView *alertView, float value))block;
+{
+    [self setSliderUpdateBlock:block];
+    [self setMinContentWidth:280];
+    
+    UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(10, 0, 260, 50)];
+    [slider setAutoresizingMask:(UIViewAutoresizingFlexibleWidth |
+                                 UIViewAutoresizingFlexibleTopMargin |
+                                 UIViewAutoresizingFlexibleBottomMargin)];
+    [slider setMinimumValue:min];
+    [slider setMaximumValue:max];
+    [slider setValue:current];
+    [slider addTarget:self action:@selector(sliderUpdatedValue:) forControlEvents:UIControlEventValueChanged];
+    [self setContentView:slider];
+    
+    if (block)
+        block(self, slider.value);
+}
+
+- (void)sliderUpdatedValue:(UISlider *)slider
+{
+    void(^block)(DLAVAlertView *alertView, float value) = [self sliderUpdateBlock];
+    if (block)
+        block(self, slider.value);
+}
+
+- (void)addImageViewForImage:(UIImage *)image
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 280, 280)];
+    [imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [imageView setBackgroundColor:[UIColor blackColor]];
+    [imageView setImage:image];
+    [self setContentView:imageView];
+    [self setMinContentWidth:300];
+}
+
+@end

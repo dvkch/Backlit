@@ -12,6 +12,6 @@
 
 @interface UIImage (SY)
 
-+ (UIImage *)imageFromRGBData:(NSData *)data saneParameters:(SYSaneScanParameters *)parameters;
++ (UIImage *)imageFromRGBData:(NSData *)data saneParameters:(SYSaneScanParameters *)parameters error:(NSString **)error;
 
 @end

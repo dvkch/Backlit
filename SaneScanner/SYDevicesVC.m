@@ -10,7 +10,7 @@
 #import "SYTools.h"
 #import "SYSaneHelper.h"
 #import "SYSaneDevice.h"
-#import <BlocksKit/UIAlertView+BlocksKit.h>
+#import <DLAVAlertView.h>
 #import "SSPullToRefresh.h"
 #import "SYDeviceVC.h"
 #import "MBProgressHUD+SYAdditions.h"
@@ -73,15 +73,16 @@
 
 - (void)buttonAddHostTap:(id)sender
 {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Add a host"
-                                                 message:@"Enter the hostname or IP address for the new host"
-                                                delegate:nil
-                                       cancelButtonTitle:nil
-                                       otherButtonTitles:nil];
+    DLAVAlertView *av = [[DLAVAlertView alloc] initWithTitle:@"Add a host"
+                                                     message:@"Enter the hostname or IP address for the new host"
+                                                    delegate:nil
+                                           cancelButtonTitle:@"Cancel"
+                                           otherButtonTitles:@"Add", nil];
     
-    [av setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [av bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
-    [av bk_addButtonWithTitle:@"Add" handler:^{
+    [av setAlertViewStyle:DLAVAlertViewStylePlainTextInput];
+    [av showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex == alertView.cancelButtonIndex)
+            return;
         NSString *host = [[av textFieldAtIndex:0] text];
         [[SYSaneHelper shared] addHost:host];
         [self.tableView reloadData];
@@ -115,16 +116,18 @@ needsAuthForDevice:(NSString *)device
     
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *message = [NSString stringWithFormat:@"Please enter the username and password for %@", device];
-        UIAlertView *alertView = [[UIAlertView alloc] init];
-        [alertView setTitle:@"Authentication needed"];
-        [alertView setMessage:message];
-        [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
-        [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^{
-            dispatch_semaphore_signal(semaphore);
-        }];
-        [alertView bk_addButtonWithTitle:@"Continue" handler:^{
-            outUsername = [alertView textFieldAtIndex:0].text;
-            outPassword = [alertView textFieldAtIndex:1].text;
+        DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:@"Authentication needed"
+                                                                message:message
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:@"Continue", nil];
+        [alertView setAlertViewStyle:DLAVAlertViewStyleLoginAndPasswordInput];
+        [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex != alertView.cancelButtonIndex)
+            {
+                outUsername = [alertView textFieldAtIndex:0].text;
+                outPassword = [alertView textFieldAtIndex:1].text;
+            }
             dispatch_semaphore_signal(semaphore);
         }];
     });

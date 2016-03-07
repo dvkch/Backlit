@@ -9,11 +9,18 @@
 #import "SYDeviceVC.h"
 #import "SYSaneDevice.h"
 #import "SYSaneHelper.h"
-#import "SYSaneOptionDescriptor.h"
+#import "SYSaneOptionBool.h"
+#import "SYSaneOptionInt.h"
+#import "SYSaneOptionDouble.h"
+#import "SYSaneOptionString.h"
+#import "SYSaneOptionButton.h"
+#import "SYSaneOptionGroup.h"
 #import "SSPullToRefresh.h"
 #import "SYOptionCell.h"
-#import <CustomIOSAlertView.h>
 #import <SVProgressHUD.h>
+#import "DLAVAlertView+SY.h"
+#import "SYSaneOptionUI.h"
+#import "SYTools.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate>
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
@@ -104,17 +111,6 @@
 
 - (void)buttonScanTap:(id)sender
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
-    [imageView setContentMode:UIViewContentModeScaleAspectFit];
-    [imageView setBackgroundColor:[UIColor clearColor]];
-    
-    CustomIOSAlertView *alertView = [[CustomIOSAlertView alloc] init];
-    [alertView setContainerView:imageView];
-    [alertView setButtonTitles:@[@"Close"]];
-    [alertView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-        [alertView close];
-    }];
-    
     [SVProgressHUD showWithStatus:@"Loading..."];
     [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress) {
         [SVProgressHUD showProgress:progress];
@@ -126,7 +122,20 @@
         else
         {
             [SVProgressHUD dismiss];
-            [imageView setImage:image];
+            
+            NSData *imageData = UIImagePNGRepresentation(image);
+            NSString *path = [[SYTools documentsPath] stringByAppendingPathComponent:@"image.png"];
+            [imageData writeToFile:path atomically:YES];
+            NSLog(@"%@", path);
+            
+            DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:@"Scanned image"
+                                                                    message:nil
+                                                                   delegate:nil
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:nil];
+            [alertView setTitle:@"Scanned image"];
+            [alertView addButtonWithTitle:@"Close"];
+            [alertView addImageViewForImage:image];
             [alertView show];
         }
     }];
@@ -155,17 +164,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SYOptionCell *cell = (SYOptionCell*)[tableView dequeueReusableCellWithIdentifier:@"cell"];
-    SYSaneOptionDescriptor *opt = self.device.groupedOptions[indexPath.section].items[indexPath.row];
+    SYSaneOption *opt = self.device.groupedOptions[indexPath.section].items[indexPath.row];
     
     if(!cell)
         cell = [[SYOptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     
     [cell setOption:opt];
-
-    if(opt.readOnlyOrSingleOption)
-        [cell setBackgroundColor:[UIColor colorWithWhite:0.92 alpha:1.]];
-    else
-        [cell setBackgroundColor:[UIColor whiteColor]];
+    [cell setShowDescription:NO];
 
     return cell;
 }
@@ -182,10 +187,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SYSaneOptionDescriptor *opt = self.device.groupedOptions[indexPath.section].items[indexPath.row];
+    SYSaneOption *opt = self.device.groupedOptions[indexPath.section].items[indexPath.row];
     if (opt.capAdvanced && !self.showAdvanced)
         return 0.;
-    return 44.;
+    
+    return [SYOptionCell cellHeightForOption:opt showDescription:NO width:tableView.frame.size.width];
 }
 
 #pragma mark - UITableViewDelegate
@@ -193,9 +199,28 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SYSaneOptionDescriptorGroup *group = self.device.groupedOptions[indexPath.section];
-    SYSaneOptionDescriptor *opt = group.items[indexPath.row];
-    NSLog(@"%@: %@", opt.name, [opt descriptionHuman]);
+    SYSaneOptionGroup *group = self.device.groupedOptions[indexPath.section];
+    SYSaneOption *opt = group.items[indexPath.row];
+    
+    [SYSaneOptionUI showDetailsAndInputForOption:opt block:^(BOOL reloadAllOptions, NSString *error) {
+        if (reloadAllOptions)
+        {
+            [[SYSaneHelper shared] listOptionsForDevice:self.device block:^ {
+                [self.tableView reloadData];
+                if (error)
+                    [SVProgressHUD showErrorWithStatus:error];
+                else
+                    [SVProgressHUD showSuccessWithStatus:nil];
+            }];
+            return;
+        }
+
+        [self.tableView reloadData];
+        if (error)
+            [SVProgressHUD showErrorWithStatus:error];
+        else
+            [SVProgressHUD showSuccessWithStatus:nil];
+    }];
 }
 
 #pragma mark - SSPullToRefreshViewDelegate

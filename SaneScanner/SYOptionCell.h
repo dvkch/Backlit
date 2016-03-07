@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class SYSaneOptionDescriptor;
+@class SYSaneOption;
 
 @interface SYOptionCell : UITableViewCell
 
-@property (nonatomic, strong) SYSaneOptionDescriptor *option;
+@property (nonatomic, strong) SYSaneOption *option;
+@property (nonatomic, assign) BOOL showDescription;
+
++ (CGFloat)cellHeightForOption:(SYSaneOption *)option showDescription:(BOOL)showDescription width:(CGFloat)width;
 
 @end
