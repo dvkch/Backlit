@@ -10,17 +10,18 @@
 #import "SYSaneDevice.h"
 #import "SYSaneHelper.h"
 #import "SYSaneOptionBool.h"
-#import "SYSaneOptionInt.h"
-#import "SYSaneOptionDouble.h"
+#import "SYSaneOptionNumber.h"
 #import "SYSaneOptionString.h"
 #import "SYSaneOptionButton.h"
 #import "SYSaneOptionGroup.h"
 #import "SSPullToRefresh.h"
 #import "SYOptionCell.h"
+#import "SYPreviewCell.h"
 #import <SVProgressHUD.h>
 #import "DLAVAlertView+SY.h"
 #import "SYSaneOptionUI.h"
 #import "SYTools.h"
+#import <Masonry.h>
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate>
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
@@ -38,21 +39,21 @@
 {
     [super viewDidLoad];
     
-    CGFloat w = self.view.bounds.size.width;
-    CGFloat h = self.view.bounds.size.height;
-    CGFloat buttonHeight = 60;
+    CGFloat buttonHeight = 40;
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, w, h-buttonHeight) style:UITableViewStyleGrouped];
-    [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
+    [self.tableView registerClass:[SYPreviewCell class] forCellReuseIdentifier:@"SYPreviewCell"];
+    [self.tableView registerClass:[SYOptionCell  class] forCellReuseIdentifier:@"SYOptionCell"];
     [self.view addSubview:self.tableView];
     
     self.buttonScan = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.buttonScan addTarget:self action:@selector(buttonScanTap:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonScan setTitle:@"Scan" forState:UIControlStateNormal];
-    [self.buttonScan setFrame:CGRectMake(0, h-buttonHeight, w, buttonHeight)];
-    [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth)];
+    [self.buttonScan setBackgroundColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.]];
+    [self.buttonScan setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.buttonScan setTitle:@"SCAN" forState:UIControlStateNormal];
+    [self.buttonScan.titleLabel setFont:[UIFont systemFontOfSize:17]];
     [self.view addSubview:self.buttonScan];
     
     self.buttonToggleAdvanced = [[UIBarButtonItem alloc] initWithTitle:@""
@@ -60,6 +61,20 @@
                                                                 target:self
                                                                 action:@selector(buttonToggleAdvancedTap:)];
     [self.navigationItem setRightBarButtonItem:self.buttonToggleAdvanced];
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.left.equalTo(@0);
+        make.right.equalTo(@0);
+        make.bottom.equalTo(@(-buttonHeight));
+    }];
+    
+    [self.buttonScan mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.tableView.mas_bottom);
+        make.left.equalTo(@0);
+        make.right.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
     
     self.showAdvanced = NO;
 }
@@ -87,6 +102,8 @@
     }
 }
 
+#pragma mark - Data
+
 - (void)refresh
 {
     if(self.refreshing)
@@ -109,6 +126,18 @@
     [self.buttonToggleAdvanced setTitle:(showAdvanced ? @"Expert Mode" : @"Normal Mode")];
 }
 
+- (SYSaneOptionGroup *)optionGroupForTableViewSection:(NSUInteger)section
+{
+    return self.device.groupedOptionsWithoutCrop[section-1];
+}
+
+- (SYSaneOption *)optionForTableViewIndexPath:(NSIndexPath *)indexPath
+{
+    return self.device.groupedOptionsWithoutCrop[indexPath.section-1].items[indexPath.row];
+}
+
+#pragma mark - IBActions
+
 - (void)buttonScanTap:(id)sender
 {
     [SVProgressHUD showWithStatus:@"Loading..."];
@@ -122,21 +151,21 @@
         else
         {
             [SVProgressHUD dismiss];
-            
-            NSData *imageData = UIImagePNGRepresentation(image);
-            NSString *path = [[SYTools documentsPath] stringByAppendingPathComponent:@"image.png"];
-            [imageData writeToFile:path atomically:YES];
-            NSLog(@"%@", path);
-            
             DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:@"Scanned image"
                                                                     message:nil
                                                                    delegate:nil
-                                                          cancelButtonTitle:nil
-                                                          otherButtonTitles:nil];
-            [alertView setTitle:@"Scanned image"];
-            [alertView addButtonWithTitle:@"Close"];
+                                                          cancelButtonTitle:@"Close"
+                                                          otherButtonTitles:@"Share", nil];
             [alertView addImageViewForImage:image];
-            [alertView show];
+            [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == alertView.cancelButtonIndex)
+                    return;
+                
+                UIActivityViewController *activityViewController =
+                [[UIActivityViewController alloc] initWithActivityItems:@[image]
+                                                  applicationActivities:nil];
+                [self presentViewController:activityViewController animated:YES completion:nil];
+            }];
         }
     }];
 }
@@ -150,48 +179,70 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.device.groupedOptions.count;
+    if (!self.device.allOptions.count)
+        return 0;
+    
+    return self.device.groupedOptionsWithoutCrop.count + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.device.groupedOptions[section].containsOnlyAdvancedOptions && !self.showAdvanced)
+    if (section == 0)
+        return 1;
+    
+    SYSaneOptionGroup *group = [self optionGroupForTableViewSection:section];
+    
+    if (group.containsOnlyAdvancedOptions && !self.showAdvanced)
         return 0;
     
-    return self.device.groupedOptions[section].items.count;
+    return group.items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SYOptionCell *cell = (SYOptionCell*)[tableView dequeueReusableCellWithIdentifier:@"cell"];
-    SYSaneOption *opt = self.device.groupedOptions[indexPath.section].items[indexPath.row];
-    
-    if(!cell)
-        cell = [[SYOptionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    
-    [cell setOption:opt];
-    [cell setShowDescription:NO];
-
-    return cell;
+    if (indexPath.section == 0)
+    {
+        SYPreviewCell *cell = (SYPreviewCell*)[tableView dequeueReusableCellWithIdentifier:@"SYPreviewCell"];
+        [cell setDevice:self.device];
+        return cell;
+    }
+    else
+    {
+        SYOptionCell *cell = (SYOptionCell*)[tableView dequeueReusableCellWithIdentifier:@"SYOptionCell"];
+        SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
+        
+        [cell setOption:opt];
+        [cell setShowDescription:NO];
+        
+        return cell;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (self.device.groupedOptions[section].containsOnlyAdvancedOptions && !self.showAdvanced)
-    {
-        return [self.device.groupedOptions[section].title stringByAppendingString:@" (ADVANCED)"];
-    }
+    if (section == 0)
+        return @"PREVIEW";
     
-    return self.device.groupedOptions[section].title;
+    SYSaneOptionGroup *group = [self optionGroupForTableViewSection:section];
+    
+    if (group.containsOnlyAdvancedOptions && !self.showAdvanced)
+        return [group.title stringByAppendingString:@" (ADVANCED)"];
+    
+    return group.title;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SYSaneOption *opt = self.device.groupedOptions[indexPath.section].items[indexPath.row];
+    CGFloat width = tableView.bounds.size.width;
+    
+    if (indexPath.section == 0)
+        return [SYPreviewCell cellHeightForDevice:self.device width:width];
+    
+    SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
     if (opt.capAdvanced && !self.showAdvanced)
         return 0.;
     
-    return [SYOptionCell cellHeightForOption:opt showDescription:NO width:tableView.frame.size.width];
+    return [SYOptionCell cellHeightForOption:opt showDescription:NO width:width];
 }
 
 #pragma mark - UITableViewDelegate
@@ -199,8 +250,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SYSaneOptionGroup *group = self.device.groupedOptions[indexPath.section];
-    SYSaneOption *opt = group.items[indexPath.row];
+    
+    if (indexPath.section == 0)
+        return;
+    
+    SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
     
     [SYSaneOptionUI showDetailsAndInputForOption:opt block:^(BOOL reloadAllOptions, NSString *error) {
         if (reloadAllOptions)
@@ -214,7 +268,7 @@
             }];
             return;
         }
-
+        
         [self.tableView reloadData];
         if (error)
             [SVProgressHUD showErrorWithStatus:error];

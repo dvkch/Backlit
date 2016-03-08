@@ -8,8 +8,7 @@
 
 #import "SYSaneOption.h"
 #import "SYSaneOptionBool.h"
-#import "SYSaneOptionInt.h"
-#import "SYSaneOptionDouble.h"
+#import "SYSaneOptionNumber.h"
 #import "SYSaneOptionString.h"
 #import "SYSaneOptionButton.h"
 #import "SYSaneOptionGroup.h"
@@ -25,8 +24,8 @@
 {
     switch (opt->type) {
         case SANE_TYPE_BOOL:    return [[SYSaneOptionBool   alloc] initWithCOpt:opt index:index device:device];
-        case SANE_TYPE_INT:     return [[SYSaneOptionInt    alloc] initWithCOpt:opt index:index device:device];
-        case SANE_TYPE_FIXED:   return [[SYSaneOptionDouble  alloc] initWithCOpt:opt index:index device:device];
+        case SANE_TYPE_INT:     return [[SYSaneOptionNumber alloc] initWithCOpt:opt index:index device:device];
+        case SANE_TYPE_FIXED:   return [[SYSaneOptionNumber alloc] initWithCOpt:opt index:index device:device];
         case SANE_TYPE_STRING:  return [[SYSaneOptionString alloc] initWithCOpt:opt index:index device:device];
         case SANE_TYPE_BUTTON:  return [[SYSaneOptionButton alloc] initWithCOpt:opt index:index device:device];
         case SANE_TYPE_GROUP:   return [[SYSaneOptionGroup  alloc] initWithCOpt:opt index:index device:device];
@@ -158,10 +157,11 @@
             NSStringFromSANE_Unit(self.unit)];
 }
 
-+ (NSArray *)groupedElements:(NSArray *)elements
++ (NSArray<SYSaneOptionGroup *> *)groupedElements:(NSArray<SYSaneOption *> *)elements
+                                removeEmptyGroups:(BOOL)removeEmptyGroups
 {
-    NSMutableArray *groups = [NSMutableArray array];
-    NSMutableArray *groupElements = nil;
+    NSMutableArray <SYSaneOptionGroup *> *groups = [NSMutableArray array];
+    NSMutableArray <SYSaneOption *> *groupElements = nil;
     SYSaneOptionGroup *group = nil;
     
     for(SYSaneOption *item in elements)
@@ -184,6 +184,16 @@
     group.items = [groupElements copy];
     if (group)
         [groups addObject:group];
+    
+    if (removeEmptyGroups)
+    {
+        NSMutableArray <SYSaneOptionGroup *> *emptyGroups = [NSMutableArray array];
+        for (SYSaneOptionGroup *group in groups)
+            if (group.items.count == 0)
+                [emptyGroups addObject:group];
+        
+        [groups removeObjectsInArray:emptyGroups];
+    }
     
     return [groups copy];
 }

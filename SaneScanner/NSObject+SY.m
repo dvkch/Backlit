@@ -10,17 +10,15 @@
 
 @implementation NSObject (SY)
 
-- (void)performSelector:(SEL)selector onThread:(NSThread *)thread withArguments:(NSUInteger)argumentsCount, ...
+- (void)performBlock:(void(^)(void))block onThread:(NSThread *)thread
 {
-    va_list arguments;
-    va_start(arguments, argumentsCount);
-    
-    for (NSUInteger i = 0; i < argumentsCount; ++i)
-    {
-        NSLog(@"Arguments %ld: %@", (long)i, va_arg(arguments, id));
-    }
-    
-    va_end(arguments);
+    [self performSelector:@selector(sy_runBlock:) onThread:thread withObject:block waitUntilDone:NO];
+}
+
+- (void)sy_runBlock:(void(^)(void))block
+{
+    if (block)
+        block();
 }
 
 @end

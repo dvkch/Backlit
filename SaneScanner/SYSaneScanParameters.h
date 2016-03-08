@@ -6,7 +6,7 @@
 //  Copyright © 2016 Syan. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "sane.h"
 
 NSString *NSStringFromSANE_Frame(SANE_Frame frame);
@@ -24,5 +24,6 @@ NSString *NSStringFromSANE_Frame(SANE_Frame frame);
 
 - (int)fileSize;
 - (int)numberOfChannels;
+- (CGSize)size;
 
 @end

@@ -9,183 +9,118 @@
 #import "UIImage+SY.h"
 #import "SYSaneScanParameters.h"
 
-NSData *NSDataRGB888FromSaneFrame(NSData *data, SYSaneScanParameters *parameters, NSString **error);
-NSData *NSDataRGB888FromBlack1(NSData *data, SYSaneScanParameters *parameters);
-NSData *NSDataRGB888FromGrey8(NSData *data, SYSaneScanParameters *parameters);
-
 @implementation UIImage (SY)
 
-+ (UIImage *)imageFromRGBData:(NSData *)data
++ (UIImage *)imageFromRGBData:(NSData *)imageBytes
                saneParameters:(SYSaneScanParameters *)parameters
                         error:(NSString **)error
 {
-    NSData *imageBytes = data; //NSDataRGB888FromSaneFrame(data, parameters, error);
-    if (!imageBytes) {
+    if (parameters.currentlyAcquiredChannel != SANE_FRAME_RGB &&
+        parameters.currentlyAcquiredChannel != SANE_FRAME_GRAY)
+    {
+        if (error)
+            *error = [NSString stringWithFormat:@"Unsupported frame type %@",
+                      NSStringFromSANE_Frame(parameters.currentlyAcquiredChannel)];
         return nil;
     }
     
-    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, [imageBytes bytes], [imageBytes length], NULL);
-    
-    CGColorSpaceRef colorSpaceRef;
-    
-    switch (parameters.currentlyAcquiredChannel)
-    {
-        case SANE_FRAME_RGB:
-            colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-            break;
-        case SANE_FRAME_GRAY:
-            colorSpaceRef = CGColorSpaceCreateDeviceGray();
-            break;
-        default:
-            if (error)
-                *error = [NSString stringWithFormat:@"Unsupported frame type %@",
-                          NSStringFromSANE_Frame(parameters.currentlyAcquiredChannel)];
-            break;
+    if (!imageBytes) {
+        if (error) *error = @"No image data";
+        return nil;
     }
+    
+    CGColorSpaceRef colorSpaceRef = NULL;
+    
+    if (parameters.currentlyAcquiredChannel == SANE_FRAME_RGB)
+        colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    
+    if (parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY)
+        colorSpaceRef = CGColorSpaceCreateDeviceGray();
     
     if (!colorSpaceRef) {
-        if (error)
-            *error = @"Error allocating color space";
-        
-        CGDataProviderRelease(provider);
+        if (error) *error = @"Error allocating color space";
         return nil;
     }
     
-    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+    CGDataProviderRef provider =
+    CGDataProviderCreateWithData(NULL,
+                                 imageBytes.bytes,
+                                 imageBytes.length,
+                                 NULL);
     
-    CGImageRef iref = CGImageCreate(parameters.width,
-                                    parameters.height,
-                                    parameters.depth,
-                                    parameters.depth * parameters.numberOfChannels,
-                                    parameters.bytesPerLine,
-                                    colorSpaceRef,
-                                    (kCGBitmapByteOrderDefault | kCGImageAlphaNone),
-                                    provider,	// data provider
-                                    NULL,		// decode
-                                    YES,			// should interpolate
-                                    renderingIntent);
+    CGImageRef sourceImageRef =
+    CGImageCreate(parameters.width,
+                  parameters.height,
+                  parameters.depth,
+                  parameters.depth * parameters.numberOfChannels,
+                  parameters.bytesPerLine,
+                  colorSpaceRef,
+                  (kCGBitmapByteOrderDefault | kCGImageAlphaNone),
+                  provider,   // data provider
+                  NULL,       // decode
+                  NO,         // should interpolate
+                  kCGRenderingIntentDefault);
     
-    uint32_t* pixels = (uint32_t*)malloc(parameters.width * parameters.height * 4);
-    
-    if(pixels == NULL) {
-        NSLog(@"Error: Memory not allocated for bitmap");
+    if (!sourceImageRef) {
+        if (error) *error = @"Error allocating source image ref";
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
-        CGImageRelease(iref);
         return nil;
     }
     
-    CGContextRef context = CGBitmapContextCreate(pixels,
-                                                 parameters.width,
-                                                 parameters.height,
-                                                 8,
-                                                 parameters.width * 4,
-                                                 CGColorSpaceCreateDeviceRGB(),
-                                                 (kCGBitmapByteOrderDefault | kCGImageAlphaNoneSkipLast));
+    CGBitmapInfo destBitmapInfo = (kCGBitmapByteOrderDefault | kCGImageAlphaNoneSkipLast);
+    int destNumberOfComponents = 4;
     
-    if(context == NULL) {
-        NSLog(@"Error context not created");
+    if (parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY)
+    {
+        destBitmapInfo = (kCGBitmapByteOrderDefault | kCGImageAlphaNone);
+        destNumberOfComponents = 1;
+    }
+    
+    void* pixels = malloc(parameters.width * parameters.height * destNumberOfComponents);
+    
+    if (!pixels) {
+        if (error) *error = @"Error allocating memory for bitmap";
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(colorSpaceRef);
+        CGImageRelease(sourceImageRef);
+        return nil;
+    }
+
+    CGContextRef context =
+    CGBitmapContextCreate(pixels,
+                          parameters.width,
+                          parameters.height,
+                          8,
+                          parameters.width * destNumberOfComponents,
+                          colorSpaceRef,
+                          destBitmapInfo);
+    
+    if (!context) {
+        if (error) *error = @"Error creating image context";
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(colorSpaceRef);
+        CGImageRelease(sourceImageRef);
         free(pixels);
-        CGColorSpaceRelease(colorSpaceRef);
-        CGImageRelease(iref);
-        CGDataProviderRelease(provider);
         return nil;
     }
     
-    UIImage *image = nil;
-    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, parameters.width, parameters.height), iref);
+    CGContextDrawImage(context, (CGRect){CGPointZero, parameters.size}, sourceImageRef);
     
-    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    CGImageRef destImageRef = CGBitmapContextCreateImage(context);
     
-    image = [UIImage imageWithCGImage:imageRef
-                                scale:1.
-                          orientation:UIImageOrientationUp];
+    UIImage *image = [UIImage imageWithCGImage:destImageRef
+                                         scale:1.
+                                   orientation:UIImageOrientationUp];
     
-    CGImageRelease(imageRef);
-    CGContextRelease(context);
-    CGColorSpaceRelease(colorSpaceRef);
-    CGImageRelease(iref);
     CGDataProviderRelease(provider);
+    CGColorSpaceRelease(colorSpaceRef);
+    CGImageRelease(sourceImageRef);
+    CGImageRelease(destImageRef);
+    free(pixels);
     
-    //if(pixels) {
-    //    free(pixels);
-    //}
     return image;
 }
 
 @end
 
-NSData *NSDataRGB888FromSaneFrame(NSData *data, SYSaneScanParameters *parameters, NSString **error)
-{
-    NSData *imageBytes;
-    switch (parameters.currentlyAcquiredChannel)
-    {
-        case SANE_FRAME_RGB:
-            imageBytes = data;
-            break;
-        case SANE_FRAME_GRAY:
-            if (parameters.depth == 1)
-                imageBytes = NSDataRGB888FromBlack1(data, parameters);
-            else
-                imageBytes = NSDataRGB888FromGrey8(data, parameters);
-            break;
-        default:
-            if (error)
-                *error = [NSString stringWithFormat:@"Unsupported frame type %@",
-                          NSStringFromSANE_Frame(parameters.currentlyAcquiredChannel)];
-            break;
-    }
-    return imageBytes;
-}
-
-NSData *NSDataRGB888FromBlack1(NSData *data, SYSaneScanParameters *parameters)
-{
-    NSMutableData *imageBytes = [NSMutableData dataWithCapacity:parameters.width*parameters.height*3];
-    
-    u_int8_t *bufferIn  = malloc(1);
-    u_int8_t *bufferOut = malloc(3);
-    
-    for (NSUInteger i = 0; i < data.length; ++i)
-    {
-        [data getBytes:bufferIn range:NSMakeRange(i, 1)];
-        
-        for (NSUInteger j = 0; j < 8; ++j)
-        {
-            BOOL value = bufferIn[0] & (1 << j);
-            bufferOut[0] = (!value) * 0xFF;
-            bufferOut[1] = (!value) * 0xFF;
-            bufferOut[2] = (!value) * 0xFF;
-            [imageBytes appendBytes:bufferOut length:3];
-        }
-    }
-    
-    parameters.depth = 8;
-    parameters.currentlyAcquiredChannel = SANE_FRAME_RGB;
-    parameters.bytesPerLine = parameters.numberOfChannels * parameters.width;
-    
-    return [imageBytes copy];
-}
-
-NSData *NSDataRGB888FromGrey8(NSData *data, SYSaneScanParameters *parameters)
-{
-    NSMutableData *imageBytes = [NSMutableData dataWithCapacity:parameters.width*parameters.height*3];
-    
-    u_int8_t *bufferIn  = malloc(1);
-    u_int8_t *bufferOut = malloc(3);
-    
-    for (NSUInteger i = 0; i < data.length; ++i)
-    {
-        [data getBytes:bufferIn range:NSMakeRange(i, 1)];
-        
-        bufferOut[0] = bufferIn[0];
-        bufferOut[1] = bufferIn[0];
-        bufferOut[2] = bufferIn[0];
-        [imageBytes appendBytes:bufferOut length:3];
-    }
-    
-    parameters.depth = 8;
-    parameters.currentlyAcquiredChannel = SANE_FRAME_RGB;
-    parameters.bytesPerLine = parameters.numberOfChannels * parameters.width;
-    
-    return [imageBytes copy];
-}

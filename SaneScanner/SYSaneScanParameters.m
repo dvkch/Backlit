@@ -35,6 +35,11 @@
     return self.currentlyAcquiredChannel == SANE_FRAME_RGB ? 3 : 1;
 }
 
+- (CGSize)size
+{
+    return CGSizeMake(self.width, self.height);
+}
+
 - (NSString *)description
 {    
     return [NSString stringWithFormat:@"<%@: %p, %d*%d*%d, channel: %@, isLastChannel: %d, bytesPerLine: %d>",

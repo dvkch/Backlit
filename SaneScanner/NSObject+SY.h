@@ -10,6 +10,6 @@
 
 @interface NSObject (SY)
 
-- (void)performSelector:(SEL)selector onThread:(NSThread *)thread withArguments:(NSUInteger)argumentsCount,...;
+- (void)performBlock:(void(^)(void))block onThread:(NSThread *)thread;
 
 @end

@@ -13,7 +13,7 @@
 #import <DLAVAlertView.h>
 #import "SSPullToRefresh.h"
 #import "SYDeviceVC.h"
-#import "MBProgressHUD+SYAdditions.h"
+#import <SVProgressHUD.h>
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -150,7 +150,7 @@ needsAuthForDevice:(NSString *)device
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? [[SYSaneHelper shared] hostsCount] : [[SYSaneHelper shared] devicesCount];
+    return section == 0 ? [[SYSaneHelper shared] allHosts].count : [[SYSaneHelper shared] allDevices].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -162,10 +162,10 @@ needsAuthForDevice:(NSString *)device
     
     NSString *text;
     if(indexPath.section == 0)
-        text = [[SYSaneHelper shared] hostAtIndex:indexPath.row];
+        text = [[SYSaneHelper shared] allHosts][indexPath.row];
     else
     {
-        text = [[[SYSaneHelper shared] deviceAtIndex:indexPath.row] model];
+        text = [[SYSaneHelper shared] allDevices][indexPath.row].model;
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     
@@ -183,7 +183,7 @@ needsAuthForDevice:(NSString *)device
     if(indexPath.section != 0)
         return;
     
-    [[SYSaneHelper shared] removeHostAtIndex:indexPath.row];
+    [[SYSaneHelper shared] removeHost:[[SYSaneHelper shared] allHosts][indexPath.row]];
     
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
@@ -208,9 +208,7 @@ needsAuthForDevice:(NSString *)device
     if(indexPath.section == 0)
         return;
     
-    SYSaneDevice *device = [[SYSaneHelper shared] deviceAtIndex:indexPath.row];
-    if(!device)
-        return;
+    SYSaneDevice *device = [[SYSaneHelper shared] allDevices][indexPath.row];
     
     [SVProgressHUD showWithStatus:@"Loading..."];
     [[SYSaneHelper shared] openDevice:device block:^(NSString *error) {

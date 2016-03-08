@@ -217,6 +217,12 @@ A different license may apply to other resources included in this package,
 including Freepik Icons. Please consult their 
 respective headers for the terms of their individual licenses.
 
+## SYKit
+
+Use it as you like in every project you want, redistribute with mentions of my name and don't blame me if it breaks :)
+
+-- dvkch
+
 ## SYLogRedirect
 
 I do not really know licenses, so I won't give one precisely. I will just specify some rules I think fair:

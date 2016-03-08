@@ -10,6 +10,7 @@
 #import "sane.h"
 
 @class SYSaneDevice;
+@class SYSaneOptionGroup;
 
 NSString *NSStringFromSANE_Value_Type(SANE_Value_Type type);
 NSString *NSStringFromSANE_Unit(SANE_Unit unit);
@@ -49,6 +50,7 @@ NSString *NSStringFromSANE_Unit(SANE_Unit unit);
 
 - (void)refreshValue:(void(^)(NSString *error))block;
 
-+ (NSArray *)groupedElements:(NSArray *)elements;
++ (NSArray <SYSaneOptionGroup *> *)groupedElements:(NSArray <SYSaneOption *> *)elements
+                                 removeEmptyGroups:(BOOL)removeEmptyGroups;
 
 @end

@@ -10,6 +10,7 @@
 #import "SYTools.h"
 #import "SYDevicesVC.h"
 #import "SYSaneHelper.h"
+#import <SVProgressHUD.h>
 
 @interface SYAppDelegate ()
 
@@ -42,6 +43,9 @@
     
     // populate list for the first time
     [[SYSaneHelper shared] updateDevices];
+    
+    // customize HUD
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     return YES;
 }

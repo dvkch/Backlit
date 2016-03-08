@@ -14,15 +14,23 @@
 
 @implementation SYSaneOptionButton
 
-- (void)press:(void (^)(NSString *))block
+- (instancetype)initWithCOpt:(const SANE_Option_Descriptor *)opt index:(int)index device:(SYSaneDevice *)device
 {
-    [[SYSaneHelper shared] setValue:nil
-                        orAutoValue:YES
+    if (opt->type != SANE_TYPE_BUTTON)
+        return nil;
+    
+    self = [super initWithCOpt:opt index:index device:device];
+    return self;
+}
+
+- (void)press:(void (^)(BOOL reloadAllOptions, NSString *))block
+{
+    [[SYSaneHelper shared] setValue:@(YES)
+                        orAutoValue:NO
                           forOption:self
-                    thenReloadValue:YES
                               block:^(BOOL reloadAllOptions, NSString *error)
     {
-        block(error);
+        block(reloadAllOptions, error);
     }];
 }
 

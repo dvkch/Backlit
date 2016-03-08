@@ -8,8 +8,7 @@
 
 #import "SYSaneOptionUI.h"
 #import "SYSaneOptionBool.h"
-#import "SYSaneOptionInt.h"
-#import "SYSaneOptionDouble.h"
+#import "SYSaneOptionNumber.h"
 #import "SYSaneOptionString.h"
 #import "SYSaneOptionButton.h"
 #import "SYSaneOptionGroup.h"
@@ -44,24 +43,13 @@
         case SANE_TYPE_INT:
         case SANE_TYPE_FIXED:
         {
-            NSArray <NSNumber *> *discreetValues;
-            if (option.type == SANE_TYPE_INT)
-                discreetValues = [(SYSaneOptionInt *)option constraintValues];
-            else
-                discreetValues = [(SYSaneOptionDouble *)option constraintValues];
-            
-            NSArray <NSString *> *titles;
-            if (option.type == SANE_TYPE_INT)
-                titles = [(SYSaneOptionInt *)option constraintValuesWithUnit:YES];
-            else
-                titles = [(SYSaneOptionDouble *)option constraintValuesWithUnit:YES];
-            
             if (option.constraintType == SANE_CONSTRAINT_RANGE)
                 [self showInputWithSliderForOption:option block:block];
             else
             {
-                [self showInputForOptionsTitles:titles
-                                   optionValues:discreetValues
+                SYSaneOptionNumber *castedOption = (SYSaneOptionNumber *)option;
+                [self showInputForOptionsTitles:[castedOption constraintValuesWithUnit:YES]
+                                   optionValues:castedOption.constraintValues
                                       forOption:option
                                           block:block];
             }
@@ -101,11 +89,10 @@
          if (buttonIndex == alertView.cancelButtonIndex)
              return;
          
-         [[SYSaneHelper shared] setValue:@YES
-                             orAutoValue:NO
-                               forOption:option
-                         thenReloadValue:YES
-                                   block:block];
+         [(SYSaneOptionButton *)option press:^(BOOL reloadAllOptions, NSString *error) {
+             if (block)
+                 block(reloadAllOptions, error);
+         }];
      }];
 }
 
@@ -151,7 +138,6 @@
         [[SYSaneHelper shared] setValue:[alertView textFieldAtIndex:0].text
                             orAutoValue:useAuto
                               forOption:option
-                        thenReloadValue:YES
                                   block:block];
     }];
 }
@@ -172,60 +158,32 @@
     
     NSUInteger updateButtonIndex = alertView.firstOtherButtonIndex + (option.capSetAuto ? 1 : 0);
     
-    if (option.type == SANE_TYPE_INT)
+    if (option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED)
     {
-        SYSaneOptionInt *castedOption = (SYSaneOptionInt *)option;
-        if (castedOption.stepValue == 0)
+        SYSaneOptionNumber *castedOption = (SYSaneOptionNumber *)option;
+        if (castedOption.stepValue)
         {
-            [alertView addSliderWithMin:castedOption.minValue
-                                    max:castedOption.maxValue
-                                current:castedOption.value
+            PKYStepper *stepper = [[PKYStepper alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+            [stepper setMaximum:castedOption.maxValue.doubleValue];
+            [stepper setMinimum:castedOption.minValue.doubleValue];
+            [stepper setValue:castedOption.value.doubleValue];
+            [stepper setValueChangedCallback:^(PKYStepper *stepper, float count) {
+                stepper.countLabel.text = [option stringForValue:@(count) withUnit:YES];
+            }];
+            [stepper setup];
+            [alertView setContentView:stepper];
+        }
+        else
+        {
+            [alertView addSliderWithMin:castedOption.minValue.doubleValue
+                                    max:castedOption.maxValue.doubleValue
+                                current:castedOption.value.doubleValue
                             updateBlock:^(DLAVAlertView *alertView, float value)
              {
                  NSString *valueString = [option stringForValue:@(value) withUnit:YES];
                  NSString *buttonTitle = [NSString stringWithFormat:@"Set to %@", valueString];
                  [alertView setText:buttonTitle forButtonAtIndex:updateButtonIndex];
              }];
-        }
-        else
-        {
-            PKYStepper *stepper = [[PKYStepper alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
-            [stepper setMaximum:castedOption.maxValue];
-            [stepper setMinimum:castedOption.minValue];
-            [stepper setValue:castedOption.value];
-            [stepper setValueChangedCallback:^(PKYStepper *stepper, float count) {
-                stepper.countLabel.text = [option stringForValue:@(count) withUnit:YES];
-            }];
-            [stepper setup];
-            [alertView setContentView:stepper];
-        }
-    }
-    if (option.type == SANE_TYPE_FIXED)
-    {
-        SYSaneOptionDouble *castedOption = (SYSaneOptionDouble *)option;
-        if (castedOption.stepValue == 0)
-        {
-            [alertView addSliderWithMin:castedOption.minValue
-                                    max:castedOption.maxValue
-                                current:castedOption.value
-                            updateBlock:^(DLAVAlertView *alertView, float value)
-            {
-                NSString *valueString = [option stringForValue:@(value) withUnit:YES];
-                NSString *buttonTitle = [NSString stringWithFormat:@"Set to %@", valueString];
-                [alertView setText:buttonTitle forButtonAtIndex:updateButtonIndex];
-            }];
-        }
-        else
-        {
-            PKYStepper *stepper = [[PKYStepper alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
-            [stepper setMaximum:castedOption.maxValue];
-            [stepper setMinimum:castedOption.minValue];
-            [stepper setValue:castedOption.value];
-            [stepper setValueChangedCallback:^(PKYStepper *stepper, float count) {
-                stepper.countLabel.text = [option stringForValue:@(count) withUnit:YES];
-            }];
-            [stepper setup];
-            [alertView setContentView:stepper];
         }
     }
     
@@ -245,7 +203,6 @@
         [[SYSaneHelper shared] setValue:@(value)
                             orAutoValue:useAuto
                               forOption:option
-                        thenReloadValue:YES
                                   block:block];
     }];
 
@@ -290,7 +247,6 @@
         [[SYSaneHelper shared] setValue:value
                             orAutoValue:useAuto
                               forOption:option
-                        thenReloadValue:YES
                                   block:block];
     }];
 }

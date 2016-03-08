@@ -1,5 +1,5 @@
 //
-//  SYSaneOptionInt.h
+//  SYSaneOptionNumber.h
 //  SaneScanner
 //
 //  Created by rominet on 06/05/15.
@@ -8,15 +8,17 @@
 
 #import "SYSaneOption.h"
 
-@interface SYSaneOptionInt : SYSaneOption
+@interface SYSaneOptionNumber : SYSaneOption
 
 @property (nonatomic, strong) NSArray <NSNumber *> *constraintValues;
-@property (nonatomic, assign) int minValue;
-@property (nonatomic, assign) int maxValue;
-@property (nonatomic, assign) int stepValue;
-@property (nonatomic, assign) int value;
+@property (nonatomic, strong) NSNumber *minValue;
+@property (nonatomic, strong) NSNumber *maxValue;
+@property (nonatomic, strong) NSNumber *stepValue;
+@property (nonatomic, strong) NSNumber *value;
 
 - (NSArray <NSNumber *> *)rangeValues;
 - (NSArray <NSString *> *)constraintValuesWithUnit:(BOOL)withUnit;
+
+- (NSNumber *)bestValueForPreview;
 
 @end

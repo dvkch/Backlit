@@ -16,6 +16,9 @@
 
 - (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
 {
+    if (opt->type != SANE_TYPE_STRING)
+        return nil;
+    
     self = [super initWithCOpt:opt index:index device:device];
     if (self)
     {

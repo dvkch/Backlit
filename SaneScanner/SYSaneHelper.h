@@ -32,15 +32,11 @@ needsAuthForDevice:(NSString *)device
 
 + (instancetype)shared;
 
-- (NSArray <NSString *> *)hostsCopy;
-- (NSUInteger)hostsCount;
-- (NSString *)hostAtIndex:(NSUInteger)index;
-- (NSArray *)addHost:(NSString *)host;
-- (NSArray *)removeHostAtIndex:(NSUInteger)index;
+- (NSArray <NSString *> *)allHosts;
+- (void)addHost:(NSString *)host;
+- (void)removeHost:(NSString *)host;
 
-- (NSArray <SYSaneDevice *> *)devicesCopy;
-- (NSUInteger)devicesCount;
-- (SYSaneDevice *)deviceAtIndex:(NSUInteger)index;
+- (NSArray <SYSaneDevice *> *)allDevices;
 - (void)updateDevices;
 
 - (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSString *error))block;
@@ -51,11 +47,19 @@ needsAuthForDevice:(NSString *)device
 - (void)getValueForOption:(SYSaneOption *)option
                     block:(void(^)(id value, NSString *error))block;
 
+- (void)setCropArea:(CGRect)cropArea
+            useAuto:(BOOL)useAuto
+          forDevice:(SYSaneDevice *)device
+              block:(void(^)(BOOL reloadAllOptions, NSString *error))block;
+
 - (void)setValue:(id)value
      orAutoValue:(BOOL)autoValue
        forOption:(SYSaneOption *)option
- thenReloadValue:(BOOL)reloadValue
            block:(void(^)(BOOL reloadAllOptions, NSString *error))block;
+
+- (void)previewWithDevice:(SYSaneDevice *)device
+            progressBlock:(void(^)(float progress))progressBlock
+             successBlock:(void(^)(UIImage *image, NSString *error))successBlock;
 
 - (void)scanWithDevice:(SYSaneDevice *)device
          progressBlock:(void(^)(float progress))progressBlock

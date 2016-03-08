@@ -14,6 +14,15 @@
 
 @implementation SYSaneOptionGroup
 
+- (instancetype)initWithCOpt:(const SANE_Option_Descriptor *)opt index:(int)index device:(SYSaneDevice *)device
+{
+    if (opt->type != SANE_TYPE_GROUP)
+        return nil;
+    
+    self = [super initWithCOpt:opt index:index device:device];
+    return self;
+}
+
 - (void)refreshValue:(void(^)(NSString *error))block
 {
     if (block)

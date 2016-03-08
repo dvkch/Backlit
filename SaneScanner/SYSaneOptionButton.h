@@ -10,6 +10,6 @@
 
 @interface SYSaneOptionButton : SYSaneOption
 
-- (void)press:(void(^)(NSString *error))block;
+- (void)press:(void(^)(BOOL reloadAllOptions, NSString *error))block;
 
 @end
