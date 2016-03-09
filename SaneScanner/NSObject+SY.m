@@ -12,6 +12,13 @@
 
 - (void)performBlock:(void(^)(void))block onThread:(NSThread *)thread
 {
+    if (thread == [NSThread currentThread])
+    {
+        if (block)
+            block();
+        return;
+    }
+    
     [self performSelector:@selector(sy_runBlock:) onThread:thread withObject:block waitUntilDone:NO];
 }
 
