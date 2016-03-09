@@ -122,5 +122,31 @@
     return image;
 }
 
++ (UIImage *)addIconWithColor:(UIColor *)color
+{
+    // iOS defaults @2x for UIBarButtonItemSystemAdd
+    return [self addIconWithColor:color size:35. borderWidth:3.];
+}
+
++ (UIImage *)addIconWithColor:(UIColor *)color size:(CGFloat)size borderWidth:(CGFloat)borderWidth
+{
+    CGRect verticalRect   = CGRectMake((size - borderWidth)/2., 0, borderWidth, size);
+    CGRect horizontalRect = CGRectMake(0, (size - borderWidth)/2., size, borderWidth);
+    CGRect wholeRect      = CGRectMake(0, 0, size, size);
+    
+    UIGraphicsBeginImageContextWithOptions(wholeRect.size, NO, 0.0);
+    
+    [color setFill];
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:verticalRect];
+    [path appendPath:[UIBezierPath bezierPathWithRect:horizontalRect]];
+    [path fill];
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
 @end
 

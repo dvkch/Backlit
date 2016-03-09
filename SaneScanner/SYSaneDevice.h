@@ -12,17 +12,24 @@
 
 typedef enum : NSUInteger {
     SYSaneStandardOptionUnknown,
-    SYSaneStandardOptionResolution,
     SYSaneStandardOptionPreview,
+    SYSaneStandardOptionResolution,
+    SYSaneStandardOptionColorMode,
     SYSaneStandardOptionAreaTopLeftX,
     SYSaneStandardOptionAreaTopLeftY,
     SYSaneStandardOptionAreaBottomRightX,
     SYSaneStandardOptionAreaBottomRightY,
 } SYSaneStandardOption;
 
+typedef enum : NSUInteger {
+    SYOptionValueAuto,
+    SYOptionValueMin,
+    SYOptionValueMax,
+} SYOptionValue;
+
 NSString *NSStringFromSYSaneStandardOption(SYSaneStandardOption stdOption);
 SYSaneStandardOption SYSaneStandardOptionFromNSString(NSString *stdOption);
-BOOL SYChooseMaxInsteadOfMinForPreviewValueForOption(SYSaneStandardOption stdOption);
+SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption);
 
 @interface SYSaneDevice : NSObject
 

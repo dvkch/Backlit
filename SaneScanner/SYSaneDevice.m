@@ -148,8 +148,9 @@
 
 NSString *NSStringFromSYSaneStandardOption(SYSaneStandardOption stdOption)
 {
-    NSDictionary <NSNumber *, NSString *> *dic = @{@(SYSaneStandardOptionResolution):       @"resolution",
-                                                   @(SYSaneStandardOptionPreview):          @"preview",
+    NSDictionary <NSNumber *, NSString *> *dic = @{@(SYSaneStandardOptionPreview):          @"preview",
+                                                   @(SYSaneStandardOptionResolution):       @"resolution",
+                                                   @(SYSaneStandardOptionColorMode):        @"mode",
                                                    @(SYSaneStandardOptionAreaTopLeftX):     @"tl-x",
                                                    @(SYSaneStandardOptionAreaTopLeftY):     @"tl-y",
                                                    @(SYSaneStandardOptionAreaBottomRightX): @"br-x",
@@ -161,8 +162,9 @@ NSString *NSStringFromSYSaneStandardOption(SYSaneStandardOption stdOption)
 
 SYSaneStandardOption SYSaneStandardOptionFromNSString(NSString *stdOption)
 {
-    NSDictionary <NSNumber *, NSString *> *dic = @{@(SYSaneStandardOptionResolution):       @"resolution",
-                                                   @(SYSaneStandardOptionPreview):          @"preview",
+    NSDictionary <NSNumber *, NSString *> *dic = @{@(SYSaneStandardOptionPreview):          @"preview",
+                                                   @(SYSaneStandardOptionResolution):       @"resolution",
+                                                   @(SYSaneStandardOptionColorMode):        @"mode",
                                                    @(SYSaneStandardOptionAreaTopLeftX):     @"tl-x",
                                                    @(SYSaneStandardOptionAreaTopLeftY):     @"tl-y",
                                                    @(SYSaneStandardOptionAreaBottomRightX): @"br-x",
@@ -173,15 +175,16 @@ SYSaneStandardOption SYSaneStandardOptionFromNSString(NSString *stdOption)
     return keys.firstObject ? keys.firstObject.unsignedIntegerValue : SYSaneStandardOptionUnknown;
 }
 
-BOOL SYChooseMaxInsteadOfMinForPreviewValueForOption(SYSaneStandardOption stdOption)
+SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption)
 {
     switch (stdOption) {
-        case SYSaneStandardOptionResolution:        return NO;
-        case SYSaneStandardOptionAreaTopLeftX:      return NO;
-        case SYSaneStandardOptionAreaTopLeftY:      return NO;
-        case SYSaneStandardOptionAreaBottomRightX:  return YES;
-        case SYSaneStandardOptionAreaBottomRightY:  return YES;
+        case SYSaneStandardOptionColorMode:         return SYOptionValueAuto;
+        case SYSaneStandardOptionResolution:        return SYOptionValueMin;
+        case SYSaneStandardOptionAreaTopLeftX:      return SYOptionValueMin;
+        case SYSaneStandardOptionAreaTopLeftY:      return SYOptionValueMin;
+        case SYSaneStandardOptionAreaBottomRightX:  return SYOptionValueMax;
+        case SYSaneStandardOptionAreaBottomRightY:  return SYOptionValueMax;
         default:
-            return NO;
+            return SYOptionValueAuto;
     }
 }

@@ -14,6 +14,7 @@
 		971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2471C8EEF4700B8F29C /* SYSanePreviewView.m */; };
 		971F98881C88AC5900562A21 /* NSObject+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971F98871C88AC5900562A21 /* NSObject+SY.m */; };
 		9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */; };
+		9734E3621C90218E00B66797 /* SYAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9734E3611C90218E00B66797 /* SYAddCell.m */; };
 		9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */; };
 		97521E6A1C88E8BA00C77209 /* SYSaneOptionBool.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E5F1C88E8BA00C77209 /* SYSaneOptionBool.m */; };
 		97521E6B1C88E8BA00C77209 /* SYSaneOptionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E611C88E8BA00C77209 /* SYSaneOptionButton.m */; };
@@ -53,6 +54,8 @@
 		971F98871C88AC5900562A21 /* NSObject+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SY.m"; sourceTree = "<group>"; };
 		9724E7A21C8C60000046AE97 /* SYSaneOptionUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionUI.h; sourceTree = "<group>"; };
 		9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionUI.m; sourceTree = "<group>"; };
+		9734E3601C90218E00B66797 /* SYAddCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAddCell.h; sourceTree = "<group>"; };
+		9734E3611C90218E00B66797 /* SYAddCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAddCell.m; sourceTree = "<group>"; };
 		9735E84D1C8CE66B0049CD13 /* DLAVAlertView+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DLAVAlertView+SY.h"; sourceTree = "<group>"; };
 		9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DLAVAlertView+SY.m"; sourceTree = "<group>"; };
 		97521E5E1C88E8BA00C77209 /* SYSaneOptionBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionBool.h; sourceTree = "<group>"; };
@@ -131,6 +134,30 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9734E3631C90219800B66797 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F894F3A91AFAAFAA00365036 /* SYOptionCell.h */,
+				F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */,
+				971BE2431C8EEEC100B8F29C /* SYPreviewCell.h */,
+				971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */,
+				9734E3601C90218E00B66797 /* SYAddCell.h */,
+				9734E3611C90218E00B66797 /* SYAddCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		9734E3641C9031F300B66797 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				F8CBD2171AF9A58C00B4C221 /* SYDevicesVC.h */,
+				F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */,
+				F804E0771AFA569B00CBE307 /* SYDeviceVC.h */,
+				F804E0781AFA569B00CBE307 /* SYDeviceVC.m */,
+			);
+			name = VCs;
+			sourceTree = "<group>";
+		};
 		97521E701C8912BD00C77209 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,14 +178,6 @@
 		F804E07A1AFA56A500CBE307 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F8CBD2171AF9A58C00B4C221 /* SYDevicesVC.h */,
-				F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */,
-				F804E0771AFA569B00CBE307 /* SYDeviceVC.h */,
-				F804E0781AFA569B00CBE307 /* SYDeviceVC.m */,
-				F894F3A91AFAAFAA00365036 /* SYOptionCell.h */,
-				F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */,
-				971BE2431C8EEEC100B8F29C /* SYPreviewCell.h */,
-				971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */,
 				9724E7A21C8C60000046AE97 /* SYSaneOptionUI.h */,
 				9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */,
 				971BE2461C8EEF4700B8F29C /* SYSanePreviewView.h */,
@@ -236,7 +255,9 @@
 			isa = PBXGroup;
 			children = (
 				97521E701C8912BD00C77209 /* Categories */,
+				9734E3641C9031F300B66797 /* VCs */,
 				F804E07A1AFA56A500CBE307 /* Views */,
+				9734E3631C90219800B66797 /* Cells */,
 				F804E07C1AFA56B700CBE307 /* Models */,
 				F804E07B1AFA56AC00CBE307 /* Controllers */,
 				F8CBD2141AF9A58C00B4C221 /* SYAppDelegate.h */,
@@ -389,6 +410,7 @@
 				97521E6A1C88E8BA00C77209 /* SYSaneOptionBool.m in Sources */,
 				971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */,
 				F804E0761AFA4EC300CBE307 /* SYSaneDevice.m in Sources */,
+				9734E3621C90218E00B66797 /* SYAddCell.m in Sources */,
 				971F98881C88AC5900562A21 /* NSObject+SY.m in Sources */,
 				F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */,
 				9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */,

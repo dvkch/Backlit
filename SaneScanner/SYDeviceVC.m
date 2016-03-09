@@ -39,7 +39,7 @@
 {
     [super viewDidLoad];
     
-    CGFloat buttonHeight = 40;
+    CGFloat buttonHeight = 44;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.tableView setDelegate:self];

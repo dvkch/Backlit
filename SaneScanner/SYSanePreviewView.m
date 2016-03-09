@@ -17,6 +17,7 @@ static CGFloat const kMargin = 15.;
 
 @interface SYSanePreviewView ()
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) SYCropMaskView *cropMaskView;
 @property (nonatomic, strong) UIButton *buttonAcquirePreview;
 @end
@@ -48,6 +49,10 @@ static CGFloat const kMargin = 15.;
     [self.imageView.layer setShadowOpacity:0.3f];
     [self addSubview:self.imageView];
     
+    self.lineView = [[UIView alloc] init];
+    [self.lineView setBackgroundColor:[UIColor colorWithRed:200./255. green:199./255. blue:204./255. alpha:1.]];
+    [self addSubview:self.lineView];
+    
     self.cropMaskView = [[SYCropMaskView alloc] init];
     [self.cropMaskView setCropAreaDidChangeBlock:^(CGRect newCropArea) {
         wSelf.device.cropArea = newCropArea;
@@ -65,6 +70,13 @@ static CGFloat const kMargin = 15.;
     
     [self.cropMaskView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.imageView);
+    }];
+    
+    [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(0.5));
+        make.left.equalTo(@15);
+        make.right.equalTo(@(-15));
+        make.bottom.equalTo(self.buttonAcquirePreview.mas_top);
     }];
     
     [self.buttonAcquirePreview mas_makeConstraints:^(MASConstraintMaker *make) {

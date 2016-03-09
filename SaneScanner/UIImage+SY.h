@@ -14,4 +14,7 @@
 
 + (UIImage *)imageFromRGBData:(NSData *)data saneParameters:(SYSaneScanParameters *)parameters error:(NSString **)error;
 
++ (UIImage *)addIconWithColor:(UIColor *)color;
++ (UIImage *)addIconWithColor:(UIColor *)color size:(CGFloat)size borderWidth:(CGFloat)borderWidth;
+
 @end

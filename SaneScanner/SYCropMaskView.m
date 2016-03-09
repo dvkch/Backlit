@@ -11,6 +11,7 @@
 #import "SYTools.h"
 
 static CGFloat const kCornerViewSize = 20.;
+static CGFloat const kBorderWidth    =  2.;
 
 @interface SYCropMaskView () <UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *maskBorderView;
@@ -40,7 +41,7 @@ static CGFloat const kCornerViewSize = 20.;
     self.maskBorderView = [[SYShapeView alloc] initWithFrame:self.bounds];
     [self.maskBorderView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
     [self.maskBorderView.layer setBorderColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.].CGColor];
-    [self.maskBorderView.layer setBorderWidth:2.];
+    [self.maskBorderView.layer setBorderWidth:kBorderWidth];
     [self addSubview:self.maskBorderView];
     
     self.maskView = [[SYShapeView alloc] initWithFrame:self.bounds];
@@ -124,7 +125,11 @@ static CGFloat const kCornerViewSize = 20.;
         UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.bounds];
         [path appendPath:[UIBezierPath bezierPathWithRect:self.cropAreaInViewBounds]];
         self.maskView.layer.path = path.CGPath;
-        self.maskBorderView.frame = self.cropAreaInViewBounds;
+        self.maskBorderView.frame = UIEdgeInsetsInsetRect(self.cropAreaInViewBounds,
+                                                          UIEdgeInsetsMake(-kBorderWidth/2.,
+                                                                           -kBorderWidth/2.,
+                                                                           -kBorderWidth/2.,
+                                                                           -kBorderWidth/2.));
     }
     else
     {
@@ -178,9 +183,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    for (UIView *cornerView in self.cornerViews.allValues)
-        if (CGRectContainsPoint(cornerView.frame, point))
-            return YES;
+    UIEdgeInsets insets = UIEdgeInsetsMake(-kCornerViewSize, -kCornerViewSize,
+                                           -kCornerViewSize, -kCornerViewSize);
+    
+    if (CGRectContainsPoint(UIEdgeInsetsInsetRect(self.bounds, insets), point))
+        return YES;
     
     return [super pointInside:point withEvent:event];
 }

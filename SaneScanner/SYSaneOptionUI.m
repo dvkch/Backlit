@@ -112,6 +112,7 @@
     [alertView addButtonWithTitle:@"Close"];
     
     [alertView setAlertViewStyle:DLAVAlertViewStylePlainTextInput];
+    [[alertView textFieldAtIndex:0] setBorderStyle:UITextBorderStyleNone];
     
     switch (option.type) {
         case SANE_TYPE_INT:

@@ -13,11 +13,12 @@
 #import <DLAVAlertView.h>
 #import "SSPullToRefresh.h"
 #import "SYDeviceVC.h"
+#import "SYAddCell.h"
 #import <SVProgressHUD.h>
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIBarButtonItem *buttonAddHost;
+@property (nonatomic, strong) UIBarButtonItem *buttonSettings;
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
 @end
 
@@ -31,14 +32,16 @@
     [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+    [self.tableView registerClass:[SYAddCell class]       forCellReuseIdentifier:@"SYAddCell"];
     [self.view addSubview:self.tableView];
     
-    self.buttonAddHost = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+    self.buttonSettings = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                        target:self
-                                                                       action:@selector(buttonAddHostTap:)];
-    [self.buttonAddHost setTintColor:[UIColor darkGrayColor]];
+                                                                       action:@selector(buttonSettingsTap:)];
+    [self.buttonSettings setTintColor:[UIColor darkGrayColor]];
     
-    [self.navigationItem setRightBarButtonItems:@[self.buttonAddHost]];
+    [self.navigationItem setRightBarButtonItems:@[self.buttonSettings]];
     
     [[SYSaneHelper shared] setDelegate:self];
 }
@@ -71,24 +74,8 @@
 
 #pragma mark - IBActions
 
-- (void)buttonAddHostTap:(id)sender
+- (void)buttonSettingsTap:(id)sender
 {
-    DLAVAlertView *av = [[DLAVAlertView alloc] initWithTitle:@"Add a host"
-                                                     message:@"Enter the hostname or IP address for the new host"
-                                                    delegate:nil
-                                           cancelButtonTitle:@"Cancel"
-                                           otherButtonTitles:@"Add", nil];
-    
-    [av setAlertViewStyle:DLAVAlertViewStylePlainTextInput];
-    [av showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
-        if (buttonIndex == alertView.cancelButtonIndex)
-            return;
-        NSString *host = [[av textFieldAtIndex:0] text];
-        [[SYSaneHelper shared] addHost:host];
-        [self.tableView reloadData];
-    }];
-    
-    [av show];
 }
 
 #pragma mark - SYSaneHelperDelegate
@@ -122,6 +109,8 @@ needsAuthForDevice:(NSString *)device
                                                       cancelButtonTitle:@"Cancel"
                                                       otherButtonTitles:@"Continue", nil];
         [alertView setAlertViewStyle:DLAVAlertViewStyleLoginAndPasswordInput];
+        [[alertView textFieldAtIndex:0] setBorderStyle:UITextBorderStyleNone];
+        [[alertView textFieldAtIndex:1] setBorderStyle:UITextBorderStyleNone];
         [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
             if (buttonIndex != alertView.cancelButtonIndex)
             {
@@ -150,27 +139,34 @@ needsAuthForDevice:(NSString *)device
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? [[SYSaneHelper shared] allHosts].count : [[SYSaneHelper shared] allDevices].count;
+    return section == 0 ? ([[SYSaneHelper shared] allHosts].count+1) : [[SYSaneHelper shared] allDevices].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if(!cell)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    
-    
-    NSString *text;
-    if(indexPath.section == 0)
-        text = [[SYSaneHelper shared] allHosts][indexPath.row];
+    if (indexPath.section == 0)
+    {
+        if (indexPath.row < [[SYSaneHelper shared] allHosts].count)
+        {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+            [cell.textLabel setText:[[SYSaneHelper shared] allHosts][indexPath.row]];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            return cell;
+        }
+        else
+        {
+            SYAddCell *cell = (SYAddCell *)[tableView dequeueReusableCellWithIdentifier:@"SYAddCell"];
+            [cell setText:@"Add new host"];
+            return cell;
+        }
+    }
     else
     {
-        text = [[SYSaneHelper shared] allDevices][indexPath.row].model;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+        [cell.textLabel setText:[[SYSaneHelper shared] allDevices][indexPath.row].model];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        return cell;
     }
-    
-    [cell.textLabel setText:text];
-    return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -180,7 +176,10 @@ needsAuthForDevice:(NSString *)device
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section != 0)
+    if (indexPath.section != 0)
+        return;
+    
+    if (indexPath.row >= [[SYSaneHelper shared] allHosts].count)
         return;
     
     [[SYSaneHelper shared] removeHost:[[SYSaneHelper shared] allHosts][indexPath.row]];
@@ -194,7 +193,15 @@ needsAuthForDevice:(NSString *)device
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section == 0 ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+    if (indexPath.section == 0)
+    {
+        if (indexPath.row < [[SYSaneHelper shared] allHosts].count)
+            return UITableViewCellEditingStyleDelete;
+        else
+            return UITableViewCellEditingStyleNone;
+    }
+    else
+        return UITableViewCellEditingStyleNone;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -205,8 +212,27 @@ needsAuthForDevice:(NSString *)device
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if(indexPath.section == 0)
+    
+    if (indexPath.section == 0 && indexPath.row >= [[SYSaneHelper shared] allHosts].count)
+    {
+        DLAVAlertView *av = [[DLAVAlertView alloc] initWithTitle:@"Add a host"
+                                                         message:@"Enter the hostname or IP address for the new host"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"Cancel"
+                                               otherButtonTitles:@"Add", nil];
+        
+        [av setAlertViewStyle:DLAVAlertViewStylePlainTextInput];
+        [[av textFieldAtIndex:0] setBorderStyle:UITextBorderStyleNone];
+        [av showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex == alertView.cancelButtonIndex)
+                return;
+            NSString *host = [[av textFieldAtIndex:0] text];
+            [[SYSaneHelper shared] addHost:host];
+            [self.tableView reloadData];
+        }];
+        
         return;
+    }
     
     SYSaneDevice *device = [[SYSaneHelper shared] allDevices][indexPath.row];
     

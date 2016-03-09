@@ -173,15 +173,18 @@
 - (NSNumber *)bestValueForPreview
 {
     SYSaneStandardOption std = SYSaneStandardOptionFromNSString(self.name);
-    BOOL chooseMax = SYChooseMaxInsteadOfMinForPreviewValueForOption(std);
+    SYOptionValue value = SYBestValueForPreviewValueForOption(std);
+    
+    if (value == SYOptionValueAuto)
+        return nil;
     
     if (self.constraintType == SANE_CONSTRAINT_RANGE)
-        return (chooseMax ? self.maxValue : self.minValue);
+        return (value == SYOptionValueMax ? self.maxValue : self.minValue);
     
     if (self.constraintType == SANE_CONSTRAINT_WORD_LIST)
     {
         NSArray <NSNumber *> *sortedValues = [self.constraintValues sortedArrayUsingSelector:@selector(compare:)];
-        return (chooseMax ? sortedValues.lastObject : sortedValues.firstObject);
+        return (value == SYOptionValueMax ? sortedValues.lastObject : sortedValues.firstObject);
     }
     
     return self.value;

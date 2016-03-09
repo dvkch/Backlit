@@ -297,22 +297,18 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     SANE_Handle h = [value pointerValue];
     
     SANE_Int count;
+    
+    SANE_Status s = sane_control_option(h, 0, SANE_ACTION_GET_VALUE, &count, NULL);
+    
     NSMutableArray *opts = [NSMutableArray array];
-    
-#warning check why unused value
-    const SANE_Option_Descriptor *dn = sane_get_option_descriptor(h, 0);
-    sane_control_option(h, 0, SANE_ACTION_GET_VALUE, &count, NULL);
-    
     for(uint i = 1; i < count; ++i)
     {
-        dn = sane_get_option_descriptor(h, i);
-        [opts addObject:[SYSaneOption initWithCOpt:dn index:i device:device]];
+        const SANE_Option_Descriptor *descriptor = sane_get_option_descriptor(h, i);
+        [opts addObject:[SYSaneOption initWithCOpt:descriptor index:i device:device]];
     }
     
     for(SYSaneOption *d in opts)
-    {
         [d refreshValue:nil];
-    }
     
     PERF_END(PERF_MIN_MS);
     
@@ -578,7 +574,8 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     }
     else
     {
-        NSArray <SYSaneOption *> *options = [device standardOptions:@[@(SYSaneStandardOptionResolution),
+        NSArray <SYSaneOption *> *options = [device standardOptions:@[@(SYSaneStandardOptionColorMode),
+                                                                      @(SYSaneStandardOptionResolution),
                                                                       @(SYSaneStandardOptionAreaTopLeftX),
                                                                       @(SYSaneStandardOptionAreaTopLeftY),
                                                                       @(SYSaneStandardOptionAreaBottomRightX),
@@ -586,10 +583,16 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         
         for (SYSaneOption *option in options)
         {
-            SYSaneOptionNumber *catsedOption = (SYSaneOptionNumber *)option;
-            [oldOptions setObject:catsedOption.value forKey:catsedOption.name];
+            SYSaneOptionNumber *castedOption = (SYSaneOptionNumber *)option;
+            [oldOptions setObject:castedOption.value forKey:castedOption.name];
             
-            [self setValue:catsedOption.bestValueForPreview orAutoValue:NO forOption:catsedOption block:nil];
+            SYSaneStandardOption stdOption = SYSaneStandardOptionFromNSString(castedOption.name);
+            SYOptionValue bestValue = SYBestValueForPreviewValueForOption(stdOption);
+            
+            [self setValue:castedOption.bestValueForPreview
+               orAutoValue:(bestValue == SYOptionValueAuto)
+                 forOption:castedOption
+                     block:nil];
         }
     }
     
