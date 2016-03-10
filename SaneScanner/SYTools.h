@@ -14,6 +14,13 @@ CGRect CGRectAsPercentsInCGRect(CGRect rect, CGRect containingRect);
 CGRect CGRectFromPercentsInCGRect(CGRect percents, CGRect containingRect);
 
 typedef enum : NSUInteger {
+    CGRectSideTop,
+    CGRectSideLeft,
+    CGRectSideRight,
+    CGRectSideBottom,
+} CGRectSide;
+
+typedef enum : NSUInteger {
     CGRectCornerTopLeft,
     CGRectCornerTopRight,
     CGRectCornerBottomLeft,
@@ -27,6 +34,13 @@ CGRect CGRectByMovingCornerOfCGRectByDeltaWithoutShrinking(CGRectCorner corner,
                                                            CGSize delta,
                                                            BOOL preventWidthShrinking,
                                                            BOOL preventHeightShrinking);
+
+CGRect CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(CGRectSide side,
+                                                         CGRect rect,
+                                                         CGFloat delta,
+                                                         BOOL preventShrinking);
+
+BOOL CGRectSideIsVertical(CGRectSide side);
 
 @interface SYTools : NSObject
 

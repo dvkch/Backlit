@@ -1,0 +1,40 @@
+From de805dd8bf313935508438f6a6134c5b6559999f Mon Sep 17 00:00:00 2001
+From: Stanislas Chevallier <contact@syan.me>
+Date: Wed, 9 Mar 2016 18:46:37 +0100
+Subject: [PATCH] make it compile for iOS
+
+---
+ configure.in     | 2 +-
+ sanei/sanei_ir.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 96a52e5..0cc87b2 100644
+--- a/configure.in
++++ b/configure.in
+@@ -77,7 +77,7 @@ AC_SUBST(MAKEINDEX)
+ dnl Call explicitely before using PKG_*
+ PKG_PROG_PKG_CONFIG
+ 
+-AM_CONDITIONAL(CROSS_COMPILING, test x$cross_compiling = xyes)
++CROSS_COMPILING=1
+ 
+ dnl ***********************************************************************
+ dnl set compiler/linker flags
+diff --git a/sanei/sanei_ir.c b/sanei/sanei_ir.c
+index 42e82ba..31afc99 100644
+--- a/sanei/sanei_ir.c
++++ b/sanei/sanei_ir.c
+@@ -29,7 +29,8 @@
+ 
+ #include <stdlib.h>
+ #include <string.h>
+-#include <values.h>
++#include <limits.h>
++#include <float.h>
+ #include <math.h>
+ 
+ #define BACKEND_NAME sanei_ir	/* name of this module for debugging */
+-- 
+2.5.4 (Apple Git-61)
+

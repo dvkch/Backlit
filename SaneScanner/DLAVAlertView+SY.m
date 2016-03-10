@@ -46,7 +46,7 @@
 }
 
 - (void)setSliderUpdateBlock:(void(^)(DLAVAlertView *alertView, float value))block {
-    objc_setAssociatedObject(self, @selector(sliderUpdateBlock), [block copy], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(sliderUpdateBlock), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (void(^)(DLAVAlertView *alertView, float value))sliderUpdateBlock {

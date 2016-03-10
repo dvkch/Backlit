@@ -67,43 +67,80 @@ CGRect CGRectByMovingCornerOfCGRectByDeltaWithoutShrinking(CGRectCorner corner,
                                                            BOOL preventWidthShrinking,
                                                            BOOL preventHeightShrinking)
 {
+    BOOL isEmpty = rect.size.width < 0.5 || rect.size.height < 0.5;
+    NSLog(@"Empty=%d", isEmpty);
+    
     CGRect newRect = rect;
+    
+    CGRectSide sideX;
+    CGRectSide sideY;
+    
     switch (corner) {
         case CGRectCornerTopLeft:
-            newRect.origin.x += delta.width;
-            newRect.origin.y += delta.height;
-            newRect.size.width  -= delta.width;
-            newRect.size.height -= delta.height;
+            sideX = CGRectSideLeft;
+            sideY = CGRectSideTop;
             break;
         case CGRectCornerTopRight:
-            newRect.origin.y += delta.height;
-            newRect.size.width  += delta.width;
-            newRect.size.height -= delta.height;
+            sideX = CGRectSideRight;
+            sideY = CGRectSideTop;
             break;
         case CGRectCornerBottomLeft:
-            newRect.origin.x += delta.width;
-            newRect.size.width  -= delta.width;
-            newRect.size.height += delta.height;
+            sideX = CGRectSideLeft;
+            sideY = CGRectSideBottom;
             break;
         case CGRectCornerBottomRight:
-            newRect.size.width  += delta.width;
-            newRect.size.height += delta.height;
+            sideX = CGRectSideRight;
+            sideY = CGRectSideBottom;
             break;
     }
     
-    if (preventWidthShrinking && newRect.size.width < rect.size.width)
+    newRect = CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(sideX, newRect, delta.width, preventWidthShrinking);
+    newRect = CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(sideY, newRect, delta.height, preventHeightShrinking);
+    
+    return newRect;
+}
+
+CGRect CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(CGRectSide side,
+                                                         CGRect rect,
+                                                         CGFloat delta,
+                                                         BOOL preventShrinking)
+{
+    CGRect newRect = rect;
+    switch (side) {
+        case CGRectSideTop:
+            newRect.origin.y    += delta;
+            newRect.size.height -= delta;
+            break;
+        case CGRectSideLeft:
+            newRect.origin.x    += delta;
+            newRect.size.width  -= delta;
+            break;
+        case CGRectSideRight:
+            newRect.size.width  += delta;
+            break;
+        case CGRectSideBottom:
+            newRect.size.height += delta;
+            break;
+    }
+    
+    if (preventShrinking && newRect.size.width < rect.size.width)
     {
         newRect.origin.x = rect.origin.x;
         newRect.size.width = rect.size.width;
     }
     
-    if (preventHeightShrinking && newRect.size.height < rect.size.height)
+    if (preventShrinking && newRect.size.height < rect.size.height)
     {
         newRect.origin.y = rect.origin.y;
         newRect.size.height = rect.size.height;
     }
     
     return newRect;
+}
+
+BOOL CGRectSideIsVertical(CGRectSide side)
+{
+    return (side == CGRectSideLeft) || (side == CGRectSideRight);
 }
 
 @implementation SYTools

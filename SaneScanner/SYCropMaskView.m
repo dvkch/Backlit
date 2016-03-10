@@ -9,17 +9,20 @@
 #import "SYCropMaskView.h"
 #import <SYShapeView.h>
 #import "SYTools.h"
+#import "UIView+SYTapOutside.h"
 
 static CGFloat const kCornerViewSize = 20.;
 static CGFloat const kBorderWidth    =  2.;
 
 @interface SYCropMaskView () <UIGestureRecognizerDelegate>
-@property (nonatomic, strong) UIView *maskBorderView;
 @property (nonatomic, strong) SYShapeView *maskView;
-@property (nonatomic, strong) NSMutableDictionary <NSNumber *, UIPanGestureRecognizer *> *panGestures;
+@property (nonatomic, strong) NSMutableDictionary <NSNumber *, UIPanGestureRecognizer *> *cornerPanGestures;
+@property (nonatomic, strong) NSMutableDictionary <NSNumber *, UIPanGestureRecognizer *> *borderPanGestures;
 @property (nonatomic, strong) NSMutableDictionary <NSNumber *, UIView *> *cornerViews;
-@property (nonatomic, assign) CGPoint panOriginPoint;
+@property (nonatomic, strong) NSMutableDictionary <NSNumber *, UIView *> *borderViews;
 @property (nonatomic, assign) CGPoint panPreviousPoint;
+@property (nonatomic, assign) CGPoint panFirstPoint;
+@property (nonatomic, assign) CGRect panCropArea;
 @end
 
 @implementation SYCropMaskView
@@ -38,17 +41,37 @@ static CGFloat const kBorderWidth    =  2.;
     
     [self setBackgroundColor:[UIColor clearColor]];
     
-    self.maskBorderView = [[SYShapeView alloc] initWithFrame:self.bounds];
-    [self.maskBorderView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
-    [self.maskBorderView.layer setBorderColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.].CGColor];
-    [self.maskBorderView.layer setBorderWidth:kBorderWidth];
-    [self addSubview:self.maskBorderView];
-    
     self.maskView = [[SYShapeView alloc] initWithFrame:self.bounds];
     [self.maskView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
     [self.maskView.layer setFillColor:[UIColor colorWithWhite:0. alpha:0.4].CGColor];
     [self.maskView.layer setFillRule:kCAFillRuleEvenOdd];
     [self addSubview:self.maskView];
+    
+    self.borderViews = [NSMutableDictionary dictionary];
+    self.borderViews[@(CGRectSideTop)]    = [[UIView alloc] init];
+    self.borderViews[@(CGRectSideLeft)]   = [[UIView alloc] init];
+    self.borderViews[@(CGRectSideRight)]  = [[UIView alloc] init];
+    self.borderViews[@(CGRectSideBottom)] = [[UIView alloc] init];
+    
+    self.borderPanGestures = [NSMutableDictionary dictionary];
+    for (NSNumber *borderN in self.borderViews.allKeys)
+    {
+        UIView *borderView = self.borderViews[borderN];
+        [borderView setBackgroundColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.]];
+        [self addSubview:borderView];
+        
+        if (CGRectSideIsVertical(borderN.unsignedIntegerValue))
+            [borderView setSy_tapInsets:UIEdgeInsetsMake(  0, -15,   0, -15)];
+        else
+            [borderView setSy_tapInsets:UIEdgeInsetsMake(-15,   0, -15,   0)];
+
+        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] init];
+        [panGesture addTarget:self action:@selector(borderPanGestureTouch:)];
+        [panGesture setDelegate:self];
+        [borderView addGestureRecognizer:panGesture];
+        
+        [self.borderPanGestures setObject:panGesture forKey:borderN];
+    }
     
     self.cornerViews = [NSMutableDictionary dictionary];
     self.cornerViews[@(CGRectCornerTopLeft)]     = [[UIView alloc] init];
@@ -56,10 +79,11 @@ static CGFloat const kBorderWidth    =  2.;
     self.cornerViews[@(CGRectCornerBottomLeft)]  = [[UIView alloc] init];
     self.cornerViews[@(CGRectCornerBottomRight)] = [[UIView alloc] init];
     
-    self.panGestures = [NSMutableDictionary dictionary];
+    self.cornerPanGestures = [NSMutableDictionary dictionary];
     for (NSNumber *cornerN in self.cornerViews.allKeys)
     {
         UIView *cornerView = self.cornerViews[cornerN];
+        [cornerView setSy_tapInsets:UIEdgeInsetsMake(-5, -5, -5, -5)];
         [cornerView setBackgroundColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.]];
         [cornerView.layer setBorderColor:[UIColor whiteColor].CGColor];
         [cornerView.layer setBorderWidth:2.];
@@ -71,11 +95,11 @@ static CGFloat const kBorderWidth    =  2.;
         [self addSubview:cornerView];
         
         UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] init];
-        [panGesture addTarget:self action:@selector(panGestureTouch:)];
+        [panGesture addTarget:self action:@selector(cornerPanGestureTouch:)];
         [panGesture setDelegate:self];
         [cornerView addGestureRecognizer:panGesture];
         
-        [self.panGestures setObject:panGesture forKey:cornerN];
+        [self.cornerPanGestures setObject:panGesture forKey:cornerN];
     }
 }
 
@@ -111,33 +135,71 @@ static CGFloat const kBorderWidth    =  2.;
     
     if (!CGRectEqualToRect(self.cropArea, CGRectZero) && !CGRectEqualToRect(self.maxCropArea, CGRectZero))
     {
+        CGRect cropAreaInViewBounds = self.cropAreaInViewBounds;
         [self.maskView setHidden:NO];
-        [self.maskBorderView setHidden:NO];
         
         for (NSNumber *cornerN in self.cornerViews.allKeys)
         {
             UIView *cornerView = self.cornerViews[cornerN];
             [cornerView setFrame:CGRectMake(0, 0, kCornerViewSize, kCornerViewSize)];
-            [cornerView setCenter:CGPointForCornerOfCGRect(cornerN.unsignedIntegerValue, self.cropAreaInViewBounds)];
+            [cornerView setCenter:CGPointForCornerOfCGRect(cornerN.unsignedIntegerValue, cropAreaInViewBounds)];
             [cornerView setHidden:NO];
         }
         
+        for (NSNumber *borderN in self.borderViews.allKeys)
+        {
+            UIView *borderView = self.borderViews[borderN];
+            [borderView setHidden:NO];
+            
+            CGPoint originCentered = CGPointMake(cropAreaInViewBounds.origin.x - kBorderWidth/2.,
+                                                 cropAreaInViewBounds.origin.y - kBorderWidth/2.);
+            
+            switch ((CGRectSide)borderN.unsignedIntegerValue) {
+                case CGRectSideTop:
+                    [borderView setFrame:CGRectMake(originCentered.x,
+                                                    originCentered.y,
+                                                    cropAreaInViewBounds.size.width,
+                                                    kBorderWidth)];
+                    break;
+                case CGRectSideBottom:
+                    [borderView setFrame:CGRectMake(originCentered.x,
+                                                    originCentered.y + cropAreaInViewBounds.size.height,
+                                                    cropAreaInViewBounds.size.width,
+                                                    kBorderWidth)];
+                    break;
+                case CGRectSideLeft:
+                    [borderView setFrame:CGRectMake(originCentered.x,
+                                                    originCentered.y,
+                                                    kBorderWidth,
+                                                    cropAreaInViewBounds.size.height)];
+                    break;
+                case CGRectSideRight:
+                    [borderView setFrame:CGRectMake(originCentered.x + cropAreaInViewBounds.size.width,
+                                                    originCentered.y,
+                                                    kBorderWidth,
+                                                    cropAreaInViewBounds.size.height)];
+                    break;
+            }
+        }
+        
+        UIEdgeInsets insetsHalfBorderWidth = UIEdgeInsetsMake(-kBorderWidth/2.,
+                                                              -kBorderWidth/2.,
+                                                              -kBorderWidth/2.,
+                                                              -kBorderWidth/2.);
+        
         UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.bounds];
-        [path appendPath:[UIBezierPath bezierPathWithRect:self.cropAreaInViewBounds]];
+        [path appendPath:[UIBezierPath bezierPathWithRect:UIEdgeInsetsInsetRect(cropAreaInViewBounds, insetsHalfBorderWidth)]];
         self.maskView.layer.path = path.CGPath;
-        self.maskBorderView.frame = UIEdgeInsetsInsetRect(self.cropAreaInViewBounds,
-                                                          UIEdgeInsetsMake(-kBorderWidth/2.,
-                                                                           -kBorderWidth/2.,
-                                                                           -kBorderWidth/2.,
-                                                                           -kBorderWidth/2.));
     }
     else
     {
         for (UIView *cornerView in self.cornerViews.allValues)
             [cornerView setHidden:YES];
         
+        for (UIView *borderView in self.borderViews.allValues)
+            [borderView setHidden:YES];
+        
         [self.maskView setHidden:YES];
-        [self.maskBorderView setHidden:YES];
     }
 }
 
@@ -146,17 +208,22 @@ static CGFloat const kBorderWidth    =  2.;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    BOOL gesture1IsPan = [self.panGestures.allValues containsObject:(id)gestureRecognizer];
-    BOOL gesture2IsPan = [self.panGestures.allValues containsObject:(id)otherGestureRecognizer];
-    return (gesture1IsPan || gesture2IsPan) ? NO : YES;
+    if ([self.cornerPanGestures.allValues containsObject:(id)gestureRecognizer])
+        return NO;
+    if ([self.cornerPanGestures.allValues containsObject:(id)otherGestureRecognizer])
+        return NO;
+    if ([self.borderPanGestures.allValues containsObject:(id)gestureRecognizer])
+        return NO;
+    if ([self.borderPanGestures.allValues containsObject:(id)otherGestureRecognizer])
+        return NO;
+    return YES;
 }
 
-- (void)panGestureTouch:(UIPanGestureRecognizer *)panGesture
+- (void)cornerPanGestureTouch:(UIPanGestureRecognizer *)panGesture
 {
     switch (panGesture.state) {
         case UIGestureRecognizerStateBegan:
-            self.panOriginPoint = [panGesture locationInView:self];
-            self.panPreviousPoint = self.panOriginPoint;
+            self.panPreviousPoint = [panGesture locationInView:self];
             break;
         case UIGestureRecognizerStateChanged:
         {
@@ -167,12 +234,46 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
             CGSize delta = CGSizeMake(point.x - self.panPreviousPoint.x,
                                       point.y - self.panPreviousPoint.y);
             
-            CGRectCorner corner = [self.panGestures allKeysForObject:panGesture].firstObject.unsignedIntegerValue;
+            CGRectCorner corner = [self.cornerPanGestures allKeysForObject:panGesture].firstObject.unsignedIntegerValue;
             CGRect newCrop = CGRectByMovingCornerOfCGRectByDeltaWithoutShrinking(corner,
                                                                                  self.cropAreaInViewBounds,
                                                                                  delta,
                                                                                  preventShrinkingX,
                                                                                  preventShrinkingY);
+            [self setCropAreaInViewBounds:newCrop notifyDelegate:YES];
+            [self setPanPreviousPoint:point];
+        }
+        default:
+            break;
+    }
+}
+
+- (void)borderPanGestureTouch:(UIPanGestureRecognizer *)panGesture
+{
+    switch (panGesture.state) {
+        case UIGestureRecognizerStateBegan:
+            self.panPreviousPoint = [panGesture locationInView:self];
+            break;
+        case UIGestureRecognizerStateChanged:
+        {
+            CGPoint point = [panGesture locationInView:self];
+            CGRectSide side = [self.borderPanGestures allKeysForObject:panGesture].firstObject.unsignedIntegerValue;
+            
+            BOOL preventShrinkingX = point.x < 0 || point.x > self.bounds.size.width;
+            BOOL preventShrinkingY = point.y < 0 || point.y > self.bounds.size.height;
+            
+            BOOL preventShrinking = (CGRectSideIsVertical(side)
+                                     ? preventShrinkingX
+                                     : preventShrinkingY);
+            
+            CGFloat delta = (CGRectSideIsVertical(side)
+                             ? (point.x - self.panPreviousPoint.x)
+                             : (point.y - self.panPreviousPoint.y));
+            
+            CGRect newCrop = CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(side,
+                                                                               self.cropAreaInViewBounds,
+                                                                               delta,
+                                                                               preventShrinking);
             [self setCropAreaInViewBounds:newCrop notifyDelegate:YES];
             [self setPanPreviousPoint:point];
         }
