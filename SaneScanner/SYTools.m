@@ -56,20 +56,8 @@ CGPoint CGPointForCornerOfCGRect(CGRectCorner corner, CGRect rect)
     return CGPointZero;
 }
 
-CGRect CGRectByMovingCornerOfCGRectByDelta(CGRectCorner corner, CGRect rect, CGSize delta)
+CGRect CGRectByMovingCornerOfCGRectByDelta(CGRectCorner corner, CGRect rect, CGSize delta, CGRect maxRect)
 {
-    return CGRectByMovingCornerOfCGRectByDeltaWithoutShrinking(corner, rect, delta, NO, NO);
-}
-
-CGRect CGRectByMovingCornerOfCGRectByDeltaWithoutShrinking(CGRectCorner corner,
-                                                           CGRect rect,
-                                                           CGSize delta,
-                                                           BOOL preventWidthShrinking,
-                                                           BOOL preventHeightShrinking)
-{
-    BOOL isEmpty = rect.size.width < 0.5 || rect.size.height < 0.5;
-    NSLog(@"Empty=%d", isEmpty);
-    
     CGRect newRect = rect;
     
     CGRectSide sideX;
@@ -94,16 +82,17 @@ CGRect CGRectByMovingCornerOfCGRectByDeltaWithoutShrinking(CGRectCorner corner,
             break;
     }
     
-    newRect = CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(sideX, newRect, delta.width, preventWidthShrinking);
-    newRect = CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(sideY, newRect, delta.height, preventHeightShrinking);
+    newRect = CGRectByMovingSideOfCGRectByDelta(sideX, newRect, delta.width,  CGRectNull);
+    newRect = CGRectByMovingSideOfCGRectByDelta(sideY, newRect, delta.height, CGRectNull);
+    
+    if (!CGRectIsNull(maxRect))
+        newRect = CGRectIntersection(newRect, maxRect);
     
     return newRect;
 }
 
-CGRect CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(CGRectSide side,
-                                                         CGRect rect,
-                                                         CGFloat delta,
-                                                         BOOL preventShrinking)
+
+CGRect CGRectByMovingSideOfCGRectByDelta(CGRectSide side, CGRect rect, CGFloat delta, CGRect maxRect)
 {
     CGRect newRect = rect;
     switch (side) {
@@ -123,17 +112,8 @@ CGRect CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(CGRectSide side,
             break;
     }
     
-    if (preventShrinking && newRect.size.width < rect.size.width)
-    {
-        newRect.origin.x = rect.origin.x;
-        newRect.size.width = rect.size.width;
-    }
-    
-    if (preventShrinking && newRect.size.height < rect.size.height)
-    {
-        newRect.origin.y = rect.origin.y;
-        newRect.size.height = rect.size.height;
-    }
+    if (!CGRectIsNull(maxRect))
+        newRect = CGRectIntersection(newRect, maxRect);
     
     return newRect;
 }

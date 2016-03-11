@@ -233,6 +233,12 @@ I hope you'll enjoy it,
 
 -- dvkch
 
+## SYPair
+
+Use it as you like in every project you want, redistribute with mentions of my name and don't blame me if it breaks :)
+
+-- dvkch
+
 ## UIImage-Resize
 
 Without any further information, all the sources provided here are under the MIT License

@@ -20,6 +20,7 @@
 #import "UIImage+SY.h"
 #import "NSMutableData+SY.h"
 #import "NSObject+SY.h"
+#import "SYPreferences.h"
 
 #define ENSURE_RUNNING_THREAD(thread, block) \
 if ([NSThread currentThread] != (thread)) { [self performBlock:(block) onThread:(thread)]; return; }
@@ -516,12 +517,6 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         s = sane_control_option(h, option.index, SANE_ACTION_SET_VALUE, byteValue, &info);
     PERF_END(PERF_MIN_MS);
     
-    if (s != SANE_STATUS_GOOD)
-    {
-        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
-        NSLog(@"--> %@: %@", option.name, status);
-    }
-    
     BOOL reloadAllOptions = (info & SANE_INFO_RELOAD_OPTIONS || info & SANE_INFO_RELOAD_PARAMS);
     BOOL updatedValue = NO;
     
@@ -598,10 +593,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     {
         NSArray <NSNumber *> *stdOptions = @[@(SYSaneStandardOptionResolution),
                                              @(SYSaneStandardOptionAreaTopLeftX),
-                                             @(SYSaneStandardOptionColorMode),
                                              @(SYSaneStandardOptionAreaTopLeftY),
                                              @(SYSaneStandardOptionAreaBottomRightX),
                                              @(SYSaneStandardOptionAreaBottomRightY)];
+        
+        if ([[SYPreferences shared] previewWithAutoColorMode])
+            stdOptions = [stdOptions arrayByAddingObject:@(SYSaneStandardOptionColorMode)];
         
         for (NSNumber *stdOptionN in stdOptions)
         {

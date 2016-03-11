@@ -23,6 +23,8 @@
 		97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E721C8912CA00C77209 /* NSArray+SY.m */; };
 		97586E941C89272300C37931 /* UIImage+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97586E931C89272300C37931 /* UIImage+SY.m */; };
 		975B78111C91D52F00804D86 /* UIView+SYTapOutside.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78101C91D52F00804D86 /* UIView+SYTapOutside.m */; };
+		975B78141C923B6D00804D86 /* SYPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78131C923B6D00804D86 /* SYPreferences.m */; };
+		975B78171C923C7200804D86 /* SYPrefVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78161C923C7200804D86 /* SYPrefVC.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
 		97BB76F41C89169F00A0823A /* SYSaneScanParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */; };
 		F804E0711AFA4AF300CBE307 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06C1AFA4AF300CBE307 /* libsane-dll.a */; };
@@ -73,6 +75,10 @@
 		97586E931C89272300C37931 /* UIImage+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SY.m"; sourceTree = "<group>"; };
 		975B780F1C91D52F00804D86 /* UIView+SYTapOutside.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SYTapOutside.h"; sourceTree = "<group>"; };
 		975B78101C91D52F00804D86 /* UIView+SYTapOutside.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SYTapOutside.m"; sourceTree = "<group>"; };
+		975B78121C923B6D00804D86 /* SYPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPreferences.h; sourceTree = "<group>"; };
+		975B78131C923B6D00804D86 /* SYPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPreferences.m; sourceTree = "<group>"; };
+		975B78151C923C7200804D86 /* SYPrefVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPrefVC.h; sourceTree = "<group>"; };
+		975B78161C923C7200804D86 /* SYPrefVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPrefVC.m; sourceTree = "<group>"; };
 		975F9C981C8F15B7005A96AB /* SYCropMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYCropMaskView.h; sourceTree = "<group>"; };
 		975F9C991C8F15B7005A96AB /* SYCropMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYCropMaskView.m; sourceTree = "<group>"; };
 		97BB76F21C89169F00A0823A /* SYSaneScanParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneScanParameters.h; sourceTree = "<group>"; };
@@ -157,6 +163,8 @@
 				F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */,
 				F804E0771AFA569B00CBE307 /* SYDeviceVC.h */,
 				F804E0781AFA569B00CBE307 /* SYDeviceVC.m */,
+				975B78151C923C7200804D86 /* SYPrefVC.h */,
+				975B78161C923C7200804D86 /* SYPrefVC.m */,
 			);
 			name = VCs;
 			sourceTree = "<group>";
@@ -198,6 +206,8 @@
 			children = (
 				F8C3EE421AF9B163003A991F /* SYSaneHelper.h */,
 				F8C3EE431AF9B163003A991F /* SYSaneHelper.m */,
+				975B78121C923B6D00804D86 /* SYPreferences.h */,
+				975B78131C923B6D00804D86 /* SYPreferences.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -427,6 +437,8 @@
 				F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */,
 				F8CBD2131AF9A58C00B4C221 /* main.m in Sources */,
 				971BE2421C8E364A00B8F29C /* SYSaneOptionNumber.m in Sources */,
+				975B78171C923C7200804D86 /* SYPrefVC.m in Sources */,
+				975B78141C923B6D00804D86 /* SYPreferences.m in Sources */,
 				97521E6F1C88E8BA00C77209 /* SYSaneOptionString.m in Sources */,
 				F804E0821AFA8E6B00CBE307 /* SYSaneOption.m in Sources */,
 				97521E6B1C88E8BA00C77209 /* SYSaneOptionButton.m in Sources */,

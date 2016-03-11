@@ -13,6 +13,7 @@
 #import "SYSaneOptionString.h"
 #import "SYSaneOptionButton.h"
 #import "SYSaneOptionGroup.h"
+#import "SYPreferences.h"
 #import <Masonry.h>
 
 @interface SYOptionCell ()
@@ -40,7 +41,6 @@
         self.labelDescr = [[UILabel alloc] init];
         [self.labelDescr setNumberOfLines:0];
         [self.labelDescr setLineBreakMode:NSLineBreakByWordWrapping];
-        [self.labelDescr setTextColor:[UIColor lightGrayColor]];
         [self.labelDescr setFont:[UIFont systemFontOfSize:self.labelDescr.font.pointSize - 2]];
         [self.contentView addSubview:self.labelDescr];
         
@@ -49,25 +49,63 @@
     return self;
 }
 
+- (void)setPrefKey:(NSString *)prefKey
+{
+    self->_prefKey = prefKey;
+    self->_option  = nil;
+    [self updateTexts];
+}
+
 - (void)setOption:(SYSaneOption *)option
 {
-    self->_option = option;
+    self->_option  = option;
+    self->_prefKey = nil;
+    [self updateTexts];
+}
+
+- (void)updateTexts
+{
+    UIColor *backgroundColor = [UIColor whiteColor];
+    UIColor *normalTextColor = [UIColor darkTextColor];
+    UIColor *descTextColor   = [UIColor grayColor];
     
-    [self setBackgroundColor:(!option.disabledOrReadOnly ?
-                              [UIColor whiteColor] :
-                              [UIColor colorWithWhite:0.98 alpha:1.])];
+    if (self.option && self.option.disabledOrReadOnly)
+    {
+        backgroundColor = [UIColor colorWithWhite:0.98 alpha:1.];
+        normalTextColor = [UIColor lightGrayColor];
+        descTextColor   = [UIColor lightGrayColor];
+    }
     
-    UIColor *textColor = (!option.disabledOrReadOnly ?
-                          [UIColor darkTextColor] :
-                          [UIColor lightGrayColor]);
+    [self setBackgroundColor:backgroundColor];
+    [self.labelTitle setTextColor:normalTextColor];
+    [self.labelValue setTextColor:normalTextColor];
+    [self.labelDescr setTextColor:descTextColor];
     
-    [self.labelTitle setTextColor:textColor];
-    [self.labelValue setTextColor:textColor];
-    [self.labelDescr setTextColor:textColor];
-    
-    [self.labelTitle setText:self.option.title];
-    [self.labelValue setText:[self.option valueStringWithUnit:YES]];
-    [self.labelDescr setText:self.option.desc];
+    if (self.option)
+    {
+        [self.labelTitle setText:self.option.title];
+        [self.labelValue setText:[self.option valueStringWithUnit:YES]];
+        [self.labelDescr setText:self.option.desc];
+    }
+    else if (self.prefKey)
+    {
+        [self.labelTitle setText:[[SYPreferences shared] titleForKey:self.prefKey]];
+        [self.labelDescr setText:[[SYPreferences shared] descriptionForKey:self.prefKey]];
+        
+        switch ([[SYPreferences shared] typeForKey:self.prefKey])
+        {
+            case SYPreferenceTypeBool:
+                [self.labelValue setText:[[[SYPreferences shared] objectForKey:self.prefKey] boolValue] ? @"On" : @"Off"];
+                break;
+            case SYPreferenceTypeInt:
+                [self.labelValue setText:[[[SYPreferences shared] objectForKey:self.prefKey] stringValue]];
+                break;
+            case SYPreferenceTypeString:
+            case SYPreferenceTypeUnknown:
+                [self.labelValue setText:[[SYPreferences shared] objectForKey:self.prefKey]];
+                break;
+        }
+    }
 }
 
 - (void)setShowDescription:(BOOL)showDescription
@@ -103,6 +141,8 @@
 
 static SYOptionCell *sizingCell;
 
+#warning make this generic
+
 + (CGFloat)cellHeightForOption:(SYSaneOption *)option showDescription:(BOOL)showDescription width:(CGFloat)width
 {
     if (!sizingCell)
@@ -111,6 +151,27 @@ static SYOptionCell *sizingCell;
     }
     
     [sizingCell setOption:option];
+    [sizingCell setShowDescription:showDescription];
+    [sizingCell setFrame:CGRectMake(0, 0, width, 1000.)];
+    [sizingCell setNeedsUpdateConstraints];
+    [sizingCell updateConstraintsIfNeeded];
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    [sizingCell.contentView layoutIfNeeded];
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)
+                                        withHorizontalFittingPriority:UILayoutPriorityRequired
+                                              verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
+    return size.height + 1;
+}
+
++ (CGFloat)cellHeightForPrefKey:(NSString *)prefKey showDescription:(BOOL)showDescription width:(CGFloat)width
+{
+    if (!sizingCell)
+    {
+        sizingCell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sizingCellSYOptionCell"];
+    }
+    
+    [sizingCell setPrefKey:prefKey];
     [sizingCell setShowDescription:showDescription];
     [sizingCell setFrame:CGRectMake(0, 0, width, 1000.)];
     [sizingCell setNeedsUpdateConstraints];

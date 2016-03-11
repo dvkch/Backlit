@@ -15,10 +15,10 @@
 #import "SYDeviceVC.h"
 #import "SYAddCell.h"
 #import <SVProgressHUD.h>
+#import "SYPrefVC.h"
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIBarButtonItem *buttonSettings;
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
 @end
 
@@ -29,19 +29,13 @@
     [super viewDidLoad];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     [self.tableView registerClass:[SYAddCell class]       forCellReuseIdentifier:@"SYAddCell"];
     [self.view addSubview:self.tableView];
     
-    self.buttonSettings = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                       target:self
-                                                                       action:@selector(buttonSettingsTap:)];
-    [self.buttonSettings setTintColor:[UIColor darkGrayColor]];
-    
-    [self.navigationItem setRightBarButtonItems:@[self.buttonSettings]];
+    [self.navigationItem setRightBarButtonItem:[SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [[SYSaneHelper shared] setDelegate:self];
 }
@@ -76,6 +70,7 @@
 
 - (void)buttonSettingsTap:(id)sender
 {
+    [SYPrefVC showOnVC:self closeBlock:nil];
 }
 
 #pragma mark - SYSaneHelperDelegate

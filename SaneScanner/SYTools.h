@@ -28,17 +28,8 @@ typedef enum : NSUInteger {
 } CGRectCorner;
 
 CGPoint CGPointForCornerOfCGRect(CGRectCorner corner, CGRect rect);
-CGRect CGRectByMovingCornerOfCGRectByDelta(CGRectCorner corner, CGRect rect, CGSize delta);
-CGRect CGRectByMovingCornerOfCGRectByDeltaWithoutShrinking(CGRectCorner corner,
-                                                           CGRect rect,
-                                                           CGSize delta,
-                                                           BOOL preventWidthShrinking,
-                                                           BOOL preventHeightShrinking);
-
-CGRect CGRectByMovingSideOfCGRectByDeltaWithoutShrinking(CGRectSide side,
-                                                         CGRect rect,
-                                                         CGFloat delta,
-                                                         BOOL preventShrinking);
+CGRect CGRectByMovingCornerOfCGRectByDelta(CGRectCorner corner, CGRect rect, CGSize delta, CGRect maxRect);
+CGRect CGRectByMovingSideOfCGRectByDelta(CGRectSide side, CGRect rect, CGFloat delta, CGRect maxRect);
 
 BOOL CGRectSideIsVertical(CGRectSide side);
 

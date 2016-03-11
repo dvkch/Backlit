@@ -13,8 +13,10 @@
 @interface SYOptionCell : UITableViewCell
 
 @property (nonatomic, strong) SYSaneOption *option;
+@property (nonatomic, strong) NSString *prefKey;
 @property (nonatomic, assign) BOOL showDescription;
 
 + (CGFloat)cellHeightForOption:(SYSaneOption *)option showDescription:(BOOL)showDescription width:(CGFloat)width;
++ (CGFloat)cellHeightForPrefKey:(NSString *)prefKey showDescription:(BOOL)showDescription width:(CGFloat)width;
 
 @end

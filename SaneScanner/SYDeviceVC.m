@@ -22,14 +22,13 @@
 #import "SYSaneOptionUI.h"
 #import "SYTools.h"
 #import <Masonry.h>
+#import "SYPrefVC.h"
+#import "SYPreferences.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate>
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIBarButtonItem *buttonToggleAdvanced;
 @property (nonatomic, strong) UIButton *buttonScan;
-
-@property (nonatomic, assign) BOOL showAdvanced;
 @property (nonatomic, assign) BOOL refreshing;
 @end
 
@@ -56,11 +55,7 @@
     [self.buttonScan.titleLabel setFont:[UIFont systemFontOfSize:17]];
     [self.view addSubview:self.buttonScan];
     
-    self.buttonToggleAdvanced = [[UIBarButtonItem alloc] initWithTitle:@""
-                                                                 style:UIBarButtonItemStylePlain
-                                                                target:self
-                                                                action:@selector(buttonToggleAdvancedTap:)];
-    [self.navigationItem setRightBarButtonItem:self.buttonToggleAdvanced];
+    [self.navigationItem setRightBarButtonItem:[SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
@@ -75,8 +70,6 @@
         make.right.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
-    
-    self.showAdvanced = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,13 +110,6 @@
         wSelf.refreshing = NO;
         [wSelf.pullToRefreshView finishLoading];
     }];
-}
-
-- (void)setShowAdvanced:(BOOL)showAdvanced
-{
-    self->_showAdvanced = showAdvanced;
-    [self.tableView reloadData];
-    [self.buttonToggleAdvanced setTitle:(showAdvanced ? @"Expert Mode" : @"Normal Mode")];
 }
 
 - (SYSaneOptionGroup *)optionGroupForTableViewSection:(NSUInteger)section
@@ -170,9 +156,11 @@
     }];
 }
 
-- (void)buttonToggleAdvancedTap:(id)sender
+- (void)buttonSettingsTap:(id)sender
 {
-    self.showAdvanced = !self.showAdvanced;
+    [SYPrefVC showOnVC:self closeBlock:^{
+        [self.tableView reloadData];
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -192,7 +180,7 @@
     
     SYSaneOptionGroup *group = [self optionGroupForTableViewSection:section];
     
-    if (group.containsOnlyAdvancedOptions && !self.showAdvanced)
+    if (group.containsOnlyAdvancedOptions && ![[SYPreferences shared] showAdvancedOptions])
         return 0;
     
     return group.items.count;
@@ -225,7 +213,7 @@
     
     SYSaneOptionGroup *group = [self optionGroupForTableViewSection:section];
     
-    if (group.containsOnlyAdvancedOptions && !self.showAdvanced)
+    if (group.containsOnlyAdvancedOptions && ![[SYPreferences shared] showAdvancedOptions])
         return [group.title stringByAppendingString:@" (ADVANCED)"];
     
     return group.title;
@@ -239,7 +227,7 @@
         return [SYPreviewCell cellHeightForDevice:self.device width:width];
     
     SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
-    if (opt.capAdvanced && !self.showAdvanced)
+    if (opt.capAdvanced && ![[SYPreferences shared] showAdvancedOptions])
         return 0.;
     
     return [SYOptionCell cellHeightForOption:opt showDescription:NO width:width];
