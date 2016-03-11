@@ -55,8 +55,9 @@
     [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
     [self.view addSubview:self.tableView];
  
-    self.buttonClose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+    self.buttonClose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
                                                                      target:self action:@selector(buttonCloseTap:)];
+    [self.buttonClose setTintColor:[UIColor grayColor]];
     [self.navigationItem setRightBarButtonItem:self.buttonClose];
     
     self.keysGroups = [[SYPreferences shared] allKeysGrouped];

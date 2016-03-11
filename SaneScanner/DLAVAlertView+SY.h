@@ -10,14 +10,16 @@
 
 @interface DLAVAlertView (SY)
 
+@property (nonatomic, assign) BOOL buttonsEnabled;
+
 - (void)setText:(NSString *)text forButtonAtIndex:(NSUInteger)index;
 
 - (NSUInteger)lastOtherButtonIndex;
-- (void)addSliderWithMin:(float)min
-                     max:(float)max
-                 current:(float)current
-             updateBlock:(void(^)(DLAVAlertView *alertView, float value))block;
+- (UISlider *)addSliderWithMin:(float)min
+                           max:(float)max
+                       current:(float)current
+                   updateBlock:(void(^)(DLAVAlertView *alertView, float value))block;
 
-- (void)addImageViewForImage:(UIImage *)image;
+- (UIImageView *)addImageViewForImage:(UIImage *)image;
 
 @end

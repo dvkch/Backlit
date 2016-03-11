@@ -126,32 +126,74 @@
 
 - (void)buttonScanTap:(id)sender
 {
+    __block DLAVAlertView *alertView;
+    __block UIImageView *alertViewImageView;
+    __block UIImage *completeImage;
+    
     [SVProgressHUD showWithStatus:@"Loading..."];
-    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress) {
-        [SVProgressHUD showProgress:progress];
-    } successBlock:^(UIImage *image, NSString *error) {
-        if (error)
+    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
+        if (!alertView && incompleteImage)
         {
-            [SVProgressHUD showErrorWithStatus:error];
-        }
-        else
-        {
-            [SVProgressHUD dismiss];
-            DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:@"Scanned image"
-                                                                    message:nil
-                                                                   delegate:nil
-                                                          cancelButtonTitle:@"Close"
-                                                          otherButtonTitles:@"Share", nil];
-            [alertView addImageViewForImage:image];
+            alertView = [[DLAVAlertView alloc] initWithTitle:@"Scanned image"
+                                                     message:nil
+                                                    delegate:nil
+                                           cancelButtonTitle:@"Close"
+                                           otherButtonTitles:@"Share", nil];
+            
+            alertViewImageView = [alertView addImageViewForImage:incompleteImage];
             [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == alertView.cancelButtonIndex)
                     return;
                 
                 UIActivityViewController *activityViewController =
-                [[UIActivityViewController alloc] initWithActivityItems:@[image]
+                [[UIActivityViewController alloc] initWithActivityItems:@[completeImage]
                                                   applicationActivities:nil];
                 [self presentViewController:activityViewController animated:YES completion:nil];
             }];
+            [alertView setButtonsEnabled:NO];
+            [SVProgressHUD dismiss];
+        }
+        else
+        {
+            [SVProgressHUD showProgress:progress];
+        }
+        
+        if (incompleteImage)
+            [alertViewImageView setImage:incompleteImage];
+        
+    } successBlock:^(UIImage *image, NSString *error) {
+        completeImage = image;
+        if (error)
+        {
+            [alertView dismissWithClickedButtonIndex:alertView.cancelButtonIndex animated:NO];
+            [SVProgressHUD showErrorWithStatus:error];
+        }
+        else
+        {
+            [SVProgressHUD dismiss];
+            
+            if (!alertView)
+            {
+                alertView = [[DLAVAlertView alloc] initWithTitle:@"Scanned image"
+                                                         message:nil
+                                                        delegate:nil
+                                               cancelButtonTitle:@"Close"
+                                               otherButtonTitles:@"Share", nil];
+                
+                alertViewImageView = [alertView addImageViewForImage:completeImage];
+                [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
+                    if (buttonIndex == alertView.cancelButtonIndex)
+                        return;
+                    
+                    UIActivityViewController *activityViewController =
+                    [[UIActivityViewController alloc] initWithActivityItems:@[completeImage]
+                                                      applicationActivities:nil];
+                    [self presentViewController:activityViewController animated:YES completion:nil];
+                }];
+            }
+            
+            [alertViewImageView setImage:completeImage];
+            [alertView setButtonsEnabled:YES];
         }
     }];
 }

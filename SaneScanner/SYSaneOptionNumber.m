@@ -34,7 +34,8 @@
                 if (self.type == SANE_TYPE_FIXED)
                     value = @(SANE_UNFIX(opt->constraint.word_list[i+1]));
                 
-                [values addObject:value];
+                if (value)
+                    [values addObject:value];
             }
             self.constraintValues = [values copy];
         }

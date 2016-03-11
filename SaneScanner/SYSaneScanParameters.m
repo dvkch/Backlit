@@ -10,6 +10,19 @@
 
 @implementation SYSaneScanParameters
 
++ (SYSaneScanParameters *)parametersForIncompleteDataOfLength:(NSUInteger)length
+                                           completeParameters:(SYSaneScanParameters *)completeParameters
+{
+    SYSaneScanParameters *parameters = [[SYSaneScanParameters alloc] init];
+    parameters.currentlyAcquiredChannel = completeParameters.currentlyAcquiredChannel;
+    parameters.acquiringLastChannel     = completeParameters.acquiringLastChannel;
+    parameters.bytesPerLine             = completeParameters.bytesPerLine;
+    parameters.depth                    = completeParameters.depth;
+    parameters.width                    = completeParameters.width;
+    parameters.height                   = length / parameters.bytesPerLine;
+    return parameters;
+}
+
 - (instancetype)initWithCParams:(SANE_Parameters)params
 {
     self = [super init];
@@ -18,19 +31,19 @@
         self.currentlyAcquiredChannel   = params.format;
         self.acquiringLastChannel       = params.last_frame;
         self.bytesPerLine               = params.bytes_per_line;
+        self.depth                      = params.depth;
         self.width                      = params.pixels_per_line;
         self.height                     = params.lines;
-        self.depth                      = params.depth;
     }
     return self;
 }
 
-- (int)fileSize
+- (NSUInteger)fileSize
 {
     return self.bytesPerLine * self.height;
 }
 
-- (int)numberOfChannels
+- (NSUInteger)numberOfChannels
 {
     return self.currentlyAcquiredChannel == SANE_FRAME_RGB ? 3 : 1;
 }
@@ -42,12 +55,12 @@
 
 - (NSString *)description
 {    
-    return [NSString stringWithFormat:@"<%@: %p, %d*%d*%d, channel: %@, isLastChannel: %d, bytesPerLine: %d>",
+    return [NSString stringWithFormat:@"<%@: %p, %ld*%ld*%ld, channel: %@, isLastChannel: %d, bytesPerLine: %ld>",
             self.class, self,
-            self.width, self.height, self.depth,
+            (long)self.width, (long)self.height, (long)self.depth,
             NSStringFromSANE_Frame(self.currentlyAcquiredChannel),
             self.acquiringLastChannel,
-            self.bytesPerLine];
+            (long)self.bytesPerLine];
 }
 
 @end

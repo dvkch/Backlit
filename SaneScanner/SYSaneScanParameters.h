@@ -15,15 +15,18 @@ NSString *NSStringFromSANE_Frame(SANE_Frame frame);
 
 @property (nonatomic, assign) SANE_Frame currentlyAcquiredChannel;
 @property (nonatomic, assign) BOOL acquiringLastChannel;
-@property (nonatomic, assign) int bytesPerLine;
-@property (nonatomic, assign) int width;
-@property (nonatomic, assign) int height;
-@property (nonatomic, assign) int depth;
+@property (nonatomic, assign) NSUInteger bytesPerLine;
+@property (nonatomic, assign) NSUInteger width;
+@property (nonatomic, assign) NSUInteger height;
+@property (nonatomic, assign) NSUInteger depth;
+
++ (SYSaneScanParameters *)parametersForIncompleteDataOfLength:(NSUInteger)length
+                                           completeParameters:(SYSaneScanParameters *)completeParameters;
 
 - (instancetype)initWithCParams:(SANE_Parameters)params;
 
-- (int)fileSize;
-- (int)numberOfChannels;
+- (NSUInteger)fileSize;
+- (NSUInteger)numberOfChannels;
 - (CGSize)size;
 
 @end

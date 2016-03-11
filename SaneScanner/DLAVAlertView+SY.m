@@ -53,11 +53,23 @@
     return objc_getAssociatedObject(self, @selector(sliderUpdateBlock));
 }
 
+- (BOOL)buttonsEnabled
+{
+    if (self.buttons.count)
+        return self.buttons[0].enabled;
+    return YES;
+}
 
-- (void)addSliderWithMin:(float)min
-                     max:(float)max
-                 current:(float)current
-             updateBlock:(void(^)(DLAVAlertView *alertView, float value))block;
+- (void)setButtonsEnabled:(BOOL)buttonsEnabled
+{
+    for (UIButton *button in self.buttons)
+        [button setEnabled:buttonsEnabled];
+}
+
+- (UISlider *)addSliderWithMin:(float)min
+                           max:(float)max
+                       current:(float)current
+                   updateBlock:(void(^)(DLAVAlertView *alertView, float value))block;
 {
     [self setSliderUpdateBlock:block];
     [self setMinContentWidth:280];
@@ -74,6 +86,8 @@
     
     if (block)
         block(self, slider.value);
+    
+    return slider;
 }
 
 - (void)sliderUpdatedValue:(UISlider *)slider
@@ -83,14 +97,15 @@
         block(self, slider.value);
 }
 
-- (void)addImageViewForImage:(UIImage *)image
+- (UIImageView *)addImageViewForImage:(UIImage *)image
 {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 280, 280)];
     [imageView setContentMode:UIViewContentModeScaleAspectFit];
-    [imageView setBackgroundColor:[UIColor blackColor]];
+    [imageView setBackgroundColor:[UIColor clearColor]];
     [imageView setImage:image];
     [self setContentView:imageView];
     [self setMinContentWidth:300];
+    return imageView;
 }
 
 @end

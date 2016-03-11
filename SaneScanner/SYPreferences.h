@@ -22,6 +22,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic) BOOL previewWithAutoColorMode;
 @property (nonatomic) BOOL showAdvancedOptions;
+@property (nonatomic) BOOL showIncompleteScanImages;
 
 - (NSArray <SYPair<NSString *, NSArray <NSString *> *> *> *)allKeysGrouped;
 

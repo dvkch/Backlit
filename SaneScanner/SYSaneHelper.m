@@ -561,14 +561,14 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 }
 
 - (void)previewWithDevice:(SYSaneDevice *)device
-            progressBlock:(void (^)(float))progressBlock
+            progressBlock:(void (^)(float, UIImage *))progressBlock
              successBlock:(void (^)(UIImage *, NSString *))successBlock
 {
     [self previewWithDevice:device progressBlock:progressBlock successBlock:successBlock useMainThread:[NSThread isMainThread]];
 }
 
 - (void)previewWithDevice:(SYSaneDevice *)device
-            progressBlock:(void (^)(float))progressBlock
+            progressBlock:(void (^)(float, UIImage *))progressBlock
              successBlock:(void (^)(UIImage *, NSString *))successBlock
             useMainThread:(BOOL)useMainThread
 {
@@ -680,7 +680,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 }
 
 - (void)scanWithDevice:(SYSaneDevice *)device
-         progressBlock:(void (^)(float))progressBlock
+         progressBlock:(void (^)(float, UIImage *))progressBlock
           successBlock:(void (^)(UIImage *, NSString *))successBlock
 {
     [self scanWithDevice:device
@@ -692,7 +692,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 - (void)scanWithDevice:(SYSaneDevice *)device
        useScanCropArea:(BOOL)useScanCropArea
-         progressBlock:(void (^)(float))progressBlock
+         progressBlock:(void (^)(float, UIImage *))progressBlock
           successBlock:(void (^)(UIImage *, NSString *))successBlock
          useMainThread:(BOOL)useMainThread
 {
@@ -735,16 +735,32 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         return;
     }
     
-    NSMutableData *data = [NSMutableData data];
-    SANE_Int bufferMaxSize = 100*1000;
+    SANE_Parameters estimatedParams;
+    sane_get_parameters(h, &estimatedParams);
+    SYSaneScanParameters *estimatedParameters = [[SYSaneScanParameters alloc] initWithCParams:estimatedParams];
+    
+    NSMutableData *data = [NSMutableData dataWithCapacity:estimatedParameters.fileSize];
+    SANE_Int bufferMaxSize = MAX(100*1000, (int)estimatedParameters.fileSize / 100);
     SANE_Byte *buffer = malloc(bufferMaxSize);
     SANE_Int bufferActualSize = 0;
-    SYSaneScanParameters *parameters = 0;
+    
+    SYSaneScanParameters *parameters;
+    
     while (s == SANE_STATUS_GOOD)
     {
         if (progressBlock && parameters.fileSize) {
             float progress = (double)data.length / (double)parameters.fileSize;
-            RUN_BLOCK_ASYNC(YES, progressBlock, progress);
+            if ([[SYPreferences shared] showIncompleteScanImages])
+            {
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    // image creation needs to be done on main thread
+                    UIImage *incompleteImage = [UIImage imageFromIncompleteRGBData:[data copy] saneParameters:parameters error:NULL];
+                    if (progressBlock)
+                        progressBlock(progress, incompleteImage);
+                });
+            }
+            else
+                RUN_BLOCK_ASYNC(YES, progressBlock, progress, nil);
         }
         
         [data appendData:[NSData dataWithBytes:buffer length:bufferActualSize]];
@@ -755,7 +771,6 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
             SANE_Parameters params;
             sane_get_parameters(h, &params);
             parameters = [[SYSaneScanParameters alloc] initWithCParams:params];
-            NSLog(@"%@", parameters);
         }
     }
     

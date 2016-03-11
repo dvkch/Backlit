@@ -117,7 +117,32 @@
     CGColorSpaceRelease(colorSpaceRef);
     CGImageRelease(sourceImageRef);
     CGImageRelease(destImageRef);
+    CGContextRelease(context);
     free(pixels);
+    
+    return image;
+}
+
++ (UIImage *)imageFromIncompleteRGBData:(NSData *)data saneParameters:(SYSaneScanParameters *)parameters error:(NSString **)error
+{
+    SYSaneScanParameters *incompleteParams = [SYSaneScanParameters parametersForIncompleteDataOfLength:data.length
+                                                                                    completeParameters:parameters];
+    
+    if (!incompleteParams.fileSize)
+        return nil;
+    
+    UIImage *image = [self imageFromRGBData:data saneParameters:incompleteParams error:error];
+    
+    if (image)
+    {
+        CGRect fullRect = CGRectMake(0, 0, parameters.width, parameters.height);
+        UIGraphicsBeginImageContextWithOptions(fullRect.size, NO, 1.0);
+        [[UIColor whiteColor] setFill];
+        [[UIBezierPath bezierPathWithRect:fullRect] fill];
+        [image drawInRect:(CGRect){CGPointZero, image.size}];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
     
     return image;
 }

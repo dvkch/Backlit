@@ -127,7 +127,8 @@ static CGFloat const kMargin = 15.;
 - (void)buttonAcquirePreviewTap:(id)sender
 {
     [SVProgressHUD showWithStatus:@"Loading..."];
-    [[SYSaneHelper shared] previewWithDevice:self.device progressBlock:^(float progress) {
+    [[SYSaneHelper shared] previewWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
+        [self.imageView setImage:incompleteImage];
         [SVProgressHUD showProgress:progress];
     } successBlock:^(UIImage *image, NSString *error) {
         if (error)

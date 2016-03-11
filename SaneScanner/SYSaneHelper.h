@@ -53,11 +53,11 @@ needsAuthForDevice:(NSString *)device
            block:(void(^)(BOOL reloadAllOptions, NSString *error))block;
 
 - (void)previewWithDevice:(SYSaneDevice *)device
-            progressBlock:(void(^)(float progress))progressBlock
+            progressBlock:(void(^)(float progress, UIImage *incompleteImage))progressBlock
              successBlock:(void(^)(UIImage *image, NSString *error))successBlock;
 
 - (void)scanWithDevice:(SYSaneDevice *)device
-         progressBlock:(void(^)(float progress))progressBlock
+         progressBlock:(void(^)(float progress, UIImage *incompleteImage))progressBlock
           successBlock:(void(^)(UIImage *image, NSString *error))successBlock;
 
 @end
