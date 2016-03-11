@@ -38,7 +38,6 @@ SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption
 @property (nonatomic, strong, readonly) NSString *vendor;
 @property (nonatomic, strong, readonly) NSString *model;
 @property (nonatomic, strong, readonly) NSArray <SYSaneOption *> *allOptions;
-@property (nonatomic, strong, readonly) NSArray <SYSaneOptionGroup *> *groupedOptionsWithoutCrop;
 @property (nonatomic, assign, readonly) BOOL canCrop;
 @property (nonatomic, assign, readonly) CGRect maxCropArea;
 @property (nonatomic, strong) UIImage *lastPreviewImage;
@@ -49,6 +48,8 @@ SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption
 - (NSString *)humanName;
 
 - (CGFloat)previewImageRatio;
+
+- (NSArray <SYSaneOptionGroup *> *)filteredGroupedOptionsWithoutAdvanced:(BOOL)removeAdvanced;
 
 - (NSArray <SYSaneOption *> *)standardOptions:(NSArray <NSNumber *> *)stdOptions;
 - (SYSaneOption *)standardOption:(SYSaneStandardOption)stdOption;

@@ -58,6 +58,7 @@ static CGFloat const kBorderWidth    =  2.;
     {
         UIView *borderView = self.borderViews[borderN];
         [borderView setBackgroundColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.]];
+        [borderView.layer setOpaque:YES];
         [self addSubview:borderView];
         
         if (CGRectSideIsVertical(borderN.unsignedIntegerValue))
@@ -92,6 +93,8 @@ static CGFloat const kBorderWidth    =  2.;
         [cornerView.layer setShadowOffset:CGSizeZero];
         [cornerView.layer setShadowOpacity:0.3];
         [cornerView.layer setShadowRadius:3.];
+        [cornerView.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
+        [cornerView.layer setShouldRasterize:YES];
         [self addSubview:cornerView];
         
         UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] init];

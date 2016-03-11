@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UILabel *labelTitle;
 @property (nonatomic, strong) UILabel *labelValue;
 @property (nonatomic, strong) UILabel *labelDescr;
+@property (nonatomic, strong) MASConstraint *constraingLabelDescrHeight;
 @end
 
 @implementation SYOptionCell
@@ -32,19 +33,38 @@
         [self.contentView setClipsToBounds:YES];
         
         self.labelTitle = [[UILabel alloc] init];
+        [self.labelTitle setBackgroundColor:[UIColor clearColor]];
         [self.contentView addSubview:self.labelTitle];
         
         self.labelValue = [[UILabel alloc] init];
+        [self.labelValue setBackgroundColor:[UIColor clearColor]];
         [self.labelValue setTextAlignment:NSTextAlignmentRight];
         [self.contentView addSubview:self.labelValue];
         
         self.labelDescr = [[UILabel alloc] init];
+        [self.labelDescr setBackgroundColor:[UIColor clearColor]];
         [self.labelDescr setNumberOfLines:0];
         [self.labelDescr setLineBreakMode:NSLineBreakByWordWrapping];
         [self.labelDescr setFont:[UIFont systemFontOfSize:self.labelDescr.font.pointSize - 2]];
         [self.contentView addSubview:self.labelDescr];
         
-        [self setNeedsUpdateConstraints];
+        [self.labelTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@10);
+            make.left.equalTo(@10);
+            make.right.equalTo(self.labelValue.mas_left).offset(-10);
+        }];
+        
+        [self.labelValue mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@10);
+            make.right.equalTo(@(-10));
+        }];
+        
+        [self.labelDescr mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.labelTitle.mas_bottom).offset(self.showDescription ? 6 : 0);
+            make.left.equalTo(@10);
+            make.right.equalTo(@(-10));
+            make.bottom.equalTo(@(-10)).priorityLow();
+        }];
     }
     return self;
 }
@@ -118,25 +138,29 @@
 {
     [super updateConstraints];
     
-    [self.labelTitle mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@10);
-        make.left.equalTo(@10);
-        make.right.equalTo(self.labelValue.mas_left).offset(-10);
-    }];
+    if (self.showDescription && self.constraingLabelDescrHeight)
+    {
+        [self.constraingLabelDescrHeight uninstall];
+        self.constraingLabelDescrHeight = nil;
+    }
     
-    [self.labelValue mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@10);
-        make.right.equalTo(@(-10));
-    }];
+    if (!self.showDescription && !self.constraingLabelDescrHeight)
+    {
+        [self.labelDescr mas_makeConstraints:^(MASConstraintMaker *make) {
+            self.constraingLabelDescrHeight = make.height.equalTo(@0);
+        }];
+    }
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
     
-    [self.labelDescr mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.labelTitle.mas_bottom).offset(self.showDescription ? 6 : 0);
-        make.left.equalTo(@10);
-        make.right.equalTo(@(-10));
-        if (!self.showDescription)
-            make.height.equalTo(@0);
-        make.bottom.equalTo(@(-10)).priorityLow();
-    }];
+    for (UIView *view in self.contentView.subviews)
+        if ([view isKindOfClass:[UILabel class]])
+            [(UILabel *)view setPreferredMaxLayoutWidth:view.bounds.size.width];
+
+    [super layoutSubviews];
 }
 
 static SYOptionCell *sizingCell;
@@ -157,11 +181,21 @@ static SYOptionCell *sizingCell;
     [sizingCell updateConstraintsIfNeeded];
     [sizingCell setNeedsLayout];
     [sizingCell layoutIfNeeded];
+    
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:sizingCell.contentView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:nil
+                                                                       attribute:NSLayoutAttributeNotAnAttribute
+                                                                      multiplier:1.
+                                                                        constant:width];
+    [sizingCell.contentView addConstraint:widthConstraint];
     [sizingCell.contentView layoutIfNeeded];
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)
-                                        withHorizontalFittingPriority:UILayoutPriorityRequired
-                                              verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
-    return size.height + 1;
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)];
+    [sizingCell.contentView removeConstraint:widthConstraint];
+    
+    return ceil(size.height);
 }
 
 + (CGFloat)cellHeightForPrefKey:(NSString *)prefKey showDescription:(BOOL)showDescription width:(CGFloat)width
@@ -178,11 +212,21 @@ static SYOptionCell *sizingCell;
     [sizingCell updateConstraintsIfNeeded];
     [sizingCell setNeedsLayout];
     [sizingCell layoutIfNeeded];
+    
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:sizingCell.contentView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:nil
+                                                                       attribute:NSLayoutAttributeNotAnAttribute
+                                                                      multiplier:1.
+                                                                        constant:width];
+    [sizingCell.contentView addConstraint:widthConstraint];
     [sizingCell.contentView layoutIfNeeded];
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)
-                                        withHorizontalFittingPriority:UILayoutPriorityRequired
-                                              verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
-    return size.height + 1;
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)];
+    [sizingCell.contentView removeConstraint:widthConstraint];
+    
+    return ceil(size.height);
 }
 
 @end

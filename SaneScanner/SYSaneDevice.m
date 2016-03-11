@@ -16,7 +16,6 @@
 @property (nonatomic, strong, readwrite) NSString *vendor;
 @property (nonatomic, strong, readwrite) NSString *model;
 @property (nonatomic, strong, readwrite) NSArray <SYSaneOption *> *allOptions;
-@property (nonatomic, strong, readwrite) NSArray <SYSaneOptionGroup *> *groupedOptionsWithoutCrop;
 @property (nonatomic, assign, readwrite) BOOL canCrop;
 @property (nonatomic, assign, readwrite) CGRect maxCropArea;
 @property (nonatomic, strong) NSNumber *previewImageRatioN;
@@ -104,8 +103,6 @@
         if (!option.capSettableViaSoftware || option.capInactive)
             allSettable = NO;
     
-    NSMutableArray <SYSaneOption *> *optionsWithoutCrop = [options mutableCopy];
-    
     if (cropOptions.count == 4 && allSettable)
     {
         double tlX = 0, tlY = 0, brX = 0, brY = 0;
@@ -138,10 +135,31 @@
             self.cropArea = self.maxCropArea;
         
         self.canCrop = YES;
-        [optionsWithoutCrop removeObjectsInArray:cropOptions];
+    }
+}
+
+- (NSArray <SYSaneOptionGroup *> *)filteredGroupedOptionsWithoutAdvanced:(BOOL)removeAdvanced
+{
+    NSMutableArray <SYSaneOption *> *filteredOptions = [self.allOptions mutableCopy];
+    [filteredOptions removeObject:[self standardOption:SYSaneStandardOptionPreview]];
+    
+    if (self.canCrop)
+    {
+        NSArray <SYSaneOption *> *cropOptions = [self standardOptions:@[@(SYSaneStandardOptionAreaTopLeftX),
+                                                                        @(SYSaneStandardOptionAreaTopLeftY),
+                                                                        @(SYSaneStandardOptionAreaBottomRightX),
+                                                                        @(SYSaneStandardOptionAreaBottomRightY)]];
+        [filteredOptions removeObjectsInArray:cropOptions];
     }
     
-    self.groupedOptionsWithoutCrop = [SYSaneOption groupedElements:optionsWithoutCrop removeEmptyGroups:YES];
+    if (removeAdvanced)
+    {
+        for (SYSaneOption *option in self.allOptions)
+            if (option.capAdvanced)
+                [filteredOptions removeObject:option];
+    }
+    
+    return [SYSaneOption groupedElements:filteredOptions removeEmptyGroups:YES];
 }
 
 @end

@@ -47,6 +47,8 @@ static CGFloat const kMargin = 15.;
     [self.imageView.layer setShadowOffset:CGSizeZero];
     [self.imageView.layer setShadowRadius:5.f];
     [self.imageView.layer setShadowOpacity:0.3f];
+    [self.imageView.layer setShouldRasterize:YES];
+    [self.imageView.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
     [self addSubview:self.imageView];
     
     self.lineView = [[UIView alloc] init];
@@ -85,6 +87,17 @@ static CGFloat const kMargin = 15.;
         make.right.equalTo(@0);
         make.bottom.equalTo(@0);
     }];
+    
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(kMargin));
+        make.centerX.equalTo(@0);
+        make.left.greaterThanOrEqualTo(@(kMargin));
+        make.right.lessThanOrEqualTo(@(-kMargin));
+        make.bottom.lessThanOrEqualTo(self.buttonAcquirePreview.mas_top).offset(-kMargin);
+        make.bottom.equalTo(self.buttonAcquirePreview.mas_top).offset(-kMargin).priorityLow();
+    }];
+    
+    [self setNeedsUpdateConstraints];
 }
 
 - (void)updateConstraints
@@ -95,14 +108,8 @@ static CGFloat const kMargin = 15.;
     if (ratio <= 0.)
         ratio = 3./4.;
     
-    [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(kMargin));
-        make.centerX.equalTo(@0);
-        make.left.greaterThanOrEqualTo(@(kMargin));
-        make.right.lessThanOrEqualTo(@(-kMargin));
+    [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.imageView.mas_height).multipliedBy(ratio);
-        make.bottom.lessThanOrEqualTo(self.buttonAcquirePreview.mas_top).offset(-kMargin);
-        make.bottom.equalTo(self.buttonAcquirePreview.mas_top).offset(-kMargin).priorityLow();
     }];
 }
 

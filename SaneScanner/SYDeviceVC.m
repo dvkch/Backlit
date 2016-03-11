@@ -47,7 +47,7 @@
     [self.tableView registerClass:[SYOptionCell  class] forCellReuseIdentifier:@"SYOptionCell"];
     [self.view addSubview:self.tableView];
     
-    self.buttonScan = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.buttonScan = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonScan addTarget:self action:@selector(buttonScanTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonScan setBackgroundColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.]];
     [self.buttonScan setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -112,14 +112,19 @@
     }];
 }
 
+- (NSArray <SYSaneOptionGroup *> *)optionGroups
+{
+    return [self.device filteredGroupedOptionsWithoutAdvanced:![[SYPreferences shared] showAdvancedOptions]];
+}
+
 - (SYSaneOptionGroup *)optionGroupForTableViewSection:(NSUInteger)section
 {
-    return self.device.groupedOptionsWithoutCrop[section-1];
+    return self.optionGroups[section-1];
 }
 
 - (SYSaneOption *)optionForTableViewIndexPath:(NSIndexPath *)indexPath
 {
-    return self.device.groupedOptionsWithoutCrop[indexPath.section-1].items[indexPath.row];
+    return self.optionGroups[indexPath.section-1].items[indexPath.row];
 }
 
 #pragma mark - IBActions
@@ -212,7 +217,7 @@
     if (!self.device.allOptions.count)
         return 0;
     
-    return self.device.groupedOptionsWithoutCrop.count + 1;
+    return self.optionGroups.count + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -220,12 +225,7 @@
     if (section == 0)
         return 1;
     
-    SYSaneOptionGroup *group = [self optionGroupForTableViewSection:section];
-    
-    if (group.containsOnlyAdvancedOptions && ![[SYPreferences shared] showAdvancedOptions])
-        return 0;
-    
-    return group.items.count;
+    return [self optionGroupForTableViewSection:section].items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -251,14 +251,9 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 0)
-        return @"PREVIEW";
+        return @"Preview";
     
-    SYSaneOptionGroup *group = [self optionGroupForTableViewSection:section];
-    
-    if (group.containsOnlyAdvancedOptions && ![[SYPreferences shared] showAdvancedOptions])
-        return [group.title stringByAppendingString:@" (ADVANCED)"];
-    
-    return group.title;
+    return [self optionGroupForTableViewSection:section].title;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -268,11 +263,9 @@
     if (indexPath.section == 0)
         return [SYPreviewCell cellHeightForDevice:self.device width:width];
     
-    SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
-    if (opt.capAdvanced && ![[SYPreferences shared] showAdvancedOptions])
-        return 0.;
-    
-    return [SYOptionCell cellHeightForOption:opt showDescription:NO width:width];
+    return [SYOptionCell cellHeightForOption:[self optionForTableViewIndexPath:indexPath]
+                             showDescription:NO
+                                       width:width];
 }
 
 #pragma mark - UITableViewDelegate
