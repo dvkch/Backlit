@@ -1,10 +1,10 @@
 inhibit_all_warnings!
 
-platform :ios, '6.1'
+platform :ios, '7.0'
 
 pod 'YapDatabase'
-pod 'SVProgressHUD', '~> 1.1.3'
-pod 'UIImage-Resize', '~> 1.0.1'
+pod 'SVProgressHUD'
+pod 'UIImage-Resize'
 pod 'NSDate+TimeAgo'
 pod 'SSPullToRefresh'
 pod 'SYLogRedirect'
@@ -14,4 +14,4 @@ pod 'Masonry'
 pod 'PKYStepper'
 pod 'SYKit'
 pod 'SYPair'
-#pod 'BlocksKit', '~> 2.2.2'
+pod 'MHVideoPhotoGallery'

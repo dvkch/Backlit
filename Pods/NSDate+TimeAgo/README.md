@@ -1,3 +1,15 @@
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
+## Migration 2014.04.12
+
+NSDate+TimeAgo has merged with DateTools. DateTools is the parent project and Matthew York is the project head.
+
+This project is now part of DateTools. Please visit https://github.com/MatthewYork/DateTools
+
+This repo is here in archive form. New work should be contributed to DateTools.
+
+2016.01.04. To reiterate, all issues and contributions should go to DateTools, there is zero promise anything here will be looked at. Kevin's attention is on [Kerf](http://kerfsoftware.com).
+
 ## Description
 
 This is an iOS, Objective-C, Cocoa Touch, iPhone, iPad category for `NSDate`. It gives `NSDate` the ability to report times like `"A moment ago"`, `"30 seconds ago"`, `"5 minutes ago"`, `"Yesterday"`, `"Last month"`, `"2 years ago"`, and so on.
@@ -34,6 +46,11 @@ This functionality has variously been referred to as a "time ago", "time since",
 - pl (Polish)
 - sv (Swedish)
 - th (Thai)
+- uk (Ukrainian)
+- is (Icelandic)
+- sq (Albanian)
+- sk (Slovak)
+- ms (Malay)
 
 If you know a language not listed here, please consider submitting a translation. [Localization codes by language](http://stackoverflow.com/questions/3040677/locale-codes-for-iphone-lproj-folders).
 
@@ -126,4 +143,10 @@ kolarski added `bg` Bulgarian strings. http://github.com/kolarski
 Vladimir Kofman added `he` Hebrew strings. https://github.com/vladimirkofman
 
 Viraf Sarkari added `ar` Arabic, `gre` Greek, `pl` Polish, `sv` Swedish, and `th` Thai strings. https://github.com/viraf
+
+Vasyl Skrypii added `uk` Ukranian strings. https://github.com/medlay 
+
+Maggi Trymbill added `is` Icelandic strings. https://github.com/grundvollur
+
+Erid Bardhaj added `sq` Albanian strings. https://github.com/eridbardhaj
 
