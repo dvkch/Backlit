@@ -10,6 +10,7 @@
 #import <SYShapeView.h>
 #import "SYTools.h"
 #import "UIView+SYTapOutside.h"
+#import "UIColor+SY.h"
 
 static CGFloat const kCornerViewSize = 20.;
 static CGFloat const kBorderWidth    =  2.;
@@ -57,7 +58,7 @@ static CGFloat const kBorderWidth    =  2.;
     for (NSNumber *borderN in self.borderViews.allKeys)
     {
         UIView *borderView = self.borderViews[borderN];
-        [borderView setBackgroundColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.]];
+        [borderView setBackgroundColor:[UIColor vividBlueColor]];
         [borderView.layer setOpaque:YES];
         [self addSubview:borderView];
         
@@ -85,7 +86,7 @@ static CGFloat const kBorderWidth    =  2.;
     {
         UIView *cornerView = self.cornerViews[cornerN];
         [cornerView setSy_tapInsets:UIEdgeInsetsMake(-5, -5, -5, -5)];
-        [cornerView setBackgroundColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.]];
+        [cornerView setBackgroundColor:[UIColor vividBlueColor]];
         [cornerView.layer setBorderColor:[UIColor whiteColor].CGColor];
         [cornerView.layer setBorderWidth:2.];
         [cornerView.layer setCornerRadius:kCornerViewSize/2.];

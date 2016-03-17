@@ -10,33 +10,41 @@
 #import "SYTools.h"
 #import "SYDevicesVC.h"
 #import "SYSaneHelper.h"
+#import "SYToolbar.h"
+#import "SYGalleryManager.h"
 #import <SVProgressHUD.h>
 
-@interface SYAppDelegate ()
-
+@interface SYAppDelegate () <SYGalleryManagerDelegate>
+@property (nonatomic, strong) UINavigationController *navigationController;
 @end
 
 @implementation SYAppDelegate
 
 + (instancetype)obtain
 {
-    return [[UIApplication sharedApplication] delegate];
+    return (SYAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // needed for Sane-net config file
-    [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools documentsPath]];
+    [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools appSupportPath]];
 
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.navigationController =
+    [[UINavigationController alloc] initWithNavigationBarClass:nil toolbarClass:[SYToolbar class]];
+    [self.navigationController setToolbarHidden:YES];
+    [(SYToolbar *)self.navigationController.toolbar setHeight:64.];
+    [(SYToolbar *)self.navigationController.toolbar setPadding:0.];
+    [self.navigationController.toolbar setTranslucent:NO];
+    [self.navigationController setViewControllers:@[vc]];
     
     // creating window
     self.window = [[UIWindow alloc] init];
     [self.window makeKeyAndVisible];
     [self.window setFrame:[[UIScreen mainScreen] bounds]];
-    [self.window setRootViewController:nc];
+    [self.window setRootViewController:self.navigationController];
     [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window.layer setMasksToBounds:YES];
     [self.window.layer setOpaque:NO];
@@ -47,7 +55,21 @@
     // customize HUD
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    // auto manage toolbar visibility
+    [[SYGalleryManager shared] addDelegate:self];
+#warning need to restart app to see device ?!
     return YES;
+}
+
+#warning better delegate
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager didUpdateImageList:(NSArray<NSString *> *)imageList
+{
+    [self.navigationController setToolbarHidden:(imageList.count == 0) animated:YES];
+}
+
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager didAddImage:(NSString *)imageName
+{
+    [self.navigationController setToolbarHidden:(gallerymanager.imageNames.count == 0) animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

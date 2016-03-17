@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4D5EFD6B3082C499709140AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79433720B786F7579199C998 /* libPods.a */; };
+		970755981C972F7200BE9275 /* SYGalleryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 970755971C972F7200BE9275 /* SYGalleryVC.m */; };
+		9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */; };
+		9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559D1C972FF600BE9275 /* SYGalleryManager.m */; };
 		971BE23F1C8E288300B8F29C /* NSMutableData+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */; };
 		971BE2421C8E364A00B8F29C /* SYSaneOptionNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2411C8E364A00B8F29C /* SYSaneOptionNumber.m */; };
 		971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */; };
@@ -27,6 +30,8 @@
 		975B78171C923C7200804D86 /* SYPrefVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78161C923C7200804D86 /* SYPrefVC.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
 		97BB76F41C89169F00A0823A /* SYSaneScanParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */; };
+		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
+		97DA07151C989318007F522E /* SYToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07141C989318007F522E /* SYToolbar.m */; };
 		F804E0711AFA4AF300CBE307 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06C1AFA4AF300CBE307 /* libsane-dll.a */; };
 		F804E0721AFA4AF300CBE307 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06D1AFA4AF300CBE307 /* libsane-net.a */; };
 		F804E0731AFA4AF300CBE307 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06E1AFA4AF300CBE307 /* libsane.a */; };
@@ -45,6 +50,12 @@
 /* Begin PBXFileReference section */
 		3B707C7C94B3F4CD87DAE05B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		79433720B786F7579199C998 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		970755961C972F7100BE9275 /* SYGalleryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryVC.h; sourceTree = "<group>"; };
+		970755971C972F7200BE9275 /* SYGalleryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryVC.m; sourceTree = "<group>"; };
+		970755991C972FE600BE9275 /* SYGalleryThumbsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsView.h; sourceTree = "<group>"; };
+		9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryThumbsView.m; sourceTree = "<group>"; };
+		9707559C1C972FF600BE9275 /* SYGalleryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryManager.h; sourceTree = "<group>"; };
+		9707559D1C972FF600BE9275 /* SYGalleryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryManager.m; sourceTree = "<group>"; };
 		971BE23D1C8E288300B8F29C /* NSMutableData+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableData+SY.h"; sourceTree = "<group>"; };
 		971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableData+SY.m"; sourceTree = "<group>"; };
 		971BE2401C8E364A00B8F29C /* SYSaneOptionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionNumber.h; sourceTree = "<group>"; };
@@ -83,6 +94,10 @@
 		975F9C991C8F15B7005A96AB /* SYCropMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYCropMaskView.m; sourceTree = "<group>"; };
 		97BB76F21C89169F00A0823A /* SYSaneScanParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneScanParameters.h; sourceTree = "<group>"; };
 		97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneScanParameters.m; sourceTree = "<group>"; };
+		97DA07101C98927E007F522E /* UIColor+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SY.h"; sourceTree = "<group>"; };
+		97DA07111C98927E007F522E /* UIColor+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SY.m"; sourceTree = "<group>"; };
+		97DA07131C989318007F522E /* SYToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYToolbar.h; sourceTree = "<group>"; };
+		97DA07141C989318007F522E /* SYToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYToolbar.m; sourceTree = "<group>"; };
 		BD5626431CEA71F0459153C5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F804E06C1AFA4AF300CBE307 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/libsane-dll.a"; sourceTree = "<group>"; };
 		F804E06D1AFA4AF300CBE307 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/all/libsane-net.a"; sourceTree = "<group>"; };
@@ -165,6 +180,8 @@
 				F804E0781AFA569B00CBE307 /* SYDeviceVC.m */,
 				975B78151C923C7200804D86 /* SYPrefVC.h */,
 				975B78161C923C7200804D86 /* SYPrefVC.m */,
+				970755961C972F7100BE9275 /* SYGalleryVC.h */,
+				970755971C972F7200BE9275 /* SYGalleryVC.m */,
 			);
 			name = VCs;
 			sourceTree = "<group>";
@@ -184,6 +201,8 @@
 				971F98871C88AC5900562A21 /* NSObject+SY.m */,
 				975B780F1C91D52F00804D86 /* UIView+SYTapOutside.h */,
 				975B78101C91D52F00804D86 /* UIView+SYTapOutside.m */,
+				97DA07101C98927E007F522E /* UIColor+SY.h */,
+				97DA07111C98927E007F522E /* UIColor+SY.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -197,6 +216,10 @@
 				971BE2471C8EEF4700B8F29C /* SYSanePreviewView.m */,
 				975F9C981C8F15B7005A96AB /* SYCropMaskView.h */,
 				975F9C991C8F15B7005A96AB /* SYCropMaskView.m */,
+				970755991C972FE600BE9275 /* SYGalleryThumbsView.h */,
+				9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */,
+				97DA07131C989318007F522E /* SYToolbar.h */,
+				97DA07141C989318007F522E /* SYToolbar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -208,6 +231,8 @@
 				F8C3EE431AF9B163003A991F /* SYSaneHelper.m */,
 				975B78121C923B6D00804D86 /* SYPreferences.h */,
 				975B78131C923B6D00804D86 /* SYPreferences.m */,
+				9707559C1C972FF600BE9275 /* SYGalleryManager.h */,
+				9707559D1C972FF600BE9275 /* SYGalleryManager.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -414,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				970755981C972F7200BE9275 /* SYGalleryVC.m in Sources */,
 				975B78111C91D52F00804D86 /* UIView+SYTapOutside.m in Sources */,
 				971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
@@ -424,11 +450,15 @@
 				F894F3AB1AFAAFAA00365036 /* SYOptionCell.m in Sources */,
 				F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */,
 				97521E6A1C88E8BA00C77209 /* SYSaneOptionBool.m in Sources */,
+				97DA07151C989318007F522E /* SYToolbar.m in Sources */,
 				971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */,
+				97DA07121C98927E007F522E /* UIColor+SY.m in Sources */,
 				F804E0761AFA4EC300CBE307 /* SYSaneDevice.m in Sources */,
 				9734E3621C90218E00B66797 /* SYAddCell.m in Sources */,
 				971F98881C88AC5900562A21 /* NSObject+SY.m in Sources */,
+				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,
 				F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */,
+				9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */,
 				9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */,
 				F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */,
 				97586E941C89272300C37931 /* UIImage+SY.m in Sources */,
@@ -486,7 +516,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -525,7 +555,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -544,7 +574,6 @@
 					"$(PROJECT_DIR)/sane-libs/all",
 				);
 				INFOPLIST_FILE = SaneScanner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -566,7 +595,6 @@
 					"$(PROJECT_DIR)/sane-libs/all",
 				);
 				INFOPLIST_FILE = SaneScanner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

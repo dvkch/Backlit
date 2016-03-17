@@ -128,17 +128,18 @@ BOOL CGRectSideIsVertical(CGRectSide side)
 + (NSString *)documentsPath
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    return ([paths count] ? paths[0] : nil);
+    return paths.firstObject;
+}
+
++ (NSString *)appSupportPath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    return [paths.firstObject stringByAppendingPathComponent:@"SaneScanner"];
 }
 
 + (NSString *)pathForFile:(NSString *)filename
 {
     return [[self documentsPath] stringByAppendingPathComponent:filename];
-}
-
-+ (NSString *)hostsFile
-{
-    return [self pathForFile:@"hosts.cfg"];
 }
 
 @end

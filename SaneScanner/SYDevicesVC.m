@@ -16,10 +16,13 @@
 #import "SYAddCell.h"
 #import <SVProgressHUD.h>
 #import "SYPrefVC.h"
+#import "SYGalleryThumbsView.h"
+#import <Masonry.h>
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
+@property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
 @end
 
 @implementation SYDevicesVC
@@ -35,9 +38,16 @@
     [self.tableView registerClass:[SYAddCell class]       forCellReuseIdentifier:@"SYAddCell"];
     [self.view addSubview:self.tableView];
     
-    [self.navigationItem setRightBarButtonItem:[SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
+    self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self];
+    
+    [self.navigationItem setRightBarButtonItem:
+     [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [[SYSaneHelper shared] setDelegate:self];
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(@0);
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated

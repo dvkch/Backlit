@@ -24,9 +24,13 @@
 #import <Masonry.h>
 #import "SYPrefVC.h"
 #import "SYPreferences.h"
+#import "SYGalleryManager.h"
+#import "SYGalleryThumbsView.h"
+#import "UIColor+SY.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate>
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
+@property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIButton *buttonScan;
 @property (nonatomic, assign) BOOL refreshing;
@@ -38,8 +42,6 @@
 {
     [super viewDidLoad];
     
-    CGFloat buttonHeight = 44;
-    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
@@ -49,26 +51,27 @@
     
     self.buttonScan = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonScan addTarget:self action:@selector(buttonScanTap:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonScan setBackgroundColor:[UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.]];
+    [self.buttonScan setBackgroundColor:[UIColor vividBlueColor]];
     [self.buttonScan setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.buttonScan setTitle:@"SCAN" forState:UIControlStateNormal];
     [self.buttonScan.titleLabel setFont:[UIFont systemFontOfSize:17]];
     [self.view addSubview:self.buttonScan];
     
-    [self.navigationItem setRightBarButtonItem:[SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
+    [self.navigationItem setRightBarButtonItem:
+     [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
         make.left.equalTo(@0);
         make.right.equalTo(@0);
-        make.bottom.equalTo(@(-buttonHeight));
     }];
     
     [self.buttonScan mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.tableView.mas_bottom);
+        make.height.equalTo(@44);
         make.left.equalTo(@0);
         make.right.equalTo(@0);
-        make.bottom.equalTo(@0);
+        make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
 }
 
@@ -76,7 +79,16 @@
 {
     [super viewWillAppear:animated];
     [self setTitle:[self.device model]];
+    self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self];
+    
     [self refresh];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self setToolbarItems:@[]];
+#warning nil;
 }
 
 - (void)dealloc
@@ -131,11 +143,27 @@
 
 - (void)buttonScanTap:(id)sender
 {
+    [SVProgressHUD showWithStatus:@"Scanning..."];
+    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
+        [SVProgressHUD showProgress:progress];
+    } successBlock:^(UIImage *image, NSString *error) {
+        if (error)
+            [SVProgressHUD showErrorWithStatus:error];
+        else
+        {
+            [[SYGalleryManager shared] addImage:image];
+            [SVProgressHUD showSuccessWithStatus:nil];
+        }
+    }];
+}
+
+- (void)buttonScanTap2:(id)sender
+{
     __block DLAVAlertView *alertView;
     __block UIImageView *alertViewImageView;
     __block UIImage *completeImage;
     
-    [SVProgressHUD showWithStatus:@"Loading..."];
+    [SVProgressHUD showWithStatus:@"Scanning..."];
     [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
         if (!alertView && incompleteImage)
         {

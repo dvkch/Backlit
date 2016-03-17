@@ -36,7 +36,7 @@ BOOL CGRectSideIsVertical(CGRectSide side);
 @interface SYTools : NSObject
 
 + (NSString *)documentsPath;
++ (NSString *)appSupportPath;
 + (NSString *)pathForFile:(NSString *)filename;
-+ (NSString *)hostsFile;
 
 @end

@@ -166,6 +166,7 @@
 static SYOptionCell *sizingCell;
 
 #warning make this generic
+#warning doesn't work
 
 + (CGFloat)cellHeightForOption:(SYSaneOption *)option showDescription:(BOOL)showDescription width:(CGFloat)width
 {

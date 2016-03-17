@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Syan. All rights reserved.
 //
 
+#warning use consts in saneopts.h
+
 #import "SYSaneHelper.h"
 #import "SYTools.h"
 #import "SYSaneDevice.h"
@@ -37,7 +39,9 @@ NSDate *perfDate = [NSDate date]
 if ([[NSDate date] timeIntervalSinceDate:perfDate] > ((double)min)/1000.) \
     NSLog(@"%@: %.03lfs", NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSinceDate:perfDate])
 
-#define PERF_MIN_MS (10000)
+#define PERF_MIN_MS (1000)
+
+static NSString * const SYSaneHelper_PrefKey_Hosts = @"hosts";
 
 void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *password);
 
@@ -69,7 +73,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         [self.thread setName:@"SYSaneHelper"];
         [self.thread start];
         
-        NSArray <NSString *> *savedHosts = [NSArray arrayWithContentsOfFile:[SYTools hostsFile]];
+        NSArray <NSString *> *savedHosts = [[NSUserDefaults standardUserDefaults] arrayForKey:SYSaneHelper_PrefKey_Hosts];
         self.hosts = [NSMutableArray arrayWithArray:savedHosts];
         
         [self performBlock:^{
@@ -130,13 +134,23 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 - (void)commitHosts
 {
-    [[self.hosts copy] writeToFile:[SYTools hostsFile] atomically:YES];
+    [[NSUserDefaults standardUserDefaults] setObject:self.hosts.copy forKey:SYSaneHelper_PrefKey_Hosts];
     
     NSString *hostsString = [self.hosts componentsJoinedByString:@"\n"];
     NSString *config = [NSString stringWithFormat:@"connect_timeout = 30\n%@", (hostsString ?: @"")];
     
-    NSString *configPath = [[SYTools documentsPath] stringByAppendingPathComponent:@"net.conf"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[SYTools appSupportPath] isDirectory:NULL])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:[SYTools appSupportPath]
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+    }
+    
+    NSString *configPath = [[SYTools appSupportPath] stringByAppendingPathComponent:@"net.conf"];
     [config writeToFile:configPath atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+    
+    [[NSFileManager defaultManager] setAttributes:@{} ofItemAtPath:config error:NULL];
 }
 
 #pragma mark - Devices

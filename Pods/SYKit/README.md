@@ -150,9 +150,11 @@ Button class to look a bit like material design buttons, ya know the round ones 
 	
 	@end
 
-####SYShapeView
+####SYShapeView and SYGradientView
 
-`UIView` subclass that changes the type of the layer to `CAShapeLayer` and allows you to update the shape's path using its `layoutSubviewsBlock` block.
+`UIView` subclasses that changes the type of the layer to `CAShapeLayer` and `CAGradientLayer`, and allowing you to update the shape/gradient using its `layoutSubviewsBlock` block.
+
+######SYShapeView.h
 
 	@interface SYShapeView : UIView
 	
@@ -166,6 +168,15 @@ Button class to look a bit like material design buttons, ya know the round ones 
 	// will be called right after [super layoutSubviews]
 	@property (nonatomic, copy) void(^layoutSubviewsBlock)(SYShapeView *view);
 	
+	@end
+
+######SYGradientView.h
+
+	@interface SYGradientView : UIView
+
+	@property (nonatomic, readonly, strong) CAGradientLayer *layer;
+	@property (nonatomic, copy) void(^layoutSubviewsBlock)(SYShapeView *view);
+
 	@end
 
 ####UIButton+SYKit

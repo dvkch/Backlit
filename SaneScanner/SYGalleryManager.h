@@ -8,13 +8,27 @@
 
 #import <UIKit/UIKit.h>
 @class MHGalleryItem;
+@class SYGalleryManager;
+
+@protocol SYGalleryManagerDelegate <NSObject>
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager didAddImage:(NSString *)imageName;
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager didUpdateImageList:(NSArray <NSString *> *)imageList;
+@end
 
 @interface SYGalleryManager : NSObject
 
+@property (nonatomic, strong, readonly) NSArray <NSString *> *imageNames;
+
 + (SYGalleryManager *)shared;
 
-- (NSArray <NSString *> *)allImageNames;
+- (void)addDelegate:(id<SYGalleryManagerDelegate>)delegate;
+- (void)removeDelegate:(id<SYGalleryManagerDelegate>)delegate;
+
+- (NSArray <MHGalleryItem *> *)galleryItems;
 - (MHGalleryItem *)galleryItemForImageWithName:(NSString *)imageName;
+- (UIImage *)thumbnailImageWithName:(NSString *)imageName;
+- (UIImage *)thumbnailImageForGalleryItem:(MHGalleryItem *)galleryItem;
+
 - (void)addImage:(UIImage *)image;
 - (void)deleteImageWithName:(NSString *)imageName;
 
