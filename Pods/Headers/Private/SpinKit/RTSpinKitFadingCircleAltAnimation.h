@@ -1,0 +1,1 @@
+../../../SpinKit/SpinKit/Animations/RTSpinKitFadingCircleAltAnimation.h

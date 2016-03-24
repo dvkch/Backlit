@@ -15,4 +15,9 @@
     return [UIColor colorWithRed:0. green:0.48 blue:1. alpha:1.];
 }
 
++ (UIColor *)groupTableViewHeaderTitleColor
+{
+    return [UIColor colorWithRed:0.43 green:0.43 blue:0.45 alpha:1.];
+}
+
 @end

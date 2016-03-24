@@ -28,9 +28,8 @@
 #import "UIColor+SY.h"
 #import "SYAppDelegate.h"
 #import <UIImage+SYKit.h>
-#import <UIScrollView+INSPullToRefresh.h>
 #import "MHGalleryController+SY.h"
-#import <INSDefaultPullToRefresh.h>
+#import "SYRefreshControl.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate, SYGalleryManagerDelegate>
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
@@ -89,18 +88,10 @@
     
     // adding pull to refresh
     __weak SYDeviceVC *wSelf = self;
-    [self.tableView ins_addPullToRefreshWithHeight:60. handler:^(UIScrollView *scrollView) {
+    [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scollView) {
         [wSelf refresh];
     }];
 
-    INSDefaultPullToRefresh *pullToRefresh =
-    [[INSDefaultPullToRefresh alloc] initWithFrame:CGRectMake(0, 0, 24, 24)
-                                         backImage:[UIImage imageNamed:@"circleLight"]
-                                        frontImage:[UIImage imageNamed:@"circleDark"]];
-    
-    [self.tableView.ins_pullToRefreshBackgroundView setDelegate:pullToRefresh];
-    [self.tableView.ins_pullToRefreshBackgroundView addSubview:pullToRefresh];
-    
     // prevent tableView width to be 0 and have a constraint issue when computing cell size
     [self.view layoutIfNeeded];
 

@@ -11,7 +11,6 @@
 #import "SYSaneHelper.h"
 #import "SYSaneDevice.h"
 #import <DLAVAlertView.h>
-#import "SSPullToRefresh.h"
 #import "SYDeviceVC.h"
 #import "SYAddCell.h"
 #import "SVProgressHUD.h"
@@ -21,10 +20,10 @@
 #import "SYAppDelegate.h"
 #import "SYGalleryManager.h"
 #import "MHGalleryController+SY.h"
+#import "SYRefreshControl.h"
 
-@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate, SYSaneHelperDelegate, SYGalleryManagerDelegate>
+@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate, SYGalleryManagerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
 @property (nonatomic, strong) MHGalleryController *galleryVC;
 @end
@@ -47,6 +46,13 @@
     [self.navigationItem setRightBarButtonItem:
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
+    [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scrollView) {
+        [[SYSaneHelper shared] updateDevices:^(NSString *error) {
+            if (error)
+                [SVProgressHUD showErrorWithStatus:error];
+        }];
+    }];
+    
     [[SYSaneHelper shared] setDelegate:self];
     [[SYGalleryManager shared] addDelegate:self];
     
@@ -66,19 +72,6 @@
 {
     [super viewWillDisappear:animated];
     [self setTitle:@""];
-}
-
-- (void)viewDidLayoutSubviews
-{
-    if(self.pullToRefreshView == nil)
-    {
-        self.pullToRefreshView = [[SSPullToRefreshView alloc] initWithScrollView:self.tableView
-                                                                        delegate:self];
-        if([[SYSaneHelper shared] isUpdatingDevices])
-        {
-            [self.pullToRefreshView startLoadingAndExpand:YES animated:NO];
-        }
-    }
 }
 
 - (void)presentViewController:(UIViewController *)viewController animated:(BOOL)flag completion:(void (^)(void))completion
@@ -109,13 +102,13 @@
 
 - (void)saneHelperDidStartUpdatingDevices:(SYSaneHelper *)saneHelper
 {
-    [self.pullToRefreshView startLoadingAndExpand:YES animated:YES];
+    [self.tableView ins_beginPullToRefresh];
 }
 
 - (void)saneHelperDidEndUpdatingDevices:(SYSaneHelper *)saneHelper
 {
     [self.tableView reloadData];
-    [self.pullToRefreshView finishLoading];
+    [self.tableView ins_endPullToRefresh];
 }
 
 - (void)saneHelper:(SYSaneHelper *)saneHelper
@@ -284,15 +277,6 @@ needsAuthForDevice:(NSString *)device
             [vc setDevice:device];
             [self.navigationController pushViewController:vc animated:YES];
         }
-    }];
-}
-
-#pragma mark - SSPullToRefreshViewDelegate
-
-- (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
-{
-    [[SYSaneHelper shared] updateDevices:^(NSString *error) {
-        [SVProgressHUD showErrorWithStatus:error];
     }];
 }
 

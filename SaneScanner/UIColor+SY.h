@@ -11,5 +11,6 @@
 @interface UIColor (SY)
 
 + (UIColor *)vividBlueColor;
++ (UIColor *)groupTableViewHeaderTitleColor;
 
 @end

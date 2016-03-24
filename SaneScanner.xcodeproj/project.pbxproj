@@ -23,6 +23,7 @@
 		9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */; };
 		9734E3621C90218E00B66797 /* SYAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9734E3611C90218E00B66797 /* SYAddCell.m */; };
 		9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */; };
+		974FB9871CA43EC900C741B1 /* SYRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FB9861CA43EC900C741B1 /* SYRefreshControl.m */; };
 		97521E6A1C88E8BA00C77209 /* SYSaneOptionBool.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E5F1C88E8BA00C77209 /* SYSaneOptionBool.m */; };
 		97521E6B1C88E8BA00C77209 /* SYSaneOptionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E611C88E8BA00C77209 /* SYSaneOptionButton.m */; };
 		97521E6D1C88E8BA00C77209 /* SYSaneOptionGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E651C88E8BA00C77209 /* SYSaneOptionGroup.m */; };
@@ -36,7 +37,6 @@
 		97BB76F41C89169F00A0823A /* SYSaneScanParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */; };
 		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
 		97DA07151C989318007F522E /* SYToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07141C989318007F522E /* SYToolbar.m */; };
-		97F8EF111CA4264C00EF4205 /* UIView+SYKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F8EF101CA4264C00EF4205 /* UIView+SYKit.m */; };
 		F804E0711AFA4AF300CBE307 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06C1AFA4AF300CBE307 /* libsane-dll.a */; };
 		F804E0721AFA4AF300CBE307 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06D1AFA4AF300CBE307 /* libsane-net.a */; };
 		F804E0731AFA4AF300CBE307 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06E1AFA4AF300CBE307 /* libsane.a */; };
@@ -85,6 +85,8 @@
 		9734E3611C90218E00B66797 /* SYAddCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAddCell.m; sourceTree = "<group>"; };
 		9735E84D1C8CE66B0049CD13 /* DLAVAlertView+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DLAVAlertView+SY.h"; sourceTree = "<group>"; };
 		9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DLAVAlertView+SY.m"; sourceTree = "<group>"; };
+		974FB9851CA43EC900C741B1 /* SYRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYRefreshControl.h; sourceTree = "<group>"; };
+		974FB9861CA43EC900C741B1 /* SYRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYRefreshControl.m; sourceTree = "<group>"; };
 		97521E5E1C88E8BA00C77209 /* SYSaneOptionBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionBool.h; sourceTree = "<group>"; };
 		97521E5F1C88E8BA00C77209 /* SYSaneOptionBool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionBool.m; sourceTree = "<group>"; };
 		97521E601C88E8BA00C77209 /* SYSaneOptionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionButton.h; sourceTree = "<group>"; };
@@ -111,8 +113,6 @@
 		97DA07111C98927E007F522E /* UIColor+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SY.m"; sourceTree = "<group>"; };
 		97DA07131C989318007F522E /* SYToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYToolbar.h; sourceTree = "<group>"; };
 		97DA07141C989318007F522E /* SYToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYToolbar.m; sourceTree = "<group>"; };
-		97F8EF0F1CA4264C00EF4205 /* UIView+SYKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+SYKit.h"; path = "../../../../MyLibs/SYKit/UIView+SYKit.h"; sourceTree = "<group>"; };
-		97F8EF101CA4264C00EF4205 /* UIView+SYKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+SYKit.m"; path = "../../../../MyLibs/SYKit/UIView+SYKit.m"; sourceTree = "<group>"; };
 		BD5626431CEA71F0459153C5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F804E06C1AFA4AF300CBE307 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/libsane-dll.a"; sourceTree = "<group>"; };
 		F804E06D1AFA4AF300CBE307 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/all/libsane-net.a"; sourceTree = "<group>"; };
@@ -224,8 +224,6 @@
 				970DE9E01C9B6F5D001CD025 /* MHGalleryImageViewerViewController+SY.m */,
 				976B8DFD1CA08FA2009E5E7B /* MHOverviewController+SY.h */,
 				976B8DFE1CA08FA2009E5E7B /* MHOverviewController+SY.m */,
-				97F8EF0F1CA4264C00EF4205 /* UIView+SYKit.h */,
-				97F8EF101CA4264C00EF4205 /* UIView+SYKit.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -233,6 +231,8 @@
 		F804E07A1AFA56A500CBE307 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				974FB9851CA43EC900C741B1 /* SYRefreshControl.h */,
+				974FB9861CA43EC900C741B1 /* SYRefreshControl.m */,
 				9724E7A21C8C60000046AE97 /* SYSaneOptionUI.h */,
 				9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */,
 				971BE2461C8EEF4700B8F29C /* SYSanePreviewView.h */,
@@ -487,7 +487,6 @@
 				9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */,
 				F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */,
 				970DE9E11C9B6F5D001CD025 /* MHGalleryImageViewerViewController+SY.m in Sources */,
-				97F8EF111CA4264C00EF4205 /* UIView+SYKit.m in Sources */,
 				97586E941C89272300C37931 /* UIImage+SY.m in Sources */,
 				97521E6D1C88E8BA00C77209 /* SYSaneOptionGroup.m in Sources */,
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
@@ -496,6 +495,7 @@
 				97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */,
 				F8CBD2131AF9A58C00B4C221 /* main.m in Sources */,
 				971BE2421C8E364A00B8F29C /* SYSaneOptionNumber.m in Sources */,
+				974FB9871CA43EC900C741B1 /* SYRefreshControl.m in Sources */,
 				975B78171C923C7200804D86 /* SYPrefVC.m in Sources */,
 				975B78141C923B6D00804D86 /* SYPreferences.m in Sources */,
 				976B8DFF1CA08FA2009E5E7B /* MHOverviewController+SY.m in Sources */,
