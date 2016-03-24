@@ -9,7 +9,7 @@
 #import "SYCropMaskView.h"
 #import <SYShapeView.h>
 #import "SYTools.h"
-#import "UIView+SYTapOutside.h"
+#import <UIView+SYKit.h>
 #import "UIColor+SY.h"
 
 static CGFloat const kCornerViewSize = 20.;

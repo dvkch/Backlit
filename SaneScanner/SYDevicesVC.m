@@ -14,15 +14,19 @@
 #import "SSPullToRefresh.h"
 #import "SYDeviceVC.h"
 #import "SYAddCell.h"
-#import <SVProgressHUD.h>
+#import "SVProgressHUD.h"
 #import "SYPrefVC.h"
 #import "SYGalleryThumbsView.h"
 #import <Masonry.h>
+#import "SYAppDelegate.h"
+#import "SYGalleryManager.h"
+#import "MHGalleryController+SY.h"
 
-@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate, SYSaneHelperDelegate>
+@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate, SYSaneHelperDelegate, SYGalleryManagerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
+@property (nonatomic, strong) MHGalleryController *galleryVC;
 @end
 
 @implementation SYDevicesVC
@@ -38,12 +42,13 @@
     [self.tableView registerClass:[SYAddCell class]       forCellReuseIdentifier:@"SYAddCell"];
     [self.view addSubview:self.tableView];
     
-    self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self];
+    self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self tintColor:nil];
     
     [self.navigationItem setRightBarButtonItem:
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [[SYSaneHelper shared] setDelegate:self];
+    [[SYGalleryManager shared] addDelegate:self];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(@0);
@@ -76,11 +81,28 @@
     }
 }
 
+- (void)presentViewController:(UIViewController *)viewController animated:(BOOL)flag completion:(void (^)(void))completion
+{
+    [super presentViewController:viewController animated:flag completion:completion];
+    if ([viewController isKindOfClass:[MHGalleryController class]])
+        self.galleryVC = (MHGalleryController *)viewController;
+}
+
 #pragma mark - IBActions
 
 - (void)buttonSettingsTap:(id)sender
 {
     [SYPrefVC showOnVC:self closeBlock:nil];
+}
+
+#pragma mark - GalleryManager
+
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager
+ didUpdateGalleryItems:(NSArray<MHGalleryItem *> *)items
+               newItem:(MHGalleryItem *)newItem
+           removedItem:(MHGalleryItem *)removedItem
+{
+    [self.galleryVC setGalleryItems:items];
 }
 
 #pragma mark - SYSaneHelperDelegate
@@ -239,6 +261,9 @@ needsAuthForDevice:(NSString *)device
         return;
     }
     
+    else if (indexPath.section == 0)
+        return;
+    
     SYSaneDevice *device = [[SYSaneHelper shared] allDevices][indexPath.row];
     
     [SVProgressHUD showWithStatus:@"Loading..."];
@@ -266,7 +291,9 @@ needsAuthForDevice:(NSString *)device
 
 - (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
 {
-    [[SYSaneHelper shared] updateDevices];
+    [[SYSaneHelper shared] updateDevices:^(NSString *error) {
+        [SVProgressHUD showErrorWithStatus:error];
+    }];
 }
 
 @end

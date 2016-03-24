@@ -1,0 +1,1 @@
+../../../INSPullToRefresh/INSPullToRefreshSampleControls/Default/INSDefaultInfiniteIndicator.h

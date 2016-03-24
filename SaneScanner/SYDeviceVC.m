@@ -14,10 +14,9 @@
 #import "SYSaneOptionString.h"
 #import "SYSaneOptionButton.h"
 #import "SYSaneOptionGroup.h"
-#import "SSPullToRefresh.h"
 #import "SYOptionCell.h"
 #import "SYPreviewCell.h"
-#import <SVProgressHUD.h>
+#import "SVProgressHUD.h"
 #import "DLAVAlertView+SY.h"
 #import "SYSaneOptionUI.h"
 #import "SYTools.h"
@@ -27,13 +26,18 @@
 #import "SYGalleryManager.h"
 #import "SYGalleryThumbsView.h"
 #import "UIColor+SY.h"
+#import "SYAppDelegate.h"
+#import <UIImage+SYKit.h>
+#import <UIScrollView+INSPullToRefresh.h>
+#import "MHGalleryController+SY.h"
+#import <INSDefaultPullToRefresh.h>
 
-@interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate, SSPullToRefreshViewDelegate>
-@property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
+@interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate, SYGalleryManagerDelegate>
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIButton *buttonScan;
 @property (nonatomic, assign) BOOL refreshing;
+@property (nonatomic, weak) MHGalleryController *galleryVC;
 @end
 
 @implementation SYDeviceVC
@@ -57,6 +61,13 @@
     [self.buttonScan.titleLabel setFont:[UIFont systemFontOfSize:17]];
     [self.view addSubview:self.buttonScan];
     
+    self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self tintColor:[UIColor vividBlueColor]];
+    
+    [self.navigationItem setLeftBarButtonItem:
+     [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"]
+                                      style:UIBarButtonItemStyleDone
+                                     target:self action:@selector(backButtonTap:)]];
+    
     [self.navigationItem setRightBarButtonItem:
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
@@ -73,22 +84,35 @@
         make.right.equalTo(@0);
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self setTitle:[self.device model]];
-    self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self];
     
-    [self refresh];
+    [[SYGalleryManager shared] addDelegate:self];
+    
+    // adding pull to refresh
+    __weak SYDeviceVC *wSelf = self;
+    [self.tableView ins_addPullToRefreshWithHeight:60. handler:^(UIScrollView *scrollView) {
+        [wSelf refresh];
+    }];
+
+    INSDefaultPullToRefresh *pullToRefresh =
+    [[INSDefaultPullToRefresh alloc] initWithFrame:CGRectMake(0, 0, 24, 24)
+                                         backImage:[UIImage imageNamed:@"circleLight"]
+                                        frontImage:[UIImage imageNamed:@"circleDark"]];
+    
+    [self.tableView.ins_pullToRefreshBackgroundView setDelegate:pullToRefresh];
+    [self.tableView.ins_pullToRefreshBackgroundView addSubview:pullToRefresh];
+    
+    // prevent tableView width to be 0 and have a constraint issue when computing cell size
+    [self.view layoutIfNeeded];
+
+    // initial refresh
+    [self.tableView ins_beginPullToRefresh];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)presentViewController:(UIViewController *)viewController animated:(BOOL)flag completion:(void (^)(void))completion
 {
-    [super viewWillDisappear:animated];
-    [self setToolbarItems:@[]];
-#warning nil;
+    [super presentViewController:viewController animated:flag completion:completion];
+    if ([viewController isKindOfClass:[MHGalleryController class]])
+        self.galleryVC = (MHGalleryController *)viewController;
 }
 
 - (void)dealloc
@@ -96,18 +120,13 @@
     [[SYSaneHelper shared] closeDevice:self.device];
 }
 
-- (void)viewDidLayoutSubviews
-{
-    if(self.pullToRefreshView == nil)
-    {
-        self.pullToRefreshView = [[SSPullToRefreshView alloc] initWithScrollView:self.tableView
-                                                                        delegate:self];
-        if(self.refreshing)
-            [self.pullToRefreshView startLoadingAndExpand:YES animated:NO];
-    }
-}
-
 #pragma mark - Data
+
+- (void)setDevice:(SYSaneDevice *)device
+{
+    self->_device = device;
+    [self setTitle:self.device.model];
+}
 
 - (void)refresh
 {
@@ -120,7 +139,7 @@
     [[SYSaneHelper shared] listOptionsForDevice:self.device block:^ {
         [wSelf.tableView reloadData];
         wSelf.refreshing = NO;
-        [wSelf.pullToRefreshView finishLoading];
+        [wSelf.tableView ins_endPullToRefresh];
     }];
 }
 
@@ -140,6 +159,15 @@
 }
 
 #pragma mark - IBActions
+
+- (void)backButtonTap:(id)sender
+{
+    // prevent retain cycle
+    [self setToolbarItems:@[]];
+    [self setThumbsView:nil];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)buttonScanTap:(id)sender
 {
@@ -238,6 +266,16 @@
     }];
 }
 
+#pragma mark - GalleryManager
+
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager
+ didUpdateGalleryItems:(NSArray<MHGalleryItem *> *)items
+               newItem:(MHGalleryItem *)newItem
+           removedItem:(MHGalleryItem *)removedItem
+{
+    [self.galleryVC setGalleryItems:items];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -326,13 +364,6 @@
         else
             [SVProgressHUD showSuccessWithStatus:nil];
     }];
-}
-
-#pragma mark - SSPullToRefreshViewDelegate
-
-- (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
-{
-    [self refresh];
 }
 
 @end

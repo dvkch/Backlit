@@ -12,6 +12,7 @@
 
 @property (nonatomic, weak) UIViewController *parentViewController;
 
-+ (instancetype)showInToolbarOfController:(UIViewController *)controller;
++ (instancetype)showInToolbarOfController:(UIViewController *)controller
+                                tintColor:(UIColor *)tintColor;
 
 @end

@@ -13,5 +13,6 @@
 + (NSArray *)arrayWithNullableObjects:(NSUInteger)count, ...;
 
 - (id)realObjectAtIndex:(NSUInteger)index;
+- (id)nullableObjectAtIndex:(NSUInteger)index;
 
 @end

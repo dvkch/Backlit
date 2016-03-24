@@ -28,7 +28,6 @@ needsAuthForDevice:(NSString *)device
 @property (nonatomic, weak) id<SYSaneHelperDelegate> delegate;
 @property (nonatomic, assign) BOOL isUpdatingDevices;
 @property (atomic, strong) NSString *saneInitError;
-@property (atomic, strong) NSString *saneLastGetDevicesError;
 
 + (instancetype)shared;
 
@@ -37,7 +36,8 @@ needsAuthForDevice:(NSString *)device
 - (void)removeHost:(NSString *)host;
 
 - (NSArray <SYSaneDevice *> *)allDevices;
-- (void)updateDevices;
+- (SYSaneDevice *)deviceWithName:(NSString *)name;
+- (void)updateDevices:(void(^)(NSString *error))block;
 
 - (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSString *error))block;
 - (void)closeDevice:(SYSaneDevice *)device;

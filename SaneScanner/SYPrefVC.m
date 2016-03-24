@@ -29,7 +29,6 @@
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings"]
                                                                style:UIBarButtonItemStyleBordered
                                                               target:target action:action];
-    [button setTintColor:[UIColor grayColor]];
     return button;
 }
 
@@ -57,7 +56,6 @@
  
     self.buttonClose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
                                                                      target:self action:@selector(buttonCloseTap:)];
-    [self.buttonClose setTintColor:[UIColor grayColor]];
     [self.navigationItem setRightBarButtonItem:self.buttonClose];
     
     self.keysGroups = [[SYPreferences shared] allKeysGrouped];

@@ -9,13 +9,24 @@
 #import "SYAppDelegate.h"
 #import "SYTools.h"
 #import "SYDevicesVC.h"
+#import "SYDeviceVC.h"
 #import "SYSaneHelper.h"
 #import "SYToolbar.h"
 #import "SYGalleryManager.h"
-#import <SVProgressHUD.h>
+#import "SVProgressHUD.h"
+#import <UIImage+SYKit.h>
+#import "SYEmptyGalleryVC.h"
+#import "SYSplitVC.h"
+#import "NSArray+SY.h"
+#import "MHGalleryController+SY.h"
+#import "UIImage+SY.h"
+#import "SYGalleryThumbsView.h"
 
-@interface SYAppDelegate () <SYGalleryManagerDelegate>
-@property (nonatomic, strong) UINavigationController *navigationController;
+@interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate, UINavigationControllerDelegate>
+@property (nonatomic, strong) SYSplitVC *splitViewController;
+@property (nonatomic, strong) UINavigationController *scanNavigationController;
+@property (nonatomic, strong) MHGalleryController *galleryViewController;
+@property (nonatomic, strong) SYEmptyGalleryVC *emptyVC;
 @end
 
 @implementation SYAppDelegate
@@ -27,50 +38,124 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // needed for Sane-net config file
-    [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools appSupportPath]];
-
+    // log
+    NSLog(@"%@", [SYTools documentsPath]);
+    
+    // init swizzlings
+    [MHGalleryController sy_fix];
+    
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];
-    self.navigationController =
+    self.scanNavigationController =
     [[UINavigationController alloc] initWithNavigationBarClass:nil toolbarClass:[SYToolbar class]];
-    [self.navigationController setToolbarHidden:YES];
-    [(SYToolbar *)self.navigationController.toolbar setHeight:64.];
-    [(SYToolbar *)self.navigationController.toolbar setPadding:0.];
-    [self.navigationController.toolbar setTranslucent:NO];
-    [self.navigationController setViewControllers:@[vc]];
+    [self.scanNavigationController setToolbarHidden:YES];
+    [(SYToolbar *)self.scanNavigationController.toolbar setHeight:64.];
+    [(SYToolbar *)self.scanNavigationController.toolbar setPadding:0.];
+    [self.scanNavigationController.toolbar setTranslucent:NO];
+    [self.scanNavigationController setDelegate:self];
+    [self.scanNavigationController setViewControllers:@[vc]];
+    
+    // gallery view controller
+    self.galleryViewController =
+    [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown];
+    [self.galleryViewController setHideDoneButton:YES];
+    [self.galleryViewController.UICustomization
+     setMHGalleryBackgroundColor:[UIColor groupTableViewBackgroundColor]
+     forViewMode:MHGalleryViewModeImageViewerNavigationBarHidden];
+    
+    // empty gallery view controller
+    self.emptyVC = [[SYEmptyGalleryVC alloc] init];
+    
+    // creating split controller
+    self.splitViewController = [[SYSplitVC alloc] init];
+    [self.splitViewController setViewControllers:@[self.scanNavigationController, self.emptyVC]];
+    [self.splitViewController setDelegate:self];
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
     
     // creating window
     self.window = [[UIWindow alloc] init];
     [self.window makeKeyAndVisible];
     [self.window setFrame:[[UIScreen mainScreen] bounds]];
-    [self.window setRootViewController:self.navigationController];
+    [self.window setRootViewController:self.splitViewController];
     [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window.layer setMasksToBounds:YES];
     [self.window.layer setOpaque:NO];
     
     // populate list for the first time
-    [[SYSaneHelper shared] updateDevices];
+    [[SYSaneHelper shared] updateDevices:^(NSString *error) {
+        [SVProgressHUD showErrorWithStatus:error];
+    }];
     
     // customize HUD
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     // auto manage toolbar visibility
     [[SYGalleryManager shared] addDelegate:self];
-#warning need to restart app to see device ?!
+    
     return YES;
 }
 
-#warning better delegate
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager didUpdateImageList:(NSArray<NSString *> *)imageList
+- (void)updateToolbarAndGalleryForTraitCollection:(UITraitCollection *)traitCollection
 {
-    [self.navigationController setToolbarHidden:(imageList.count == 0) animated:YES];
+    UITraitCollection *traits = traitCollection ?: self.splitViewController.traitCollection;
+    NSArray <MHGalleryItem *> *galleryItems = [[SYGalleryManager shared] galleryItems];
+
+    BOOL constrainedW = (traits.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
+    BOOL hasImages    = (galleryItems.count > 0);
+    [self.scanNavigationController setToolbarHidden:(!constrainedW || !hasImages) animated:YES];
+    
+    [self.galleryViewController setGalleryItems:galleryItems];
+    
+    UIViewController *detailsViewController = [self.splitViewController.viewControllers nullableObjectAtIndex:1];
+    
+    if (!hasImages && detailsViewController == self.galleryViewController)
+        [self.splitViewController setViewControllers:@[self.scanNavigationController, self.emptyVC]];
+    
+    if (hasImages && detailsViewController != self.galleryViewController)
+        [self.splitViewController setViewControllers:@[self.scanNavigationController, self.galleryViewController]];
+    
+    if (traits.verticalSizeClass == UIUserInterfaceSizeClassCompact)
+        [(SYToolbar *)self.scanNavigationController.toolbar setHeight:34];
+    else
+        [(SYToolbar *)self.scanNavigationController.toolbar setHeight:64];
 }
 
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager didAddImage:(NSString *)imageName
+#pragma mark - GalleryManager
+
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager
+ didUpdateGalleryItems:(NSArray<MHGalleryItem *> *)items
+               newItem:(MHGalleryItem *)newItem
+           removedItem:(MHGalleryItem *)removedItem
 {
-    [self.navigationController setToolbarHidden:(gallerymanager.imageNames.count == 0) animated:YES];
+    [self updateToolbarAndGalleryForTraitCollection:nil];
 }
+
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController
+collapseSecondaryViewController:(UIViewController *)secondaryViewController
+  ontoPrimaryViewController:(UIViewController *)primaryViewController
+{
+    return (splitViewController.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
+}
+
+#pragma mark - NavigationController
+
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
+{
+    if (navigationController != self.scanNavigationController)
+        return;
+    
+    if ([viewController isKindOfClass:[SYDevicesVC class]] || [viewController isKindOfClass:[SYDeviceVC class]])
+    {
+        SYGalleryThumbsView *thumbsView = viewController.toolbarItems.firstObject.customView;
+        if ([thumbsView isKindOfClass:[SYGalleryThumbsView class]])
+        {
+            NSLog(@"do shit");
+        }
+    }
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -39,4 +39,11 @@
     return object;
 }
 
+- (id)nullableObjectAtIndex:(NSUInteger)index
+{
+    if (index < self.count)
+        return self[index];
+    return nil;
+}
+
 @end

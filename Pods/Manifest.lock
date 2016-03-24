@@ -1,17 +1,9 @@
 PODS:
-  - AKPickerView (0.2.7)
-  - CocoaLumberjack (2.2.0):
-    - CocoaLumberjack/Default (= 2.2.0)
-    - CocoaLumberjack/Extensions (= 2.2.0)
-  - CocoaLumberjack/Core (2.2.0)
-  - CocoaLumberjack/Default (2.2.0):
-    - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.2.0):
-    - CocoaLumberjack/Default
   - DirectoryWatchdog (1.1.0)
   - DLAlertView (1.2.5)
+  - INSPullToRefresh (1.1.5)
   - Masonry (0.6.4)
-  - MHVideoPhotoGallery (2.1.3):
+  - MHVideoPhotoGallery (HEAD based on 2.1.3):
     - Masonry
     - SDWebImage
     - TTTAttributedLabel (= 1.13.3)
@@ -21,62 +13,18 @@ PODS:
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
   - SSPullToRefresh (1.2.4)
-  - SVProgressHUD (1.1.3)
-  - SYKit (0.0.13)
+  - SVProgressHUD (2.0)
+  - SYKit (0.0.14)
   - SYLogRedirect (1.2.5)
   - SYPair (1.0)
   - TTTAttributedLabel (1.13.3)
-  - UIImage-Resize (1.0.1)
-  - YapDatabase (2.8.3):
-    - YapDatabase/Standard (= 2.8.3)
-  - YapDatabase/Standard (2.8.3):
-    - YapDatabase/Standard/Core (= 2.8.3)
-    - YapDatabase/Standard/Extensions (= 2.8.3)
-  - YapDatabase/Standard/Core (2.8.3):
-    - CocoaLumberjack (~> 2)
-  - YapDatabase/Standard/Extensions (2.8.3):
-    - YapDatabase/Standard/Core
-    - YapDatabase/Standard/Extensions/CloudKit (= 2.8.3)
-    - YapDatabase/Standard/Extensions/ConnectionProxy (= 2.8.3)
-    - YapDatabase/Standard/Extensions/FilteredViews (= 2.8.3)
-    - YapDatabase/Standard/Extensions/FullTextSearch (= 2.8.3)
-    - YapDatabase/Standard/Extensions/Hooks (= 2.8.3)
-    - YapDatabase/Standard/Extensions/Relationships (= 2.8.3)
-    - YapDatabase/Standard/Extensions/RTreeIndex (= 2.8.3)
-    - YapDatabase/Standard/Extensions/SearchResults (= 2.8.3)
-    - YapDatabase/Standard/Extensions/SecondaryIndex (= 2.8.3)
-    - YapDatabase/Standard/Extensions/SecondaryIndex (= 2.8.3)
-    - YapDatabase/Standard/Extensions/Views (= 2.8.3)
-  - YapDatabase/Standard/Extensions/CloudKit (2.8.3):
-    - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/ConnectionProxy (2.8.3):
-    - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/FilteredViews (2.8.3):
-    - YapDatabase/Standard/Core
-    - YapDatabase/Standard/Extensions/Views
-  - YapDatabase/Standard/Extensions/FullTextSearch (2.8.3):
-    - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/Hooks (2.8.3):
-    - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/Relationships (2.8.3):
-    - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/RTreeIndex (2.8.3):
-    - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/SearchResults (2.8.3):
-    - YapDatabase/Standard/Core
-    - YapDatabase/Standard/Extensions/FullTextSearch
-    - YapDatabase/Standard/Extensions/Views
-  - YapDatabase/Standard/Extensions/SecondaryIndex (2.8.3):
-    - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/Views (2.8.3):
-    - YapDatabase/Standard/Core
 
 DEPENDENCIES:
-  - AKPickerView
   - DirectoryWatchdog
   - DLAlertView
+  - INSPullToRefresh
   - Masonry
-  - MHVideoPhotoGallery
+  - MHVideoPhotoGallery (HEAD)
   - NSDate+TimeAgo
   - PKYStepper
   - SSPullToRefresh
@@ -84,26 +32,21 @@ DEPENDENCIES:
   - SYKit
   - SYLogRedirect
   - SYPair
-  - UIImage-Resize
-  - YapDatabase
 
 SPEC CHECKSUMS:
-  AKPickerView: 125372e36fcc372216127600a541f14dcdbb7993
-  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   DirectoryWatchdog: 85f0a92a52bc0d3d66346d80629227b44500506a
   DLAlertView: 774c1242cc854177fdc07634ed3f8c250a38864d
+  INSPullToRefresh: 112ae2c295d2b3a76daa9dff86e7ef40ed002c47
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MHVideoPhotoGallery: aa36cdd9b75c6d5a19b48005cddb9b730c2e27e8
   NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
   PKYStepper: 8dacefbddf9fa2b6aaec2ef828b46a78daa2db7d
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SSPullToRefresh: 369e862c1d6528c7a354fc85cd4763d4e670e9af
-  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
-  SYKit: 55d1131f2ffe184ae2e9c4aa23234e9c8f444007
+  SVProgressHUD: e9e7c893686a20da55a28015ed384d9425e15479
+  SYKit: a77a453cac8a76c737a5cdd43d211c1eb0685819
   SYLogRedirect: da3e42582f1621bcb60c33704a3144059b42b87d
   SYPair: 53e6b705f98fc3b374df3f21c4a57dcacd2f1747
   TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
-  UIImage-Resize: fa776860f10e6900bbaf53a73e494bdceaaccc77
-  YapDatabase: 15b6867a07ff30eac3af28794cd2262b4d0ca4ca
 
 COCOAPODS: 0.39.0

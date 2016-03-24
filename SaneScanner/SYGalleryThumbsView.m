@@ -10,12 +10,12 @@
 #import "SYGalleryManager.h"
 #import <Masonry.h>
 #import "UIColor+SY.h"
+#import "SYGalleryThumbsCell.h"
 #import <SYGradientView.h>
 #import <MHGallery.h>
 #import <AVFoundation/AVUtilities.h>
 
 static CGFloat const kGradientWidth = 30;
-static CGFloat const kShadowRadius  =  2;
 
 @interface SYGalleryThumbsView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SYGalleryManagerDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -27,14 +27,15 @@ static CGFloat const kShadowRadius  =  2;
 @implementation SYGalleryThumbsView
 
 + (instancetype)showInToolbarOfController:(UIViewController *)controller
+                                tintColor:(UIColor *)tintColor
 {
-    CGRect thumbsViewInitialRect = controller.navigationController.toolbar.bounds;
-    //thumbsViewInitialRect.size.width  -= 2 * [UIToolbar horizontalPadding];
-    thumbsViewInitialRect.size.height -= 8;
+    UIColor *color = (tintColor ?: controller.navigationController.toolbar.backgroundColor);
     
+    CGRect thumbsViewInitialRect = controller.navigationController.toolbar.bounds;
     SYGalleryThumbsView *thumbsView = [[SYGalleryThumbsView alloc] initWithFrame:thumbsViewInitialRect];
     [thumbsView setParentViewController:controller];
-    [thumbsView setTintColor:controller.navigationController.toolbar.backgroundColor];
+    [thumbsView setTintColor:color];
+    [thumbsView setBackgroundColor:color];
     [thumbsView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [controller setToolbarItems:@[[[UIBarButtonItem alloc] initWithCustomView:thumbsView]]];
     return thumbsView;
@@ -70,9 +71,11 @@ static CGFloat const kShadowRadius  =  2;
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.collectionView registerClass:[SYGalleryThumbsCell class] forCellWithReuseIdentifier:@"cell"];
     [self.collectionView setContentInset:UIEdgeInsetsMake(0, kGradientWidth, 0, kGradientWidth)];
     [self.collectionView setScrollIndicatorInsets:UIEdgeInsetsMake(0, kGradientWidth, 0, kGradientWidth)];
+    [self.collectionView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh
+                                                         forAxis:UILayoutConstraintAxisVertical];
     [self addSubview:self.collectionView];
     
     self.leftGradientView = [[SYGradientView alloc] init];
@@ -106,13 +109,13 @@ static CGFloat const kShadowRadius  =  2;
     }];
     
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(2*kShadowRadius));
+        make.top.equalTo(@(10)).priorityLow();
         make.left.equalTo(@0);
         make.right.equalTo(@0);
-        make.bottom.equalTo(@(-2*kShadowRadius));
+        make.bottom.equalTo(@(-10)).priorityLow();
+        make.centerY.equalTo(@0);
+        make.height.greaterThanOrEqualTo(@30);
     }];
-    
-    self.galleryItems = [[SYGalleryManager shared] galleryItems];
 }
 
 - (void)setTintColor:(UIColor *)tintColor
@@ -122,16 +125,21 @@ static CGFloat const kShadowRadius  =  2;
     UIColor *gradientOpaqueColor = tintColor ?: [UIColor whiteColor];
     
     [self.leftGradientView.layer  setColors:@[(id)gradientOpaqueColor.CGColor,
-                                              (id)[UIColor colorWithWhite:1.0 alpha:0.0].CGColor]];
+                                              (id)[gradientOpaqueColor colorWithAlphaComponent:0.].CGColor]];
     [self.rightGradientView.layer setColors:@[(id)gradientOpaqueColor.CGColor,
-                                              (id)[UIColor colorWithWhite:1.0 alpha:0.0].CGColor]];
+                                              (id)[gradientOpaqueColor colorWithAlphaComponent:0.].CGColor]];
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
-    NSIndexPath *leftIndexPath = self.collectionView.indexPathsForVisibleItems.firstObject;
+    NSArray <NSIndexPath *> *indexPaths = self.collectionView.indexPathsForVisibleItems;
+    indexPaths = [indexPaths sortedArrayUsingSelector:@selector(compare:)];
+    
+    NSIndexPath *leftIndexPath = indexPaths.firstObject;
+    if (!leftIndexPath && self.galleryItems.count)
+        leftIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
@@ -141,28 +149,32 @@ static CGFloat const kShadowRadius  =  2;
     [self.collectionView scrollToItemAtIndexPath:leftIndexPath
                                 atScrollPosition:UICollectionViewScrollPositionLeft
                                         animated:NO];
+    
+    // makes sure contentSize is correct
+    [self.collectionView layoutIfNeeded];
+    CGFloat availableWidth = self.collectionView.bounds.size.width - self.collectionView.contentSize.width;
+    availableWidth = MAX(0, availableWidth - 2 * kGradientWidth);
+    CGFloat horizontalInset = kGradientWidth + availableWidth / 2.;
+    [self.collectionView setContentInset:UIEdgeInsetsMake(0, horizontalInset, 0, horizontalInset)];
 }
 
 - (UIImage *)imageForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [[SYGalleryManager shared] thumbnailImageForGalleryItem:self.galleryItems[indexPath.item]];
+    return [[SYGalleryManager shared] thumbnailForItem:self.galleryItems[indexPath.item]];
 }
 
 #pragma mark - SYGalleryManager
 
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager didAddImage:(NSString *)imageName
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager
+ didUpdateGalleryItems:(NSArray<MHGalleryItem *> *)items
+               newItem:(MHGalleryItem *)newItem
+           removedItem:(MHGalleryItem *)removedItem
 {
-    [self.collectionView performBatchUpdates:^{
-        self.galleryItems = gallerymanager.galleryItems;
-        [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
-    } completion:nil];
-}
-
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager didUpdateImageList:(NSArray<NSString *> *)imageList
-{
-    self.galleryItems = gallerymanager.galleryItems;
-    [self.collectionView reloadData];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.galleryItems = items;
+        [self.collectionView reloadData];
+        [self setNeedsLayout];
+    }];
 }
 
 #pragma mark - UICollectionView
@@ -172,65 +184,55 @@ static CGFloat const kShadowRadius  =  2;
     return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section
 {
     return self.galleryItems.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    //[cell.contentView.layer setBorderColor:[UIColor vividBlueColor].CGColor];
-    //[cell.contentView.layer setBorderWidth:2.];
-    [cell.contentView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [cell.contentView.layer setShadowOffset:CGSizeZero];
-    [cell.contentView.layer setShadowOpacity:.6];
-    [cell.contentView.layer setShadowRadius:kShadowRadius];
-    [cell.contentView.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
-    [cell.contentView.layer setShouldRasterize:YES];
-    
-    MHPresenterImageView *imageView = [[MHPresenterImageView alloc] init];
-    [imageView setImage:[self imageForItemAtIndexPath:indexPath]];
-    
     __weak SYGalleryThumbsView *wSelf = self;
-    __weak MHPresenterImageView *wImageView = imageView;
-
-    [imageView setInseractiveGalleryPresentionWithItems:self.galleryItems
-                                      currentImageIndex:indexPath.item
-                                  currentViewController:self.parentViewController
-                                         finishCallback:
-     ^(NSInteger currentIndex, UIImage *image, MHTransitionDismissMHGallery *interactiveTransition, MHGalleryViewMode viewMode)
-    {
-        if (viewMode == MHGalleryViewModeOverView) {
-            [wSelf.parentViewController dismissViewControllerAnimated:YES completion:nil];
-        }else{
-            [wSelf.parentViewController.presentedViewController dismissViewControllerAnimated:YES
-                                                                             dismissImageView:wImageView
-                                                                                   completion:nil];
-        }
-    }];
-    [imageView setContentMode:UIViewContentModeScaleAspectFit];
-    [imageView setShoudlUsePanGestureReconizer:NO];
-    [cell.contentView addSubview:imageView];
     
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(@0);
+    SYGalleryThumbsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    [cell updateWithItems:self.galleryItems
+                    index:indexPath.item
+         parentController:self.parentViewController
+             dismissBlock:^UIImageView *(NSUInteger index)
+    {
+        if (index >= wSelf.galleryItems.count)
+            return nil;
+        
+        NSIndexPath *dismissIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
+        [wSelf.collectionView scrollToItemAtIndexPath:dismissIndexPath
+                                     atScrollPosition:(UICollectionViewScrollPositionCenteredVertically |
+                                                       UICollectionViewScrollPositionCenteredHorizontally)
+                                             animated:NO];
+        
+        // needed to be sure the cell is loaded
+        [wSelf.collectionView layoutIfNeeded];
+        
+        SYGalleryThumbsCell *dismissCell =
+        (SYGalleryThumbsCell *)[wSelf.collectionView cellForItemAtIndexPath:dismissIndexPath];
+        
+        return dismissCell.imageView;
     }];
     
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *image = [self imageForItemAtIndexPath:indexPath];
 
-    CGFloat availableHeight = self.bounds.size.height - 4 * kShadowRadius;
+    CGFloat availableHeight = collectionView.bounds.size.height;
     CGSize size = CGSizeMake(availableHeight, availableHeight);
     size.width = AVMakeRectWithAspectRatioInsideRect(image.size, (CGRect){CGPointZero, size}).size.width;
     
     return size;
 }
 
-#warning centrer si pas assez de photos et/ou mettre marge gauche et droite pour avoir la première image centrée
 @end

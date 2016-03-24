@@ -14,5 +14,7 @@
 
 + (instancetype)obtain;
 
+- (void)updateToolbarAndGalleryForTraitCollection:(UITraitCollection *)traitCollection;
+
 @end
 

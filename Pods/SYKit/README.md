@@ -186,6 +186,27 @@ Category on `UIButton` to add some new features.
 	// creates a 1x1 image of color buttonColor and associates it as a background for the given state
 	-(void)sy_setButtonBackgroundColor:(UIColor *)buttonColor forState:(UIControlState)state;
 
+####UIView+SYKit
+
+Adds a way to override `pointInside:withEvent:` to "grow" your view touch areas outside of their natural bounds.
+
+	@interface UIView (SYKit)
+	
+	@property (nonatomic, assign) UIEdgeInsets sy_tapInsets;
+	
+	@end
+
+####NSObject+SYKit
+
+Adds to methods to work with swizzling object methods and executing a block on a specific `NSThread`
+
+	@interface NSObject (SYKit)
+
+	- (void)sy_performBlock:(void(^)(void))block onThread:(NSThread *)thread;
+	+ (void)sy_swizzleSelector:(SEL)originalSelector withSelector:(SEL)swizzledSelector;
+	
+	@end
+
 
 License
 ===

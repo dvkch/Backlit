@@ -25,6 +25,9 @@ static CGFloat kUIToolbar_SYHorizontalPadding = -1;
 
 - (void)setHeight:(CGFloat)height
 {
+    if (self.height == height)
+        return;
+    
     self.heightNumber = height < 0.5 ? nil : @(height);
     [self.superview setNeedsLayout];
 }
@@ -47,15 +50,16 @@ static CGFloat kUIToolbar_SYHorizontalPadding = -1;
     return CGSizeMake([super sizeThatFits:size].width, self.height);
 }
 
-- (void)setItems:(NSArray<UIBarButtonItem *> *)items
-{
-    [super setItems:items];
-}
-
 - (void)setItems:(NSArray<UIBarButtonItem *> *)items animated:(BOOL)animated
 {
     self.realItems = items;
-    
+
+    if (!items.count)
+    {
+        [super setItems:items animated:animated];
+        return;
+    }
+
     NSMutableArray *mutableItems = [items mutableCopy];
 
     CGFloat defaultPadding = [self.class systemPadding];

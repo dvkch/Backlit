@@ -11,7 +11,7 @@
 #import "SYSaneHelper.h"
 #import "SYSaneDevice.h"
 #import <Masonry.h>
-#import <SVProgressHUD.h>
+#import "SVProgressHUD.h"
 
 static CGFloat const kMargin = 15.;
 
