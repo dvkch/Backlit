@@ -27,6 +27,7 @@
 - (NSArray <MHGalleryItem *> *)galleryItems;
 
 - (UIImage *)thumbnailForItem:(MHGalleryItem *)item;
+- (NSString *)dateStringForItem:(MHGalleryItem *)item;
 
 - (void)addImage:(UIImage *)image;
 - (void)deleteItem:(MHGalleryItem *)item;

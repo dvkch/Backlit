@@ -45,6 +45,9 @@
 {
     [super viewDidLoad];
     
+    // can't reenable swipe back because we wouldn't get the possiblity to close the device once it's not needed
+    //[self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
+    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];

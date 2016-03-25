@@ -11,6 +11,7 @@
 #import <MHGalleryItem.h>
 #import <UIImage+SYKit.h>
 #import <SGDirWatchdog.h>
+#import "UIColor+SY.h"
 
 @interface SYGalleryManager ()
 @property (nonatomic, strong) NSCache <NSString *, UIImage *> *thumbanilCache;
@@ -57,12 +58,6 @@
     MHGalleryItem *item = [MHGalleryItem itemWithURL:[self urlForImageWithName:imageName thumbnail:NO].absoluteString
                                         thumbnailURL:[self urlForImageWithName:imageName thumbnail:YES].absoluteString];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
-    item.titleString = [dateFormatter stringFromDate:[NSDate date]];
-
     return item;
 }
 
@@ -208,6 +203,23 @@
     
     [self.thumbanilCache setObject:thumb forKey:imageName];
     return thumb;
+}
+
+- (NSString *)dateStringForItem:(MHGalleryItem *)item
+{
+    NSString *imageName = [self imageNameForGalleryItem:item];
+    NSString *imagePath = [self pathForImageWithName:imageName thumbnail:NO];
+    
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:imagePath error:NULL];
+    NSDate *date = attributes[NSFileCreationDate];
+    
+    if (!date)
+        return nil;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    return [dateFormatter stringFromDate:date];
 }
 
 - (void)addImage:(UIImage *)image

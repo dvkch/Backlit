@@ -8,7 +8,7 @@
 
 #import <MHGalleryController.h>
 
-@interface MHGalleryController (SY)
+@interface MHGalleryController (SY) <MHGalleryDelegate>
 
 @property (nonatomic, assign) CGSize thumbSize;
 @property (nonatomic, assign) CGFloat thumbsMargin;

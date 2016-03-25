@@ -15,32 +15,18 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self sy_swizzleSelector:@selector(updateToolBarForItem:)
-                    withSelector:@selector(sy_updateToolBarForItem:)];
         [self sy_swizzleSelector:@selector(reloadData)
                     withSelector:@selector(sy_reloadData)];
     });
 }
 
-- (void)sy_updateToolBarForItem:(MHGalleryItem *)item
-{
-    [self sy_updateToolBarForItem:item];
-    
-    if (self.UICustomization.customBarButtonItem)
-    {
-        NSMutableArray <UIBarButtonItem *> *items = [self.toolbar.items mutableCopy];
-        [items removeLastObject];
-        [items addObject:self.UICustomization.customBarButtonItem];
-        self.toolbar.items = [items copy];
-    }
-}
-
 - (void)sy_reloadData
 {
     [self sy_reloadData];
-    __weak MHGalleryImageViewerViewController *wSelf = self;
     
     /*
+    __weak MHGalleryImageViewerViewController *wSelf = self;
+    
     NSUInteger numberOfItems = [self.galleryViewController.dataSource numberOfItemsInGallery:self.galleryViewController];
     if (numberOfItems && self.pageIndex >= numberOfItems)
     {
