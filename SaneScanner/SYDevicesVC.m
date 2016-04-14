@@ -33,6 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.tableView setDataSource:self];

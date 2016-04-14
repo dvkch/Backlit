@@ -104,8 +104,8 @@ NSString *NSStringFromMHBarButtonItemType(MHBarButtonItemType type);
     [self.UICustomization.overViewCollectionViewLayoutPortrait  setItemSize:thumbSize];
     [self.UICustomization.overViewCollectionViewLayoutLandscape setItemSize:thumbSize];
     [self.overViewViewController.collectionView reloadData];
-    [self.overViewViewController willRotateToInterfaceOrientation:self.overViewViewController.interfaceOrientation
-                                                         duration:0];
+    self.overViewViewController.collectionView.collectionViewLayout = [self.overViewViewController layoutForOrientation:0];
+    [self.overViewViewController.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (CGFloat)thumbsMargin
@@ -121,8 +121,8 @@ NSString *NSStringFromMHBarButtonItemType(MHBarButtonItemType type);
     [self.UICustomization.overViewCollectionViewLayoutPortrait  setMinimumInteritemSpacing:thumbsMargin];
     [self.UICustomization.overViewCollectionViewLayoutLandscape setMinimumInteritemSpacing:thumbsMargin];
     [self.overViewViewController.collectionView reloadData];
-    [self.overViewViewController willRotateToInterfaceOrientation:self.overViewViewController.interfaceOrientation
-                                                         duration:0];
+    self.overViewViewController.collectionView.collectionViewLayout = [self.overViewViewController layoutForOrientation:0];
+    [self.overViewViewController.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (BOOL)hideDoneButton {

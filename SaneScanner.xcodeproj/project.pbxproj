@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4D5EFD6B3082C499709140AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79433720B786F7579199C998 /* libPods.a */; };
-		970755981C972F7200BE9275 /* SYGalleryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 970755971C972F7200BE9275 /* SYGalleryVC.m */; };
 		9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */; };
 		9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559D1C972FF600BE9275 /* SYGalleryManager.m */; };
 		970DE9DE1C9B6344001CD025 /* MHGalleryController+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 970DE9DD1C9B6344001CD025 /* MHGalleryController+SY.m */; };
@@ -55,8 +54,6 @@
 /* Begin PBXFileReference section */
 		3B707C7C94B3F4CD87DAE05B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		79433720B786F7579199C998 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		970755961C972F7100BE9275 /* SYGalleryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryVC.h; sourceTree = "<group>"; };
-		970755971C972F7200BE9275 /* SYGalleryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryVC.m; sourceTree = "<group>"; };
 		970755991C972FE600BE9275 /* SYGalleryThumbsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsView.h; sourceTree = "<group>"; };
 		9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryThumbsView.m; sourceTree = "<group>"; };
 		9707559C1C972FF600BE9275 /* SYGalleryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryManager.h; sourceTree = "<group>"; };
@@ -197,8 +194,6 @@
 				F804E0781AFA569B00CBE307 /* SYDeviceVC.m */,
 				975B78151C923C7200804D86 /* SYPrefVC.h */,
 				975B78161C923C7200804D86 /* SYPrefVC.m */,
-				970755961C972F7100BE9275 /* SYGalleryVC.h */,
-				970755971C972F7200BE9275 /* SYGalleryVC.m */,
 				9710B41C1C9B10DB00A55529 /* SYEmptyGalleryVC.h */,
 				9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */,
 			);
@@ -379,6 +374,7 @@
 				TargetAttributes = {
 					F8CBD20C1AF9A58C00B4C221 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 79RY8264V4;
 					};
 				};
 			};
@@ -464,7 +460,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				970755981C972F7200BE9275 /* SYGalleryVC.m in Sources */,
 				971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
 				970DE9DE1C9B6344001CD025 /* MHGalleryController+SY.m in Sources */,
@@ -546,7 +541,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -585,7 +580,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -598,6 +593,8 @@
 			baseConfigurationReference = BD5626431CEA71F0459153C5 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -611,6 +608,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -619,6 +617,8 @@
 			baseConfigurationReference = 3B707C7C94B3F4CD87DAE05B /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -632,6 +632,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

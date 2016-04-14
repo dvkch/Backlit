@@ -75,7 +75,6 @@
     // creating window
     self.window = [[UIWindow alloc] init];
     [self.window makeKeyAndVisible];
-    [self.window setFrame:[[UIScreen mainScreen] bounds]];
     [self.window setRootViewController:self.splitViewController];
     [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window.layer setMasksToBounds:YES];
@@ -107,6 +106,9 @@
     [self.galleryViewController setGalleryItems:galleryItems];
     
     UIViewController *detailsViewController = [self.splitViewController.viewControllers nullableObjectAtIndex:1];
+    
+    if (!constrainedW)
+        [self.scanNavigationController dismissViewControllerAnimated:NO completion:nil];
     
     if (!hasImages && detailsViewController == self.galleryViewController)
         [self.splitViewController setViewControllers:@[self.scanNavigationController, self.emptyVC]];

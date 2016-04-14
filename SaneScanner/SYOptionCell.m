@@ -15,6 +15,7 @@
 #import "SYSaneOptionGroup.h"
 #import "SYPreferences.h"
 #import <Masonry.h>
+#import <UITableViewCell+SYKit.h>
 
 @interface SYOptionCell ()
 @property (nonatomic, strong) UILabel *labelTitle;
@@ -30,6 +31,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self)
     {
+        // prevents constraint errors when cell width is still 0
+        [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
         [self.contentView setClipsToBounds:YES];
         
         self.labelTitle = [[UILabel alloc] init];
@@ -152,83 +156,20 @@
     }
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    for (UIView *view in self.contentView.subviews)
-        if ([view isKindOfClass:[UILabel class]])
-            [(UILabel *)view setPreferredMaxLayoutWidth:view.bounds.size.width];
-
-    [super layoutSubviews];
-}
-
-static SYOptionCell *sizingCell;
-
-#warning make this generic
-#warning doesn't work
-
 + (CGFloat)cellHeightForOption:(SYSaneOption *)option showDescription:(BOOL)showDescription width:(CGFloat)width
 {
-    if (!sizingCell)
-    {
-        sizingCell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sizingCellSYOptionCell"];
-    }
-    
-    [sizingCell setOption:option];
-    [sizingCell setShowDescription:showDescription];
-    [sizingCell setFrame:CGRectMake(0, 0, width, 1000.)];
-    [sizingCell setNeedsUpdateConstraints];
-    [sizingCell updateConstraintsIfNeeded];
-    [sizingCell setNeedsLayout];
-    [sizingCell layoutIfNeeded];
-    
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:sizingCell.contentView
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:nil
-                                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                                      multiplier:1.
-                                                                        constant:width];
-    [sizingCell.contentView addConstraint:widthConstraint];
-    [sizingCell.contentView layoutIfNeeded];
-    
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)];
-    [sizingCell.contentView removeConstraint:widthConstraint];
-    
-    return ceil(size.height);
+    return [self sy_cellHeightForWidth:width configurationBlock:^(UITableViewCell *sizingCell) {
+        [(SYOptionCell *)sizingCell setOption:option];
+        [(SYOptionCell *)sizingCell setShowDescription:showDescription];
+    }];
 }
 
 + (CGFloat)cellHeightForPrefKey:(NSString *)prefKey showDescription:(BOOL)showDescription width:(CGFloat)width
 {
-    if (!sizingCell)
-    {
-        sizingCell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sizingCellSYOptionCell"];
-        [sizingCell setTranslatesAutoresizingMaskIntoConstraints:NO];
-    }
-    
-    [sizingCell setPrefKey:prefKey];
-    [sizingCell setShowDescription:showDescription];
-    [sizingCell setFrame:CGRectMake(0, 0, width, 1000.)];
-    [sizingCell setNeedsUpdateConstraints];
-    [sizingCell updateConstraintsIfNeeded];
-    [sizingCell setNeedsLayout];
-    [sizingCell layoutIfNeeded];
-    
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:sizingCell.contentView
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:nil
-                                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                                      multiplier:1.
-                                                                        constant:width];
-    [sizingCell.contentView addConstraint:widthConstraint];
-    [sizingCell.contentView layoutIfNeeded];
-    
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)];
-    [sizingCell.contentView removeConstraint:widthConstraint];
-    
-    return ceil(size.height);
+    return [self sy_cellHeightForWidth:width configurationBlock:^(UITableViewCell *sizingCell) {
+        [(SYOptionCell *)sizingCell setPrefKey:prefKey];
+        [(SYOptionCell *)sizingCell setShowDescription:showDescription];
+    }];
 }
 
 @end

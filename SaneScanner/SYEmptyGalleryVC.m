@@ -20,9 +20,21 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
+    [text appendAttributedString:
+     [[NSAttributedString alloc] initWithString:@"No images yet"
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17],
+                                                  NSForegroundColorAttributeName:[UIColor darkGrayColor]}]];
+    [text appendAttributedString:
+     [[NSAttributedString alloc] initWithString:@"\n\nScan a document with one of the devices on the left and it will appear here"
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                                                  NSForegroundColorAttributeName:[UIColor grayColor]}]];
+    
     self.label = [[UILabel alloc] init];
-    [self.label setText:@"No images yet. Scan a document with one of the devices on the left and it will appear here"];
-    [self.label setTextColor:[UIColor darkGrayColor]];
+    [self.label setAttributedText:text];
+    [self.label setNumberOfLines:0];
+    [self.label setLineBreakMode:NSLineBreakByWordWrapping];
+    [self.label setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.label];
 
     [self.label mas_makeConstraints:^(MASConstraintMaker *make) {

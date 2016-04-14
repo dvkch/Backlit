@@ -15,6 +15,7 @@
 @property (nonatomic, strong) SYSaneDevice *device;
 
 + (CGFloat)cellHeightForDevice:(SYSaneDevice *)device
-                         width:(CGFloat)width;
+                         width:(CGFloat)width
+                     maxHeight:(CGFloat)maxHeight;
 
 @end

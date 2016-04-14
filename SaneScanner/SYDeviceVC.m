@@ -44,6 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     
     // can't reenable swipe back because we wouldn't get the possiblity to close the device once it's not needed
     //[self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
@@ -169,6 +170,7 @@
     [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
         [SVProgressHUD showProgress:progress];
     } successBlock:^(UIImage *image, NSString *error) {
+        
         if (error)
             [SVProgressHUD showErrorWithStatus:error];
         else
@@ -321,7 +323,7 @@
     CGFloat width = tableView.bounds.size.width;
     
     if (indexPath.section == 0)
-        return [SYPreviewCell cellHeightForDevice:self.device width:width];
+        return [SYPreviewCell cellHeightForDevice:self.device width:width maxHeight:600];
     
     return [SYOptionCell cellHeightForOption:[self optionForTableViewIndexPath:indexPath]
                              showDescription:NO

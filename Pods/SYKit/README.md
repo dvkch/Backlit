@@ -207,6 +207,17 @@ Adds to methods to work with swizzling object methods and executing a block on a
 	
 	@end
 
+####UITableViewCell+SYKit
+
+Adds some help to compute a cell height using auto layout. Implementation may not be perfect, feel free to send PR my way if you have any suggestion.
+
+	@interface UITableViewCell (SYKit)
+
+	+ (CGFloat)sy_cellHeightForWidth:(CGFloat)width
+    	          configurationBlock:(void(^)(UITableViewCell *sizingCell))configurationBlock;
+
+	@end
+
 
 License
 ===

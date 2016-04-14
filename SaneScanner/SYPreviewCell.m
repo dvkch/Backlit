@@ -21,24 +21,22 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) [self customInit];
+    if (self)
+    {
+        // prevents constraint errors when cell width is still 0
+        [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+        [self setBackgroundColor:[UIColor clearColor]];
+        [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        self.previewView = [[SYSanePreviewView alloc] init];
+        [self.contentView addSubview:self.previewView];
+        
+        [self.previewView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(@0);
+        }];
+    }
     return self;
-}
-
-- (void)customInit
-{
-    if (self.previewView)
-        return;
-    
-    [self setBackgroundColor:[UIColor clearColor]];
-    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    self.previewView = [[SYSanePreviewView alloc] init];
-    [self.contentView addSubview:self.previewView];
-    
-    [self.previewView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(@0);
-    }];
 }
 
 - (void)setDevice:(SYSaneDevice *)device
@@ -49,8 +47,10 @@
 
 + (CGFloat)cellHeightForDevice:(SYSaneDevice *)device
                          width:(CGFloat)width
+                     maxHeight:(CGFloat)maxHeight
 {
-    return width;
+    CGFloat bestHeight = width / device.previewImageRatio;
+    return MIN(MAX(bestHeight, width), maxHeight);
 }
 
 @end

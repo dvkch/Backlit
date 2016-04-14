@@ -27,7 +27,7 @@
 + (UIBarButtonItem *)barButtonItemWithTarget:(id)target action:(SEL)action
 {
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings"]
-                                                               style:UIBarButtonItemStyleBordered
+                                                               style:UIBarButtonItemStylePlain
                                                               target:target action:action];
     return button;
 }
@@ -45,7 +45,7 @@
 {
     [super viewDidLoad];
     [self setTitle:@"Preferences"];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.tableView setDataSource:self];
@@ -59,6 +59,10 @@
     [self.navigationItem setRightBarButtonItem:self.buttonClose];
     
     self.keysGroups = [[SYPreferences shared] allKeysGrouped];
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(@0);
+    }];
 }
 
 #pragma mark - IBActions
