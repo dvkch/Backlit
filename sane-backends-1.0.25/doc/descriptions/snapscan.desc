@@ -1,0 +1,353 @@
+; $Id$
+;
+; SANE Backend specification file (Matto Marjanovic's format)
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "SnapScan"               	; name of backend
+:version "1.4"                    	; version of backend
+:manpage "sane-snapscan"          	; name of manpage (if it exists)
+:url "http://snapscan.sourceforge.net/" ; backend's web page
+:comment "Supported  bit depths: 24 bit (color), 48 bit (color, Epson) 8 bit (gray)"
+
+:devicetype :scanner              	; start of a list of devices....
+                                  	; other types:  :stillcam, :vidcam,
+                                  	;               :meta, :api
+
+;-----------------------------------------------------------------------------
+
+:mfg "AGFA"				; name a manufacturer
+:url "http://www.agfa.com/"
+
+:model "SnapScan"                  	; name models for above-specified mfg.
+:interface "SCSI"
+:status :good
+
+:model "SnapScan 300"
+:interface "SCSI"
+:status :good
+
+:model "SnapScan 310"
+:interface "SCSI"
+:status :good
+
+:model "SnapScan 600"
+:interface "SCSI"
+:status :good
+:comment "Optional ADF supported."
+
+:model "Arcus 1200"
+:interface "SCSI"
+:status :good
+:comment "Optional transparency unit supported."
+
+:model "SnapScan 1236s"
+:interface "SCSI"
+:status :good
+:comment "Optional ADF and transparency unit supported."
+
+:model "SnapScan 1236u"
+:interface "USB"
+:status :good
+:usbid "0x06bd" "0x0002"
+:comment "Optional ADF and transparency unit supported."
+
+:model "SnapScan 1212U"
+:interface "USB"
+:usbid "0x06bd" "0x0001"
+:status :good
+
+:model "SnapScan 1212U_2"
+:interface "USB"
+:usbid "0x06bd" "0x2061"
+:status :good
+
+:model "SnapScan e10"
+:interface "USB"
+:usbid "0x06bd" "0x2093"
+:status :good
+
+:model "SnapScan e20"
+:interface "USB"
+:usbid "0x06bd" "0x2091"
+:status :good
+
+:model "SnapScan e25"
+:interface "USB"
+:usbid "0x06bd" "0x2095"
+:status :good
+
+:model "SnapScan e26"
+:interface "USB"
+:usbid "0x06bd" "0x2097"
+:status :good
+
+:model "SnapScan e40"
+:interface "USB"
+:usbid "0x06bd" "0x208d"
+:status :good
+
+:model "SnapScan e42"
+:interface "USB"
+:usbid "0x06bd" "0x20ff"
+:status :good
+
+:model "SnapScan e50"
+:interface "USB"
+:status :good
+:usbid "0x06bd" "0x208f"
+:comment "Optional tranparency unit supported"
+
+:model "SnapScan e52"
+:interface "USB"
+:status :good
+:usbid "0x06bd" "0x20fd"
+:comment "Optional tranparency unit supported"
+
+:model "SnapScan e60"
+:interface "USB"
+:status :untested
+
+;------------------------------------------------------------------------------
+
+:mfg "Acer Peripherals"
+:comment "Company was renamed to <a href=\"#BENQ\">Benq</a>."
+
+:mfg "Vuego"
+:comment "Company was renamed to <a href=\"#BENQ\">Benq</a>."
+
+:mfg "Benq (Acer)"
+:url "http://www.benq.com"
+:comment "Formerly Acer Peripherals"
+
+:model "300f"
+:interface "SCSI"
+:status :good
+
+:model "310s"
+:interface "SCSI"
+:status :good
+
+:model "610s"
+:interface "SCSI"
+:status :good
+
+:model "610plus"
+:interface "SCSI"
+:status :good
+
+:model "620s"
+:interface "SCSI"
+:status :good
+
+:model "ScanWit 2720s"
+:interface "SCSI"
+:status :good
+
+:model "310U"
+:interface "USB"
+:usbid "0x04a5" "0x1a20"
+:status :good
+
+:model "320U"
+:interface "USB"
+:usbid "0x04a5" "0x2022"
+:status :good
+
+:model "340U"
+:interface "USB"
+:usbid "0x04a5" "0x2022"
+:status :good
+
+:model "620U"
+:interface "USB"
+:usbid "0x04a5" "0x1a2a"
+:status :good
+:comment "Optional tranparency unit supported"
+
+:model "620UT"
+:interface "USB"
+:usbid "0x04a5" "0x2040"
+:status :good
+:comment "Optional tranparency unit supported"
+
+
+:model "640U"
+:interface "USB"
+:usbid "0x04a5" "0x2060"
+:status :good
+:comment "Optional tranparency unit supported"
+
+:model "640bu"
+:interface "USB"
+:usbid "0x04a5" "0x207e"
+:status :good
+
+:model "640BT"
+:interface "USB"
+:usbid "0x04a5" "0x20be"
+:status :good
+:comment "Optional tranparency unit supported"
+
+:model "1240"
+:interface "USB"
+:usbid "0x04a5" "0x20c0"
+:status :good
+:comment "Optional tranparency unit supported"
+
+:model "3300"
+:interface "USB"
+:usbid "0x04a5" "0x20b0"
+:status :good
+
+:model "3300"
+:interface "USB"
+:usbid "0x04a5" "0x20de"
+:status :good
+
+:model "4300"
+:interface "USB"
+:usbid "0x04a5" "0x20b0"
+:status :good
+
+:model "4300"
+:interface "USB"
+:usbid "0x04a5" "0x20de"
+:status :good
+
+:model "5000E"
+:interface "USB"
+:usbid "0x04a5" "0x20fc"
+:status :basic
+:comment "Same as 5000U, working up to 600 DPI"
+
+:model "5000U"
+:interface "USB"
+:usbid "0x04a5" "0x20fc"
+:status :basic
+:comment "Same as 5000E, working up to 600 DPI"
+
+:model "5000"
+:interface "USB"
+:usbid "0x04a5" "0x20f8"
+:status :good
+:comment "USB ID 0x04a5,0x20f8: Color / grayscale scans working up to 1200 DPI"
+
+:model "5150"
+:interface "USB"
+:usbid "0x04a5" "0x2137"
+:status :basic
+:comment "Calibration algorithm unknown"
+
+:model "5250"
+:interface "USB"
+:usbid "0x04a5" "0x2137"
+:status :basic
+:comment "Same hardware as 5150 (?), Calibration algorithm unknown"
+
+:model "5300"
+:interface "USB"
+:usbid "0x04a5" "0x20fe"
+:status :basic
+:comment "Problems with firmware upload reported"
+
+;------------------------------------------------------------------------------
+
+:mfg "Guillemot / Hercules"
+:url "http://www.guillemot.com"
+
+:model "Maxi Scan A4 Deluxe (SCSI)"
+:interface "SCSI"
+:status :good
+:comment "Rebadged SnapScan 310s."
+
+:model "Scan@home Touch 1248 (USB)"
+:interface "USB"
+:usbid "0x04a5" "0x20de"
+:status :good
+:comment "Rebadged Benq 3300."
+
+:model "Maxi Scan A4 USB 640U"
+:interface "USB"
+:usbid "0x04a5" "0x2060"
+:status :good
+:comment "Rebadged Benq 640U."
+
+:model "Maxi A4 36 bit"
+:interface "USB"
+:usbid "0x04a5" "0x2060"
+:status :good
+:comment "Rebadged Benq 620U, needs Benq firmware file u96v???.bin"
+
+;------------------------------------------------------------------------------
+
+:mfg "Mitsubishi"
+:url "http://www.mitsubishi.com"
+
+:model "Diamondview 648UT"
+:interface "USB"
+:usbid "0x04a5" "0x2022"
+:status :good
+:comment "Rebadged Benq 320u."
+
+:model "Diamondview 650U"
+:interface "USB"
+:usbid "0x04a5" "0x20b0"
+:status :good
+:comment "Rebadged Benq 4300."
+
+;------------------------------------------------------------------------------
+
+:mfg "Epson"
+:url "http://www.epson.com"
+
+:model "Perfection 660"
+:interface "USB"
+:usbid "0x04b8" "0x0114"
+:status :good
+
+:model "Perfection 1270"
+:interface "USB"
+:usbid "0x04b8" "0x0120"
+:status :good
+
+:model "Perfection 1670"
+:interface "USB"
+:usbid "0x04b8" "0x011f"
+:status :good
+
+:model "Perfection 2480"
+:interface "USB"
+:usbid "0x04b8" "0x0121"
+:status :good
+
+:model "Perfection 2580"
+:interface "USB"
+:status :basic
+:usbid "0x04b8" "0x0121"
+:comment "Film scanning unit unsupported"
+
+:model "Perfection 3490"
+:interface "USB"
+:usbid "0x04b8" "0x0122"
+:status :good
+
+:model "Perfection 3590"
+:interface "USB"
+:usbid "0x04b8" "0x0122"
+:status :basic
+:comment "Film scanning unit unsupported"
+
+:model "Stylus CX-1500"
+:interface "USB"
+:usbid "0x04b8" "0x080c"
+:status :good
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.

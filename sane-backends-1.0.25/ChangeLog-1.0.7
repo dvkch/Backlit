@@ -1,0 +1,856 @@
+******  Release of sane-backends 1.0.7. End of code freeze ******
+
+2002-02-03  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* acinclude.m4 aclocal.m4 configure: Added a missing "test" command
+	  in check for gphoto2. This fixes error messages while testing for
+	  gphoto2 and a false positive result.
+	* TODO: Added entries about config.h, sane-backends.html, device file
+	  types, the HPUX -ansi problem, and make distclean.
+	* backend/Makefile.in backend/coolscan2.desc: Added description file
+	  for coolscan2 backend (from Major Andras 
+	  <andras@users.sourceforge.net>).
+	* backend/gphoto2.desc: gphoto2 is no longer "NEW".
+
+2002-02-02  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* PROJECTS: Added info about Canon N670U project. Added info about
+	  Sceptre S1200 project.
+	* backend/sceptre.desc backend/Makefile.in: New file (from Frank Zago 
+	  <fzago@greshamstorage.com>).
+	* backend/microtek2.desc doc/sane-microtek2.man: Updated microtek2
+	  documentation (from karsten.festag@t-online.de (Karsten Festag)).
+	* Makefile.in README.netbsd: New file. Information about problems
+	  with shared libs.
+	* configure configure.in: Include <sys/types.h> and <sys/ipc.h> also
+	  when checking for struct semun in <sys/sem.h>. This fixes a 
+	  compilation problem on FreeBSD.
+
+2002-01-31  Peter Fales <peter@fales.com>
+
+	* configure, acinclude.m4, aclocal.m4 - Latest gphoto2 updates
+	  changed the version number, breaking the gphoto2 backend.  This
+	  is a one line change to correct that.
+	
+2002-01-31  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* PROJECTS: Added info about GT-68xx backend.
+
+2002-01-29  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* configure configure.in: New version: 1.0.7. Disabled extra version.
+	  Disabled warnings by default.
+	* TODO: Added entry about adding well known types and manufacturers
+	  to sane.tex.
+
+---- CODE FREEZE FOR SANE 1.0.7 ---
+---- sane-backends-1.0.7-beta2 ----
+
+2002-01-27  Gerhard Jaeger <g.jaeger@earthling.net>
+
+	* backend/plustek-usbhw.c: Fixed LM9831 problem...
+	
+2002-01-27  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/microtek.c backend/microtek2.h: Fixed undefined behaviour
+	  problem and Scanmaker X12 problems. New version: 20020127. Code from
+	  karsten.festag@t-online.de (Karsten Festag).
+	* lib/inet_ntop.c: Fixed problem with header include order on Irix.
+	* configure configure.in backend/snapscan-usb.c
+	  include/sane/config.h.in: Only define union semun if not already
+	  defined in <sys/sem.h>. Fixes compilation bugs on Irix and FreeBSD.
+
+2002-01-26  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* NEWS: Updated for sane-backends 1.0.7.
+	* TODO: Added point about sane-find-scanner. Added details about
+	  NetBSD linking problem.
+
+2002-01-25 Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.desc, doc/sane-epson.man: Added Perfection
+	  1650 and 2450 scanners to supported scanners list.
+
+2002-01-25 Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* frontend/scanimage.c: illegal placeholders in the -f format
+	  string are now replaced by "%%". (Bug found by Peter Fales)
+
+2002-01-25  Gerhard Jaeger <g.jaeger@earthling.net>
+
+	* backend/plustek-usb.h: changed according to avoid
+	  some gcc-3 warnings
+	* docb/sane-plustek.man: Update
+
+2002-01-24  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* po/Makefile.in: Added SHELL variable. Fixes po generation on OS/2.
+	* po/README: Added some comments on what the Makefile actually does.
+	* doc/backend-writing.txt doc/sane.man: Added note about doxygen
+	  configuration for sanei.
+
+2002-01-24  Stéphane Voltz  <svoltz@wanadoo.fr>
+
+	* backend/umax_pp_low.c: corrected 2000P mis-detection by adding
+	  pauses in epat wake-up.
+
+2002-01-23  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.c backend/snapscan-scsi.c backend/snapscan.h
+          Fix recognition of Acer 320U, Fix for spaces in model ID strings,
+          Change snapscan version to 1.4.7
+          
+2002-01-23  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/mustek.c backend/mustek_usb.c doc/mustek/mustek.CHANGES
+	  doc/mustek_usb/mustek_usb.CHANGES: Fixed undefined operation
+	  warnings.
+
+2002-01-22  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.c:
+          Do not use quantization for scan areas
+	* backend/snapscan-scsi.c:
+	  Add sense handling for sense code 0x0b to avoid infinite loops,
+          Change snapscan version to 1.4.6
+        * backend/snapscan.conf
+          Use /dev/sg0 as default instead of the more uncommon /dev/sga
+          
+---- sane-backends-1.0.7-beta1 ----
+
+2002-01-21  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* TODO: Made entry about TL_X < BR_X, jpeg->sanei, and sanei_scsi
+	  more exact. Added entry about new version of libtool. Removed entry
+	  about exit().
+	* backend/Makefile.in po/Makefile.in: Added missing files to DISTFILES.
+	  Fixed incompatibilities with older versions of gmake.
+
+2002-01-21 Oliver Rauch <Oliver.Rauch@rauch-domain.de>
+
+	* doc/sane-umax.man, backend/umax.conf:
+	  added new umax.conf options and explaination
+
+2002-01-20  Gerhard Jaeger <g.jaeger@earthling.net>
+
+	* backend/plustek.c: change the options names to match SANE standard
+	* backend/plustek-usbhw.c backend/plustek-usbio.c
+	  backend/plustek-usbscan.c:
+	  Minor fixes, according to the National Sources
+
+2002-01-20  Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* sanei/sanei_scsi.c: set timeout value for all operating
+	  systems to 1 minute. The timeout value is now derived from
+	  the macro SANE_SCSICMD_TIMEOUT.
+
+2002-01-20  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/mustek.c backend/mustek.desc doc/mustek/mustek.CHANGES:
+	  Fixed calibration bug for the 1200 Pro. New version: 1.0-118.
+	* include/sane/sanei_thread.h: Removed */.
+	* backend/tamarack.c: Used return SANE_STATUS_INVAL instead of exit.
+
+2002-01-19  Peter Fales <peter@fales.com>
+
+	* backend/gphoto2.c - Fixed a bug that can cause driver errors
+	  following image capture, and bug that was incorrectly disabling
+	  thumbail previews.
+
+2002-01-19 Oliver Rauch <Oliver.Rauch@rauch-domain.de>
+
+	* updated umax.de.po
+
+2002-01-19  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* TODO: Removed entries about kill(-1,...), wrong .desc links,
+	  sanei documentation, added entries about exit(), and sanei
+	  doxygen documentation.
+	* backend/mustek.c doc/mustek/mustek.CHANGES: Fixed some option
+	  name issues.
+	* doc/sane-mustek-usb.man: Fixed typo.
+	* po/Makefile.in po/README po/epson.de.po po/mustek.de.po
+	  po/mustek_usb.de.po po/plustek.de.po po/pnm.de.po po/saneopts.de.po
+	  po/umax.de.po: Moved the options contained in saneopts.h into a
+	  seperate file. So the backend po files are much smaller and easier to
+	  read and the saneopts translations are consistent through backends.
+	* backend/microtek2.c backend/microtek2.h: Update to backend 
+	  0.95-20020112 (from karsten.festag@t-online.de (Karsten Festag)).
+	* include/sane/sanei.h include/sane/sanei_config.h
+	  include/sane/sanei_thread.h sanei/sanei_config.c: Made documentation
+	  doxygen-compatible. Move comments from sanei_config.c to
+	  sanei_config.h.
+
+2002-01-18  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c: Also recognize the GT-xxxx scanners when connected via
+	  SCSI or IEEE-1394 interface
+
+2002-01-17  Peter Fales <peter@fales.com>
+
+	* configure, acinclude.m4, aclocal.m4 - Update gphoto2 version check
+	* backend/gphoto2.c - Improved support for options not
+	  supported by camera.  Cosmetic cleanup.
+	  	
+2002-01-18  Rene Rebe <rene.rebe@gmx.net>
+
+        * docs/sane-avision.man: added the new disable-gamma-table option
+	  to the sane-avision man-page.
+
+2002-01-18  Rene Rebe <rene.rebe@gmx.net>
+
+        * backend/avision.h, backend/avision.c, backend/avision.conf:
+	  many cleanups, fixed sane_cancel to not hang - but perform the
+	  cancel, added a disable-gamma-table option and added the possible
+	  options into the avision.conf file
+
+2002-01-18  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/Makefile.in: Added doxygen-sanei.conf to DIST_FILES.
+
+2002-01-17  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* include/sanei/sanei_usb.h: Made documentation doxygen compatible.
+
+2002-01-17  Peter Fales <peter@fales.com>
+
+	* backend/gphoto2.c, doc/sane-gphoto2.man
+	  Remove calls to exit()
+	  Support cameras which store all files in top-level directory
+
+2002-01-17  Peter Fales <peter@fales.com>
+
+	* configure, acinclude.m4, aclocal.m4 - (Really) disable
+	  gphoto2 backend unless specifically requested by the user (using
+	  --with-gphoto2) and the right CVS version of gphoto2 is found
+
+2002-01-17  Rene Rebe <rene.rebe@gmx.net>
+
+        * backend/avision.c removed to call exit in a debug case
+
+2002-01-17  Gerhard Jaeger <g.jaeger@earthling.net>
+
+	* backend/plustek.c backend/plustek.h
+	  Fixed conditional compilation problem
+	  Updated localization strings
+	* doc/sane-plustek.man: Updated
+	* po/plustek.de.po: Updated
+	* doc/doxygen-sanei.conf: Added doxygen configuration file for
+	  the sane libs
+	* include/sane/sanei.h include/sane/sanei_ab306.h
+	  include/sane/sanei_lm983x.h sanei/sanei_lm983x.c:
+	  Updated to support doxygen comments
+
+2002-01-17  Peter Fales <peter@fales.com>
+
+	* configure.in, configure, acinclude.m4, aclocal.m4 - Disable
+	  gphoto2 backend unless specifically requested by the user (using
+	  --with-gphoto2) and the right CVS version of gphoto2 is found
+
+2002-01-17  Rene Rebe <rene.rebe@gmx.net>
+
+	* backend/avision.h backend/avision.c backend/avision.desc
+	  doc/sane-avision.man: Merged the Avision v0.3.0 backend. It
+	  includes overall cleanups, improved supported device detection,
+	  memory-leak fixes, new config-options, initial USB device and
+	  color calibration support. Also upadted the homepage-url and the
+	  sane-avision man-page.
+
+2002-01-16  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/abaton.desc backend/dmc.desc backend/m3096g.desc
+	  backend/mustek.c backend/sp15c.desc backend/v4l.desc:
+	  Updated broken URLs for which I could find new ones. Commented out
+	  all the others.
+
+2002-01-15  Peter Fales <peter@fales.com>
+
+	* backend/gphoto2.c:  Following yet another gphoto2 API change -
+	  converted gp_debug_printf to gp_log
+
+	  configure.in, configure, acinclude.m4, aclocal.m4 - Improvements
+	  to the way gphoto2 is detected and used based on using 
+	  gphoto2-config. 
+
+2002-01-15  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/pnm.c backend/pnm.desc po/pnm.de.po: Removed descripions
+	  of options of type SANE_TYPE_GROUP. Fixed some translations.
+	  Fixed header. New version: 1.0.4.
+	* backend/plustek.c backend/plustek.h po/Makefile.in po/plusetk.de.po:
+	  Added German translation of Plustek backend options. Marked
+	  translatable text in backend sources.
+
+2002-01-14  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+	
+	* backend/snapscan.c   backend/snapscan-usb.c:
+          Added workaround for bug in semctl() on PPC;
+          backend version 1.4.5
+        
+2002-01-14  Peter Fales <peter@fales.com>
+	* backend/gphoto2.c:  Was requiring the device to have the
+	  IMAGE_CAPTURE capability - changed this to a warning instead
+	  of an error so the "Directory Browse" camera can be used.
+	  Don't require a port to be specified for the "Directory
+	  Browse" camera.  Fixed a bug that can result in extra data 
+	  at the end of the iamge.  Allow the returned image image to be 
+	  larger than the "estimate" specified in the configuration file.
+
+2002-01-14  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* frontend/scanimage.c: Added help message for --formatted-device-list.
+	  Added va_end() and #include <stdarg.h>. Used fprintf to print errors.
+	  Fixed some typos.
+
+2002-01-13  Abel Deuring <a.deuring@satzbau.gmbh.de>
+	* frontend/scanimage.c, doc/scaniamge.man: Added the option -f /
+	  --formatted-device-list to allow arbirtarily formatted device
+	  lists. Suggested by Klaas Freitag.
+
+2002-01-13  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* acinclude.m4 aclocal.m4 configure: Included AC_PROG_LIBTOOL into
+	  acinclude.m4 to avoid trouble with newer versions of libtool.
+	* backend/niash.desc: New file for the niash backend (from Bertrik
+	  Sikken <bertrik@zonnet.nl>).
+
+2002-01-12  Peter Fales <peter@fales.com>
+
+    * backend/gphoto2.c - Fixed breakage due to gphoto2 API changes
+      (Added context parameter to functions calls)
+
+2002-01-12  Gerhard Jaeger <g.jaeger@earthling.net>
+
+    * doc/sane-plustek.man: Update
+    * backend/plustek-devs.c backend/plustek-usb.c backend/plustek-usbhw.c
+      backend/plustek-usbio.c backend/plustek-usbscan.c
+      backend/plustek-usbshading.c backend/plustek.c:
+      Updated to reflect the current feedback upon the code and
+      added some minor fixes
+    * backend/plustek.desc: Added Mustek and HP entry
+
+2002-01-12  Gerhard Jaeger <g.jaeger@earthling.net>
+
+    * include/sane/sanei_lm983x.h sanei/sanei_lm983x.c:
+      added sanei_lm983x_init(), updated comments and fixed the u_long
+    * AUTHORS: Added myself to the list of sanei authors.
+
+2002-01-12  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/sane.man doc/scanimage.man: Added link to scanadf.
+
+2002-01-11  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/qcam.c: Create lockfile with O_EXCL even when using fcntl
+	  locking. Remove it in any case after exiting. Log file handling
+	  is still buggy but this has to be done by someone who has a qcam.
+	* sanei/sanei_lm983x.c: Added #include <sys/types.h> (OS/2 complains
+	  otherwise).
+	* backend/pnm.c backend/pnm.desc po/pnm.de.po: hand_scanner and
+	  three_pass options need SANE_INFO_RELOAD_PARAMETERS. All options
+	  have a symbolic name now. Removed bogus translation from po. New
+	  version: 1.0.3.
+	* frontend/saned.c: Check that the IP addresses of the peer are the
+	  same for control and data connections. Exit, if this is not the
+	  case. Changed some debug levels.
+	* PROJECTS: Updated some URLs. Removed m3096g and Mustek BearPaw 
+	  (both are included now in SANE). Added test backend and SaneTwain.
+	* TODO: Removed primax (not a backend), fixed viceo URL, updated 
+	  qcam entries, added entries about ipv6 support, removed saned
+	  address validation entry. Added entry about scanimage + NLS.
+	* backend/mustek_usb.c backend/mustek_usb.desc
+	  backend/mustek_usb_high.c backend/mustek_usb_high.h
+	  backend/mustek_usb_mid.c backend/mustek_usb_mid.h
+	  doc/mustek_usb/mustek_usb.CHANGES po/mustek_usb.de.po:
+	  Removed some warnings. Fixed segfault while exiting. Using empty
+	  devicename works now. New version: 1.0-10.
+
+2002-01-10  Tom Martone <tom@martoneconsulting.com>
+        * backend/bh.c
+          addressed security issue with tempfile
+
+2002-01-10  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+	
+	* backend/snapscan.c   backend/snapscan.h  backend/snapscan.desc:
+	  Update to snapscan-20020110 (Version 1.4.4) 
+          - add support for SnapScan e42	  
+
+2002-01-10  Gerhard Jaeger <g.jaeger@earthling.net>
+
+    * include/sane/sanei_lm983x.h sanei/sanei_lm983x.c sanei/Makefile.in:
+      Added to support for the National Semiconductor LM9831/2/3 chipsets
+      (read/write functions)
+    * backend/plustek.desc: Updated, added missing, now supported devices
+    * backend/plustek.c backend/plustek-share.h backend/plustek.h
+      backend/plustek.conf backend/plustek-usb.c backend/plustek-devs.c
+      backend/plustek-pp.c backend/plustek-usbhw.c backend/plustek-usbimg.c
+      backend/plustek-usbio.c backend/plustek-usbmap.c
+      backend/plustek-usbscan.c backend/plustek-usbshading.c
+      backend/plustek-usb.h:
+      Major changes to use the new sanei_lm983x functions
+      Changed the configuration file to reflect all the possible config-options
+    * backend/Makefile.in: Changed to compile the Plustek backend
+
+2002-01-10  Henning Meier-Geinitz <henning@meier-geinitz.de>
+	
+	* po/pnm.de.po: Added German translation for pnm backend.
+	* po/mustek.de.po po/mustek_usb.de.po: Updated German translations.
+	  They should be complete now.
+	* po/Makefile.in README: Made Makefile more intelligent. Targets
+	  are only updated if necessary. No manual copying necessary.
+	  Added pnm.de.po to DISTFILES. Added comment about DISTFILES.
+	* backend/mustek_usb.desc: New status: beta.
+	* README: Added description of --enable-translations.
+	* doc/sane.man: Added comment about translations.
+	* Makefile.in: Added Changelogs to DISTFILES. test/Makefile is
+	  removed in make distclean now. 
+	* doc/backend-writing.txt: Added paragraph about getting started.
+	  Added comments about ANSI C, compilation warnings, testing and 
+	  keeping manpages up-to-date.
+	* backend/pnm.c: Added SANE_I18N() marks.
+	* TODO: Cleanup. Moved several entries to doc/backend-writing.txt.
+	  Moved some entries to more appropriate paragraphs. Added entry about
+	  missing or defective links in the .desc files. Removed entry about
+	  translations.
+	* lib/inet_ntop.c: Changed order of includes for OS/2 compatibility.
+	* frontend/scanimage.c: Added output of bytes scanned in total.
+	  Added warning that's printed if scanimage gets more data then
+	  expected from the parameters.
+	* include/Makefile.in: Added sanei_lm983x.h to DISTFILES.
+	* backend/qcam.c: Actually close the lock file when unlocking.
+
+2002-01-09  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* ChangeLog ChangeLog-1.0.0 ChangeLog-1.0.1 ChangeLog-1.0.2
+	  ChangeLog-1.0.3 ChangeLog-1.0.4 ChangeLog-1.0.5: Splitted
+	  ChangeLog to limit filesize. Editing became slow on smaller systems.
+
+2002-01-08  Marcio Teixeira <marciot@users.sourceforge.net>
+
+	* backend/umax1220u.c: fixed compile warnings
+	* backend/umax1220u-common.c: fixed compile warnings
+	* backend/umax1220u.desc: added info about 2000U, 2200U, 2200US
+
+2002-01-08  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* configure configure.in: Added V_EXTRA version number to mark
+	  CVS versions (-cvs) and snapshots/betas (e.g. -beta1).
+	  V_EXTRA=-pre1 would result in "sane-backends-1.0.7-pre1(.tar.gz)".
+	  For release, V_EXTRA is empty. Added NUMBER_VERSION to avoid
+	  confusing sane-config and frontends that rely on numbered versions.
+	* tools/sane-config.in: Use @NUMBER_VERSION@.
+	* sane-backends.lsm: Made more compatible with LSM standard. Fixed
+	  mostang.com directory. Added OpenBSD.
+	* include/Makefile.in: Added targed "dist". Moved include targets from
+	  root dir to this file. Added standard variables and .PHONY.
+	* backend/Makefile.in doc/Makefile.in frontend/Makefile.in
+	  japi/Makefile.in lib/Makefile.in po/Makefile.in sanei/Makefile.in
+	  testsuite/Makefile.in tools/Makefile.in: Added target "dist". 
+	  Fixed .PHONY.
+	* Makefile.in: Added targets "dist" and "sane-backends". make dist
+          creates sane-backends-x.y.z.tar.gz and make sane-backends also
+          creates the appropriate sane-x-y-z.lsm. Moved distclean to include/.
+          Fixed .PHONY. Made sane-backands-*.lsm look nicer.
+	* doc/backend-writing.txt: Point to po/README for the I18N details.
+	* doc/releases.txt: Added "make sane-backends" procedure.
+	* po/Makefile.in: make now creates all the files, make install does
+	  nothing but installation.
+	* README: Updated. Fixed minor bugs.
+	* AUTHORS: Added sanei authors.
+	* doc/saned.man: Added info about data connection.
+	* po/mustek.de.po: Updated German translation for the Mustek SCSI
+	  backend.
+	* frontend/.gdbinit: Removed unnecessary file.
+
+2002-01-08  Stéphane Voltz  <svoltz@wanadoo.fr>
+
+	* configure.in: added help text for --enable-parport-directio
+
+2002-01-07  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* PROJECTS: Added link to backend for HP Scanjet 3300C / 3400C
+	  and 4300C scanners. Removed umax1220u project (now included in
+	  sane-backends).
+	* po/Makefile.in po/README: Added basic support for translating
+	  option descriptions and titles of SANE backends. This is really
+	  alpha!
+	* po/epson.de.po po/umax.de.po: Updated by make update-po.
+	* po/mustek.de.po mustek_usb.de.po: Added German translations
+	  for Mustek SCSI and USB backends. Translations for well-known
+	  options are missing.
+	* Makefile.in configure configure.in: Added option 
+	  --enable-translations to configure. I18N support is disabled by 
+	  default.
+	* po/.cvsignore: New file.
+	* doc/sane-mustek_usb.man doc/mustek_usb/mustek_usb.CHANGES:
+	  Added info about BearPaw scanners and plustek backend.
+	* backend/mustek.c backend/mustek.desc doc/sane-mustek.man
+	  doc/mustek/mustek.CHANGES:
+	  Small fix for Paragon 1200 Pro. Added some test code for this
+	  scanner. Added Trust Imagery 1200 to man page and .desc. New
+	  version: 1.0-117.
+	* backend/Makefile.in backend/dll.conf backend/umax1220u-common.c
+	  backend/umax1220u.c backend/umax1220u.conf backend/umax1220u.desc:
+	  Added new backend umax1220u for UMAX Astra 1220U and 2000U
+	  scanners (patch from Marcio Luis Teixeira 
+	  <marciot@holly.colostate.edu>).
+	* doc/Makefile.in doc/sane.man doc/sane-umax1220u.man: Added
+	  documentation fo umax1220u backend (patch from from Marcio Luis
+	  Teixeira <marciot@holly.colostate.edu>).
+	* AUTHORS: Added Marcio Luis Teixeira.
+	* TODO: Removed umax1220u project (now included in sane-backends).
+	  Added HP Scanjet 3300C / 3400C and 4300C project. Added entry about
+	  saned data port documentation. Removed saned race condition bug.
+	* doc/.cvsignore: Added sane-umax1220u.5.
+
+2002-01-06  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* configure configure.in include/sane/config.h.in: Added check
+	  for inet_ntop().
+	* lib/inet_ntop.c lib/Makefile.in backend/Makefile.in: Added
+	  implementation of inet_ntop() for platforms withouth this
+	  function based on inet_ntoa.
+	* backend/saned.conf frontend/saned.c doc/saned.man: Changed access
+	  control (function check host). Now IP addresses are used for
+	  comparison, not host names as before. It's possible to put
+	  hostnames, FQDNs and IP addresses into saned.conf. Limitations:
+	  Only the first IP address in struct hostent is checked. IPv6 is
+	  untested. The change is based on a patch by Petter Reinholdtsen 
+	  <pere@hungry.com>.
+	  Return SANE_STATUS_ACCESS_DENIED if access was not granted instead
+	  of SANE_STATUS_IO_ERROR.
+	  Removed isfdtype to avoid compilation problems.
+	  Added more debug output. Print function name in every DBG statement.
+	  Updated manual pages and saned.conf.
+	* net.c: Return SANE_STATUS_ACCESS_DENIED if access was not granted
+	  instead of SANE_STATUS_IO_ERROR.
+
+2001-01-06  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c: Undefine TEST_IOCTL again, which was enabled
+	  by accident. 
+
+2002-01-06  Stéphane Voltz  <svoltz@wanadoo.fr>
+
+	* backend/umax_pp_low.c: improved warm up and color calibration
+	  of much better quality now. Manual settings now work correctly.
+	  Corrected parport mode being set before being claimed.
+	* backend/umax_pp.c: changed build number.
+	* tools/umax_pp.c: changed version.
+	  
+
+2002-01-05 Oliver Rauch <Oliver.Rauch@rauch-domain.de>
+	* backend/umax-scanner.c, umax.c, umax.conf, umax.desc, umax.h:
+	  update to backend version 1.0 build 32
+
+2002-01-05  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.[ch]: Check for (and set) s->fd to -1 when 
+	  scanner is closed. Removed black gamma table - only RGB
+	  is used, even for grayscale scans. Do not call access()
+	  when running on OS/2 or when using a parallel port scanner.
+
+2002-01-05  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/net.c backend/net.desc: Fixed race condition between saned
+	  sending NET_OPEN reply and net.c flushing the wire. New version:
+	  1.0.6.
+	* doc/saned.man frontend/saned.c: Changed debug handling. All debug
+	  messages use DBG now. If in inetd mode or dameon mode with "-s",
+	  the messages are printed to syslog as before. If option "-d" is used,
+	  the mesages are printed to stderr. Updated manual page.
+
+2002-01-04  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* sanei/sanei_wire.c: Added DBG message that warns if the read buffer
+	  is going to be deleted (data loss).
+
+2002-01-03  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* README.os2: Updated URL of Franz Bakan's web site.
+	* include/sane/sanei_usb.h sanei/sanei_usb.c: Added support for USB
+	  control messages (patch from Marcio Luis Teixeira
+	  <marciot@holly.colostate.edu>).
+	* doc/sane-usb.man: Updated concerning backends supporting sanei_usb
+	  and OpenBSD. Other minor fixes.
+	* include/sane/sanei_pv8630.h sanei/sanei_pv8630.h sanei/Makefile.in:
+	  Added support for the PowerVision 8630 chip, a USB to parallel
+	  converter used in many scanners (patch from from Marcio Luis Teixeira
+	  <marciot@holly.colostate.edu>). Fixed sanei_thread Makefile.in entry.
+	* TODO: Added entries about saned/net freezes and parport-directio doc.
+	  Removed entries about sanei_usb control msg, sanei_pv8630 inclusion,
+	  OS/2 libsocket problem, and splitting --enable-directio.
+
+2001-12-30  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* frontend/scanimage.c: Fixed endless loop in sighandler.
+	* frontend/saned.c: Fixed sigpipe race in connection with
+	  select_fd. Added debug output.
+
+2001-12-30  Gerhard Jaeger <g.jaeger@earthling.net>
+
+	* backend/plustek_usbmap.c backend/plustek-usbimg.c
+	  backend/plustek_usb.c backend/plustek_usb.h:
+	  Fixed bug in lineart scaling and in brightness setting
+
+2001-12-29  Gerhard Jaeger <g.jaeger@earthling.net>
+
+    * backend/plustek.c backend/plustek-share.h backend/plustek.h
+      backend/plustek.conf:
+      Changed to support the LM983x based USB scanner
+    * backend/plustek.desc: Updated, added missing, now supported devices
+    * backend/plustek-usb.c backend/plustek-devs.c backend/plustek-pp.c
+      backend/plustek-usbhw.c backend/plustek-usbimg.c
+      backend/plustek-usbio.c backend/plustek-usbmap.c
+      backend/plustek-usbscan.c backend/plustek-usbshading.c
+      backend/plustek-usb.h: New files - added to support the Plustek
+      USB devices (LM9831/2 based) and other devices based on this
+      chipset
+    * backend/Makefile.in: Changed to compile the Plustek backend
+    * doc/sane-plustek.man: Added some USB information
+
+2001-12-28  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* configure configure.in: Changed order of tests for libsocket and
+	  libsyslog to avoid problems with OS/2. Small spelling and format
+	  fixes.
+
+2001-12-28  Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* configure.in, configure, sanei/sanei_scsi.c, umax_pp_low.c,
+	  README.linux: replaced --enable-directio and ENABLE_DIRECTIO
+	  with --enable-scsi-directio / --enable-parport-directio resp.
+	  ENABLE_SCSI_DIRECTIO / ENABLE_PARPORT_DIRECTIO
+
+2001-12-27  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* PROJECTS TODO: Updated info about "Relisys Scorpio Super 3 SCSI II".
+
+2001-12-25  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* README.linux: Used "sane-find-scanner". Some minor changes.
+	* config.guess config.sub: Updated from 
+	  http://savannah.gnu.org/projects/config.
+	* TODO: New section: "platform-specific". Added some problems with
+	  *BSD. Some minor fixes and additions.
+	* tools/sane-find-scanner.c: Added OpenBSD device files.
+	* README.openbsd: New file. Some information on how to get SANE 
+	  running on top of OpenBSD.
+
+2001-12-22  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/mustek_usb.c backend/mustek_usb.conf backend/mustek_usb.desc
+	  backend/mustek_usb_low.c backend/mustek_usb_low.h 
+	  doc/sane-mustek_usb.man doc/mustek_usb/mustek_usb.CHANGES:
+	  Made usb_low_read_rows more robust. Limited maximum block size and
+	  added option for this. New version: 1.0-9.
+	
+2001-12-21  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.c    backend/snapscan.h
+          Remove tmpfname var
+
+2001-12-20  Peter Fales <peter@fales.com>
+
+	* backend/dc25.c - Fixed a potential security problem due to a 
+	  race condition involving temporary file creation.  Also did some
+	  cosmetic cleanup and removed some un-needed code.
+
+2001-12-19  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/dll.conf: Added (commented out) st400 entry.
+
+2001-12-18  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.c    backend/snapscan.h
+          Remove temporary file
+
+2001-12-18  Ingo Wilken <Ingo.Wilken@informatik.uni-oldenburg.de>
+
+	* backend/st400.c backend/st400.conf
+	  Security fix: Dump inquiry data to $HOME/st400.dump instead
+	  of /tmp/st400.dump.
+
+2001-12-17  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan-scsi.c    backend/snapscan.h
+	  backend/snapscan-usb.h     backend/snapscan-usb.c
+	  backend/snapscan-sources.h backend/snapscan-sources.c
+	  backend/snapscan.c         backend/snapscan.desc
+	  Update to snapscan-20011212 (snapscan backend 1.4.3):
+          - Use sense handler for USB scanners
+          - Correct color alignment for Snapscan 600
+          - Fix dither matrix computation
+          - Add support for Snapscan e26 and e52
+          - Guard for TL_X < BR_X and TL_Y < BR_Y
+
+2001-12-16  Peter Kirchgessner <peter@kirchgessner.net>
+	* frontend/stiff.c
+	  Add fillorder tag for b/w-TIFF-files
+	  Include stiff.h to avoid warning "no previous prototype"
+
+2001-12-15  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/mustek.c backend/mustek.desc doc/mustek/mustek.CHANGES:
+	  Fixed a possible segfault in sane_control_option. Added more
+	  debug output for SCSI commands. New version: 1.0-116.
+
+2001-12-01  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* sanei/sanei_ab306: Removed warning: `dev_io_fd' defined but not
+	  used. Variable used only by FreeBSD. Added test for FreeBSD.
+	  Patch from Stephen Torri <storri@ameritech.net>.
+	
+2001-11-30  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* testsuite/Makefile.in testsuite/README: Added comment about
+	  the need to enable pnm. Made output easier to read.
+
+2001-11-29  Henning Meier-Geinitz <henning@meier-geinitz.de>
+	
+	* backend/mustek.c backend/mustek.desc doc/mustek/mustek.CHANGES: 
+	  Added check for TL_X > BR_X or TL_Y > BR_Y. New version: 1.0-115.
+	* TODO: Added entry about TL_X < BR_X problems and semaphores for OS/2.
+	  Removed entry about BearPaw scanners.
+	
+2001-11-26 Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* backend/sharp.c: added an additional check to prevent OS/2 from
+	  define "#define USE_FORK"
+
+2001-11-24 Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* backend/sharp.c: removed an unconditional "#define USE_FORK"
+
+2001-11-22  Stéphane Voltz  <svoltz@wanadoo.fr>
+
+	* backend/umax_pp_low.c: fixed color calibration bug. Scans are
+	  of much better quality now. Manual settings now work correctly.
+	* tools/umax_pp.c: changed version.
+	  
+
+2001-11-22  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* config.guess config.sub: Fetched new versions from
+	  http://savannah.gnu.org/projects/config.
+	* mkinstalldirs: Updated for OS/2 (from "Franz Bakan" 
+	  <fbakan@gmx.net>).
+	* backend/mustek.c backend/mustek.desc backend/mustek.h
+	  doc/mustek/mustek.CHANGES: Added OS/2 compatibility fixes
+	  (from "Franz Bakan" <fbakan@gmx.net>). New version: 1.0-114.
+	* sanei/sanei_scsi.c: OS/2 changes: Removed semaphore code and
+	  increased MAX_DATA to 64k (from "Franz Bakan" <fbakan@gmx.net>).
+	* tools/sane-config.in: Also return -ldl (necessary fo IA64?).
+	* TODO: Added entry about .exe and similar file extentions.
+	  Removed sane-config.in -ldl issue.
+
+2001-11-22  Stéphane Voltz  <svoltz@wanadoo.fr>
+
+	* backend/umax_pp_low.c: fixed build problem on non i386 linux when
+	  there is no <sys/io.h>.
+
+2001-11-21  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* TODO: Added entries about the fork/kill(-1,...) issue, the inb/outb
+	  problems, config.guess and sane-config.in.
+	* sanei/Makefile.in: Added sanei_thread for OS/2 portability.
+
+2001-11-20  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/scanimage.man frontend/scanimage.c: Use out%d.tif by default if
+	  --format tiff was selected. Update documentation about default
+	  formats. Fixed spelling mistakes.
+	* AUTHORS: I think this was planned in alphabetical order...
+
+2001-11-18  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c: Fixed Wait for Button functionality.
+	  Don't call access() for par port scanners.
+
+2001-11-18  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.h: Added missing defines for USB IOCTLs
+
+2001-11-18  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/mustek.desc doc/sane-mustek.man doc/mustek/mustek.CHANGES:
+	  Added enries for Primax Compact 4800.
+
+2001-11-15  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/mustek_usb.c backend/mustek_usb.conf backend/mustek_usb.desc
+	  backend/mustek_usb.h backend/mustek_usb_high.c 
+	  backend/mustek_usb_high.h backend/mustek_usb_low.c
+	  backend/mustek_usb_low.h backend/mustek_usb_mid.c
+	  backend/mustek_usb_mid.h doc/sane-mustek_usb.man
+	  doc/mustek_usb/mustek_usb.CHANGES doc/mustek_usb/mustek_usb.TODO:
+	  FreeBSD is supported to some degree now. Started 1200 USB support.
+	  Documentation updates. New version: 1.0-8.
+
+2001-11-12  Peter Fales <peter@fales.com>
+
+	* gphoto2.c - Debug message was not getting printed because DBG_INIT
+	  was not called first.
+
+2001-11-12  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/sane-scsi.man: More details and examples for the "scsi * ..."
+	  directive for config files. Added information about debug level 255
+	  printing (Linux) kernel debug messages. Added link to sane-usb(5).
+
+2001-11-10  Stéphane Voltz  <svoltz@wanadoo.fr>
+
+	* backend/umax_pp_low.c: correct PPC compile problem by removing
+	  buggy extra ifdef
+
+2001-11-11  Peter Fales <peter@fales.com>
+
+	* gphoto2.c - Number of images was not getting updated after
+	  capturing a new image
+
+2001-11-11  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/dll.c backend/dll.desc doc/sane-dll.man: Added some debug
+	  messages (e.g. if dll.conf isn't found). Some adjustments concerning
+	  debug levels. Removed some compilation warnings. New version: 1.0.5.
+
+2001-11-11 Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* sanei/sanei_scsi.c (Linux part): 
+          - improved handling of status codes returned by the SG driver. 
+          Device status INTERMEDIATE GOOD and CONDITION MET are now mapped 
+          to SANE_STATUS_GOOD; device status BUSY and a few driver status 
+          codes are mapped to SANE_STATUS_DEVICE_BUSY
+          - On SCSI command completion, the (sometimes bogus) residual count 
+          is no longer subtracted from *req->dstlen
+        * backend/sharp.c: if a READ command fails with SANE_STATUS_DEVICE_BUSY,
+          retry a few times.
+
+2001-11-10  Karl Heinz Kremer <khk@khk.net>
+
+	* backends/epson.[ch]: all strings tagged with I18N macro
+	  Added support for scan button, scanner waits for button if the
+	  option "wait-for-button" is activated.
+
+2001-11-10  Stéphane Voltz  <svoltz@wanadoo.fr>
+
+	* backend/umax_pp_low.c backend/umax_pp_low.h backend/umax_pp_mid.c
+	  backend/umax_pp_mid.h backend/umax_pp.c backend/umax_pp.h:
+	  use ENABLE_DIRECTIO to compile in direct I/O. Corrected the long 
+	  standing scan area origin detection bug. Improved parport mode
+	  negociation.
+
+2001-11-07  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* sanei/sanei_usb.c: Fixed debug messages.
+
+2001-11-06  Peter Fales <peter@fales.com>
+
+	* dc240.c - fix a bug that causes the backend's internal directory
+	  to get out of sync with the camera directory when a file is deleted
+	* gphoto2.c - include the gphoto2 port name as part of the SANE
+	  device name and improve reliability when using the gphoto2
+	  serial port libs.
+
+2001-11-04  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* configure configure.in: Enabled warnings by default.
+	* sane-backends.lsm: Made more compatible with template.
+	  Added myself as maintainer to avoid problems when uploading
+	  to tsx-11 and sunsite in future.
+
+Older entries can be found in ChangeLog-1.0.6.

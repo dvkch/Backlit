@@ -1,0 +1,698 @@
+/* include/sane/config.h.in.  Generated from configure.in by autoheader.  */
+
+/* Define if building universal (internal helper macro) */
+#undef AC_APPLE_UNIVERSAL_BUILD
+
+/* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
+   systems. This function is required for `alloca.c' support on those systems.
+   */
+#undef CRAY_STACKSEG_END
+
+/* Define to 1 if using `alloca.c'. */
+#undef C_ALLOCA
+
+/* Should we disable SCSI generic v3? */
+#undef DISABLE_LINUX_SG_IO
+
+/* Define to 1 if the system supports IPv6 */
+#undef ENABLE_IPV6
+
+/* Define to 1 if device locking should be enabled. */
+#undef ENABLE_LOCKING
+
+/* Define to 1 if struct sockaddr_storage has an ss_family member */
+#undef HAS_SS_FAMILY
+
+/* Define to 1 if struct sockaddr_storage has __ss_family instead of ss_family
+   */
+#undef HAS___SS_FAMILY
+
+/* Define to 1 if you have `alloca', as a function or macro. */
+#undef HAVE_ALLOCA
+
+/* Define to 1 if you have <alloca.h> and it should be used (not on Ultrix).
+   */
+#undef HAVE_ALLOCA_H
+
+/* Define to 1 if you have the <apollo/scsi.h> header file. */
+#undef HAVE_APOLLO_SCSI_H
+
+/* Define to 1 if you have the <asm/io.h> header file. */
+#undef HAVE_ASM_IO_H
+
+/* Define to 1 if you have the <asm/types.h> header file. */
+#undef HAVE_ASM_TYPES_H
+
+/* Define to 1 if you have the `atexit' function. */
+#undef HAVE_ATEXIT
+
+/* Define to 1 if you have the <be/drivers/USB_scanner.h> header file. */
+#undef HAVE_BE_DRIVERS_USB_SCANNER_H
+
+/* Define to 1 if you have the <be/kernel/OS.h> header file. */
+#undef HAVE_BE_KERNEL_OS_H
+
+/* Define to 1 if you have the <bsd/dev/scsireg.h> header file. */
+#undef HAVE_BSD_DEV_SCSIREG_H
+
+/* Define to 1 if you have the <camlib.h> header file. */
+#undef HAVE_CAMLIB_H
+
+/* Define to 1 if you have the `cfmakeraw' function. */
+#undef HAVE_CFMAKERAW
+
+/* Define to 1 if you have the <ddk/ntddscsi.h> header file. */
+#undef HAVE_DDK_NTDDSCSI_H
+
+/* Define to 1 if you have the <dev/ppbus/ppi.h> header file. */
+#undef HAVE_DEV_PPBUS_PPI_H
+
+/* Is /dev/urandom available? */
+#undef HAVE_DEV_URANDOM
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
+
+/* Define to 1 if you have the `dlopen' function. */
+#undef HAVE_DLOPEN
+
+/* Define to 1 if you have the <dl.h> header file. */
+#undef HAVE_DL_H
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#undef HAVE_FCNTL_H
+
+/* Define to 1 if you have the `getaddrinfo' function. */
+#undef HAVE_GETADDRINFO
+
+/* Define to 1 if you have the `getenv' function. */
+#undef HAVE_GETENV
+
+/* Define to 1 if you have the `getnameinfo' function. */
+#undef HAVE_GETNAMEINFO
+
+/* Define to 1 if you have the <getopt.h> header file. */
+#undef HAVE_GETOPT_H
+
+/* Define to 1 if you have the `getopt_long' function. */
+#undef HAVE_GETOPT_LONG
+
+/* Define to 1 if you have the `getpagesize' function. */
+#undef HAVE_GETPAGESIZE
+
+/* Define to 1 if you have the `getpass' function. */
+#undef HAVE_GETPASS
+
+/* Define to 1 if you have the `getuid' function. */
+#undef HAVE_GETUID
+
+/* Define to 1 if you have the `gp_camera_init' function. */
+#undef HAVE_GP_CAMERA_INIT
+
+/* Define to 1 if you have the `gp_port_info_get_path' function. */
+#undef HAVE_GP_PORT_INFO_GET_PATH
+
+/* Define to 1 if you have the `i386_set_ioperm' function. */
+#undef HAVE_I386_SET_IOPERM
+
+/* Define to 1 if you have the <ifaddrs.h> header file. */
+#undef HAVE_IFADDRS_H
+
+/* Define to 1 if you have the `inet_addr' function. */
+#undef HAVE_INET_ADDR
+
+/* Define to 1 if you have the `inet_aton' function. */
+#undef HAVE_INET_ATON
+
+/* Define to 1 if you have the `inet_ntoa' function. */
+#undef HAVE_INET_NTOA
+
+/* Define to 1 if you have the `inet_ntop' function. */
+#undef HAVE_INET_NTOP
+
+/* Define to 1 if you have the `inet_pton' function. */
+#undef HAVE_INET_PTON
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <IOKit/cdb/IOSCSILib.h> header file. */
+#undef HAVE_IOKIT_CDB_IOSCSILIB_H
+
+/* Define to 1 if you have the
+   <IOKit/scsi-commands/SCSICommandOperationCodes.h> header file. */
+#undef HAVE_IOKIT_SCSI_COMMANDS_SCSICOMMANDOPERATIONCODES_H
+
+/* Define to 1 if you have the <IOKit/scsi/SCSICommandOperationCodes.h> header
+   file. */
+#undef HAVE_IOKIT_SCSI_SCSICOMMANDOPERATIONCODES_H
+
+/* Define to 1 if you have the <IOKit/scsi/SCSITaskLib.h> header file. */
+#undef HAVE_IOKIT_SCSI_SCSITASKLIB_H
+
+/* Define to 1 if you have the `ioperm' function. */
+#undef HAVE_IOPERM
+
+/* Define to 1 if you have the `iopl' function. */
+#undef HAVE_IOPL
+
+/* Define to 1 if you have the <io/cam/cam.h> header file. */
+#undef HAVE_IO_CAM_CAM_H
+
+/* Define to 1 if you have the `isfdtype' function. */
+#undef HAVE_ISFDTYPE
+
+/* Define to 1 if you have the <libc.h> header file. */
+#undef HAVE_LIBC_H
+
+/* Define to 1 if you have the `ieee1284' library (-lcam). */
+#undef HAVE_LIBIEEE1284
+
+/* Define to 1 if you have the libjpeg library. */
+#undef HAVE_LIBJPEG
+
+/* Define to 1 if you have the libpng library. */
+#undef HAVE_LIBPNG
+
+/* Define to 1 if you have the net-snmp library. */
+#undef HAVE_LIBSNMP
+
+/* Define to 1 if you have libusb. */
+#undef HAVE_LIBUSB
+
+/* Define to 1 if you have libusb-1.0. */
+#undef HAVE_LIBUSB_1_0
+
+/* Define to 1 if you have the <limits.h> header file. */
+#undef HAVE_LIMITS_H
+
+/* Define to 1 if you have the <linux/ppdev.h> header file. */
+#undef HAVE_LINUX_PPDEV_H
+
+/* Define if the long long type is available. */
+#undef HAVE_LONG_LONG
+
+/* Define to 1 if you have the <lusb0_usb.h> header file. */
+#undef HAVE_LUSB0_USB_H
+
+/* Define to 1 if you have the <machine/cpufunc.h> header file. */
+#undef HAVE_MACHINE_CPUFUNC_H
+
+/* Define to 1 if you have the <mach-o/dyld.h> header file. */
+#undef HAVE_MACH_O_DYLD_H
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `mkdir' function. */
+#undef HAVE_MKDIR
+
+/* Define to 1 if you have a working `mmap' system call. */
+#undef HAVE_MMAP
+
+/* Define to 1 if you have the <netinet/in.h> header file. */
+#undef HAVE_NETINET_IN_H
+
+/* Define to 1 if you have the `NSLinkModule' function. */
+#undef HAVE_NSLINKMODULE
+
+/* Define to 1 if you have the <ntddscsi.h> header file. */
+#undef HAVE_NTDDSCSI_H
+
+/* Define to 1 if you have the <os2.h> header file. */
+#undef HAVE_OS2_H
+
+/* Define to 1 if you have the `poll' function. */
+#undef HAVE_POLL
+
+/* Define to 1 if you have the `pthread_cancel' function. */
+#undef HAVE_PTHREAD_CANCEL
+
+/* Define to 1 if you have the `pthread_create' function. */
+#undef HAVE_PTHREAD_CREATE
+
+/* Define to 1 if you have the `pthread_detach' function. */
+#undef HAVE_PTHREAD_DETACH
+
+/* Define to 1 if you have the <pthread.h> header file. */
+#undef HAVE_PTHREAD_H
+
+/* Define to 1 if you have the `pthread_join' function. */
+#undef HAVE_PTHREAD_JOIN
+
+/* Define to 1 if you have the `pthread_kill' function. */
+#undef HAVE_PTHREAD_KILL
+
+/* Define to 1 if you have the `pthread_testcancel' function. */
+#undef HAVE_PTHREAD_TESTCANCEL
+
+/* Define to 1 if you have the <pwd.h> header file. */
+#undef HAVE_PWD_H
+
+/* define if you have the resmgr library */
+#undef HAVE_RESMGR
+
+/* Define to 1 if you have the <scdds.h> header file. */
+#undef HAVE_SCDDS_H
+
+/* Define to 1 if you have the `scsireq_enter' function. */
+#undef HAVE_SCSIREQ_ENTER
+
+/* Define if SCSITaskSGElement is available. */
+#undef HAVE_SCSITASKSGELEMENT
+
+/* Define to 1 if you have the <scsi.h> header file. */
+#undef HAVE_SCSI_H
+
+/* Define to 1 if you have the <scsi/sg.h> header file. */
+#undef HAVE_SCSI_SG_H
+
+/* Define to 1 if you have the `setitimer' function. */
+#undef HAVE_SETITIMER
+
+/* Define if sg_header.target_status is available. */
+#undef HAVE_SG_TARGET_STATUS
+
+/* Define to 1 if you have the `shl_load' function. */
+#undef HAVE_SHL_LOAD
+
+/* Define to 1 if you have the `sigprocmask' function. */
+#undef HAVE_SIGPROCMASK
+
+/* Define to 1 if you have the `sleep' function. */
+#undef HAVE_SLEEP
+
+/* Define to 1 if you have the `snprintf' function. */
+#undef HAVE_SNPRINTF
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the `strcasecmp' function. */
+#undef HAVE_STRCASECMP
+
+/* Define to 1 if you have the `strcasestr' function. */
+#undef HAVE_STRCASESTR
+
+/* Define to 1 if you have the `strdup' function. */
+#undef HAVE_STRDUP
+
+/* Define to 1 if you have the `strftime' function. */
+#undef HAVE_STRFTIME
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the `strncasecmp' function. */
+#undef HAVE_STRNCASECMP
+
+/* Define to 1 if you have the `strndup' function. */
+#undef HAVE_STRNDUP
+
+/* Define to 1 if you have the `strsep' function. */
+#undef HAVE_STRSEP
+
+/* Define to 1 if you have the `strstr' function. */
+#undef HAVE_STRSTR
+
+/* Define to 1 if you have the `strtod' function. */
+#undef HAVE_STRTOD
+
+/* Define if struct flock is available. */
+#undef HAVE_STRUCT_FLOCK
+
+/* Define to 1 if you have the `syslog' function. */
+#undef HAVE_SYSLOG
+
+/* Is /usr/include/systemd/sd-daemon.h available? */
+#undef HAVE_SYSTEMD
+
+/* Define to 1 if you have the <sys/bitypes.h> header file. */
+#undef HAVE_SYS_BITYPES_H
+
+/* Define to 1 if you have the <sys/dsreq.h> header file. */
+#undef HAVE_SYS_DSREQ_H
+
+/* Define to 1 if you have the <sys/hw.h> header file. */
+#undef HAVE_SYS_HW_H
+
+/* Define to 1 if you have the <sys/ioctl.h> header file. */
+#undef HAVE_SYS_IOCTL_H
+
+/* Define to 1 if you have the <sys/io.h> header file. */
+#undef HAVE_SYS_IO_H
+
+/* Define to 1 if you have the <sys/ipc.h> header file. */
+#undef HAVE_SYS_IPC_H
+
+/* Define to 1 if you have the <sys/param.h> header file. */
+#undef HAVE_SYS_PARAM_H
+
+/* Define to 1 if you have the <sys/passthrudef.h> header file. */
+#undef HAVE_SYS_PASSTHRUDEF_H
+
+/* Define to 1 if you have the <sys/poll.h> header file. */
+#undef HAVE_SYS_POLL_H
+
+/* Define to 1 if you have the <sys/scanio.h> header file. */
+#undef HAVE_SYS_SCANIO_H
+
+/* Define to 1 if you have the <sys/scsicmd.h> header file. */
+#undef HAVE_SYS_SCSICMD_H
+
+/* Define to 1 if you have the <sys/scsiio.h> header file. */
+#undef HAVE_SYS_SCSIIO_H
+
+/* Define to 1 if you have the <sys/scsi.h> header file. */
+#undef HAVE_SYS_SCSI_H
+
+/* Define to 1 if you have the <sys/scsi/scsi.h> header file. */
+#undef HAVE_SYS_SCSI_SCSI_H
+
+/* Define to 1 if you have the <sys/scsi/sgdefs.h> header file. */
+#undef HAVE_SYS_SCSI_SGDEFS_H
+
+/* Define to 1 if you have the <sys/scsi/targets/scgio.h> header file. */
+#undef HAVE_SYS_SCSI_TARGETS_SCGIO_H
+
+/* Define to 1 if you have the <sys/sdi_comm.h> header file. */
+#undef HAVE_SYS_SDI_COMM_H
+
+/* Define to 1 if you have the <sys/select.h> header file. */
+#undef HAVE_SYS_SELECT_H
+
+/* Define to 1 if you have the <sys/sem.h> header file. */
+#undef HAVE_SYS_SEM_H
+
+/* Define to 1 if you have the <sys/shm.h> header file. */
+#undef HAVE_SYS_SHM_H
+
+/* Define to 1 if you have the <sys/signal.h> header file. */
+#undef HAVE_SYS_SIGNAL_H
+
+/* Define to 1 if you have the <sys/socket.h> header file. */
+#undef HAVE_SYS_SOCKET_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#undef HAVE_SYS_TIME_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the `tcsendbreak' function. */
+#undef HAVE_TCSENDBREAK
+
+/* Define to 1 if you have the <tiffio.h> header file. */
+#undef HAVE_TIFFIO_H
+
+/* Define if union semun is available. */
+#undef HAVE_UNION_SEMUN
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if you have usbcall.dll. */
+#undef HAVE_USBCALLS
+
+/* Define to 1 if you have the `usleep' function. */
+#undef HAVE_USLEEP
+
+/* Define to 1 if the system has the type `u_char'. */
+#undef HAVE_U_CHAR
+
+/* Define to 1 if the system has the type `u_int'. */
+#undef HAVE_U_INT
+
+/* Define to 1 if the system has the type `u_long'. */
+#undef HAVE_U_LONG
+
+/* Define to 1 if the system has the type `u_short'. */
+#undef HAVE_U_SHORT
+
+/* Define to 1 if you have the `vsyslog' function. */
+#undef HAVE_VSYSLOG
+
+/* Define to 1 if you have the <windows.h> header file. */
+#undef HAVE_WINDOWS_H
+
+/* Define to 1 if you have the <winsock2.h> header file. */
+#undef HAVE_WINSOCK2_H
+
+/* Define to 1 if you have the `_portaccess' function. */
+#undef HAVE__PORTACCESS
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
+/* Define to the name of the distribution. */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define as the return type of signal handlers (`int' or `void'). */
+#undef RETSIGTYPE
+
+/* SANE DLL revision number */
+#undef SANE_DLL_V_BUILD
+
+/* SANE DLL major number */
+#undef SANE_DLL_V_MAJOR
+
+/* SANE DLL minor number */
+#undef SANE_DLL_V_MINOR
+
+/* Define to 1 if you have the <sys/io.h> providing inb,outb. */
+#undef SANE_HAVE_SYS_IO_H_WITH_INB_OUTB
+
+/* SCSI command buffer size */
+#undef SCSIBUFFERSIZE
+
+/* The size of `char', as computed by sizeof. */
+#undef SIZEOF_CHAR
+
+/* The size of `int', as computed by sizeof. */
+#undef SIZEOF_INT
+
+/* The size of `long', as computed by sizeof. */
+#undef SIZEOF_LONG
+
+/* The size of `short', as computed by sizeof. */
+#undef SIZEOF_SHORT
+
+/* The size of `void*', as computed by sizeof. */
+#undef SIZEOF_VOIDP
+
+/* If using the C implementation of alloca, define if you know the
+   direction of stack growth for your system; otherwise it will be
+   automatically deduced at runtime.
+	STACK_DIRECTION > 0 => grows toward higher addresses
+	STACK_DIRECTION < 0 => grows toward lower addresses
+	STACK_DIRECTION = 0 => direction of growth unknown */
+#undef STACK_DIRECTION
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Define if pthreads should be used instead of forked processes. */
+#undef USE_PTHREAD
+
+/* Enable extensions on AIX 3, Interix.  */
+#ifndef _ALL_SOURCE
+# undef _ALL_SOURCE
+#endif
+/* Enable GNU extensions on systems that have them.  */
+#ifndef _GNU_SOURCE
+# undef _GNU_SOURCE
+#endif
+/* Enable threading extensions on Solaris.  */
+#ifndef _POSIX_PTHREAD_SEMANTICS
+# undef _POSIX_PTHREAD_SEMANTICS
+#endif
+/* Enable extensions on HP NonStop.  */
+#ifndef _TANDEM_SOURCE
+# undef _TANDEM_SOURCE
+#endif
+/* Enable general extensions on Solaris.  */
+#ifndef __EXTENSIONS__
+# undef __EXTENSIONS__
+#endif
+
+
+/* Define to the version of the distribution. */
+#undef VERSION
+
+/* define if Avahi support is enabled for saned and the net backend */
+#undef WITH_AVAHI
+
+/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
+   significant byte first (like Motorola and SPARC, unlike Intel). */
+#if defined AC_APPLE_UNIVERSAL_BUILD
+# if defined __BIG_ENDIAN__
+#  define WORDS_BIGENDIAN 1
+# endif
+#else
+# ifndef WORDS_BIGENDIAN
+#  undef WORDS_BIGENDIAN
+# endif
+#endif
+
+/* Define to 1 if on MINIX. */
+#undef _MINIX
+
+/* Define to 2 if the system does not provide POSIX.1 features except with
+   this defined. */
+#undef _POSIX_1_SOURCE
+
+/* Define to 1 if you need to in order for `stat' and other things to work. */
+#undef _POSIX_SOURCE
+
+/* Define to empty if `const' does not conform to ANSI C. */
+#undef const
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#undef inline
+#endif
+
+/* Define to `int' if <sys/types.h> does not define. */
+#undef pid_t
+
+/* Define scsireq_t as \'struct scsireq\' if necessary. */
+#undef scsireq_t
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#undef size_t
+
+/* Define socklen_t as \'int\' if necessary. */
+#undef socklen_t
+
+/* Define to `long' if <sys/types.h> does not define. */
+#undef ssize_t
+
+/* Define for OS/2 only */
+#undef strcasecmp
+
+/* Define for OS/2 only */
+#undef strncasecmp
+
+
+
+#if defined(__MINGW32__)
+#define _BSDTYPES_DEFINED
+#endif
+
+#ifndef HAVE_U_CHAR
+#define u_char unsigned char
+#endif
+#ifndef HAVE_U_SHORT
+#define u_short unsigned short
+#endif
+#ifndef HAVE_U_INT
+#define u_int unsigned int
+#endif
+#ifndef HAVE_U_LONG
+#define u_long unsigned long
+#endif
+
+/* Prototype for getenv */
+#ifndef HAVE_GETENV
+#define getenv sanei_getenv
+char * getenv(const char *name);
+#endif
+
+/* Prototype for inet_ntop */
+#ifndef HAVE_INET_NTOP
+#define inet_ntop sanei_inet_ntop
+#include <sys/types.h>
+const char * inet_ntop (int af, const void *src, char *dst, size_t cnt);
+#endif
+
+/* Prototype for inet_pton */
+#ifndef HAVE_INET_PTON
+#define inet_pton sanei_inet_pton
+int inet_pton (int af, const char *src, void *dst);
+#endif
+
+/* Prototype for isfdtype */
+#ifndef HAVE_ISFDTYPE
+#define isfdtype sanei_isfdtype
+int isfdtype(int fd, int fdtype);
+#endif
+
+/* Prototype for sigprocmask */
+#ifndef HAVE_SIGPROCMASK
+#define sigprocmask sanei_sigprocmask
+int sigprocmask (int how, int *new, int *old);
+#endif
+
+/* Prototype for snprintf */
+#ifndef HAVE_SNPRINTF
+#define snprintf sanei_snprintf
+#include <sys/types.h>
+int snprintf (char *str,size_t count,const char *fmt,...);
+#endif
+
+/* Prototype for strcasestr */
+#ifndef HAVE_STRCASESTR
+#define strcasestr sanei_strcasestr
+char * strcasestr (const char *phaystack, const char *pneedle);
+#endif
+
+/* Prototype for strdup */
+#ifndef HAVE_STRDUP
+#define strdup sanei_strdup
+char *strdup (const char * s);
+#endif
+
+/* Prototype for strndup */
+#ifndef HAVE_STRNDUP
+#define strndup sanei_strndup
+#include <sys/types.h>
+char *strndup(const char * s, size_t n);
+#endif
+
+/* Prototype for strsep */
+#ifndef HAVE_STRSEP
+#define strsep sanei_strsep
+char *strsep(char **stringp, const char *delim);
+#endif
+
+/* Prototype for usleep */
+#ifndef HAVE_USLEEP
+#define usleep sanei_usleep
+unsigned int usleep (unsigned int useconds);
+#endif
+
+/* Prototype for vsyslog */
+#ifndef HAVE_VSYSLOG
+#include <stdarg.h>
+void vsyslog(int priority, const char *format, va_list args);
+#endif
+

@@ -1,0 +1,56 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "bh"                     ; name of backend
+:version "1.0-4"                    ; version of backend
+:manpage "sane-bh"                ; name of manpage (if it exists)
+:url "http://www.martoneconsulting.com/sane-bh.html" ; backend's web page
+:comment "Supports Copiscan II scanners with Remote SCSI Controller (RSC) interface"
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "Bell and Howell"            ; name a manufacturer
+:url "http://www.bhscanners.com/"
+
+:model "COPISCAN II 6338"
+:interface "SCSI"
+:status :good
+:comment "Duplex Scanner with ACE - development model"
+
+:model "COPISCAN II 2135"
+:status :untested
+:interface "SCSI"
+:comment "Simplex Scanner"
+
+:model "COPISCAN II 2137(A)"
+:interface "SCSI"
+:status :good
+:comment "Simplex Scanner (with ACE) - limited testing"
+
+:model "COPISCAN II 2138A"
+:status :untested
+:interface "SCSI"
+:comment "Simplex Scanner with ACE"
+
+:model "COPISCAN II 3238"
+:status :untested
+:interface "SCSI"
+:comment "Simplex Scanner"
+
+:model "COPISCAN II 3338(A)"
+:status :untested
+:interface "SCSI"
+:comment "Simplex Scanner (with ACE)"
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.
+

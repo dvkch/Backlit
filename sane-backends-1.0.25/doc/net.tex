@@ -1,0 +1,479 @@
+\chapter{Network Protocol}\label{chap:net}
+
+The SANE interface has been designed to facilitate network access to
+image acquisition devices.  In particular, most SANE implementations
+are expected to support a network backend (net client) and a
+corresponding network daemon (net server) that allows accessing image
+acquisition devices through a network connection.  Network access is
+useful in several situations:
+\begin{itemize}
+
+\item To provide controlled access to resources that are inaccessible
+  to a regular user.  For example, a user may want to access a device
+  on a host where she has no account on.  With the network protocol,
+  it is possible to allow certain users to access scanners without
+  giving them full access to the system.
+
+  Controlling access through the network daemon can be useful even in
+  the local case: for example, certain backends may require root
+  privileges to access a device.  Rather than installing each frontend
+  as setuid-root, a system administrator could instead install the
+  SANE network daemon as setuid-root.  This enables regular users to
+  access the privileged device through the SANE daemon (which,
+  presumably, supports a more fine-grained access control mechanism
+  than the simple setuid approach).  This has the added benefit that
+  the system administrator only needs to trust the SANE daemon, not
+  each and every frontend that may need access to the privileged
+  device.
+
+\item Network access provides a sense of ubiquity of the available
+  image acquisition devices.  For example, in a local area network
+  environment, this allows a user to log onto any machine and have
+  convenient access to any resource available to any machine on the
+  network (subject to permission constraints).
+
+\item For devices that do not require physical access when used (e.g.,
+  video cameras), network access allows a user to control and use
+  these devices without being in physical proximity.  Indeed, if such
+  devices are connected to the Internet, access from any place in the
+  world is possible.
+
+\end{itemize}
+
+The network protocol described in this chapter has been design with
+the following goals in mind:
+\begin{enumerate}
+
+\item Image transmission should be efficient (have low encoding
+  overhead).
+
+\item Accessing option descriptors on the client side must be
+  efficient (since this is a very common operation).
+
+\item Other operations, such as setting or inquiring the value of an
+  option are less performance critical since they typically require
+  explicit user action.
+
+\item The network protocol should be simple and easy to implement on
+  any host architecture and any programming language.
+
+\end{enumerate}
+The SANE protocol can be run across any transport protocol that
+provides reliable data delivery.  While SANE does not specify a
+specific transport protocol, it is expected that TCP/IP will be among
+the most commonly used protocols.
+
+\section{Data Type Encoding}
+
+\subsection{Primitive Data Types}
+
+The four primitive types of the SANE standard are encoded as follows:
+\begin{description}
+
+\item[\code{\defn{SANE\_Byte}}:] A byte is encoded as an 8 bit value.
+  Since the transport protocol is assumed to be byte-orientd, the bit
+  order is irrelevant.
+
+\item[\code{\defn{SANE\_Word}}:] A word is encoded as 4 bytes (32
+  bits).  The bytes are ordered from most-significant to
+  least-significant byte (big-endian byte-order).
+
+\item[\code{\defn{SANE\_Char}}:] A character is currently encoded as an 8-bit
+  ISO LATIN-1 value.  An extension to support wider character sets (16 or 32
+  bits) is planned for the future, but not supported at this point.
+
+\item[\code{\defn{SANE\_String}}:] A string pointer is encoded as a
+  \code{SANE\_Char} array.  The trailing NUL byte is considered part
+  of the array and a \code{NULL} pointer is encoded as a zero-length
+  array.
+  
+\item[\code{\defn{SANE\_Handle}}:] A handle is encoded like a word.
+  The network backend needs to take care of converting these integer
+  values to the opaque pointer values that are presented to the user
+  of the network backend.  Similarly, the SANE daemon needs to take
+  care of converting the opaque pointer values it receives from its
+  backends into 32-bit integers suitable for use for network encoding.
+
+\item[{\em\defn{enumeration types}}:] Enumeration types are encoded
+  like words.
+
+\end{description}
+
+\subsection{Type Constructors}
+
+Closely following the type constructors of the C language, the SANE network
+protocol supports the following four constructors:
+\begin{description}
+
+\item[{\em\defn{pointer}}:] A pointer is encoded by a word that indicates
+  whether the pointer is a NULL-pointer which is then followed by the
+  value that the pointer points to (in the case of a non-NULL pointer;
+  in the case of a NULL pointer, no bytes are encoded for the pointer
+  value).
+
+\item[{\em\defn{array}}:] An array is encoded by a word that indicates
+  the length of the array followed by the values of the elements in
+  the array.  The length may be zero in which case no bytes are
+  encoded for the element values.
+
+\item[{\em\defn{structure}}:] A structure is encoded by simply encoding the
+  structure members in the order in which they appear in the
+  corresponding C type declaration.
+
+\item[{\em\defn{union}}:] A union must always be accompanied by a tag
+  value that indicates which of the union members is the currently the
+  active one.  For this reason, the union itself is encoded simply by
+  encoding the value of the currently active member.
+
+\end{description}
+
+Note that for type constructors, the pointer, element, or member
+values themselves may have a constructed type.  Thus, the above rules
+should be applied recursively until a sequence of primitive types has
+been found.
+
+Also SANE had no need for encoding of circular structures.  This
+greatly simplifies the network protocol.
+
+\section{Remote Procedure Call Requests}
+
+The SANE network protocol is a client/server-style remote procedure
+call (RPC) protocol.  This means that all activity is initiated by the
+client side (the network backend)---a server is restricted to
+answering requests sent by the client.
+
+The data transferred from the client to the server is comprised of the RPC code
+(as a \code{SANE\_WORD}), followed by arguments defined in the {\bf request}
+column below.  The format of the server's answer is given in the {\bf reply}
+column.
+
+\subsection{\code{\defn{SANE\_NET\_INIT}}}
+
+RPC Code: 0
+
+This RPC establishes a connection to a particular SANE network daemon.
+It must be the first call in a SANE network session.  The parameter
+and reply arguments for this call are shown in the table below:
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_Word version\_code} & \code{SANE\_Word status} \\
+  \code{SANE\_String user\_name}   & \code{SANE\_Word version\_code} \\
+\end{tabular}
+\end{center}
+The \code{version\_code} argument in the request is the SANE
+version-code of the network backend that is contacting the network
+daemon (see Section~\ref{sec:saneversioncode}).  The
+``build-revision'' in the version code is used to hold the network
+protocol version.  The SANE network daemon receiving such a request
+must make sure that the network protocol version corresponds to a
+supported version since otherwise the encoding of the network stream
+may be incompatible (even though the SANE interface itself may be
+compatible).  The \code{user\_name} argument is the name of the user
+on whose behalf this call is being performed.  If the network backend
+cannot determine a user-name, it passes a \code{NULL} pointer for this
+argument.  No trust should be placed in the authenticity of this
+user-name.  The intent of this string is to provide more convenience
+to the user.  E.g., it could be used as the default-user name in
+subsequent authentication calls.
+
+In the reply, \code{status} indicates the completion status.  If the
+value is anything other than \code{SANE\_STA\-TUS\_GOOD}, the
+remainder of the reply has undefined values.\footnote{The sane network
+  daemon should be careful not to leak information in the undefined
+  portion of the reply.} The \code{version\_code} argument returns the
+SANE version-code that the network daemon supports.  See the comments
+in the previous paragraph on the meaning of the build-revision in this
+version code.
+
+\subsection{\code{\defn{SANE\_NET\_GET\_DEVICES}}}
+
+RPC Code: 1
+
+This RPC is used to obtain the list of devices accessible by the SANE
+daemon.
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{void} & \code{SANE\_Word status} \\
+              & \code{SANE\_Device ***device\_list} \\
+\end{tabular}
+\end{center}
+There are no arguments in the request for this call.
+
+In the reply, \code{status} indicates the completion status.  If the
+value is anything other than \code{SANE\_STA\-TUS\_GOOD}, the
+remainder of the reply has undefined values.  The \code{device\_list}
+argument is a pointer to a \code{NULL}-terminated array of
+\code{SANE\_Device} pointers.
+
+\subsection{\code{\defn{SANE\_NET\_OPEN}}}
+
+RPC Code: 2
+
+This RPC is used to open a connection to a remote SANE device.
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_String device\_name} & \code{SANE\_Word status} \\
+                                   & \code{SANE\_Word handle} \\
+                                   & \code{SANE\_String resource} \\
+\end{tabular}
+\end{center}
+The \code{device\_name} argument specifies the name of the device to
+open.
+
+In the reply, \code{status} indicates the completion status.  If the
+value is anything other than \code{SANE\_STA\-TUS\_GOOD}, the
+remainder of the reply has undefined values.  The \code{handle}
+argument specifies the device handle that uniquely identifies the
+connection.  The \code{resource} argument is used to request
+authentication.  If it has a non-\code{NULL} value, the network
+backend should authenticate the specified resource and then retry this
+operation (see Section~\ref{sec:authorization} for details on how to
+authorize a resource).
+
+\subsection{\code{\defn{SANE\_NET\_CLOSE}}}
+
+RPC Code: 3
+
+This RPC is used to close a connection to a remote SANE device.
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_Word handle} & \code{SANE\_Word dummy} \\
+\end{tabular}
+\end{center}
+The \code{handle} argument identifies the connection that should be
+closed.
+
+In the reply, the \code{dummy} argument is unused.  Its purpose is to
+ensure proper synchronization (without it, a net client would not be
+able to determine when the RPC has completed).
+
+\subsection{\code{\defn{SANE\_NET\_GET\_OPTION\_DESCRIPTORS}}}
+
+RPC Code: 4
+
+This RPC is used to obtain {\em all\/} the option descriptors for a
+remote SANE device.
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_Word handle} & \code{Option\_Descriptor\_Array odesc} \\
+\end{tabular}
+\end{center}
+The \code{handle} argument identifies the remote device whose option
+descriptors should be obtained.
+
+In the reply, the \code{odesc} argument is used to return the array of
+option descriptors.  The option descriptor array has the following
+structure:
+\begin{quote}\index{Option\_Descriptor\_Array}
+\begin{verbatim}
+struct Option_Descriptor_Array
+  {
+    SANE_Word num_options;
+    SANE_Option_Descriptor **desc;
+  };
+\end{verbatim}
+\end{quote}
+
+
+\subsection{\code{\defn{SANE\_NET\_CONTROL\_OPTION}}}
+
+RPC Code: 5
+
+This RPC is used to control (inquire, set, or set to automatic) a
+specific option of a remote SANE device.
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_Word handle}      & \code{SANE\_Status status} \\
+  \code{SANE\_Word option}      & \code{SANE\_Word info} \\
+  \code{SANE\_Word action}      & \code{SANE\_Word value\_type} \\
+  \code{SANE\_Word value\_type} & \code{SANE\_Word value\_size} \\
+  \code{SANE\_Word value\_size} & \code{void *value} \\
+  \code{void *value}            & \code{SANE\_String *resource} \\
+\end{tabular}
+\end{center}
+The \code{handle} argument identifies the remote device whose option
+should be controlled.  Argument \code{option} is the number (index) of
+the option that should be controlled.  Argument \code{action}
+specifies what action should be taken (get, set, or set automatic).
+Argument \code{value\_type} specifies the type of the option value
+(must be one of \code{SANE\_TYPE\_BOOL}, \code{SANE\_TYPE\_INT},
+\code{SANE\_TYPE\_FIXED}, \code{SANE\_TYPE\_STR\-ING},
+\code{SANE\_TYPE\_BUTTON}).  Argument \code{value\_size} specifies
+the size of the option value in number of bytes (see
+Section~\ref{sec:valuesize} for the precise meaning of this value).
+Finally, argument \code{value} is a pointer to the option value.  It
+must be a writeable area that is at least \code{value\_size} bytes
+large. (Note that this area must be writable even if the action is to
+set the option value.  This is because the backend may not be able to
+set the exact option value, in which case the option value is used to
+return the next best value that the backend has chosen.)
+
+In the reply, argument \code{resource} is set to the name of the
+resource that must be authorized before this call can be retried.  If
+this value is non-\code{NULL}, all other arguments have undefined
+values (see Section~\ref{sec:authorization} for details on how to
+authorize a resource).  Argument \code{status} indicates the
+completion status.  If the value is anything other than
+\code{SANE\_STA\-TUS\_GOOD}, the remainder of the reply has undefined
+values.  The \code{info} argument returns the information on how well
+the backend was able to satisfy the request.  For details, see the
+description of the corresponding argument in
+Section~\ref{sec:control}.  Arguments \code{value\_type} and
+\code{value\_size} have the same values as the arguments by the same
+name in corresponding request.  The values are repeated here to ensure
+that both the request and the reply are self-contained (i.e., they can
+be encoded and decoded independently).  Argument \code{value} is holds
+the value of the option that has become effective as a result of this
+RPC.
+
+
+\subsection{\code{\defn{SANE\_NET\_GET\_PARAMETERS}}}
+
+RPC Code: 6
+
+This RPC is used to obtain the scan parameters of a remote SANE
+device.
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_Word handle} & \code{SANE\_Status status} \\
+                           & \code{SANE\_Parameters params} \\
+\end{tabular}
+\end{center}
+The \code{handle} argument identifies the connection to the remote
+device whose scan parameters should be returned.
+
+In the reply, \code{status} indicates the completion status.  If the
+value is anything other than \code{SANE\_STA\-TUS\_GOOD}, the
+remainder of the reply has undefined values.  The argument
+\code{params} is used to return the scan parameters.
+
+\subsection{\code{\defn{SANE\_NET\_START}}}
+
+RPC Code: 7
+
+This RPC is used to start image acquisition (scanning).
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_Word handle} & \code{SANE\_Status status} \\
+                           & \code{SANE\_Word port} \\
+                           & \code{SANE\_Word byte\_order} \\
+                           & \code{SANE\_String resource} \\
+\end{tabular}
+\end{center}
+The \code{handle} argument identifies the connection to the remote
+device from which the image should be acquired.
+
+In the reply, argument \code{resource} is set to the name of the
+resource that must be authorized before this call can be retried.  If
+this value is non-\code{NULL}, all other arguments have undefined
+values (see Section~\ref{sec:authorization} for details on how to
+authorize a resource).  Argument, \code{status} indicates the
+completion status.  If the value is anything other than
+\code{SANE\_STA\-TUS\_GOOD}, the remainder of the reply has
+undefined values.  The argument \code{port} returns the port number
+from which the image data will be available.  To read the image data,
+a network client must connect to the remote host at the indicated port
+number.  Through this port, the image data is transmitted as a
+sequence of data records.  Each record starts with the data length in
+bytes.  The data length is transmitted as a sequence of four bytes.
+These bytes should be interpreted as an unsigned integer in big-endian
+format.  The four length bytes are followed by the number of data
+bytes indicated by the length.  Except for byte-order, the data is in
+the same format as defined for \code{sane\_read()}.  Since some
+records may contain no data at all, a length value of zero is
+perfectly valid.  The special length value of \code{0xffffffff} is
+used to indicate the end of the data stream.  That is, after receiving
+a record length of \code{0xffffffff}, the network client should close
+the data connection and stop reading data.
+
+Argument \code{byte\_order} specifies the byte-order of the image
+data.  A value of 0x1234 indicates little-endian format, a value of
+0x4321 indicates big-endian format.  All other values are presently
+undefined and reserved for future enhancements of this protocol.  The
+intent is that a network server sends data in its own byte-order and
+the client is responsible for adjusting the byte-order, if necessary.
+This approach causes no unnecessary overheads in the case where the
+server and client byte-order match and puts the extra burden on the
+client side when there is a byte-order mismatch.  Putting the burden
+on the client-side improves the scalability properties of this
+protocol.
+
+\subsection{\code{\defn{SANE\_NET\_CANCEL}}}
+
+RPC Code: 8
+
+This RPC is used to cancel the current operation of a remote SANE
+device.
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_Word handle} & \code{SANE\_Word dummy} \\
+\end{tabular}
+\end{center}
+The \code{handle} argument identifies the connection whose operation
+should be cancelled.
+
+In the reply, the \code{dummy} argument is unused.  Its purpose is to
+ensure proper synchronization (without it, a net client would not be
+able to determine when the RPC has completed).
+
+\subsection{\code{\defn{SANE\_NET\_AUTHORIZE}}}\label{sec:authorization}
+\index{network authorization}
+
+RPC Code: 9
+
+This RPC is used to pass authorization data from the net client to the
+net server.
+\begin{center}
+\begin{tabular}{ll}
+  {\bf request:} & {\bf reply:} \\
+  \code{SANE\_String resource} & \code{SANE\_Word dummy} \\
+  \code{SANE\_String username} & \\
+  \code{SANE\_String password} & \\
+\end{tabular}
+\end{center}
+The \code{resource} argument specifies the name of the resource to be
+authorized.  This argument should be set to the string returned in the
+\code{resource} argument of the RPC reply that required this
+authorization call.  The \code{username} and \code{password} are the
+name of the user that is accessing the resource and the password for
+the specified resource/user pair.
+
+Since the password is not encrypted during network transmission, it is
+recommended to use the following extension:
+
+If the server adds the string `\code{\$MD5\$}' to the resource-name followed
+by a random string not longer then 128 bytes, the client may answer with the
+MD5 digest of the concatenation of the password and the random string. To
+differentiate between the MD5 digest and a strange password the client prepends
+the MD5 digest with the string `\code{\$MD5\$}'.
+
+In the reply, \code{dummy} is completely unused.  Note that there is
+no direct failure indication.  This is unnecessary since a net client
+will retry the RPC that resulted in the authorization request until
+that call succeeds (or until the request is cancelled). The RPC that resulted
+in the authorization request continues after the reply from the client and may
+fail with \code{SANE\_STATUS\_ACCESS\_DENIED}.
+
+
+\subsection{\code{\defn{SANE\_NET\_EXIT}}}
+
+RPC Code: 10
+
+This RPC is used to disconnect a net client from a net server.  There
+are no request or reply arguments in this call.  As a result of this
+call, the connection between the client and the server that was
+established by the \code{SANE\_NET\_INIT} call will be closed.
+
+% Local Variables: 
+% mode: latex
+% TeX-master: "sane.tex"
+% End: 

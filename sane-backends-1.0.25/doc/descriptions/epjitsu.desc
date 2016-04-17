@@ -1,0 +1,65 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "epjitsu"               ; name of backend
+:url "http://www.thebility.com/epjitsu/" 
+:version "27"                    ; version of backend
+:manpage "sane-epjitsu"          ; name of manpage (if it exists)
+:comment "Backend updated for SANE release 1.0.26, see sane-epjitsu manpage"
+:devicetype :scanner             ; start of a list of devices....
+                                 ; other types:  :stillcam, :vidcam,
+                                 ;               :meta, :api
+
+:mfg "Fujitsu"                   ; name a manufacturer
+:url "http://www.fujitsu.com/"
+
+;==================================================
+:model "fi-60F"
+:interface "USB"
+:status :basic
+:usbid "0x04c5" "0x10c7"
+:comment "A6-size flatbed, 300/600 dpi, color/gray/binary"
+
+:model "ScanSnap S300"
+:interface "USB"
+:status :good
+:usbid "0x04c5" "0x1156"
+:comment "Duplex, 150/225/300/600 dpi, color/gray/binary, AC/USB power, buttons/sensors all supported. Scanner always scans in _triplex_ color, fast USB required."
+
+:model "ScanSnap S300M"
+:interface "USB"
+:status :good
+:usbid "0x04c5" "0x117f"
+:comment "Same as S300, with different usb id"
+
+:model "ScanSnap S1100"
+:interface "USB"
+:status :good
+:usbid "0x04c5" "0x1200"
+:comment "Hardware only supports 300 and 600 dpi simplex color. Backend manufactures gray and binary modes."
+
+:model "ScanSnap S1300"
+:interface "USB"
+:status :good
+:usbid "0x04c5" "0x11ed"
+:comment "Same as S300, with different usb id"
+
+:model "ScanSnap S1300i"
+:interface "USB"
+:status :good
+:usbid "0x04c5" "0x128d"
+:comment "Similar to S1300."
+
+:model "fi-65F"
+:interface "USB"
+:status :basic
+;:usbid "0x04c5" "0x10c7"
+:comment "A6-size flatbed, 300/600 dpi, color/gray/binary."

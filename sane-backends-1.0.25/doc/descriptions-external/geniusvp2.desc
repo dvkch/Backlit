@@ -1,0 +1,26 @@
+;
+; SANE Backend specification file
+;
+
+:backend "geniusvp2"              ; backend's name
+;:version "0.2"                    ; backend's version (or "unmaintained")
+;:manpage "sane-geniusvp2"         ; manpage name
+:url "http://sourceforge.net/projects/geniusvp2/" ; backend's web page
+:comment "Supports color mode, bit depth of 8, 75-600 dpi resolution"
+                                  ; comment about the backend
+
+:devicetype :scanner              ; start of a list of devices....
+
+:mfg "Genius"                     ; name a manufacturer
+:url "http://www.genius-kye.com/"  ; manufacturer's URL
+
+:model "ColorPage-Vivid Pro II"   ; name models for above-specified mfg.
+:status :basic                    ; :minimal, :basic, :good, :complete
+                                  ; :untested, or :unsupported
+:interface "Parport (EPP)"        ; interface type of the device:
+                                  ; "SCSI", "USB", "Parport (EPP)",
+                                  ; "Parport (SPP)", "Parport (ECP)",
+                                  ; "Serial port", "IEEE-1394", "JetDirect",
+                                  ; or "Proprietary".
+:comment "Similar to Primax Colorado Direct 9600, but with EICI 091000 ASIC"
+                                  ; comment about the model

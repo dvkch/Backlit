@@ -1,0 +1,20 @@
+#!/bin/sh
+
+DEVCLASS=$1
+DEVNAME=$2
+
+case $DEVCLASS in
+0)
+	# generic devices
+	case "$DEVNAME" in
+	ugen*)
+		BUSNAME=`usbdevs -v -d | egrep "Controller|$DEVNAME\$" | grep -B 1 ugen0$ | head -n 1 | sed -e 's,Controller ,,' -e 's,:$,,' `
+		echo $BUSNAME >  /var/run/${DEVNAME}.bus
+		# probably our scanner
+		chgrp usb /dev/"$DEVNAME".*
+		chgrp usb /dev/"$BUSNAME"
+		;;
+	esac
+
+        ;;
+esac

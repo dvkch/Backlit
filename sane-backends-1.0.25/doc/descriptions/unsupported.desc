@@ -1,0 +1,2757 @@
+
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "unsupported"		; name of backend
+:version "2010-06-09"		; version of backend
+:url "/contrib.html"
+;:manpage "sane-mustek"		; name of manpage (if it exists)
+:comment "The devices mentioned here are not supported by any SANE backend. However, there may be links to information about them or stand-alone programs."
+
+:devicetype :scanner
+
+;********************************************************************************************
+
+:mfg "Agfa"
+
+:model "DuoScan f40"
+:url "/unsupported/agfa-duoscan-f40.html"
+:interface "USB IEEE-1394"
+:usbid "0x06bd" "0x02bf"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "DuoScan T2000XL"
+:url "/unsupported/agfa-duoscan-t2000xl.html"
+:interface "SCSI"
+:status :unsupported
+:comment "Unsupported. Same as Microtek ArtixScan 2020?"
+
+:model "DuoScan T2500"
+:interface "SCSI IEEE-1384"
+:status :unsupported
+:comment "Unsupported. Same as Microtek Artixscan 2500f"
+
+:model "SnapScan 310P"
+:url "/unsupported/acer-parport.html"
+:interface "Parport"
+:status :unsupported
+:comment "Unsupported, see link for details."
+
+:model "SnapScan EZ"
+:url "/unsupported/acer-parport.html"
+:interface "Parport"
+:status :unsupported
+:comment "Unsupported, see link for details."
+
+:model "SnapScan 1200P"
+:url "/unsupported/acer-parport.html"
+:interface "Parport"
+:status :unsupported
+:comment "Unsupported, see link for details."
+
+:model "SnapScan 1212P"
+:url "/unsupported/acer-parport.html"
+:interface "Parport"
+:status :unsupported
+:comment "Unsupported, see link for details."
+
+;********************************************************************************************
+
+:mfg "Artec/Ultima"
+:url "http://www.artecusa.com/"
+
+:model "1236 USB"
+:url "/unsupported/artec_1236usb.html"
+:interface "USB"
+:usbid "0x05d8" "0x4001"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "AM12e+"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported. Chips found inside: AT015, AD9816JS. Maybe similar to SCSI version or as6e?"
+
+:model "Ultima 2000 (0x4001)"
+:url "/unsupported/artec-ultima-2000-2.html"
+:interface "USB"
+:usbid "0x05d8" "0x4001"
+:status :unsupported
+:comment "Same name, but different ids: This scanner is not supported. The scanner with product id 0x4002 is supported by the gt68xx backend, however."
+
+;********************************************************************************************
+
+:mfg "Avigramm"
+
+:model "Minidoc"
+:url "/unsupported/trust-combiscan-19200.html"
+:interface "USB Parport"
+:usbid "0x05cb" "0x1483"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Avision"
+:url "http://www.avision.com/"
+
+:model "DS310F"
+:interface "Parport"
+:status :unsupported
+:comment "Probably not supported. Scanner/printer/copier combination."
+
+:model "iVina FB2400"
+:interface "USB"
+:status :unsupported
+:comment "Not supported. No chipset information available. Same as UMAX Astra 6700."
+
+:model "iVina 1600"
+:url "/unsupported/umax-astra-4500.html"
+:interface "USB"
+:usbid "0x0638" "0x0a10"
+:status :unsupported
+:comment "GL646 based, to be added to genesys backend. Same as UMAX Astra 4500."
+
+:model "iVina FB1800"
+:url "/unsupported/umax-astra-4700.html"
+:interface "USB"
+:usbid "0x0638" "0x0a20"
+:status :unsupported
+:comment "GL646/GL660 based. Same as UMAX Astra 4700."
+
+
+;********************************************************************************************
+
+:mfg "Benq (Acer)"
+:url "http://www.benq.com"
+:comment "Formerly Acer Peripherals"
+
+:model "310P"
+:url "/unsupported/acer-parport.html"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported, see link for details."
+
+:model "320P"
+:url "/unsupported/acer-parport.html"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported, see link for details."
+
+:model "340P"
+:url "/unsupported/acer-parport.html"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported, see link for details."
+
+:model "610P"
+:url "/unsupported/acer-parport.html"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported, see link for details."
+
+:model "610PT"
+:url "/unsupported/acer-parport.html"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported, see link for details."
+
+:model "620P"
+:url "/unsupported/acer-parport.html"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported, see link for details."
+
+:model "620PT"
+:url "/unsupported/acer-parport.html"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported, see link for details."
+
+:model "640P"
+:url "/unsupported/acer-parport.html"
+:status :unsupported
+:interface "Parport"
+:comment "Unsupported, see link for details."
+
+:model "5450"
+:interface "USB"
+:usbid "0x04a5" "0x211e"
+:status :unsupported
+:comment "Unsupported."
+
+:model "5550"
+:url "/unsupported/benq-5550.html"
+:interface "USB"
+:usbid "0x04a5" "0x2211"
+:status :unsupported
+:comment "Unsupported, see link for details."
+
+:model "5560"
+:interface "USB"
+:usbid "0x04a5" "0x2311"
+:status :unsupported
+:url "http://lists.alioth.debian.org/pipermail/sane-devel/2009-January/023447.html"
+
+:model "7400UT"
+:url "/unsupported/benq-7400ut.html"
+:interface "USB"
+:usbid "0x04a5" "0x2202"
+:status :unsupported
+
+;********************************************************************************************
+
+:mfg "Boeder"
+
+:model "Sm@rtScan Office"
+:url "/unsupported/trust-combiscan-19200.html"
+:interface "Parport USB"
+:usbid "0x05cb" "0x1483"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Brother"
+:url "http://www.brother.com/"
+
+:model "MFC 2500"
+:url "/unsupported/brother-mfc-2500.html"
+:interface "USB"
+:usbid "0x04f9" "0x000a"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+:model "MFC 4600"
+:status :unsupported
+:url "http://sourceforge.net/projects/brother-mfc"
+:interface "Parport"
+:comment "The parport 200x400dpi grayscale version of this scanner is unsupported. Dmitri Katchalov did some investigations on this scanner. If you want to write a backend, contact him (see link)."
+
+:model "MFC 7300c"
+:url "/unsupported/brother-mfc-7300.html"
+:interface "Parport USB"
+:usbid "0x04f9" "0x0106"
+:status :unsupported
+
+:model "MFC 9600"
+:url "/unsupported/brother-mfc-9600.html"
+:interface "USB"
+:usbid "0x04f9" "0x0101"
+:status :unsupported
+
+;********************************************************************************************
+
+:mfg "C-Channel"
+:url "http://www.c-channel.ch/"
+
+:model "MyPen Pro"
+:url "/unsupported/c-channel-mypen-pro.html"
+:interface "USB"
+;:usbid "" ""
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "MyPen Light"
+:interface "USB"
+:usbid "0x0a93" "0x0005"
+:status :unsupported
+:comment "See bug #306792 for details."
+
+:model "MoneyPen II"
+;:url "/unsupported/c-channel-mypen-pro.html"
+:interface "USB"
+;:usbid "" ""
+:status :unsupported
+:comment "Probably unsupported."
+
+;********************************************************************************************
+
+:mfg "Canon"
+:url "http://www.canon.com/"
+
+:model "CanoScan 3000"
+:url "/unsupported/canon-3000.html"
+:interface "USB"
+:usbid "0x04a9" "0x2215"
+:status :unsupported
+:comment "GL660+GL646 based."
+
+:model "CanoScan 3000ex"
+:url "/unsupported/canon-3000.html"
+:interface "USB"
+:usbid "0x04a9" "0x2215"
+:status :unsupported
+:comment "GL660+GL646 based."
+
+:model "CanoScan 3000F"
+:url "/unsupported/canon-3000.html"
+:interface "USB"
+:usbid "0x04a9" "0x2215"
+:status :unsupported
+:comment "GL660+GL646 based, to be added to genesys backend"
+
+:model "CanoScan 4200F"
+:url "/unsupported/canon-4200f.html"
+:interface "USB"
+:usbid "0x04a9" "0x221b"
+:status :unsupported
+:comment "Probably unsupported. See link."
+
+:model "CanoScan 4400F"
+:url "/unsupported/canon-4400.html"
+:interface "USB"
+:usbid "0x04a9" "0x2228"
+:status :unsupported
+:comment "GL843 based, to be added to genesys backend"
+
+:model "CanoScan 5000F"
+:url "/unsupported/canon-5000f.html"
+:interface "USB"
+:usbid "0x04a9" "0x2212"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "CanoScan 5200F"
+:url "/unsupported/canon-5200f.html"
+:interface "USB"
+:usbid "0x04a9" "0x2217"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "CanoScan 8000F"
+:url "/unsupported/canon-8000f.html"
+:interface "USB"
+:usbid "0x04a9" "0x220f"
+:status :unsupported
+:comment "Not supported. See link for more information. With transparency adapter."
+
+:model "CanoScan 8400F"
+:url "/unsupported/canon-8400f.html"
+:interface "USB"
+:usbid "0x04a9" "0x221e"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "CanoScan 8600F"
+:url "/unsupported/canon-8600.html"
+:interface "USB"
+:usbid "0x04a9" "0x2229"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+
+:model "CanoScan 9900F"
+:url "/unsupported/canon-9900f.html"
+:interface "USB"
+:usbid "0x04a9" "0x2210"
+:status :unsupported
+:comment "Probably unsupported, similar to 8000F. 3200x6400 dpi USB2. With transparency adapter."
+
+:model "CanoScan 9950F"
+:url "/unsupported/canon-9950f.html"
+:interface "USB"
+:usbid "0x04a9" "0x2219"
+:status :unsupported
+:comment "Probably unsupported."
+
+:model "CanoScan D646U"
+:url "/unsupported/canon-d646u.html"
+:interface "USB"
+:usbid "0x04a9" "0x220b"
+:status :unsupported
+:comment "Probably not supported. See link for more information and test program."
+
+:model "CanoScan D646U ex"
+:url "/unsupported/canon-d646u.html"
+:interface "USB"
+:usbid "0x04a9" "0x220b"
+:status :unsupported
+:comment "Probably not supported. See D646."
+
+:model "CanoScan D1230U"
+:url "/unsupported/canon-d1230u.html"
+:interface "USB"
+:usbid "0x04a9" "0x2209"
+:status :unsupported
+:comment "Probably not supported. "
+
+:model "CanoScan D1250U2"
+:url "/unsupported/canon-d1250u2.html"
+:interface "USB"
+:usbid "0x04a9" "0x220c"
+:status :unsupported
+:comment "Not supported. However, someone started working on this scanner and some information is available (see link)."
+
+:model "CanoScan D2400UF"
+:url "/unsupported/canon-d2400uf.html"
+:interface "USB"
+:usbid "0x04a9" "0x220a"
+:status :unsupported
+:comment "Not supported. See link."
+
+:model "CanoScan FB320U"
+:interface "USB"
+:usbid "0x04a9" "0x2201"
+:status :unsupported
+:comment "Probably not supported. No details known."
+
+:model "CanoScan FB620U"
+:url "/unsupported/canon-fb620u.html"
+:interface "USB"
+:usbid "0x04a9" "0x2202"
+:status :unsupported
+:comment "Probably not supported. Some information is available."
+
+:model "CanoScan FB1210U"
+:url "http://sourceforge.net/projects/canonscanner/"
+:interface "USB"
+:usbid "0x04a9" "0x2205"
+:status :unsupported
+:comment "Not supported. However, a stand-alone program for FreeBSD is available."
+
+:model "CanoScan LiDE 70"
+:url "http://www.juergen-ernst.de/info_sane.html"
+:interface "USB"
+:usbid "0x04a9" "0x2225"
+:status :unsupported
+:comment "Philips chip. Backend started, see link"
+
+:model "CanoScan LiDE 90"
+:url "/unsupported/canon-lide-90.html"
+:interface "USB"
+:usbid "0x04a9" "0x1900"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "CanoScan LiDE 500F"
+:url "/unsupported/canon-canoscan-lide-500f.html"
+:interface "USB"
+:usbid "0x04a9" "0x221f"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "CanoScan LiDE 600"
+:interface "USB"
+:url "http://www.juergen-ernst.de/info_sane.html"
+:usbid "0x04a9" "0x2224"
+:status :unsupported
+:comment "Philips chip. Backend started, see link"
+
+:model "CanoScan LiDE 600F"
+:interface "USB"
+:url "http://www.juergen-ernst.de/info_sane.html"
+:usbid "0x04a9" "0x2224"
+:status :unsupported
+:comment "Philips chip. Backend started, see link"
+
+:model "FS4000"
+:url "/unsupported/canon-fs4000.html"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x3042"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+:model "IS 12"
+:url "/unsupported/canon-is-12.html"
+:interface "USB"
+:status :unsupported
+:comment "Probably not supported. Scanner cardridge for Canon inkjet printers."
+
+:model "IS 22"
+:url "/unsupported/canon-is-22.html"
+:interface "Parport"
+:status :unsupported
+:comment "Probably not supported. Scanner cardridge for Canon inkjet printers."
+
+:model "IS 32"
+:url "/unsupported/canon-is-32.html"
+:interface "USB"
+:usbid "0x04a9" "0x105d"
+:status :unsupported
+:comment "Probably not supported. Scanner cardridge for Canon inkjet printers."
+
+:model "IS 52"
+:url "/unsupported/canon-is-52.html"
+:interface "USB"
+:status :unsupported
+:comment "Probably not supported. Scanner cardridge for Canon inkjet printers."
+
+:model "ImageRunner iR1018"
+:url "/unsupported/canon-imagerunner.html"
+:interface "USB"
+:usbid "0x04a9" "0x269d"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "ImageRunner iR1022"
+:url "/unsupported/canon-imagerunner.html"
+:interface "USB"
+:usbid "0x04a9" "0x269d"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "ImageRunner iR1023"
+:url "/unsupported/canon-imagerunner.html"
+:interface "USB"
+:usbid "0x04a9" "0x269d"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "PIXMA MP110"
+:url "/unsupported/canon-pixma-mp110.html"
+:interface "USB"
+:usbid "0x04a9" "0x1700"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "PIXMA MP130"
+:url "/unsupported/canon-pixma-mp130.html"
+:interface "USB"
+:usbid "0x04a9" "0x1701"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "DR-2020U"
+:interface "USB"
+:status :unsupported
+:comment "GL84x?"
+
+;********************************************************************************************
+:mfg "Chinon"
+
+:model "DS-3000"
+:url "/unsupported/chinon-ds3000.html"
+:interface "Parport Serial Port"
+:status :unsupported
+:comment "Unsupported at the moment, but a backend is in preparation. See link."
+
+;********************************************************************************************
+
+:mfg "Compaq"
+:url "http://www.compaq.com/"
+
+:model "S200"
+:interface "USB"
+:usbid "0x049f" "0x0021"
+:status :unsupported
+:comment "Not supported. 2400x1200 dpi. One bulk-in, one bulk-out and one interrupt endpoint. Type-number: U0001-HB21, another type nr on the inside: 75100512-00"
+
+;********************************************************************************************
+
+:mfg "Compeye"
+
+:model "Simplex 1236C"
+:url "/unsupported/trust-combiscan-19200.html"
+:interface "Parport USB"
+:usbid "0x05cb" "0x1483"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Corex"
+:url "http://www.cardscan.com/"
+
+:model "Cardscan 500"
+:url "/unsupported/corex-cardscan-500.html"
+:interface "USB"
+:usbid "0x08f0" "0x0001"
+:status :unsupported
+:comment "Probably not supported. Businesscard reader."
+
+:model "Cardscan 700 C"
+:url "/unsupported/corex-cardscan-700.html"
+:interface "USB"
+:usbid "0x08f0" "0x0004"
+:status :unsupported
+:comment "Probably not supported."
+
+;********************************************************************************************
+
+:mfg "Dell"
+:url "http://www.dell.com/"
+
+:model "A940"
+:interface "USB"
+:usbid "0x413c" "0x5106"
+:status :unsupported
+:comment "Probably rebadged Lexmark X5150. May work with sane-lexmark? See bug #312130"
+
+:model "A960"
+:url "/unsupported/dell-a960.html"
+:interface "USB"
+:usbid "0x413c" "0x5107"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "922"
+:url "/unsupported/dell-922.html"
+:interface "USB"
+:usbid "0x413c" "0x5109"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Epson"
+:url "http://www.epson.com/"
+
+:model "GT-2200"
+:interface "USB"
+:usbid "0x04b8" "0x0102"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "StylusScan 2000"
+:interface "USB"
+:usbid "0x04b8" "0x0105"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "Stylus DX4450"
+:url "/unsupported/epson-stylus-dx4450.html"
+:interface "USB"
+:usbid "0x04b8" "0x083f"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "Stylus CX-5800"
+:interface "USB"
+:status :unsupported
+:comment "Probably unsupported at the moment. Not compatible to snapscan backend. It's not known if it may work with epson or epkowa backend."
+
+;********************************************************************************************
+
+:mfg "EDT (Electronic Document Technology)"
+:url "http://www.bizcardreader.com/"
+
+:model "BizCardReader 900C"
+:url "/unsupported/edt-900c.html"
+:interface "USB"
+:usbid "0x0a53" "0x5001"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+
+
+;********************************************************************************************
+
+:mfg "E-Lux"
+:comment "E-Lux and Enhans seem to have been purchased by dysan, now known as MEMOREX"
+
+:model "j-6121"
+:interface "Parport"
+:status :unsupported
+:comment "Probably unsupported. Sold 1998. Same as E-Lux j-6121."
+
+;********************************************************************************************
+
+:mfg "Enhans"
+:comment "E-Lux and Enhans seem to have been purchased by dysan, now known as MEMOREX"
+
+:model "j-6121"
+:interface "Parport"
+:status :unsupported
+:comment "Probably unsupported. Sold 1998. Same as E-Lux j-6121."
+
+:model "M-3630 A"
+:interface "Parport"
+:status :unsupported
+:comment "Probably unsupported. "
+
+;********************************************************************************************
+
+:mfg "Genius"
+:url "http://www.geniusnet.com.tw/"
+:url "http://www.genius-kye.com/"
+
+:model "ColorPage CS"
+:url "/unsupported/genius-colorpage-cs.html"
+:interface "SCSI"
+:status :unsupported
+:comment "Probably unsupported, see link for details."
+
+:model "ColorPage-Slim 1200 USB2"
+:url "/unsupported/genius-colorpage-slim-1200-usb2.html"
+:interface "USB"
+:usbid "0x0458" "0x2020"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend."
+
+:model "ColorPage HR6X Slim"
+:url "/unsupported/genius-colorpage-hr6x.html"
+:interface "USB"
+:usbid "0x0458" "0x2019"
+:status :unsupported
+:comment "GL646 based, to be added to genesys backend"
+
+:model "ColorPage HR7X"
+:url "/unsupported/genius-colorpage-hr7x.html"
+:interface "USB"
+:usbid "0x0458" "0x2018"
+:status :unsupported
+:comment "GL646 based, to be added to genesys backend"
+
+:model "ColorPage HR7XE"
+:url "/unsupported/genius-colorpage-hr7xe.html"
+:interface "USB"
+:usbid "0x06dc" "0x0012"
+:status :unsupported
+:comment "Unsuported. See link for details."
+
+:model "ColorPage HR8"
+:url "/unsupported/genius-colorpage-hr8.html"
+:interface "USB"
+:usbid "0x0458" "0x201c"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+;********************************************************************************************
+
+:mfg "Guillemot"			; name a manufacturer
+
+:model "SCAN@HOME 48 USB"
+:url "/unsupported/teco-vm6509.html"
+:interface "USB"
+:usbid "0x080d" "0x0102"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "Maxi Scan A4 Parallel 36 bit"
+:interface "Parport"
+:status :unsupported
+:comment "Probably unsupported. Identical to the Benq Prisa 620P."
+
+
+;********************************************************************************************
+
+:mfg "Hercules"			; name a manufacturer
+
+:model "SCAN@HOME 48 USB"
+:url "/unsupported/teco-vm6509.html"
+:interface "USB"
+:usbid "0x080d" "0x0102"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+
+;********************************************************************************************
+
+:mfg "Hewlett-Packard"			; name a manufacturer
+:url "http://www.hp.com/"
+
+:model "Photo Scanner 1000"
+:url "/unsupported/hp-photo-1000.html"
+:interface "USB"
+:usbid "0x03f0" "0x1001"
+:status :unsupported
+:comment "Not supported by SANE. However, it's detected as mass storage device so just mounting it is reported to work. See link for device data."
+
+:model "Photosmart 1200 Photo"
+:interface "USB"
+:status :unsupported
+:comment "Probably not supported by SANE. No details known. 10x15 cm. Maybe similar to Photo Scanner 1000?"
+
+:model "Photosmart S20 (C5101A)"
+:url "/unsupported/hp-photosmart-s20xi.html"
+:interface "USB"
+:usbid "0x03f0" "0x0102"
+:status :unsupported
+:comment "Not supported yet by SANE. See link for details."
+
+:model "Photosmart S20xi (C7150A)"
+:url "/unsupported/hp-photosmart-s20xi.html"
+:interface "USB"
+:usbid "0x03f0" "0x0102"
+:status :unsupported
+:comment "Not supported yet by SANE. See link for details."
+
+:model "Photosmart C5100 series"
+:url "/unsupported/hp-photosmart-5100.html"
+:interface "USB"
+:usbid "0x03f0" "0x5811"
+:status :unsupported
+:comment "Not supported yet by SANE. See link for details."
+
+:model "Photosmart C3180"
+:url "/unsupported/hp-photosmart-3180.html"
+:interface "USB"
+:usbid "0x03f0" "0x5611"
+:status :unsupported
+:comment "Not supported yet by SANE. See link for details."
+
+:model "ScanJet 3770"
+:status :unsupported
+:interface "USB"
+:usbid "0x03f0" "0x2505"
+:comment "While an external binary-only backend exists, it works only on Linux i386. Therefore the scanner is unsupported on other platforms."
+
+:model "ScanJet 4600"
+:url "/unsupported/hp-scanjet-4600.html"
+:interface "USB"
+:usbid "0x03f0" "0x3005"
+:comment "Not supported. See link for details, or http://www.chmil.org/hp4600linux/ for code"
+:status :unsupported
+
+:model "ScanJet 4670"
+:interface "USB"
+:usbid "0x03f0" "0x3005"
+:comment "Not supported. See ScanJet 4600 entry."
+:status :unsupported
+
+:model "ScanJet 4890C"
+:url "/unsupported/hp-scanjet-4850.html"
+:interface "USB"
+:usbid "0x03f0" "0x1b05"
+:comment "GL843, maybe can be added to genesys backend "
+:status :unsupported
+
+:model "ScanJet 5530C Photosmart"
+:url "/unsupported/hp-scanjet-5530.html"
+:interface "USB"
+:usbid "0x03f0" "0x1605"
+:comment "Maybe GL841_HP, but not confirmed, maybe can be added to genesys backend"
+:status :unsupported
+
+:model "ScanJet 8390"
+:url "/unsupported/hp-scanjet-8390.html"
+:interface "USB"
+:usbid "0x03f0" "0x3805"
+:comment "Probably not supported. See link for details."
+:status :unsupported
+
+:model "ScanJet G4000"
+:url "/unsupported/hp-g4000.html"
+:interface "USB"
+:usbid "0x03f0" "0x4505"
+:comment "Probably not supported. See link for details."
+:status :unsupported
+
+;********************************************************************************************
+
+:mfg "IBM"
+:url "http://www.ibm.com"
+
+:model "ADF Color Scanner"
+:interface "Proprietary"
+:status :unsupported
+:comment "Unsupported. Uses proprietary ISA card. Maybe the same as the Plustek Spectra ADF?"
+
+;********************************************************************************************
+
+:mfg "IOMagic"
+:url "http://www.iomagic.com/"
+
+:model "MobileScan USB"
+:url "/unsupported/trust-combiscan-19200.html"
+:interface "USB Parport"
+:usbid "0x05cb" "0x1483"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Iris"
+:url "http://irislink.com/"
+
+:model "IriScan"
+:url "/unsupported/iris-iriscan.html"
+:interface "USB"
+:usbid "0x0a53" "0x1000"
+:status :unsupported
+:comment "Unsupported. LM9832/3. See link for details."
+
+:model "IRISPen Translator Executive"
+:url "/unsupported/iris-irispen-translator.html"
+:interface "USB"
+:usbid "0x0f43" "0x015a"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "IRISCard Pro (IBCR II)"
+:url "/unsupported/iris-business.html"
+:interface "USB"
+:usbid "0x0a38" "0x0301"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Kodak"
+:url "http://www.kodak.com"
+
+:model "Snapshot Photo Scanner 1"
+:interface "Parport"
+:status :unsupported
+:comment "Unsupported. FCC ID HWF96PHS"
+
+;********************************************************************************************
+
+:mfg "Lexmark"
+:url "http://www.lexmark.com/"
+
+:model "P6250"
+:url "/unsupported/lexmark-p6250.html"
+:interface "USB"
+:usbid "0x043d" "0x0097"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "Photo 3150"
+:url "/unsupported/lexmark-3150.html"
+:interface "USB"
+:usbid "0x043d" "0x007d"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "X74"
+:url "/unsupported/lexmark-x75.html"
+:interface "USB"
+:usbid "0x043d" "0x0060"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "X75"
+:url "/unsupported/lexmark-x75.html"
+:interface "USB"
+:usbid "0x043d" "0x0060"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "X75 PrinTrio"
+:url "/unsupported/lexmark-x75.html"
+:interface "USB"
+:usbid "0x043d" "0x0060"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "X83"
+:url "/unsupported/lexmark-x83.html"
+:interface "USB"
+:usbid "0x043d" "0x003d"
+:status :unsupported
+:comment "Unsupported. GL640."
+
+:model "X2330"
+:url "/unsupported/lexmark-x2330.html"
+:interface "USB"
+:usbid "0x043d" "0x00bb"
+:status :unsupported
+:comment "Unsupported. See link for details."
+ 
+:model "X3450"
+:url "/unsupported/lexmark-x3450.html"
+:interface "USB"
+:usbid "0x043d" "0x00f6"
+:status :unsupported
+:comment "Unsupported. See link for details."
+ 
+:model "X5130"
+:url "/unsupported/lexmark-x5130.html"
+:interface "USB"
+:usbid "0x043d" "0x0065"
+:status :unsupported
+:comment "Unsupported."
+
+:model "X5150"
+:url "/unsupported/lexmark-x5130.html"
+:interface "USB"
+:usbid "0x043d" "0x0065"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "X5250"
+:url "/unsupported/lexmark-x5250.html"
+:interface "USB"
+:usbid "0x043d" "0x0093"
+:status :unsupported
+:comment "Unsupported."
+
+:model "X6170"
+:url "/unsupported/lexmark-x6170.html"
+:interface "USB"
+:usbid "0x043d" "0x0072"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "X7170"
+:interface "USB"
+:usbid "0x043d" "0x0098"
+:status :unsupported
+:comment "Unsupported. See bug #310889 for details."
+
+:model "X7350"
+:url "/unsupported/lexmark-x7350.html"
+:interface "USB"
+:usbid "0x043d" "0x00b8"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "X8350"
+:url "/unsupported/lexmark-x8350.html"
+:interface "USB"
+:usbid "0x043d" "0x00b9"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+
+;********************************************************************************************
+
+:mfg "Logitech"
+
+:model "PageScan Color"
+:interface "Parport"
+:status :unsupported
+:comment "Most probably unsupported."
+
+:model "PageScan USB"
+:url "/unsupported/logitech-pagescan-usb.html"
+:interface "USB"
+:usbid "0x046d" "0x040f"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Medion/Lifetec/Tevion/Cytron"
+:url "http://www.medion.com/"
+:url "http://www.medion.de/"
+
+:model "MD 6190"
+:url "/unsupported/medion-md6190.html"
+:interface "USB"
+:usbid "0x0461" "0x0392"
+:status :unsupported
+:comment "Probably unsupported. There seem to exist two different scanners with that name. See link for details."
+
+:model "MD 6190"
+:url "/unsupported/medion-md6190.html"
+:interface "USB"
+:usbid "0x0461" "0x037b"
+:status :unsupported
+:comment "Probably unsupported. There seem to exist two different scanners with that name. See link for details."
+
+:model "MD 40420"
+:url "/unsupported/tevion-md40420.html"
+:interface "USB"
+:usbid "0x05da" "0x3008"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "MD 41260"
+:url "/unsupported/medion-md6190.html"
+:interface "USB"
+:usbid "0x0461" "0x037b"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "MD 41985"
+:url "/unsupported/medion-md6190.html"
+:interface "USB"
+:usbid "0x0461" "0x037b"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "MD 42666"
+:url "/unsupported/tevion-md40420.html"
+:interface "USB"
+:usbid "0x05da" "0x3008"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "MD 85264"
+:url "http://gkall.hobby.nl/authentec.html"
+:interface "USB"
+:usbid "0x08ff" "0x2580"
+:status :unsupported
+:comment "Fingerprint sensor. See link for details."
+
+:model "MD 90009"
+:url "/unsupported/tevion-md90009.html"
+:interface "USB"
+:usbid "0x05da" "0x30e5"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "MD 90070"
+:url "/unsupported/tevion-md90070.html"
+:interface "USB"
+:usbid "0x05da" "0x3022"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "MD 90090"
+:url "/unsupported/tevion-md90070.html"
+:interface "USB"
+:usbid "0x05da" "0x3022"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Memorex"
+:url "http://www.memorex.com/"
+
+:model "6136u"
+:url "/unsupported/memorex-maxx-6136u.html"
+:interface "USB"
+:usbid "0x0461" "0x0346"
+:status :unsupported
+:comment "Probably unsupported."
+
+:model "6142u"
+:url "/unsupported/visioneer-onetouch4400.html"
+:interface "USB"
+:usbid "0x0461" "0x0347"
+:status :unsupported
+:comment "Probably unsupported. Same as Visioneer Onetouch 4400. See link for details."
+
+:model "MaxxScan 6122"
+:url "/unsupported/trust-combiscan-19200.html"
+:interface "USB Parport"
+:usbid "0x05cb" "0x1483"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "SCF 9612P"
+:url "/unsupported/memorex-scf-9612p.html"
+:interface "Parport"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+;********************************************************************************************
+
+:mfg "Microtek"
+:url "http://www.microtek.com/"
+
+:model "ArtixScan 2020"
+:interface "SCSI"
+:status :unsupported
+:comment "Unsupported. Same as Agfa DuoScan T2000XL?"
+
+:model "ArtixScanDI 2020"
+:url "/unsupported/microtek-artixscan-2020.html"
+:interface "USB"
+:usbid "0x05da" "0x202e"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "Artixscan 2500f"
+:interface "SCSI IEEE-1384"
+:status :unsupported
+:comment "Unsupported. Same as Agfa DuoScan T2500?"
+
+:model "ArtixScan 4000tf"
+:interface "USB"
+:status :unsupported
+:comment "Unsupported. Uses ALI M5611B."
+
+:model "FilmScan 35"
+:url "/unsupported/microtek-filmscan-35.html"
+:interface "USB"
+:usbid "0x05e3" "0x0120"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "ScanMaker 336 CX"
+:interface "SCSI"
+:status :unsupported
+:comment "Probably unsupported. Seems to be similar to the Microtek 330 CX and is detected by the microtek2 backend. Scanning doesn't seem to work however."
+
+:model "Scanmaker 1850S"
+:url "/unsupported/microtek-scanmaker-1850s.html"
+:interface "SCSI"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "ScanMaker 3630"
+:url "/unsupported/microtek-scanmaker-3630.html"
+:interface "USB"
+:usbid "0x0461" "0x0347"
+:status :unsupported
+:comment "Unsupported. Doesn't seem to be compatible to 3600 series, see link."
+
+:model "ScanMaker 3800"
+:url "/unsupported/microtek-scanmaker-3800.html"
+:interface "USB"
+:usbid "0x05da" "0x30ce"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 3830"
+:url "/unsupported/microtek-scanmaker-3830.html"
+:interface "USB"
+:usbid "0x05da" "0x30ce"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 3860"
+:url "/unsupported/microtek-scanmaker-3880.html"
+:interface "USB"
+:usbid "0x05da" "0x3023"
+:status :unsupported
+:comment "Unsupported. See link for more details. Appears to be similar to ScanMaker 3880."
+
+:model "ScanMaker 3880"
+:url "/unsupported/microtek-scanmaker-3880.html"
+:interface "USB"
+:usbid "0x05da" "0x3021"
+:status :unsupported
+:comment "Unsupported. SQ113 chip. See link for more details."
+
+:model "ScanMaker 4600"
+:url "/unsupported/microtek-scanmaker-4600.html"
+:interface "USB"
+:usbid "0x05da" "0x40c7"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 4700"
+:url "/unsupported/microtek-scanmaker-4700.html"
+:interface "USB"
+:usbid "0x05da" "0x20b4"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 4850"
+:url "/unsupported/microtek-scanmaker-4900.html"
+:interface "USB"
+:usbid "0x05da" "0x30d9"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "ScanMaker 4850 II"
+:url "/unsupported/microtek-scanmaker-4850-2.html"
+:interface "USB"
+:usbid "0x05da" "0x3008"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "ScanMaker 4900"
+:url "/unsupported/microtek-scanmaker-4900.html"
+:interface "USB"
+:usbid "0x05da" "0x30b9"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 5"
+:url "/unsupported/microtek-scanmaker-5600.html"
+:interface "SCSI"
+:status :unsupported
+:comment "Probably unsupported. See link for more details."
+
+:model "ScanMaker 5600"
+:url "/unsupported/microtek-scanmaker-5600.html"
+:interface "USB"
+:usbid "0x05da" "0x20a7"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 5700"
+:interface "USB"
+:usbid "0x05da" "0x20bd"
+:status :unsupported
+:comment "Unsupported. Uses ALI M5615 like the ScanMaker 4700."
+
+:model "ScanMaker 5800"
+:url "/unsupported/microtek-scanmaker-5800.html"
+:interface "USB"
+:usbid "0x05da" "0x3008"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "ScanMaker 5800"
+:url "/unsupported/microtek-scanmaker-5800.html"
+:interface "USB"
+:usbid "0x05da" "0x30d8"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "ScanMaker 5900"
+:url "/unsupported/microtek-scanmaker-5900.html"
+:interface "USB"
+:usbid "0x05da" "0x30d8"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 5950"
+:url "/unsupported/microtek-scanmaker-5950.html"
+:interface "USB"
+:usbid "0x05da" "0x30d8"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 6000"
+:url "/unsupported/microtek-scanmaker-6000.html"
+:interface "USB"
+:usbid "0x05da" "0x30e5"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 6100"
+:url "/unsupported/microtek-scanmaker-6100.html"
+:interface "USB"
+:usbid "0x05da" "0x30e5"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "ScanMaker 6700"
+:url "/unsupported/microtek-scanmaker-6700.html"
+:interface "USB IEEE-1394"
+:usbid "0x05da" "0x20c9"
+:status :unsupported
+:comment "Unsupported. See link."
+
+:model "ScanMaker 8700"
+:status :unsupported
+:url "/unsupported/microtek-scanmaker-8700.html"
+:interface "USB IEEE-1394"
+:usbid "0x05da" "0x20b1"
+:comment "Unsupported. See link for details. USB vendor and product ids to be checked."
+
+:model "ScanMaker 9600XL"
+:interface "USB IEEE-1394"
+:usbid "0x05da" "0x20de"
+:status :unsupported
+:comment "Probably unsupported. SCSI seems to work with microtek2 backend."
+
+:model "ScanMaker 9800XL"
+:url "/unsupported/microtek-scanmaker-9800.html"
+:interface "USB SCSI"
+:usbid "0x05da" "0x20de"
+:status :unsupported
+:comment "Partly unsupported. IEEE-1394 works with microtek2 backend. See link."
+
+:model "ScanMaker i320"
+:url "/unsupported/microtek-scanmaker-i320.html"
+:interface "USB"
+:usbid "0x05da" "0x30e6"
+:status :unsupported
+:comment "Unsupported. See link."
+
+:model "ScanMaker s400"
+:url "/unsupported/microtek-scanmaker-s400.html"
+:interface "USB"
+:usbid "0x05da" "0x201c"
+:status :unsupported
+:comment "Unsupported. See link."
+
+:model "ScanMaker S400"
+:url "/unsupported/microtek-scanmaker-s400.html"
+:interface "USB"
+:usbid "0x05da" "0x300b"
+:status :unsupported
+:comment "Unsupported. See link."
+
+:model "ScanPort 3000"
+:url "/unsupported/microtek-scanport-3000.html"
+:interface "USB"
+:usbid "0x04a7" "0x0224"
+:status :unsupported
+:comment "Unsupported. Vendor/Product ids: 0x04a7/0x0224. Realtek RTS8801B?. See link for details."
+
+
+;********************************************************************************************
+
+:mfg "Konica Minolta"
+:url "http://www.konicaminolta.com/"
+
+:model "Dual Scan III"
+:url "/unsupported/minolta-dual-scan-III.html"
+:interface "USB"
+:usbid "0x0686" "0x400d"
+:status :unsupported
+:comment "Unsupported. May work with vuescan. See link for details."
+
+:model "Dual Scan IV"
+:url "/unsupported/minolta-dual-scan-IV.html"
+:interface "USB"
+:usbid "0x132b" "0x000a"
+:status :unsupported
+:comment "Unsupported. Works with vuescan. See link for details."
+
+:model "DiMAGE Scan Elite 5400"
+:url "/unsupported/minolta-dse-5400.html"
+:interface "USB IEEE-1394"
+:usbid "0x0686" "0x400e"
+:status :unsupported
+:comment "Probably unsupported. May work with vuescan. See link for details."
+
+:model "DiMAGE Scan Elite 5400 2"
+:url "/unsupported/minolta-dse-5400-2.html"
+:interface "USB"
+:usbid "0x132b" "0x0012"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "DiMAGE Scan Multi Pro"
+:url "/unsupported/minolta-dimage-scan-multi-pro.html"
+:interface "IEEE-1394"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model      "magicolor 2480MF"
+:interface  "USB Network"
+:status     :unsupported
+:comment    "Uses a different scanning protocol than the magicolor 1690MF"
+
+;********************************************************************************************
+
+:mfg "Mustek"			; name a manufacturer
+:url "http://www.mustek.com/"
+:url "http://www.mustek.de/"
+:url "http://www.mustek.com.tw/"
+
+:model "1200 III EP"
+:interface "Parport"
+:status :unsupported
+:comment "Probably not supported. quarlewm at jmu dot edu offers to temporarily loan such a scanner to anyone who is interested in writing a driver."
+
+:model "2400 M"
+:interface "USB"
+:url "http://www.meier-geinitz.de/sane/misc/mustek-scanners.html#UNSUPPORTED"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "BearPaw 2400 TA Pro"
+:url "http://www.meier-geinitz.de/sane/misc/mustek-scanners.html#UNSUPPORTED"
+:interface "USB"
+:usbid "0x055f" "0x0400"
+:comment "Not supported. May be supported by mustek_usb2 backend later. See link for some information."
+:status :unsupported
+
+:model "BearPaw 2448 CU Pro"
+:url "/unsupported/mustek-bearpaw-2448-cu-pro.html"
+:usbid "0x055f" "0x0408"
+:interface "USB"
+:comment "Not supported. May be supported by mustek_usb2 backend later. See link for some information."
+:status :unsupported
+
+:model "BearPaw 4800 TA Pro"
+:url "/unsupported/mustek-bearpaw-4800ta-pro.html"
+:interface "USB"
+:usbid "0x055f" "0x1000"
+:comment "Not supported. See link for some information."
+:status :unsupported
+
+:model "BearPaw 4800 TA Pro II"
+:url "/unsupported/mustek-bearpaw-4800ta-pro-ii.html"
+:interface "USB"
+:usbid "0x055f" "0x040a"
+:comment "Not supported.  May be supported by mustek_usb2 backend later. See link for some information."
+:status :unsupported
+
+:model "BearPaw 6400 TA Pro"
+:url "http://www.meier-geinitz.de/sane/misc/mustek-scanners.html#UNSUPPORTED"
+:interface "USB"
+:usbid "0x055f" "0x040b"
+:comment "Not supported. May be supported by mustek_usb2 backend later. See link for some information."
+:status :unsupported
+
+:model "Paragon 800 II EP"
+:interface "Parport"
+:status :unsupported
+:comment "Not supported. Maybe similar to 600 II EP (SCSI_over-parport)? In this case it could be supported by the mustek SCSI backend."
+
+:model "ScanExpress 600 USB"
+:url "http://www.meier-geinitz.de/sane/misc/mustek-scanners.html#UNSUPPORTED"
+:interface "USB"
+:usbid "0x055f" "0x0873"
+:status :unsupported
+:comment "Unsupported. Programming information is available."
+
+:model "ScanExpress 1200 USB"
+:url "http://www.meier-geinitz.de/sane/misc/mustek-scanners.html#UNSUPPORTED"
+:interface "USB"
+:usbid "0x055f" "0x0003"
+:status :unsupported
+:comment "Unsupported. Programming information is available."
+
+:model "ScanExpress 1200 USB Plus"
+:url "http://www.meier-geinitz.de/sane/misc/mustek-scanners.html#UNSUPPORTED"
+:interface "USB"
+:usbid "0x055f" "0x0007"
+:status :unsupported
+:comment "Unsupported."
+
+:model "ScanExpress 12000 P"
+:url "http://penguin-breeder.org/?page=mustek_pp"
+:interface "Parport"
+:status :unsupported
+:comment "Not supported. Asic 1505/05."
+
+:model "ScanExpress A3 EP"
+:interface "Parport"
+:status :unsupported
+:comment "Not supported. Maybe it will be supported by the mustek_pp backend in future."
+
+:model "ScanExpress CardSmart"
+:url "http://www.meier-geinitz.de/sane/misc/mustek-scanners.html#UNSUPPORTED"
+:interface "USB"
+:status :unsupported
+:comment "Probably unsupported. USB business card scanner. Maybe works as USB storage device?"
+
+:model "ScanMagic 9636P"
+:url "http://lists.alioth.debian.org/pipermail/sane-devel/2003-May/007682.html"
+:interface "Parport"
+:status :unsupported
+:comment "Probably not supported. Same as Mustek 12000 P?. ASIC 1505."
+
+;********************************************************************************************
+
+:mfg "NEC"
+:url "http://www.nevt.co.jp/"
+
+:model "Petiscan"
+:url "/unsupported/nec-petiscan.html"
+:interface "USB"
+:usbid "0x0475" "0x0100"
+:status :unsupported
+:comment "Most probably unsupported. See link for details. Vendor ID is Relisys/Teco. Not known if it is similar to other Relisys/Teco USB scanners."
+
+;********************************************************************************************
+
+:mfg "Nikon"
+:url "http://www.nikon.com/"
+
+:model "LS-9000 ED"
+:url "/unsupported/nikon-ls9000-ed.html"
+:interface "IEEE-1394"
+:status :unsupported
+:comment "Probably not supported. See link for details. Possibly similar to LS-8000 ED."
+
+;********************************************************************************************
+
+:mfg "Olivetti"
+:url "http://www.olivetti.com"
+
+:model "Job-Jet M400"
+:url "/unsupported/olivetti-job-jet-m400.html"
+:interface "USB"
+:usbid "0x0b3c" "0xa880"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+;********************************************************************************************
+
+:mfg "Olympus"
+:url "http://www.olympus.com"
+
+:model "ES-10P"
+:url "http://lists.alioth.debian.org/pipermail/sane-devel/2008-December/023326.html"
+:interface "Parport"
+:status :unsupported
+
+:model "ES-10S"
+:url "/unsupported/olympus-es10s.html"
+:interface "SCSI"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Optoelectronics"
+
+:model "Barcode scanner"
+:interface "USB"
+:usbid "0x065a" "0x0001"
+:status :unsupported
+:comment "Probably not supported."
+
+;********************************************************************************************
+
+:mfg "Optrox"
+
+:model "PhotoMaker 3C"
+:url "http://www.df.lth.se/~triad/krad/optrox/"
+:interface "Parport"
+:status :unsupported
+
+:model "PhotoMaker 3E"
+:url "http://www.df.lth.se/~triad/krad/optrox/"
+:interface "Parport"
+:status :unsupported
+
+:model "PhotoMaker 3F"
+:url "http://www.df.lth.se/~triad/krad/optrox/"
+:interface "Proprietary"
+:status :unsupported
+:comment "Special ISA card"
+
+:model "PhotoMaker 3S"
+:url "http://www.df.lth.se/~triad/krad/optrox/"
+:interface "Parport"
+:status :unsupported
+
+:model "PhotoMaker 6E"
+:url "http://www.df.lth.se/~triad/krad/optrox/"
+:interface "Parport"
+:status :unsupported
+
+:model "PhotoMaker 6F"
+:url "http://www.df.lth.se/~triad/krad/optrox/"
+:interface "Proprietary"
+:status :unsupported
+:comment "Special ISA card"
+
+;********************************************************************************************
+
+:mfg "Panasonic"
+
+:model "KV-SS905C"
+:interface "SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend. See http://code.google.com/p/kvss905c/ for a standalone scanning tool."
+
+:model "KV-S2055W"
+:interface "USB SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S2055L"
+:interface "SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S2065W"
+:interface "SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S3065CW"
+:interface "USB SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S3065CL"
+:interface "USB SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S3085"
+:interface "USB SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S3105C"
+:interface "USB SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend. See http://code.google.com/p/kvss905c/ for a standalone scanning tool."
+
+:model "KV-S6040W"
+:interface "SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S6045W"
+:interface "SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S6050W"
+:interface "SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S6055W"
+:interface "SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+:model "KV-S7065C"
+:interface "USB SCSI"
+:status :unsupported
+:comment "might be supported by matsushita backend."
+
+;********************************************************************************************
+
+:mfg "Pentax"
+
+:model "DSmobile USB"
+:url "/unsupported/syscan-travelscan-pro.html"
+:interface "USB"
+:usbid "0x0a82" "0x2000"
+:status :unsupported
+:comment "Probably not supported. Some information is available."
+
+;********************************************************************************************
+
+:mfg "PIE"
+:url "http://www.scanace.com/"
+:comment "Pacific Image Electronics"
+
+:model "Primefilm 1800u"
+:url "/unsupported/pie-1800u.html"
+:interface "USB"
+:usbid "0x05e3" "0x0120"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+:model "Primefilm 2700"
+:interface "USB"
+:status :unsupported
+:url "http://lists.alioth.debian.org/pipermail/sane-devel/2009-January/023442.html"
+
+:model "Primefilm 3600PRO"
+:interface "USB IEEE-1394"
+:status :unsupported
+:comment "Probably not supported. "
+
+:model "Powerslide 3600"
+:url "/unsupported/reflecta-digitdia-3600.html"
+:interface "USB IEEE-1394"
+:usbid "0x05e3" "0x0142"
+:status :unsupported
+:comment "Probably unsupported. Film scanner that can scan directly from the magazine."
+
+:model "PF3650 Pro3 Film Scanner"
+:url "/unsupported/pie-pf3650.html"
+:interface "USB IEEE-1394"
+:usbid "0x05e3" "0x0143"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+;********************************************************************************************
+
+;:mfg "Packard Bell"
+
+;********************************************************************************************
+
+:mfg "Plustek"
+:url "http://www.plustek.de/"
+:url "http://www.plustek.com/"
+
+:model "OpticFilm 7200"
+:url "/unsupported/plustek-opticfilm-7200.html"
+:interface "USB"
+:usbid "0x07b3" "0x0807"
+:status :unsupported
+:comment "GL842 based, maybe to be added to genesys backend"
+
+:model "OpticFilm 7200i"
+:interface "USB"
+:usbid "0x07b3" "0x0c04"
+:status :unsupported
+:comment "GL843 based, maybe to be added to genesys backend"
+
+:model "OpticPro A3U"
+:interface "USB"
+:status :unsupported
+:comment "Uses Plustek ASIC P99002"
+
+:model "OpticPro S6"
+:interface "USB"
+:status :unsupported
+:comment "Uses RealTek chipset (RTL8801D)"
+
+:model "OpticPro S12"
+:url "/unsupported/plustek-opticpro-st12.html"
+:interface "USB"
+:usbid "0x07b3" "0x0600"
+:status :unsupported
+:comment "Product id 0x0600 is unsupported but may be supported by the genesys backend in future. Product id 0x040b is supported by the gt68xx backend."
+
+:model "OpticPro ST12"
+:url "/unsupported/plustek-opticpro-st12.html"
+:interface "USB"
+:usbid "0x07b3" "0x0600"
+:status :unsupported
+:comment "Product id 0x0600 is unsupported but may be supported by the genesys backend in future. Product id 0x040b is supported by the gt68xx backend."
+
+:model "OpticPro ST16"
+:url "/unsupported/plustek-opticpro-st16.html"
+:interface "USB"
+:usbid "0x07b3" "0x0600"
+:status :unsupported
+:comment "GL646 based, to be added to genesys backend"
+
+:model "OpticPro UA18"
+:interface "USB"
+:status :unsupported
+:comment "Probably LM983x based."
+
+:model "OpticPro S24"
+:url "/unsupported/plustek-opticpro-st24.html"
+:interface "USB"
+:usbid "0x07b3" "0x0601"
+:status :unsupported
+:comment "Product id 0x0601 is unsupported but may be supported by the genesys backend in future /GL646). Product id 0x040e is supported by the gt68xx backend."
+
+:model "OpticPro ST24"
+:url "/unsupported/plustek-opticpro-st24.html"
+:interface "USB"
+:usbid "0x07b3" "0x0601"
+:status :unsupported
+:comment "GL646 based, to be added to genesys backend"
+
+:model "OpticPro S28"
+:interface "USB"
+:url "/unsupported/plustek-opticpro-s28.html"
+:usbid "0x07b3" "0x0801"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "OpticPro ST28"
+:url "/unsupported/plustek-opticpro-s28.html"
+:interface "USB"
+:usbid "0x07b3" "0x0801"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "OpticPro ST28"
+:url "/unsupported/plustek-opticpro-st28.html"
+:interface "USB"
+:usbid "0x07b3" "0x0802"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "Umax AstraScan 4750"
+:url "/unsupported/umax-astrscan-4750.html"
+:interface "USB"
+:usbid "0x07b3" "0x0802"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend, rebadged Plustek ST28"
+
+:model "OpticPro ST48"
+:url "/unsupported/plustek-opticpro-st48.html"
+:interface "USB"
+:usbid "0x07b3" "0x0800"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "OpticPro ST64"
+:url "/unsupported/plustek-opticpro-st64.html"
+:interface "USB"
+:usbid "0x07b3" "0x0c00"
+:status :unsupported
+:comment "GL843 based, maybe to be added to genesys backend"
+
+:model "OpticPro ST64+"
+:url "/unsupported/plustek-opticpro-st64plus.html"
+:interface "USB"
+:usbid "0x07b3" "0x0c03"
+:status :unsupported
+:comment "GL843 based. See link for more details."
+
+:model "PL 806"
+:url "/unsupported/plustek-pl806.html"
+:interface "USB"
+:usbid "0x07b3" "0x0c0c"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "SmartOffice PL 812"
+:url "/unsupported/plustek-pl812.html"
+:interface "USB"
+:usbid "0x07b3" "0x0c0d"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "OpticSlim 500"
+:url "/unsupported/plustek-opticslim-500.html"
+:interface "USB"
+:usbid "0x07b3" "0x0458"
+:status :unsupported
+:comment "Unsupported. See link for more details."
+
+:model "OpticSlim 2420"
+:url "/unsupported/plustek-opticslim-2420.html"
+:interface "USB"
+:usbid "0x07b3" "0x0806"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "OpticSlim 2420+"
+:url "/unsupported/plustek-opticslim-2420plus.html"
+:interface "USB"
+:usbid "0x07b3" "0x0914"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "OpticWorks 2000"
+:interface "Parport"
+:status :unsupported
+:comment "Multifunction device. No further information available."
+
+:model "OptiCard 600+"
+:interface "USB"
+:status :unsupported
+:comment "Business card reader. No further information available."
+
+:model "ScanCopy 115"
+:url "/unsupported/plustek-scancopy-115.html"
+:interface "USB"
+:usbid "0x07b3" "0x081c"
+:status :unsupported
+:comment "GL841 based, to be added to genesys backend"
+
+:model "Spectra ADF"
+:interface "Proprietary"
+:status :unsupported
+:comment "Unsupported. Uses proprietary ISA card that also provides power and is labelled GPS-1 PAGE-A from Taiwan. Other labels on the scanner include ADF Color Scanner and SF600AS. Maybe the same as the IBM ADF Color Scanner?"
+
+:model "Unknown Plustek Device"
+:interface "USB"
+:usbid "0x07b3" "0x0005"
+:status :unsupported
+:comment "Probably unsupported. Scanner name not known yet."
+
+:model "Unknown Plustek Device"
+:interface "USB"
+:usbid "0x07b3" "0x0007"
+:status :unsupported
+:comment "Probably unsupported. Scanner name not known yet."
+
+:model "Unknown Plustek Device"
+:interface "USB"
+:usbid "0x07b3" "0x000f"
+:status :unsupported
+:comment "Probably unsupported. Scanner name not known yet."
+
+:model "Unknown Plustek Device"
+:interface "USB"
+:usbid "0x07b3" "0x0012"
+:status :unsupported
+:comment "Probably unsupported. Scanner name not known yet."
+
+:model "Unknown Plustek Device"
+:interface "USB"
+:usbid "0x07b3" "0x0014"
+:status :unsupported
+:comment "Probably unsupported. Scanner name not known yet."
+
+:model "Unknown Plustek Device"
+:interface "USB"
+:usbid "0x07b3" "0x0016"
+:status :unsupported
+:comment "Probably unsupported. Scanner name not known yet."
+
+;********************************************************************************************
+
+:mfg "PLANon"
+:url "http://www.planon.com/"
+
+:model "DocuPen RC800"
+:interface "USB"
+:status :unsupported
+:comment "Probably not supported. No details known."
+
+:model "DocuPen R700"
+:url "/unsupported/planon-docupen-r700.html"
+:interface "USB"
+:usbid "0x10c4" "0xea60"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "DocuPen (DPEN-BW)"
+:interface "USB"
+:status :unsupported
+:comment "Probably not supported. No details known."
+
+;********************************************************************************************
+
+:mfg "Primax"
+:url "http://www.primax.nl/"
+
+:model "Colorado 600U"
+:url "/unsupported/primax-colorado-600u.html"
+:interface "USB"
+:usbid "0x0461" "0x0341"
+:status :unsupported
+:comment "Not supported. Some information is available."
+
+:model "Colorado 1200p"
+:interface "Parport"
+:url "http://home2.swipnet.se/~w-25069/pxscan.html"
+:status :unsupported
+:comment "Unsupported by SANE. But is reported to partly work with pxscan. See link."
+
+:model "Colorado 1200u"
+:interface "USB"
+:usbid "0x0461" "0x0361"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "Primascan Colorado 2600u"
+:url "/unsupported/visioneer-onetouch4400.html"
+:interface "USB"
+:usbid "0x0461" "0x0347"
+:status :unsupported
+:comment "Unsupported. Same as Visioneer Onetouch 4400. See link for details."
+
+:model "Colorado Direct 600"
+:url "http://home2.swipnet.se/~w-25069/pxscan.html"
+:interface "Parport"
+:status :unsupported
+:comment "Not supported. However, a stand-alone program is available."
+
+:model "Colorado Direct 9600"
+:url "http://home2.swipnet.se/~w-25069/pxscan.html"
+:interface "Parport"
+:status :unsupported
+:comment "Not supported. However, a stand-alone program is available."
+
+:model "Colorado USB 9600"
+:url "/unsupported/primax-colorado-usb-9600.html"
+:interface "USB"
+:usbid "0x0461" "0x0340"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+:model "G2-300"
+:interface "USB"
+:usbid "0x0461" "0x0300"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "G2-300 #2"
+:interface "USB"
+:usbid "0x0461" "0x0302"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "G2E-300"
+:interface "USB"
+:usbid "0x0461" "0x0301"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "G2E-300 #2"
+:usbid "0x0461" "0x0303"
+:interface "USB"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "G2-600"
+:usbid "0x0461" "0x0380"
+:interface "USB"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "G2-600 #2"
+:interface "USB"
+:usbid "0x0461" "0x0382"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "G2E-600"
+:usbid "0x0461" "0x0383"
+:interface "USB"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "OneTouch 5300"
+:interface "Parport"
+:status :unsupported
+:comment "Not supported."
+
+:model "ReadyScan 636i"
+:usbid "0x0461" "0x0381"
+:interface "USB"
+:status :unsupported
+:comment "Probably unsupported. No details known."
+
+:model "Slim-Line 1200"
+:interface "USB"
+:status :unsupported
+:comment "Maybe GL646. Maybe similar to Medion MD 6228?"
+
+:model "Onetouch 8920"
+:url "/unsupported/visioneer-onetouch8920.html"
+:interface "USB"
+:usbid "0x0461" "0x0371"
+:status :unsupported
+:comment "Not supported. Look similar to Visioneer Onetouch 8920 (same USB product id)."
+
+;********************************************************************************************
+
+:mfg "Prolink"
+:url "http://www.fida.com/"
+
+:model "Winscan Pro 2448U"
+:url "/unsupported/prolink-2448u.html"
+:interface "USB"
+:usbid "0x06dc" "0x0014"
+:status :unsupported
+:comment "Not supported. Some information is available. RealTek RTS8801."
+
+:model "Winscan Pro 2000"
+:interface "USB Parport"
+:status :unsupported
+:comment "Not supported. No further information available."
+
+;********************************************************************************************
+
+:mfg "Quato"
+:url "http://www.quato.de/"
+
+:model "X-Finity"
+:interface "SCSI"
+:status :unsupported
+:comment "Probably not supported. No details yet. Originally manufactured by PFU?"
+
+:model "X-Finity Ultra"
+:interface "USB IEEE-1394"
+:status :unsupported
+:comment "Probably not supported. No details yet."
+
+;********************************************************************************************
+
+:mfg "Reflecta"
+
+:model "DigitDia 3600"
+:url "/unsupported/reflecta-digitdia-3600.html"
+:interface "USB IEEE-1394"
+:usbid "0x05e3" "0x0142"
+:status :unsupported
+:comment "Film scanner that can scan directly from the magazine."
+
+:model "iScan 1800"
+:url "/unsupported/reflecta-iscan-1800.html"
+:interface "USB"
+:usbid "0x05e3" "0x0120"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "ProScan 4000"
+:url "/unsupported/reflecta-proscan-4000.html"
+:interface "USB IEEE-1394"
+:usbid "0x05e3" "0x0143"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Relisys"
+
+:model "Eclipse 1200U"
+:url "/unsupported/relisys-eclipse-1200u.html"
+:interface "USB"
+:usbid "0x0475" "0x0103"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "Scorpio Ultra 3"
+:url "/unsupported/relisys-scorpio-ultra3.html"
+:interface "USB"
+:usbid "0x0475" "0x0210"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "Episode"
+:url "/unsupported/relisys-episode.html"
+:interface "USB"
+:usbid "0x0475" "0x0103"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+:model "AVEC II E3"
+:interface "Parport"
+:status :unsupported
+:comment "Parport version of AVEC II S3?. See bug #304992 for details"
+
+;********************************************************************************************
+
+:mfg "Samsung"
+
+:model "SCX-4725FN"
+:url "/unsupported/samsung-scx-4725.html"
+:interface "USB"
+:usbid "0x04e8" "0x341f"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Scanshell"
+
+:model "800N"
+:url "/unsupported/scanshell-800n.html"
+:interface "USB"
+:usbid "0x0a82" "0x6605"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Sicos"
+
+:model "DMS 2000"
+:url "mailto:ehaase@inf.fu-berlin.de"
+:interface "proprietary"
+:status :unsupported
+:comment "Not supported until now. Work on a backend has started, contact the author for details (see link)"
+
+;********************************************************************************************
+
+:mfg "Siemens"                 ; name a manufacturer
+:url "http://www.siemens.com/"
+
+:model "ID Mouse Professional"
+:interface "USB"
+:usbid "0x0681" "0x0005"
+:status :unsupported
+:comment "Not supported."
+
+:model "Cherry FingerTIP ID Board - Sensor"
+:interface "USB"
+:usbid "0x0681" "0x0010"
+:status :unsupported
+:comment "Not supported."
+
+;********************************************************************************************
+
+:mfg "SmartDisk"
+
+:model "SmartScan 3600"
+:interface "USB IEEE-1394"
+:status :unsupported
+:comment "Probably not supported. Same as PIE Primefilm 2600 PRO."
+
+;********************************************************************************************
+
+:mfg "Spot Technology"
+:comment "Spot seems have gone out of business."
+
+:model "Maxiscan A4"
+:url "http://www.el-profesor.net/spoonset/"
+:interface "proprietary"
+:status :unsupported
+:comment "Not supported until now. Work on a backend has started, see link for more information."
+
+:model "ScanTak 2c"
+:url "http://www.el-profesor.net/spoonset"
+:interface "proprietary"
+:status :unsupported
+:comment "Not supported. Work on a backend has started, see link for more information."
+
+:model "ScanTak 3c"
+:url "http://www.el-profesor.net/spoonset"
+:interface "proprietary"
+:status :unsupported
+:comment "Not supported. Work on a backend has started, see link for more information."
+
+;********************************************************************************************
+
+:mfg "Syscan"
+
+:model "TravelScan FS-531"
+:url "/unsupported/syscan-travelscan-fs531.html"
+:interface "USB"
+:usbid "0x0a82" "0x0530"
+:status :unsupported
+:comment "Not supported. May work with the Plustek backend in future. See link for details."
+
+:model "TravelScan Pro"
+:url "/unsupported/syscan-travelscan-pro.html"
+:interface "USB"
+:usbid "0x0a82" "0x2000"
+:status :unsupported
+:comment "Probably not supported. Some information is available."
+
+;********************************************************************************************
+
+:mfg "Tamarack"
+
+:model "Artiscan 9600"                ; name models for above-specified mfg.
+:interface "Parport"
+:status :unsupported
+:url "http://www.autistici.org/tamarhack/"
+:comment "Unsupported at the moment. See link for a project for that scanner taht may support it in future."
+
+:model "Artiscan 9600 pro 36"                ; name models for above-specified mfg.
+:interface "Parport"
+:status :unsupported
+:url "http://www.autistici.org/tamarhack/"
+:comment "Unsupported at the moment. See link for a project for that scanner."
+
+:model "Artiscan 2400FS"
+:url "/unsupported/tamarack-artiscan-2400.html"
+:interface "USB"
+:usbid "0x05e3" "0x0100"
+:status :unsupported
+:comment "Unsupported. See link for more information."
+
+;********************************************************************************************
+
+:mfg "TCE"
+:comment "Brasilian vendor."
+:url "http://www.tce.com.br/"
+
+:model "MK600U"
+:url "/unsupported/memorex-maxx-6136u.html"
+:interface "USB"
+:usbid "0x0461" "0x0346"
+:status :unsupported
+:comment "Not supported. Some information is available."
+
+:model "S450"
+:url "http://home2.swipnet.se/~w-25069/pxscan.html"
+:interface "Parport"
+:status :unsupported
+:comment "Not supported by SANE but is reported to work with pxscan (see link)."
+
+;********************************************************************************************
+
+:mfg "Teco"
+:url "http://www.tecoimage.com.tw/"
+
+:model "VM6509F"
+:url "/unsupported/teco-vm6509.html"
+:interface "USB"
+:usbid "0x080d" "0x0102"
+:status :unsupported
+:comment "Probably unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Tiny"
+
+:model "FU661E"
+:url "/unsupported/visioneer-onetouch4400.html"
+:interface "USB"
+:usbid "0x0461" "0x0347"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "Trust"
+:url "http://www.trust-site.com"
+
+:model "CombiScan 19200"
+:url "/unsupported/trust-combiscan-19200.html"
+:interface "Parport USB"
+:usbid "0x05cb" "0x1483"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "EasyScan 19200"
+:url "http://lists.alioth.debian.org/pipermail/sane-devel/2008-October/022955.html"
+:interface "Parport"
+:status :unsupported
+
+:model "SCSI Scan 19200 -Excellence Series-"
+:url "/unsupported/trust-scsi-scan-19200.html"
+:interface "SCSI"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+;********************************************************************************************
+
+:mfg "UMAX"
+:url "http://www.umax.com/"
+
+:model "Astra 2500"
+:url "/unsupported/umax-astra-2500.html"
+:interface "USB"
+:usbid "0x0461" "0x0374"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "Astra 2850"
+:url "/unsupported/plustek-opticpro-st24.html"
+:interface "USB"
+:usbid "0x07b3" "0x0601"
+:status :unsupported
+:comment "Probably not supported. Same IDs as Plustek OpticPro ST24. See link for details."
+
+:model "Astra 3000"
+:url "/unsupported/umax-astra-3000.html"
+:interface "USB"
+:usbid "0x0461" "0x038a"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "Astra 3600"
+:url "/unsupported/umax-astra-3600.html"
+:interface "USB"
+:usbid "0x0461" "0x038a"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "Astra 4000"
+:url "/unsupported/umax-astra-4000.html"
+:interface "USB"
+:usbid "0x1606" "0x1030"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+:model "Astra 4100"
+:url "/unsupported/umax-astra-4100.html"
+:interface "USB"
+:usbid "0x0461" "0x038c"
+:status :unsupported
+:comment "Not supported, to be added to genesys backend."
+
+:model "Astra 4500"
+:url "/unsupported/umax-astra-4500.html"
+:interface "USB"
+:usbid "0x0638" "0x0a10"
+:status :unsupported
+:comment "GL646 based, to be added to genesys backend. Avision iVina FB1600 clone"
+
+:model "Astra 4600"
+:interface "USB"
+:status :unsupported
+:comment "Probably not supported, no details known."
+
+:model "Astra 4700"
+:url "/unsupported/umax-astra-4700.html"
+:interface "USB"
+:usbid "0x0638" "0x0a20"
+:status :unsupported
+:comment "GL646/GL660 based. Avision iVina FB1800 clone."
+
+:model "Astra 6700"
+:interface "USB"
+:status :unsupported
+:comment "Not supported. No chipset information available. Same as Avision iVina FB2400."
+
+:model "AstraSlim"
+:url "/unsupported/umax-astraslim.html"
+:usbid "0x080d" "0x0104"
+:interface "USB"
+:status :unsupported
+:comment "Probably not supported currently. See link for more details."
+
+:model "AstraSlim 1200"
+:url "/unsupported/umax-astraslim-1200.html"
+:interface "USB"
+:usbid "0x080d" "0x0110"
+:status :unsupported
+:comment "See link for more details."
+
+:model "AstraSlim 6000"
+:url "/unsupported/umax-astraslim-6000.html"
+:interface "USB"
+:usbid "0x080d" "0x0104"
+:status :unsupported
+:comment "Probably not supported currently. See link for more details."
+
+:model "Nete3470'"
+:interface "Parport"
+:status :unsupported
+:comment "Probably not supported. No details known.."
+
+:model "Powerlook 180"
+:url "/unsupported/umax-powerlook-180.html"
+:interface "USB"
+;:usbid "0x3902" "0xc470" #correct?
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "Powerlook 1000 USB"
+:interface "USB"
+:status :unsupported
+:comment "Probably not supported. No further information available."
+
+;********************************************************************************************
+
+:mfg "Vantas"
+
+:model "3000"
+:url "/unsupported/visioneer-onetouch4800.html"
+:interface "USB"
+:usbid "0x04a7" "0x0224"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+;********************************************************************************************
+
+:mfg "Visioneer"
+:url "http://www.visioneer.com/"
+
+:model "6200"
+:interface "USB"
+:usbid "0x0461" "0x0345"
+:status :unsupported
+:comment "Not supported. Is reported to use the E5 chipset. Uses a Primax ID. Looks similar to Primascan Colorado 2600u."
+
+:model "6200 EPP/USB"
+:interface "USB"
+:usbid "0x04a7" "0x0311"
+:status :unsupported
+:comment "Not supported. Id is from Primax? Yet another scanner with the same name?"
+
+:model "9420"
+:url "/unsupported/visioneer-9420.html"
+:interface "USB"
+:usbid "0x0461" "0x03a8"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "9450 USB"
+:url "/unsupported/visioneer-9450-usb.html"
+:interface "USB"
+:usbid "0x04a7" "0x0421"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "Onetouch 4400"
+:url "/unsupported/visioneer-onetouch4400.html"
+:interface "USB"
+:usbid "0x0461" "0x0347"
+:status :unsupported
+:comment "Not supported. E5 chipset? See link for more details."
+
+:model "OneTouch 4800 USB"
+:url "/unsupported/visioneer-onetouch4800.html"
+:interface "USB"
+:usbid "0x04a7" "0x0224"
+:status :unsupported
+:comment "Unsupported. Seems to use Realtek RTS8801B. Same as Microtek Scanport 3000. See link for details."
+
+:model "OneTouch 5300 USB"
+:url "/unsupported/visioneer-onetouch5300.html"
+:interface "USB"
+:usbid "0x04a7" "0x0226"
+:status :unsupported
+:comment "Not supported. Chipset is RTS8801B(?). See link for output of /proc/bus/usb/devices."
+
+:model "OneTouch 5300"
+:interface "USB"
+:usbid "0x04a7" "0x0221"
+:status :unsupported
+:comment "Not supported. Yet another scanner with this name?"
+
+:model "OneTouch 5800 USB"
+:url "/unsupported/visioneer-onetouch5800.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0226"
+:status :unsupported
+:comment "Unsupported. 48 bit scanner, doesn't work with viceo backend. RTS8801C."
+
+:model "OneTouch 6600"
+:url "/unsupported/visioneer-onetouch6600.html"
+:interface "USB"
+:usbid  "0x04a7" "0x022a"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "Onetouch 7100"
+:url "/unsupported/visioneer-onetouch7100.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0229"
+:status :unsupported
+:comment "GL646 based, to be added to genesys backend"
+
+:model "Onetouch 7700"
+:url "/unsupported/visioneer-onetouch7700.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0380"
+:status :unsupported
+:comment "LM9832/3 based, to be added to plustek backend"
+
+:model "OneTouch 8100"
+:url "/unsupported/visioneer-onetouch8100.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0321"
+:status :unsupported
+:comment "Unsupported. See link for details."
+
+:model "Onetouch 8700"
+:url "/unsupported/visioneer-onetouch8920.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0371"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+:model "Onetouch 8900"
+:url "/unsupported/visioneer-onetouch8920.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0371"
+:status :unsupported
+:comment "Not supported. Same as 8920 but without TA?"
+
+:model "Onetouch 8920"
+:url "/unsupported/visioneer-onetouch8920.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0371"
+:status :unsupported
+:comment "Not supported. Same as 8700 and 8900 but includes a TA. Uses a Primax ID. Chipset is RTS8801C. See link for output of /proc/bus/usb/devices."
+
+:model "Onetouch 9000"
+:url "/unsupported/visioneer-onetouch9020.html"
+:interface "USB"
+:usbid  "0x04a7" "0x022c"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+:model "Onetouch 9020"
+:url "/unsupported/visioneer-onetouch9020.html"
+:interface "USB"
+:usbid  "0x04a7" "0x022c"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+:model "Onetouch 9320"
+:url "/unsupported/visioneer-onetouch9320.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0362"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "Onetouch Pro 8800"
+:url "/unsupported/visioneer-onetouch8820.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0410"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "Onetouch Pro 8820"
+:url "/unsupported/visioneer-onetouch8820.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0410"
+:status :unsupported
+:comment "Probably not supported. See link for details."
+
+:model "PaperPort 3100b"
+:url "/unsupported/visioneer-paperport-3100b.html"
+:interface "Parport"
+:status :unsupported
+:comment "Most probably not supported. See link for details."
+
+:model "PaperPort 6100"
+:interface "Parport"
+:status :unsupported
+:comment "Most probably not supported. More details would be appreciated."
+
+:model "PaperPort OneTouch"
+:url "/unsupported/visioneer-paperport-onetouch.html"
+:interface "Parport"
+:status :unsupported
+:comment "Most probably not supported. See link for details."
+
+:model "Strobe Pro USB"
+:url "/unsupported/visioneer-strobe-pro-usb.html"
+:interface "USB"
+:usbid  "0x04a7" "0x0102"
+:status :unsupported
+:comment "Not supported. See link for details."
+
+;********************************************************************************************
+
+:model "4800 One Touch"
+:url "/unsupported/xerox-4800-onetouch.html"
+:interface "USB"
+:usbid "0x04a7" "0x03a0"
+:status :unsupported
+:comment "Unsupported. See link for details. Different id compared to One Touch 4800?"
+
+:model "DocuImage 620S"
+:url "/unsupported/xerox-docuimage-620s.html"
+:interface "SCSI"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+:model "DocuMate 510"
+:url "/unsupported/xerox-documate-510.html"
+:interface "USB"
+:status :unsupported
+:usbid "0x04a7" "0x0446"
+:comment "Not supported. See link for more details."
+
+:model "DocuMate 510"
+:url "/unsupported/xerox-documate-510.html"
+:interface "USB"
+:status :unsupported
+:usbid "0x04a7" "0x047c"
+:comment "Not supported. See link for more details. Yet another USB id."
+
+:model "One Touch 4800"
+:url "/unsupported/visioneer-onetouch4800.html"
+:interface "USB"
+:usbid "0x04a7" "0x0224"
+:status :unsupported
+:comment "Unsupported. See link for details. Different id compared to 4800 One Touch?"
+
+:model "WorkCentre 470cx"
+:url "/unsupported/xerox-workcentre-470cx.html"
+:interface "Parport"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+:model "WorkCentre M15i"
+:url "/unsupported/xerox-workcentre-m15i.html"
+:interface "USB"
+:usbid "0x0924" "0xffef"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+:model "WorkCentre XK35c"
+:url "/unsupported/xerox-workcentre-xk35c.html"
+:interface "USB Parport"
+:usbid "0x043d" "0x0020"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+:model "WorkCentre XK50cx"
+:url "/unsupported/xerox-workcentre-xk50cx.html"
+:interface "USB"
+:usbid "0x04e8" "0x3903"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+:model "WorkCentre Pro 412"
+:url "/unsupported/xerox-workcentre-pro412.html"
+:interface "USB Parport"
+:usbid "0x043d" "0x4303"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+:model "WorkCentre PE16"
+:url "/unsupported/xerox-workcentre-pe16.html"
+:interface "USB Parport"
+:usbid "0x0924" "0x4220"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+:model "WorkCentre PE120i"
+:url "/unsupported/xerox-workcentre-pe120i.html"
+:interface "USB"
+:usbid "0x0924" "0x4237"
+:status :unsupported
+:comment "Not supported. See link for more details."
+
+
+;********************************************************************************************
+;********************************************************************************************
+;********************************************************************************************
+
+:devicetype :vidcam
+
+:mfg "Biolux"
+
+:model "654 (micrOcular)"
+:url "/unsupported/biolux-654.html"
+:interface "USB"
+:usbid "0x0923" "0x010f"
+:status :unsupported
+:comment "Not supported yet. See link for more details."
+
+
+;********************************************************************************************
+
+:mfg "Grandtek Scopecam"
+
+:model "8x30 Binocular & Digital Camera"
+:url "/unsupported/grandtech-scopecam.html"
+:interface "USB"
+:usbid "0x0797" "0x801c"
+:status :unsupported
+:comment "Not Supported yet. See link for more details."
+
+
+;********************************************************************************************
+
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.
+ 

@@ -1,0 +1,490 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+
+:backend "fujitsu"               ; name of backend
+:url "http://www.thebility.com/fujitsu/" 
+:version "127"                   ; version of backend
+:manpage "sane-fujitsu"          ; name of manpage (if it exists)
+:comment "Backend updated for SANE release 1.0.25, see sane-fujitsu manpage"
+:devicetype :scanner             ; start of a list of devices....
+                                 ; other types:  :stillcam, :vidcam,
+                                 ;               :meta, :api
+
+:mfg "Fujitsu"                   ; name a manufacturer
+:url "http://www.fujitsu.com/"
+
+;==================================================
+; DISCONTINUED OLDER MODELS, SMALL
+:model "M3091DC"
+:interface "SCSI"
+:url "http://www.remote.org/frederik/projects/software/sane/" 
+:status :complete
+:comment "small, old, discontinued"
+
+:model "M3092DC"
+:interface "SCSI"
+:status :complete
+:comment "small, old, discontinued"
+
+;==================================================
+; DISCONTINUED NEWER MODELS, SMALL
+:model "fi-4120C"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x1041"
+:status :complete
+:comment "small, recent, discontinued, usb 1.1"
+
+:model "fi-4120C2"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x10ae"
+:status :complete
+:comment "small, recent, discontinued, usb 2.0"
+
+:model "fi-4220C"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x1042"
+:status :complete
+:comment "small, recent, discontinued, usb 1.1"
+
+:model "fi-4220C2"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x10af"
+:status :complete
+:comment "small, recent, discontinued, usb 2.0"
+
+:model "fi-5110C"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x1097"
+:comment "small, recent, discontinued"
+
+:model "fi-5110EOX/2"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x1096"
+:comment "small, recent, discontinued"
+
+:model "fi-5110EOX3"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x10e6"
+:comment "small, recent, discontinued"
+
+:model "fi-5110EOXM"
+:interface "USB"
+:usbid "0x04c5" "0x10f2"
+:status :complete
+:comment "small, recent, discontinued"
+
+:model "fi-5120C"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x10e0"
+:comment "small, recent, discontinued"
+
+:model "fi-5220C"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x10e1"
+:comment "small, recent, discontinued"
+
+:model "fi-5000N"
+:interface "Ethernet"
+:status :untested
+:comment "Not a scanner, rather a scanner to ethernet interface"
+
+:model "fi-6000NS"
+:interface "Ethernet"
+:status :untested
+:comment "small, recent, discontinued, integrated touchscreen and keyboard"
+
+:model "ScanSnap S500"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x10fe"
+:comment "small, recent, discontinued"
+
+:model "ScanSnap S500M"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x1135"
+:comment "small, recent, discontinued"
+
+:model "ScanSnap S510"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x1155"
+:comment "small, recent, discontinued"
+
+:model "ScanSnap S510M"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x116f"
+:comment "small, recent, discontinued"
+
+:model "fi-6130"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x114f"
+:comment "small, recent, discontinued"
+
+:model "fi-6230"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x1150"
+:comment "small, recent, discontinued"
+
+:model "fi-6130Z"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x11f3"
+:comment "small, recent, discontinued"
+
+:model "fi-6230Z"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x11f4"
+:comment "small, recent, discontinued"
+
+:model "ScanSnap S1500"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x11a2"
+:comment "small, discontinued"
+
+:model "ScanSnap S1500M"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x11a2"
+:comment "small, discontinued, same as S1500"
+
+:model "ScanSnap N1800"
+:interface "Ethernet"
+:status :untested
+:comment "small, discontinued, integrated touchscreen and keyboard"
+
+;==================================================
+; CURRENT MODELS, SMALL
+:model "ScanSnap N7100"
+:interface "Ethernet"
+:status :untested
+:comment "small, current, integrated touchscreen and keyboard"
+
+:model "ScanSnap fi-6010N"
+:interface "Ethernet"
+:status :untested
+:comment "small, current, integrated touchscreen and keyboard"
+
+:model "fi-6110"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x11fc"
+:comment "small, current"
+
+:model "fi-7160"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x132e"
+:comment "small, current"
+
+:model "fi-7260"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x132f"
+:comment "small, current"
+
+:model "ScanSnap iX500"
+:interface "USB WiFi"
+:status :good
+:usbid "0x04c5" "0x132b"
+:comment "small, current, WiFi not supported. Hardware only scans in color. Backend generates binary and grayscale modes."
+
+:model "ScanSnap iX100"
+:interface "USB WiFi"
+:status :good
+:usbid "0x04c5" "0x13f4"
+:comment "small, current, WiFi not supported."
+
+:model "ScanSnap SV600"
+:interface "USB"
+:status :untested
+:usbid "0x04c5" "0x128e"
+:comment "Also has a second USB VID 0x13ba. Will require some gymnastics to support."
+
+;==================================================
+; DISCONTINUED OLDER MODELS, MEDIUM
+:model "M3093E"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "medium, old, discontinued"
+
+:model "M3093DE"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "medium, old, discontinued"
+
+:model "M3093DG"
+:interface "SCSI"
+:status :complete
+:comment "medium, old, discontinued"
+
+:model "M3093EX"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "medium, old, discontinued"
+
+:model "M3093GX"
+:interface "SCSI"
+:status :complete
+:comment "medium, old, discontinued"
+
+:model "M3096EX"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "medium, old, discontinued"
+
+:model "M3096GX"
+:interface "SCSI"
+:status :complete
+:comment "medium, old, discontinued"
+
+:model "M3097E+"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "medium, old, discontinued"
+
+:model "M3097G+"
+:interface "SCSI"
+:status :complete
+:comment "medium, old, discontinued"
+
+:model "M3097DE"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "medium, old, discontinued"
+
+:model "M3097DG"
+:interface "SCSI"
+:status :complete
+:comment "medium, old, discontinued"
+
+;==================================================
+; DISCONTINUED NEWER MODELS, MEDIUM
+:model "fi-4340C"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x10cf"
+:status :complete
+:comment "medium, current"
+
+:model "fi-4530C"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x1078"
+:comment "medium, recent, discontinued"
+
+:model "fi-4640S"
+:interface "SCSI"
+:status :complete
+:comment "medium, recent, discontinued"
+
+:model "fi-4750C"
+:interface "SCSI"
+:status :complete
+:comment "medium, recent, discontinued"
+
+:model "fi-5530C"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x10e2"
+:comment "medium, recent, discontinued"
+
+:model "fi-6140"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x114d"
+:comment "medium, recent, discontinued"
+
+:model "fi-6240"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x114e"
+:comment "medium, recent, discontinued"
+
+:model "fi-6140Z"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x11f1"
+:comment "medium, recent, discontinued"
+
+:model "fi-6240Z"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x11f2"
+:comment "medium, recent, discontinued"
+
+;==================================================
+; CURRENT MODELS, MEDIUM
+
+:model "fi-5530C2"
+:interface "SCSI USB"
+:status :complete
+:usbid "0x04c5" "0x114a"
+:comment "medium, current"
+
+:model "fi-7180"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x132c"
+:comment "medium, current"
+
+:model "fi-7280"
+:interface "USB"
+:status :complete
+:usbid "0x04c5" "0x132d"
+:comment "medium, current"
+
+;==================================================
+; DISCONTINUED OLDER MODELS, BIG
+:model "M3099A"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "big, old, discontinued"
+
+:model "M3099G"
+:interface "SCSI"
+:status :complete
+:comment "big, old, discontinued"
+
+:model "M3099EH"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "big, old, discontinued"
+
+:model "M3099GH"
+:interface "SCSI"
+:status :complete
+:comment "big, old, discontinued"
+
+:model "M3099EX"
+:interface "RS232C/Video"
+:status :unsupported
+:comment "big, old, discontinued"
+
+:model "M3099GX"
+:interface "SCSI"
+:status :complete
+:comment "big, old, discontinued"
+
+:model "M4097D"
+:interface "SCSI"
+:status :complete
+:comment "big, old, discontinued"
+
+:model "M4099D"
+:interface "SCSI"
+:status :complete
+:comment "big, old, discontinued"
+
+;==================================================
+; DISCONTINUED NEWER MODELS, BIG
+:model "fi-4750L"
+:interface "SCSI"
+:status :complete
+:comment "big, recent, discontinued"
+
+:model "fi-4860C"
+:interface "SCSI"
+:status :complete
+:comment "big, recent, discontinued"
+
+:model "fi-4860C2"
+:interface "SCSI"
+:status :complete
+:comment "big, recent, discontinued"
+
+:model "fi-4990C"
+:interface "SCSI"
+:status :complete
+:comment "big, recent, discontinued"
+
+:model "fi-5650C"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x10ad"
+:status :complete
+:comment "big, recent, discontinued"
+
+:model "fi-5750C"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x1095"
+:status :complete
+:comment "big, recent, discontinued"
+
+:model "fi-5900C"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x10e7"
+:status :good
+:comment "big, recent, discontinued. Independent ultrasonic control and multistream unsupported"
+
+:model "fi-6750S"
+:interface "USB"
+:status :untested
+:usbid "0x04c5" "0x1178"
+:comment "Simplex, USB only version of fi-6770, won't wakeup via software, discontinued"
+
+;==================================================
+; CURRENT MODELS, BIG
+:model "fi-5950"
+:interface "SCSI USB"
+:usbid "0x04c5" "0x1213"
+:status :untested
+:comment "big, current. Faster version of fi-5900?"
+
+:model "fi-6670"
+:interface "SCSI USB"
+:status :good
+:usbid "0x04c5" "0x1176"
+:comment "big, current, won't wakeup via software"
+
+:model "fi-6670A"
+:interface "SCSI USB"
+:status :good
+:usbid "0x04c5" "0x1177"
+:comment "big, current, VRS CGA board unsupported, won't wakeup via software"
+
+:model "fi-6770"
+:interface "SCSI USB"
+:status :good
+:usbid "0x04c5" "0x1174"
+:comment "big, current, won't wakeup via software"
+
+:model "fi-6770A"
+:interface "SCSI USB"
+:status :good
+:usbid "0x04c5" "0x1175"
+:comment "big, current, VRS CGA board unsupported, won't wakeup via software"
+
+:model "fi-6800"
+:interface "SCSI USB"
+:status :untested
+:usbid "0x04c5" "0x119d"
+:comment "big, current. Independent ultrasonic control and multistream unsupported"
+
+:model "fi-6800-CGA"
+:interface "SCSI USB"
+:status :untested
+:usbid "0x04c5" "0x119e"
+:comment "big, current. VRS CGA board unsupported, Independent ultrasonic control and multistream unsupported"
+
+:model "fi-6400"
+:interface "SCSI USB"
+:status :untested
+;:usbid "0x04c5" "0x"

@@ -1,0 +1,4309 @@
+1998-11-21  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 1.0 released
+
+	* From Brian J. Murrell:
+	
+	* backend/dll.conf: Mention dc210.
+
+	* backend/cderror.h: New file.
+	* backend/jinclude.h: Ditto.
+	* backend/djpeg.c: Ditto.
+	* backend/dc210.desc: Ditto.
+	* backend/dc210.h: Ditto.
+	* backend/dc210.c: Ditto.
+	* backend/cdjpeg.h: Ditto.
+
+	* doc/Makefile.in (SECT5): Mention sane-abaton.5.
+	* doc/sane-abaton.man: New file.
+	* backend/abaton.c: Ditto.
+	(wait_ready): Explicitly cost tv_sec member to (long) in order
+	to print it (avoids warning on platforms where tv_sec is not a long).
+
+	* backend/abaton.h: Ditto.
+	* backend/abaton.conf: Ditto.
+	* backend/abaton.desc: Ditto.
+	* backend/dll.conf: Mention abaton.
+
+	* Apollo/DomainOS fixes by Paul Walker:
+	* sanei/sanei_DomainOS.h: Add this missing file.
+	* sanei/sanei_config2.c: Include <sane/config.h> to get
+	u_char defined if necessary.
+	* sanei/sanei_DomainOS.c (upper_string): Delete.
+	(do_help): Ditto.
+	* include/sane/config.h.in: Add #undef HAVE_SYS_TIME_H.
+
+	* lib/usleep.c [HAVE_SYS_TIME_H]: Include <sys/time.h> only if
+	we have it.
+
+	* configure.in (CPPFLAGS): Check for sys/time.h.
+
+	* frontend/gtkglue.c: Move include of <sys/types.h> in front
+	of include of <sys/stat.h>.
+
+	* config.sub: Apply patch to recognize -sys5.3.
+
+	* backend/microtek.c: Applied Matto's latest patch to upgrade
+	backend from v0.9 to v0.10.
+
+1998-11-04  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/microtek2.desc: Mention ScanMaker X6 and Phantom 636.
+
+	* backend/microtek2.c (check_inquiry): Mention Phantom 636 in
+	model string.
+
+1998-11-03  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/microtek2.c (check_inquiry): Added patch by Sebastian
+	Erdmann <serdmann@cs.tu-berlin.de> to recognize ScanMaker X6.
+
+1998-11-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/artec.c: Print size_t as recommended in backend/GUIDE.
+
+1998-11-02  Chris Pinkham <cpinkham@infi.net>
+
+	* backend/artec.c: changes to correct bugs when using AT12.
+	(sense_handler): New function (by Dick Bruijn).
+	(wait_ready): Ditto (by Dick Bruijn).
+	(abort_scan): Ditto (by Dick Bruijn).
+	Support added to read capability data from scanner if the model.
+	Supports this command (by Dick Bruijn).
+	Added call to sanei_scsi_close() if detected scanner is not
+	a Artec/Ultima model (by Francois Ouellet).
+	Added Negative option.  Added Halftone Pattern option.
+	Added Filter Type option for mono scans.
+	Added Quality Calibration option.
+	Moved test_unit_ready command till AFTER we check for ULTIMA scanner.
+
+1998-11-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* config.guess: Upgrade to libtool v1.2.
+	* config.sub: Ditto.
+	* ltconfig: Ditto.
+	* ltmain.sh: Ditto.
+
+1998-10-29  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/mustek.c (encode_resolution): If MUSTEK_FLAG_DOUBLE_RES
+	is set, use resultion encoding reported by
+	<Heiko_Schroeder@t-online.de>
+	(attach): Set MUSTEK_FLAG_DOUBLE_RES for MSF-06000CZ.  Do other
+	models need this, too?
+	(calibration): Declare NUM as size_t, not int.  #ifdef out this
+	unused routine.
+	(reader_process): Print size_t values as %lu with explicit cast
+	to u_long.
+
+	* backend/mustek.h (MUSTEK_FLAG_DOUBLE_RES): New flag.
+
+	* backend/mustek.c (init_options): Initialize resolution with 18
+	dpi, not 100dpi so that "scanimage" without options gives a
+	preview-quality image that doesn't take much space or time.
+
+	* backend/mustek.c: Updated with Andreas Bolsch's version (adds
+	support for SE models).
+	* backend/mustek.h: Ditto.
+	* backend/mustek.spec: Ditto.
+
+	* backend/pnm.c (sane_read): Replace C++ comment with C comment.
+
+	* backend/microtek2.c: Updated with Bernd's v0.5.
+	* backend/microtek2.h: Ditto.
+	* backend/microtek2.conf: Ditto.
+
+	* backend/umax.c: Updated with Oliver's latest version.
+	* backend/umax.h: Ditto.
+	* backend/umax-scsidef.h: Ditto.
+	* backend/umax-scanner.h: Ditto.
+	* backend/umax-uc630.h: Ditto.
+	* backend/umax-uc840.h: Ditto.
+	* backend/umax-ug630.h: Ditto.
+	* backend/umax-ug80.h: Ditto.
+	* backend/umax-uc1200s.h: Ditto.
+	* backend/umax-uc1200se.h: Ditto.
+	* backend/umax-uc1260.h: Ditto.
+	* backend/umax.conf: Ditto.
+	* include/sane/saneopts.h: Ditto.
+	* doc/sane-umax-doc.html: Ditto.
+	* doc/sane-umax-doc.tex: Ditto.
+	* doc/sane-umax.man: Ditto.
+
+1998-10-28  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane.tex (subsection{sane_control_option}): Clarify that
+	paramter "v" is ignored for SET_AUTO calls.
+
+	* frontend/saned.c (init): Initialize w->version.
+
+	* backend/net.c (connect_dev): Accept version code 2 and
+	set peer's version code in dev->wire.version.
+
+	* include/sane/sanei_wire.h: New member "version".
+
+	* sanei/sanei_net.c (sanei_w_control_option_req): Encode
+	option value only if peer_version is < 3 or if action is
+	not SANE_ACTION_SET_AUTO.
+
+	* include/sane/sanei_net.h (SANEI_NET_PROTOCOL_VERSION): Up
+	protocol version to version 3.
+
+	* sanei/sanei_net.c (sanei_w_control_option_req): Transcode
+	value_type, value_size, and value only if req->action !=
+	SANE_ACTION_SET_AUTO.  Reported by Petter Reinholdtsen.
+
+	Patches by Petter Reinholdtsen <pere@hungry.com>:
+
+	* backend/dmc.c (attach_one): Don't use C++-style comments.
+
+	* backend/dc25.h (DEFAULT_TTY_BAUD): New macro.  Move SPEEDS macro
+	to dc25.c.
+
+	* backend/dc25.c: Initialize tty_baud to DEFAULT_TTY_BAUD.  Use
+	B57600 and B115200 only if defined.
+
+	* doc/saned.man: Mention that hostname matching no longer is case
+	significant.
+
+	* configure.in
+	(lib/Makefile.in,lib/strcasecmp.c,frontend/saned.c): Use
+	strcasecmp() instead of strcmp to compare DNS hostnames.  Case is
+	irrelevant when using DNS.
+
+	* backend/dll.c: Add support for HP-UX 10.xx style shared
+	libs.
+
+	* configure.in include/sane/config.h.in backends/dll.c:
+	Use dhl_load() family for DLL support on HP/UX.
+
+	* backend/snapscan.c (sane_snapscan_open): Don't cast lvalue
+	(illegal according to ANSI C, I think).
+
+	* backend/apple.c (init_options): Add explicit "break" after
+	"default:" to make HP-UX compiler happy (?).
+	(sane_read): Make stuff after #endif a comment.
+
+	* backend/agfafocus.c: New file (by Karl Anders Oygard
+	<karlo@opera.no>).
+	* backend/agfafocus.h: Ditto.
+	* doc/sane-agfafocus.man: Ditto.
+
+	* doc/sane-net.man: Fix typo: network service is called "sane",
+	not "saned" (by Andreas Dilger <adilger@enel.ucalgary.ca>).
+
+	* backend/hp-scl.c (sanei_hp_scsi_pipeout): Use SIGPWR only if its
+	defined (by Peter Kirchgessner).
+
+	* frontend/Makefile.in (INCLUDES): Mention @GTK_CFLAGS@ as part of
+	INCLUDES macro instead of CFLAGS.  Despite its name, @GTK_CFLAGS@
+	is guaranteed to contain CPP include directives only.  (Reported
+	by Kevin Dalley <kevind@rahul.net>.)
+
+1998-10-27  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_scsi.c (sanei_scsi_open): Return
+	SANE_STATUS_ACCESS_DENIED if open() fails with errno==EACCES.
+
+	* backend/ricoh-scsi.c: #ifdef out unused code and print values of
+	type size_t as prescribed in the file backend/GUIDE.
+
+	* backend/dll.conf: Mention Ricoh backend.
+
+	* backend/ricoh.c: New file (by Ricoh Dillema).
+	* backend/ricoh.h: Ditto..
+	* backend/ricoh-scsi.c: Ditto..
+
+	* backend/microtek.c: Apply Aug 7 patch by Matto Marjanovic.
+
+	* backend/dc25.c: Apply patch by Peter Fales (v1.1).
+	* backend/dc25.desc: Ditto.
+	* doc/sane-dc25.man: Ditto.
+
+	* backend/pnm.c: Applied patch by Goran Thyni <goran@bildbasen.se>
+	that allows scanning parts of a PNM image.
+
+	* backend/GUIDE: Add Matto's comment on .desc files.
+
+	* backend/hp.c: New file from Peter Kirch (formerly known as xhp).
+	* backend/hp.h: Ditto.
+	* backend/hp-accessor.h: Ditto.
+	* backend/hp-device.h: Ditto.
+	* backend/hp-handle.h: Ditto.
+	* backend/hp-option.h: Ditto.
+	* backend/hp-scl.h: Ditto.
+	* backend/hp-scsi.h: Ditto.
+	* backend/hp-accessor.c: Ditto.
+	* backend/hp-device.c: Ditto.
+	* backend/hp-handle.c: Ditto.
+	* backend/hp-hpmem.c: Ditto.
+	* backend/hp-option.c: Ditto.
+	* backend/hp-scl.c: Ditto.
+	* backend/Makefile.in (libsane-hp.la): Make libsane-hp.la
+	dependent upon hp-accessor.lo, hp-device.lo, hp-handle.lo,
+	hp-hpmem.lo, hp-option.lo, and hp-scl.lo.
+
+1998-10-22  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-hp.man (Model): Mention HP6200 as per report by Tom
+	Martone <tommartone@erols.com>.
+
+1998-07-30  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* include/sane/config.h.in: Apply Cory Kempf's
+	<ckempf@enigami.com> FreeBSD CAM support patch.
+	* sanei/sanei_scsi.c: Ditto.
+	* tools/find-scanner.c: Ditto.
+	* configure.in: Ditto.
+
+1998-07-27  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.74 released.
+
+	* configure.in (CPPFLAGS): Save old CPPFLAGS in saved_CPPFLAGS and
+	then set CPPFLAGS (not saved_CPPFLAGS!) to include GTK_CFLAGS.
+	This should get GIMP detected again.
+
+	* frontend/xscanimage.c (init): Add missing newline.
+
+	* backend/net.c (sane_init): Look for service "sane", not "saned".
+
+	* configure.in (V_MINOR): Make it 74.
+
+	* tools/sane-desc.el: Hack a bit so sane-backends.html can be
+	generated some place other than the working directory
+	(which may not be writable).
+
+	* tools/sane-desc.el: New file by Matto.
+
+	* doc/Makefile.in (sane-backends-html): New rule to generate
+	sane-backends.html.
+
+	* backend/apple.desc: List sane-apple man page.
+
+	* backend/umax.c: Updated with Oliver's latest version (with Irix
+	4MB workaround).
+
+	* backend/microtek.c: Updated with Matto's v0.9.
+	* backend/microtek.h: Ditto.
+	* backend/microtek.conf: Ditto.
+	* backend/microtek.desc: Ditto.
+	* doc/sane-microtek.man: Ditto.
+
+	* backend/apple.h: Updated with Milon's v0.3.
+	* backend/apple.c: Ditto.
+
+	* doc/sane-apple.man: New file (contributed by Milon Firirkis).
+
+1998-07-23  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/canon-scsi.c (reserve_unit): Don't compile unused
+	reserve_unit().
+
+	* sanei/sanei_scsi.c: Apply Yuri's patch to add
+	sanei_scsi_find_devices() support to OS/2.
+
+	* sanei/sanei_pio.c: Include <sane/sanei_backend.h> instead of
+	just <sanei/sanei_debug.h> so we pick up #define's for inb and
+	out.
+
+	* include/sane/config.h.in: Mention HAVE_OS2_H and
+	HAVE_SYS_TYPES_H.
+
+	* configure.in (AC_CHECK_HEADERS): Mention sys/hw.h and
+	sys/types.h.
+	(AC_CHECK_LIB): Check for syslog.
+	(AC_CHECK_FUNCS): Check for _portaccess.
+	(CPPFLAGS): Don't disable qcam backend if we have _portaccess.
+	These patches contributed by Yuri for the benefit of OS/2.
+
+	* backend/qcam.c (qc_unlock) [!F_SETLK]: Fall back to convention
+	UNIX-style locking using O_EXCL (not ideal, but better than
+	nothing at all).
+	(qc_lock_wait): Ditto.
+
+	* sanei/sanei_scsi.c (KillDomainServer): Add missing paren.
+
+	* lib/usleep.c [HAVE_SYS_SELECT_H]: Include <sys/select.h>.
+
+	* include/sane/sanei_backend.h: Define i/o-port access
+	compatibility macros (by Yuri Dario).
+
+	* backend/Makefile.in (CONFIGS): Mention dummy saned.conf
+	(this really ought to go in frontend/Makefile, but I'm too lazy to
+	add a configuration-install rule there...).
+
+	* backend/coolscan.c: Update with Didier's latest version.
+	(send_one_LUT): Merge in alloca() fix from 1998-04-04.
+
+1998-07-22  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/dll.conf: Mention artec backend.
+
+	* backend/mustek.c (sane_start): Remove duplicate status test.
+
+1998-07-21  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/saned.c (main): Look for service name "sane", not
+	"saned".
+
+1998-07-20  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/epson.c (epson_cmd): Add patch by Holger Frahm
+	<frahm@itp.uni-hannover.de> to support GT9500.
+
+	* backend/microtek.c: Update with latest version (v0.8).
+
+	* backend/artec.c (PREFER_PIXEL_MODE): Apply Chris Pinkham's
+	6/4/98 patch to add preliminary support for AT6 and AT12 scanner
+	models.
+
+	* backend/epson.c: Apply Christian Bucher's patch.
+	
+	* backend/dc25.h: New file (by Peter Fales <psfales@earthling.net>)
+	* backend/dc25.c: Ditto.
+	* backend/dc25.conf: Ditto.
+	* doc/sane-dc25.man: Ditto.
+
+	* backend/microtek2.c: Replace dynamically sized array with
+	alloca() to be ANSI C compliant.
+
+	* backend/epson.c: Replace zero-sized byte arrays with 1 byte
+	arrays to be ANSI C compliant.
+
+	* doc/sane-hp.man: Mention ScanJet 3P (reported by Patrick Debois
+	<Patrick.Debois@lin.vlaanderen.be>).
+
+	* backend/umax.c: Updated with Oliver's 5/7/98 patch.
+
+1998-07-20  Chris Pinkham  <cpinkham@infi.net>
+
+	* backend/artec.c: Added code to default to using millimeters
+	instead of pixels for measurements, can revert to pixels by
+	defining PREFER_PIXEL_MODE at compilation time.
+	
+	Added code to cause sane_read to block until data available to return,
+	also buffers as much data as possible before returning.
+
+	Added code to cause sane_read to read as much data from scanner as
+	possible for each call, previously would read 1 line max from
+	scanner.
+
+	Added code to attempt to detect scanner capabilities from scanner
+	if scanner supports this command, it not program has defaults
+	coded in for certain scanner models.
+
+	Separated horizontal and vertical resolution settings with ability
+	to bind them together.  This still has a bug, so the option is is
+	disabled by default until I can get it working correctly.
+
+	Bug-fixes to get backend working properly with xscanimage.
+	Added preview mode option.
+	Added threshold option.
+
+	* backend/artec.h: Added options codes to go along with options
+	added in artec.c file.
+
+1998-07-20  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/epson.c (scsi_write): Apply patch by Thomas Bogendoerfer
+	<tsbogend@alpha.franken.de> to get Epson backend to work for SCSI
+	scanners again.
+
+1998-06-05  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/mustek.c (attach): Move dev_wait_ready() after the check
+	for a Mustek scanner.  This is to make sure we don't issue any
+	command other than INQUIRY to SCSI devices that are not known to
+	be Mustek scanners.
+
+1998-05-22  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/dmc.c: Updated with David Skoll's latest patch.
+
+	* sanei/sanei_scsi.c (sanei_scsi_find_devices): Declare missing
+	findtype arg for dummy sanei_scsi_find_devices().
+
+1998-05-16  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/hp.c (attach): Return right after INQUIRY if the device
+	doesn't look like an HP scanner.
+
+1998-05-15  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.73 released.
+
+	* backend/mustek.c (attach): Initialize *devp to 0.
+
+	* configure.in: Use AM_PATH_GTK to figure out if/how to compile
+	with gtk libs.
+
+	* aclocal.m4: Include gtk.m4 from gtk-1.0.1 distribution.
+
+	* backend/Makefile.in (install): Change install rule so there is
+	guaranteed to be a (symlink) of the form
+	libsane-$(BACKEND).so.$(V_MAJOR) pointing to the right version
+	of a dll.
+
+	* backend/dll.c (load): Get rid of .la parsing non-sense.  Instead,
+	always attempt to open libsane-$(BACKEND).so.$(V_MAJOR).
+
+	* backend/mustek.c (sane_init): Make sure empty lines really
+	are ignored.
+
+1998-05-13  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/microtek2.conf: Add line "scsi * * Scanner".
+	* backend/microtek.conf: Ditto.
+
+	* sanei/sanei_scsi.c (get_devicename): New function.
+
+	* sanei/sanei_config2.c: New file.
+
+	* sanei/Makefile.in (LIBSANEI_OBJS): Mention sanei_config2.
+	(LIBSANEI_LTOBJS): Ditto.
+
+	* sanei/sanei_scsi.c (sanei_scsi_find_devices): New function
+	(comes in two flavors: one for Linux, one for the remaining
+	platforms).
+
+	* include/sane/sanei_scsi.h: New function.
+
+	* doc/sane-dll.man: Fix to make it work with man2html (use
+	\- instead of -).
+	* doc/sane-dmc.man: Ditto.
+	* doc/sane-epson.man: Ditto.
+	* doc/sane-hp.man: Ditto.
+	* doc/sane-microtek.man: Ditto.
+	* doc/sane-microtek2.man: Ditto.
+	* doc/sane-mustek.man: Ditto.
+	* doc/sane-pint.man: Ditto.
+	* doc/sane-scsi.man: Ditto.
+	* doc/sane-umax.man: Ditto.
+	* doc/saned.man: Ditto.
+	* doc/scanimage.man: Ditto.
+	* doc/xscanimage.man: Ditto.
+
+	* doc/Makefile.in (MAN2HTML): New macro.
+	(html-man): New rule to generate HTML version of man-pages.
+
+	* configure.in (V_MINOR): Up to 73.
+
+	* backend/umax.conf: Add lines "scsi UMAX" and "scsi LinoHell
+	Office".
+
+	* backend/microtek2.h: New file (by Bernd Schroeder
+	<bernd@aquila.muc.de>).
+	* backend/microtek2.c: Ditto.
+	* backend/microtek2.conf: Ditto.
+
+	* backend/dll.conf: Mention "microtek2".
+
+	* backend/apple.conf: Add line "scsi APPLE".
+	* backend/mustek.conf: Add lines for "scsi MUSTEK" and "scsi
+	SCANNER".
+
+	* backend/apple.c (attach_one): New function.
+	(sane_init): Use sanei_config_attach_matching_devices().
+	* backend/artec.c: Like for apple.c.
+	* backend/canon.c: Ditto.
+	* backend/coolscan.c: Ditto.
+	* backend/dmc.c: Ditto.
+	* backend/epson.c: Ditto.
+	* backend/hp.c: Ditto.
+	* backend/microtek.c: Ditto.
+	* backend/mustek.c: Ditto.
+	* backend/s9036.c: Ditto.
+	* backend/snapscan.c: Ditto.
+	* backend/tamarack.c: Ditto.
+
+1998-05-11  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/snapscan.c (sane_snapscan_get_parameters): Always set
+	depth of 8.
+
+	* configure.in: Check for gtk_tooltips_set_tips _after_ gtk
+	libraries have been located.  (Patch by Jake E. Hamby
+	<jehamby@lightside.com>).
+
+1998-05-09  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/Makefile.in (.c.o): Patch by Kaz Sasayama
+	<Kaz.Sasayama@hypercore.co.jp>: invoke $(COMPILE) if libtool
+	doesn't give us a regular .o file.
+	* lib/Makefile.in (.c.o): Ditto.
+
+	* frontend/preview.c (preview_update): Call update_selection() so
+	selection is updated when scanwindow geometry changes.  The patch
+	from 1998/4/2 never worked satisfactorily (and indeed was never
+	enabled in any of the SANE releases).
+
+1998-05-06  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/mustek.c (sane_init): Use sanei_config_skip_whitespace()
+	to skip whitespace.
+
+1998-05-05  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/xscanimage.c (init): Allow -g as an option.
+
+	* sanei/sanei_config.c (sanei_config_get_string): New function.
+	(sanei_config_skip_whitespace): Ditto.
+
+	* backend/umax.c: Updated with Oliver's latest patch.
+
+	* Makefile.in (INSTALLED_INCLUDES): Mention sanei_readproc.h.
+
+	* backend/microtek.h: Updated with Matto's 0.7 patch.
+	* doc/sane-microtek.man: Ditto.
+	* backend/microtek.c: Ditto.
+	Added precalibration code:  tries to intelligently have scanner
+	run a calibration only once when necessary --- this shaves a solid
+	six seconds off every scan!
+	Added model code/vendor name for ScanMaker 600ZS.
+	Added model codes/vendor name for Agfa Arcus II, StudioScan,
+	StudioScan II.
+	Patched up 3-pass scanning (forgot to switch color planes).
+	Corrected IIHR to 600dpi base resolution.
+	Check so that 0x0 regions are recognized as invalid.
+	Fixed subtle buffering bug in color scans.
+	Fixed-up active/inactive dependencies among options.
+	Make sure shadow <= midtone <= highlight.
+	Let shadow/midtone/hightlight be active during LineArt and Halftone.
+	"Halftoning" option moved into Scan Mode Group (from Enhancement).
+	Removed some illegal "TEST_UNIT_READY" commands (during scan).
+	Removed "MODE_SENSE_1", since it didn't quite work anyway.
+
+1998-05-03  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/xscanimage.c (scan_preview): Don't register
+	preview_window_destroyed as a delete_event handler.
+
+1998-05-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/Makefile.in: Remove unused LIBLIB macro.
+
+1998-04-30  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	Patches by Matto Marjanovic:
+
+	* frontend/gtkglue.c (gsg_close_dialog_callback): Remove
+	client_data pointer arg.
+
+	* frontend/xscanimage.c (scan_win_delete): Remove GdkEvent arg.
+	(preview_window_destroyed): Ditto.
+	(input_available): Include bad_depth handling code only if
+	HAVE_LIBGIMP_GIMP_H is defined.
+	(scan_dialog): Remove client_data pointer arg.
+
+1998-04-29  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/gtkglue.c (gsg_get_filename): Use gtk_events_pending()
+	instead of gdk_events_pending().
+	* frontend/preview.c (input_available): Ditto.
+	* frontend/xscanimage.c (quit_xscan): Ditto.
+	(input_available): Ditto.
+
+1998-04-08  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_pio.c (sanei_pio_open): Fix prototype.
+
+1998-04-07  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.72 released.
+
+	* backend/epson.c (sane_init): Fix up config file reading
+	to be more like that of other backends.
+	(PATH_MAX): Use PATH_MAX instead of FILENAME_MAX.
+
+	* backend/canon.c (sane_init): Read & process canon.conf (patch by
+	Yuri Dario <mc6530@mclink.it>).
+
+1998-04-06  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_init_debug.c (sanei_init_debug): Move up #endif
+	so NULL-test works for OS/2, too.
+
+	* frontend/saned.c: Include <sys/types.h>.
+
+	* backend/snapscan.c: Don't include non-ANSI <values.h>.
+	(sane_snapscan_start): Use INT_MAX instead of MAXINT.
+	(PATH_MAX): Define PATH_MAX as 1024 if not defined otherwise.
+
+1998-04-05  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/umax.c: Updated with Oliver's latest version
+	(0.72pre-a).
+
+1998-04-04  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/coolscan.c: Do lalloca.h spiel instead of including
+	alloca.h.
+
+	* configure.in: Look for glib/include directory in /usr/local/lib
+	and /usr/lib.  Add $C_SWITCH_X_SITE to CPPFLAGS, not DEFS.
+
+	* doc/sane-mustek.man: Mention MFS-1200SP v1.07 as working as
+	reported by ehramm@dk3uz.hh.provi.de (Edmund H. Ramm).
+
+1998-04-03  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/canon-scsi.c (request_sense): ifdef out to quiet down
+	gcc.
+
+	* backend/artec.c (read_data): Print size_t as (u_long) to make it
+	work right and without compiler warning both on 32 and 64 bit
+	platforms.
+	(artec_get_status): Ditto.
+	(init_and_start_scan): Ditto.
+	(sane_start): Ditto.
+	(sane_read): Ditto.
+	(artec_buffer_line_offset): Declare LEN as size_t.
+	* backend/epson.c (sane_read): Ditto.
+
+	* sanei/sanei_pio.c (pio_wait): Initialize STAT with 0 to quiet
+	down gcc.
+
+	* backend/Makefile.in (libsane-epson.la): Mention sanei_pio.lo.
+	(libsane-dll.la libsane.la): Ditto.
+
+	* sanei/Makefile.in (LIBSANEI_OBJS): Mention sanei_pio.o.
+	(LIBSANEI_LTOBJS): Mention sanei_pio.lo.
+
+	* frontend/xcam.c (input_available): Undo braindamage regarding
+	break out of scan loop (the SANE docs _do_ specify that in
+	blocking mode, *len==0 implies end of scan).
+	* frontend/xscanimage.c: Ditto.
+
+	* doc/sane-dmc.man: New file by David Skoll.
+
+	* sanei/sanei_DomainOS.c: New file by Paul Walker.
+
+	* backend/snapscan.c (DL_INFO, DL_MAJOR_ERROR): Up error code to 1
+	to avoid printing anything unless the user specifically asked
+	for this.
+
+	* include/sane/sanei_debug.h (DBG_LEVEL): Define debug level
+	variable as macro DBG_LEVEL.
+
+	* README.solaris (NOTE): Emphasize that generic scsi driver
+	needs to be installed before running configure.
+
+	* backend/s9036.c: Don't depend on GNU C dynamically sized arrays.
+	
+	* backend/coolscan.c (send_one_LUT): Use alloca() instead of
+	depending on GNU C dynamically sized arrays.
+	Include <alloca.h>.
+
+	* frontend/xscanimage.c (input_available): Break out of the
+	loop only if LEN==0 _and_ we have a non-negative input tag.
+	* frontend/xcam.c (input_available): Ditto.
+
+	* backend/microtek.c (parse_inquiry): Handle for ScanMaker 35t+.
+	(id_microtek): Ditto.
+
+1998-04-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* configure.in (CPPFLAGS): Check for libXi.
+
+	* frontend/gtkglue.c (panel_destroy): Clear dialog elements
+	after destroying the panel.
+
+	Patches by Christian Bucher <cbucher@vernetzt.at>:
+
+	* include/sane/sanei_pio.h: New file.
+	* sanei/sanei_pio.c: Ditto.
+	* backend/epson.c, backend/epson.h, backend/epson.conf: Updated
+	with Christian's version adds support for parallel port interface.
+	
+	* sanei/sanei_scsi.c (sanei_scsi_req_wait): Patch by Matto to let
+	sense-handler decide whether a non-zero sense_buffer[0] really
+	should be considered an error (needed for Microtek backend).
+
+	* doc/sane.tex (\subsubsection{Option Value Unit}): Document new
+	unit SANE_UNIT_MICROSECOND.
+
+	Patches by Oliver Rauch:
+	
+	* frontend/gtkglue.c (unit_string): Handle SANE_UNIT_MICROSECOND.
+	* frontend/scanimage.c (print_unit): Ditto.
+	(parse_scalar): Ditto.
+
+	* include/sane/sane.h: Add SANE_UNIT_MICROSECOND.
+
+	* Upgrade to Kevin's latest SnapScan backend (0.4).
+
+	* doc/sane-hp.man: Mention ScanJet IIp C1790A as working (reported
+	by Ronald.Vogelaar@nl.origin-it.com).
+
+	* frontend/xscanimage.c (init): Issue an error message when we see
+	option -g as this is most likely due to someone invoking
+	xscanimage through GIMP when GIMP support is missing.
+	(scan_done): Add sanity check.
+	(scan_start): Ditto.
+
+	* Upgraded to Matto's latest Microtek backend (0.6).
+
+	* Upgraded to Oliver's latest UMAX backend (0.71h).
+
+	* frontend/preview.c (draw_selection): Fix so that selection is
+	updated when sliders are moved.  Patch by Mikko Tyo"la"ja"rvi.
+
+	* backend/snapscan.c (DL_INFO): Increase from 0 to 1.
+	(DL_MAJOR_ERROR): Ditto.  This avoids printing error messages
+	unless the user specifically requests them.
+	
+	* frontend/gtkglue.c: Include <sys/types.h>.
+
+	* include/sane/config.h.in: Ignore HAVE_USLEEP under Apollo
+	Domain.
+
+	Patches by Paul Walker:
+
+	* sanei/sanei_scsi.c: New Domain OS code.
+
+	* tools/find-scanner.c: Include <sane/config.h>.
+
+	* lib/usleep.c (usleep): Use time_$wait() to avoid broken usleep()
+	implementation in Domain Sys5.3 environment.
+
+	* config.sub: Translate sys5.3 into sysv3 for the benefit
+	of Apollo Domain/OS.
+
+	* sanei/sanei_init_debug.c (sanei_init_debug): Use DosScanEnv()
+	instead of getenv() under OS/2.  (Patch by Yuri Dario
+	<mc6530@mclink.it>)
+
+1998-03-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/xcam.c (main): Remove obsolete call to
+	gdk_set_debug_level (0).
+
+	* backend/mustek.c (attach): Print debug message when discovering
+	unknown model.
+
+	* doc/sane-scsi.man: Mention Adaptec 1505.
+
+	* tools/find-scanner.c (main): List FreeBSD specific device names.
+
+	* tools/Makefile.in (LIBS): Define.
+	(find-scanner): Mention $(LIBS).
+
+	* backend/epson.conf: New file.
+
+	Patches by Yuri Dario <mc6530@mclink.it>:
+	
+	* backend/epson.c (sane_init): Support config file.
+
+	* sanei/sanei_ab306.c (outb): Add missing parens.
+
+	* backend/snapscan.c: Don't include <values.h>
+
+	* backend/net.c: Include netdb.h after in.h to appease OS/2.
+	Include <sys/types.h>.
+
+	* sane-0.71.spec (%files): Mention sane-dmc.5.
+	* doc/Makefile.in (SECT5): Ditto.
+
+	* backend/dmc.c, backend/dmc.h: Update with Feb 26 patch from
+	David Skoll.
+	* doc/dmc.man: New file by David Skoll.
+
+1998-02-25  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/dmc.c (DMCSetMode): Add missing field name (patch by
+	Martin Huber).
+
+	* tools/find-scanner.c (main) [__sun]: Add missing command (patch
+	by Martin Huber.
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Fix typo: fd_Info->fd_info
+	(patch by Jeff Freedman).
+
+	* configure.os2: Update with patch by Jeff Freedman.
+
+	* backend/snapscan.c (sane_snapscan_start): Replace non-standard
+	MAXINT by INT_MAX from <limits.h>.
+	(PATH_MAX): Define PATH_MAX as 1024 if not defined by headers.
+
+1998-02-23  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.71 released.
+
+	* backend/dmc.c (DMCAttach): Close scsi fd before returning.
+
+	* backend/microtek.c: Default to no_dump.
+	(sane_init): Change "nodump" into "dump" option.
+	* doc/sane-microtek.man: Document this change.
+
+	* backend/snapscan.c: Include <sane/sanei_config.h>.
+	(sane_snapscan_init): Use sanei_config_open() instead of fopen().
+
+	* backend/snapscan.c: Upgrade to latest version (0.3 patch 7).
+	* backend/snapscan.h: Ditto.
+	
+	* configure.in (V_MINOR): Up version to 0.71.
+
+	* sanei/sanei_scsi.c (scsi_cmd) [USE == SOLARIS_INTERFACE]: "or"
+	in lun instead of overwriting cdb[1] (patch by Martin Huber
+	<hu@garfield.m.isar.de>).
+
+	* backend/snapscan.c: Replace <posix1_lim.h> with <limits.h>.
+
+	* backend/mustek.c (fix_line_distance_mfs): Add back missing
+	multiplication by bpl (patch by Stefano Garavaglia
+	<alter.ego@iol.it>).
+
+	* backend/coolscan.c: Updated with Didier's latest version.
+	(COOLSCAN_CONFIG_FILE): Rename from PATH_COOLSCAN_CONFIG and
+	define as "coolscan.conf".  Include <sane/sanei_config.h>.
+	(sanei_init): Use sanei_config_open() instead of fopen().
+
+	* backend/coolscan-scsidef.h: Ditto.
+	* backend/coolscan.h: Ditto.
+
+	* backend/hp.c (sane_close): Change s to s->next (patch by David
+	Skoll <dskoll@chipworks.com>).
+
+1998-02-17  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/Makefile.in (PRELOADABLE_BACKENDS): Mention apple &
+	coolscan.
+
+	* backend/coolscan.c: New file (by Didier Carlier
+	<didier@sema.be>)..
+	* backend/coolscan.h: Ditto.
+	* backend/coolscan-scsidef.h: Ditto.
+
+	* backend/apple.c: Include <sane/sanei_config.h>
+	(APPLE_CONFIG_FILE): Rename from PATH_APPLE_CONFIG.
+	(sane_init): Use sanei_config_open().
+
+	* backend/apple.conf: New file.
+
+	* backend/dll.conf: Mention apple & coolscan backends.
+
+	* backend/apple.c: New file (by Milon Firikis
+	<milonf@isosun.ariadne-t.gr>).
+	* backend/apple.h: Ditto.
+
+	* sane-0.70.spec: Make symlink for libsane.so.0.
+
+	* doc/sane-epson.man: Mention GT-5500 scanner as working (as
+	reported by Umberto Zanatta <uzanatta@foscolo.org>).
+
+1998-02-12  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_scsi.c (DOMAINOS_INTERFACE): Define.  Add
+	Apollo Domain/OS support contributed by Paul Walker.
+
+	* configure.in (AC_CHECK_HEADERS): Mention apollo/scsi.h.
+	Add #undef of HAVE_APOLLO_SCSI_H.  Add type checks for u_char,
+	u_int, u_long (DomainOS reportedly needs these).
+
+	* sanei/sanei_scsi.c (sanei_scsi_req_wait) [USE ==
+	LINUX_INTERFACE]: Always check for a non-zero error code in the
+	sense-buffer.  The Linux sg driver guarantees that the sense
+	buffer is clear to zero when no sense code has been requested, so
+	this is safe.
+
+1998-01-28  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.7 released.
+
+1998-01-27  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/xscanimage.c (quit_xscan): Exit with status 0, not 1.
+
+	* tools/xerox (scale): Added improvements contributed by Joachim
+	Woll <woll@physik.uni-kassel.de>.
+
+	* Upgrade to Oliver's latest UMAX backend. 
+
+	* include/Makefile.in (distclean): Add empty all rule.  Add
+	distclean rule to delete Makefile.
+
+	* Makefile.in (distclean): Delete japi/Makefile as well (this
+	command should be removed once japi gets added to SUBDIRS).
+
+	* backend/Makefile.in (EXTRA): Remove ../lib/usleep.lo and
+	../lib/strndup.lo.
+	(libsane.la): Make dependent on $(LIBOBJS).
+
+	* frontend/xscanimage.c (preview_window_destroyed): Declare second
+	arg (added in some version of gtk?).
+
+	* tools/find-scanner.c (main): Change __sgi__ to __sgi.
+
+1998-01-26  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/microtek.c: Don't declare strdup()---you're bound to get
+	it wrong for some platforms!
+
+	* doc/sane-scsi.man: Say explicity that generic SCSI support needs
+	to be enabled.
+
+	* doc/sane-hp.man (Problems): Document PhotoSmart problems
+	as reported Peter Kirchgessner <Pkirchg@aol.com>.
+
+	* backend/snapscan.c: Upgrade to v0.3 from
+	http://www.cs.ualberta.ca/~charter/snapscan.html.
+	* backend/snapscan.h: Ditto.
+
+1998-01-22  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	SnapScan backend by Franck Schnefra, Michel Roelofs and
+	Kevin Charter:
+
+	* backend/snapscan.c: New file.
+	* backend/snapscan.h: Ditto.
+	* backend/snapscan.conf: Ditto.
+
+	* backend/umax-scanner.h (scanner_str): Add missing comma.
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Pass sense_handler_arg to
+	sense handler for BSD_INTERFACE, HPUX_INTERFACE,
+	OPENSTEP_INTERFACE, DECUNIX_INTERFACE, SCO_OS5_INTERFACE,
+	OS2_INTERFACE, IRIX_INTERFACE, AIX_GSC_INTERFACE, and
+	SOLARIS_INTERFACE.
+
+	* include/sane/config.h.in: Add missing #undef of
+	HAVE_SYS_SCSI_TARGETS_SCGIO_H.
+	Ditto for HAVE_SYS_SCSI_SGDEFS_H.
+
+1998-01-20  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.69 released.
+
+	* doc/sane-scsi.man: Limit ncr810 patch to kernel versions <
+	2.0.33.
+
+	* tools/xerox (HEIGHT): Add A4 paper size as comment.
+
+1998-01-19  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/preview.c (make_preview_image_path): New function.
+	(preview_destroy): Save scan surface parameters as a comment
+	in the preview image.
+	(restore_preview_image): Read scan surface parameters from
+	preview image file and restore only if the parameters match
+	the currently selected surface.
+	(paint_image): Gracefully handle NULL image_data.
+	(event_handler): Don't call restore_preview_image().
+	(preview_update): Detect if the scan surface changed.  If so,
+	establish a new preview widget size, preview area size, and
+	restore a preview image, if available.
+
+	* backend/mustek.c (sense_handler): Declare closure argument.
+
+	* sanei/sanei_scsi.c (sanei_scsi_open): Fix typos.
+
+	* backend/umax-scsi.c (umax_open_scanner): Pass us as sense_arg.
+	(umax_open_scanner): Ditto.
+	(umax_open_scanner): Ditto.
+	* backend/umax.c (sane_start): Ditto.
+
+	* backend/canon.c (attach): Pass 0 as sense_arg to sanei_scsi_open().
+	(sane_start): Ditto.
+	* backend/epson.c (attach): Ditto.
+	(sane_start): Ditto.
+	* backend/tamarack.c (sense_handler): Ditto.
+	* backend/s9036.c (sane_start): Ditto.
+	* backend/mustek.c (dev_open): Ditto.
+	* backend/hp.c (attach): Ditto.
+	(sane_start): Ditto.
+	* backend/mustek.c (dev_open): Ditto.
+	* tools/find-scanner.c (main): Ditto.
+
+	* include/sane/sanei_scsi.h (SANEI_SCSI_Sense_Handler): Declare
+	closure arg.
+	(sanei_scsi_open): Ditto.
+
+	* doc/sane-hp.man (Model): Remove obsolete comment regardign 5P.
+
+1998-01-17  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/mustek.c (dev_open): Fix debug message.
+
+	* Solaris related patches by Martin Huber:
+	
+	* backend/umax-scsi.c (umax_wait_scanner): Sleep for 1 second
+	instead of 100ms on Sun platforms---the SCHILYscg driver prints a
+	warning message each time a device is busy.  Duh.
+	(umax_get_data_buffer_status): Don't do
+	umax_get_data_buffer_status() on Sun's.  This should be fixed...
+
+	* sanei/sanei_scsi.c (sanei_scsi_open): Call unit_ready() towards
+	the end of this function.
+	(CCS_SENSE_LEN): Define as 18 if not defined
+	by any header files.
+	(sanei_scsi_cmd): Use sensebuffer to collect sense info.
+	(scsi_cmd): Better error handling when using SCHILYscg driver.
+
+1998-01-14  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/xscanimage.c (scan_start): Turn off dialog sensitivity.
+	(scan_done): Restore dialog sensitivity.
+
+	* backend/qcam.c (init_options): Turn on SANE_CAP_ALWAYS_SETTABLE.
+
+	* frontend/preview.c (scan_done): Enable dialog sensitivity.
+	(scan_start): Disable dialog sensitivity.
+
+	* include/sane/sane.h (SANE_CAP_ACTIVE_WHILE_SCANNING): New
+	manifest constant.
+
+1998-01-12  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/gtkglue.c (panel_destroy): Call gtk_tooltips_unref()
+	instead of gtk_tooltips_destroy() as suggested by Ben Gertzfield
+	<che@debian.org>.
+
+1997-12-25  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/canon.c: New file by Helmut Koeberle
+	<helmut.koeberle@bytec.de>.
+	(sane_start): Print variables of type size_t as %lu and cast to
+	(u_long), to make it compile without warning on all platforms.
+	(attach): Remove extraneous semicolon.
+
+	* backend/canon.h (canon_h): Ditto
+	* backend/canon-scsi.c: Ditto.
+
+1997-12-24  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_ab306.c (sanei_ab306_cmd): Write the first
+	6 bytes of a SCSI command only (suggested by Andreas, but
+	is this really correct??).
+
+	* backend/mustek.c (gamma_correction): Add patch by Andreas
+	Czechanowski <andreas@inspc44c.ins.uni-stuttgart.de> to
+	fix lineart scanning for Paragon II 600 N scanner.
+
+1997-12-23  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* tools/find-scanner.c (scanner_identify_scanner): Print info on
+	all SCSI devices when --verbose is in effect.
+	(main): Add Sun device names.
+
+	* include/sane/config.h.in: Define _POSIX_SOURCE and
+	__EXTENSIONS__ when compiling on a Sun with GCC.
+
+	* configure.in (AC_CHECK_HEADERS): Mention sys/scsi/sgdefs.h and
+	sys/scsi/targets/scgio.h.
+
+1997-12-17  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/xscanimage.c (device_dialog): Suggestion by Matt: set
+	window auto-shrink by calling gtk_window_set_policy().
+
+	* japi/ImageCanvas.java: Updated with Jeff's latest patch.
+	* japi/Jscanimage.java: Ditto.
+	* japi/Makefile.in: Ditto.
+	* japi/README.JAVA: Ditto.
+	* japi/ScanIt.java: Ditto.
+	* japi/ImageCanvasClient.java: New file.
+
+1997-12-16  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/gtkglue.c (panel_build): Patch by Matt: a) For all
+	individual options flagged as "advanced", panel_build will only
+	display the option if the "Show advanced" button is toggled.
+	Group identifiers flagged as "advanced" are handled the same as
+	before.  b) panel_rebuild is called whenever the "Show advanced"
+	button is toggled on or off.
+
+	* doc/sane-scsi.man: Mention sane-epson(5) and sane-microtek(5).
+	* doc/scanimage.man: Ditto.
+	* doc/xscanimage.man: Ditto.
+
+	* doc/sane-microtek.man: New file by Matt.
+
+	* backend/microtek.c: Updated with Matt's version 0.4.
+	* backend/microtek.h: Ditto.
+	* backend/microtek.conf: Ditto.
+
+	* doc/Makefile.in (SECT5): Mention sane-microtek.5.
+
+1997-12-15  Fred Hucht & Michael Staats <{fred|michael}@thp.Uni-Duisburg.DE>
+
+	* Added support for generic SCSI under AIX 4.1.x using the device
+	driver gsc written by Matthew Jacob <mjacob@feral.com> (nice piece
+	of work!).
+	Find this driver under
+	ftp://ftp.feral.com/pub/aix/gsc.tar.gz or
+	ftp://ftp.thp.Uni-Duisburg.DE/pub/source/gsc.tar.gz.
+	Changed files: sanei/sanei_scsi.c, include/sane/config.h.in,
+	configure.in.
+
+	* Moved '#include <lalloca.h>' to very beginning in all source
+	files as AIX needs it there.
+
+	* Added define OUTFILENAME to frontend/xscanimage.c.
+
+	* Fixed wrong environment reference in /doc/sane-scsi.man.
+
+	* Several changes in tools/find-scanner.c to run using
+	above mentioned driver.
+	Fixed wrong IN_periph_devtype_cpu (was 1, should be 3).	
+
+1997-12-14  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-hp.man: Mention ScanJet 4P (reported to work by
+	Adam Sjoegren <asjo@diku.dk>).
+
+1997-12-09  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/saned.c (check_host): Change len from size_t to int to
+	match getpeername() as per Single Unix Spec (as opposed to POSIX
+	drafts...).
+	(start_scan): Ditto for getsockname().
+	* backend/net.c (sane_start): Ditto.
+
+	* backend/tamarack.c (TAMARACK_CONFIG_FILE): Delete.
+	(TAMARACK_CONFIG_FILE): New macro.
+	Include <sane/sanei_config.h>.
+	(sane_init): Use sanei_config_open() instead of fopen().
+	(read_data): Declare nbytes as size_t---makes a difference
+	on 64-bit platforms.
+
+1997-12-07  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/s9036.c (sane_init): Run through "indent -gnu". Use
+	sanei_config_open() instead of fopen().  Include
+	<sane/sanei_config.h>.
+	(read_more_data): Print size_t variables by casting them to
+	(u_long) and using %lu format (some platforms have size_t as
+	u_long, others as u_int, which does make a difference if
+	sizeof(long) > sizeof(int).
+	(sane_start): Ditto.
+	Add English translation for comments that were in German only.
+
+	* backend/s9306.c: New file by Ingo Schneider.
+	* backend/s9306.h: New file by Ingo Schneider.
+
+1997-12-04  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/mustek.c (sane_cancel): Collect child process status
+	after killing it (avoids accumulating zombie processes).  Reported
+	by Mike Sweet.
+	* backend/umax.c (sane_cancel): Ditto.
+	* backend/qcam.c (sane_close): Ditto.
+	(sane_cancel): Ditto.
+
+1997-12-03  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.68 released.
+
+1997-12-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/scanimage.c (window_val_user): New variable.
+	(fetch_options): Don't overwrite window_val[i] if it's
+	user-specified.
+	(main): Set window_val_user[i] as necessary.
+
+	* backend/mustek.c (send_gamma_table): New function.
+	(sane_start): Send gamma table both before and after start_scan().
+	The MFS-06000CX is reported to need the gamma-table before
+	start_scan() and the Mustek docs do indeed indicate downloading
+	the gamma-table twice.
+	(init_options): Make --custom-gamma option active by default (since
+	gray-scale mode is the default mode).
+
+1997-11-30  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-mustek.man: Mention MFC-08000CZ.
+
+	* backend/mustek.c (attach): Reduce y_range.max for MFC-08000CZ
+	from 300 to 292mm as reported by Jeroen Steenblik
+	<jeroens@esrac.ele.tue.nl>.  Ditto for MFC-06000CZ.
+
+1997-11-28  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/umax-scanner.h (scanner_str): Add "Astra 610S".
+	(known_scanners): Increment from 13 to 14.
+
+	PP fixes by Andreas Czechanowski:
+	* backend/mustek.c (EXTRA_SAVE_LINES): New macro.
+	(fix_line_distance_pp): Use EXTRA_SAVE_LINES instead of hardcoded
+	constant.  Various fixes to make it actually work.
+	(reader_process): Initialize s->ld_ld_line to zero.
+
+	* backend/mustek.h (struct Mustek_Scanner): Add member ld_line.
+
+1997-11-26  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* tools/Makefile.in (.c.o): Add this rule.
+
+	* tools/find-scanner.c: Include sanei_scsi.h and sanei_debug.h
+	via <> quotes (note "").
+
+1997-11-25  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_ab306.c (sanei_ab306_exit): Fix by Andreas
+	Czechanowski: output 0x00 at port[i].base + 1 instead.
+
+1997-11-22  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-mustek.man (Model): Clarify that paralell port != printer
+	port.
+
+	* backend/mustek.c (fix_line_distance_mfs): Add missing SANE_UNFIX()
+	calls for x_range.max and dpi_range.max.
+	(fix_line_distance_pp): Correct based on Andreas' feedback.
+
+1997-11-18  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* configure.in (CFLAGS): Don't specify -ansi---with older libcs,
+	it's causing more problems than it's worth.
+
+	* Patch by Jeff Freedman:
+
+	* japi/Sane.c: Limit string length to option size.
+
+	* japi/SaneOption.java: Fix indentation.
+	(unitString): New function.
+	
+	* japi/ImageCanvas.java: New file.
+	* japi/Jscanimage.java: Ditto.
+	* japi/ScanIt.java: Ditto.
+	
+	* japi/Makefile.in (CLASSES): Mention ScanIt.class and
+	ImageCanvas.class.
+	(all): Mention Jscanimage.class.
+	* japi/Scan.c: Include <string.h>.
+	(String_length): New function.
+
+1997-11-16  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/gtkglue.c (scale_update): In recent versions of GTK,
+	"value_changed" callbacks no longer return a value.  Change this
+	function to type "void" accordingly.
+
+	* sanei/sanei_scsi.c: Declare cam_fd only if USE ==
+	DECUNIX_INTERFACE.
+
+	* sanei/sanei_load_values.c (sanei_load_values): Detect errors
+	while reading the option name (first call to sanei_w_string()).
+	Reported by Geoffrey T. Dairiki.
+
+	* sanei/sanei_ab306.c [HAVE_UNISTD_H]: Include <unistd.h>.  Fix by
+	Geoffrey T. Dairiki.
+
+	* lib/alloca.c: Enclose in #ifndef HAVE_ALLOCA bracket.  Fix by
+	Geoffrey T. Dairiki.
+
+	* include/lalloca.h: Declare alloca() as returning void* when
+	__STDC__ is in effect so declaration matches definition in
+	lib/alloca.c.  Reported by Geoffrey T. Dairiki.
+
+	* frontend/preview.c (update_selection): Set coord[] values to
+	rounded-to-nearest-int of float values.  This avoids the jumping
+	selection box effect. Fix by Geoffrey T. Dairiki.
+
+	* frontend/gtkglue.c (scale_update): Patch by Geoffrey T. Dairiki
+	<dairiki@apl.washington.edu>: emit value_changed signal if the
+	backend changed the value.
+
+	* backend/umax.c: Upgraded to Oliver's latest UMAX version.
+
+	* backend/mustek.c (sane_init): Ignore white space in front of an
+	option/device-name.
+
+1997-11-12  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_ab306.c (sanei_ab306_get_io_privilege):
+	(struct port): Remove member HAVE_IO_PRIVS.
+	(sanei_ab306_get_io_privilege): Get ioperm()issions independent of
+	HAVE_IO_PRIVS.
+
+	* backend/mustek.c (do_stop): Always send STOP command before
+	closing the device.
+	(dev_read_req_enter): For parallel-port scanner, set *idp to 0.
+
+1997-11-10  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	Bug reported by Matto Marjanovic <maddog@mir.com>:
+
+	* frontend/gtkglue.c (panel_build): Create button only after we
+	know the option's value.
+	(button_new): Add VAL argument and initialize button state to
+
+	correct value before connecting the toggled callback.
+
+	Bugs reported by Petter Reinholdtsen <pere@link.no>:
+	
+	* sanei/sanei_config.c (sanei_config_open): Add missing cast to
+	(char *).
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd) [USE == IRIX_INTERFACE]: Fix
+	(u_char) cast to (u_char *).
+
+1997-11-06  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/qcam.c (init_options): Set the type of OPT_NUM_OPTS to
+	SANE_TYPE_INT (suggested by Guido Muesch
+	<odiug@faho.rwth-aachen.de>).
+	* backend/mustek.c (init_options): Ditto.
+
+1997-11-04  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/xcam.c (xcam_exit): Protect against recursive
+	invocation.
+	(main): Turn on preferences.advanced as no graphical geometry
+	selection exists right now.
+	Include <preferences.h>.
+	preferences: New variable.
+	(pref_toggle_advanced): New function.
+	(pref_toggle_tooltips): Ditto.
+	(build_preferences_menu): Add button to control advanced & tooltips
+	preferences.
+
+	* doc/sane.tex (subsection{sanecontrol_option}): Make it illegal
+	for SANE_INFO_RELOAD_OPTIONS to be set needlessly.
+
+	* backend/hp.c (sane_control_option): Only turn on RELOAD_PARAMS
+	when value changed.
+	
+	* backend/qcam.c (sane_control_option): Only turn on
+	RELOAD_PARAMS when value changed.
+
+	* backend/mustek.c (sane_control_option): Only turn on
+	RELOAD_OPTIONS and/or RELOAD_PARAMS when value changes.
+
+	* Integrate b&w quickcam fixes by Guido Muesch
+	<odiug@faho.rwth-aachen.de>:
+
+	* backend/qcam.c (bw_x_range, odd_bw_x_range, bw_y_range,
+	odd_bw_y_range): New constants.
+	(sane_open): Disable despeckle, black-level, hue, saturation,
+	resolution & test options for b&w camera (either not useful or not
+	supported at this point).
+	(sane_start): Use QC_MONO_SET_CONTRAST instead of
+	QC_BW_SET_CONTRAST.
+	(sane_start): Call qc_reset() for b&w camera to avoid hangs (color
+	camera doesn't need this and is faster that way).
+	(sane_start): Multiply undecimated_width by s->val[OPT_DEPTH].w,
+	not 4.
+
+	* backend/qcam.h: Remove obsolete QC_BW_SET_CONTRAST,
+	QC_BW_AUTO_ADJUST_OFFSET, QC_BW_GET_OFFSET, and QC_SET_CONTRAST
+	macros.
+
+1997-11-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-hp.man (Model): Mention ScanJet IIcx.  Johannes Geiger
+	<J_Geiger@fleury.de> reported it to work fine under OS/2 with
+	sane-0.66
+
+	* backend/umax.c: Apply patch by Oliver Rauch that avoid
+	umax hangs.
+
+1997-11-01  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.67 released.
+
+	* sanei/sanei_ab306.c: New file.
+
+	* backend/mustek.h (MUSTEK_FLAG_PP): New macro.
+	(struct Mustek_Scanner): Add members ld.index and ld.lmod3
+	for parallel-port scanner line-distance correction.
+
+	* backend/mustek.c (color_seq): Move to global level from
+	fix_line_distance_normal().
+	(fix_line_distance_pp): New function.
+	(scsi_wait_ready): Renamed from wait_ready().
+	(pp_wait_ready): New function.
+	(dev_wait_ready): Ditto.
+	(dev_open): Ditto.
+	(dev_cmd): Ditto.
+	(dev_req_wait): Ditto.
+	(dev_read_start): Ditto.
+	(dev_read_req_enter): Ditto.
+	(dev_close): Ditto.
+	(attach): Modify to use dev_open().  Set minimum scan resolution
+	to 51 dpi for parallel-port scanners.
+	(scan_area_and_windows): Call dev_cmd() instead of
+	sanei_scsi_cmd().
+	(mode_select): Ditto.
+	(gamma_correction): Ditto.
+	(start_scan): Ditto.
+	(stop_scan): Ditto.
+	(line_distance): Ditto.
+	(get_image_status): Ditto.
+	(backtrack_and_adf): Ditto.
+	(gamma_correction): Return immediately if custom-gamma is turned
+	off or if not doing a multibit scan.  Add support for sending all
+	three gamma tables with a single command.
+	(line_distance): Initialize additional line-distance correction
+	state needed by parallel-port scanner.
+	(read_req_enter): Remove.
+	(send_data): Modify to support parallel-port scanner line-distance
+	correction.
+	(reader_process): Require I/O-privilege if dealing with parallel
+	port scanner and call dev_read_start().  Use dev_read_req_enter()
+	instead of read_req_enter(), dev_req_wait() instead of
+	sanei_scsi_req_wait().
+	(sane_start): For parallel-port scanner, send gamma table with
+	a single gamma_correction() call.
+
+	* doc/sane-mustek.man: Update with info regarding parallel port
+	scanner.
+
+	* backend/dll.c (add_backend): When a backend is present already,
+	move it to the head of the backend list, so pre-loaded backends
+	appear in the same order as if they had been loaded dynamically
+
+	* backend/mustek.c (pp_mode_list): New constant.
+
+	* backend/mustek.c (init_options): Use pp_mode_list for parallel
+	port type scanners (no color lineart/halftone modes).
+
+	* sanei/sanei_codec_ascii.c (ascii_w_string): free(*s) only if *s
+	is non-NULL (reported by Geoffrey T. Dairiki
+	<dairiki@apl.washington.edu>).
+
+	* backend/mustek.c (attach): Turn on MUSTEK_FLAG_LD_NONE for
+	MFS-12000SP with firmware 1.02 or newer. Reported by Henning
+	Busacker <henning.busacker@Duesseldorf.netsurf.de>.
+
+1997-10-25  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane.tex (chapter{Contact Information}): Update mailing list
+	and home page address.
+
+	* backend/dll.c: Include <sane/sanei_config.h>.  Call
+	sanei_config_open() instead of fopen().
+	* backend/hp.c: Ditto.
+	* backend/mustek.c: Ditto.
+	* backend/net.c: Ditto.
+	* backend/pint.c: Ditto.
+	* backend/qcam.c: Ditto.
+	* backend/umax.c: Ditto.
+
+	* backend/Makefile.in (EXTRA): Mention ../sanei/sanei_config.lo.
+
+	* doc/sane-dll.man: Document SANE_CONFIG_DIR.
+	* doc/sane-hp.man: Ditto.
+	* doc/sane-mustek.man: Ditto.
+	* doc/sane-net.man: Ditto.
+	* doc/sane-pint.man: Ditto.
+	* doc/sane-qcam.man: Ditto.
+	* doc/sane-scsi.man: Ditto.
+	* doc/sane-umax.man: Ditto.
+	* doc/saned.man: Ditto.
+
+	* backend/microtek.c: Updated with v0.3 from Matt.
+	Include <sane/sanei_config.h>
+	(MICROTEK_CONFIG_FILE): Define as "microtek.conf".
+	(PATH_MICROTEK_CONFIG): Delete.
+	(sane_init): Replace fopen() with sanei_config_open().
+
+	* backend/microtek.h: Ditto.
+
+1997-10-24  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_config.c (sanei_config_open): Add multiple-directory
+	support for SANE_CONFIG_DIR.
+
+	* sanei/sanei_config.c: New file by Jeff Freedman.
+	* include/sane/sanei_config.h: Ditto.
+
+1997-10-23  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Fixes for OS/2 by Jeff Freedman:
+	* frontend/Makefile.in (SBINPROGS): Set to @SANED@.
+	* configure.os2 (LN_S): Add --sysconfdir=.
+	* configure.in: Set up SANED depending on <sys/socket.h>.
+	* backend/Makefile.in (EXTRA): Mention usleep.lo and strndup.lo.
+	* backend/pnm.c (rgblength, rgbbuf, rgbleftover): Declare as
+	static.
+	* ltconfig: Upgrade to 1.0d.
+	* ltmain.sh: Ditto.
+	* sanei/sanei_constrain_value.c: Include <sane/config.h>.
+
+1997-10-22  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/gtkglue.h (struct GSGDialog): Remove idle_id member.
+
+	* frontend/gtkglue.c (idle_handler): Remove.  GTK's reference
+	counting appears to have been fixed (?).
+
+	* backend/umax_scanner.h: Update with Oliver's latest version.
+	* backend/umax-scsi.c: Ditto.
+	* backend/umax-scsidef.h: Ditto.
+	* backend/umax-struct.h: Ditto.
+	* backend/umax.c: Ditto.
+	* backend/umax.h: Ditto.
+
+1997-10-18  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_scsi.c (sanei_scsi_req_enter): Set cdb.hdr.pack_id
+	to unique id number.
+
+1997-10-17  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* japi/Makefile.in: New file (by Jeff Freedman <jsf@hevanet.com>).
+	* japi/README.JAVA: Ditto.
+	* japi/Sane.c: Ditto.
+	* japi/Sane.java: Ditto.
+	* japi/SaneDevice.java: Ditto.
+	* japi/SaneOption.java: Ditto.
+	* japi/SaneParameters.java: Ditto.
+	* japi/SaneRange.java: Ditto.
+	* japi/Test.java: Ditto.
+
+	* configure.in (AC_OUTPUT): Mention japi/Makefile.
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd) [USE == IRIX_INTERFACE]:
+	Add data buffer alignment fix by Michael Sweet.
+
+1997-10-24  Jeff Freedman <jsf@hevanet.com>
+
+	* sanei_open_config() added.  Backends call it to open .conf files.
+
+1997-10-14  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.66 released.
+
+	* README: Update with new URLs and latest GIMP/GTK info.
+
+1997-10-11  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* include/sane/saneopts.h: Add #defines for TEN_BIT_MODE, WARMUP,
+	RGB_PREVIEW_PATCH, and START_SCAN_PATCH.
+
+	* README: Remove umax-specific configure options (they're now
+	runtime options).
+	* configure.in (CPPFLAGS): Ditto.
+	* include/sane/config.h.in: Ditto.
+
+	* backend/epson.c: Updated 
+
+1997-10-09  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/umax.c (sane_exit): Remove bogus call to free()
+	(reported by Peter).
+
+Thu Oct  9 20:20:32 1997  Kazuhiro Sasayama  <kaz@hypercore.co.jp>
+
+	* epson.c (sane_start): Fix lcount computation.
+
+Thu Oct  9 11:44:03 1997  Kazuhiro Sasayama  <kaz@hypercore.co.jp>
+	* epson.c (sane_start): Use byte-interleaved mode if available.
+	(sane_start): Set line counter for byte-interleaved mode.
+	(sane_read): Handle byte-interleaved mode.
+	(sane_init) [PACKAGE && VERSION]: Debug out PACKAGE and VERSION.
+
+Tue Oct  7 18:44:36 1997  Kazuhiro Sasayama  <kaz@hypercore.co.jp>
+
+	* epson.c (set_lcount): New function.
+	(sane_start): Use block mode for monochrome if available.
+	(sane_read): Handle block mode.
+
+	* epson.h (struct Epson_Scanner): Add block.
+
+Tue Oct  7 15:48:11 1997  Kazuhiro Sasayama  <kaz@hypercore.co.jp>
+
+	* epson.c (set_speed): New function.
+	(sane_start): Use set_speed.
+
+Tue Oct  7 15:44:33 1997  Kazuhiro Sasayama  <kaz@hypercore.co.jp>
+
+	* README: Add info about a mailing list.
+
+	* Makefile.am (libsane_epsonx_la_LDFLAGS): Increment the revision.
+
+	* epson.c (identify): Debug output the command level.
+
+1997-10-08  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/mustek.conf: Turn on linedistance-fix and lineart-fix by
+	default.
+
+	* include/sane/config.h.in: Remove
+	NEED_MUSTEK_LINE_DISTANCE_WORKAROUND.
+
+	* doc/sane-mustek.man (CONFIGURATION): Document option
+	linedistance-fix and lineart-fix.
+
+	* configure.in: Remove test for --enable-ld-fix.
+
+	* backend/mustek.h (MUSTEK_FLAG_LD_FIX): New flag.
+	(MUSTEK_FLAG_LINEART_FIX): Ditto.
+
+	* backend/mustek.c (line_distance): Replace
+	NEED_MUSTEK_LINE_DISTANCE_WORKAROUND with runtime test for same.
+	(reader_process): If MUSTEK_FLAG_LINEART_FIX is on, delay 200ms
+	when scanning in lineart mode.
+	(sane_init): New variable.  Add linedistance-fix and lineart-fix
+	support.
+
+	* backend/Makefile.in (install): Fix install rule so all symlinks
+	necessary for libsane.so are installed.
+
+	* backend/dll.c (load): Change from LIBNAME to LIBPATH (as per
+	libtool-1.0c documention).
+
+	* sanei/sanei_scsi.c (issue): Declare `static'.
+
+	* aclocal.m4: Update with contents of libtool.m4.
+
+	* configure.in (AC_PROG_RANLIB): Remove (once again!).
+
+	* config.guess: Update from libtool-1.0c.
+	* config.sub: Ditto.
+	* ltconfig: Ditto.
+	* ltmain.sh: Ditto.
+
+	* backend/epson.c: Update with Kazuhiro's latest epson version
+	(1.1.6).
+
+1997-10-07  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/gtkglue.c (panel_destroy): Clear elem->menu after
+	freeing it (reported by Kazuhiro Sasayama <kaz@hypercore.co.jp>).
+
+1997-10-06  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/epson.c: Updated with Kazuhiro Sasayama
+	<kaz@hypercore.co.jp> latest version (1.1.5).
+
+1997-10-04  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.65 released.
+
+	* sanei/sanei_scsi.c (close_aspi): Rename from sanei_close_aspi (static
+	functions don't need ugly sanei_ prefix...).
+	(open_aspi): Ditto.
+
+	* configure.os2: New file (from Jeff's config.os2).
+
+	* backend/umax-scsi.c: Mmove include of <scsi/scsi.h> and
+	<scsi/sg.h> into !def UMAX_TO_SANE bracket.
+
+	* backend/pnm.c (getparmfromfile): Open with mode "rb" to get
+	binary file on platforms where this is meaningful.
+
+1997-10-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-epson.man: Mention that backend is known to work with
+	GT-5000.
+
+1997-10-01  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-epson.man: New file (based on Kzuhiro's README file).
+
+	* backend/Makefile.in (PRELOADABLE_BACKENDS): Mention epson.
+	(libsane-epson.la): Add dependencies for Epson backend.
+
+	* backend/epson.c: New file by Kazuhiro Sasayama
+	<kaz@hypercore.co.jp>.
+	* backend/epson.h: Ditto.
+
+	* backend/microtek.c: Updated with latest version from
+	http://www.mir.com/mtek/ by Matt Marjanovic <maddog@mir.com>.
+	* backend/microtek.h: Ditto.
+	
+1997-10-3   Jeff Freedman <jsf@hevanet.com>
+
+	* sanei/sanei_scsi.c:  Minor fixes for OS/2 support.
+
+	* configure.in: Check for presence of sys/socket.h to set @NET@.
+
+	* backend/Makefile.in: net -> @NET@
+
+1997-09-30  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_scsi.c: Integrate OS/2 support by Jeff Freedman:
+	(OS2_INTERFACE) Define.
+	(open_aspi,close_aspi): New OS/2-specific functions.
+	(sanei_scsi_open): Add OS/2 support.
+	[USE = OS2_INTERFACE]: OS/2 version of sanei_scsi_cmd().
+	(sanei_scsi_cmd, sanei_scsi_req_wait) [STUBBED_INTERFACE]:
+	Return proper value.
+	
+	* include/sane/config.h.in (HAVE_STRNCASECMP, HAVE_OS2_H): Add
+	#undef.  If !HAVE_STRNCASECMP, define strncasecmp macro as
+	alias for strnicmp.
+
+	* configure.in (AC_CHECK_FUNCS): Check for strncasecmp().
+	(AC_CHECK_HEADERS): Check for os2.h.
+
+1997-09-30  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sanei/sanei_scsi.c: Integrate OS/2 support by Jeff Freedman:
+	(OS2_INTERFACE) Define.
+	(open_aspi,close_aspi): New OS/2-specific functions.
+	(sanei_scsi_open): Add OS/2 support.
+	[USE = OS2_INTERFACE]: OS/2 version of sanei_scsi_cmd().
+	(sanei_scsi_cmd, sanei_scsi_req_wait) [STUBBED_INTERFACE]:
+	Return proper value.
+	
+	* include/sane/config.h.in (HAVE_STRNCASECMP, HAVE_OS2_H): Add
+	#undef.  If !HAVE_STRNCASECMP, define strncasecmp macro as
+	alias for strnicmp.
+
+	* configure.in (AC_CHECK_FUNCS): Check for strncasecmp().
+	(AC_CHECK_HEADERS): Check for os2.h.
+
+1997-09-24  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.64 released.
+
+	* PROJECTS (Backend): Update microtek entry.
+	Add entry for sgivl.
+
+	* backend/microtek.conf: New file.
+
+	* backend/dll.conf: Mention microtek.
+
+	* backend/Makefile.in (PRELOADABLE_BACKENDS): Mention microtek.
+	(libsane-microtek.la): Mention microtek dependencies.
+
+	* backend/microtek.c: New file by Matthew Marjanovic.
+	* backend/microtek.h: Ditto.
+
+1997-09-23  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Integrate Michael Sweet's
+	latest Irix implementation of sanei_scsi_cmd().
+
+Sat Sep  6 08:59:24 1997  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 0.63 released.
+
+	* configure.in (V_MINOR): Bump up to 63.
+
+	* configure.in (AM_PROG_RANLIB): Go back to AC_PROG_RANLIB.  The
+ 	former causes a bad configure script.
+
+Fri Aug 29 16:08:05 1997  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-umax.man: Change status of "Astra 1200S" to "all modes ok"
+	as Oliver tells me that this has been tested and is working now.
+
+Wed Aug 20 17:23:04 1997  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* sane-0.63.lsm: Update email addresses etc.
+
+	Integrate Oliver Rauch's UMAX improvements:
+
+	* README: Document --enable-umax-preview-fix,
+ 	--enable-umax-start-scan-fix.
+
+	* configure.in (UMAX_RGB_PREVIEW, UMAX_START_SCAN_PATCH): Define if
+	necessary.
+
+	* include/sane/config.h.in (UMAX_RGB_PREVIEW, UMAX_START_SCAN_PATCH):
+	Add #undef.
+
+	* include/sane/saneopts.h: Add manifest constants for options
+	resolution-bind, negative, quality-cal, threshold, analog-gamma,
+	analog-gamma-r, analog-gamma-g, analog-gamma-b, analog-gamma-bind,
+	smear, white-bind, black-bind.
+
+	* AUTHORS (Frontends): Update email addresses of Oliver Rauch and
+	myself.
+
+1997-08-07  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (attach): Print Mustek scanner info at
+	debug level 2, not 3.
+
+1997-08-06  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/preview.c (XSERVER_WITH_BUGGY_VISUALS): Make conditional
+	on #ifdef __alpha__ (Michael Sweet reports that the old code broke
+	SGI IRIX 6.3).
+
+1998-08-01  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* include/sane/config.h.in (HAVE_SYS_SCSICMD_H, HAVE_SYS_DSREQ_H):
+ 	Undefine.
+
+	* configure.in (AC_CHECK_HEADERS): Mention sys/scsicmd.h and
+ 	sys/dsreq.h.
+
+	* sanei/sanei_scsi.c (SCO_OS55_INTERFACE, IRIX_INTERFACE,
+ 	SOLARIS_INTERFACE): Define.
+
+1997-07-27  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscanimage.c (quit_xscan) [HAVE_LIBGIMP_GIMP_H]: When
+	running as a GIMP extension, call gimp_quit().
+	(init) [HAVE_LIBGIMP_GIMP_H]: Set GDK's xshm flag based on GIMP's
+	flag.
+
+	* doc/sane-mustek.man (SCSI ADAPTER TIPS): Try to make complete
+	sentences.
+
+1997-07-25  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.62 released.
+
+	* configure.in (CPPFLAGS): Test for gtk_gamma_curve_new() to
+	see whether appropriate version of gtk is installed.
+
+	* backend/mustek.c (sane_init): Add parsing support for option
+	`strip-height'.
+	(strip_height): New variable to limit scan strip height.
+	(reader_process): If strip_height is greater than 0.0, limit
+	lines_per_buffer so that no more than strip_height inches are
+	scanned with a single SCSI read command.
+
+	* doc/sane-mustek.man (CONFIGURATION): Describe strip-height
+	option.
+
+1997-07-23  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane-hp.man (Model): Added ScanJet 3c info.
+
+1997-07-22  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/scanimage.README: Remove file.
+
+	* doc/sane-scsi.man: Add info on generic AM53C974 driver.
+
+1997-07-19  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_scsi.c [USE == LINUX_INTERFACE]: Include
+	<sys/time.h>.
+
+1997-07-18  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_scsi.c (sanei_scsi_req_flush_all)
+	[WE_HAVE_ASYNC_SCSI]: Implement stub.
+
+	* scripts/xerox: New file (simple xeroxing script).
+
+	* frontend/scanimage.c (main): When opening a device fails, also
+	print reason for failure.
+
+	* frontend/preview.c (preview_new): Register expose_event handler.
+	(preview_destroy): Call scan_done() if called when preview
+	scanning in progress.
+
+	* backend/mustek.c (attach): Add argument MAY_WAIT.  If it's TRUE,
+	wait for scanner to become ready before sending inquiry command.
+	(do_cancel): Rename to do_stop.  Ignore child's exist status
+	when we're really cancelling a scan.  Issue stop_scan() command
+	only if the scan got cancelled and do a wait_ready() before
+	issueing the stop_scan().
+	(read_data): Delete.
+	(sane_init): Call attach() with MAY_WAIT set to SANE_FALSE.
+	(sane_open): Call attach() with MAY_WAIT set to SANE_TRUE.
+
+	* frontend/preview.c (display_partial_image): Use gtk_preview_put()
+	to update the preview window.  Much faster than hiding/showing the
+	widget.
+	(expose_handler): New function.
+
+	* frontend/progress.c (progress_new): Make "Cancel" button a
+	toggle-button so user can see when it was pressed down while
+	the backend cancels its operation.
+
+	* backend/mustek.c (do_cancel): Call wait_ready() before
+	attempting to stop scanner.
+	(read_req_enter): New function.
+	(send_data): Ditto.
+	(sigterm_handler): New function.
+	(reader_process): Reimplement using asynchronous SCSI command
+	interface.
+	(wait_ready): Use gettimeofday() to implement timeout.  The
+	scsi command itself may take a considerable amount of time
+	(1 second or more) so we can't just loop for a fixed number
+	of times.
+
+	* include/sane/sanei_scsi.h: Declre sanei_scsi_req_enter,
+	sanei_scsi_req_wait, and sanei_scsi_req_flush_all.
+
+	* sanei/sanei_scsi.c [WE_HAVE_ASYNC_SCSI]: Define.
+	(issue): New function.
+	(sanei_scsi_req_flush_all): New function.
+	(sanei_scsi_req_enter): Ditto.
+	(sanei_scsi_req_wait): Ditto.
+	(sanei_scsi_cmd): Reimplement in terms of enter/wait.
+	(sanei_scsi_req_enter) [!WE_HAVE_ASYNC_SCSI]: Stub that
+	simply calls sanei_scsi_cmd().
+	(sanei_scsi_req_wait): Empty stub.
+
+1997-07-16  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane-scsi.man: Add Tekram DC390 info (contributed by
+	kawk@Home.Yo.COM (Kolja Waschk))
+
+1997-07-15  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd) [USE==LINUX_INTERFACE]:
+	Return SANE_STATUS_NO_MEM if write() of SCSI command fails.
+
+	* backend/mustek.c (do_cancel): If reader_process exited, use
+	exit status as return value.
+	(reader_process): Return SANE_STATUS_IO_ERROR instead of 1.
+	Return SANE_STATUS_NO_MEM instead of 2.  Return STATUS instead
+	of 3.  Return SANE_STATUS_GOOD instead of 0.
+	(sane_read): If do_cancel() returns anything but
+	SANE_STATUS_CANCELLED or SANE_STATUS_GOOD, something bad has
+	happened and the return status should be returned.
+
+	* doc/sane-scsi.man: Fix typo: sg.h is in /usr/include/scsi, not
+	/usr/include.
+
+	* PROBLEMS: Add warning about updating Linux kernel after increasing
+	SG_BIG_BUFF.
+
+1997-07-14  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscanimage.c (quit_xscan): Destroy preview window before
+	quitting, so preview image gets saved if necessary.
+
+	* frontend/Makefile.in (LIBX11): New macro.
+	(LIBGTK): Ditto.
+	(xscanimage): Use $(LIBGTK) instead of $(LIBS).
+	(xcam): Use $(LIBGTK) instead of $(LIBS).
+
+	* configure.in (LIBX11): Define as all libraries necessary when
+	using X11.
+	(LIBGTK): Define as all libraries necessary when using GTK+.
+
+	* backend/mustek.c (sane_start): Don't send gamma in lineart and
+	halftone mode!
+
+	* doc/sane-scsi.man: Add info on how to setup BT958 card (contributed
+	by Jeremy <jeremy@xxedgexx.com>).
+
+1997-07-13  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane-scsi.man: Add info on FreeBSD.
+
+1997-07-12  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* ltmain.sh: Installed libtool-1.0-nomode patch.
+
+	* configure.in (AC_PROG_RANLIB): Change to AM_PROG_RANLIB.
+
+1997-07-11  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* ltmain.sh: Upgrade to libtool-1.0.
+	* ltconfig: Ditto.
+	* config.guess: Ditto.
+	* config.sub: Ditto.
+	* aclocal.m4: Ditto.
+
+1997-07-08  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.61 released.
+
+	* backend/Makefile.in (LIBLIB_FUNCS): Mention snprintf.
+
+	* backend/umax-struct.h (LINEART, HALFTONE, GREYSCALE, RGB): Move
+	the pound sign to the beginning of the line.
+	* backend/umax-scsidef.h: Ditto for all indendent #defines in this
+	file.
+	* backend/umax-scsi.c: Ditto for all # directives in here.
+
+	* frontend/saned.c [HAVE_LIBC_H]: Include <libc.h>.
+
+1997-07-07  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/net.c [HAVE_LIBC_H]: Include <libc.h>.
+
+	* lib/usleep.c: New file (adapted from glibc).
+
+	* lib/strndup.c: Move #ifndef HAVE_STRNDUP up so nothing
+	except <config.h> gets included unless really needed.
+	Include <sys/types.h> to get size_t defined.
+
+	* lib/snprintf.c (vsnprintf): Rename from vplp_snprintf.
+	(snprintf): Rename from plp_snprintf.
+
+	* include/sane/config.h.in: Add #undef HAVE_USLEEP.  Add #undef
+	HAVE_IO_CAM_CAM_H.
+
+	* configure.in: Test ${ac_cv_prog_gcc} instead of $CC to find out
+	whether we're dealing with gcc.  Test for io/cam/cam.h header.
+	(AC_C_INLINE): Add.
+	(AC_CHECK_FUNCS): Mention usleep.
+	Check for Xext after checking for X11 since on some platforms,
+	linking against Xext requires functions from X11.
+
+	* backend/umax.c (PATH_MAX): Define as 1024 if undefined.
+
+	* backend/Makefile.in (CONFIGS): Don't add $(srcdir) prefix.
+	(LIBLIB_FUNCS): Mention usleep.
+	(install): Invoke $(LIBTOOL) $(MINST) --finish $(libdir) in
+	a final step.  Correct installation rule for config files.
+
+1997-07-06  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): New variable RESULT.
+
+1997-07-05  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Improve BSD version based
+	on patch by Amancio Hasty <hasty@rah.star-gate.com>.
+	(BSD_INTERFACE): Rename from NETBSD_INTERFACE (FreeBSD uses the
+	same interface).
+
+	* configure.in (CPPFLAGS): Check for scsireq_enter in libscsi.a.
+
+	* doc/Makefile.in (SECT5): Mention sane-scsi.5.
+	* doc/sane-scsi.man: New file.
+
+	* doc/sane-umax.man: Add SEE ALSO section mentioning sane-scsi(5).
+	* doc/sane-mustek.man: Ditto.
+
+	* doc/scanimage.man: Mention sane-umax(5).
+	* doc/xscanimage.man: Ditto.
+	* doc/saned.man: Ditto.
+
+	* configure.in (AC_TYPE_PID_T): Add.
+	* include/sane/config.h.in: Add undef of pid_t.
+
+1997-07-04  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* lib/sigprocmask.c (sigprocmask): Use hardcoded values instead
+	of SIG_BLOCK, SIG_UNBLOCK, and SIG_SETPROCMASK.
+
+1997-07-03  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* configure.in (CPPFLAGS): Remove -D_POSIX_SOURCE.  We can't define
+	it safely since it causes select() related typedefs and defines
+	to go away under FreeBSD, for example.
+
+1997-07-02  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* configure.in (CPPFLAGS): Put -D_GNU_SOURCE and -D_POSIX_SOURCE
+	in CPPFLAGS, not CFLAGS.
+
+	* doc/sane-umax.man: Change SG_BIG_BUFF example from 128KB to
+	127.5KB.
+	* doc/sane-mustek.man: Ditto.  Mention DTC3181E together with
+	DTCT436.
+
+	* frontend/gtkglue.c (gsg_create_dialog): Initialize dialog->advanced
+	to TRUE so "dumb" frontends will show all options.
+
+	* frontend/xscanimage.c (device_dialog): Turn off advanced options
+	by default.
+
+	* configure.in (AC_CHECK_TYPE): Check for u_long and u_int.
+	Check for scsireq_t.
+	* sanei/sanei_scsi.c: Don't define scsireq_t here.
+
+	* include/sane/config.h.in: Add undef of u_long, u_int, and
+	scsireq_t.
+
+1997-07-01  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscanimage.c (quit_xscan): No longer call
+	preview_destroy() since that now gets called as part of
+	the "destroy" callback.
+
+	* backend/hp.c (attach) [PREFER_DEVICEPIXEL]: Use device-pixel
+	unit commands instead of decipoint commands so things work on a 5p
+	as well (contributed by NOGAYA Shigeki
+	<nogaya@mbox.kyoto-inet.or.jp>).
+	(sane_start) [PREFER_DEVICEPIXEL]: Convert from mm to pixels.
+
+	* frontend/preview.c (input_available): Break out of per-bit loop
+	when done with one line (fix contributed by NOGAYA Shigeki
+	<nogaya@mbox.kyoto-inet.or.jp>).
+	* frontend/xscanimage.c (input_available): Ditto.
+
+	* doc/sane-umax.man: Rename SCSI id to Product id to reduce
+	confusion.
+	* doc/sane-hp.man: Ditto.
+	* doc/sane-mustek.man: Ditto.
+
+	* backend/mustek.c (wait_ready): Ignore errors during wait_ready().
+	With 3-pass scanners, ncr810 driver returns EIO while the scanner
+	is getting ready for pass 2 or 3.
+
+1997-06-30  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (sense_handler): Print debug info if we
+	find unknown sense result.
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Consider sense_buffer[]
+	only when result != 0.
+
+	* frontend/scanimage.c (sighandler): Change return value type
+	from void to RETSIGTYPE (from <sane/config.h>).
+
+	* doc/sane-mustek.man: Mention problems with MSFS-12000SP.
+
+	* backend/umax.c (sane_start): Don't use C++ style line comments.
+
+	* backend/umax-scsi.c (umax_do_scsi_cmd): Use sigemptyset() to clear
+	out signal set.  Include <sane/config.h>.
+
+	* frontend/saned.c [HAVE_SYS_SELECT_H]: Include <sys/select.h>.
+	* include/sane/config.h.in: Mention HAVE_SYS_SELECT_H.
+
+Thu Jun 26 10:19:50 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* README: Mention permissions on generic SCSI device.
+
+Tue Jun 24 17:35:52 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/xscanimage.man: Fix spacing.
+
+	* doc/sane-dll.man: Mention how list of pre-loaded backends
+	can be changed.
+
+Sun Jun 22 08:29:47 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* PROBLEMS: Add note on SCSI device names under OpenStep.
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Fix various minor bugs.
+	(sanei_scsi_open): Add support for OpenStep.
+
+	* backend/Makefile.in (install): Replace 'ln -f -s' with `rm -f',
+ 	`ln -s' sequence.  OpenStep doesn't support the -f option at all.
+
+Fri Jun 20 07:30:18 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane-qcam.man: Updated B&W status.
+
+	* sanei/sanei_save_values.c [HAVE_LIBC_H]: Include <libc.h>.
+	* sanei/sanei_load_values.c: Ditto.
+
+	* lib/sigprocmask.c: New file.
+	* lib/strdup.c: Ditto.
+
+	* lib/Makefile.in (LIBLIB_OBJS): Mention strdup.o and sigprocmask.o.
+	(LIBLIB_LTOBJS):  Mention strdup.lo and sigprocmask.lo.
+	(liblib.a): Use $(RANLIB) instead of -ranlib.
+
+	* include/sane/sanei_backend.h [!HAVE_SIGPROCMASK]: Define
+ 	compatibility macros sigset_t, sigemptyset(), sigfillset(),
+	sigaddset(), sigdelset(), and sigaction().
+	Define macro SIGACTION.
+
+	* frontend/saned.c (HAVE_VARARG_MACROS): Don't define unless we
+	have at least gcc 2.6.
+	* include/sane/sanei_debug.h Ditto.  Use HAVE_VARARG_MACROS
+	instead of __GNUC__.
+	* sanei/sanei_init_debug.c: Ditto.
+
+	* configure.in (AC_PROG_RANLIB): Mention.
+	(CFLAGS): Move up near the beginning and add -D_POSIX_SOURCE.
+	(AC_CHECK_HEADERS): Test for libc.h.
+	(AC_TYPE_SIGNAL): Mention.
+	(AC_CHECK_FUNCS): Check for sigprocmask.
+
+	* backend/net.c (sane_init): Honor SANE_NET_HOSTS even if
+	net.conf does not exist.
+
+	* backend/mustek.c (sane_start): Use "struct SIGACTION" so it's
+	easier to make code work on platforms that don't support
+	sigprocmask().
+	* backend/umax.c (sane_start): Ditto.
+
+	* ltmain.sh: Upgrade to libtool-0.9h.
+	* ltconfig: Ditto.
+	* config.guess: Ditto.
+	* config.sub: Ditto.
+	* aclocal.m4: Ditto.
+
+Thu Jun 19 08:26:33 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* configure.in (V_MINOR): Update forgotten version number...
+
+	* backend/qcam.c (reader_process): Scale 4 and 6 bpp to 8 bpp.
+
+	* backend/mustek.h (MUSTEK_FLAG_LD_NONE): New flag.
+	* backend/mustek.c (attach): Turn on MUSTEK_FLAG_LD_NONE for
+	MSF-06000SP (this fixes the problems for Andreas Gaumann
+ 	<gg261@appl2.hrz.uni-siegen.de>).
+	(attach): Print debug message when MUSTEK_FLAG_LD_NONE is on.
+	(line_distance): Fix up ld correction only if MUSTEK_FLAG_LD_NONE
+	is not on.
+
+Wed Jun 18 15:42:25 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (section{Image Data Format}}): Clarify
+	what valid bit-depths are.
+	
+Tue Jun 17 07:47:51 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/qcam.c (sane_get_parameters): Test for != QC_COLOR
+	instead of == QC_MONO.  Apparently, there are several versions
+	of the monochrome camera.
+	(qc_setscanmode): Ditto.
+
+	* lib/snprintf.c: Update with latest version (also includes
+	license information now).
+
+	* sane-0.6.lsm (Author): Update Tristan Tarrant's email address.
+	* AUTHORS: Ditto.
+	* frontend/xscanimage.c: Ditto.
+
+Sun Jun 15 10:08:44 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/xscanimage.man: Add section on how to run xscanimage under
+ 	the GIMP.
+
+	* frontend/xscanimage.c (init) [HAVE_LIBGIMP_GIMP_H]: Call
+ 	gtk_rc_parse() with gimp_gtk_rc() to get space-saving layout of
+ 	The GIMP. (Suggested by Sven Neumann.)
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Add NeXTStep/OpenStep
+ 	implementation.
+	(sanei_scsi_cmd): Adjust NetBSD version to make it more like
+	NeXTStep/OpenStep version.
+
+	* configure.in (AC_CHECK_HEADERS): Mention bsd/dev/scsireg.h.
+
+Thu Jun 19 15:19:38 1997  Gordon Matzigkeit  <gord@gnu.ai.mit.edu>
+
+	* backend/umax-scsi.c: Parameterize slightly more so that the
+ 	build succeeds on non-Linux platforms.
+
+	* Makefile.in, backend/Makefile.in, doc/Makefile.in,
+ 	frontend/Makefile.in (install): Fail immediately if any
+ 	installation fails.  Use mkinstalldirs to create all installation
+ 	directories.
+
+Sat Jun 14 11:07:13 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.6 released.
+
+	* frontend/preview.c (preview_new): Connect "destroy" signal
+	so we notice if window manager closes our window.
+	(top_destroyed): New function.
+
+	* frontend/xscanimage.c (scan_preview): Make it robust against
+ 	preview_new() returning NULL and connect "destroy" signal so we
+ 	notice when the window manager closes the preview window.
+	(preview_window_destroyed): New function.
+
+	* LICENSE: New file.
+
+	* backend/dll.c: Change license from GPL to relaxed GPL.
+	* backend/hp.c: Ditto.
+	* backend/hp.h: Ditto.
+	* backend/mustek.c: Ditto.
+	* backend/mustek.h: Ditto.
+	* backend/net.c: Ditto.
+	* backend/net.h: Ditto.
+	* backend/pint.c: Ditto.
+	* backend/pint.h: Ditto.
+	* backend/pnm.c: Ditto.
+	* backend/pnm.h: Ditto.
+	* backend/qcam.c: Ditto.
+	* backend/qcam.h: Ditto.
+	* sanei/sanei_codec_ascii.c: Ditto.
+	* sanei/sanei_codec_bin.c: Ditto.
+	* sanei/sanei_constrain_value.c: Ditto.
+	* sanei/sanei_init_debug.c: Ditto.
+	* sanei/sanei_load_values.c: Ditto.
+	* sanei/sanei_net.c: Ditto.
+	* sanei/sanei_save_valus.c: Ditto.
+	* sanei/sanei_scsi.c: Ditto.
+	* sanei/sanei_wire.c: Ditto.
+
+Fri Jun 13 18:35:47 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* lib/snprintf.c: New file (Patrick Powell).
+
+	* frontend/xcam.c: Use guint32 and guint32 instead of u_int16_t
+ 	and u_int32_t (Tristan Tarrant).
+
+	* doc/Makefile.in (SECT5): Mention sane-umax.5.
+
+	* configure.in (PACKAGE_VERSION): Check for snprintf (Tristan
+ 	Tarrant).
+
+	* backend/dll.conf: Mention umax.
+
+	* backend/umax-scanner.h: New file (from umax-0.5.5).
+	* backend/umax-scsi.c: Ditto.
+	* backend/umax-scsidef.h: Ditto.
+	* backend/umax-struct.h: Ditto.
+	* backend/umax-uc630.h: Ditto.
+	* backend/umax-ug630.h: Ditto.
+	* backend/umax-umax.c: Ditto.
+	* backend/umax.conf: Ditto.
+	* backend/umax.h: Ditto.
+	* doc/sane-umax.5: Ditto.
+
+	* backend/Makefile.in (PRELOADABLE_BACKENDS): Mention umax.
+	(libsane-umax.la): List dependencies for umax library.
+
+	* COPYING: New file.
+
+	* include/sane/config.h.in: Add #undef HAVE_SNPRINTF.
+
+Tue Jun 10 21:00:34 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* ltmain.sh: Upgrade to libtool-0.9g.
+
+Sun Jun  8 21:24:27 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/dll.c (load): Also check SHLIB_PATH (HP-UX) and LIBPATH
+ 	(AIX).
+
+	* include/sane/config.h.in: Remove HAVE_GTK_GTKCURVE_H.
+
+Sat Jun  7 11:19:57 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscanimage.c (pref_device_save): Call gsg_sync() before
+	saving the values.
+
+	* backend/Makefile.in (libsane-%.la): Add -export-dynamic flag.
+
+	* frontend/xscanimage.c (query): Rename "/Extensions/" to "/Xtns/"
+ 	to reflect gimp-0.99.10 changes.
+	(query): Don't put in separator---it confuses gimp.
+	(main): Temporarily install a null print handler so gimp_main()
+ 	doesn't produce any ugly messages when program gets invoked in
+ 	stand-alone mode.
+
+	* ltconfig: Upgrade libtool to version 0.9f.
+	* ltmain.sh: Ditto.
+	* config.guess: Ditto.
+	* config.sub: Ditto.
+
+	* frontend/Makefile.in (install): Define MKDIR as
+	$(top_srcdir)/mkinstallldirs.
+	Use $(MKDIR) instead of mkdir.
+	* backend/Makefile.in (install): Ditto.
+	* doc/Makefile.in (install): Ditto.
+
+	* mkinstalldirs: New file (from maint-0.1g).
+
+Tue Jun  3 10:29:17 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* LEVEL2: New file.
+
+Sun Jun  1 13:26:40 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/Makefile.in (LATEX, DLH): New macros.
+	(sane.ind): Prefix source filename with $(srcdir).
+	(ps): Ditto.
+	(html): Ditto.
+
+	* doc/net.tex (subsection{SANE_NET_START}): Document member
+	byte_order.
+
+	* sanei/sanei_net.c (sanei_w_start_reply): (De-)code BYTE_ORDER
+ 	member.
+
+	* frontend/saned.c (byte_order): New union.
+	(process_request): Initialize byte_order member.
+
+	* include/sane/sanei_net.h (SANE_Net_Byte_Order): New enum type.
+	(SANE_Start_Reply): New member BYTE_ORDER.
+
+Wed May 28 17:13:43 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/Makefile.in (install): Create $(mandir)/man1 and
+ 	$(mandir)/man5 if necessary.
+
+Tue May 27 09:31:39 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/hp.c: Remove s7_range and s1_range.
+	(attach): Add inquiry of min/max brightness/contrast and fill in
+ 	dev->brightness_range and dev->contrast_range accordingly.
+	(init_options): Use s->hw->brightness_range instead of s7_range.
+  	Use s->hw->contrast_range instead of s7_range.  Disable contrast
+ 	option if min value is same as max value.
+
+	* backend/hp.h (struct HP_Device): Add members BRIGHTNESS_RANGE
+ 	and CONTRAST_RANGE.
+
+	* sanei/sanei_scsi.c (sanei_scsi_open): Add more debug info.
+
+Mon May 26 10:43:51 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/Makefile.in: Add definitions for VPATH, srcdir, top_srcdir,
+ 	and top_builddir.
+	(INCLUDES): Move -I directives from CPPFLAGS to this macro.  Also
+ 	search in $(srcdir), $(top_builddir)/include, and
+	$(top_srcdir)/include.
+
+	* lib/Makefile.in: Add definitions for VPATH, srcdir, top_srcdir,
+ 	and top_builddir.
+	(INCLUDES): Move -I directives from CPPFLAGS to this macro.  Also
+ 	search in $(srcdir), $(top_builddir)/include, and
+	$(top_srcdir)/include.
+
+	* include/Makefile.in: New file.
+
+	* frontend/Makefile.in: Add definitions for VPATH, srcdir, top_srcdir,
+ 	and top_builddir.
+	(INCLUDES): Also search in $(srcdir), $(top_builddir)/include, and
+	$(top_srcdir)/include.
+	(install): Add $(srcdir) prefix to sane-style.rc.
+
+	* doc/Makefile.in: Add definitions for VPATH, srcdir, top_srcdir,
+ 	and top_builddir.
+	(%.1 %.5): Use $^ instead of $* so source file can be found even
+	when in a different directory.
+
+	* configure.in (AC_OUTPUT): Create (dummy) include/Makefile to
+	ensure include directory exists in build tree.
+
+	* backend/Makefile.in: Add definitions for VPATH, srcdir,
+ 	top_srcdir, and top_builddir.
+	(INCLUDES): Also search in $(srcdir), $(top_builddir)/include, and
+	$(top_srcdir)/include.
+	(CONFIGS): Add $(srcdir) prefix.
+	(%-s.c): Ditto.
+
+	* Makefile.in (INSTALLED_INCLUDES): Mention include/sane/config.h.
+	Add definitions for VPATH, srcdir, top_srcdir, and top_builddir.
+	(INSTALLED_INCLUDES): Change include/sane to $(top_srcdir)/include/sane
+	and use "addprefix" function to add prefix.
+
+Thu May 15 07:26:06 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane-mustek.man (Model): Add entry for MFC-600CD.
+	(Model): Mention AHA-2940.
+
+	* frontend/xscanimage.c (scan_dialog): Move gsg_sync() to here
+ 	(from scan_start()).
+
+	* backend/mustek.c (init_options): Disable brightness/contrast for
+ 	1-pass scanners only (in color mode).
+
+Wed May 14 09:17:02 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c: Add ax_brightness_range, ax_contrast_range.
+	(init_options): Use ax_brightness_range/ax_contrast_range for
+	brightness/contrast option when using a 3-pass scanner.
+	(encode_percentage): Remove extraneous division by 100.0.
+
+	* doc/sane-mustek.man (Model): Add MFS-12000CX entry.
+
+Mon May 12 07:58:34 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/scanimage.c (main): Shorten help string so it fits in
+ 	80 characters.
+
+	* frontend/preview.c (paint_image): Only increment height if
+ 	height < p->image_height.
+
+Sat May 10 14:43:05 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.57 released.
+
+	* backend/mustek.c (attach): Fix range to 220x300mm.
+	(init_options): Initialize OPT_PREVIEW and OPT_GRAY_PREVIEW.
+	(sane_control_option): Handle OPT_PREVIEW and OPT_GRAY_PREVIEW.
+  	Do not allow OPT_NUM_OPTS to be set.
+	(sane_get_parameters): Except for s->params.format and
+ 	s->params.last_frame, do not change any parameters when scanning
+	is in progress.
+	(sane_start): Handle mono-chrome previewing.
+
+	* backend/mustek.h (Mustek_Option): Add OPT_PREVIEW and
+ 	OPT_GRAY_PREVIEW.
+
+	* frontend/progress.c (progress_new): Fix position of progress bar
+ 	window to (progress_x,progress_y).
+
+	* frontend/gtkglue.c (panel_build): Skip Preview option.
+
+Thu May  8 19:39:48 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/scanimage.man: New file.
+
+	* doc/Makefile.in (SECT1): Mention scanimage.1.
+
+	* backend/dll.conf: Add hp to dll.conf.
+
+Wed May  7 07:28:18 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* include/sane/sanei_scsi.h (SANEI_SCSI_Sense_Handler): New type.
+	(sanei_scsi_close): Add SENSE_HANDLER argument (NULL means no
+ 	special handler needed).
+
+	* backend/hp.c (sane_start): Pass 0 as SENSE_HANDLER argument.
+	(attach): Ditto.
+
+	* backend/mustek.c (sense_handler): Rename from request_sense and
+	simplify.
+	Remove all explicit request-sense calls.
+
+	* sanei/sanei_scsi.c: Include <stdlib.h>.
+	(num_handlers_alloced): New variable.
+	(sense_handler): Ditto.
+	(sanei_scsi_open): Add SENSE_HANDLER argument.  Stash it away in
+ 	SENSE_HANDLER array if non-NULL.
+	(sanei_scsi_cmd) [HAVE_SYS_SG]: Invoke SENSE_HANDLER[FD] if it
+ 	exists and is non-NULL and we have a valid sense-buffer.
+	(sanei_scsi_cmd) [HAVE_SYS_SCSI]: Ditto.
+	(sanei_scsi_close): Reset SENSE_HANDLER[FD] to NULL if it exists.
+
+	* frontend/xcam.c: Include <sane/config.h>.
+
+	* configure.in: Add a big fat warning that PROBLEMS should be
+	read before running any programs.
+
+	* PROBLEMS: Add info on how to avoid damaging Mustek scanners.
+
+Mon May  5 07:06:54 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (chapter{Contact Information}): Fix URL.
+
+	* doc/net.tex: Add missing sections.  Make into chapter.
+
+	* backend/pint.README: Remove.
+
+	* backend/dll.c (ASSERT_SPACE): Call malloc() when devlist is
+ 	NULL.  SunOS realloc() returns NULL otherwise.
+	* backend/net.c (ASSERT_SPACE): Ditto.
+
+Sun May  4 09:21:48 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/saned.c (EXIT_SUCCESS): Define as 0 if not defined by
+ 	stdlib.h.
+
+	* frontend/scanimage.c: Include <sys/types.h>.
+
+	* backend/qcam.c: Define PATH_MAX as 1024 if limits.h doesn't
+ 	define it.
+	* backend/dll.c: Ditto.
+	* backend/hp.c: Ditto.
+	* backend/mustek.c: Ditto.
+	* backend/net.c: Ditto.
+	* backend/pint.c: Ditto.
+	* backend/qcam.c: Ditto.
+	* frontend/xscanimage.c: Ditto.
+	* frontend/xcam.c: Ditto.
+	* frontend/preview.c: Ditto.
+
+	* sanei/sanei_wire.c: Include <sane/config.h>.
+	* sanei/sanei_net.c: Ditto.
+	* sanei/sanei_codec_ascii.c: Ditto.
+	* sanei/sanei_codec_bin.c: Ditto.
+	* sanei/sanei_save_values.c: Ditto.
+	* backend/net.c: Ditto.
+	* frontend/saned.c: Ditto.
+
+	* configure.in (AC_CHECK_HEADERS): Mention
+ 	/usr/src/linux/include/scsi/sg.h.
+
+	* include/sane/config.h.in: Add
+ 	#undef HAVE__USR_SRC_LINUX_INCLUDE_SCSI_SG_H.
+
+	* sanei/sanei_scsi.c [HAVE__USR_SRC_LINUX_INCLUDE_SCSI_SG_H]:
+ 	Include "/usr/src/linux/include/scsi/sg.
+	(sanei_scsi_cmd): Use Linux version if either HAVE_SCSI_SG_H or
+	HAVE__USR_SRC_LINUX_INCLUDE_SCSI_SG_H are defined.
+
+	* doc/xscanimage.man: Rename --no-shm to --no-xshm.
+
+Mon Apr 28 09:55:02 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.56 released.
+
+	* backend/qcam.c (sane_open): Move disabling of despeckle-filter
+	for b&w cameras to here (from init_options()).
+
+	* frontend/preferences.c: Add missing default value for FILENAME.
+
+	* backend/qcam.h: Add QC_BW_SET_CONTRAST,
+ 	QC_BW_AUTO_ADJUST_OFFSET, and QC_BW_GET_OFFSET.  * backend/qcam.c
+ 	(sane_start): Use QC_BW_SET_CONTRAST when dealing with B&W camera.
+  	Fix computation of QC_SET_NUM_H value.  [Based on Guido Muensch's
+ 	patches.]
+
+	* frontend/scanimage.c (advance): Move out-of-memory error message
+ 	from scan_it() to here.
+	(scan_it): When height is known a priori, allocate one extra line
+ 	to avoid realloc() when image has been filled.
+
+	* backend/hp.c (BACKEND_NAME): Define as hp (reported by Henryk
+ 	Paluch).
+
+	* backend/mustek.c (request_sense): Increase result size from 4 to
+ 	16 bytes to shut up aha1542 driver (reported by Mathias Lautner).
+
+	* frontend/scanimage.c (advance): Fix memory allocation logic
+	(bug reported by Matthias Lautner).
+
+	* doc/sane-dll.man: Clarify that pre-loaded backends are not
+ 	affected by dll.conf.
+
+	* doc/sane-pint.man: New file (contributed by Gordon Matzigkeit).
+
+	* backend/dll.c (RTLD_NOW): Define as 0 if dlfcn.h doesn't define
+ 	it.
+
+Wed Apr 23 23:03:47 1997  Gordon Matzigkeit  <gord@gnu.ai.mit.edu>
+
+	* backend/Makefile.in, frontend/Makefile.in: Specify full
+ 	filenames, rather than just the directory name for INSTALL
+ 	destinations.  This Automakeism helps debugging when the target
+ 	directory doesn't exist.
+
+	* include/sane/config.h.in (HAVE_SYS_SCANIO_H): Define, for PINT's
+	sake.
+
+	* backend/pint.c: Prefix sane includes with <sane/...>.
+
+	* backend/dll.c (RTLD_NOW): Paramaterize, so that RTLD_LAZY is
+	used if RTLD_NOW is not defined.
+	(load): Try looking up the symbol with a leading underscore, if we
+ 	can't find it the first time.
+
+	Make dynamic loading conditional on HAVE_DLOPEN rather than the
+ 	library and header file.
+
+	* configure.in (enable_dynamic): Disable dynamic loading if the
+	system doesn't have dlopen.
+
+Tue Apr 22 00:17:41 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.55 released.
+
+	* frontend/xscanimage.c (browse_filename_callback): Initialize
+	FILENAME before calling gsg_get_filename().
+
+	* doc/sane.tex: Change obsolete \driver{DVIps} into DVIps document
+ 	style option.
+
+	* frontend/xscanimage.c (query): Update to new command name
+ 	length.
+
+Mon Apr 21 08:27:28 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/Makefile.in (install): Add rule to install man-pages.
+	(%.1 %.5): Add rule to generate man-pages (by substituting
+	actual paths).
+	(SECT1): New variable.
+	(SECT5): Ditto.
+	(MANPAGES): Ditto.
+
+	* doc/sane-pnm.man: New file.
+	* backend/pnm.README: Deleted.
+
+	* doc/sane-hp.man: New file.
+	* backend/hp.README: Deleted.
+
+	* doc/saned.man: New file.
+	* frontend/saned.README: Deleted.
+
+	* doc/sane-qcam.man: New file.
+	* backend/qcam.README: Deleted.
+
+	* doc/sane-mustek.man: New file.
+	* backend/mustek.README: Deleted.
+
+	* doc/sane-net.man: New file.
+	* backend/net.README: Deleted.
+
+	* doc/sane-dll.man: New file.
+	* backend/dll.README: Deleted.
+
+	* doc/xscanimage.man: New file.
+	* frontend/xscanimage.README: Deleted.
+
+	* frontend/preview.c (event_handler): Restore preview image only
+	if preferences.preserve_preview is TRUE.
+
+	* frontend/xscanimage.c (preview_options_dialog): Add an option
+	to control whether the preview image should be preserved.
+
+	* sanei/sanei_load_values.c (sanei_load_values): Copy string value
+	into temporary buffer that is opt->size bytes long.  Then pass copy
+	to sane_control_option().
+
+	* AUTHORS (Backends): Updated according to recent changes.
+
+	* doc/sane.tex (The SANE Application Programmer Interface (API)):
+ 	Fix typo: replace () by {}.
+
+	* PROJECTS (Backend): Update PINT entry.
+
+	* frontend/xscanimage.c (prog_name): New variable.
+	(input_available): Use prog_name instead of hardcoding "xscan".
+	(preview_options_ok_callback): Ditto.
+	(preview_options_dialog): Ditto.
+	(usage): Ditto.
+	(interface): Ditto.
+	(main): Initialize prog_name.
+
+	* frontend/scanimage.c: Update for new name (scanimage instead of
+ 	scan).
+
+	* frontend/Makefile.in (SCAN_OBJS): Rename sources to xscanimage.c
+ 	and scanimage.c as well.
+
+Sun Apr 20 09:09:06 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.54 released.
+
+	* sanei/Makefile.in (LIBSANEI_LTOBJS): Remove @LTALLOCA@.
+	(LIBSANEI_OBJS): Remove @ALLOCA@.
+
+	* lib/Makefile.in: Invoke $(LIBTOOL) with --mode arg to avoid
+ 	depending on command names.  Prefix $(LIBTOOL) invocation with
+	@-sign to reduce verbosity.
+	* frontend/Makefile.in: Ditto.
+	* backend/Makefile.in: Ditto.
+	* sanei/Makefile.in: Ditto.
+	
+	* frontend/saned.c (_PATH_HEQUIV): Define if not defined yet..
+
+	* configure.in: Check for libgimp/gimp.h instead of -lgimp since
+	-lgimp cannot be linked by itself (it has an unresolved reference
+	to PLUG_IN_INFO).
+
+	* lib/strndup.c (strndup): Include <stdlib.h>.
+
+	* frontend/xscanimage.README: Update.
+
+	* sanei/sanei_scsi.c: Add missing "int" type in front of
+ 	sanei_scsi_max_request_size.
+
+	* configure.in: Check for -lintl, -lsocket, and -lnsl for
+ 	braindamaged SVR4 systems.
+
+	* frontend/scan.c (scan_it): Initialize min with 0xff, not ~0
+	(Sun CC complains otherwise).
+
+	* backend/Makefile.in: Use "ln -f -s", not "ln -sf", Solaris doesn't
+	like the former.  Grrr...
+
+	* lib/alloca.c: Don't use xmalloc().
+
+	* frontend/saned.c (store_reclen): Declare BUF as a pointer to
+ 	SANE_Byte (not char).
+	(do_scan): Ditto.
+
+	* frontend/scan.c (fetch_options): Cast opt->name to (char *)
+	to suppress (spurious) warning.
+
+	* backend/dll.c (sane_init): Skip preloaded backends with no name.
+
+	* backend/hp.c (inquire): Cast BUF to (char *) to avoid warning.
+	(sane_read): Change type of NREAD to size_t (from ssize_t).
+
+	* include/sane/sanei_backend.h (u_int16_t): Define u_int8_t,
+ 	u_int16_t, and u_int32_t if necessary.
+
+	* include/sane/sane.h (sane_strstatus): Remove non-ANSI "const".
+	* backend/sane_strstatus.c (sane_strstatus): Ditto
+
+	* include/sane/sanei_debug.h (DBG): Define alternate version for
+	non-GNU C compilers.
+
+	* sanei/sanei_init_debug.c (sanei_debug) [!__GNUC__]: New function.
+	(max_level) [!__GNUC__]: New variable.
+
+	* include/sane/sanei_wire.h: Fix typo in prototype for
+ 	sanei_w_value_type.
+
+	* configure.in: Test for gtk_check_button_new() in libgtk.
+
+	* lib/Makefile.in (CPPFLAGS): Add -I../include/sane.
+
+	* frontend/scan.c (STRIP_HEIGHT): New macro.
+	(advance): Use above macro instead of hard-coding value.
+	(scan_it): Ditto.
+	(scan_it): Print error when out of memory.
+
+	* frontend/sane-style.rc: Make the curve in the graph red.
+
+	* frontend/preview.c (XSERVER_WITH_BUGGY_VISUALS): Define for now.
+	(preview_new): Avoid push_visual()/get_visual() since it seems to
+ 	cause problems with some XFree86 servers (and may be others as
+ 	well).
+
+	* frontend/preferences.h: Add member ADVANCED.
+	* frontend/preferences.c: Initialize member ADVANCED and add
+	an option descriptor for it.
+
+	* frontend/gtkglue.c (panel_build): Layout panel different: all
+ 	options are now in one column (advanced options are at the
+ 	bottom).  The graph widget (if any), will be shown in a separate
+ 	column to the right of the options.  Display a group only when
+ 	there is at least one option in it.  Create graph widget if there
+ 	is at least one vector-valued option.
+	(gsg_sync): New function.
+	(gsg_set_advanced): Ditto.
+	(gsg_message_dialog_active): Rename from SHOWING_MESSAGE and make
+	global.
+
+	* frontend/gtkglue.h (GSGDialog): Rename member NOTEBOOK to
+ 	MAIN_HBOX.  Add members ADVANCED_VBOX and ADVANCED.
+
+	* frontend/gtkglue.c (group_new): New function.
+	(curve_new): Ditto.
+	(vector_new): Ditto.
+
+	* backend/mustek.c (init_options): Initialize OPT_CUSTOM_GAMMA.
+	(sane_control_option): Handle OPT_CUSTOM_GAMMA.
+
+	* backend/mustek.h (OPT_CUSTOM_GAMMA): New option.
+
+	* configure.in (AC_CONFIG_HEADER): Update for new location.
+
+	* include/sane/config.h.in: Move to here from include/config.h.
+	* *.[ch]: Replace <config.h> with <sane/config.h> (except for
+	files in lib.
+
+	* frontend/saned.README: saned moved from bin/saned to sbin/saned.
+
+	* configure.in (AC_CHECK_HEADERS): Check for gtk/gtkcurve.h.
+
+	* backend/mustek.c (init_options): Undo changes of April 18th.
+
+	* frontend/Makefile.in (install): Install $(BINPROGS) in $(bindir)
+ 	and $(SBINPROGS) in $(sbindir).
+	(SBINPROGS): New variable.
+	(BINPROGS): Ditto.
+	(PROGRAMS): Define as concatenation of the two vars above.
+	(install): Create $(bindir) and $(sbindir) if necessary.
+
+Sat Apr 19 18:21:02 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/Makefile.in (scanimage): Rename "scan" binary to
+ 	"scanimage" to avoid name-collision with MH's scan command.
+
+	* backend/mustek.c (gamma_correction): Update according to new
+	gamma-table handling.
+
+	* backend/mustek.h: Declare gamma_table as 4 arrays of 256 words
+	each.
+
+	* backend/mustek.c (sane_control_option): Add missing return after
+	setting OPT_GAMMA_VECTOR.
+
+	* frontend/progress.h: Protect against multiple inclusion using
+ 	macro progress_h, not __PROGRESS_H__ (names starting with
+ 	underscores are reserved for libc/system).
+
+	* frontend/gtkglue.c: Remove include of <gtk.h>.
+	* frontend/xcam.c: Ditto.
+	* frontend/xscan.c: Ditto.
+
+	* frontend/gtkglue.h: Include <gtk/gtk.h> instead of <gtk.h>.
+	* frontend/progress.c: Ditto.
+
+	* Makefile.in (install): Install headerfiles.
+	(INSTALLED_INCLUDES): List of header files that need to be
+ 	installed.
+
+Sat Apr 19 18:15:03 1997  Michael K. Johnson <johnsonm@redhat.com>
+
+	* */*.[ch]: Prefix sane-includes with <sane/...>.
+	include/sane*: Move to include/sane subdirectory.
+
+Sat Apr 19 08:25:36 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/gtkglue.c (set_option): Add missing return and use
+	snprintf instead of sprintf.
+
+	* frontend/xscan.c (update_param): Multiply size by 3 if we're
+	dealing with a frame from a 3-pass image.
+
+Fri Apr 18 07:28:46 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (init_options): Mark all vector options as
+	SANE_CAP_ADVANCED.
+
+	* frontend/scan.c (scan_it): Fail if advance() fails.
+
+Thu Apr 17 08:59:00 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (sane_read): Add debug statement.
+	(reader_process): Remove extraneous if-statement that had the
+ 	effect of not passing along any data in 3-pass mode.
+
+Wed Apr 16 09:16:01 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/preview.h: Add member CANCEL.
+	* frontend/preview.c (scan_start): Make p->cancel sensitive.
+	(scan_done): Make p->cancel insensitive.
+	(preview_new): Set p->cancel insensitive.
+
+	* frontend/preferences.h (Preferences): Add member "filename".
+	* frontend/preferences.c: Initialize new member "filename".
+	Declare member "filename" as a string.
+
+	* frontend/xscan.c (device_dialog): Rename "Files" to "File".
+	(quit_xscan): Call pref_xscan_save() before exiting.  Replace
+	global variable filename by preferences.filename.
+
+	* frontend/xcam.c (main): Ditto.
+
+	* PROBLEMS: New file.
+
+	* frontend/gtkglue.c (scale_new): Set the adjustment page size to
+ 	0.0.  Make horizontal scale 200 pixels wide.
+
+	* frontend/xscan.c (device_dialog): Move gtk_widget_show
+ 	(ScanWin.shell) after pref_device_restore (0, 0).
+	(pref_device_restore): Make arg-less since callback arguments must
+ 	not be used.
+	(device_dialog): Remove dummy args from call to pref_device_restore().
+
+	* include/saneopts.h (SANE_TITLE_SCAN_TL_X, SANE_TITLE_SCAN_TL_Y,
+ 	SANE_TITLE_SCAN_BR_X, SANE_TITLE_SCAN_BR_Y): Shorten titles.
+
+	* frontend/xcam.c (main): Move gtk_widget_show(win.shell) to end
+	of function.
+
+	* backend/mustek.c (attach): Turn on MUSTEK_FLAG_USE_EIGHTS for
+ 	MFS-12000CX.
+	(sane_get_parameters): Must not depend on s->mode in this routine,
+	since s->mode is valid only once scanning has begun.
+
+Tue Apr 15 23:06:17 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (sane_start): Issue SCAN_AREA and BACKTRACK
+ 	commands even during second and third pass.
+	(sane_get_parameters): Be sure to properly update the
+ 	params.format member during second and third pass.
+
+Sat Apr 12 11:40:52 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/scan.c (STRIP_HEIGHT): New macro.
+	(scan_it): Fix typo: test parm.lines instead of image.height.
+
+	* backend/pnm.c (hand_scanner): New variable.
+	(sane_control_option): Handle setting/reading of HAND_SCANNER
+ 	option.
+	(getparmfromfile): Set parms.lines to -1 when simulating
+ 	hand-scanner.
+	(sod): Add hand-scanner option descriptor.
+
+	* frontend/gtkglue.c (panel_build): Move gtk_widget_show
+ 	(notebook) to the very of this function.  This works around the
+ 	notebook redrawing problems.  Define WORKING_NOTEBOOK.
+
+	* frontend/xscan.c (interface): Call quit_xscan() if
+ 	device_dialog() did not end up with a non-NULL dialog.
+	(quit_xscan): Add missing exit() call.
+
+	* backend/mustek.c (attach): Print more debug info on detected
+ 	scanner (1 vs 3-pass, ADF & TA support).
+	(start_scan): Fix typo in code selecting the three-pass color filter.
+
+Sun Apr 13 23:53:02 1997  Gordon Matzigkeit  <gord@gnu.ai.mit.edu>
+
+	* backend/pint.c, backend/pint.h, backend/pint.README: Added to
+ 	distribution.
+
+Fri Apr 11 22:04:17 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.53 released.
+
+	* frontend/xscan.c: Default to "out.pnm" instead of "out.ppm".
+
+	* backend/mustek.c (get_image_status): Add debug message.
+	(sane_start): Only divide pixels_per_line by three if we're doing
+ 	a one-pass color scan.
+	(do_eof): New function.
+	(sane_read): Call do_eof() when done with a frame.
+	(do_cancel): Call do_eof().
+
+	* frontend/scan.c (write_pnm_header): New function.
+	(advance): Ditto.
+	(scan_it): Modify to support three-pass scanning and scanning of
+ 	images whose height is not known a priori (hand-held scanners).
+
+Wed Apr  9 14:39:59 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscan.c (ok_choose_dialog_callback): Make
+ 	argument-free.
+	(select_device_callback): Declare event as second argument and
+ 	call ok_choose_dialog_callback() if the callback was invoked
+ 	through a double-click.
+	(choose_device): Register select_device_callback() as
+ 	"button_press_event" handler instead of as "clicked" so we can
+ 	catch double-clicks.
+
+Tue Apr  8 10:31:47 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscan.c (init): Enable gtk_rc_parse() code (GTK-0.99.7
+ 	requires patch for gtkstyle.c).
+
+	* backend/hp.c (attach): Fix parenthization to shut up gcc.
+
+Mon Apr  7 13:08:45 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscan.c (preview_options_dialog): Rename "changed_text"
+	to "changed" to reflect latest GTK version.
+	(device_dialog): Ditto.
+	* frontend/gtkglue.c (text_entry_new): Ditto.
+
+	* Version 0.52 released.
+
+	* AUTHORS: Various updates.
+
+	* backend/mustek.README: Add Adaptec info.
+
+	* backend/mustek.c (sane_start): Call wait_ready() before any
+	other scanner command.
+	(wait_ready): New function.
+	(attach): Call wait_ready() instead of open-coding it.
+
+	* doc/sane.tex (subsection{\code{sane\_strstatus}}): Include
+ 	net.tex.
+	* doc/net.tex: New file.
+
+Thu Apr  3 08:51:13 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscan.c (update_param): Change type of SIZE to u_long
+ 	(from long) since under NetBSD there seem to be some odd sign
+ 	problems otherwise (compiler bug?).
+
+Wed Apr  2 07:15:41 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (sane_read): Always deliver EOF after reading
+	0 bytes.
+
+	* backend/qcam.c (reader_process): Fine-tune pixel interpolation.
+	(despeckle32): Ignore last red pixel in every line (it's always
+ 	black).  Switch red and blue pixel location (the Connectix docs
+ 	are wrong).
+
+	* backend/mustek.c (start_scan): Fix typo that caused start[4] to
+	be set incorrectly.
+
+	* frontend/preview.c: Include <sys/param.h> to get PATH_MAX.
+
+Tue Apr  1 18:45:14 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/qcam.c (despeckle): New function.
+	(despeckle32): Ditto.
+	(init_options): Initialize OPT_DESPECKLE.
+	(reader_process): Add despeckling support.
+	(sane_control_option): Ditto.
+	(sane_start): Initialize req.despeckle.
+
+	* backend/qcam.h: New member DESPECKLE.
+
+	* frontend/preview.c (restore_option): Fix typo: it should be
+ 	SANE_ACTION_SET_VALUE (not _get_).
+
+	* backend/mustek.c (attach): Turn on MUSTEK_FLAG_USE_EIGHTS for
+ 	MFS-06000CX.
+
+	* backend/hp.c (attach): Allow both TYPE_PROCESSOR (0x03) and
+	TYPE_SCANNER (0x06) as the first inquiry byte---some scanners use
+	the former, others the latter.
+
+	* Version 0.51 released.
+
+	* configure.in: Check for gtk_tooltips_new in libgtk.
+
+Mon Mar 31 14:42:56 1997  Gordon Matzigkeit  <gord@gnu.ai.mit.edu>
+
+	* frontend/scan.c (main): Added full_optstring, to allow getopt to
+	do full parsing of the option arguments.
+
+	* backend/pnm.c (getparmfromfile): Need to round up the number of
+	bytes per line when scanning bitmaps.
+
+Mon Mar 31 07:48:50 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/qcam.c (attach): Send a dummy black-level command.  The
+ 	first black-level command aftera camera reset doesn't appear to
+ 	"take."
+
+	* lib/strndup.c: Correct typo: HAVE_STRDUP -> HAVE_STRNDUP.
+
+	* frontend/xscan.c (pref_set_tooltips): New function.
+	(pref_build_menu): Build tooltip submenu.
+
+	* frontend/preferences.h: New member TOOLTIPS_ENABLED.
+	* frontend/preferences.c: Add entry for TOOLTIPS_ENABLED.
+
+	* frontend/gtkglue.h: Add members TOOLTIPS, TOOLTIPS_FG, and
+ 	TOOLTIPS_BG.
+
+	* frontend/gtkglue.c (set_tooltip): New function.
+	(autobutton_new): Add argument TOOLTIPS and add button-description
+ 	via set_tooltip().
+	(button_new): New args TOOLTIPS & DESC.  Set DESC as tooltip help
+ 	string.
+	(scale_new): Ditto.
+	(option_menu_new): Ditto.
+	(text_entry_new): Ditto.
+	(panel_destroy): Destroy dialog tooltips as well.
+	(panel_build): Create tooltips and allocate colors for it; pass
+	new args to above functions.
+	(gsg_set_tooltips): New function.
+
+	* Version 0.5 released.
+
+	* backend/Makefile.in (install): Add missing double-quotes to
+ 	$(LIBS) and $(CONFIGS).  Also create a symlink for libsane.a.
+
+	* ltconfig: Revert back to version 0.9.
+	* ltmain.sh: Ditto.
+
+	* frontend/scan.c (print_option): Substitute our own help string
+ 	for -x and -y options.
+	(main): Remove BROKEN_GETOPT code.
+
+	* frontend/Makefile.in (CPPFLAGS): Undo yesterday's change.
+	* lib/getopt1.c: Ditto.
+	* lib/getopt.c: Ditto.
+
+	* frontend/scan.c (main): Add some clever getopt () hackery to
+ 	work around multi-scan getopt () bug (patch by Gord Matzigkeit).
+
+	* backend/qcam.README: Correct path of configuration file.
+
+Sun Mar 30 21:42:12 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/Makefile.in (CPPFLAGS): Add back -DBROKEN_GETOPT.
+
+	* frontend/scan.c (main): Reinstantiate BROKEN_GETOPT code.
+	getopt_long() is _STILL_ broken. ;-(
+
+	* lib/getopt.c: Use this code if __GNU_LIBRARY__ <= 6.  Early
+	versions of glibc had a buggy getopt().
+	* lib/getopt1.c: Ditto.
+
+	* frontend/Makefile.in (xscan): Mention $(LIBSANEI).
+
+	* frontend/xscan.c: Include <libgimp/gimp.h>, not <gimp.h>.
+
+	* Makefile.in (distclean): Mention libtool.
+	* configure.in (AC_CHECK_FUNCS): Ditto.
+
+	* include/config.h.in: Add undef of STRSEP.
+
+	* sanei/sane_strstatus.c: Move to backend directory to minimize
+	chance of confusing this with a SANE-internal routine.
+
+	* sanei/Makefile.in (LIBSANEI_OBJS): Remove sane_strstatus.o.
+	(LIBSANEI_LTOBJS):  Remove sane_strstatus.lo.
+
+	* backend/Makefile.in (libsane-%.la): Mention sane_strstatus.lo
+ 	explicitly (every SANE backend library MUST define this function
+	so we can switch backends at will).
+
+	* frontend/Makefile.in (SCAN_OBJS): Remove getopt.o, getopt1.o.
+
+	* Makefile.in (SUBDIRS): Mention lib as first directory.
+
+	* configure.in (AC_OUTPUT): Mention lib/Makefile.
+
+	* lib/strsep.c: New file.
+	* lib/strndup.c: Ditto.
+	* lib/Makefile.in: Ditto.
+
+	* sanei/test_wire.c (main): Initialize codecs through
+ 	sanei_w_init().
+
+	* sanei/sanei_codec_bin.c (sanei_codec_bin_init): Ditto.
+
+	* sanei/sanei_codec_ascii.c (sanei_codec_ascii_init): Remove
+ 	w->buffer initalization---this function should be called through
+	sanei_w_init () only.
+
+	* sanei/sanei_scsi.c: Rename _sanei_scsi_max_request_size to
+ 	sanei_scsi_max_request_size.
+
+	* backend/mustek.c (reader_process): Rename macro
+ 	SANEI_SCSI_MAX_REQUEST_SIZE to variable
+ 	sanei_scsi_max_request_size.
+
+	* include/sanei_scsi.h: Rename _sanei_scsi_max_request_size to
+ 	sanei_scsi_max_request_size (names with a leading underscore are
+ 	reserved for libc/system).
+	(SANEI_SCSI_MAX_REQUEST_SIZE): Remove macro.
+
+	* frontend/scan.c (main): Add a brief description of the program.
+
+	* frontend/getopt.c: Move to lib.
+	* frontend/getopt1.c: Ditto.
+
+	* backend/pnm.c (enum ppm_type): Remove non-ANSI trailing comma.
+	Correct struct indentation.
+
+	* include/lalloca.h: Isolate alloca cruft in this file.
+	* frontend/gtkglue.c: Include lalloca.h in place of alloca hack.
+	* frontend/dll.c: Ditto.
+	* frontend/scan.c: Ditto.
+	* sanei/sanei_load_values.c: Ditto.
+	* sanei/sanei_scsi.c: Ditto.
+
+Sat Mar 29 00:14:37 1997  Gordon Matzigkeit  <gord@gnu.ai.mit.edu>
+
+	* backend/pnm.c (sane_read): Slurp in RGB files all at once,
+	rather than limping along three bytes at a time.
+
+	* frontend/xscan.c (advance): Only define if HAVE_LIBGIMP.
+
+	* backend/pnm.c (sane_read, sane_start, getparmfromfile): Handle
+ 	grayscale and monochrome bitmapped PNM files.
+
+	* frontend/scan.c (main): Remove BROKEN_GETOPT workaround---the
+	new getopt() works properly when making multiple passes over the
+	argument list.
+
+Fri Mar 28 21:33:36 1997  Gordon Matzigkeit  <gord@gnu.ai.mit.edu>
+
+	* configure.in: Make the QuickCam device conditional on whether or
+ 	not the ioperm function exists.
+
+	* sanei/sanei_scsi.c: created a stubbed version of sanei_scsi_cmd.
+
+	* frontend/scan.c (main): Only print error messages to stderr.
+	Use fputs or fputc when it is possible to avoid printf.
+
+	* sanei/sanei_wire.c (sanei_w_array, sanei_w_ptr, sanei_w_init),
+ 	sanei/sanei_save_values.c (sanei_save_values),
+ 	sanei/sanei_codec_ascii.c (ascii_w_string): Return an error if
+ 	malloc fails.
+
+	* sanei/test_wire.c (main): Added --readonly flag to help test
+	wire robustness.
+
+	* backend/Makefile.in (LIBSANEI): Deleted the `EXTRA' variable,
+	and used the convenience library, ../sanei/libsanei.a.
+
+Sat Mar 29 10:19:58 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex: Change version from 0.42 to 0.5.
+
+	* README: Add pointer to frontend & backend specific README files.
+
+	* backend/net.c (connect_dev): Ensure dev->ctl gets closed and
+ 	reset to -1 in case of failure.
+
+	* configure.in: Look for gtk_preview_new() in libgtk so we can
+	ignore old GTK versions against which we can't build.
+
+	* (config.sub): Replace with version that comes with
+ 	autoconf-2.12.  The version that came with libtool-0.9
+	doesn't like i686-unknown-linux.
+
+Fri Mar 28 13:12:17 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (subsection{sane_get_select_fd}): Remove extraneous
+ 	backslash.
+
+	* backend/stubs.c (sane_cancel): Don't return anything.
+
+	* include/sane.h: Remove trailing comma (for -pedantic).
+
+	* frontend/xscan.c (interface): Complain when trying to call
+	a device that's unavailable.
+	(select_device_callback): Correct prototype.
+
+	* frontend/xcam.c (main): Remove unused variable `label.'
+
+	* backend/net.c (sane_cancel): Call SANE_NET_CANCEL.
+	(sane_start): Handle failure of SANE_NET_START.
+
+	* frontend/saned.c (process_request): Implement SANE_NET_CANCEL.
+
+	* frontend/gtkglue.h (GSGDialogElement): Remove member "label".
+	* frontend/gtkglue.c: Update accordingly.
+	(button_new): Use gtk_check_button_new_with_label () to simplify
+	this function.
+
+	* frontend/gtkglue.c (unit_string): New function.
+	(panel_build): Append unit_string () to option's title if
+	the unit is not SANE_UNIT_NONE.  Use "title" instead of opt->title
+	when creating widgets.
+
+	* frontend/preview.c (preview_update): Compute width/height as
+	(max - min + eps) where eps is 1 for integer coordinates and
+ 	SANE_UNFIX(1) for fixed-point coordinates.
+	(display_partial_image): Support different scaling in x/y
+ 	direction.  In the case where surface_unit == SANE_UNIT_PIXEL,
+ 	compute xscale/yscale based on the ratio between the _expected_
+ 	width/height and the actual width/height.  If they're not equal,
+ 	the backend must be doing some scaling (e.g., transfer-scale in
+ 	the qcam backend).
+
+	* frontend/xscan.c (init): Disable gtk_rc_parse () calls for now
+	since gtk styles seem to be a bit buggy right now.
+	(scan_done): Remove input_tag if it is >= 0.
+
+	* frontend/gtkglue.c: Include <preferences.h>.
+	(panel_build): For fixed-point range-constraints scale min/max/quant
+	based on the preferred metric.
+	(scale_update): Ditto.
+	(gsg_update_scan_window): Ditto.
+
+	* backend/mustek.c (sane_control_option): For OPT_GAMMA_VECTOR_*
+ 	options, fail with SANE_STATUS_INVAL if the vector has zero length
+ 	(i.e., hasn't been set yet).
+
+	* frontend/progress.c (progress_new): Don't make Cancel the
+ 	default-button---it's too easy to cancel by mistake otherwise.
+
+	* frontend/sane-style.rc: New file.
+
+	* frontend/xscan.c (init): New function.  Parse gtk_rc_parse ()
+	on /usr/local/share/sane-style.rc and ~/.sane/sane-style.rc if
+	those files exist.
+
+	* configure.in (CPPFLAGS): Add PATH_SANE_DATA_DIR.
+
+	* frontend/gtkglue.c (gsg_warning): New function.
+	(gsg_message): New function.
+	(gsg_error): Implement in terms of gsg_message ().
+
+Thu Mar 27 16:52:27 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/gtkglue.c (gsg_make_path): Terminate buffer with '\0'
+	before attempting mkdir().
+
+	* frontend/xcam.c (main): Use gtk_menu_item_new_label () instead
+	of gtk_label_new ()/gtk_menu_item_new ().
+
+	* frontend/preview.c (establish_selection): Invoke
+ 	param_change_callback only if non-NULL.
+	(preview_update): Convert scale range to inches if that's user's
+	preference.
+
+	* frontend/xcam.c (delayed_switch): New function.
+	(device_activate_callback): Call delayed_switch() rather than
+ 	executing that code directly.  Pete tells me GTK is not designed
+ 	to have a widget rebuilt while a submenu is active.
+
+	* frontend/gtkglue.c (panel_build): Avoid using notebook widget
+ 	until GTK+ has been fixed.
+	(idle_handler): New function: rebuild dialog if dialog->rebuild is
+ 	set.
+	(set_option): Set dialog->rebuild to TRUE and schedule
+ 	idle_handler() rather than directly calling panel_rebuild().  Pete
+ 	tells me GTK is not designed to have a widget rebuilt while a
+ 	submenu is active.
+	(gsg_refresh_dialog): Ditto.
+
+Thu Mar 27 14:54:23 1997  Gordon Matzigkeit  <gord@gnu.ai.mit.edu>
+
+	* backend/Makefile.in: Converted all for statements that might be
+	empty to use a temporary list variable.
+
+	* frontend/Makefile.in (scan): Added getopt.o, getopt1.o to scan
+	dependencies.
+
+	* frontend/getopt.c, frontend/getopt1.c, include/getopt.h: Added
+	to the distribution.
+
+	* backend/net.c (connect_dev), frontend/saned.c (main): Don't use
+ 	TCP_NODELAY if it has not been defined.  Look up tcp protocol
+ 	number if SOL_TCP is not defined.
+
+	* sanei/test_wire.c (main): lseek after changing direction, or the
+	direction change ends up at the end of the output file.
+	Added option parsing, a usage message, and other cleanups.
+
+	* sanei/sanei_codec_ascii.c (sanei_codec_ascii_init),
+ 	sanei/sanei_codec_bin.c (sanei_codec_bin_init): Initialize the
+ 	wire if it has a 0-length buffer.
+
+	* sanei/sanei_wire.c (sanei_w_init): Only call the codec_init_func
+	if it is not NULL.
+
+	* sanei/sanei_scsi.c: Parameterize inclusion of generic SCSI
+	headers based on HAVE_SCSI_SG_H, HAVE_SYS_SCSI_H, or
+	HAVE_SYS_SCSIIO_H.
+
+	* configure.in (AC_CHECK_HEADERS): Check for scsi/sg.h,
+	sys/scsi.h, and sys/scsiio.h.
+
+	* sanei/sanei_load_values.c, sanei/sanei_scsi.c, backend/dll.c:
+ 	Replaced unconditional alloca.h include with the cruft suggested
+ 	by the Autoconf manual.
+
+	* sanei/alloca.c: Add to distribution.
+
+	* sanei/Makefile.in: Eliminate GNU make dependencies, and use
+	@ALLOCA@ and @LTALLOCA@ as appropriate.
+
+	* configure.in (AM_FUNC_ALLOCA): Use it.
+
+	* aclocal.m4 (AM_FUNC_ALLOCA): Define it.
+
+Wed Mar 26 17:25:49 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_wire.c (sanei_w_status): Update *v only when decoding.
+	(sanei_w_bool): Ditto.
+	(sanei_w_constraint_type): Ditto.
+	(sanei_w_value_type): Ditto.
+	(sanei_w_unit): Ditto.
+	(sanei_w_action): Ditto.
+	(sanei_w_frame): Ditto.
+
+	* frontend/xscan.c (quit_xscan): Always invoke gtk_main_quit()
+	(not just in standalone mode).
+	(quit_callback): Correct prototype.
+
+	* backend/pnm.c (sod): Fix doc-string for option "three-pass".
+
+	* frontend/xscan.c (advance): New function.
+	(input_available): Support 1 bpp frames.  Call advance() instead
+ 	of open-coding it.  Add RED/GREEN/BLUE frame support in GIMP mode.
+	Complain when encountering unknown depth.
+	(ScanWin): add member first_frame.
+	(scan_start): Initialize first_frame and frame_offset in
+	GIMP mode.
+
+	* Integrate force unidirectional mode patch by Guido Muesch
+	  <odiug@faho.rwth-aachen.de>:
+	* backend/qcam.c (attach): Force uni-directional mode if port
+	address starts with `u'.
+	(attach): Add debug statement to print QCam version.
+
+	* Integrate 3-pass patches by Heiko
+	  <Heiko.Schroeder@Post.RWTH-Aachen.de>:
+	* backend/mustek.cb
+ 	(scan_area_and_windows): Use 1/8" mode when MUSTEK_FLAG_USE_EIGHTS
+ 	is on (instead of pixel unit).
+	(mode_select): Set bit 3 in mode byte only if
+ 	MUSTEK_FLAG_USE_EIGHTS is off.
+	(encode_resolution): Don't do funky encoding for 3-pass scanners
+ 	in 10% resolution mode.  It seems the docs are wrong and the
+ 	actual scanners require a much simpler setup.
+
+	* frontend/preview.h: Add include of <sys/types.h>.
+
+Sat Mar 22 16:37:34 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscan.c (input_available): Reset ScanWin.x to zero at
+ 	the end of each line.
+	(input_available): Reset tile_offset to zero after updating a
+ 	tile.
+	(scan_done): Call gimp_display_new() to display the newly acquired
+	image.  Draw final few lines of image if image height is not a multiple
+	of the tile-height.
+
+	* frontend/saned.c (process_request): quit when receiving
+	unexpected procedure number---ignoring is dangerous.
+
+	* backend/dll.c (load): Fix off-by-one bug in allocation of
+	libname.
+
+	* frontend/xcam.c (prompt_for_device_name): Move grab-default
+	call behind signal_connect since otherwise the default action
+	won't work.
+
+	* frontend/xscan.c (choose_device): Let "Ok" button be the one
+	that gets activated by default (by hitting the Return key).
+
+	* frontend/preview.c (preview_destroy): Rename save_preview_image
+	to preserve_preview_image.
+  	* frontend/preview.h: Ditto.
+
+	* frontend/preview.c (restore_preview_image): New function.
+	(preview_destroy): Save preview image if it exists.
+	(preview_scan): New parameter SELECTION_ONLY.  If true,
+ 	preview-scanning is limited to the selected area.
+
+	* frontend/xscan.c (scan_done): Call quit_xscan() to exit.
+	(quit_xscan): Destroy preview if ScanWin.preview is non-NULL.
+
+	* frontend/preview.c (draw_selection): Don't draw if p->gc is
+	NULL (i.e., if windows aren't mapped yet).
+
+	* frontend/xscan.c: Move HAVE_LIBGIMP-specific code further
+	down (past the type & global variable decls).
+
+	* configure.in (CPPFLAGS): Make --disable-shared impy
+ 	--enable-preload.
+
+	* include/config.h.in: Add HAVE_STRNDUP.
+
+Fri Mar 21 00:01:00 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Implemented FreeBSD
+	version (untested).
+
+	* sanei/sanei_load_values.c: Include <alloca.h>
+
+	* frontend/preview.c (update_selection): New function to set
+	selection based on current scan-area option values.
+	(preview_update): Call update_selection ().
+
+	* sanei/sanei_save_values.c: Add copyright notice.
+	* sanei/sanei_load_values.c: Add copyright notice and explanation
+	of algorithm.
+	(BITS_PER_LONG): New macro.
+	(SET): Ditto.
+	(IS_SET): Ditto.
+	(sanei_load_values): Add variables caused_reload and keep_going to
+	keep track of what options caused a reload_option and whether
+	the whole option-value setting process should be repeated.
+
+	* include/config.h.in: Add #undef HAVE_LIBGIMP.
+	* frontend/xscan.c: Put all GIMP-dependencies inside
+	#ifdef HAVE_LIBGIMP.
+	Include <config.h>.
+
+	* sanei/sanei_wire.c (sanei_w_init): Initialize status to 0.
+	(sanei_w_free): Preserve existing direction and do not flush i/o.
+	(sanei_w_space): Return EINVAL if reading 0 bytes.
+
+Thu Mar 20 09:11:21 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/gtkglue.h (dev_name): New member.
+	* frontend/gtkglue.c (gsg_destroy_dialog): free dialog->dev_name.
+	(gsg_create_dialog): Keep copy of device name in dev_name member.
+
+	* include/sanei_backend.h: Move stubs into backend/stubs.c and
+	define redirection macros only if STUBS is not defined.
+	* backend/stubs.c: New file.
+
+	* configure.in (AC_PROG_RANLIB): Removed.  No longer needed with
+	libtool.
+	* (frontend/Makefile.in): Adapt to libtool.
+	* (backend/Makefile.in): Ditto.
+	* (sanei/Makefile.in): Ditto.
+
+	* backend/mustek.c (attach): Check result[0] == 0x06 to find out
+ 	whether we're dealing with a scanner (rather than attemting to
+ 	find the string "SCANNER" ).
+
+	* backend/hp.c (sane_read): Initialize nread with max_len, not
+ 	*len.
+	(sane_get_parameters): Add missing `== 0' comparison for strcmp()
+ 	calls.
+	(inquire): Generalize so we can inquire any quantity and improve
+ 	parsing.
+	(attach): Use reasonable default value if inquiry of a quantity
+ 	fails.
+	(sane_start): Report error if inquiry of a scan parameter fails.
+
+Wed Mar 19 18:03:38 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xcam.c (prompt_for_device_name): grab default for OK
+ 	button (doesn't seem to work, though).
+
+	* frontend/progress.c (progress_new): Connect progress_cancel()
+ 	via signal_connect(), not signal_connect_object() and pass P, not
+ 	P->SHELL.
+	(progress_cancel): Don't free progress structure (must be done by
+ 	app).
+
+	* frontend/xscan.c (input_available): New function.
+	(scan_done): Ditto.
+	(scan_start): Ditto.
+	(progress_cancel): Simply call sane_cancel().
+	(scan_dialog): Moved most of the code to above functions.
+
+	* frontend/gtkglue.c (get_filename_button_clicked): New function.
+	(gsg_get_filename): Ditto.
+
+	* frontend/xscan.c (scan_dialog): Do not quit xscan when in
+	standalone mode.
+	(scan_dialog): Prompt for output filename in standalone mode.
+	(filename): New variable.
+
+	* backend/pnm.c (sane_control_option): Remove "pnm." prefix
+	in debug messages.
+
+	* backend/qcam.c (sane_cancel): Remove "qcam." prefix in debug
+ 	messages.
+
+	* backend/mustek.c: Remove "mustek." prefix in debug messages.
+
+Tue Mar 18 17:30:29 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (sane_close): Remove superfluous "[mustek]" in
+ 	debug string.
+
+	* sanei/sanei_scsi.c (sanei_scsi_cmd): Implement HP-UX version
+	of this function (untested).
+
+	* backend/qcam.c (reader_process): Enable code to handle 4 bpp
+	and 6 bpp cases.
+
+Thu Mar 13 13:15:21 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (subsection{Scan Area Options}): Attempt to
+	clarify the meaning of "top-left" corner.
+
+Tue Mar 11 07:12:53 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/gtkglue.c (panel_build): Fix typo in matching of
+	"resolution" option (missing == 0).
+
+Mon Mar 10 20:19:06 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Announced pre0.5 snapshot.
+
+	* backend/qcam.h: Make transfer-scale part of the "mode" group.
+
+	* backend/qcam.c (sane_read): Moved return of SANE_STATUS_EOF
+ 	behind test for delivering EOF.
+
+	* frontend/xscan.c (device_dialog): Relabel "Cancel" button to
+	"Quit".
+
+	* backend/qcam.c (init_options): Set SANE_CAP_ADVANCED for geometry
+	group.
+	* backend/mustek.c (init_options): Ditto.
+
+	* backend/pnm.c (pass, three_pass): New variables.
+	(sod): Add option "three-pass" to simulate a three-pass scanner.
+	(sane_control_option): Add support for three_pass option.
+	(getparmfromfile): In three-pass mode, set format and last_frame
+	based on `pass'.
+	(sane_start): If input file is open already, fail unless we're
+	scanning the next frame of a three-pass image.
+	(sane_read): Handle three-pass case.
+
+Sun Mar  9 13:20:19 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/gtkglue.c (text_entry_callback): Only call
+ 	gtk_entry_set_text() if the backend modified the string.  Otherwise,
+	infinite recursion occurs on any change (since the change results
+	in a change...).
+
+	* frontend/xcam.c (next_frame): Reset win.remaining to zero.
+
+	* backend/qcam.c (init_options): Set size of "resolution" option
+	to sizeof("High").
+
+	* doc/sane.tex (subsection{Scan Area Options}): Allow word-list
+	as a constraint.
+
+	* configure.in (CFLAGS): Add -D_GNU_SOURCE to CFLAGS since we
+	now depend on snprintf ().
+
+	* frontend/xscan.c (device_dialog): Fix typo: PixelHeight should
+ 	be > 0, not == 0 in order for us to create the preview window.
+	(device_dialog): Ditto.
+	(device_dialog): Add ScanWin.preview to frame container.
+
+Sat Mar  8 10:19:41 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (subsection{sane_get_select_fd}): Clarify what
+	must happen when the end of a frame has been reached.
+
+	* frontend/xcam.c (input_available): Stop when sane_read() returns
+	0 bytes.  Fix typo: win.data needs to be set to dst, not src, on
+	exit.
+
+	* backend/qcam.h (read_fd): New member.
+	* backend/qcam.c (sane_get_select_fd): Return read_fd instead of
+	from_child.
+	(sane_open): Initialize s->read_fd to -1.
+	(sane_close): Close s->select_fd if >= 0.
+	(sane_start): Make read_fd dup() of s->from_child.
+	(sane_cancel): Close s->read_fd if >= 0.
+	(sane_set_io_mode): Modify s->read_fd instead of s->from_child.
+
+	* frontend/scan.c: Include <sanei.h> for NELEMS macro.
+	* frontend/xcam.c: Ditto.
+
+	* configure.in (CPPFLAGS): Add defines for V_MAJOR and V_MINOR.
+	(V_MAJOR, V_MINOR): New variables.
+
+	* sanei/Makefile.in (SANEI_OBJS): Mention sanei_net.o.
+
+	* include/sanei_net.h: New file (split from sanei_wire.h).
+	* sanei/sanei_net.c: New file  (split from sanei_wire.c).
+
+	* configure.in: Add -Wall to CFLAGS when using gcc.
+
+	* frontend/Makefile.in (saned): List -lsanei before -lsane
+	so saned never depends on sanei_*-routines that may be present
+	in -lsane (the only dependencies for that library must be
+	on sane_* names).
+
+	* backend/Makefile.in (LIBS): Remove -ldl (configure will add
+	it if available).
+	(SHLDFLAGS): Use -usanei_init instead of --whole-archive option.
+	(SHLDPOSTFLAGS): Remove --no-whole-archive.
+
+	* backend/dll.c: Add include of <config.h>.
+	(DYNAMIC): New macro.  Defined it dynamic loading support is
+	available and enabled.
+	Include <dlfcn.h> only when DYNAMIC is defined.
+	(load): Make no-op when DYNAMIC is not defined.
+	(sane_exit): Never call dlclose() if DYNAMIC is not defined.
+
+	* include/sanei_scsi.h: Rename from genscsi.h and rename prefix
+	from `genscsi_' to `sanei_scsi_'.
+	* sanei/sanei_scsi.c: Ditto.
+	* backend/mustek.c: Rename `genscsi_' to `sanei_scsi_'.
+
+	* configure.in: Check for availability of -ldl and <dlfcn.h>.
+
+Fri Mar  7 15:21:38 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* sanei/sanei_wire.c: New file.
+	* sanei/sanei_codec_bin.c: Ditto.
+	* sanei/sanei_codec_ascii.c: Ditto.
+
+	* backend/dll.c (sane_exit): Call dlclose() only if handle is
+ 	non-NULL.
+	(sane_init): Chain together preloaded backends.
+
+	* backend/qcam.c (attach): Make static.
+	(sighandler): Ditto.
+	(qc_getstatus): Ditto.
+	* backend/mustek.c (attach): Ditto.
+
+	* backend/dll.c (op_name): Remove `sane_' prefix.
+
+	* sanei/sanei_init_debug.c (sanei_init_debug): Upcase backend
+	name when building environment variable name.
+
+	* backend/genscsi.c: Make use of sanei_debug.h.
+
+	* backend/mustek.c: Adapt to use sanei_backend.h.
+	* backend/net.c: Ditto.
+	* backend/pnm.c: Ditto.
+	* backend/qcam.c: Ditto.
+
+	* backend/dll.c (sane_exit): Fix typo that resulted in the
+	last backend not being exited.
+
+Thu Mar  6 21:25:27 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (subsection{\code{sane\_init}}): Allow
+ 	authorization callbacks during sane_start() but not during
+ 	sane_read().
+
+Tue Mar  4 21:04:16 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (sane_close): Print debug message when trying
+	to close an unknown handle.
+
+Thu Feb 27 18:10:20 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (chapter{Contact Information}\label{chap:contact}):
+	Add `listserv.' to mailing list address---seems to be needed for
+	subscriptions etc.
+
+Sun Feb  9 12:54:20 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.README: Add pointer to Ingmar's 53c400 patch.
+
+Sat Feb  8 11:49:24 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (line_distance): Add more debug output.
+
+Fri Feb  7 19:21:36 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (line_distance): Remove erroneous #ifdef
+	around FACTOR and COLOR.
+
+	* doc/sane.tex (subsection{sane_init}): Make username/password
+	fixed length arrays so no malloc/free magic is needed.
+	(subsection{Preview Mode Option}): New section.
+
+	* include/sane.h: Ditto.
+
+	* include/sane.h (SANE_Char): New type.
+
+Tue Feb  4 18:47:52 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (sane_get_parameters): Correct typo: replace
+	s->pass with s->params.format.
+
+Fri Jan 31 16:16:26 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (attach): Print debug message when using
+ 	special line-distance algorithm.
+	Enable special line-distance algorithm only for firmware
+ 	revisions < 1.02.
+	Determine fw revision based on INQUIRY result.
+
+Thu Jan 30 21:22:38 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (section{Attaching to a SANE backend}): Rename
+	metanet -> net, netproxy -> saned, metadl -> dll and update
+	hierarchy figure as well.  Added autolum meta backend as a
+	filter example.
+
+	* TODO: Rename metanet -> net, metadl -> dll.
+
+	* AUTHORS (Frontends): Rename metanet -> net, metadl -> dll,
+	mention saned and xcam and sort entries alphabetically.
+
+	* backend/net.c (sane_control_option): Replace all occurances of
+ 	metanet with net.
+	* backend/net.README: Ditto.
+	Rename env var METANETHOST to SANE_NET_HOST.
+
+	* backend/dll.README: Replace all occurances of metadl with dll.
+	* backend/dll.c: Ditto.
+
+	* backend/dll.conf: Comment out metanet since it's a bit of a
+ 	security risk (no authentication just yet).
+
+	* backend/Makefile.in (CONFIGS): New macro (list of config files)
+	(install): Change install rule so existing configuration files
+	are not overwritten.
+	Replace all occurances of metanet with net.
+
+	(V_MINOR): Bump up to 43.
+
+Tue Jan 28 08:17:18 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/Makefile (saned): Mention -lsanei before -lsane so
+ 	saned does not incorrectly depend on sanei_printf/sanei_scanf in
+ 	-lsane (if it happens to define those symbols).
+
+	* backend/metanet.c (sane_init): Rename SANE_Authorization_Callback
+	to SANE_Auth_Callback.
+	* backend/mustek.c (sane_init): Ditto.
+	* backend/pnm.c (sane_init): Ditto.
+	* backend/metadl.c (sane_init): Ditto.
+
+	* frontend/saned.c (main): Put output socket in TCP_NODELAY mode.
+	Include of <sys/socket.h>
+
+	* backend/metanet.c (openit): Ditto.
+
+Mon Jan 27 19:32:29 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+
+	* doc/sane.tex (subsection{Device Descriptor Type}): Change vendor
+ 	name "None" to "Noname".
+	* backend/pnm.c (dev): Change vendor name from "noname" to "Noname".
+
+	* include/sane.h (SANE_STATUS_ACCESS_DENIED): New status value.
+	* sanei/sane_strstatus.c (sane_strstatus): Return appropriate
+	status string.
+
+	* frontend/xscan.c (scan_dialog): Don't depend on first_frame
+	when creating image---the old code didn't work for R/G/B-only
+	frames anyhow, so there is no point pretending.
+
+	* include/sane.h (SANE_Parameters): Rename first_frame to
+	last_frame.
+	* backend/metanet.c (sane_get_parameters): Update accordingly.
+	* backend/qcam.c (sane_get_parameters): Ditto.
+	* frontend/saned.c (readcmd): Ditto.
+	* frontend/test.c (testsane): Ditto.
+	* backend/mustek.c (sane_get_parameters): Set last_frame unless
+	the current pass is acquiring a red- or green-only frame.
+
+	* doc/sane.tex (subsection{sane_get_parameters)): Change
+ 	FIRST_FRAME into LAST_FRAME.
+
+	* backend/metanet.c: Initialize PEER with -1.
+	(sane_get_select_fd): Return PEER and succeed if not negative.
+
+	* include/netsane.h (ns_printf, ns_scanf, netfd_wr, netfd_rd):
+ 	Remove (obsolete).
+
+	* frontend/saned.c: Increase STRBUF size to 32KB to get better
+	scan_read() throughput.
+
+	* include/sane.h (SANE_Athorization_Callback): Return void
+ 	(instead of int) and make USERNAME and PASSWORD (pointers to)
+ 	return values.
+
+	* frontend/saned.c (netsane_auth_callback): Update prototype.
+
+	* backend/metanet.c (sane_init): Move assignments out of
+ 	if-conditional for clarity (and to avoid gcc warning).
+
+	* sanei/sanei_printf.c: Include <memory.h>, <string.h>.
+
+	* backend/Makefile.in (libsane-mustek.a): Replace
+ 	../sanei/sane_strstatus.o with appropriately defined EXTRA
+	macro.
+
+	* backend/mustek.c (attach): Initialize ld.mode to MLD_NORMAL for
+ 	all scanners but MFS-12000SP.
+	(line_distance): In MD_MFS correction mode, do not issue LD
+ 	command.
+	(sane_close): Free s->ld.red_buf if non-NULL.
+	(fix_line_distance_mfs): New function.
+	(fix_line_distance_normal): Rename from fix_line_distance().
+	(reader_process): In MLD_MFS line-distance mode, call the
+	mfs-specific routine, not the normal one.
+
+	* backend/mustek.h (Mustek_Scanner): New members ld.red_buf,
+ 	ld.green_buf.
+	(MUSTEK_FLAG_LD_MFS): New flag to indicate when MFS-specific
+ 	line-distance correction is needed.
+
+	* backend/metanet.c: Fix up some minor formatting problems due
+	to indent.
+
+	* Merge in Andy's netsane diffs.
+
+Sun Jan 26 00:04:22 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscan.c (zoom_in_preview): Ignore selections of zero
+	or negative width/height.
+	(set_max_selection): Use SANE_UNFIX() instead of open coding.
+	Adapted to use gtkglue.
+
+	* backend/metadl.c (sane_init): Grab authorization callback.
+	(authorization_callback): New variable.
+	(load): Pass authorization callback to init function.
+
+	* frontend/gtkglue.h (gsg_destroy_dialog): Add param_callback.
+
+Sat Jan 25 17:35:52 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/Makefile.in (distclean): Mention $(TESTPROGRAMS).
+
+	* backend/metanet.c (copy_opt): Fix constraint-length computation.
+
+	* backend/metadl.c (sane_get_devices): Pass along LOCA_ONLY arg
+	to backend.
+
+	* frontend/xcam.c (main): Remove extraneous calls to gtk_exit()
+	and sane_exit().
+
+	* frontend/scan.c (main): Install sane_exit() as atexit handler.
+
+	* backend/metadl.c (sane_get_devices): Ignore NULL BE_LIST.
+
+	* frontend/saned.c (quit): New function.
+	(main): catch SIGALRM, and SIGPIPE.
+
+	* backend/metanet.c (sane_get_devices): Return empty list of
+	LOCAL_ONLY is TRUE.
+
+	* frontend/saned.c (readcmd): Don't take LOCAL arg from
+ 	request---always pass SANE_TRUE!
+
+	* doc/netprotocol.doc (sane_get_devices): Don't need LOCAL arg.
+
+	* include/sanei.h: Include <sane.h>.
+
+	* frontend/test.c (testsane): Print status message instead of
+	status code and make robust against failed calls.  Use fprintf(stderr
+	instead of printf.
+
+	* backend/qcam.c (reader_process): Remove extraneous arg.
+	(reader_process): Declare `static' to make setjmp() safe.
+
+	* frontend/saned.c (readcmd): Delete unused variable schr_hlp.
+	(peerfp): New variable.
+	Rename ns_printf() to sanei_printf() and pass peerfp arg.
+	Rename ns_scanf() to sanei_scanf() and pass peerfp arg.
+	(say_helo): Make peerfp refer to fd 0.
+
+	* backend/metanet.c (openit): Return FILE*, not socket.
+	(openit): Return 0, not -1 in case of failure.
+	(peerfp): New variable.
+	Rename ns_printf() to sanei_printf() and pass peerfp arg.
+	Rename ns_scanf() to sanei_scanf() and pass peerfp arg.
+
+	* sanei/sane_strstatus.c: New file (in lieu of backend/sane.c)
+	* sanei/sanei_constrain_value.c: Ditto.
+	* sanei/sanei_init_debug.c: Ditto.
+
+	* sanei/sanei_scanf.c (ns_scanf): New file (based on Andy's
+ 	ns_scanf).
+	Use int8_t for 'c', int32_t for 'd'.
+	Include <sys/types.h>.
+
+	* sanei/sanei_printf.c (sanei_printf): New file (based on Andy's
+ 	ns_printf).
+	Use int8_t for 'c', int32_t for 'd'.
+	Include <sys/types.h>.
+
+	* include/netsane.h (CMD_SANE_STRS): Remove.
+
+	* backend/metanet.c: Include <errno.h>
+	(sane_strstatus): Remove.
+
+	* backend/Makefile.in (BACKENDS): Mention libsane-metanet.
+
+	* backend/metanet.c (openit): Use memcpy instead of bcopy.  Use
+ 	inet_aton() instead of inet_addr(), don't prototype.
+	(sane_get_devices): Use strdup() instead of opencoding it.
+	(sane_get_devices): Don't append " (NS)" to modelname!  Metanet
+ 	already prefixes the devicename with netsane, which is good
+ 	enough.
+
+	* backend/sanei.h (IF_DBG): New macro.
+
+	* PROJECTS (Backend): Mention saned, metanet, and autoadj.
+	(Frontend): New info.
+
+	* AUTHORS: Update to reflect sanescan -> xscan namechange.
+	Credit Andy for netsane.
+
+Fri Jan 24 00:01:45 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* doc/sane.tex (subsection{\code{sane\_get\_option\_descriptor}}):
+	Define how long the returned option descriptor must remain valid.
+
+	* frontend/gtkglue.c (autobutton_update): Check for
+ 	SANE_INFO_RELOAD_OPTIONS.
+	(button_update): Ditto.
+
+	* frontend/xcam.c (main): Add device info label.
+
+	* backend/mustek.c (init_options): Make OPT_BRIGHTNESS and
+ 	OPT_CONTRAST inactive by default.
+
+	* frontend/xcam.c (exit_callback): Only call gsg_destroy_dialog()
+	if dialog is non-null.
+
+Thu Jan 23 00:17:46 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (sane_control_option): Return
+ 	SANE_STATUS_DEVICE_BUSY when attempting to set option during
+ 	scanning.
+	(sane_close): Call do_cancel(), not sane_cancel().
+	(sane_start): Ditto.
+
+	* backend/pnm.c (sod): Rename "File" group to "Source Selection".
+
+	* frontend/xcam.c (device_name_dialog_cancel): New function.
+	(device_name_dialog_ok): Ditto.
+	(prompt_for_device_name): Ditto.
+	(build_device_menu): Move "Rescan devices..." from build_files_menu()
+	to here.  Add "Specify device name..." entry that invokes
+	prompt_for_device_name.
+	(play_stop_button): Ignore call if there is no device_dialog yet.
+	(main): Don't attempt to set preview size if there is no device
+	dialog yet.
+
+	* frontend/gtkglue.c (text_entry_callback): Don't ignore tab
+	key---it's used to switch focus!
+
+	* backend/qcam.c (qc_wait): Return read value so optimizer won't
+ 	be able to get rid of it easily.
+	(qc_lock_wait): Use same lockname as qcam-0.7d for
+ 	interoperability.
+	(reader_process): Explicitly do an enable_ports() in the reader
+ 	process.  Linux/x86 doesn't inherit i/o port access rights.
+
+	* frontend/xcam.c (stop_camera): New function.
+	(input_available): Use stop_camera().
+	(next_frame): Ditto.
+
+	* backend/genscsi.c (genscsi_open): Add missing DBG_INIT(GENSCSI).
+	(genscsi_cmd): Return SANE_STATUS_DEVICE_BUSY if EBUSY is
+ 	returned.
+
+	* frontend/xcam.c (input_available): Fix line wrap for
+ 	SANE_FRAME_GRAY.
+
+	* include/sane.h: Remove old SANE_STATUS_AGAIN.
+	* backend/sane.c (sane_strstatus): Ditto.
+	* backend/mustek.c (sane_read): Return SANE_STATUS_GOOD, not AGAIN
+	when no data available.
+	(sane_start): Add debug printing.
+	(sane_set_io_mode): Fix typo: return SANE_STATUS_GOOD on success.
+
+	* backend/mustek.c (sane_control_option): Add support for
+ 	OPT_BACKTRACK.
+	(attach): Add lots of debug printing.
+
+	* backend/qcam.README: New file.
+
+	* backend/qcam.c (sane_control_option): Allow changing resolution
+ 	while scan is in progress, but set RELOAD_OPTIONS only if not
+ 	scanning already.
+
+	* frontend/xcam.c (canvas_events): Get rid of old debug messages.
+
+	* backend/qcam.c (sane_get_parameters): Update parameters only if
+ 	not scanning.  This makes it possible to change certain options
+	(such as width/height while a scan is in progress).
+	(sane_control_option): Allow changing of image corners,
+ 	transfer-scale, and depth while scan is in progress.  Set
+	RELOAD_PARAMS only if scan is not in progress.
+	(sane_start): Return DEVICE_BUSY if scan is in progress.
+
+	* configure.in (PACKAGE_VERSION): Version 0.41 released.
+
+	* backend/qcam.c (brightness_range): New variable.
+	(init_options): Use brightness_range instead of u8_range to
+	avoid going into bulb-mode accidentally.
+
+Wed Jan 22 09:16:21 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/qcam.c (reader_process): Correct typo: it's buf, not
+ 	buffer that we want to write out in high-res mode.
+	(qc_reset): New function.
+	(reader_process): Send at least one byte of data after receiving a
+ 	signal.
+	(sighandler): New function.
+	(sane_cancel): If a read request is outstanding, cancel request by
+ 	(a) sending SIGINT to reader process, (b) reading one byte of data
+ 	in blocking mode, and then (c) reading whatever is left in the
+ 	pipe in non-blocking mode.
+	(sane_read): Return SANE_STATUS_CANCELLED if SCANNING is not set.
+
+	* backend/qcam.h (QC_Scanner): Remove unused x/y fields.
+
+	* backend/qcam.c (sane_close): Call disable_ports().
+	(sane_init): Replace isblank() with isspace() (former is a GNU
+ 	extension).
+	(sane_control_option): Scale corner coordinates when switching
+ 	resolution and ensure they're always legal values.
+	(sane_close): Check for reader_pid >= 0 not != 0!
+	(sane_exit): Move disable_ports () from sane_close to here.
+	(sane_start): Keep track of when we're holding lock.
+	(sane_read): Release lock if s->holding_lock is TRUE and we
+	read a few bytes.
+	(sane_cancel): Release lock if it's being held.
+
+	* backend/qcam.c: Clean up unused variables.
+
+Tue Jan 21 13:49:00 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/qcam.c (sane_control_option): Keep track of changes to
+ 	option values.
+	(sane_get_select_fd): Implemented.
+	(sane_set_io_mode): Ditto.
+	(reader_process): New function.
+	(sane_start): Modify to use reader_process().
+
+	* backend/qcam.h: (struct QC_Scanner): New field value_changed.
+
+Mon Jan 20 22:11:11 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/metadl.c (sane_open): Correctly handle case where
+	backend name is empty.
+
+Sun Jan 19 10:29:43 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/qcam.c (attach): Add qc_wait() calls after each
+ 	write_lpcontrol() call to ensure reliable communication.
+	(attach): Add debug output in case of failure.
+
+	* Version 0.4 released.
+
+Sat Jan 18 10:12:40 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/xscan.c (get_scan_size): Handle case where scan
+ 	width/height is of type SANE_TYPE_INT.
+	(get_scan_size): If width/height unit is pixels and the height is
+ 	less than 500 pixels, use a ratio of 1.
+	(device_dialog): Call update_complete_dialog() to ensure inactive
+ 	options do not show (there probably is a better solution to this).
+
+	* frontend/scan.c (main): Compute bottom-right position as
+ 	top-left + width/height - 1 (the - 1 is new and necessary and
+ 	works both for fixed and integer values).
+	(print_option): Insert line-break when column >= 79 (not 80) to
+ 	leave last column blank (better when running inside Emacs, for
+ 	example).
+	(main): Fix typos: case 't': window[2] -> window[3], switch short
+ 	option names for top/left.
+	(print_option): Print current option values (except for vectors).
+	(fetch_options): Another off by one bug: width is br_x|y-tl_x|y+1.
+
+Thu Jan 16 20:26:29 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/sane.c (sanei_constrain_value): Fix so it properly
+ 	handles strings that are longer than any of the strings in a
+ 	string list.
+
+	* frontend/scan.c (main): Subtract value of top-left-x/top-left-y
+	from width/height, respectively after all options have been
+	read in.
+	(main): Print help message _after_ options have been processed.
+	(fetch_options): New function.
+	(set_option): Call fetch_options() if SANE_INFO_RELOAD_OPTIONS is
+	set.
+	(main): Call fetch_options() instead of open-coding same.
+
+	* doc/sane.tex (subsection{Device Descriptor Type}): Add index
+	entry for device-name.
+
+Wed Jan 15 19:55:03 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/metadl.c (sane_init): Call DBG_INIT() and declare
+	debug level variable with DBG_DECL.  Added various debug
+	statements.
+
+	* backend/pnm.c (sane_init): Ditto.
+	* backend/mustek.c (sane_init): Ditto.
+
+	* frontend/scan.c (parse_scalar): Default to mm again (instead of
+ 	cm).  Using `mm' as the default is counter-intuitive since the
+ 	help info is printed with `mm' as the unit.
+
+	* frontend/xscan.c (main): Pass local_only==SANE_FALSE as second
+	argument to sane_get_devices().
+
+Sun Jan 12 13:12:45 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/sane.c (sanei_constrain_value): For string-lists, ignore
+ 	case and allow prefixes as long as they remain unique.
+
+	* frontend/scan.c (print_option): Print "auto" as a legal option
+ 	value if the option has capability SANE_CAP_AUTOMATIC set.
+	(process_backend_option): If option has SANE_CAP_AUTOMATIC set,
+ 	let option value of "auto" turn on automatic mode.
+
+Wed Jan  8 19:55:31 1997  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/Makefile.in (install): Modify install rule so that
+	$(libdir) gets added to /etc/ld.so.conf if it isn't there
+	already.
+	(COMPILE): Use $(SHCFLAGS) instead of $(CFLAGS).
+	(LINK): Remove (unused).
+
+Wed Dec 25 20:21:39 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.README: Add section "SCSI Adapter Tips".
+
+Fri Dec 13 20:02:03 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (line_distance): Rename
+ 	LINE_DISTANCE_WORKAROUND to NEED_MUSTEK_LINE_DISTANCE_WORKAROUND.
+	Include <config.h>.
+
+Thu Dec 12 20:19:26 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.h (next): New member.  Forms linked list of open
+ 	handles.  * backend/mustek.c (first_handle): New variable.  Root
+ 	of list of open handles.
+	(sane_open): Insert handle into list of open handles.
+	(sane_close): Remove handle from list of open handles.
+
+Wed Dec  4 18:37:45 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (attach): Added back MFS-12000SP, MFS-08000SP,
+ 	and MFS-06000SP.  At least the first one really does exist.  I
+ 	don't know how the differ from the other scanners, but it looks as
+ 	if line-distance correction might be different.
+
+Tue Dec  3 21:22:54 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/sane.c (sane_strstatus): Remove trailing dot from error
+ 	message.
+
+Mon Dec  2 19:12:53 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* backend/mustek.c (max_string_size): New function to determine
+ 	maximum size of a string constraint list.
+	(init_options): Use max_string_size () to initialize size of
+ 	string-valued options.
+
+Sun Dec  1 15:44:53 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* Version 0.1 released.
+
+	* backend/mustek.c (attach): Fix mispelled/bad model names:
+		MFS-12000SP -> MSF-12000SP
+		MFS-08000SP -> MSF-08000SP
+		MFS-06000SP -> MSF-06000SP
+		MFS-08000CZ -> <removed>
+		MFS-06000CZ -> <removed>
+
+Tue Nov 26 19:11:18 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/scan.c (print_option): Separate option name from option
+ 	values by blank, not equal so the syntax is correct even for short
+ 	options.
+	(parse_scalar): Added missing newline to error message.
+
+Sat Nov 16 17:26:19 1996  David Mosberger-Tang  <davidm@azstarnet.com>
+
+	* frontend/scan.c (main): Created (by Andy).
+
+	* backend/pnm.c: Adapted from Andy's pnm.c (just minor updates).
+
+	* backend/mustek.c: Created.
+	* backend/metadl.c: Ditto.

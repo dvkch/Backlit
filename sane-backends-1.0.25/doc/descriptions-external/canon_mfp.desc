@@ -1,0 +1,73 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+; See doc/descriptions.txt for details.
+
+:backend "canon_mfp"               ; name of backend
+;:version "1.0.0"                   ; version of backend (or "unmaintained")
+;:new :yes                         ; Is the backend new to this SANE release?
+                                  ; :yes or :no
+;:manpage "sane-template"          ; name of manpage (if it exists)
+:url "http://cweb.canon.jp/drv-upd/bj/other.html#linux";
+:url "http://support-asia.canon-asia.com/";
+:comment "External backend made by canon. As this software contains non-free parts, it can't be included into SANE. If you can't find your model here, please have a look at the canon website which contains the latest list." 
+:comment "Note: these backend are designed by Canon and are part of their proprietary scanning software. They may not work at all with SANE, or with SANE frontends." 
+                                  ; comment about the backend
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "Canon"                   ; name a manufacturer
+:url "http://www.canon.com/"   ; manufacturer's URL
+;:comment ""
+                                  ; comment about the manufacturer
+
+:model "MP140"
+:status :untested
+:interface "USB"
+:usbid "0x04a9" "0x172b"
+:comment "No report yet."
+
+:model "MP160"
+:status :untested
+:interface "USB"
+:usbid "0x04a9" "0x1714"
+:comment "No report yet."
+
+:model "MP210"
+:status :untested
+:interface "USB"
+:usbid "0x04a9" "0x1721"
+:comment "No report yet."
+
+:model "MP510"
+:status :untested
+:interface "USB"
+:usbid "0x04a9" "0x1717"
+:comment "No report yet."
+
+:model "MP520"
+:status :untested
+:interface "USB"
+:usbid "0x04a9" "0x1724"
+:comment "No report yet."
+
+:model "MP600"
+:status :untested
+:interface "USB"
+:usbid "0x04a9" "0x1718"
+:comment "No report yet."
+
+:model "MP610"
+:status :untested
+:interface "USB"
+:usbid "0x04a9" "0x1725"
+:comment "Could not have it working with SANE."

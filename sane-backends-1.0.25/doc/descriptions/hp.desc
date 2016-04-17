@@ -1,0 +1,127 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "hp"                     ; name of backend
+:version "unmaintained"           ; version of backend
+:manpage "sane-hp"                ; name of manpage (if it exists)
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "Hewlett-Packard"            ; name a manufacturer
+:url "http://www.hp.com/"
+
+:model "ScanJet Plus"           ; name models for above-specified mfg.
+:interface "Propietary"
+:status :complete
+:comment "Driver for HP parallel interface card required"
+
+:model "ScanJet IIc"
+:interface "SCSI"
+:status :complete
+:scsi "HP" "C1750A" "processor"
+
+:model "ScanJet IIp"
+:interface "SCSI"
+:status :complete
+:scsi "HP" "C1790A" "processor"
+
+:model "ScanJet IIcx"
+:interface "SCSI"
+:status :complete
+:scsi "HP" "C2500A" "processor"
+
+:model "ScanJet 3c"
+:interface "SCSI"
+:status :complete
+
+:model "ScanJet 3p"
+:interface "SCSI"
+:status :complete
+
+:model "ScanJet 4c"
+:interface "SCSI"
+:status :complete
+:scsi "HP" "C2520A" "processor"
+
+:model "ScanJet 4p"
+:interface "SCSI"
+:status :complete
+:scsi "HP" "C1130A" "processor"
+:comment "Buttons may not work on some scanners"
+
+:model "ScanJet 4100C"
+:interface "USB"
+:usbid "0x03f0" "0x0101"
+:status :complete
+:comment "Buttons may not work on some scanners"
+
+:model "ScanJet 5p"
+:interface "SCSI"
+:status :complete
+:scsi "HP" "C5110A" "processor"
+:comment "Buttons may not work on some scanners"
+
+:model "ScanJet 5100C"
+:interface "Parport"
+:status :complete
+:comment "Requires ppscsi driver and epst module. Buttons may not work on some scanners"
+
+:model "ScanJet 5200C"
+:interface "Parport USB"
+:usbid "0x03f0" "0x0401"
+:status :complete
+:comment "Parallel interface requires ppscsi driver and epst module. Buttons may not work on some scanners"
+
+:model "ScanJet 6100C"
+:interface "SCSI"
+:status :complete
+
+:model "ScanJet 6200C"
+:interface "SCSI USB"
+:scsi "HP" "C6270A" "processor"
+:usbid "0x03f0" "0x0201"
+:status :complete
+:comment "Buttons may not work on some scanners"
+
+:model "ScanJet 6250C"
+:interface "SCSI USB"
+:usbid "0x03f0" "0x0201"
+:status :complete
+:comment "Buttons may not work on some scanners"
+
+:model "ScanJet 6300C"
+:interface "SCSI USB"
+:scsi "HP" "C7670A" "processor"
+:usbid "0x03f0" "0x0601"
+:status :complete
+:comment "Buttons may not work on some scanners"
+
+:model "ScanJet 6350C"
+:interface "SCSI USB"
+:usbid "0x03f0" "0x0601"
+:status :complete
+:comment "Buttons may not work on some scanners"
+
+:model "ScanJet 6390C"
+:interface "SCSI USB"
+:usbid "0x03f0" "0x0601"
+:status :complete
+:comment "Buttons may not work on some scanners"
+
+:model "PhotoSmart PhotoScanner"
+:interface "SCSI"
+:status :complete
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.
+

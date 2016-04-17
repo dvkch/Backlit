@@ -1,0 +1,40 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+; See doc/descriptions.txt for details.
+
+:backend "hp8200" 	          ; name of backend
+;:version "0.0"                   ; version of backend (or "unmaintained")
+;:new :yes                         ; Is the backend new to this SANE release?
+                                  ; :yes or :no
+;:manpage "sane-template"          ; name of manpage (if it exists)
+:url "http://www.cyberbaladeur.fr/telechargement.html" ; backend's web page
+:comment "This backend can't be added to the SANE distribution because it consists of binary-only code." 
+                                  ; comment about the backend
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "Hewlett Packard"            ; name a manufacturer
+:url "http://www.hp.com/"         ; manufacturer's URL
+
+:model "ScanJet 8200"                  ; name models for above-specified mfg.
+:status :good                     ; :minimal, :basic, :good, :complete
+                                  ; :untested, or :unsupported
+:interface "USB"                  ; interface type of the device:
+                                  ; "SCSI", "USB", "Parport (EPP)",
+                                  ; "Parport (SPP)", "Parport (ECP)",
+                                  ; "Serial port", "IEEE-1394", "JetDirect",
+                                  ; or "Proprietary".
+:usbid "0x03f0" "0x0b01"
+:url "http://ftp.cyberbaladeur.fr/82xxc%20Linux%20drivers.tar.gz"  ; model's URL
+:comment "External backend. Binary-only Linux i386 code. Not supported by the SANE developers."
+

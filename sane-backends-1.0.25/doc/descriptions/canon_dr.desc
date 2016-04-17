@@ -1,0 +1,393 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "canon_dr"              ; name of backend
+:url "http://www.thebility.com/canon/" 
+:version "51"                    ; version of backend
+:manpage "sane-canon_dr"         ; name of manpage (if it exists)
+:comment "Backend updated for SANE release 1.0.25, see sane-canon_dr manpage"
+:devicetype :scanner             ; start of a list of devices....
+                                 ; other types:  :stillcam, :vidcam,
+                                 ;               :meta, :api
+
+:mfg "Canon"                   ; name a manufacturer
+:url "http://www.canon.com/"
+
+;==================================================
+:model "CR-25"
+:interface "USB"
+:usbid "0x1083" "0x161a"
+:status :untested
+:comment "Please test!"
+
+:model "CR-50"
+:interface "USB"
+;:usbid "0x1083" "0x"
+:status :untested
+:comment "Please test!"
+
+:model "CR-55"
+:interface "USB"
+:usbid "0x1083" "0x160c"
+:status :untested
+:comment "Please test!"
+
+:model "CR-80"
+:interface "USB"
+;:usbid "0x1083" "0x"
+:status :untested
+:comment "Please test!"
+
+:model "CR-135i"
+:interface "USB SCSI"
+:usbid "0x1083" "0x1639"
+:status :untested
+:comment "Please test!"
+
+:model "CR-180"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x1602"
+:status :untested
+:comment "Please test!"
+
+:model "CR-180II"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x1602"
+:status :untested
+:comment "Same as CR-180? Please test!"
+
+:model "CR-190i"
+:interface "USB SCSI"
+:usbid "0x1083" "0x162b"
+:status :untested
+:comment "Please test!"
+
+:model "DR-1210C"
+:interface "USB"
+:usbid "0x04a9" "0x2222"
+:status :untested
+:comment "Older version? Please test!"
+
+:model "DR-1210C"
+:interface "USB"
+:usbid "0x1083" "0x160f"
+:status :untested
+:comment "Later version? Please test!"
+
+:model "DR-2010C"
+:interface "USB"
+:usbid "0x1083" "0x161b"
+:status :complete
+:comment "Hardware provides: Gray/Color, Simplex/Duplex, Full-width, 300/600dpi horizontal. Driver provides: Binary, Despeckle, Deskew, Cropping, Calibration, other resolutions."
+
+:model "DR-2010M"
+:interface "USB"
+:status :untested
+:comment "Mac version of DR-2010C? Please test!"
+
+:model "DR-2050C"
+:interface "USB"
+:usbid "0x04a9" "0x160a"
+:status :complete
+:comment "Hardware provides: Gray/Color, Simplex/Duplex, Full-width. Driver provides: Binary, Despeckle, Deskew, Cropping, Calibration."
+
+:model "DR-2050SP"
+:interface "USB"
+:usbid "0x04a9" "0x160a"
+:status :untested
+:comment "Same as DR-2050C? Please test!"
+
+:model "DR-2080C"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x1601"
+:status :complete
+:comment "Hardware provides: Gray/Color, Simplex/Duplex, Full-width. Driver provides: Binary, Despeckle, Deskew, Cropping, Calibration"
+
+:model "DR-2510C"
+:interface "USB"
+:usbid "0x1083" "0x1617"
+:status :complete
+:comment "Hardware provides: Gray/Color, Simplex/Duplex, Full-width, 300/600dpi horizontal. Driver provides: Binary, Despeckle, Deskew, Cropping, Calibration, other resolutions"
+
+:model "DR-2510M"
+:interface "USB"
+:status :untested
+:comment "Mac version of DR-2510C? Please test!"
+
+:model "DR-2580C"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x1608"
+:status :complete
+:comment "Hardware provides: Gray/Color, Simplex/Duplex, Full-width. Driver provides: Binary, Despeckle, Deskew, Cropping, Calibration"
+
+:model "DR-3010C"
+:interface "USB"
+:usbid "0x1083" "0x161d"
+:status :good
+:comment "Minimal testing, settings copied from DR-2510C"
+
+:model "DR3020"
+:interface "SCSI"
+:status :untested
+:comment "Please test!"
+
+:model "DR-3020C"
+:interface "SCSI"
+:status :untested
+:comment "Please test!"
+
+:model "DR-3060"
+:interface "SCSI"
+:status :untested
+:comment "Please test!"
+
+:model "DR-3080C"
+:interface "SCSI"
+:status :untested
+:comment "Almost works, need to investigate traces from windows driver"
+
+:model "DR-3080CII"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x1609"
+:status :untested
+:comment "Almost works, need to investigate traces from windows driver"
+
+:model "DR-4010C"
+:interface "USB"
+:usbid "0x1083" "0x1614"
+:status :good
+:comment "Binary/HT/Gray/Color, Simplex/Duplex working. Multistream unsupported."
+
+:model "DR4080U"
+:interface "USB"
+;:usbid "0x1083" "0x1614"
+:status :untested
+:comment "Please test!"
+
+:model "DR-4580U"
+:interface "USB"
+;:usbid "0x1083" "0x1614"
+:status :untested
+:comment "Please test!"
+
+:model "DR-5010C"
+:interface "USB"
+:usbid "0x04a9" "0x1606"
+:status :untested
+:comment "Please test!"
+
+:model "DR-5020"
+:interface "SCSI"
+:status :good
+:comment "LineArt, Duplex working, cannot read buttons or screen?"
+
+:model "DR-5060F"
+:interface "SCSI"
+:status :basic
+:comment "Grayscale works, LineArt might"
+
+:model "DR-5080C"
+:interface "SCSI"
+:status :untested
+:comment "Please test!"
+
+:model "DR-6010C"
+:interface "USB SCSI"
+:usbid "0x1083" "0x1626"
+:status :untested
+:comment "Please test!"
+
+:model "DR-6030C"
+:interface "USB SCSI"
+:usbid "0x1083" "0x1638"
+:status :untested
+:comment "Please test!"
+
+:model "DR-6050C"
+:interface "USB SCSI"
+:usbid "0x1083" "0x1624"
+:status :good
+:comment "Simplex, duplex, all resolutions, binary/ht/gray working.  Can't wake from stand-by mode"
+
+:model "DR-6080"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x1607"
+:status :good
+:comment "Simplex, duplex, all resolutions, binary/ht/gray, async mode, dropout-color, multifeed/staple detection, deskew, buttons and JPEG working. Imprinter, barcode, custom gamma and multistream unsupported"
+
+:model "DR-7080C"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x1604"
+:status :good
+:comment "ADF and flatbed work"
+
+:model "DR-7090C"
+:interface "USB SCSI"
+:usbid "0x1083" "0x1620"
+:status :good
+:comment "ADF and flatbed work"
+
+:model "DR-7550C"
+:interface "USB SCSI"
+:usbid "0x1083" "0x1623"
+:status :untested
+:comment "Assumed compatible with DR-6050C"
+
+:model "DR-7580"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x160b"
+:status :good
+:comment "Simplex, duplex, all resolutions, binary/ht/gray, async mode, dropout-color, multifeed/staple detection, deskew, buttons and JPEG working. Imprinter, barcode, custom gamma and multistream unsupported"
+
+:model "DR-9050C"
+:interface "USB SCSI"
+:usbid "0x1083" "0x1622"
+:status :good
+:comment "Simplex, duplex, all resolutions, binary/ht/gray working.  Can't wake from stand-by mode"
+
+:model "DR-9080C"
+:interface "USB SCSI"
+:usbid "0x04a9" "0x1603"
+:status :good
+:comment "Simplex, duplex, all resolutions, binary/ht/gray/color, async mode, dropout-color, multifeed/staple detection, deskew, buttons and JPEG working. Imprinter, barcode, custom gamma and multistream unsupported"
+
+:model "DR-X10C"
+:interface "USB SCSI"
+:usbid "0x1083" "0x1618"
+:status :untested
+:comment "Please test!"
+
+:model "DR-C120"
+:interface "USB"
+:usbid "0x1083" "0x1651"
+:status :untested
+
+:model "DR-C125"
+:interface "USB"
+:usbid "0x1083" "0x1640"
+:status :good
+
+:model "DR-C130"
+:interface "USB"
+:usbid "0x1083" "0x164a"
+:status :untested
+
+:model "DR-C225"
+:interface "USB"
+:usbid "0x1083" "0x1658"
+:status :untested
+:comment ""
+
+:model "DR-F120"
+:interface "USB"
+:usbid "0x1083" "0x1654"
+:status :untested
+
+:model "DR-G1100"
+:interface "USB"
+:usbid "0x1083" "0x1650"
+:status :good
+
+:model "DR-G1130"
+:interface "USB"
+:usbid "0x1083" "0x164f"
+:status :untested
+
+:model "DR-M140"
+:interface "USB"
+:usbid "0x1083" "0x163f"
+:status :good
+
+:model "DR-M160"
+:interface "USB"
+:usbid "0x1083" "0x163e"
+:status :good
+
+:model "DR-M160II"
+:interface "USB"
+;:usbid "0x1083" "0x"
+:status :untested
+
+:model "DR-M1060"
+:interface "USB"
+:usbid "0x1083" "0x1657"
+:status :untested
+
+:model "P-150"
+:interface "USB"
+;:usbid "0x1083" "0x"
+:status :untested
+
+:model "P-150M"
+:interface "USB"
+;:usbid "0x1083" "0x"
+:status :untested
+
+:model "P-201"
+:interface "USB"
+:usbid "0x1083" "0x1652"
+:status :untested
+
+:model "DR-P208"
+:interface "USB"
+:usbid "0x1083" "0x164b"
+:status :untested
+:comment "Same as P-208?"
+
+:model "P-208"
+:interface "USB"
+:usbid "0x1083" "0x164c"
+:status :basic
+:comment "All modes and resolutions working, but calibration is poor."
+
+:model "DR-P208II"
+:interface "USB"
+:usbid "0x1083" "0x165d"
+:status :untested
+
+:model "P-208II"
+:interface "USB"
+:usbid "0x1083" "0x165f"
+:status :untested
+
+:model "DR-P215"
+:interface "USB"
+:usbid "0x1083" "0x1641"
+:status :untested
+:comment "Same as P-215?"
+
+:model "P-215"
+:interface "USB"
+:usbid "0x1083" "0x1646"
+:status :basic
+:comment "All modes and resolutions working, but calibration is poor. Card reader slot not working."
+
+:model "P-215"
+:interface "USB"
+:usbid "0x1083" "0x1647"
+:status :basic
+:comment "This is the same device as the 0x1646 P-215, but the mode switch on the scanner is in the wrong position, you must move the switch."
+
+:model "DR-P215II"
+:interface "USB"
+:usbid "0x1083" "0x1659"
+:status :untested
+
+:model "P-215II"
+:interface "USB"
+:usbid "0x1083" "0x165b"
+:status :untested
+
+:model "FSU-201"
+:interface "USB"
+:usbid "0x1083" "0x1648"
+:status :untested
+

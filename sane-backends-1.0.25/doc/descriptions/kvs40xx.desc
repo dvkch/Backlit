@@ -1,0 +1,35 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "kvs40xx"               ; name of backend
+:version "unmaintained"          ; version of backend
+:manpage "sane-kvs40xx"          ; name of manpage (if it exists)
+:comment "New backend for SANE release 1.0.23, see sane-kvs40xx manpage"
+:devicetype :scanner             ; start of a list of devices....
+
+:mfg "Panasonic"                 ; name a manufacturer
+:url "http://www.panasonic.com/"
+
+:model "KV-S4065C"
+:interface "USB"
+:usbid "0x04da" "0x100d"
+:status :untested
+
+:model "KV-S4085C"
+:interface "USB"
+:usbid "0x04da" "0x100c"
+:status :untested
+
+:model "KV-S7075C"
+:interface "USB"
+:usbid "0x04da" "0x100e"
+:status :untested
+

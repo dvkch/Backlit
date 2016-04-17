@@ -1,0 +1,52 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+
+
+:backend "rts8891"               ; name of backend
+:version "1.0-0"                    ; version of backend (or "unmaintained")
+:manpage "sane-rts8891"        ; name of manpage (if it exists)
+:url "http://stef.dev.free.fr/sane/rts8891/index.html" 
+				  ; backend's web page
+
+:comment "This backend supports Realtek RTS8891 ASIC bases scanners." 
+                                  ; comment about the backend
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "UMAX"                   ; name a manufacturer
+:url "http://www.umax.com.tw/"   ; manufacturer's URL
+
+:model "Astra 4400"
+:interface "USB"
+:usbid "0x1606" "0x0070"
+:status :good
+:comment "Supports 75, 150, 300, 600 and 1200 dpi"
+
+:model "Astra 4450"
+:interface "USB"
+:usbid "0x1606" "0x0070"
+:status :untested
+
+:mfg "Hewlett-Packard"			; name a manufacturer
+:url "http://www.hp.com/"
+
+:model "scanjet 4470c"
+:interface "USB"
+:usbid "0x03f0" "0x0805"
+:status :good
+:comment "re-branded Astra 4400"
+
+:model "scanjet 4400c"
+:interface "USB"
+:usbid "0x03f0" "0x0705"
+:status :good
+:comment "exists with 2 different sensors of which only one works"

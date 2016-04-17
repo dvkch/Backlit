@@ -1,0 +1,92 @@
+.TH sane\-qcam 5 "14 Jul 2008" "@PACKAGEVERSION@" "SANE Scanner Access Now Easy"
+.IX sane\-qcam
+.SH NAME
+sane\-qcam \- SANE backend for Connectix QuickCam cameras
+.SH DESCRIPTION
+The
+.B sane\-qcam
+library implements a SANE (Scanner Access Now Easy) backend that
+provides access Connectix QuickCam cameras.
+.SH "DEVICE NAMES"
+This backend expects device names of the form:
+.PP
+.RS
+.I port
+.RE
+.PP
+Where
+.I port
+is the I/O port address at which the device resides.  This address is
+normally specified in hexadecimal using C syntax (e.g., 0x37b) and may
+be prefixed with the letter "u" (e.g., u0x37b) to force the backend to
+access the camera in uni-directional mode.
+.SH CONFIGURATION
+The contents of the
+.I qcam.conf
+file is a list port addresses that may be connected to a
+Connectix QuickCam.  Empty lines and everything starting from a hash
+mark (#) up to the end of a line are ignored.  A sample configuration
+file is shown below:
+.PP
+.RS
+0x37b  # /dev/lp0
+.br
+0x378  # /dev/lp1
+.br
+u0x278 # /dev/lp2 forced in uni-directional mode
+.br
+0x3bc  # /dev/lp0 (alternate address)
+.RE
+.PP
+In general, it is safest to list only the port addresses that really
+correspond to a QuickCam.  For example, if one of the listed addresses
+actually connect to a printer, then starting up this backend will
+cause the printer to perform a device reset (which is generally
+undesirable).
+.SH FILES
+.TP
+.I @CONFIGDIR@/qcam.conf
+The backend configuration file (see also description of
+.B SANE_CONFIG_DIR
+below).
+.TP
+.I @LIBDIR@/libsane\-qcam.a
+The static library implementing this backend.
+.TP
+.I @LIBDIR@/libsane\-qcam.so
+The shared library implementing this backend (present on systems that
+support dynamic loading).
+.SH ENVIRONMENT
+.TP
+.B SANE_CONFIG_DIR
+This environment variable specifies the list of directories that may
+contain the configuration file.  Under UNIX, the directories are
+separated by a colon (`:'), under OS/2, they are separated by a
+semi-colon (`;').  If this variable is not set, the configuration file
+is searched in two default directories: first, the current working
+directory (".") and then in @CONFIGDIR@.  If the value of the
+environment variable ends with the directory separator character, then
+the default directories are searched after the explicitly specified
+directories.  For example, setting
+.B SANE_CONFIG_DIR
+to "/tmp/config:" would result in directories "tmp/config", ".", and
+"@CONFIGDIR@" being searched (in this order).
+.TP
+.B SANE_DEBUG_QCAM
+If the library was compiled with debug support enabled, this
+environment variable controls the debug level for this backend.  E.g.,
+a value of 128 requests all debug output to be printed.  Smaller
+levels reduce verbosity.
+.SH AUTHOR
+David Mosberger
+.SH BUGS
+Support is currently limited to the color version of the QuickCam.
+The black-and-white camera is starting to work too, but I don't
+believe it works in all cases yet.  Reportedly, acquiring images of
+certain sizes work fine, but others result in shifted images (sounds
+like a problem due to byte-padding).
+.PP
+The program needs root-privileges since it needs to be able to access
+the camera's I/O ports.
+.SH SEE ALSO
+sane(7)

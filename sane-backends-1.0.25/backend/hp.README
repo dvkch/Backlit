@@ -1,0 +1,70 @@
+Fri Dec  5 18:10:52 PST 1997
+Geoffrey T. Dairiki <dairiki@alumni.caltech.edu>
+
+Here is a new HP backend.  It's name is, appropriately, ``newhp''.
+
+It is still in the pre-alpha stages but mostly works on my ScanJet 5P.
+It is completely untested on other scanners, but might hopefully work
+on ScanJet models IIp, IIc, IIcx, 3p, 3c, 4c, 4p, and 5p.
+
+I've only really tested this with xscanimage.
+
+Some features included in this backend which aren't in the old
+HP driver are:
+
+  Support for custom tonemaps (gamma-maps).  For some reason I
+  can't get the 10-bit tonemaps working with my 5p, so for you
+  only get a single tonemap (it still works in color mode, but
+  you don't get individual control over each R/G/B channel.)
+
+  You can enable the scanjets "Auto Threshold" mode when scanning
+  line-art.  I can't notice that it does much though....
+
+  Added an option to control the scan speed.
+
+  Added an option to select the dither pattern used in half-tone mode.
+  I don't think that custom dither patterns are working correctly,
+  and in any case, with the current front-ends, there is no convenient
+  way to set a custom dither pattern....
+
+  Added an option to select the color correction matrixes.
+  This also seems to be flaky.   Again the current front-ends do not provide
+  a decent way to adjust the custom color matrix.
+
+
+Tue Feb 24 20:00:00 UT+1 1998
+Peter Kirchgessner <pkirchg@aol.com>
+
+Picked up the sources because they did not find their way to the
+SANE-package up to now. And because I want to have a better support
+for the HP Photosmart Photoscanner. Renamed the backend from newhp
+to xhp just to get a better acceptance.
+
+  Added an option to perform calibration. Upload and download calibration data
+
+  Added options for horizontal/vertical mirroring. Vertical mirroring
+  is performed by loading image completely into memory before
+  sending to frontend.
+
+  Uses SCSI-flushing more often because otherwise the scanner did not
+  accept all of the commands.
+
+  Test support of commands to be independant from inquired
+  model number.
+  
+Wed Mar 28 10:00:00 UT+1 1998
+
+Bring it on its way to the SANE-project. Geoffrey accepted to add
+licence informations to the files as long as noone has to pay for the code.
+
+Sun Jun 07 15:00:00 UT+1 1998
+
+  Added unload button
+
+  Fixed problem with custom gamma table
+
+Sat Nov 14 14:00:00 UT+1 1998
+
+  Show calibrate button on Photosmart only for print media
+  Add HP 6200 C
+  Suppress halftone mode on photosmart (it is not supported)

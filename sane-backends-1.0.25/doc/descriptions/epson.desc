@@ -1,0 +1,354 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "epson"                  ; name of backend
+;:version "0.2.42"                ; version of backend
+:version "unmaintained"           ; version of backend
+:new :no
+:manpage "sane-epson"             ; name of manpage (if it exists)
+:url "http://www.khk.net/sane"    ; backend's web page
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "Epson"                      ; name a manufacturer
+:url "http://www.epson.com/"
+
+:model "GT-5000"                  ; name models for above-specified mfg.
+:interface "SCSI Parport"
+:status :good
+
+:model "Actionscanner II"
+:comment "US version of GT-5000"
+:interface "SCSI Parport"
+:status :good
+
+:model "GT-6000"
+:interface "SCSI Parport"
+:status :good
+
+:model "ES-300C"
+:comment "US version of GT-6000"
+:interface "SCSI Parport"
+:status :good
+
+:model "ES-300GS"
+:interface "SCSI"
+:status :good
+
+:model "GT-5500"
+:interface "SCSI"
+:status :good
+
+:model "GT-6500"
+:interface "Parport"
+:status :good
+
+:model "ES-600C"
+:comment "US version of GT-6500"
+:interface "Parport"
+:status :good
+
+:model "ES-1200C"
+:comment "US version of GT-9000"
+:interface "Parport"
+:status :good
+
+:model "GT-7000"
+:interface "SCSI"
+:scsi "EPSON" "SCANNER GT-7000" "processor"
+:status :good
+
+:model "GT-8000"
+:interface "SCSI"
+:status :good
+
+:model "ES-8500"
+:interface "SCSI"
+:status :good
+
+:model "Perfection 636S"
+:comment "US version of GT-7000"
+:interface "SCSI"
+:scsi "EPSON" "Perfection1200" "processor"
+:status :complete
+
+:model "Perfection 636"
+:interface "SCSI"
+:scsi "EPSON" "Perfection636" "processor"
+:status :complete
+
+:model "Perfection 636U"
+:interface "USB"
+:usbid "0x04b8" "0x0101"
+:status :complete
+
+:model "Perfection 610"
+:interface "USB"
+:usbid "0x04b8" "0x0103"
+:status :complete
+
+:model "Perfection 640"
+:interface "USB"
+:usbid "0x04b8" "0x010c"
+:status :complete
+
+:model "Perfection 1200S"
+:interface "SCSI"
+:scsi "EPSON" "Perfection1200" "processor"
+:status :complete
+
+:model "Perfection 1200U"
+:interface "USB"
+:usbid "0x04b8" "0x0104"
+:status :complete
+
+:model "Perfection 1200Photo"
+:comment "with TPU"
+:interface "USB"
+:usbid "0x04b8" "0x0104"
+:status :complete
+
+:model "Perfection 1240"
+:interface "SCSI USB"
+:usbid "0x04b8" "0x010b"
+:status :complete
+
+:model "Perfection 1640"
+:interface "SCSI USB"
+:usbid "0x04b8" "0x010a"
+:status :complete
+
+:model "Perfection 1650"
+:interface "USB"
+:usbid "0x04b8" "0x0110"
+:status :complete
+
+:model "Perfection 1660"
+:interface "USB"
+:usbid "0x04b8" "0x011e"
+:status :complete
+
+:model "Perfection 2400"
+:interface "USB"
+:usbid "0x04b8" "0x011b"
+:status :complete
+
+:model "Perfection 2450"
+:interface "USB IEEE-1394"
+:usbid "0x04b8" "0x0112"
+:scsi "EPSON" "GT-9700" "processor"
+:status :complete
+
+:model "Perfection 3200"
+:comment "US version of the GT-9800"
+:interface "USB IEEE-1394"
+:usbid "0x04b8" "0x011c"
+:scsi "EPSON" "GT-9800" "processor"
+:status :complete
+
+:model "Perfection 4870"
+:comment "US version of the GT-X700"
+:interface "USB"
+:usbid "0x04b8" "0x0128"
+:status :complete
+
+:model "Perfection 4990"
+:comment "US version of the GT-X800"
+:interface "USB"
+:usbid "0x04b8" "0x012a"
+:status :complete
+
+:model "Expression 636"
+:comment "US version of GT-9500"
+:interface "SCSI"
+:status :complete
+
+:model "Expression 800"
+:interface "SCSI"
+:status :complete
+:scsi "EPSON" "Expression800" "processor"
+
+:model "Expression 1600"
+:interface "SCSI USB IEEE-1394"
+:usbid "0x04b8" "0x0107"
+:status :complete
+
+:model "Expression 1680"
+:interface "SCSI USB IEEE-1394"
+:usbid "0x04b8" "0x010e"
+:status :complete
+
+:model "FilmScan 200"
+:interface "SCSI"
+:status :unsupported
+
+:model "CX-3200"
+:interface "USB"
+:usbid "0x04b8" "0x0802"
+:status :good
+
+:model "CX-3600"
+:interface "USB"
+:usbid "0x04b8" "0x080e"
+:status :good
+
+:model "CX-3650"
+:interface "USB"
+:usbid "0x04b8" "0x080e"
+:status :good
+
+:model "CX-4600"
+:interface "USB"
+:usbid "0x04b8" "0x080d"
+:status :good
+
+:model "CX-4800"
+:interface "USB"
+:usbid "0x04b8" "0x0819"
+:status :good
+
+:model "CX-5000"
+:interface "USB"
+:usbid "0x04b8" "0x082b"
+:status :good
+
+:model "CX-5200"
+:interface "USB"
+:usbid "0x04b8" "0x0801"
+:status :good
+
+:model "CX-5400"
+:interface "USB"
+:usbid "0x04b8" "0x0801"
+:status :good
+
+:model "CX-5400"
+:interface "USB"
+:usbid "0x04b8" "0x0808"
+:status :good
+
+:model "CX-6300"
+:interface "USB"
+:usbid "0x04b8" "0x0805"
+:status :good
+
+:model "CX-6400"
+:interface "USB"
+:usbid  "0x04b8" "0x0805"
+:status :good
+
+:model "CX-6500"
+:interface "USB"
+:usbid "0x04b8" "0x0813"
+:status :good
+
+:model "CX-6600"
+:interface "USB"
+:usbid  "0x04b8" "0x0813"
+:status :good
+
+:model "RX-500"
+:interface "USB"
+:usbid "0x04b8" "0x0807"
+:status :good
+
+:model "RX-600"
+:interface "USB"
+:usbid "0x04b8" "0x0806"
+:status :good
+
+:model "RX-425"
+:interface "USB"
+:usbid "0x04b8" "0x080f"
+:status :good
+
+:model "RX-700"
+:interface "USB"
+:usbid "0x04b8" "0x0810"
+:status :good
+
+:model "RX-620"
+:interface "USB"
+:usbid "0x04b8" "0x0811"
+:status :good
+
+:model "DX-3850"
+:interface "USB"
+:usbid "0x04b8" "0x0818"
+:status :good
+
+:model "CX-3700"
+:interface "USB"
+:usbid "0x04b8" "0x0818"
+:status :good
+
+:model "CX-3800"
+:interface "USB"
+:usbid "0x04b8" "0x0818"
+:status :good
+
+:model "CX-4200"
+:interface "USB"
+:usbid "0x04b8" "0x0820"
+:status :good
+
+:model "DX-3800"
+:interface "USB"
+:usbid "0x04b8" "0x0818"
+:status :good
+
+:model "DX-5000"
+:interface "USB"
+:usbid "0x04b8" "0x082b"
+:status :good
+
+:model "DX-5050"
+:interface "USB"
+:usbid "0x04b8" "0x082b"
+:status :good
+
+:model "DX-6000" 
+:interface "USB" 
+:usbid "0x04b8" "0x082e" 
+:status :good 
+
+:model "DX-7400"
+:interface "USB"
+:usbid "0x04b8" "0x0838"
+:status :good
+
+:model "DX-4050"
+:interface "USB"
+:usbid "0x04b8" "0x082f"
+:status :good
+
+:model "AcuLaser CX11"
+:interface "USB"
+:usbid "0x04b8" "0x0815"
+:status :good
+
+:model "AcuLaser CX11NF"
+:interface "USB"
+:usbid "0x04b8" "0x0815"
+:status :good
+
+:model "V700"
+:interface "USB IEEE-1394"
+:usbid "0x04b8" "0x012c"
+:status :good
+
+:model "V750"
+:interface "USB IEEE-1394"
+:usbid "0x04b8" "0x012c"
+:status :good
+

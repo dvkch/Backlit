@@ -1,0 +1,47 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "umax1220u"              ; name of backend
+:version "unmaintained"                  ; version of backend
+;:status :stable                   ; :alpha, :beta, :stable, :new
+:manpage "sane-umax1220u"         ; name of manpage (if it exists)
+:url "http://sourceforge.net/projects/umax1220u-sane" ; backend's web page
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "UMAX"                       ; name a manufacturer
+:url "http://www.umax.com/"
+
+:model "Astra 1220U"        ; name models for above-specified mfg.
+:interface "USB"
+:usbid "0x1606" "0x0010"
+:status :good
+
+:model "Astra 1600U"
+:interface "USB"
+:usbid "0x1606" "0x0030"
+:status :good
+
+:model "Astra 2000U"
+:interface "USB"
+:usbid "0x1606" "0x0030"
+:status :good
+
+:model "Astra 2100U"
+:interface "USB"
+:usbid "0x1606" "0x0130"
+:status :good
+
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.

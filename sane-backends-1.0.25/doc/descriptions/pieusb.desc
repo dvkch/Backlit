@@ -1,0 +1,86 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "pieusb"                 ; name of backend
+:version "1.0"                    ; version of backend
+:new :yes
+:manpage "sane-pieusb"            ; name of manpage (if it exists)
+:url "https://github.com/kkaempf/sane-backends"  ; backend's web page
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "PIE"
+:url "http://www.scanace.com"
+
+:model "PowerSlide 3600"
+:interface "USB"
+:status :untested
+:comment "Identical to Reflecta DigitDia 3600"
+
+:model "PowerSlide 3650"
+:interface "USB"
+:status :untested
+:comment "Identical to Reflecta DigitDia 4000"
+
+:model "PowerSlide 4000"
+:interface "USB"
+:status :untested
+:comment "Identical to Reflecta DigitDia 5000"
+
+:model "PowerSlide 5000"
+:interface "USB"
+:status :untested
+:comment "Identical to Reflecta DigitDia 6000"
+
+:mfg "Reflecta"
+:url "https://reflecta.de"
+
+:model "Reflecta ProScan 7200"
+:interface "USB"
+:usbid "0x05e3" "0x0145"
+:status :basic
+:comment "Similar to PrimeFilm 7250 scanner from Pacific Image Electronics"
+
+:model "CrystalScan 7200"
+:interface "USB"
+:status :untested
+
+:model "Reflecta CrystalScan 7250"
+:interface "USB"
+:usbid "0x05e3" "0x0145"
+:status :basic
+:comment "Similar to PrimeFilm 7250 scanner from Pacific Image Electronics"
+
+:model "DigitDia 3600"
+:interface "USB"
+:status :untested
+:comment "Identical to Pacific Image Electronics PowerSlide 3600 scanner"
+
+:model "DigitDia 4000"
+:interface "USB"
+:status :untested
+:comment "Identical to Pacific Image Electronics PowerSlide 3650 scanner"
+
+:model "DigitDia 5000"
+:interface "USB"
+:status :untested
+:comment "Identical to Pacific Image Electronics PowerSlide 4000 scanner"
+
+:model "Reflecta DigitDia 6000 Multiple Slide Scanner"
+:interface "USB"
+:usbid "0x05e3" "0x0142"
+:status :good
+:comment "Identical to Pacific Image Electronics PowerSlide 5000 scanner"
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.

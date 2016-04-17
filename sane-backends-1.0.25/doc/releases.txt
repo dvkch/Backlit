@@ -1,0 +1,86 @@
+2009-05-05
+
+This text summarizes some points to pay attention to when a new release
+of sane-backends is planned.
+
+Timetable (approximate periods):
+
+Day  0: Announcement of upcoming release on sane-devel including timetable
+Day 14: Feature freeze (only bugfixes + documentation updates)
+Day 28: Code freeze (only fixes for bugs that can destroy hardware, can cause 
+        compilation problems or render a backend completely unusable, and
+        documentation updates are allowed)
+Day 35: Release
+
+Before the release:
+
+* set :new :yes on any new backend .desc files
+* Make sure that config.guess and config.sub are up-to-date (get them from
+  savannah.gnu.org/projects/config)
+* configure.in: increase version number
+* configure.in: remove 'git' from textual version number
+* configure.in: set is_release=yes
+* OPTIONAL: aclocal.m4: recreate by running aclocal
+* OPTIONAL: include/sane/config.h.in: recreate (autoheader in root of checkout)
+* DONT run autoreconf, it will overwrite our custom ltmain.sh
+* configure: recreate by running autoconf
+* NEWS: update and enter date of release
+* sane-backends.lsm: update
+* ChangeLog: set release marker
+* git commit -a
+* tag git with release tag; e.g.: 'git tag -a RELEASE_1_0_15'
+* probably DONT want to git push here, cause alioth will rebuild it's local
+  checkout needlessly
+
+Making the release:
+
+* make tar.gz, sane-backends-x.y.z.lsm, and .md5sum with "make sane-backends"
+* unpack tar.gz in temporary directory
+* make diff from last release by unpacking it also in temporary directory
+  and running e.g. 
+  diff -uNr sane-backends-1.0.23 sane-backends-1.0.24  > sane-backends-1.0.23-1.0.24.diff
+* check that the diff applies cleanly to the old version
+* gzip the diff
+* install devel headers required to build optional backends (1284,gphoto,etc)
+* check that the new version .tar.gz can be compiled
+* upload the .tar.gz, tar.gz.md5 and .diff.gz to the FTP/HTTP servers
+  (at the moment: alioth.debian.org, ftp files are in
+  /srv/alioth.debian.org/chroot/ftproot/pub/sane/ )
+  In the alioth web interface, you should upload the smallest file first,
+  since you don't get error messages until after an upload completes,
+  and you might need to change something.
+  You can add the larger files afterwards. You may have to split larger
+  files.
+
+Announcing the release:
+
+* checkout the sane/website.git module and:
+* copy sane-backends.html to sane-backends-"old-version".html
+* update sane-supported-devices.html with link to above "old" file
+* rebuild sane-backends.html and sane-mfgs.html (make -C doc html-pages)
+* use man2html from http://hydra.nac.uci.edu/indiv/ehood/man2html.html
+  to rebuild html man pages (make -C doc html-man) (no other version works)
+* add md5 sum to sane-md5sums.txt
+* check and update platforms page (sane-support.html)
+* add announcement to index.html
+* git commit -a && git push
+* check that website was updated automatically. if not, see:
+  /home/groups/sane/bin/update-htdocs.sh
+* rebuild descriptions.db (make -C doc descriptions.db)
+* scp doc/descriptions.db to alioth:
+  /home/groups/sane/search/release
+* write announcements sane-devel, maybe others (e.g. freshmeat),
+  include the md5 hash
+
+After the release:
+
+* move ChangeLog to ChangeLog-"version"
+* start a new ChangeLog
+* add ChangeLog-"version" to EXTRA_DIST in Makefile.in and Makefile.am
+* configure.in: bump textual version & add 'git' suffix
+* configure.in: bump V_REV
+* configure.in: set is_release=no
+* configure: regenerate with autoconf
+* remove the ':new' tag from any new backends .desc files
+* git add new files and commit
+* git push --tags

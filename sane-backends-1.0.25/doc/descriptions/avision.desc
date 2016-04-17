@@ -1,0 +1,857 @@
+; SANE Backend specification file
+;
+; THIS FILE IS GENERATED FROM THE "avision.c" FILE AUTOMATICALLY - DO NOT EDIT
+; THIS FILE MANUALLY !!!
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+
+; name of backend
+:backend "avision"
+
+; version of backend
+:version "Build: 296"
+;status: alpha, beta, stable, new
+;:status :stable
+
+; backend's web page
+:url "http://exactcode.com/site/open_source/saneavision/"
+
+; name of manpage (if it exists)
+:manpage "sane-avision"
+
+:devicetype :scanner
+
+:mfg "Avision"
+:url "http://www.avision.com"
+
+:model "AV100CS"
+:interface "SCSI"
+:status :untested
+
+:model "AV100IIICS"
+:interface "SCSI"
+:status :untested
+
+:model "AV100S"
+:interface "SCSI"
+:status :untested
+
+:model "AV120"
+:interface "USB"
+:usbid "0x0638" "0x0a27"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "AV121"
+:interface "USB"
+:usbid "0x0638" "0x0a3c"
+:comment "sheetfed scanner"
+:status :good
+
+:model "AV122"
+:interface "USB"
+:usbid "0x0638" "0x0a33"
+:comment "sheetfed duplex scanner"
+:status :good
+
+:model "AV122 C2"
+:interface "USB"
+:usbid "0x0638" "0x0a93"
+:comment "sheetfed duplex scanner"
+:status :good
+
+:model "AV210"
+:interface "USB"
+:usbid "0x0638" "0x0a24"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "AV210"
+:interface "USB"
+:usbid "0x0638" "0x0a25"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "AV210C2"
+:interface "USB"
+:usbid "0x0638" "0x0a3a"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "AV210C2-G"
+:interface "USB"
+:usbid "0x0638" "0x0a2f"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "AV210D2+"
+:interface "USB"
+:usbid "0x0638" "0x1a35"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "AV220"
+:interface "USB"
+:usbid "0x0638" "0x0a23"
+:comment "duplex! sheetfed scanner"
+:status :complete
+
+:model "AV220C2"
+:interface "USB"
+:usbid "0x0638" "0x0a2a"
+:comment "duplex! sheetfed scanner"
+:status :complete
+
+:model "AV220D2"
+:interface "USB"
+:usbid "0x0638" "0x0a2b"
+:comment "duplex! sheetfed scanner"
+:status :basic
+
+:model "AV220D2"
+:interface "USB"
+:usbid "0x0638" "0x1a31"
+:comment "duplex! sheetfed scanner"
+:status :untested
+
+:model "AV220+"
+:interface "USB"
+:usbid "0x0638" "0x0a2c"
+:comment "duplex! sheetfed scanner"
+:status :complete
+
+:model "AV220C2-G"
+:interface "USB"
+:usbid "0x0638" "0x0a2d"
+:comment "duplex! sheetfed scanner"
+:status :complete
+
+:model "AV220C2-B"
+:interface "USB"
+:usbid "0x0638" "0x0a2e"
+:comment "duplex! sheetfed scanner"
+:status :complete
+
+:model "AV220-G"
+:interface "USB"
+:usbid "0x0638" "0x0a94"
+:comment "duplex! sheetfed scanner"
+:status :complete
+
+:model "AV240SC"
+:interface "SCSI"
+:status :untested
+
+:model "AV260CS"
+:interface "SCSI"
+:status :untested
+
+:model "AV360CS"
+:interface "SCSI"
+:status :untested
+
+:model "AV363CS"
+:interface "SCSI"
+:status :untested
+
+:model "AV420CS"
+:interface "SCSI"
+:status :untested
+
+:model "AV6120"
+:interface "SCSI"
+:status :untested
+
+:model "AV610"
+:interface "USB"
+:usbid "0x0638" "0x0a18"
+:status :good
+
+:model "AV600U Plus"
+:interface "USB"
+:usbid "0x0638" "0x0a18"
+:status :good
+
+:model "AV610C2"
+:interface "USB"
+:usbid "0x0638" "0x0a5e"
+:status :good
+
+:model "AM3000 Series"
+:interface "USB"
+:usbid "0x0638" "0x0a41"
+:comment "MFD"
+:status :basic
+
+:model "DS610CU Scancopier"
+:interface "USB"
+:usbid "0x0638" "0x0a16"
+:comment "1 pass, 600 dpi, A4"
+:status :good
+
+:model "AV620CS"
+:interface "SCSI"
+:comment "1 pass, 600 dpi"
+:status :complete
+
+:model "AV620CS Plus"
+:interface "SCSI"
+:comment "1 pass, 1200 dpi"
+:status :complete
+
+:model "AV630CS"
+:interface "SCSI"
+:comment "1 pass, 1200 dpi"
+:status :complete
+
+:model "AV630CSL"
+:interface "SCSI"
+:comment "1 pass, 1200 dpi"
+:status :untested
+
+:model "AV6240"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV600U"
+:interface "USB"
+:usbid "0x0638" "0x0a13"
+:comment "1 pass, 600 dpi"
+:status :good
+
+:model "AV660S"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :untested
+
+:model "AV680S"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :untested
+
+:model "AV690U"
+:interface "SCSI"
+:comment "1 pass, 2400 dpi"
+:status :untested
+
+:model "AV800S"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :untested
+
+:model "AV810C"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :untested
+
+:model "AV820"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :untested
+
+:model "AV820C"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV820C Plus"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV830C"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV830C Plus"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :untested
+
+:model "AV880"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :untested
+
+:model "AV880C"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :untested
+
+:model "AV3200C"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV3200SU"
+:interface "USB"
+:usbid "0x0638" "0x0a4e"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV3730SU"
+:interface "USB"
+:usbid "0x0638" "0x0a4f"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV3750SU"
+:interface "USB"
+:usbid "0x0638" "0x0a65"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV3800C"
+:interface "SCSI"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "AV3850SU"
+:interface "USB"
+:usbid "0x0638" "0x0a66"
+:comment "1 pass, ??? dpi"
+:status :complete
+
+:model "FB6000E"
+:interface "SCSI"
+:comment "1 pass, 1200 dpi, A3 - duplex! - zero edge!"
+:status :complete
+
+:model "FB6080E"
+:interface "USB"
+:usbid "0x0638" "0x0a82"
+:comment "1 pass, 1200 dpi, A3 - duplex! - zero edge!"
+:status :complete
+
+:model "FB2080E"
+:interface "USB"
+:usbid "0x0638" "0x0a84"
+:comment "1 pass, 600 dpi, zero-edge" ASIC 7
+:status :basic
+
+:model "AV8000S"
+:interface "SCSI"
+:comment "1 pass, 1200 dpi, A3"
+:status :complete
+
+:model "AV8050U"
+:interface "USB"
+:usbid "0x0638" "0x0a4d"
+:comment "1 pass, 1200 dpi, A3 - duplex!"
+:status :complete
+
+:model "AV8300"
+:interface "USB"
+:usbid "0x0638" "0x0a40"
+:comment "1 pass, 1200 dpi, A3 - duplex!"
+:status :complete
+
+:model "AV8350"
+:interface "USB"
+:usbid "0x0638" "0x0a68"
+:comment "1 pass, 1200 dpi, A3 - duplex!"
+:status :complete
+
+:model "IT8300"
+:interface "USB"
+:usbid "0x0638" "0x0a61"
+:comment "1 pass, 1200 dpi, A3 - duplex!, LCD screen, paper sensors"
+:status :good
+
+:model "@V2500"
+:interface "USB"
+:usbid "0x0638" "0x0aa1"
+:status :untested
+
+:model "@V5100"
+:interface "USB"
+:usbid "0x0638" "0x0a45"
+:comment "1 pass, 1200 dpi, A3 - duplex!, LCD screen, paper sensors"
+:status :good
+
+:model "AVA3"
+:interface "SCSI"
+:comment "1 pass, 600 dpi, A3"
+:status :basic
+
+
+:mfg "Hewlett-Packard"
+:url "http://www.hp.com"
+
+:model "ScanJet 5300C"
+:interface "USB"
+:usbid "0x03f0" "0x0701"
+:comment "1 pass, 2400 dpi - some FW revisions have x-axis image scaling problems over 1200 dpi"
+:status :complete
+
+:model "ScanJet 5370C"
+:interface "USB"
+:usbid "0x03f0" "0x0701"
+:comment "1 pass, 2400 dpi - some FW revisions have x-axis image scaling problems over 1200 dpi"
+:status :good
+
+:model "ScanJet 7400c"
+:interface "USB"
+:usbid "0x03f0" "0x0801"
+:comment "1 pass, 2400 dpi - dual USB/SCSI interface"
+:status :good
+
+:model "ScanJet 7450c"
+:interface "USB"
+:usbid "0x03f0" "0x0801"
+:comment "1 pass, 2400 dpi - dual USB/SCSI interface"
+:status :good
+
+:model "ScanJet 7490c"
+:interface "USB"
+:usbid "0x03f0" "0x0801"
+:comment "1 pass, 1200 dpi - dual USB/SCSI interface"
+:status :good
+
+:model "ScanJet 8200"
+:interface "USB"
+:usbid "0x03f0" "0x0b01"
+:comment "1 pass, 4800 (?) dpi - USB 2.0"
+:status :good
+
+:model "ScanJet 8250"
+:interface "USB"
+:usbid "0x03f0" "0x0b01"
+:comment "1 pass, 4800 (?) dpi - USB 2.0"
+:status :good
+
+:model "ScanJet 8270"
+:interface "USB"
+:usbid "0x03f0" "0x3905"
+:comment "1 pass, 4800 (?) dpi - USB 2.0"
+:status :good
+
+:model "ScanJet 8290"
+:interface "USB"
+:usbid "0x03f0" "0x0b01"
+:comment "1 pass, 4800 (?) dpi - USB 2.0 and SCSI - only SCSI tested so far"
+:status :good
+
+:model "ScanJet 8300"
+:interface "USB"
+:usbid "0x03f0" "0x3805"
+:comment "1 pass, 4800 (?) dpi - USB 2.0"
+:status :good
+
+:model "ScanJet 8350"
+:interface "USB"
+:usbid "0x03f0" "0x3805"
+:comment "1 pass, 4800 (?) dpi - USB 2.0"
+:status :good
+
+:model "ScanJet 8390"
+:interface "USB"
+:usbid "0x03f0" "0x3805"
+:comment "1 pass, 4800 (?) dpi - USB 2.0"
+:status :good
+
+
+:mfg "Minolta"
+:url "http://www.minolta.com"
+
+:model "Dimage Scan Dual I"
+:interface "SCSI"
+:status :basic
+
+:model "Scan Multi Pro"
+:interface "SCSI"
+:status :untested
+
+:model "Dimage Scan Dual II"
+:interface "USB"
+:usbid "0x0638" "0x026a"
+:comment "1 pass, film-scanner"
+:status :good
+
+:model "Elite II"
+:interface "USB"
+:usbid "0x0686" "0x4004"
+:comment "1 pass, film-scanner"
+:status :untested
+
+:model "Dimage Scan Dual III"
+:interface "USB"
+:usbid "0x0686" "0x400d"
+:comment "1 pass, film-scanner"
+:status :good
+
+:model "Dimage Scan Elite 5400"
+:interface "USB"
+:usbid "0x0686" "0x400e"
+:comment "1 pass, film-scanner"
+:status :good
+
+
+:mfg "Minolta-QMS"
+
+:model "SC-110"
+:interface "USB"
+:usbid "0x0638" "0x0a15"
+:status :untested
+
+:model "SC-215"
+:interface "USB"
+:usbid "0x0638" "0x0a16"
+:status :good
+
+
+:mfg "Mitsubishi"
+
+:model "MCA-ADFC"
+:interface "SCSI"
+:status :untested
+
+:model "S1200C"
+:interface "SCSI"
+:status :untested
+
+:model "S600C"
+:interface "SCSI"
+:status :untested
+
+:model "SS600"
+:interface "SCSI"
+:status :good
+
+
+:mfg "Fujitsu"
+:url "http://www.fujitsu.com"
+
+:model "ScanPartner"
+:interface "SCSI"
+:status :untested
+
+:model "ScanPartner 10"
+:interface "SCSI"
+:status :untested
+
+:model "ScanPartner 10C"
+:interface "SCSI"
+:status :untested
+
+:model "ScanPartner 15C"
+:interface "SCSI"
+:status :untested
+
+:model "ScanPartner 300C"
+:interface "SCSI"
+:status :untested
+
+:model "ScanPartner 600C"
+:interface "SCSI"
+:status :untested
+
+:model "ScanPartner 620C"
+:interface "SCSI"
+:status :good
+
+:model "ScanPartner Jr"
+:interface "SCSI"
+:status :untested
+
+:model "ScanStation"
+:interface "SCSI"
+:status :untested
+
+:model "fi-4010CU"
+:interface "USB"
+:usbid "0x04c5" "0x1029"
+:status :untested
+
+:model "fi-5015C"
+:interface "USB"
+:usbid "0x04c5" "0x10ef"
+:status :good
+
+
+:mfg "Kodak"
+:url "http://www.kodak.com"
+
+:model "i30"
+:interface "USB"
+:usbid "0x040a" "0x6001"
+:status :untested
+
+:model "i40"
+:interface "USB"
+:usbid "0x040a" "0x6002"
+:status :basic
+
+:model "i50"
+:interface "USB"
+:usbid "0x040a" "0x6003"
+:status :untested
+
+:model "i55"
+:interface "USB"
+:usbid "0x040a" "0x6003"
+:status :untested
+
+:model "i60"
+:interface "USB"
+:usbid "0x040a" "0x6004"
+:status :untested
+
+:model "i65"
+:interface "USB"
+:usbid "0x040a" "0x6004"
+:status :untested
+
+:model "i80"
+:interface "USB"
+:usbid "0x040a" "0x6005"
+:status :good
+
+
+:mfg "iVina"
+
+:model "1200U"
+:interface "USB"
+:usbid "0x0638" "0x0268"
+:status :untested
+
+
+:mfg "Visioneer"
+
+:model "Strobe XP 450"
+:interface "USB"
+:usbid "0x04a7" "0x0424"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "Strobe XP 450-G"
+:interface "USB"
+:usbid "0x04a7" "0x0491"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "Strobe XP 470"
+:interface "USB"
+:usbid "0x04a7" "0x0479"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "Strobe XP 470-G"
+:interface "USB"
+:usbid "0x04a7" "0x048f"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "9320"
+:interface "USB"
+:usbid "0x04a7" "0x0420"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "9450"
+:interface "USB"
+:usbid "0x04a7" "0x0421"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "9450-G"
+:interface "USB"
+:usbid "0x04a7" "0x047a"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "9550"
+:interface "USB"
+:usbid "0x04a7" "0x0422"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "9650"
+:interface "USB"
+:usbid "0x04a7" "0x0390"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "9650-G"
+:interface "USB"
+:usbid "0x04a7" "0x047b"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "9750"
+:interface "USB"
+:usbid "0x04a7" "0x0423"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "9750-G"
+:interface "USB"
+:usbid "0x04a7" "0x0493"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "Patriot 430"
+:interface "USB"
+:usbid "0x04a7" "0x0497"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "Patriot 470"
+:interface "USB"
+:usbid "0x04a7" "0x048f"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "Patriot 680"
+:interface "USB"
+:usbid "0x04a7" "0x0498"
+:comment "sheetfed scanner"
+:status :complete
+
+:model "Patriot 780"
+:interface "USB"
+:usbid "0x04a7" "0x0499"
+:comment "sheetfed scanner"
+:status :complete
+
+
+:mfg "Xerox"
+
+:model "DocuMate150"
+:interface "USB"
+:usbid "0x04a7" "0x049c"
+:status :good
+
+:model "DocuMate152"
+:interface "USB"
+:usbid "0x04a7" "0x0477"
+:status :good
+
+:model "DocuMate162"
+:interface "USB"
+:usbid "0x04a7" "0x049d"
+:status :good
+
+:model "DocuMate250"
+:interface "USB"
+:usbid "0x04a7" "0x0448"
+:status :good
+
+:model "DocuMate250-G"
+:interface "USB"
+:usbid "0x04a7" "0x0490"
+:status :good
+
+:model "DocuMate252"
+:interface "USB"
+:usbid "0x04a7" "0x0449"
+:status :good
+
+:model "DocuMate252-G"
+:interface "USB"
+:usbid "0x04a7" "0x048c"
+:status :good
+
+:model "DocuMate232"
+:interface "USB"
+:usbid "0x04a7" "0x0476"
+:status :good
+
+:model "DocuMate262"
+:interface "USB"
+:usbid "0x04a7" "0x044c"
+:status :good
+
+:model "DocuMate262-G"
+:interface "USB"
+:usbid "0x04a7" "0x048d"
+:status :good
+
+:model "DocuMate262i"
+:interface "USB"
+:usbid "0x04a7" "0x04a7"
+:status :good
+
+:model "DocuMate272"
+:interface "USB"
+:usbid "0x04a7" "0x0475"
+:status :untested
+
+:model "DocuMate272-G"
+:interface "USB"
+:usbid "0x04a7" "0x048e"
+:status :untested
+
+:model "DocuMate510"
+:interface "USB"
+:usbid "0x04a7" "0x0446"
+:status :untested
+
+:model "DocuMate512"
+:interface "USB"
+:usbid "0x04a7" "0x0495"
+:status :untested
+
+:model "DocuMate510-G"
+:interface "USB"
+:usbid "0x04a7" "0x047c"
+:status :untested
+
+:model "DocuMate520"
+:interface "USB"
+:usbid "0x04a7" "0x0447"
+:status :untested
+
+:model "DocuMate520-G"
+:interface "USB"
+:usbid "0x04a7" "0x0492"
+:status :untested
+
+:model "DocuMate632"
+:interface "USB"
+:usbid "0x04a7" "0x0498"
+:status :untested
+
+:model "DocuMate752"
+:interface "USB"
+:usbid "0x04a7" "0x0478"
+:status :untested
+
+:model "DocuMate752"
+:interface "USB"
+:usbid "0x04a7" "0x049a"
+:status :untested
+
+
+:mfg "OKI"
+
+:model "S700 Scancopier"
+:interface "USB"
+:usbid "0x0638" "0x0a16"
+:comment "1 pass, 600 dpi, A4"
+:status :good
+
+
+:mfg "Bell+Howell"
+
+:model "2000F"
+:interface "SCSI"
+:comment "1 pass, ??? dpi, A4"
+:status :basic
+
+
+:mfg "Kyocera"
+
+:model "FS-1016MFP"
+:interface "USB"
+:usbid "0x0482" "0x0335"
+:comment "1 pass, ??? dpi, A4"
+:status :untested
+

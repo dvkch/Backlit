@@ -1,0 +1,62 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "teco3"                  ; name of backend
+:version "1.0-1"                  ; version of backend
+:manpage "sane-teco3"             ; name of manpage (if it exists)
+:url "http://www.zago.net/sane/#teco3"    ; backend's web page
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+
+:mfg "Relisys"
+:url "http://www.tecoimage.com.tw/"
+:model "Infinity Scorpio"
+:comment "sub model VM3552"
+:interface "SCSI"
+:status :good
+
+:mfg "Plustek"
+:model "OpticPro 2400SP"
+:comment "sub model VM3552"
+:interface "SCSI"
+:status :untested
+
+:mfg "PIOTECH"
+:url "http://www.image-land.com/"
+:model "Splendeur 3024"
+:comment "sub model VM3552"
+:interface "SCSI"
+:status :good
+
+:mfg "Trust"
+:model "Imagery 2400 SP"
+:comment "sub model VM3552"
+:interface "SCSI"
+:status :good
+
+:model "Imagery 4800 SP+"
+:comment "sub model VM3552"
+:interface "SCSI"
+:status :good
+
+:model "Imagery 9600 SP"
+:comment "sub model VM3552"
+:interface "SCSI"
+:status :untested
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.
+
+
+

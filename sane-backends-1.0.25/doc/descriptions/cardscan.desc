@@ -1,0 +1,35 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "cardscan"              ; name of backend
+:url "http://www.thebility.com/cardscan/" 
+:version "2"                 ; version of backend
+:manpage "sane-cardscan"         ; name of manpage (if it exists)
+:comment "Backend updated for SANE release 1.0.21, see sane-cardscan manpage"
+:devicetype :scanner             ; start of a list of devices....
+                                 ; other types:  :stillcam, :vidcam,
+                                 ;               :meta, :api
+
+:mfg "Corex"                   ; name a manufacturer
+:url "http://www.cardscan.com/"
+
+:model "800c"
+:interface "USB"
+:usbid "0x08f0" "0x0005"
+:status :good
+:comment "4 inch wide 8bit Gray or 24bit Color simplex card/receipt scanner"
+
+:model "600c"
+:interface "USB"
+:usbid "0x08f0" "0x0002"
+:status :basic
+:comment "4 inch wide 8bit Gray or 24bit Color simplex card/receipt scanner"
+

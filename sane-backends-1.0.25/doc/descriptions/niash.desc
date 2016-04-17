@@ -1,0 +1,63 @@
+; $Id$
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "niash"
+:version "0.3"
+:manpage "sane-niash"
+:url "http://sourceforge.net/projects/hp3300backend"
+
+:devicetype :scanner
+
+:mfg "Hewlett-Packard"
+:url "http://www.hp.com"
+
+:model "ScanJet 3300c"
+:interface "USB"
+:usbid "0x03f0" "0x0205"
+:status :complete
+
+:model "ScanJet 3400c"
+:interface "USB"
+:usbid "0x03f0" "0x0405"
+:comment "If you use Linux 2.6, version 2.6.8 or newer is necessary."
+:status :complete
+
+:model "ScanJet 4300c"
+:interface "USB"
+:usbid "0x03f0" "0x0305"
+:comment "If you use Linux 2.6, version 2.6.8 or newer is necessary."
+:status :complete
+
+:model "ScanJet 4300c/Silitek"
+:interface "USB"
+:usbid "0x047b" "0x1002"
+:comment "If you use Linux 2.6, version 2.6.8 or newer is necessary."
+:status :complete
+
+:mfg "Agfa"
+:url "http://www.agfa.com"
+
+:model "Snapscan Touch"
+:interface "USB"
+:usbid "0x06bd" "0x0100"
+:status :complete
+
+:mfg "Trust"
+:url "http://www.trust.com"
+
+:model "Office Scan USB 19200"
+:interface "USB"
+:usbid "0x047b" "0x1000"
+:status :complete
+
+
+
+

@@ -1,0 +1,70 @@
+2003-02-06
+
+This directory contains translations for the options of the SANE backends.
+They are only used if the gettext tools are found by configure.
+You will need GNU gettext: xgettext, msgfmt and msgmerge. The translations
+are used at least by the frontends XSane and quiteinsane.
+
+
+Users: I want to just read the description of SANE options in my language
+-------------------------------------------------------------------------
+
+Use XSane (>=0.90) or your favourite frontend that supports translations, read
+the documentation and set the environment variable LANG to your local setting.
+Example for German: export LANG=de_DE ; xsane
+
+
+Translators: I want to update existing translations
+---------------------------------------------------
+
+* cd po ; make update
+* Edit lang.po, add/change translations. (with lang = your
+  language, e.g. "de"). You need an editor that is capable of using the
+  encoding UTF8 (unicode).
+* Add your name to the header. Update the "last translator" field.
+* make ; make install
+
+
+Translators: I want to add a new language
+-----------------------------------------
+
+* Edit po/LINGUAS, add your language to ALL_LINGUAS.
+* Run automake -OR- update po/Makefile.in accordingly by hand.
+* ./configure
+* Go ahead with "I want to update existing translations".
+
+
+Backend developers: I want to add internationalization support for my backend
+-----------------------------------------------------------------------------
+
+* Edit the source code of the backend and add SANE_I18N to the appropriate
+  strings. Mark the descriptions (desc) and titles of options with
+  SANE_I18N(). Do the same for string lists used in options. The name of
+  options must NOT be marked. Do NOT mark macros. Especially you don't need
+  to mark standard option strings like SANE_TITLE_NUM_OPTIONS as this is
+  already done in saneopts.h.
+  Examples: s->opt[5].title = SANE_I18N("Enhancement");
+            #define STANDARD_FORMAT SANE_I18N("a4 Paper")
+* Edit po/POTFILES. Add all source code files that contain strings marked
+  by SANE_I18N() to that file.
+* If you want to also add a new language, see above.
+* ./configure
+* See "Update existing translations" or "Add a new language".
+
+
+Frontend developers: I want to add internationalization support for my frontend
+-------------------------------------------------------------------------------
+
+* The Makefile installs files called "sane-backends.mo" in the directory
+  "$(prefix)/share/locale/lang/LC_MESSAGES/", e.g.:
+  "/usr/local/share/locale/de/LC_MESSAGES/sane-backends.mo". For every
+  language exactly one .mo file is installed. Earlier releases of
+  sane-backends installed one file per backend, e.g. sane-umax.mo. For
+  backward compatibility, frontends may want to check for these files, also.
+* As mentioned above, GNU gettext is used. 
+* With other NLS implementations, converting the mo files may work.
+
+
+
+Bugs:
+- Using sed to include macros into *.pot isn't nice.

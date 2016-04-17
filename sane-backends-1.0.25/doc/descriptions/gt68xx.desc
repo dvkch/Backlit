@@ -1,0 +1,472 @@
+:backend "gt68xx"
+:version "1.0-84"
+:manpage "sane-gt68xx"
+:url "http://www.meier-geinitz.de/sane/gt68xx-backend/"
+:comment "Only the USB scanners mentioned below are supported. For other Mustek BearPaws, look at the Plustek and the MA-1509 backend."
+:devicetype :scanner
+
+; -----------------------------------------------------------------------------
+
+:mfg "Artec/Ultima"
+:url "http://www.artecusa.com/"
+
+:model "Ultima 2000"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Works, only product id 0x4002 is supported"
+
+:model "Ultima 2000 e+"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Works, however 12 bit mode doesn't seem to be supported"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Boeder"
+:model "Sm@rtScan Slim Edition"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Similar to Artec Ultima 2000"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Fujitsu"
+:url "http://www.fujitsu.com/"
+
+:model "1200CUS"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :basic
+:comment "Works, but is slow. Probably a Mustek BearPaw 2400 CU clone."
+
+; -----------------------------------------------------------------------------
+
+:mfg "Genius"
+:url "http://www.genius-kye.com/"
+
+:model "ColorPage Slim 1200"
+;:url "/unsupported/genius-colorpage-slim-1200.html"
+:interface "USB"
+:usbid "0x0458" "0x201e"
+:status :untested
+:comment "Untested but should work."
+
+:model "Colorpage SF600"
+:interface "USB"
+:usbid "0x0458" "0x2021"
+:status :basic
+
+:model "Colorpage Vivid3x"
+:interface "USB"
+:usbid "0x0458"	"0x2011"
+:status :good
+
+:model "Colorpage Vivid3 V2"
+:interface "USB"
+:usbid "0x0458"	"0x2011"
+:status :good
+:comment "Same as Colorpage Vivid3x"
+
+:model "Colorpage Vivid3xe"
+:interface "USB"
+:usbid "0x0458"	"0x2017"
+:status :good
+
+:model "Colorpage Vivid4"
+:usbid "0x0458"	"0x2014"
+:interface "USB"
+:status :good
+
+:model "Colorpage Vivid4x"
+:usbid "0x0458"	"0x201b"
+:interface "USB"
+:status :good
+
+:model "Colorpage Vivid4xe"
+:usbid "0x0458"	"0x201a"
+:interface "USB"
+:status :good
+
+:model "Colorpage Vivid 1200 X"
+:interface "USB"
+:usbid "0x0458"	"0x201d"
+:status :good
+
+:model "Colorpage Vivid 1200 XE"
+:interface "USB"
+:usbid "0x0458"	"0x201f"
+:status :good
+
+; -----------------------------------------------------------------------------
+
+:mfg "Googlegear"
+:model "2000"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Same as Artec Ultima 2000."
+
+; -----------------------------------------------------------------------------
+
+:mfg "Lexmark"
+:url "http://www.lexmark.com/"
+:model "X70"
+:interface "USB"
+:usbid "0x043d" "0x002d"
+:status :good
+:comment "Works, some resolutions fail at 16 bit"
+
+:model "X73"
+:interface "USB"
+:usbid "0x043d" "0x002d"
+:status :good
+:comment "Works, some resolutions fail at 16 bit, same as X70"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Medion/Lifetec/Tevion/Cytron"
+:url "http://www.medion.com"
+:comment "Sold by Aldi and Tchibo."
+	  
+:model "MD 4394"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Product id 0x4002. If you have 0x4003, use artec_eplus48u backend."
+
+:model "MD/LT 9375"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :untested
+:comment "Untested, but is reported to have the same ids as the Artec Ultima 2000. Please test."
+
+:model "MD/LT 9385"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Similar to Artec Ultima 2000"
+
+:model "LT 9452"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Similar to Mustek ScanExpress 1200 UB Plus"
+
+:model "MD 9458"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Similar to Artec Ultima 2000 (e+?)"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Mustek"
+:url "http://www.mustek.com/"
+:url "http://www.mustek.com.tw/"
+:url "http://www.mustek.de/"
+
+:model "BearPaw 1200 CS"
+:interface "USB"
+:usbid "0x055f" "0x021e"
+:status :good
+
+:model "BearPaw 1200 CU"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+
+:model "BearPaw 1200 CU Plus"
+:interface "USB"
+:usbid "0x055f" "0x021b"
+:status :good
+
+:model "BearPaw 1200 CU Plus"
+:interface "USB"
+:usbid "0x055f" "0x021c"
+:status :good
+
+:model "BearPaw 1200 TA"
+:interface "USB"
+:usbid "0x055f" "0x021e"
+:status :good
+:comment "Transparency adapter supported"
+
+:model "BearPaw 1248 CU"
+:interface "USB"
+:usbid "0x055f" "0x021c"
+:status :good
+:comment "Seems to use the same ids as BearPaw 1200 CU Plus."
+
+:model "BearPaw 2400 CS"
+:interface "USB"
+:usbid "0x055f" "0x0218"
+:status :untested
+:comment "Probably works, reports are welcome"
+
+:model "BearPaw 2400 CS Plus"
+:interface "USB"
+:usbid "0x055f" "0x0219"
+:status :good
+:comment "Works, problems with 12/16 bit modes?"
+
+:model "BearPaw 2400 CU"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :basic
+:comment "Works, but is slow"
+
+:model "BearPaw 2400 CU Plus"
+:interface "USB"
+:usbid "0x055f" "0x021d"
+:status :good
+
+:model "BearPaw 2400 TA"
+:interface "USB"
+:usbid "0x055f" "0x0218"
+:status :good
+:comment "Transparency adapter supported"
+
+:model "BearPaw 2400 TA Plus"
+:interface "USB"
+:usbid "0x055f" "0x0219"
+:status :good
+:comment "Transparency adapter supported"
+
+:model "BearPaw 2448 CS Plus"
+:interface "USB"
+:usbid "0x055f" "0x021a"
+:status :basic
+:comment "Slow. Same as 2448 TA Plus, but without TA."
+
+:model "BearPaw 2448 TA Plus"
+:interface "USB"
+:usbid "0x055f" "0x021a"
+:status :basic
+:comment "Slow. Transparency adapter supported. Slow. Brightness depends on resolution?"
+
+:model "Plug-n-Scan 2400 MT"
+:interface "USB"
+:usbid "0x055f" "0x0219"
+:status :good
+:comment "Works but is slow in high resolutions. Same as BearPaw 2400 TA Plus."
+
+:model "Plug-n-Scan 2400 M"
+:interface "USB"
+:usbid "0x055f" "0x0219"
+:status :good
+:comment "Works but is slow in high resolutions. Same as BearPaw 2400 CS Plus."
+
+:model "ScanExpress 1200 UB Plus"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+
+:model "ScanExpress 1248 UB"
+:interface "USB"
+:usbid "0x055f" "0x021f"
+:status :complete
+
+:model "ScanExpress 2400 USB"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :minimal
+:comment "Should be detected but may need some more work in the code. Testers welcome. Please contact me if you own this scanner."
+
+:model "ScanExpress A3 USB"
+:interface "USB"
+:usbid "0x055f" "0x0210"
+:status :basic
+:comment "Still some vertical stripes."
+
+:model "ScanMagic 1200 UB Plus"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Same as ScanExpress 1200 UB Plus"
+
+; -----------------------------------------------------------------------------
+
+:mfg "NeatReceipts"
+
+:model "Scanalizer Professional 2.5"
+:interface "USB"
+:usbid "0x07b3" "0x0412"
+:status :untested
+:comment "Similar to Plustek OpticSlim M12. Please tell us if this scanner works."
+
+:model "Mobile Scanner"
+:interface "USB"
+:usbid "0x07b3" "0x0462"
+:status :basic
+:comment "Similar to Plustek OpticSlim M12."
+; -----------------------------------------------------------------------------
+
+
+:mfg "Nortek"
+
+:model "MyScan 1200"
+:interface "USB"
+:usbid "0x07b3" "0x040b"
+:status :untested
+:comment "Untested. Please test. Similar to Plustek OpticPro S12?"
+; -----------------------------------------------------------------------------
+
+:mfg "Packard Bell"
+
+:model "Diamond 1200"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Similar to Mustek BearPaw 1200 (Plus)"
+
+:model "Diamond 1200 Plus"
+:interface "USB"
+:usbid "0x055f" "0x021c"
+:status :good
+:comment "Similar to Mustek BearPaw 1200 Plus"
+
+:model "Diamond 1200 Plus"
+:interface "USB"
+:usbid "0x055f" "0x021b"
+:status :good
+:comment "Similar to Mustek BearPaw 1200 Plus"
+
+:model "Diamond 2450"
+:interface "USB"
+:usbid "0x055f" "0x0219"
+:status :good
+
+; -----------------------------------------------------------------------------
+
+:mfg "Plustek"
+:url "http://www.plustek.de/"
+:url "http://www.plustek.com/"
+
+:model "OpticPro 1248U"
+:interface "USB"
+:usbid "0x07b3" "0x0400"
+:status :good
+
+:model "OpticPro 1248U"
+:interface "USB"
+:usbid "0x07b3" "0x0401"
+:status :good
+
+:model "OpticPro U16B"
+:interface "USB"
+:usbid "0x07b3" "0x0402"
+:status :good
+
+:model "OpticPro U16B+"
+:interface "USB"
+:usbid "0x07b3" "0x0403"
+:status :good
+
+:model "OpticPro UT16B"
+:interface "USB"
+:usbid "0x07b3" "0x0403"
+:status :untested
+:comment "Probably works. Transparency adapter not supported yet. Please contact me if you own such a device. "
+
+:model "OpticPro S12"
+:interface "USB"
+:usbid "0x07b3" "0x040b"
+:status :good
+:comment "Product ID 0x040b only."
+
+:model "OpticPro S24"
+:interface "USB"
+:usbid "0x07b3" "0x040e"
+:status :good
+:comment "Product ID 0x040e only. Is reported to work."
+
+:model "OpticPro ST12"
+:interface "USB"
+:usbid "0x07b3" "0x040b"
+:status :untested
+:comment "Product ID 0x040b only. Needs testing. Transparency adapter completely untested. Please contact me if you own such a scanner."
+
+:model "OpticSlim 1200"
+:interface "USB"
+:usbid "0x07b3" "0x0413"
+:status :good
+
+:model "OpticSlim 2400"
+:interface "USB"
+:usbid "0x07b3" "0x0422"
+:status :good
+:comment "Works up to 1200 dpi."
+
+:model "OpticSlim 2400 plus"
+:interface "USB"
+:usbid "0x07b3" "0x0454"
+:status :good
+:comment "Same as OpticSlim 2400."
+
+:model "Iriscan Express 2"
+:interface "USB"
+:usbid "0x07b3" "0x045f"
+:status :complete
+:comment "Works up to 1200 dpi. Calibration with external calibration sheet supported"
+; -----------------------------------------------------------------------------
+
+:model "OpticSlim M12"
+:interface "USB"
+:usbid "0x07b3" "0x0412"
+:status :complete
+:comment "Works up to 1200 dpi. Calibration with external calibration sheet supported"
+; -----------------------------------------------------------------------------
+
+:mfg "RevScan"
+;:url ""
+
+:model "19200i"
+:interface "USB"
+:usbid "0x07b3" "0x0400"
+:status :good
+:comment "Similar to Plustek OpticPro 1248U"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Trust"
+:url "http://www.trust-site.com"
+
+:model "240TH Easy Webscan Gold"
+:interface "USB"
+:usbid "0x055f" "0x0218"
+:status :good
+:comment "Same as Mustek Bearpaw 2400 TA plus."
+
+:model "Compact Scan USB 19200"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Works, if you have vendor id 0x055f and product id 0x0006, use the mustek_usb backend instead, similar to Mustek ScanExpress 1200 UB (Plus)"
+
+:model "Direct WebScan 19200"
+:interface "USB"
+:usbid "0x055f" "0x021c"
+:status :good
+:comment "Same as Mustek BearPaw 1200 CU Plus (0x021c)."
+
+:model "Flat Scan USB 19200"
+:interface "USB"
+:usbid "0x05d8" "0x4002"
+:status :good
+:comment "Similar to Artec Ultima 2000"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Visioneer"
+:url "http://www.visioneer.com/"
+
+:model "OneTouch 7300"
+:interface "USB"
+:usbid "0x04a7" "0x0444"
+:status :good
+:comment "Works upto 1200 dpi and 12 bits/color."
+
+; -----------------------------------------------------------------------------

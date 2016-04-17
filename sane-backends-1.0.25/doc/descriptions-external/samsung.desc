@@ -1,0 +1,88 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "samsung"                 ; name of backend
+;:version "(external)"             ; version of backend
+:url "http://product.samsung.com/cgi-bin/nabc/support/b2c_support_product_results.jsp"     ; backend's web page
+:comment "External binary-only backend for Linux i386 (and x86_64?). See the website for the latest release."
+
+
+
+:devicetype :scanner               ; start of a list of devices....
+                                   ; other types:  :stillcam, :vidcam,
+                                   ;               :meta, :api
+
+:mfg "Samsung"                     ; name a manufacturer
+:url "http://www.samsung.com/"
+:comment "Multi Function Peripheral. External backend made by Samsung."
+
+; name models for above-specified mfg.
+:model "SCX-4016"
+:interface "Parport USB"
+:status :untested
+:comment "Please contact us if you use this device."
+
+:model "SCX-4100"
+:interface "Parport USB"
+:usbid "0x04e8" "0x3413"
+:status :good
+:comment "Is reported to work. "
+
+:model "SCX-4200"
+:interface "USB"
+:usbid "0x04e8" "0x341b"
+:status :good
+:comment "Is reported to work. The configuration applet must be run as root."
+
+:model "SCX-4216F"
+:interface "Parport USB"
+:usbid "0x04e8" "0x3409"
+:status :untested
+:comment "Please contact us if you use this device."
+
+:model "SCX-4521F"
+:interface "Parport USB"
+:usbid "0x04e8" "0x3419"
+:status :basic
+:comment "See bug report #304052"
+
+:model "SCX-4720F"
+:interface "Parport USB"
+:status :untested
+:comment "Please contact us if you use this device."
+
+:model "SCX-6220"
+:interface "Parport USB"
+:status :untested
+:comment "Please contact us if you use this device."
+
+:model "SCX-6320F"
+:interface "Parport USB"
+:status :untested
+:comment "Please contact us if you use this device."
+
+:model "SF-565P"
+:interface "Parport USB"
+:status :untested
+:comment "Please contact us if you use this device."
+
+:model "SF-755P"
+:interface "Parport USB"
+:status :untested
+:comment "Please contact us if you use this device."
+
+:model "For models not mentioned here, check Samsung website"
+:interface "USB"
+:status :untested
+:comment "Please contact us if you have a Samsung device not mentioned here.""
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.

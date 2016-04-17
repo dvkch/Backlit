@@ -1,0 +1,25 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "v4l"                    ; name of backend
+:version "1.0-3"                  ; version of backend
+:manpage "sane-v4l"               ; name of manpage (if it exists)
+:url "mailto:henning@meier-geinitz.de" ; backend's web page
+
+:devicetype :api                  ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+
+:desc "Interface to Video For Linux API"      ; describe a non-hardware device
+:comment "Supports video cameras and other devices accessed by the v4l kernel API, e.g. bttv devices. Quite a lot of known bugs."
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.

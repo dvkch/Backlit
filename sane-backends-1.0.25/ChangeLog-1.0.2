@@ -1,0 +1,563 @@
+2000-03-06  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure.in configure: New version is 1.0.2.
+
+2000-03-01  Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* doc/sane-scsi.man: fixed an ambiguity and a typo.
+
+2000-02-27  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/v4l*.desc: Changed description from v4l to Video For
+	Linux.
+
+	* backend/lhii.desc: Updated with URL to LHII drivers home page.
+
+	* README.unixware7: Added compile information for SCO UnixWare 7
+	from Jens Scheithauer.
+
+2000-02-26  Karl Heinz Kremer <khk@khk.net>
+
+	* doc/sane-epson.man: Updated documentation for EPSON
+	backend.
+
+2000-02-26  Chris Pinkham <cpinkham@infi.net>
+
+	* backend/artec.desc: updated statuses, added link to a webpage for
+	AS6E parallel models, added manpage info.
+
+2000-02-26  Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* Sharp man page updated; man page added to doc/Makefile.in
+
+2000-02-26  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure.in: Don't use -ansi and -pedantic unless
+	--enable-warnings is used.  Warnings are now disabled by default
+	to prepare for the next release.
+	
+2000-02-24  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* tools/sane-desc.el: In backend web page, packends not included
+	in the distribution have the version number in parentheses.
+
+2000-02-20  Karl Heinz Kremer <khk@khk.net
+
+	* backend/epson.c: Added some OS/2 compatibility fixes.
+
+2000-02-20  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* sanei/sanei_scsi.c: Make sure the file is valid ANSI C.
+
+	* configure: Regenerated based on current configure.in.
+
+	* include/sane/sanei_backend.h: Typedef u_int{8,16,32}_t.
+	Defining them gave bogus code in <sys/types.h> on Irix 6.5.
+
+	* backend/lhii.desc backend/musteka4s2.desc backend/nec.desc
+	backend/plustek.desc backend/sagitta.desc backend/st400.desc
+	backend/v4l.desc backend/v4l2.desc: Added info on existing
+	backends.  Placed version number in () to indicate that these
+	backend are distributed separately.
+
+	* backend/sharp.desc backend/pint.desc backend/canon.desc
+	backend/s9036.desc: Fixed typo and updated with more information.
+
+	* AUTHORS: Marked active maintainers with '(*)'.
+
+	* sanei/sanei_pio.c: Removed some warnings.
+
+	* configure.in: New flag --enable-warnings to turn on or off more
+	GCC warnings.  Default should be 'on' for development snapshots,
+	and 'off' for releases.
+
+2000-02-19  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.*: Updated desc file with new version number and 
+	  some more supported scanners.
+	  Removed OPT_PREVIEW_RESOLUTION so that the frontend can handle
+	  the preview resolution.
+	  Changed the OPT_RESOLUTION data from a range to a word list, so
+	  that the frontends can display the correct list of available
+	  resolutions.
+
+2000-02-19  Chris Pinkham <cpinkham@infi.net>
+
+	* backend/artec.c: Updated backend version to v0.5.13.  Corrected
+	matrix of which features/enhancements should be active for each
+	scan mode.  Fixed bug which causing Contrast to be INactive at
+	startup instead of Threshold.
+	* backend/artec.desc: updated backend version information.
+
+2000-02-19  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* sanei/sanei_thread.c include/sane/sanei_thread.h: These files
+	declares a _proposed_ internal SANE interface.  It was proposed by
+	Yuri Dario to wrap UNIX functions fork(), kill(), waitpid() and
+	wait(), which are missing or not working on OS/2.
+
+	* frontend/saned.c: OS/2 send socket on param list. Patch from
+	Yuri Dario.
+
+	* sanei/os2_srb.h sanei/sanei_scsi.c: Include OS/2 SCSI header file.
+
+	* include/sane/sanei_config.h sanei/sanei_config.c: New function
+	sanei_config_read().  Use this instead of fgets() when reading
+	config files to remove line ending chars on all known platforms.
+	Patch from Yuri Dario.
+
+	* configure.os2: Updated configure param list from Yuri Dario.
+
+2000-02-19  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+	* updated umax backend to version 1.0 build 18
+	  for details read backend/umax.CHANGES
+
+2000-02-19  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+	* corrected spelling error in umax,c (devive -> device)
+
+2000-02-18  Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* sharp.c / sharp.h: Options for resolution now conform to
+	the Sane API; fixed and initialisation bug. Updated backend 
+	version number in sharp.desc.	
+
+2000-02-18  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+	* updated umax backend to 1.0 build 17
+	  (added support for sanei_scsi_open_extended)
+	  for details take a look at backend/umax.CHANGES
+
+2000-02-15  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/tamarack.desc: Updated info on request from Rogier
+	Wolff.
+
+2000-02-14  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/m3096g-scsi.h backend/sp15c-scsi.h: Make lint_catcher
+	static to avoid link problems with duplicate symbols.
+	
+2000-02-13  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* README.unixware2: Information from Wolfgang Rapp on how to build
+	SANE on UnixWare 2.
+
+	* ltconfig ltmain.sh: Upgraded to libtool 1.3.4 and added Oliver
+	Rauch's soname patch.
+	
+	* backend/hp-accessor.c backend/hp-device.c backend/hp-handle.c
+	backend/hp-hpmem.c backend/hp-option.c backend/hp-option.h
+	backend/hp-scl.c backend/hp-scsi.h backend/hp.c backend/hp.desc
+	backend/hp.h doc/sane-hp.man: Updated HP backend to v0.86 from
+	Peter Kirchgessner.  Enable scan depths > 8 and add option
+	enable-image-buffering to config file.
+
+	* AUTHORS: Added author for backend s9036.
+	* backend/qcam.desc: Updated with more information.
+
+2000-02-11  Chris Pinkham <cpinkham@infi.net>
+
+	* backend/artec.c backend/artec.h: Updated backend to version 0.5.11.
+	  Removed mono_adjust function which handled bit offset in 1bpp modes,
+	  this is now handled by forcing all scans to be wide enough to fill a
+	  full byte.  Reinserted code to set brightness on A6000C model as this
+	  appears to be the only model that accepts that setting.  Bug-fixes
+	  for ADF & Transparency option settings.
+	* backend/artec.desc: updated backend version information.
+
+2000-02-11  Karl Heinz Kremer <khk@khk.net>
+	* backend/epson.c - Fixed default scan source when option equipment 
+	  is installed.  The default is now always "Flatbed". 
+
+2000-02-08  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* Added (again) missing file: doc/sane-logo2.jpg
+
+2000-02-08  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* Added missing umax doc files:
+	  - doc/sane-umax-old-scanners-doc.html
+	  - doc/sane-umax-not-listed-doc.html
+	  - doc/sane-umax-speed-doc.html
+        * Updated:
+	  - doc/sane-umax-doc.html
+	  - doc/sane-umax-scanners-doc.html
+
+2000-02-08  Matto Marjanovic  <maddog@mir.com>
+
+	* backend/microtek.c backend/microtek.h backend/microtek.conf
+	backend/microtek.desc doc/sane-microtek.man:  Updated microtek
+	backend to v0.12.0.  Changes:
+	- LUT entry size should match bit depth of scan.
+	- Free LUT's in sane_close().
+	- Fixed really dumb type typos in microtek.h.
+        - Added all "mystery" model codes (and an auto-warning).
+        - Added all additional document size codes.
+        - Made function (description) of "scan speed" more obvious.
+        - Added entries for Color PageWiz.
+        - Added entries for Agfa DuoScan.
+        - A few miscellaneous cleanups to quiet gcc warnings.
+
+2000-02-07  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* frontend/saned.c sanei/sanei_pio.c sanei/sanei_scsi.c: Some OS/2
+	patches from Yuri Dario.
+
+	* frontend/scanimage.c: Avoid sprintf("%s", NULL). Bugreport and
+	fix from Yuri Dario.
+
+2000-02-06  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure: Regenerated based on current configure.in.
+
+	doc/Makefile.in doc/sane-logo.gif doc/sane-logo.png doc/sane.gif
+	doc/sane.png: Convert .gif to .png.
+
+	* backend/canon.c backend/snapscan-sources.c: Port to HP/UX.  Stop
+	using GCC specific features.
+
+2000-02-05  Rene Rebe <rene.rebe@myokay.net>
+	* backedn/avision.? only minor updates and the new home-page
+	  url ...
+	
+2000-02-05  Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* fixed wrong buffer size handling for old Linux SG drivers
+	  in sanei_scsi.c
+	* updated sane-scsi.man: How to change the buffer size,
+	  if the new Linux SG driver is being used.
+	* fixed a type on sharp.c
+
+2000-02-03  Karl Heinz Kremer <khk@khk.net>
+	* backend/epson.[ch] Reworked the gamma correction stuff
+
+2000-02-02  Karl Heinz Kremer <khk@khk.net>
+	* backend/epson.[ch] Finally put the USB fix into the CVS
+	  version. Removed version number from epson.h so that this
+	  file does not need to be updated everytime epson.c changes.
+
+2000-02-01  Karl Heinz Kremer <khk@khk.net>
+	* backend/epson.[ch] More changes in the attach function to
+	  recognize USB scanners again.
+	* doc/sane-epson.man More updates to the man page. 
+
+2000-01-29  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* updated umax backend to version 1.0-build-16
+	  for details take a look at backend/umax.CHANGES
+
+2000-01-31  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/hp-accessor.c backend/hp-accessor.h backend/hp-device.c
+	backend/hp-device.h backend/hp-handle.c backend/hp-hpmem.c
+	backend/hp-option.c backend/hp-option.h backend/hp-scl.c
+	backend/hp-scl.h backend/hp-scsi.h backend/hp.TODO backend/hp.c
+	backend/hp.desc doc/sane-hp.man: Updated to v0.85 from Peter
+	Kirchgessner.
+
+2000-01-30  Chris Pinkham <cpinkham@infi.net>
+
+	* backend/artec.c backend/artec.h: (v0.5.9) changes to get lineart
+	  and halftone modes working on AT12 and AM12S models.  bugfixes to
+	  eliminate hanging on some AT12 models.
+	* backend/artec.desc: version and model status updates
+
+2000-01-30  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+	* corrected missing "/" in include/sane/config.h.in line 251
+
+2000-01-30  Rene Rebe <rene.rebe@myokay.net>
+
+	* backend/avision.c fixed to compile on HP/UX
+	* backend/avision.desc fixed typo
+	* AUTHORS changed my eMail address
+	
+2000-01-30  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/dll.c backend/dll.aliases doc/sane-dll.man: Aliased and
+	hidden backend patch from Ingo Wilken.
+
+	* config.sub configure.in include/sane/config.h.in sanei/sanei_scsi.c:
+	UnixWare 2.x and UnixWare 7 port by Wolfgang Rapp.
+
+2000-01-29 Karl Heinz Kremer <khk@Kk.net>
+
+	* backend/epson.[ch] Moved gamma "stuff" from advanced to standard
+	  options section to fix core dump in xscanimage
+	  Removed pragma pack() to make it easier to compile on non-gcc
+	  systems
+
+2000-01-29  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* preview (xscanimage): added GDK_INPUT_EXCEPTION to gdk_input_add
+	* updated umax-backend to build 15 (for more see umax.CHANGES
+	* xscanimage: added GDK_INPUT_EXCEPTION to gdk_input_add
+
+2000-01-26  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.[ch] Bugfix for resolution selection via menu
+	  Fixed coredump when no scanner found
+	  merged Christian Bucher's newest version
+
+	* AUTHORS ChangeLog
+
+2000-01-26  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/m3096g-scsi.h backend/m3096g.c backend/m3096g.desc
+	backend/m3096g.h backend/sp15c-scsi.h backend/sp15c.c
+	backend/sp15c.desc backend/sp15c.h: Updated backends sp15c
+	(v1.12) and m3096g (v1.11) from Randolph Bentson.
+
+2000-01-25  Chris Pinkham <cpinkham@infi.net>
+
+	* backend/artec.h backend/artec.c backend/artec.desc
+	  installed new version (0.5.6) of artec backend with support
+	  for Artec AM12S and Plustek 19200S models and numerous bugfixes.
+	* doc/sane-artec.man
+	  updated manpage to reflect new list of supported models and
+	  backend status.
+
+
+2000-01-25  Abel Deuring <a.deuring@satzbau-gmbh.de>
+
+	* frontend/scanimage.c: minor modifications to the new batch mode
+	  If an error occurs in batch mode, the corresponding output file
+	  is now deleted. (Should make post-processing easier, because
+	  otherwise we would have an empty output file every time the
+	  ADF is empty or paper is jammed.)
+
+2000-01-25  Kazuya Fukuda <fukuda@avm.nhe.nec.co.jp> and
+            Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* backend/sharp.c: Fix of possible segfault in sane_init
+	* backend/sharp.conf: contains now a complete sample configuration
+
+2000-01-25  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* frontend/scanimage.c: Return SANE_STATUS_NO_MEM if advance()
+	failes.  Add return value to test_it().
+
+	* include/sane/sanei_debug.h: Add fflush() after fprintf() in
+	DBG macro.
+	
+	* AUTHORS backend/Makefile.in backend/m3096g.h backend/m3096g.c
+	backend/m3096g-scsi.h backend/m3096g.desc backend/m3096g.conf
+	backend/sp15c.h backend/sp15c.c backend/sp15c-scsi.h
+	backend/sp15c.conf backend/sp15c.desc backend/dll.conf
+	doc/Makefile.in doc/sane-fujitsu.man: Added backends sp15c (v1.11)
+	and m3096g (v1.10).
+
+	All patches from Randolph Bentson.
+
+2000-01-24  Abel Deuring <a.deuring@satzbau-gmbh.de>
+
+	* backend/sharp.c, backend/sharp.h: update to version 0.30 
+	(sorry, forgot to make this note some days earlier)
+
+2000-01-24  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* Added test for libcam to configure.in
+	  it is needed by FreeBSD 3+
+
+2000-01-21  Rene Rebe: <rene.rebe@okay.net>
+
+	* ChangeLog: updated (oversaw last time, sorry)
+	* backend/avision.c: fixed some compiling warnings
+	
+2000-01-21  Petter Reinholdtsen <pere@td.org.uit.no>
+
+        * sanei/sanei_scsi.c: Bugfix: Added return type for dummy
+	sanei_scsi_open_extended() call.  Bugreport for Solaris from
+	Martin Spott.
+
+2000-01-20  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* sanei/sanei_ab306.c: Removed compiler warnings.
+
+	* frontend/scanimage.c: Adds a "batch mode" to the software, that
+	can be used in conjunction with an ADF device, so that one can
+	e.g. scan a complete document consting of multiple pages with just
+	one call to scanimage.  This modification was created by Christian
+	Bucher so that his Epson scanner could use the ADF.  Patch from
+	Karl Heinz Kremer.
+
+2000-01-19  Rene Rebe <rene.rebe@okay.net>
+
+	* backend/avision.*: added - the (very) basic avision backend
+	* backend/Makefile.in: updated for the avision backend
+	* AUTHORS: updated
+
+2000-01-18  Karl Heinz Kremer <khk@khk.net>
+	* fixed typo in epson.desc and fixed the dates for
+	  two of my earlier submissions in ChangeLog file
+
+2000-01-16  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.desc updated with URL
+        * backend/epson.c added support for Expression family
+	  of scanners
+	* doc/sane-epson.man updated
+
+2000-01-10  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.desc fixed/updated. Now shows a link to
+	  the alternative FilmScan 200 backend.
+
+2000-01-09  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.* updated. This is a new backend still based 
+	  on the origial Sane 1.0.1 version, but with lots of work 
+	  done: Support for ADF/TPU, more function levels (up to B9 
+	  and initial work for F5), parallel scanner support and initial 
+	  support for USB scanners (don't use this yet, it still needs
+	  a lot of work to be functional and usable).
+
+2000-01-05  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* backend/umax* updated to backend version 1.0 build 14
+          for detailled info take a look at umax.CHANGES
+
+2000-01-05  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* sanei/sanei_scsi.c include/sane/sanei_scsi.h configure.in
+	linux_sg3_err.h: Updated Linux SCSI Generic (SG) driver as
+	follows:
+	     - new handling of sanei_scsi_max_request_size, if an SG
+	       driver >= 2 is installed;
+	     - SCSI command queueing on SG level for SG drivers >= 2.1.35;
+	     - usage of the new interface in SG version 3, if available
+	     - new configure option --enable-scsibuffersize=N
+	Patch from Abel Deuring <a.deuring@satzbau-gmbh.de>.
+
+2000-01-02  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure.in tools/Makefile.in tools/sane-config.in: New script
+	sane-config to help frontend developers find the sane libraries.
+
+1999-12-29  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure.in: Add gcc options '-W -Wall -Wpointer-arith
+	-Wcast-qual' to at least get warnings on illegal C code which
+	would fail to compile on HP/UX native compiler.
+
+1999-12-20  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* include/sane/config.h.in backend/dc25.desc backend/dc25.c:
+	Updated DC-25 backend to v1.2 from Peter Fales
+	<psfales@lucent.com>.
+	- Updated dc25.desc
+	- Retry capability for missing data or bad checksums in the data
+	  from the camera. This has resulted in a dramatic reduction in
+	  download failures.
+	- Include HAVE_CFMAKERAW in config.h.in and dc25.c.
+
+	* backend/dc210.c: Corrected HAVE_cfmakeraw to HAVE_CFMAKERAW.
+
+	* frontend/xscanimage.c: Change GIMP_EXTENSION to
+	SANE_GIMP_EXTENSION to avoid name conflict with gimp.  Patch from
+	Stanislav Brabec <utx@k332.feld.cvut.cz>.
+
+1999-12-12  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/ricoh.h backend/ricoh.c: Add support for Ricoh IS50
+	scanner.  Limit IS50 resolution to 400 dpi.  Reverse IS50 contrast
+	direction.  Patch from Dick Streefland
+	<Dick.Streefland@inter.NL.net>.
+
+	* backend/microtek.c backend/microtek.h backend/microtek.conf
+	backend/microtek.desc doc/sane-microtek.man: Updated Microtek
+	backend to v0.11.0 from Matthew Marjanovic <maddog@mir.com>.
+
+	* backend/microtek2.c backend/microtek2.h: Updated Microtek2
+	backend to v0.8 from Bernd Schroeder <bernd@aquila.muc.de>.
+
+1999-11-20  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* ltmain.sh:
+        changed variable soname from "libsane-backendname.*"
+        to "libsane.*" by sed command.
+        * ltmain.sh:
+        changed again the sed command, forgot to remove "0-9"
+
+1999-11-14  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/artec.c backend/artec.h backend/artec.desc
+	doc/sane-artec.5 doc/Makefile.in: Updated Artec backend to v0.5
+	from Chris Pinkham <cpinkham@infi.net>.
+
+1999-11-11  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/microtek2.c backend/microtek2.h backend/microtek2.desc:
+	Updated Microtek2 backend to vpre0.8.161099 from Bernd Schroeder
+	<bernd@aquila.muc.de>
+
+	* backend/canon-* NEWS doc/canon.*: Updated Canon backend to
+	v991108 from Manuel Panea <mpd@rzg.mpg.de>.
+
+1999-09-14  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* removed sane-umax-*.gif and umaxlogo.gif,
+	  the files were replaced by jpg format.
+
+1999-09-13  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* backend/umax* and doc/sane-umax* updated to version 1.0-build-12
+          for detailled info take a look at umax.CHANGES
+
+1999-09-12  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* include/sane/config.h.in: Add missing HAVE_SYS_SOCKET_H.
+
+	* backend/hp-handle.c backend/hp-option.c backend/hp-option.h
+ 	backend/hp-scl.c backend/hp-scl.h backend/hp-scsi.h backend/hp.c
+ 	backend/hp.desc backend/hp.h doc/sane-hp.man: Updated backend to
+ 	v0.83 from Peter Kirchgessner <peter@kirchgessner.net>.  News:
+	 - Reset scanner before downloading parameters (fixes problem with
+ 	   sleep mode of scanner)
+         - Fix problem with coredump if non-scanner HP SCSI devices are
+ 	   connected (CDR)
+         - Option scan-from-adf replaced by scantype
+ 	   normal/adf/xpa. Transparency adapter scans (XPA) allow scanning
+ 	   with internal light source switched off.
+         - PhotoScanner: Allow scanning of slides/negatives only at
+ 	   multiple of 300 dpi. This fixes problem with preview which
+ 	   scanned at arbitrary resolutions.
+	 - (by Marian Szebenyi): close pipe (coredump on Digital UNIX) 
+	
+ 	* backend/Makefile.in: Correct install target to also work on
+ 	platforms where dll endings isn't .so (like HP/UX).  Extract
+ 	endings from libsane-dll.la.
+
+1999-09-07  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* tools/find-scanner.c: Checks (Linux only so far) for SCSI
+ 	Generic support in the OS kernel. If NOT present it tells the user
+ 	they may need SG drivers.  Patch from Nick Lamb
+ 	<njl98r@ecs.soton.ac.uk>.
+	
+	* sanei/sanei_scsi.c [sanei_scsi_cmd sanei_scsi_open]: Digital
+ 	UNIX 4.0D patches from Marian Szebenyi <dms35@cornell.edu>.
+
+1999-08-16  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure.in: Turn on more gcc warnings.
+
+	* acinclude.m4 configure.in: Separate GTK_LIBS into LIBS and
+ 	LDFLAGS to get the X programs to link on HP/UX.
+	
+1999-08-12  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* aclocal.m4 configure.in configure: Generate configure and
+ 	aclocal.m4 with autoconf 2.13.  Adding AC_PROG_LD, trying to get
+ 	this compiling on CygWin32.  Add AM_PROG_CC_STDC to get it to
+ 	compile out of the box on HP/UX.
+
+	* lib/dll.c: Use calloc() instead of malloc() and memset().  Use
+	dlerror() instead of strerror() when dlopen fails
+ 	(bugfix from Ingo Wilkens).
+
+1999-08-11  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* config.guess config.sub: Updated to latest versions from FSF.
+  	Better support for BeOS, WinNT and others.
+	
+1999-08-09  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* Started CVS branch DEVEL_1_9.
+
+	* install-sh ltconfig ltmain.sh mkinstalldirs: Updated from
+	automake 1.4 and libtool 1.3.3.
+

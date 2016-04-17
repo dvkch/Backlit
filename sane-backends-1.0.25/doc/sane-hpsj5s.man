@@ -1,0 +1,103 @@
+.TH sane\-hpsj5s 5 "13 Jul 2008" "@PACKAGEVERSION@" "SANE Scanner Access Now Easy"
+.IX sane\-hpsj5s
+.SH NAME
+sane\-hpsj5s \- SANE backend for HP ScanJet 5S sheet-fed scanner
+.SH DESCRIPTION
+The
+.B sane\-hpsj5s
+library implements a SANE (Scanner Access Now Easy) backend that
+provides access to a parallel port Hewlett-Packard ScanJet 5S scanner.
+.PP
+IMPORTANT: this is alpha code. Don't expect this to work
+correctly. Many functions are missing, others contain errors. In some
+cases, your computer might even hang. It cannot be excluded (although
+I consider it extremely improbable) that your scanner will be
+damaged.
+.PP
+LIMITATIONS: For now this backend works only on Linux.  This limitation
+is due to dependence on the libieee1284 library. If your system supports libieee1284 too,
+this backend should work. If you ported libieee1284 for your platform, please let
+me know. Your system should support
+.B EPP
+(or
+.B EPP+ECP
+) mode to operate this scanner. Future versions will support ECP and SPP
+(Nibble and Byte) modes also. It's planned to support scanners not only
+at daisy-chain position 0, but anywhere. Support for multiple scanners could
+be implemented too.
+.PP
+Current version implements only gray scale scanning. True Color and B/W modes are
+not supported for now.
+.PP
+That said, TESTERS ARE WELCOME. Send your bug reports and comments to
+Max Vorobiev <pcwizard@yandex.ru>.
+.PP
+.SH "DEVICE NAMES"
+This backend expects device names of the form:
+.PP
+.RS
+.I special
+.RE
+.PP
+Where
+.I special
+is the parallel port name in form, libieee1284 expects. It seems to be system dependent.
+Under Linux it's parport0, parport1, etc.
+.SH CONFIGURATION
+The contents of the
+.I hpsj5s.conf
+file is a list of parport names that correspond to HP ScanJet 5S
+scanners.  Empty lines and lines starting with a hash mark (#) are
+ignored.  Only one device name can be listed in
+.IR hpsj5s.conf
+for this moment. Future versions will support daisy chain selection.
+
+.SH TIPS
+.PP
+It seems that HP ScanJet 5S scanner uses software noise correction. This
+feature is not implemented for now. So does gamma correction and calibration.
+I'll handle it in future versions.
+Native resolution for this scanner is 300 DPI. Other modes could be jagged in some
+ways.
+.PP
+.SH FILES
+.TP
+.I @CONFIGDIR@/hpsj5s.conf
+The backend configuration file (see also description of
+.B SANE_CONFIG_DIR
+below).
+.TP
+.I @LIBDIR@/libsane\-hpsj5s.a
+The static library implementing this backend.
+.TP
+.I @LIBDIR@/libsane\-hpsj5s.so
+The shared library implementing this backend (present on systems that
+support dynamic loading).
+.SH ENVIRONMENT
+.TP
+.B SANE_CONFIG_DIR
+This environment variable specifies the list of directories that may
+contain the configuration file.  Under UNIX, the directories are
+separated by a colon (`:'), under OS/2, they are separated by a
+semi-colon (`;').  If this variable is not set, the configuration file
+is searched in two default directories: first, the current working
+directory (".") and then in @CONFIGDIR@.  If the value of the
+environment variable ends with the directory separator character, then
+the default directories are searched after the explicitly specified
+directories.  For example, setting
+.B SANE_CONFIG_DIR
+to "/tmp/config:" would result in directories "tmp/config", ".", and
+"@CONFIGDIR@" being searched (in this order).
+
+.TP
+.SH "SEE ALSO"
+sane(7)
+.br
+http://hpsj5s.sourceforge.net
+.br
+http://cyberelk.net/tim/libieee1284
+.br
+.SH AUTHOR
+Max Vorobiev
+.br
+Man page mostly based on canon.man

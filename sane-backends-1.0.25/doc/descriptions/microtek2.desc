@@ -1,0 +1,167 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "microtek2"              ; name of backend
+:version "unmaintained"                   ; version of backend
+:manpage "sane-microtek2"         ; name of manpage (if it exists)
+:url "http://karstenfestag.gmxhome.de/linux.html"
+
+:devicetype :scanner              ; start of a list of devices....
+
+:mfg "Microtek"                   ; name a manufacturer
+:url "http://www.microtek.com/"
+
+:model "ScanMaker E3plus"
+:interface "Parport"
+:status :complete
+
+:model "ScanMaker E3plus"         ; name models for above-specified mfg.
+:interface "SCSI"
+:status :complete
+
+:model "ScanMaker X6"
+:interface "SCSI"
+:status :complete
+
+:model "ScanMaker X6EL"
+:interface "SCSI"
+:status :basic
+
+:model "ScanMaker X6USB"
+:interface "USB"
+:usbid "0x05da" "0x0099"
+:status :good
+
+:model "ScanMaker V300"
+:interface "SCSI"
+:status :good
+
+:model "ScanMaker V300"
+:interface "Parport"
+:status :good
+
+:model "ScanMaker V310"
+:interface "SCSI"
+:status :basic
+
+:model "ScanMaker V310"
+:interface "Parport"
+:status :basic
+
+:model "ScanMaker V600"
+:interface "SCSI"
+:status :basic
+
+:model "ScanMaker V600"
+:interface "Parport"
+:status :basic
+
+:model "ScanMaker 330"
+:interface "SCSI"
+:status :basic
+
+:model "ScanMaker 630"
+:interface "SCSI"
+:status :basic
+
+:model "ScanMaker 636"
+:interface "SCSI"
+:status :complete
+
+:model "ScanMaker 6400XL"
+:interface "SCSI"
+:status :complete
+
+:model "ScanMaker 9600XL"
+:interface "SCSI"
+:comment "only flatbed mode ?"
+:status :good
+
+:model "ScanMaker 9800XL"
+:url "/unsupported/microtek-scanmaker-9800.html"
+:interface "IEEE-1394"
+:status :minimal
+:comment "IEEE-1394 seems to work. See link. More reports welcome."
+
+:model "Phantom 330CX"
+:interface "Parport"
+:status :complete
+
+:model "SlimScan C3"
+:interface "Parport"
+:status :complete
+
+:model "Phantom 636"
+:interface "SCSI"
+:status :complete
+
+:model "Phantom 636CX"
+:interface "Parport"
+:status :complete
+
+:model "SlimScan C6"
+:interface "USB"
+:usbid "0x05da" "0x009a"
+:status :complete
+
+:model "ScanMaker V6UPL"
+:interface "USB"
+:usbid "0x05da" "0x00b6"
+:status :basic
+:comment "Sometimes scan speed goes to fast and results look badly smudged."
+
+:model "ScanMaker V6USL"
+:interface "SCSI"
+:status :complete
+
+:model "ScanMaker V6USL"
+:interface "USB"
+:usbid "0x05da" "0x00a3"
+:status :complete
+
+:model "ScanMaker V6USL"
+:interface "USB"
+:usbid "0x05da" "0x80a3"
+:status :complete
+
+:model "ScanMaker X12USL"
+:interface "SCSI"
+:comment "only Flatbed mode ?"
+:status :good
+
+:mfg "Vobis"
+:url "http://www.vobis.de/"
+
+:model "HighScan"                 ; name models for above-specified mfg.
+:interface "SCSI"
+:comment "only E3plus based models"
+:status :complete
+
+:mfg "Scanport"
+:url "http://www.scanport.com/"
+:model "SQ300"
+:interface "Parport?"
+:status :basic
+
+:model "SQ2030"
+:interface "Parport"
+:status :basic
+
+:model "SQ4836"
+:interface "SCSI"
+:status :basic
+
+:mfg "Genius"
+:url "http://www.geniusmouse.co.uk/"
+:model "ColorPage-EP"
+:interface "Parport"
+:status :good
+

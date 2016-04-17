@@ -1,0 +1,9 @@
+# pieusb.conf: Configuration file for PIE/Reflecta USB scanner
+# Read man sane-pieusb for documentation
+
+# Autodetect
+# Reflecta 6000 Multiple Slide Scanner
+usb 0x05e3 0x0142
+# Reflecta CrystalScan 7200
+# Reflecta ProScan 7200
+usb 0x05e3 0x0145

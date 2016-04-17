@@ -1,0 +1,19 @@
+:backend "qcam"               ; name of backend
+:version "unmaintained"                    ; version of backend
+; :url ""                           ; backend's homepage
+:manpage "sane-qcam"
+
+:devicetype :vidcam
+
+:mfg "Connectix"                    ; name a manufacturer
+;:url "http://www.connectix.com/"   ; doesn't exist any longer?
+
+:model "Color QuickCam"             ; name models for above-specified mfg.
+:interface "Parport"
+:status :good
+:comment "Requires root privileges."
+
+:model "Greyscale QuickCam"         ; name models for above-specified mfg.
+:interface "Parport"
+:status :minimal
+:comment "Requires root privileges.  Partly working."

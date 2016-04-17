@@ -1,0 +1,729 @@
+************************  Release of sane-backends 1.0.4 **********************
+
+2000-12-22  Henning Meier-Geinitz <hmg@gmx.de>
+	
+        * configure configure.in: Changed version to 1.0.4 and package to 
+	  sane-backends (from Oliver Rauch <Oliver.Rauch@Wolfsburg.DE).
+        * sane.lsm Removed (renamed to sane-backends.lsm).
+	* sane-backends.lsm New file. Package name is sane-backends instead 
+	  of sane and added additional maintainer: Oliver Rauch (from
+	  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE).
+
+2000-12-17  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: Some points about OS/2 compilation problems.
+
+2000-12-17  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: More details for net/saned problems.
+
+2000-12-16  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* TODO: removed entry about net.c seg-faulting when saned isn't
+	  loaded or timed-out
+
+2000-12-16  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* configure configure.in: Disable warnings by default for release.
+	* sanei/sanei_wire.c: Fixed typo.
+
+2000-12-16  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* sanei/sanei_wire.c: added test for negative parameter to memcpy()
+
+2000-12-15 Gerhard Jaeger <g.jaeger@earthling.net>
+
+	* fixed wrong options in sane-plustek.man
+
+2000-12-12 Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* corrected backend version in umax.desc
+
+**************************  Code freeze for SANE 1.0.4 ** *********************
+
+2000-12-12  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* NEWS: Updated/corrected version numbers of backends.
+	
+2000-12-10  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* doc/sane-scsi.man: Small changes/updates concerning Linux
+	  2.2. Updated entries about Adaptec cards, NCR53c400/Domex 3181
+	  cards, NCR 810 cards. Removed direct links to some backends.
+	* doc/sane-snapscan.man: Added link to new snapscan website.
+
+2000-12-10  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* backend/mustek.c backend/mustek.desc backend/mustek.CHANGES:
+	  Fixed wrong comment in encode_resolution. Added missing test for
+	  return status in sane_start.  Fixed wrong calculation of tlx and
+	  tly for Pro series scanners. Increased version number.
+
+2000-12-09  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c: Fixed user defined gamma curve for
+	  inverted images. When scanning negatives the gamma curve
+	  was applied incorrectly. Fixed debug output for user defined
+	  gamma curves - no [epson] in between values anymore.
+
+2000-12-09  Peter Kirchgessner <peter@kirchgessner.net>
+
+        * doc/sane-hp.man, backend/hp.desc
+          Add HP ScanJet 6390C to list of supported scanners
+
+2000-12-07  Henning Meier-Geinitz <hmg@gmx.de>
+	
+	* TODO: Updated. Removed entries about plustek comment problembelm
+	  and libsane.la. Added entry about disabling local scanning.
+
+2000-12-07 Gerhard Jaeger <g.jaeger@earthling.net>
+	
+    * backend/plustek-share.h backend/plustek.h backend/plustek.c
+      removed warning conditions
+      fixed a bug that causes wrong frontend displays
+      fixed problem when driver returns error during read
+
+2000-12-05  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* NEWS: Updated backend versions. Added point about compilation fixes
+	  on Irix and FreeBSD.
+	* backend/mustek.c backend/mustek.desc backend/mustek.CHANGES:
+	  Fixed problem with lamp control of SE scanners and reduced
+	  length of scan area for Paragon 1200 SP PRO. Removed warning for
+	  this scanner. Increased version number.
+	
+2000-12-05  Henning Meier-Geinitz <hmg@gmx.de>
+    
+	* TODO: Updated. Added point about plustek-share.h using c++ comment
+	  and reminder to check config.in.h. Removed entriy about as6e.c stat
+	  result check.
+	* backend/as6e.c backend/as63.h: Comitted patch from Eugene Weiss
+	  <eweiss@sas.upenn.edu>. Fixes: Use only DBG (no printfs). Check result
+	  of stat. Add GPL header.
+
+2000-12-05 Gerhard Jaeger <g.jaeger@earthling.net>
+	
+	* backend/plustek-share.h
+	  cleanup
+
+2000-12-05  Peter Kirchgessner <peter@kirchgessner.net>
+
+	* backend/hp-handle.c
+	  - Change SCL_UNLOAD to SCL_CHANGE_DOC (bug from copying code)
+
+2000-12-04  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: Updated. Added entries about as6e stat problems and addition to
+	  sanei_scsi.c from FreeBSD ports.
+	
+*************************  snapshot-2000-12-04  *******************************
+
+2000-12-04  Peter Kirchgessner <peter@kirchgessner.net>
+
+        * backend/hp.c, hp-handle.c, hp.desc
+          - fix problem with ADF support on 6350C (and maybe others)
+
+2000-12-04  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* removed usage of gettext, problem with -lintl should be solved:
+	  - removed usage of gettext from lib/getopt.c
+	  - removed test for libintl/gettext in configure[.in]
+	  - removed intllib from frontend/Makfile.in
+	* updated umax.desc
+
+2000-12-03  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.*: Version 0.1.38
+	  Removed changes regarding 12/14 bit support because of SANE
+	  feature freeze for 1.0.4. 
+	  The following fixes are in the software compared to the version
+	  prior to the feature freeze:
+	  - refresh UI after a change in the scan mode setting (was not updated
+	    when going from Binary to Gray or vice versa)
+	  - Read values for "line distance" from the scanner instead of using
+	    hardcoded values. This makes sure the backend always uses the correct
+	    values regardless of firmware version.
+	  - Fixed an "off-by-one" error in the color reordering routine that 
+	    caused weird artifacts in some instances.
+
+2000-12-03  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c: Fixed off-by-one in color reordering
+
+2000-12-02  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.*: Read information about optical resolution 
+	  and line distance from scanner instead of hardcoded values.
+          Add support for color depth > 8 bits per channel. 
+	  (can use 12, 14 and 16 bits per channel)
+	  EPSON backend is now version 0.36 
+
+2000-11-30  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* changed backend/Makefile.in:
+	  wrong old installation of libsane.la
+	  $(INSTALL_PROGRAM) libsane.la $(libdir)/libsane.la
+	  to this:
+	  $(LIBTOOL) $(MINST) $(INSTALL_PROGRAM) libsane.la $(libdir)/libsane.la
+
+2000-11-30  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* README.irix: Removed. Problem with libjpeg is solved.
+	* TODO: Updated. Removed hpoj addition. Added snapscan link. Added 
+	  entry about net backend segfaulting if using net:localhost. Removed
+	  artec O_SYNC problem. Removed Irix jpeg problem. Removed PTAL 
+	  addition.
+	* doc/saned.man: Added paragraph about xinetd (from Matt Mozur 
+	  <matt.mozur@sourwood.net>). Removed links to backends, added
+	  sane-"backendname" instead.
+	* doc/sane-net.man: Added comment about segfaults if scanning
+	  on localhost.
+	* sanei/sanei_scsi.c: Added missing DBG_INIT (from FreeBSD ports).
+
+2000-11-30 Gerhard Jaeger <g.jaeger@earthling.net>
+	
+	* backend/plustek.c backend/plustek.desc backend/plustek-share.h
+	  backend/plustek.h doc/sane-plustek.man:
+	  changed to version 0.38 - document update, minor bugfixes
+
+2000-11-30  Chris Pinkham <cpinkham@infi.net>
+
+	* artec.c: removed O_SYNC for posix compatibility, converted variable
+	  to unsigned char to get rid of overflow error.  Changed version
+	  to 0.5.15.
+
+2000-11-30  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* changed sane-config.in again:
+	  sane-config --libs has to print all libs
+	  that the sane libs depend on.
+	  This is not needed for shared libs and that
+	  was the reason why I removed all libs but "-lsane".
+	  But when linking against static sane libs we need
+	  to know about all necessary libs.
+
+*************************  snapshot-2000-11-28  *******************************
+
+2000-11-28  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* added SANE_CHECK_JPEG to aclocal.m4 and configure.in
+	  (test routine by henning Meier Geinitz)
+
+*************************  Feature freeze for SANE 1.0.4  *********************
+
+2000-11-27  Peter Kirchgessner <peter@kirchgessner.net>
+
+        * NEWS: hp-backend version is 0.92
+
+2000-11-27  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* backend/umax.c: corrected wrong BUILD (25->24)
+
+2000-11-26  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* AUTHORS: Added Karsten Festag as maintainer of microtek2.
+	* backend/mustek.* doc/sane-mustek.man: Update to Mustek backend
+	  1.0-100. Added option fast-preview that tries to use the fastest
+	  mode available for preview. This is supported for the 3-pass
+	  scanners (was option "preview in gray") and some of the
+	  ScanExpress scanners (6000 SP, 12000 SP Plus). Use #include 
+	  "../include/sane/...". Put option force-wait into mustek.conf
+	  (disabled). Removed block mode for Paragon 6000 SP and 8000 SP. 
+	  Code cleanup. More debug output. Details in backend/mustek.CHANGES.
+	* doc/.cvsignore: Added sane-as6e.5 and sane-nec.5.
+	
+2000-11-26  Peter Kirchgessner <peter@kirchgessner.net>
+
+        * backend/hp.desc, doc/sane-hp.man
+          Add descriptions for PTAL support
+
+        * backend/hp.c
+          If PTAL-support requested, write warning about unsupported PTAL
+          with DBG(0,...  instead of DBG(1,...
+
+2000-11-25  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* configure configure.in acinclude.m4 aclocal.m4 
+	  include/sane/config.h.in: Added test for PTAL library and headers 
+	  (patch from David Paschal <paschal@rcsis.com>). Some reformating of 
+	  the output of configure --help.
+
+	* backend/GUIDE: Updated entry about #include.
+	
+2000-11-24  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* AUTHORS: Removed authors of xscanimage and xcam (now in 
+	  sane-frontends).
+	* README.unixware2, README.unixware7: X-frontends are no longer
+	  included. Removed comments and sourcecode of "rev" (not supported/used
+	  in backends/Makefile anymore).
+	* sane.lsm: X-frontends are no longer included. Used blanks instead of
+	  tabs.
+	* doc/scanimage.man: Removed links to backends, added generic link
+	  instead.
+	* doc/.cvsignore frontend/.cvsignore: X-frontends are no longer included.
+
+2000-11-24  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* changed configure.in, configure frontend/Makefile.in
+	  and backend/Makfile.in:
+	  The shared libraries required by the backends are linked to
+	  the backends (they have been linked to the frontends before).
+	  Only libintl is linked to the frontend.
+	* changed tool/sane-config.in, sane-config --libs => "-lsane",
+	  all other libraries are linked to the backend libs now
+
+2000-11-24  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* doc/scanimage.man doc/saned.man: updated description of password
+	  file
+	* sanei/sanei_auth.c frontend/saned.c frontend/scanimage.c: replaced
+	  index() by strchr(). Changed style of password file
+	* backend/net.c: the net backend now prepends net:host: to the
+	  resource before calling the auth_callback function
+
+2000-11-23  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* removed doc/xcam.man, doc/xscanimage.man and
+	  updated doc/Makefile.in
+	* changed configure.in and frontend/Makefile.in,
+	  "-lintl" is not added to @LIBS@ any more, @INTLLIBS@
+	  is defined instead now, this is necessary because "-lintl"
+	  has to be added to the frontends and not to a backend and
+	  sane-config --libs must not list it.
+	* Added "Introduction" to README that tells about
+	  the new X-frontend package
+	* removed gimp and gtk parts from include/sane/config.h.in
+	* removed gtk test from aclocal.m4
+	* removed xcam.c xscanimage.c sane-style.rc progress.c progress.h
+                  preview.c preview.h preferences.c preferences.h gtkglue.c gtkglue.h 
+          from frontend/
+	* removed parts for xcam and xscanimage from frontend/Makefile.in,
+          configure.in and updated confiugre
+
+2000-11-23  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* NEWS: Updated for SANE 1.0.4. Please check.
+	* README.aix: Removed paragraph about shared libs not working.
+	* README.linux: Added paragraph about excessive warnings due to glibc
+	  bug (from Peter Kirchgessner).
+	* TODO: Removed entry about shared libs not working on AIX. Added entry
+	  about PTAL checks. Removed entry about DBG and microtek2. Added entry
+	  about dc210 and jpeg functions. Added entry about using strchr() 
+	  instead of index().
+	* sane.lsm: Added NEC.
+	* backend/microtek2.c: (from karsten.festag@t-online.de (Karsten
+	  Festag)) Use DBG instead of printf/fprintf. Use 
+	  #include "../sane/include/..." instead of #include "sane/...". Fixed
+	  warnings. 
+	
+2000-11-23  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c:  Display "Set Focus" control only for scanners that
+	  can actually handle the command.
+
+2000-11-22  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* changed configure and configure.in, removed test for sting.h/strings.h
+	  this is not needed because we use strchr instead (always in string.h)
+	  of index (sometimes in string.h, sometimes in strings.h)
+
+	* changed ltconfig for aix4*, repleace -o $objdir/$soname by -o $lib,
+	  the shared libraries are handled correct now
+
+2000-11-21 Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* backend/sharp.c, backend/sharp.desc, doc/sharp.man: Support
+	  for JX320 added	
+
+2000-11-21  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* AUTHORS: Added FUKUDA Kazuya for the nec Backend. Used spaces instead 
+	  of tabs.
+	* PROJECTS: Removed entry about NEC. Added/updated entries about Mustek
+	  USB scanners.
+	* README: Added link to sane-nec(5).
+	* TODO: Removed entries about sanei_authorize and plain text passwords.
+	* backend/Makefile.in backend/dll.conf backend/nec.conf backend/nec.c
+	  backend/nec.desc backend/nec.h doc/Makefile.in doc/sane-nec.man:
+	  Added nec backend for the NEC scanners PC-IN500/4C (from Kazuya Fukuda 
+	  <fukuda@pjs.nevt.nec.co.jp>)
+
+2000-11-20  Henning Meier-Geinitz <hmg@gmx.de>
+	
+	* AUTHORS: Added Eugene S. Weiss.
+	* PROJECTS: Removed Artec as6e backend.
+	* README: Added link to man sane-as6e.5.
+	* TODO: Removed as6e.
+	* doc/Makefile.in: Added generation of as6e manpage.
+        * backend/Makefile.in: Added entries for as6e.
+	* backend/dll.conf: Added as6e.
+	* backend/as6e.c backend/as6e.h backend/as6e.desc doc/sane-as6e.man:
+	  Added backend for Artec AS6E parallel port scanner (from Eugene S.
+	  Weiss <yossarian@users.sourceforge.net>).
+	
+2000-11-20  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* configure configure.in: Added test for /dev/urandom and
+	  index() in string.h or strings.h
+	* backend/net.c: Fixed SANE_NET_AUTHORIZE call handling
+	* doc/net.tex: Clarified definition of SANE_NET_AUTHORIZE, added
+	  definition of MD5 authorization
+	* doc/sane.tex: Upgraded to version 1.0.2, changed definition of
+	  SANE_MAX_USERNAME_LEN & SANE_MAX_PASSWORD_LEN to 128 chars
+	* doc/saned.man: added description of SANE_CONFIG_DIR/saned.users
+	* doc/scanimage.man: added description of ~/.sane/pass and
+	  --accept-md5-only
+	* frontend/saned.c: implemented user authorization on a per backend
+	  basis
+	* frontend/scanimage.c: fixed bug (option -b wasn't present)
+	  implemented auth_callback
+	* lib/md5.c include/md5.h: added md5 functions from GNU textutils
+	* include/sane/sane.h: changed definition of SANE_MAX_USERNAME_LEN &
+	  SANE_MAX_PASSWORD_LEN to 128 chars
+	* include/sane/sanei_auth.h sanei/sanei_auth.c: implemented new
+	  SANE interface for user authorization using MD5 digest
+	* lib/Makefile.in sanei/Makefile.in: updated Makefiles
+
+2000-11-19  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c: Removed one debug output statement.
+
+2000-11-19  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.[ch]: Added support for "set focus position" command. This
+	  command is necessary to scan via the TPU with the Expression1600.
+2000-11-19  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: Removed entry about stiff.*. Updated entry about testing
+	  saned.
+
+2000-11-19  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* backend/mustek_pp.[ch]: replaced #include "sane/.." by
+	  #include "../include/sane/.."
+
+2000-11-19  Peter Kirchgessner <peter@kirchgessner.net>
+
+        * frontend/stiff.c: Fix problem with writing Tag bits per sample
+          for color tiff files.
+
+2000-11-18  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* doc/sane-mustek_pp.man backend/mustek_pp.*: updated mustek_pp
+	  backend to version 0.9-devel
+
+2000-11-15  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* PROJECTS: Added entry about Visioneer OneTouch 8600.
+	* TODO: Added entries about net backend crashing after timeout, stiff.c
+	  problems, and more details about Irix cc jpeg problems.
+
+2000-11-15  Rene Rebe <rene.rebe@gmx.net>
+	* backend/avision.[c,h]: some fixes for brightness and contrast via
+	  the gamma-table. New config-option to force the backend to use DIN A4
+	  ("option force-a4"). Clean up.
+	
+2000-11-14  Rene Rebe <rene.rebe@gmx.net>
+	* backend/avision.[h,c]: Added gamma table support in hardware.
+	  Brightness and contrast emulation via the hardware gamma table.
+	  Code cleanup.
+	* AUTHORS: Changed my e-mail address.
+	
+2000-11-13  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* Makefile.in: Install sane.h and saneopts.h only.
+	* PROJECTS: Removed sane-pie.
+	* TODO: Removed sane-pie. Added possible portability problem for
+	  artec. Removed entry about installed headers. Added entry about
+	  gettext and libdl.
+	* doc/.cvsignore: Added sane-pie.5.
+
+2000-11-13  Simon Munton <simon@munton.demon.co.uk>
+
+	* backend/pie.c backend/pie-scsidef.c backend/pie.conf backend/pie.desc
+	  doc/sane-pie.man: Added Pacific Image Electronics backend for ScanAce
+	  range of scanners (also supports DevCom BlackWidow scanners and ADLIB
+	  JetScan scanners).
+	* README backend/Makefile.in backend/dll.conf doc/Makefile.in: Added pie
+	  backend.
+	* sane.lsm: Added keywords for pie backend.
+	* AUTHORS: Added myself as maintainer of pie backend.
+
+2000-11-12  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* doc/sane.tex: Fixed a typo.
+	* doc/.cvsignore: Added the files produced by make ps.
+	* README: Removed X-frontends. Point to sane-frontends and website.
+	  Some reformatting.
+	* TODO: Updated concerning frontends split.
+	* PROJECTS: Removed entries about frontends (now in 
+	  sane-frontends/README)
+	* PROBLEMS: Removed entries about frontends (now in
+	  sane-frontends/PROBLEMS)
+	
+2000-11-10  Henning Meier-Geinitz <hmg@gmx.de>
+
+        * sanei/sanei_constrain_value.c: If constraint_type is
+	  SANE_CONSTRAINT_RANGE and quantization is used, the results may
+	  be outside the limits of the range because quantization uses the
+	  orginal value. Fixed by doing quantization with the already 
+	  checked value.
+
+2000-11-10 Gerhard Jaeger <g.jaeger@earthling.net>
+	
+	* backend/plustek.c backend/plustek.desc backend/plustek-share.h
+      backend/plustek.h doc/sane-plustek.man:
+	  updated to version 0.37 - support for xsane, new models
+      document update, minor bugfixes
+
+2000-11-08  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: Updated. Added entries for viceo backend and addition to hp
+	  backend. Updated entries about the include issue. Added point about
+	  additional options for pnm backend, install problem of libsane.la, 
+	  and some build problems and the --without-x problem. Some more 
+	  details for detecting older SANE versions. 
+
+	* LEVEL2: Added entry about sending messages from backend to frontend.
+	  Removed entry about image polarity.
+
+	* backend/mustek.c backend/mustek.h backend/mustek.CHANGES 
+      backend/mustek.desc: Update to Mustek backend 1.0-99. Better
+	  transparency adapter support for ScanExpress scanners. Changed
+	  color support for ScanExpress scanners (faster at some resolutions
+	  now). Paragon 1200 SP color mode should work now without garbage at
+	  the end of an image. Some bugfixes. Details in 
+	  backend/mustek.CHANGES.
+	
+2000-11-08  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* include/sane/sanei_debug.h: fixed typo
+
+2000-10-30  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: Updated. Added points about --without-x and the 
+	  #include <sane...> stuff. Added xcam problem. Changed entry for
+	  Relisys scanner.
+
+2000-10-30  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* frontend/xscanimage.c: Define GIMP_ENABLE_COMPAT_CRUFT when
+	including gimp.h to use the old API.  Eventually we should convert
+	the frontends to use the new Gimp API.  Patch from Kevin Dalley.
+
+2000-10-29  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: Updated.
+	
+2000-10-23  Peter Kirchgessner <peter@kirchgessner.net>
+
+        *backend/hp-accessor.c hp-device.c hp-handle.c hp-hpmem.c hp.h hp.c
+                 hp-option.c  hp-scl.c: Change sanei_debug-interface
+            Allocate accessors once (for fixed size accessors)
+            Close connection in some error conditions
+
+2000-10-23  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* backend/dll.c: added test for ``dll'' in dll.conf
+
+2000-10-23  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* sanei/sanei_init_debug.c include/sane/sanei_debug.h
+	  frontend/saned.c: removed vararg macros
+
+2000-10-17  Henning Meier-Geinitz <hmg@gmx.de>
+ 
+	* doc/sane.tex: Added paragraph about image polarity as discussed
+	  on sane-devel. This is the version from Nick Lamb.
+	
+2000-10-15  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* include/sane/sanei_debug.h: sanei_debug_init was only declared
+	  if VARARG macros are supported. Fixed this.
+
+2000-10-08  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* sanei/sanei_pa4s2.c: fixed all but one compiler warning
+
+2000-10-03  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* tools/find-scanner.c: Explicitly state that find-scanner won't
+ 	  find non-SCSI scanners.
+	* doc/scanimage.man: Add examples for SANE device names.
+	* frontend/scanimage.c: Output message when no devices are found.
+	  Add example for devicename to --help message. Print warning
+	  when a Unix devicename is used instead of a SANE device. Removed
+	  compiler warning.
+	* TODO: Removed entries about the fgets and include issues in
+ 	  umax. Removed entries about scanimage device name
+ 	  documentation. Added a point about xscanimage problems with the
+ 	  new GIMP API.
+	* backend/mustek.* doc/sane-mustek.man: Update to Mustek backend
+ 	  1.0-98. Fixed segmentation fault in sane_init. Enabled double
+ 	  buffering. Clear inquiry buffer before using. Paragon 1200 SP now
+ 	  uses LD_BLOCK color correction. Removed LD MFS (wasn't used
+ 	  anymore). Fix sane_cancel for Paragon series II scanners. Fix
+ 	  halftone and grain for Paragon series II scanners. Backtracking is
+ 	  used automaticly by all scanners now. Some safety checks, code
+ 	  cleanup and more debug output. Details are in 
+	  backend/mustek.CHANGES.
+
+2000-10-02  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+	* Updated umax backend to sane-umax-1.0.3-build-24
+          take a look at backend/umax.CHANGES for details
+
+2000-10-02  Oliver Rauch <Oliver.Rauch@Wolfsburg.DE>
+
+        * sanei/sanei_constrain_value.c:
+          if checked option is a range and the value is out of
+	  range the value is now corrected to the minimum or maximum
+	  allowed value and SANE_INFO_INEXACT is set.
+	  The old version returned with an error. This caused problems
+	  when the value was a little bit out of range because of rounding
+          errors.
+
+2000-09-30  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* backend/pnm.c: Fixed three segfaults due to buffer overruns:
+ 	  maximum length of filename wasn't checked; maximum length in
+ 	  sane_read wasn't always checked; ppm_type wasn't always set in
+ 	  getparmfromfile. Added some checks for safety and removal of
+ 	  warnings. Added DBG lines for every SANE API call.
+	* TODO: Added entries about the backend:devicename issue. Add a
+	  comment about fronends not to crash when length is -1. Added entry
+ 	  about sane-pie. Added point about fronends not checking if too 
+	  much data is delivered with sane_read.
+	* PROJECTS: Added entry about sane-pie.
+
+2000-09-24  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* backend/mustek.*: Update to Mustek backend 1.0-97. This is a
+       	  development version and is only tested for three-pass scanners.
+  	  Added support for Paragon 1200 SP Pro and ScanExpress A3 SP.
+  	  Removed detection of " C04" and " C12" (don't seem to exist).
+  	  Changed SCSI request scheme. Sane_read can read more than 4096
+ 	  bytes from pipe. Minimum dpi is 30 now. Fixed LD correction for
+ 	  Paragon 1200SP 1.06 and 1.11.  Read SCSI buffer into big block and
+ 	  do LD after that for Paragon one-pass scanners. New option
+ 	  "blocksize" in mustek.conf. Better detection of the scanner type
+ 	  (three-pass, Paragon I, ...). Fixed possible segmentation faults
+ 	  in Paragon 600 II N LD code, scsi_sense_wait_ready and
+ 	  sense_handler. Decreased maximum scan size of Paragon 800 II
+ 	  SP. For three-pass scanners: fixed stop_scan and speed code, scan
+ 	  area is in pixels now, added RGB brightness and contrast, use
+ 	  +-100% for brightness and contrast. Return SANE_STATUS_CANCELLED
+ 	  when scan was cancelled. Option "force backtracking" is enabled by
+ 	  default, "scan speed" is set to "fastest". Added option
+ 	  "force-warn" for mustek.conf.  Rewrote halftone mode. Better error
+ 	  handling and more debug output.
+	* TODO: Clarified point about image data polarity. Moved point about
+	  xscanimage not updating the progress bar for 3pass scanners to
+	  frontend section. Removed umax entry in "frontends". Removed entry
+	  about alpha channel (was added to LEVEL2 file).
+	* LEVEL2: Add point about image data polarity.
+	* frontend/scanimage.c: Removed some warnings.
+	
+2000-09-19  Gerhard Jaeger <g.jaeger@earthling.net>
+
+	* backend/plustek.desc doc/sane-plustek.man:
+	  updated information about supported scanners	  
+
+2000-09-18  Henning Meier-Geinitz <hmg@gmx.de>
+
+        * README: Removed comment about xscanimage error message. Added
+          comment about find-scanner (may find scanners not supported by
+          SANE).
+	* tools/README: Added comment about find-scanner and some lines
+ 	  about sane-desc.el and sane-config.
+	* tools/find-scanner.c: Added comment about scanners not supported
+ 	  by SANE. Removed some warnings.
+	* TODO LEVEL2: Removed xscanimage error comment from TODO and moved
+ 	  ideas for SANE 2.0 from TODO to LEVEL2.
+
+2000-09-18  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/v4l.c: Remove X11 dependency.
+
+2000-09-17  Henning Meier-Geinitz <hmg@gmx.de>
+	
+	* frontend/xscanimage.c: Fixed gtk_main_quit bug (based on patch
+ 	  from <moloch@nikocity.de>). An error message was printed when 
+	  no sane device was found.
+
+2000-09-17  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* config.guess config.sub : Upgraded to latest version from
+	<URL:ftp://ftp.gnu.org/pub/gnu/config/>.
+
+	* doc/Makefile.in: New target 'install-docs' to install
+	documentation in $(prefix)/doc/sane-<version>/.
+
+	* japi/Makefile.in: Move javac and javah to make variables.
+
+2000-09-16  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: Added xscanimage bug and information about versioning
+ 	  problems. Some other minor changes.
+
+2000-09-15 Gerhard Jaeger <g.jaeger@earthling.net>
+	
+	* backend/plustek.c
+	  added some code to support timing measurement in debug sessions
+
+2000-09-10 Peter Kirchgessner <peter@kirchgessner.net>
+
+        * backend/hp-handle.c
+            Special handling of sane_cancel for OfficeJet K series
+
+2000-09-09 Peter Kirchgessner <peter@kirchgessner.net>
+
+        * backend/hp.h hp-scsi.h hp-scl.h hp-option.h hp-option.c
+                  hp-device.h hp-scl.c hp.c hp-device.c hp-handle.c
+
+          David Paschal (paschal@rcsis.com)
+            Added support for flatbed HP OfficeJets.
+          fix problem with cancel preview
+          fix timing problem between killing child and writing to pipe
+          change fprintf(stderr,...) to DBG
+          change include <sane..> to "sane.." in hp.h
+          change handling of options that have global effects.
+            i.e. if option scanmode is received (has global effect),
+            all options that "may change" are send to the scanner again.
+            This fixes a problem that --resolution specified infront of
+            --mode on command line of scanimage was ignored.
+            NOTE: This change does not allow to specify --depth 12 infront of
+            --mode color, because --depth is only enabled with --mode color.
+          add depth greater 8 bits for mode grayscale
+          add option for 8 bit output but 10/12 bit scanning
+
+2000-08-24 Gerhard Jaeger <g.jaeger@earthling.net>
+
+	* Updated plustek backend to support multiple devices and 12bit color-depth
+	  affected files: backend/plustek.c backend/plustek.h 
+	                  backend/plustek-share.h backend/plustek.conf
+	* backend/plustek.desc: updated information about supported scanner
+	* doc/sane-plustek.man: updated manpage according to the changes
+
+2000-08-23 Abel Deuring <a.deuring@satzbau-gmbh.de>
+	* sanei/sanei_scsi.c: Second attempt to fix the errno bug
+	  in the Linux command queue handling. 
+
+2000-08-19  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* TODO: Included TODO file for 1.0.4.
+	* sanei/sanei_ab306.c: Removed some comiler warnings.
+	* doc/sane.tex: Set \date to the date of the last change (not
+	  the date of running latex (\today))
+	* frontend/xscanimage.c: Fixed image size overrun (>ca. 400 MB). 
+	  Removed some compiler warnings.
+	
+2000-08-15  Henning Meier-Geinitz <hmg@gmx.de>
+
+	* configure configure.in: Default to --enable-warnings again.
+	
+2000-08-15  Jochen Eisinger <jochen.eisinger@gmx.net>
+
+	* backend/mustek_pp.c: fixed bug in config_ccd_1013 that prevents
+	ASIC 1013 scanners from working
+

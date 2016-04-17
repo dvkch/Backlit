@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+ldflags=@LDFLAGS@ @GPHOTO2_LDFLAGS@
+libs=@LIBS@ @DL_LIBS@ @LIBV4L_LIBS@ @MATH_LIB@ @TIFF_LIBS@ @JPEG_LIBS@ @GPHOTO2_LIBS@ @SOCKET_LIBS@ @AVAHI_LIBS@ @USB_LIBS@ @SCSI_LIBS@ @RESMGR_LIBS@
+
+Name: SANE Backends
+Description: Backends for SANE, the universal scanner interface
+Version: @VERSION@
+Requires:
+Libs: -L${libdir} -lsane
+Libs.private: ${ldflags} ${libs}
+Cflags: -I${includedir}

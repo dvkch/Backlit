@@ -1,0 +1,284 @@
+;
+; SANE Backend description file for Plustek backend (USB only)
+;
+
+:backend "plustek"
+:version "0.52"
+:manpage "sane-plustek"
+; backend's web page
+:url "http://www.gjaeger.de/scanner/plustek/"
+
+:devicetype :scanner
+
+;* Plustek **********************************************************************************
+
+:mfg "Plustek"
+:url "http://www.plustek.de/"
+:url "http://www.plustek.com/"
+
+:model "OpticPro U12"
+:interface "USB"
+:usbid "0x07b3" "0x0010"
+:status :complete
+:comment "NOTE: Devices with product ID 0x0001 are not supported!"
+
+:model "OpticPro UT12"
+:interface "USB"
+:usbid "0x07b3" "0x0013"
+:status :complete
+
+:model "OpticPro UT12"
+:interface "USB"
+:usbid "0x07b3" "0x0017"
+:status :complete
+:comment "Note: Devices with product ID 0x0001 are not supported!"
+
+:model "OpticPro UT16"
+:interface "USB"
+:usbid "0x07b3" "0x0017"
+:status :complete
+
+:model "OpticPro U24"
+:interface "USB"
+:usbid "0x07b3" "0x0011"
+:status :complete
+
+:model "OpticPro U24"
+:interface "USB"
+:usbid "0x07b3" "0x0015"
+:status :complete
+
+:model "OpticPro UT24"
+:interface "USB"
+:usbid "0x07b3" "0x0017"
+:status :complete
+
+;* Genius/KYE *******************************************************************************************
+
+:mfg "Genius"
+:url "http://www.geniusnet.com.tw/"
+
+:model "Colorpage HR6 V2"
+:interface "USB"
+:usbid "0x0458" "0x2007"
+:status :complete
+
+:model "Colorpage HR6 V2"
+:interface "USB"
+:usbid "0x0458" "0x2008"
+:status :complete
+
+:model "Colorpage HR7"
+:interface "USB"
+:usbid "0x0458" "0x2013"
+:status :complete
+
+:model "Colorpage HR6A"
+:interface "USB"
+:usbid "0x0458" "0x2009"
+:status :untested
+
+:model "Colorpage HR7LE"
+:interface "USB"
+:usbid "0x0458" "0x2015"
+:status :untested
+
+:model "Colorpage HR6X"
+:interface "USB"
+:usbid "0x0458" "0x2016"
+:status :untested
+
+;* MUSTEK ***********************************************************************************
+
+:mfg "Mustek"
+:url "http://www.mustek.com/"
+
+:model "BearPaw 1200"
+:interface "USB"
+:usbid "0x0400" "0x1000"
+:status :complete
+:comment "both product versions are supported, see backends' man-page"
+
+:model "BearPaw 1200"
+:interface "USB"
+:usbid "0x0400" "0x1001"
+:status :complete
+:comment "both product versions are supported, see backends' man-page"
+
+:model "BearPaw 2400"
+:interface "USB"
+:usbid "0x0400" "0x1001"
+:status :complete
+
+;* Hewlett-Packard **************************************************************************
+
+:mfg "Hewlett-Packard"
+:url "http://www.hp.com/"
+
+:model "ScanJet 2100C"
+:interface "USB"
+:usbid "0x03f0" "0x0505"
+:status :complete
+
+:model "ScanJet 2200C"
+:interface "USB"
+:usbid "0x03f0" "0x0605"
+:status :complete
+
+;* EPSON *******************************************************************************************
+
+:mfg "Epson"
+:url "http://www.epson.com/"
+
+:model "Perfection 1250"
+:interface "USB"
+:usbid "0x04b8" "0x010f"
+:status :complete
+
+:model "Perfection 1250Photo"
+:interface "USB"
+:usbid "0x04b8" "0x010f"
+:status :good
+:comment "TPA scans not perfect"
+
+:model "Perfection 1260"
+:interface "USB"
+:usbid "0x04b8" "0x011d"
+:status :complete
+
+:model "Perfection 1260Photo"
+:interface "USB"
+:usbid "0x04b8" "0x011d"
+:status :good
+:comment "TPA scans not perfect"
+
+;* UMAX *************************************************************************************
+
+:mfg "Umax"
+:url "http://www.umax.com/"
+
+:model "UMAX 3400"
+:interface "USB"
+:usbid "0x1606" "0x0050"
+:status :complete
+:comment "there are some UMAX 3400 outside the U.S. which are not supported, as they use another chipset than the LM983x"
+
+:model "UMAX 3400"
+:interface "USB"
+:usbid "0x1606" "0x0060"
+:status :complete
+:comment "there are some UMAX 3400 outside the U.S. which are not supported, as they use another chipset than the LM983x"
+
+:model "UMAX Astranet ia101"
+:interface "USB"
+:usbid "0x1606" "0x0060"
+:status :complete
+:comment "seems to be a renamed UMAX 3400"
+
+:model "UMAX 3450"
+:interface "USB"
+:usbid "0x1606" "0x0060"
+:status :complete
+
+:model "UMAX 5400"
+:interface "USB"
+:usbid "0x1606" "0x0160"
+:status :complete
+
+;* COMPAQ ******************************************************************************************
+
+:mfg "Compaq"
+:url "http://www.compaq.com/"
+
+:model "S4-100"
+:interface "USB"
+:usbid "0x049f" "0x001a"
+:status :complete
+:comment "Identical to UMAX 3400"
+
+
+;* CANON *******************************************************************************************
+
+:mfg "Canon"
+:url "http://www.canon.com/"
+
+:model "CanoScan N650U/N656U"
+:interface "USB"
+:usbid "0x04a9" "0x2206"
+:status :complete
+
+:model "CanoScan N1220U"
+:interface "USB"
+:usbid "0x04a9" "0x2207"
+:status :complete
+
+:model "CanoScan N670U/N676U/LiDE20"
+:interface "USB"
+:usbid "0x04a9" "0x220d"
+:status :complete
+
+:model "CanoScan N1240U/LiDE30"
+:interface "USB"
+:usbid "0x04a9" "0x220e"
+:status :complete
+
+:model "CanoScan LiDE25"
+:interface "USB"
+:usbid "0x04a9" "0x2220"
+:status :good
+
+:model "CanoScan D660U"
+:interface "USB"
+:usbid "0x04a9" "0x2208"
+:status :good
+:comment "TPA scans not perfect"
+
+;* SYSCAN *******************************************************************************************
+
+:mfg "Syscan"
+:url "http://www.syscaninc.com/"
+
+:model "TravelScan 460/464"
+:interface "USB"
+:usbid "0x0a82" "0x4600"
+:status :complete
+
+:model "TravelScan 662"
+:interface "USB"
+:usbid "0x0a82" "0x6620"
+:status :complete
+
+;* SYSCAN *******************************************************************************************
+
+:mfg "Ambir"
+
+:model "Visigo A4"
+:interface "USB"
+:usbid "0x0a82" "0x4600"
+:status :complete
+:comment "Rebaged Travelscan 464"
+
+;* Portable Peripheral Co., Ltd. ********************************************************************
+
+:mfg "Portable Peripheral Co., Ltd."
+:url "http://www.pandp.com.tw/"
+
+:model "Q-Scan USB001 (A4 portable scanner)"
+:interface "USB"
+:usbid "0x0a53" "0x1000"
+:status :complete
+
+:model "Q-Scan USB201 (A6 portable scanner)"
+:interface "USB"
+:usbid "0x0a53" "0x2000"
+:status :good
+
+;* Visioneer ****************************************************************************************
+
+:mfg "Visioneer"
+:url "http://www.visioneer.com/"
+
+:model "Strobe XP 100"
+:interface "USB"
+:usbid  "0x04a7" "0x0427"
+:status :basic

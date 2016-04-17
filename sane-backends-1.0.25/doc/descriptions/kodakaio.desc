@@ -1,0 +1,185 @@
+:backend "kodakaio"
+:url "http://sourceforge.net/projects/cupsdriverkodak/" 
+:version "2.7.2"
+:manpage "sane-kodakaio"
+:comment "Backend for Kodak AiO ESP and Hero printers. Also possibly Advent AWL10"
+:devicetype :scanner
+
+:mfg "Kodak"
+:url "http://www.kodak.com/"
+
+;======================================
+; ESP series
+
+:model "ESP 2150"
+:interface "USB"
+:usbid "0x040a" "0x4059"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 2170"
+:interface "USB"
+:usbid "0x040a" "0x4066"
+:status :basic
+:comment "Tested with network"
+
+:model "ESP 3200"
+:interface "USB"
+:usbid "0x040a" "0x4043"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 3300"
+:interface "USB"
+:usbid "0x040a" "0x4031"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 4100"
+:interface "USB"
+:usbid "0x040a" "0x4053"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 5000"
+:interface "USB"
+:usbid "0x040a" "0x4028"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 5100"
+:interface "USB"
+:usbid "0x040a" "0x4025"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 5200"
+:interface "USB Ethernet"
+:usbid "0x040a" "0x4041"
+:status :complete
+:comment "USB good, Network good"
+
+:model "ESP 5300"
+:interface "USB"
+:usbid "0x040a" "0x4026"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 5500"
+:interface "USB"
+:usbid "0x040a" "0x4027"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 6100"
+:interface "USB"
+:usbid "0x040a" "0x4054"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 7200"
+:interface "USB"
+:usbid "0x040a" "0x4056"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 9200"
+:interface "USB"
+:usbid "0x040a" "0x4065"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 5"
+:interface "USB"
+:usbid "0x040a" "0x4032"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 7"
+:interface "USB"
+:usbid "0x040a" "0x403e"
+:status :untested
+:comment "Please test!"
+
+:model "ESP 9"
+:interface "USB"
+:usbid "0x040a" "0x403f"
+:status :untested
+:comment "Please test!"
+
+:model "ESP C110"
+:interface "USB"
+:usbid "0x040a" "0x4057"
+:status :untested
+:comment "Please test!"
+
+:model "ESP C115"
+:interface "USB"
+:usbid "0x040a" "0x4058"
+:status :untested
+:comment "Please test!"
+
+:model "ESP C310"
+:interface "USB"
+:usbid "0x040a" "0x405d"
+:status :untested
+:comment "Please test!"
+
+:model "ESP C315"
+:interface "USB"
+:usbid "0x040a" "0x405e"
+:status :untested
+:comment "Please test!"
+
+;======================================
+; Hero series
+
+:model "Hero 3.1"
+:interface "USB"
+:usbid "0x040a" "0x406d"
+:status :untested
+:comment "Please test!"
+
+:model "Hero 4.1"
+:interface "USB"
+:usbid "0x040a" "0x4069"
+:status :untested
+:comment "Please test!"
+
+:model "Hero 5.1"
+:interface "USB"
+:usbid "0x040a" "0x4064"
+:status :untested
+:comment "Please test!"
+
+:model "Hero Office 6.1"
+:interface "USB"
+:usbid "0x040a" "0x4062"
+:status :basic
+:comment "Does the adf work?"
+
+:model "Hero 7.1"
+:interface "USB"
+:usbid "0x040a" "0x4063"
+:status :untested
+:comment "Please test!"
+
+:model "Hero 9.1"
+:interface "USB Ethernet"
+:usbid "0x040a" "0x4067"
+:status :complete
+:comment "USB good, Network good"
+
+;===================================
+
+:mfg "Advent"
+:url "http://www.adventcomputers.co.uk"
+
+:model "AW10"
+:interface "USB"
+:usbid "0x040a" "0x4060"
+:status :untested
+:comment "Please test!"
+
+
+

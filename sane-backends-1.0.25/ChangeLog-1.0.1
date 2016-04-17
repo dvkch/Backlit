@@ -1,0 +1,449 @@
+1999-04-19  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Version 1.0.1 released.
+
+	* backend/artec.c (attach): Applied patch by Petter to fix URL in
+	debug output.
+
+	* backend/microtek2.c (chunky_proc_data): Apply Bernd's latest
+	patch to fix some color problems.
+
+1999-04-17  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* Patch by Mikko Työläjärvi:
+	* sanei/sanei_scsi.c: Check for cam_devices[fd]==NULL, not !=NULL.
+
+	* Patch from Petter:
+	* config.guess: Update to latest version.
+	* config.sub: Update to latest version.
+	* config.install-sh: Update to latest version.
+	* mkinstalldirs: Update to latest version.
+
+1999-04-12  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane-dc25.man: Apply fixes by Peter Fales
+	<psfales@lucent.com>.
+	* backend/dc25.c: Apply patch by Peter Fales.
+
+1999-04-11  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* include/sane/config.h.in: Declare return type of strdup(),
+	strndup(), and strsep() if these functions are not part of the
+	standard libc.  This breaks the GNU convention of not declaring
+	standard C library functions but is required in these cases
+	because the functions return pointers.  On a 64 bit platform, bad
+	code is generated if a function is (implicitly) declared to return
+	an "int" and then returns a pointer.  To minimize the risk of
+	compile errors due to conflicting prototypes, we don't specify a
+	prototype though (just the return type).
+
+	* backend/dll.conf: Comment out dc25 and dc210 backends as those
+	are VERY slow to initialize when no camera is attached.
+
+	* backend/epson.desc: Add Epson GT-7000.
+
+1999-04-06  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/sharp.c (sane_read_shuffled): Declare as "static".
+	(sane_read_direct): Ditto.
+	Applied latest patch by Kazuya and Abel.
+
+	* sanei/sanei_scsi.c [USE == FREEBSD_CAM_INTERFACE]: Fix bugs
+	(patch by Mikko Tyo"la"ja"rvi <mikko@securitydynamics.com>).
+
+	* backend/snapscan.c (start_reader): Don't redirect scanner file
+	descriptor to fd 0 (needlessly breaks FreeBSD and other platforms
+	that don't use real file descriptors for the scanner.
+
+	* backend/microtek2.c: Apply Bernd's patch to fix "green-ness"
+	bug.
+
+	* backend/umax.BUGS: Applied Oliver's latest patch.
+	* backend/umax.CHANGES: Ditto.
+	* backend/umax.FAQ: Ditto.
+	* backend/umax.TODO: Ditto.
+	* backend/umax.c: Ditto.
+	* backend/umax.desc: Ditto.
+	* doc/sane-umax-doc.html: Ditto.
+	* doc/sane-umax-doc.tex: Ditto.
+	* doc/sane-umax-doc.man: Ditto.
+	
+1999-04-06  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* backend/snapscan.c (sane_exit sane_get_devices): Removed memory
+	leak.
+	(sane_open): Give more sensible error message when unable to open
+	temp file.  Open temp file in /var/tmp, not in current directory.
+	(mini_inquiry add_device): Make sure to only match listed models.
+  	Earlier, substrings would also match.
+
+	* backend/snapscan.c (sane_snapscan_*): Changed API entries from
+	sane_snapscan_* to sane_*.
+
+	* backend/snapscan.c (add_device init_options inquiry
+ 	sane_snapscan_get_parameters sane_snapscan_start
+ 	sane_snapscan_set_io_mode sane_snapscan_read) backend/snapscan.h
+ 	backend/snapscan.desc: Rewrote scanner detection code to loop over
+ 	array of supported SCSI names.  Added AGFA SnapScan 1236s support.
+  	It seems to be compatible with SnapScan 600.
+	Make sure to not add the same device more then once to the device
+ 	list.  Bugfix in sane_snapscan_read() triggered on EOF.
+
+1999-04-04  David Mosberger-Tang  <David.Mosberger@acm.org>
+	* PROBLEMS: Note that /proc/sys/kernel/sg-big-buff is available
+	since Linux kernel v2.2.
+
+	* backend/agfafocus.desc: Changed status from "new" to "alpha".
+	* backend/hp.desc: Ditto.
+
+	* backend/microtek2.desc: Increase version number to 0.6.
+
+1999-04-04  Petter Reinholdtsen <pere@td.org.uit.no>
+	* PROBLEMS:  Updated note on SG_BIG_BUF.
+	* tools/README: Corrected typo.  Added some notes on
+	mustek600iin-off.
+	* tools/mustek600iin-off.c: Remove hardcoded path to mustek.conf.
+
+1999-04-03  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* include/sane/sanei_debug.h: Define sanei_debug_BACKEND_NAME only
+	if STUBS is not defined.
+
+	* backend/microtek2.h: #ifdef out do_dummy_scan.
+
+	* backend/Makefile.in (V_REV): New variable.
+
+	* configure.in (V_REV): New variable.
+	(VERSION): Include ${V_REV} in vesion number.
+	Substitute V_REV.
+	
+	* backend/umax.c (umax_do_request_sense): Make "static".
+
+	* backend/canon.h: Move array "option_name"...
+	* backend/canon-sane.c: ...to here and make "static".
+
+	* backend/pnm.c: Rolled back to version that shipped with
+	sane-0.74.  The scan area options were not well implemented.  If
+	someone wants to fix that code, the previous (unreliable) version
+	of the PNM backend is in backend/pnm.c-bad.
+
+	* doc/sane.tex (subsection{Resolution Option}: Remove section
+	4.5.5---it was a duplicate of section 4.5.2 (Scan Resolution
+	Option)!
+
+	* backend/microtek2.c (chunky_proc_data): Merge in latest changes
+	from Bernd.
+
+1999-04-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/net.c (sane_control_option): Ignore the option size
+	of BUTTONs and GROUPs as required by section 4.2.9.  (Bug
+	reported by Nick Lamb).
+
+	* frontend/xscanimage.c (null_print_func): Declare MSG param
+	as "const" to match declaration of glib-1.2.1.
+
+	* backend/ricoh.c (attach_one): return SANE_STATUS_GOOD.
+
+	* backend/microtek2.c (do_dummy_scan): #ifdef out since it
+	seems to be used for debugging only.
+
+	* backend/hp-option.c (_probe_int): Needed only if HP_EXPERIMENTAL
+	is defined.
+
+	* backend/coolscan.c: Updated with Didier's latest patch.
+
+	* backend/mustek.c: Applied Andreas's latest patch.
+
+	* doc/sane.tex (subsection{Device Descriptor Type}): Add AGFA.
+
+	* doc/net.tex (subsection{Primitive Data Types}): Clarify that
+	SANE_Char is encoded as ISO LATIN-1 and describe SANE_String
+	encoding (patch by Petter).
+
+	* frontend/saned.c (DBG): Remove extraneous parens around "msg".
+
+	* AUTHORS (Frontends): Update David Skoll's email address.
+
+	* frontend/saned.c (get_free_handle): Check for out of memory
+	situations and initialize newly allocated memory.
+	(auth_callback): Fail when we can _not_ authorize (i.e.,
+	!can_authorize), not the other way round.
+	(quit): Make sure quit() gets executed only once.
+
+	* backend/microtek2.c: Updated with Bernd's latest version.
+	* backend/microtek2.h: Ditto.
+
+	* backend/st400.desc: New file.
+
+	* backend/epson.c (sane_open): Check for NULL or empty
+	dummy_dev.sane.name to avoid segfaults.  (Suggested by Yuri
+	Dario).
+
+	* sanei/sanei_scsi.c [USE = LINUX_INTERFACE]: Make "cdb" last
+	member in "struct req" and change size of "data" to 1 byte to
+	allow dynamic sizing of data buffer based on the value of
+	sanei_scsi_max_request_size.
+	(sanei_scsi_req_enter): Calculate size of request based on
+	sanei_scsi_max_request_size.  A similar patch was proposed
+	by Petter Reinholdtsen.
+
+1999-03-13  Petter Reinholdtsen  <pere@td.org.uit.no>
+
+	* doc/saned.man: More info on how to use tcp_wrapper for access
+	control.
+
+1999-03-08  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/microtek2.c (sane_get_select_fd): Remove bogus cast.
+	Reported by Petter Reinholdtsen.
+
+	* sanei/sanei_config.c: Include <sane/config.h>.
+
+	* frontend/saned.c: Include <sys/types.h>.
+	(MAXHOSTNAMELEN): Define MAXHOSTNAMELEN if necessary.
+
+	* configure.os2 (LN_S): Updated with Yuri's latest version.
+
+	* backend/Makefile.in (install): Use $(LN_S) instead of ln -s.
+	(libsane-dll.la): Make dependent on $(DLL_PRELOAD_EXTRAS).
+	(libsane-hp.la): Make dependent on sanei_pio.lo.
+
+	* backend/hp.c (PATH_MAX): Define PATH_MAX if necessary.
+
+	* backend/hp-scl.c (sanei_hp_scsi_pipeout): Add SIGXCPU, SIGXFSZ,
+	and SIGVTALRM only if defined.
+
+	* backend/dc25.c (PATH_MAX): Define PATH_MAX if necessary.
+	(sane_init): Move up fclose(fp) to avoid segfault when fp==NULL.
+	* backend/dc210.c (sane_init): Ditto.
+
+	* backend/pnm.c: Apply Oliver's 4-liner to make TLX, TLY, BRX, and
+	BRY advanced options.
+
+	* backend/umax.c: Updated with Oliver's latest version.
+	
+	* doc/sane-sharp.man: New file (by Kazuya Fukuda).
+	* backend/sharp.c: Updated with Kazuya's latest version.
+	* backend/sharp.h: Ditto.
+	* backend/sharp.desc: Ditto.
+
+1999-03-04  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/canon.c (adjust_hilo_points): Print values of type
+	size_t as described in backend/GUIDE..
+
+	* backend/canon-scsi.c: Comment out unused code.
+
+	* backend/canon.c: Updated with Manuel Panea latest version.
+
+	* Irix patches from Michael Sweet:
+
+	* sanei/sanei_scsi.c (sanei_scsi_find_devices): Update with
+	Michael's latest version.
+	* configure.in (CPPFLAGS): Don't check for libnsl or libsocket on
+	Irix.
+	(CPPFLAGS): Check for cfmakeraw.
+	* backend/sharp.h (mode_select_param): Remove double semicolon
+	(some compiler's don't grok those in structure declarations).
+	* backend/Makefile.in (libsane-abaton.la): Make dependent on
+	sanei_config2.lo.
+	* backend/dll.conf: Enable net backend, disable pnm backend by
+	default to lessen risk of confusing novice users.
+	* backend/abaton.c (sane_read): Change type of "size" from ssize_t
+	to size_t.
+	* backend/apple.c (sane_read): Ditto.
+
+1999-03-02  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/Makefile.in (EXTRA_dc210): New macro.
+
+	* sanei/sanei_ab306.c: Apply usleep() patch by Andreas
+	Czechanowski.
+
+	* backend/hp.c: Updated with Peter's latest version (v.082).
+
+1999-03-01  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* include/sane/sanei_net.h: Changed copyright on this file (and
+	this file only!) to be public domain (same as sane.h).  This helps
+	ensuring that independent network implementations remain
+	compatible.
+
+1999-02-28  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/sharp.c: New file by FUKUDA Kazuya
+	<fukuda@avm.nhe.nec.co.jp>.
+	* backend/sharp.h: Ditto
+	* backend/sharp.conf: Ditto.
+	* backend/sharp.desc: Ditto.
+
+	* include/sane/sanei_debug.h: Define sanei_debug_BACKEND_NAME
+	only if BACKEND_NAME is defined.
+
+	* tools/find-scanner.c (main): Add NetBSD device names (patch by
+	Taniguchi Shinya <Taniguchi.Shinya@exc.epson.co.jp>).
+
+	* backend/epson.c (attach): Recognize Perfection636 scanner.
+	Suggested by Svend Daugaard Pedersen <sdp@vip.cybercity.dk>.
+
+	* backend/abaton.c (attach_one): Move past attach() to avoid
+	forward-reference.
+
+	* backend/umax.c (umax_do_request_sense): Make static.
+
+	* backend/snapscan-310.c (rgb_buf_can_get_line): Make static.
+	(rgb_buf_init): Ditto.
+	(rgb_buf_clean): Ditto.
+	(rgb_buf_push_line): Ditto.
+	(rgb_buf_get_line): Ditto.
+	(rgb_buf_set_diff): Ditto.
+	(transfer_data_diff): Ditto.
+
+	* backend/snapscan.c (gamma_8): Make static.
+	(start_reader): Ditto.
+	
+	* backend/microtek.c (do_precalibrate): Make static.
+	(finagle_precal): Ditto.
+	(pack_flat_data): Ditto.
+	(pack_goofyrgb_data): Ditto.
+	(pack_into_ring): Ditto.
+	(pack_into_dest): Ditto.
+	(pack_seqrgb_data): Ditto.
+	(ring_alloc): Ditto.
+	(ring_expand): Ditto.
+	(ring_free): Ditto.
+	(set_pass_parameters): Ditto.
+
+	* backend/epson.c (epson_cmd): Make static.
+
+	* backend/dc25.c (pp): Make static.
+	(tmpname): Ditto.
+	(tmpnamebuf): Ditto.
+	(tty_baud): Ditto.
+
+	* backend/artec.c (artec_get_status): Make static.
+	(attach_one): Ditto.
+	(cap_data): Ditto.
+
+	* backend/abaton.c (mode_update): Make mode_update() static.
+	* backend/apple.c (mode_update): Ditto.
+	(gamma_update): Make static.
+	(xquant): Ditto.
+	(yquant): Ditto.
+
+	* backend/microtek2.c: Updated with Bernd's v0.6.
+	Add missing include of <errno.h>.
+
+	* backend/microtek2.h: Ditto.
+	* backend/microtek2.conf: Ditto.
+
+1999-02-27  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* frontend/preview.c (preview_scan): Fix dpi calculation by
+	replacing gwidth by gheight.  Reported by Manuel Panea.
+
+	* doc/sane-net.man: Change service name from "saned" to "sane".
+
+	* sanei/sanei_scsi.c (MAX_DATA) [FREEDBSD_CAM_INTERFACE]:  Change
+	MAX_DATA from MAXPHYS to (DFLTPHYS - PAGE_SIZE).  Patch by
+	Parag Patel <parag@cgt.com>.
+
+	* AUTHORS (Backends): Updated Peter's email address.
+
+	* PROJECTS: Updated Peter's home page URL.
+
+	* backend/snapscan.c (EXPECTED_MAJOR): Update EXPECTED_MAJOR to 1.
+
+	* include/sane/sane.h (SANE_CURRENT_MAJOR): SANE_CURRENT_MAJOR and
+	V_MAJOR HAVE to be in sync, so I'm forced to fix SANE_CURRENT_MAJOR
+	now.  Embarassing, but fortunately only the snapscan backend seems
+	affected by this change.
+
+	* backend/dll.c (load): Use SANE_CURRENT_MAJOR, not V_MAJOR (the
+	latter is used for shared lib versioning).
+
+	* tools/find-scanner.c (main): Make verbose output a bit
+	friendlier (patch by Petter).
+
+	* backend/umax.c: Updated with Oliver's latest version (v1.0c).
+
+	* Patch by Mike Sweet: * backend/Makefile.in (libsane-ricoh.la):
+	Make dependent on sanei_config2.lo.  * sanei/sanei_scsi.c
+	(sanei_scsi_find_devices): New function.
+	(WE_HAVE_FIND_DEVICES): Define.  * frontend/saned.c (check_host):
+	A "+" in saned.conf now matches any remote host (may be a bit
+	dangerous, so use this judiciously).  * frontend/gtkglue.c:
+	Include <string.h>.  * backend/hp-accessor.c (hp_data_alloc):
+	Round size up to a multiple of sizeof(long) to avoid alignment
+	problems.  * backend/abaton.h: Remove extraneous comma in enums.
+	* backend/artec.conf: Add "scsi ULTIMA" line.  *
+	backend/abaton.conf: Add "scsi ABATON" line.  *
+	backend/epson.conf: Add "scsi EPSON" line.  * backend/ricoh.conf:
+	Add "scsi RICOH IS60" line.  * backend/snapscan.conf: Add "scsi
+	AGFA" and "scsi COLOR" line.  * backend/tamarack.conf: Add "scsi
+	TAMARACK" line.  * backend/abaton.c (sane_init): Fix fall back
+	code to attach /dev/scanner when ABATON_CONFIG_FILE doesn't exist.
+	(sane_init): Use sanei_config_attach_matching_devices().
+	(attach_one): New function.
+	* backend/hp-device.c (sanei_hp_device_probe): Mention model
+	6250C.
+
+	* backend/saned.conf: Remove the stale comments about hostname
+	matching being case-sensitive.
+
+	* backend/microtek.h: Updated with Matto's v0.10.1.
+
+	* backend/mustek.c (send_gamma_se): Apply patch by Wilco Oelen
+	<woelen@noord.bart.nl> to clip gamma values to range 0..255.
+
+	* backend/artec.desc: Updated with Chris Pinkham's latest version.
+
+	* backend/umax.c (PATH_MAX): Do conditional define of PATH_MAX
+	_after_ including all the headers to avoid "duplicate define"
+	warning message.
+
+	* backend/ricoh.h: Include <sane/config.h> to get #define for
+	"inline" if necessary.
+
+	* backend/dc210.c (init_dc210): To send break, use tcsendbreak()
+	if available or TCSBKRP or TCKSBRK ioctl() if available or fall
+	back to doing nothing if none of these are supported.  This may
+	cause the backend to work incorrectly on platforms that do not
+	support one of the above methods for sending a break, but at least
+	it will compile that way.
+
+1998-12-12  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/hp.desc: Updated with Peter's latest version.
+
+1998-11-30  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* LICENSE (terms): Add a pointer to backend/djpeg.README.gz.
+
+	* backend/djpeg.README.gz: New file (required to comply with JPG
+	licensing restriction).
+
+	* backend/snapscan.c (sane_snapscan_start): Use INT_MAX instead
+	of non-portable MAXINT.
+	Don't include Linux-specific <values.h>.
+
+1998-11-26  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* doc/sane.tex (subsection{Device Descriptor Type}): Consistently
+	use "Noname" (instead of None/Noname) to indicate the absence of
+	a vendor.
+	(subsection{sane_strstatus}): Define how long the returned string
+	is valid.
+	(section{Code Flow}): Clarify that sane_cancel() has to be called
+	even if read returns SANE_STATUS_EOF.
+
+1998-11-22  David Mosberger-Tang  <David.Mosberger@acm.org>
+
+	* backend/ricoh.h (_4btol): Replace "__inline" by "inline".
+
+	* backend/abaton.c (sane_control_option): Assign word values to
+	s->val[foo].w not s->val[foo].  The latter compiles on gcc-2.7.2.3
+	without warning but causes an error on other compilers (e.g.,
+	egcs).
+	

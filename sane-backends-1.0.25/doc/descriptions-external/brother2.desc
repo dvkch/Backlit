@@ -1,0 +1,235 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+; See doc/descriptions.txt for details.
+
+:backend "brother2"               ; name of backend
+;:version "1.0.0"                   ; version of backend (or "unmaintained")
+;:new :yes                         ; Is the backend new to this SANE release?
+                                  ; :yes or :no
+;:manpage "sane-template"          ; name of manpage (if it exists)
+:url "http://solutions.brother.com/linux/sol/printer/linux/sane_drivers.html" ; backend's web page
+:comment "External backend made by brother. As this software contains non-free parts, it can't be included into SANE. If you can't find your model here, please have a look at the brother website which contains the latest list."  
+                                  ; comment about the backend
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "Brother"                   ; name a manufacturer
+:url "http://www.brother.com/"   ; manufacturer's URL
+;:comment ""
+                                  ; comment about the manufacturer
+
+;data taken from Brother website and Brsane2.ini
+
+:model "DCP-110C"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x0169"
+
+:model "DCP-115C"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x018c"
+
+:model "DCP-116C"
+:status :untested
+:interface "USB"
+;:usbid "0x04f9" "0x018c"
+:comment "No report yet."
+
+:model "DCP-117C"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x018e"
+
+:model "DCP-120C"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x0190"
+
+:model "DCP-310CN"
+:status :untested
+:interface "USB network"
+:usbid "0x04f9" "0x016b"
+:comment "No report yet."
+
+:model "DCP-315CN"
+:status :untested
+:interface "USB network"
+;:usbid "0x04f9" ""
+:comment "No report yet."
+
+:model "DCP-330C"
+:status :untested
+:interface "USB"
+:usbid "0x04f9" "0x01a9"
+:comment "No report yet."
+
+:model "DCP-340CW"
+:status :untested
+:interface "USB"
+;:usbid "0x04f9" ""
+:comment "No report yet."
+
+:model "DCP-7010"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x0182"
+
+:model "DCP-7020"
+:status :untested
+:interface "USB"
+:usbid "0x04f9" "0x0183"
+:comment "No report yet."
+
+:model "DCP-7025"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x0184"
+
+:model "MFC-210C"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x0161"
+
+:model "MFC-215C"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x0193"
+:comment "brscan2-0.0.2 necessary"
+
+:model "MFC-240C"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x01ab"
+:comment "Reportedly working."
+
+:model "MFC-3240C"
+:status :untested
+:interface "USB"
+:usbid "0x04f9" "0x0173"
+:comment "No report yet."
+
+:model "MFC-3340CN"
+:status :untested
+:interface "USB network"
+:usbid "0x04f9" "0x0174"
+:comment "No report yet."
+
+:model "MFC-410CN"
+:status :basic
+:interface "USB network"
+:usbid "0x04f9" "0x0163"
+:comment "Sometimes hangs and refuses to scan. A simple power off/on switch will fix things."
+
+:model "MFC-420CN"
+:status :untested
+:interface "USB network"
+:usbid "0x04f9" "0x0162"
+:comment "No report yet."
+
+:model "MFC-425CN"
+:status :untested
+:interface "USB network"
+;:usbid "0x04f9" ""
+:comment "No report yet."
+
+:model "MFC-5440CN"
+:status :good
+:interface "USB network"
+:usbid "0x04f9" "0x016d"
+
+:model "MFC-5840CN"
+:status :untested
+:interface "USB network"
+:usbid "0x04f9" "0x016e"
+:comment "No report yet."
+
+;only in ini
+:model "MFC-610CLN"
+:status :untested
+:interface "USB network"
+:usbid "0x04f9" "0x0166"
+:comment "No report yet."
+
+;only in ini
+:model "MFC-610CLN"
+:status :untested
+:interface "USB network"
+:usbid "0x04f9" "0x0168"
+:comment "No report yet."
+
+:model "MFC-620CN"
+:status :untested
+:interface "USB network"
+:usbid "0x04f9" "0x0165"
+:comment "No report yet."
+
+:model "MFC-640CW"
+:status :untested
+:interface "USB"
+;:usbid "0x04f9" ""
+:comment "No report yet."
+
+:model "MFC-7220"
+:status :untested
+:interface "USB"
+:usbid "0x04f9" "0x0185"
+:comment "No report yet."
+
+:model "MFC-7225N"
+:status :untested
+:interface "USB network"
+:usbid "0x04f9" "0x0186"
+:comment "No report yet."
+
+:model "MFC-7420"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x0180"
+:comment "No report yet."
+
+:model "MFC-7820N"
+:status :good
+:interface "USB network"
+:usbid "0x04f9" "0x0181"
+:comment "Network connection reported to work."
+
+:model "MFC-7840W"
+:status :good
+:interface "USB"
+:usbid "0x04f9" "0x01e5"
+:comment "Reported to work with brscan3 driver."
+
+:model "MFC-820CW"
+:status :untested
+:interface "USB"
+;:usbid "0x04f9" "0x0180"
+:comment "No report yet."
+
+:model "MFC-8460N"
+:status :untested
+:interface "USB"
+;:usbid "0x04f9" "0x0180"
+:comment "No report yet."
+
+:model "MFC-8860DN"
+:status :untested
+:interface "USB"
+;:usbid "0x04f9" "0x0180"
+:comment "No report yet."
+
+:model "MFC-9420CN"
+:status :untested
+:interface "USB network"
+;:usbid "0x04f9" ""
+:comment "No report yet."

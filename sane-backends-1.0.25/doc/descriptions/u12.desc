@@ -1,0 +1,60 @@
+;
+; SANE Backend description file for U12 backend
+;
+
+:backend "u12"
+:version "0.02"
+:manpage "sane-u12"
+; backend's web page
+:url "http://www.gjaeger.de/scanner/u12/"
+
+:devicetype :scanner
+
+;* Plustek **********************************************************************************
+
+:mfg "Plustek"
+:url "http://www.plustek.de/"
+:url "http://www.plustek.com/"
+
+:model "OpticPro U12"
+:interface "USB"
+:usbid "0x07b3" "0x0001"
+:status :basic
+:comment "Note: Only devices with product ID 0x0001 are supported!"
+
+:model "OpticPro UT12"
+:interface "USB"
+:usbid "0x07b3" "0x0001"
+:status :basic
+:comment "Note: Only devices with product ID 0x0001 are supported!"
+
+:model "OpticPro 1212U"
+:interface "USB"
+:usbid "0x07b3" "0x0001"
+:status :basic
+
+;* RevScan **********************************************************************************
+
+:mfg "RevScan"
+
+:model "RevScan Orange R48Ti"
+:interface "USB"
+:usbid "0x07b3" "0x0001"
+:status :basic
+:comment "Rebadged Plustek OpticPro UT12"
+
+;* Genius/KYE *******************************************************************************************
+
+:mfg "Genius"
+:url "http://www.geniusnet.com.tw/"
+
+:model "ColorPage HR6 V1"
+:interface "USB"
+:usbid "0x0458" "0x2004"
+:status :basic
+
+:model "ColorPage Vivid III USB"
+:interface "USB"
+:usbid "0x07b3" "0x0001"
+:status :untested
+:comment "Note: Device has Plustek vendor and product ID (0x07b3/0x0001)"

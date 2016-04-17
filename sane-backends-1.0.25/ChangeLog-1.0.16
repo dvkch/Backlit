@@ -1,0 +1,944 @@
+******  Release of sane-backends 1.0.16. End of code freeze ******
+
+2005-08-07  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* configure configure.in: New version 1.0.16.
+
+2005-08-05  St�hane Voltz <stefdev@modulonet.fr>
+
+	* backend/genesys.c: Fixed endianess issue in slope table
+	  generation. Tested ok on x86 architecture.
+
+2005-08-02  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* po/sane-backends.da.po: Updated Danish translation (from
+	  Mogens Jaeger <mogensjaeger@get2net.dk).
+
+2005-08-02  Mattias Ellert <mattias.ellert@tsl.uu.se>
+
+	* po/sane-backends.sv.po: Update Swedish translation
+
+2005-08-01  Eddy De Greef <eddy_de_greef at tiscali dot be>
+
+	* doc/sane-mustek_pp.man: updated URL for additional CIS driver info.
+
+2005-07-31  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* NEWS: Updated.
+
+---- CODE FREEZE FOR SANE 1.0.16 --- 
+
+2005-07-31  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* configure configure.in: Disabled compilation warnings.
+
+2005-07-30  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson_usb.c: Applied Olaf Meuwissen's patch to add
+	  new device IDs. 
+
+2005-07-30  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added Xerox Workcentre
+	  470cx. Added link for Canon DR-2080C.
+	* backend/Makefile.in: libsane and documentation is installed
+	  correctly again.
+	* acinclude.m4 configure configure.in: Avoid error messages in
+	  locking test. Make sure that io/cam/cam.h header file will be
+	  detected correctly. 
+
+2005-07-29  Gerard Klaver <gerard at gkall dot hobby dot nl>
+
+	* doc/sane-teco2.man: text update
+	  doc/descriptions/teco2.desc: update status VM3564
+	  doc/teco/teco2.txt: text added
+	  backend/teco2.c: removed teco_request_sens command for VM3564 (bug)
+	  backend/teco2.h: text update
+
+2005-07-29  Julien Blache <jb@jblache.org>
+	* tools/hotplug/libsane.usermap: Added various Epson IDs from Olaf
+	Meeuwissen; reodered some misplaced Epson entries.
+
+2005-07-29  Julien Blache <jb@jblache.org>
+	* tools/hotplug/libsane.usermap: Added Visioneer OneTouch 7300
+	(0x0444,0x0211), from Derek J Frye.
+
+2005-07-25  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* doc/descriptions-external/epkowa.desc: Updated according to
+	  the info provided by  Olaf Meeuwissen <olaf.meeuwissen@avasys.jp>
+
+2005-07-24  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions-external/brother2.desc: Brother DCP 7025 is
+	  reported to work (bug #301960).
+	* doc/descriptions-external/hp_rts88xx.desc: Moved unsupported
+	  devices to unsupported.desc.
+	* doc/descriptions-external/hp3770.desc
+	  doc/descriptions-external/hp8200.desc: Added external hp3770 and
+	  hp8200 backends.
+	* doc/descriptions/unsupported.desc: Added unsupported scanners
+	  from hp_rts88xx.desc. Removed HP ScanJet 3770 (now in hp3770
+	  backend). Added Lexmark X75 PrinTrio.
+	
+2005-07-22  Giuseppe Sacco <eppesuig@debian.org>
+
+	* italian translation update
+
+2005-07-22  Julien Blache <jb@jblache.org>
+	* tools/hotplug/libsane.usermap: Added HP ScanJet 7400C (0x03f0,
+	0x0801), from Thomas Nadolny.
+
+2005-07-21  Gerhard Jaeger <gerhard@gjaeger.de> 
+
+	* doc/plustek/Plustek-USB.changes: Update.
+	* backend/plustek.c: Bumped build number.
+	* backend/plustek-usbcal.c: Fixed lampsettings for CIS devices.
+
+2005-07-15  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan-options.c: Change TPO range for Epson 2480/2580 to 
+	  55x80mm^2 which is the working range for the 2580. Reenabled 
+	  2400 DPI for 2480/2580.
+
+2005-07-15  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan-mutex.c backend/snapscan-usb.c: Changes to support 
+	  SANE on ZETA.
+	* backend/snapscan-scsi.c: Fix compiler warnings.
+
+---- FEATURE FREEZE FOR SANE 1.0.16 ---
+
+2005-07-17  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* Makefile.in backend/Makefile.in tools/Makefile.in: Make sure
+	  that all the necessary files will be in the distribution .tar.gz
+	  file.
+	* sanei/sanei_scsi.c: Removed "const" to make gcc on OS/2 happy.
+	* NEWS: Updated.
+
+2005-07-15  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/sp15c.c: Better 4->8 bit depth expansion algorithm (from 
+	  Mattias Ellert <mattias.ellert@tsl.uu.se>).
+	* sanei/sanei_usb.c: Fixed comment (we still use 30 seconds USB
+	  timeout by default).
+	* README.zeta configure configure.in Makefile.in backend/Makefile.in
+	  backend/artec_eplus48u.h backend/dll.c backend/plustek-pp_scan.h
+	  doc/Makefile.in frontend/saned.c include/sane/config.h.in
+	  po/Makefile.in sanei/sanei_config.c sanei/sanei_config2.c
+	  sanei/sanei_init_debug.c sanei/sanei_pio.c sanei/sanei_thread.c
+	  sanei/sanei_usb.c: Changes to support SANE on ZETA. Not all
+	  patches have been applied yet, but it's a start. The backends
+	  are not installed as shared libs but as add-ons, which are shared libs
+	  but in a specific folder in [/system|~]/config/add-ons/ named SANE/.
+	  The install target has been changed to account for this,
+	  Some files don't exist in BeOS/ZETA (ipc.h, ...).
+	  Backend function names get a prefix, I suppose to avoid namespace clashes.
+	  Though we do have a libdl to implement dl_open, the native way is prefered.
+	  Added a --with-docdir= configure arg.
+	  BeOS has a broken get[name|addr]info() from bind. This is fixed in ZETA R1.
+	  libtool needs -no-undefined. Various VPATH fixes.
+	  Check for <be/drivers/USB_scanner.h>, but not used yet.
+	  No S_IFSOCK (sockets are fds to /dev/net/api). Stub pio code, untested.
+	  Patch from Fran�is Revol <revol@free.fr>.
+
+2005-07-15  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* doc/descriptions/snapscan.desc:
+	  updated comments for Epson 1670, 2480 and 2580
+
+2005-07-15  Rene Rebe <rene@exactcode.de>
+
+	* backend/avision.h, backend/avision.c, doc/sane-avision.man,
+	  doc/descriptions/avision.desc: updated the Avision backend with the
+	  latest off-site maintained version: fixed segmentation faults for
+	  some modes, many many new devices, two different duplex modes
+	  are supported, vast speedup of multi page batch scans, buttons as well
+	  a 7-segment LED readout and some quirks for old scanners not filling
+	  all fields
+
+2005-07-15  Rene Rebe <rene@exactcode.de>
+
+	* include/sane/sanei_usb.h sanei/sanei_usb.c: Added support to set
+	  the USB timeout.
+
+2005-07-10  Henning Meier-Geinitz <henning@meier-geinitz.de>
+	
+	* backend/gt68xx.c backend/gt68xx_devices.c
+	  backend/gt68xx_generic.c backend/gt68xx_high.c
+	  doc/descriptions/gt68xx.desc doc/gt68xx/gt68xx.CHANGES
+	  doc/gt68xx/gt68xx.TODO: Changed resolution from 75 to 100 dpi
+	  and changed 16 bit/color to 12 based on a user report for the
+	  Visioneer OneTouch 7300. Updated .desc. Moved check for stable
+	  lamp to its own function. Mustek ScanExpress A3 USB: Use CIS
+	  calibration. Use lamp warmup. Fixed CCD on GT6801 scanning (color
+	  scanning was broken due to a change in motormode_2. 
+
+2005-07-09  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* po/Makefile.in po/sane-backends.bg.po po/sane-backends.cs.po
+	  po/sane-backends.da.po po/sane-backends.de.po
+	  po/sane-backends.es.po po/sane-backends.fi.po
+	  po/sane-backends.fr.po po/sane-backends.it.po
+	  po/sane-backends.nl.po po/sane-backends.no.po
+	  po/sane-backends.pl.po po/sane-backends.pt.po
+	  po/sane-backends.ru.po po/sane-backends.sv.po: Updated Danish
+	  translation (from Mogens Jaeger <mogensjaeger@get2net.dk>). Made
+	  sure that no errors occur because xgettext/xmsgfmt think that
+	  "%" is a C format string. Regenerated all po files. 
+
+	* configure configure.in include/sane/config.h.in: Make sure that
+	  getopt is not built on OS/2 (from Franz Bakan <fbakan@gmx.net>).
+
+2005-07-07  Frank Zago
+
+	* AUTHORS backend/leo.c backend/leo.h backend/matsushita.c
+	  backend/matsushita.h backend/sceptre.c backend/sceptre.h
+	  backend/teco1.c backend/teco1.h backend/teco2.c backend/teco2.h
+	  backend/teco3.c backend/teco3.h frontend/tstbackend.c: new
+	  email address.
+	
+2005-07-07  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* doc/plustek/Plustek-USB.changes: Update.
+	* backend/plustek.c: Fixed scanarea calculation.
+	* backend/plustek-usbshading.c: Fixed fine-white calibration.
+
+2005-07-05  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* doc/descriptions-external/epkowa.desc: Updated according to
+	  the info provided by  Olaf Meeuwissen <olaf.meeuwissen@avasys.jp>
+
+2005-07-04  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* doc/plustek/Plustek-USB.changes: Update.
+	* backend/plustek.[ch] backend/plustek-usbscan.c 
+	  backend/plustek-usbshading.c backend/plustek-usbdevs.c
+	  backend/plustek-usbdevs.c backend/plustek-usbimg.c
+	  backend/plustek-usbmap.c backend/plustek-usbhw.c
+	  backend/plustek-usbcal.c backend/plustek-usb.[ch]:
+	  Added button support, did some cleanup, added IPC between
+	  reader- and parent-process.
+
+2005-07-04  ULrich Deiters <ulrich.deiters@uni-koeln.de>
+
+	* inserted a definition for SSIZE_MAX in backend/canon.h
+
+2005-07-03  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/sm3600.c: Don't check the result of
+	  usb_find_busses(). Based on patch from Julien BLACHE
+	  <jb@jblache.org>. 
+	* doc/descriptions/genesys.desc: Used
+	  "Medion/Lifetec/Tevion/Cytron" as manufacturer as in the other
+	  backends. Used "ScanJet 2300C" as model name as in other
+	  backends.
+	* doc/descriptions/unsupported.desc: Added links to scanners with
+	  GL646 and GL841 chipsets. Moved all unsupported scanners from
+	  doc/descriptions-external/genesys.desc to unsupported.desc. Minor
+	  fixes for other scanners.
+	* doc/descriptions-external/genesys.desc: Removed. Scanners have
+	  been moved to doc/descriptions/genesys.desc and
+	  doc/descriptions/unsupported.desc.
+	* doc/sane-genesys.man: Typo/formatting fixes.
+	* NEWS: Updated for sane-backends 1.0.16.
+
+2005-07-01  Ulrich Deiters <ulrich.deiters@uni-koeln.de>
+
+	* restored the actual version of the Canon-SCSI backend
+	  (backend/canon.c, canon-sane.c canon-scsi.c canon.h)
+
+2005-06-30  St�hane Voltz <stefdev@modulonet.fr>
+
+	* configure.in AUTHORS backend/dll.conf doc/sane.man doc/Makefile.in 
+	  po/Makefile.in : Fixed forgotten modifications when adding the
+	  genesys backend
+
+2005-06-30  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* tools/RenSaneDlls.cmd backend/dll.c: Fixed OS/2 restriction for 
+	  dlopening DLLs on OS/2, as it only works for 7.3 filenames for 
+	  some reason (patches by Franz Bakan <fbakan@gmx.net>.
+
+2005-06-27  St�hane Voltz <stefdev@modulonet.fr>
+
+	* configure doc/sane-genesys.man doc/sane-genesys.man doc/Makefile.in
+	  doc/descriptions/genesys.desc doc/descriptions/unsupported.desc
+	  backend/genesys_low.h backend/genesys_devices.c
+	  backend/genesys_gl841.c backend/genesys_gl646.c backend/genesys.h
+	  backend/genesys.conf backend/genesys.c backend/Makefile.in
+
+2005-06-27  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* backend/plustek.c: Fixed "double free" problem in sane_exit.
+	* doc/plustek/Plustek-USB.changes: Update.
+
+2005-06-26  Mattias Ellert <mattias.ellert@tsl.uu.se>
+
+	* po/sane-backends.sv.po: Update Swedish translation
+	* tools/Makefile.in: link sane-desc to $(LIBLIB)
+
+2005-06-12  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Removed Samsung SCX-4216F
+	  (supported by samsung backend). Dell 1600n has also network
+	  connection. 
+	* doc/descriptions-external/brother.desc: Removed misleading
+	  comment. 
+	* doc/descriptions-external/samsung.desc: Added several models,
+	  updated others.
+	* doc/descriptions.txt: Added "Ethernet" to list of possible
+	  interfaces. 
+	
+2005-06-12  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added Canon CanoScan LiDE
+	  500F.
+	
+2005-06-04  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added Genius ColorPage-SF600.
+	* doc/descriptions-external/brother2.desc: New. Listed scanners
+	  supported by the new external brother2 backend.
+	* doc/descriptions-external/brother.desc: Fixed comments.
+
+2005-05-30  Karl Heinz Kremer <khk@khk.net>
+
+	* doc/descriptions/epson.desc: Added CX-4600
+
+2005-05-29  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions-external/samsung.desc: Status of Samsung
+	  SCX-4100 is "good" asit's reported to work.
+	* doc/sane-usb.man doc/sane.man: Updated, mostly concerning kernel
+	  scanner driver (deprecated). Minor fixes.
+	* backend/gt68xx.c backend/gt68xx_devices.c backend/gt68xx_high.c
+	  backend/gt68xx_low.h doc/sane-gt68xx.man
+	  doc/descriptions/gt68xx.desc doc/gt68xx/gt68xx.CHANGES
+	  doc/gt68xx/gt68xx.TODO:
+	  Start exposure with the settings from the scanner entry. CIS
+	  Calibration and exposure uses a broader spectrum now. Expsoure
+	  limit is increased to 50 loops. Genius Vivid 4x is reported to
+	  work so the UNTESTED label is removed now. Visioneer 7300 is
+	  reported to work so the UNTESTED label is removed now. Genius
+	  ColorPage Vivid 1200XE: Removed UNTESTED label. Fixed
+	  resolutions. Adjusted margins. Fixed color order. Fixed
+	  linedistance. Adjusted AFE. Mustek ScanExpress 1248 UB: Fixed
+	  margins. Adjusted AFE. Adjusted exposure. Adjusted
+	  gamma. Changed status to "complete". Mustek BearPaw 2400 CU
+	  Plus: Adsusted exposure and AFE parameters. Hopefully stripes
+	  and similar trouble are gone now. Mustek BearPaw 1200 CU:
+	  Increased exposure to avoid vertical lines. Updated manual page.
+
+2005-05-28  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added Avision DS310F. Added link
+	  for the UMAX Astra 4000. Fixed missing link for Genius
+	  ColorPage-Slim 1200 USB2.
+	
+2005-05-26  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/net.tex doc/sane.tex: Mention RPC codes explicitely and
+	  explain what request and reply means. based on patch from
+	  Johannes Berg <johannes@sipsolutions.net>. 
+
+2005-05-25  Jochen Eisinger <jochen@penguin-breeder.org>
+
+	* doc/descriptions/mustek_pp.desc: added scanner
+
+2005-05-23  Julien Blache <jb@jblache.org>
+	* doc/sane-find-scanner.man, doc/gamma4scanimage.man: spelling
+	  fixes from A Costa.
+
+2005-05-22  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added Konica Minolta Dimage
+	  5400 2. Fixed bus type for Mustek 800 II EP.
+	* doc/descriptions-external/genesys.desc: Changed status of Medion
+	  MD 6471 to "basic".
+
+2005-05-22  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan-options.c:
+	  Disabled 2400 DPI for Epson 2480 due to user report of
+	  broken scanner
+
+2005-05-20  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/gt68xx.c backend/gt68xx_devices.c
+	  backend/gt68xx_generic.c backend/gt68xx_generic.h
+	  backend/gt68xx_gt6801.c backend/gt68xx_gt6801.h
+	  backend/gt68xx_gt6816.c backend/gt68xx_gt6816.h
+	  backend/gt68xx_high.c backend/gt68xx_high.h backend/gt68xx_low.c
+	  backend/gt68xx_low.h backend/gt68xx_mid.c
+	  doc/descriptions/gt68xx.desc doc/gt68xx/gt68xx.CHANGES
+	  doc/gt68xx/gt68xx.TODO:
+	  Mustek BearPaw 1200 CU Plus model 0x21b works now. Fixed
+	  firmware and offset settings. Calibration is not completely ok
+	  yet, however.  Code cleanup for setup_scan (only one function
+	  for all chipsets).  Simplified line mode/pixel mode setting 
+	  Updated TODO.  Mustek BearPaw 2448 TA Plus is now only
+	  "basic". Too much trouble for "good".  Removed option "fast
+	  preview". By default for preview mode 8 bits/pixel are used.  
+	  Fixed indentation.  Full scan really scans from y=0 on gt6816
+	  scanners now.
+	* po/sane-backends.bg.po po/sane-backends.cs.po
+	  po/sane-backends.da.po po/sane-backends.de.po
+	  po/sane-backends.es.po po/sane-backends.fi.po
+	  po/sane-backends.fr.po po/sane-backends.it.po
+	  po/sane-backends.nl.po po/sane-backends.no.po
+	  po/sane-backends.pl.po po/sane-backends.pt.po
+	  po/sane-backends.ru.po po/sane-backends.sv.po: Regenerated
+	  translation files. Updated German translation.
+
+2005-05-16  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/backend-writing.txt: Minor updates and line-wrap fixes.
+	* doc/descriptions/unsupported.desc: Added Kodak i30 and Minolta
+	  Dual Scan IV. Updated link to Konica Minolta website.
+
+2005-05-15  frank  <sane at zago net>
+
+	* tools/Makefile.in: remove superflous libraries for sane-desc 
+	* doc/descriptions/matsushita.desc: changed some scanner status from
+	  good to minimal
+	* doc/descriptions/unsupported.desc: added a few Panasonic scanners.
+
+2005-05-13  Julien Blache <jb@jblache.org>
+	* tools/hotplug/libsane.usermap: Added Epson Stylus RX620
+	  (04b8/0811). From Mike Talbot.
+
+2005-05-11  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* backend/plustek-pp_misc.c: Applied patch (see bug #301605).
+	* doc/plustek/Plustek-PARPORT.changes: Update.
+	* backend/plustek-pp.c: Bumped build number.
+
+2005-05-10  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* sanei/sanei_access.c: Added PATH_MAX, in case it's not defined 
+	  by any header (i.e. OS/2).
+
+2005-05-07  Mattias Ellert <mattias.ellert@tsl.uu.se>
+
+	* README.darwin: updated the section about libusb, since all known
+	  bugs have now been fixed in the libusb CVS.
+
+2005-05-05  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/gt68xx.c backend/gt68xx_devices.c
+	  doc/descriptions/gt68xx.desc doc/gt68xx/gt68xx.CHANGES
+	  doc/gt68xx/gt68xx.TODO: Plustek OpticSlim 2400: Fixed list of
+	  resolutions. That fixed the preview. Removed "untested"
+	  warning. Adjusted scan area.  Updated gt68xx.TODO.  Find firmwares
+	  independent of capitalization (bug #301580).
+
+2005-05-07 Julien Blache <jb@jblache.org>
+
+	* tools/hotplug/libsane.usermap: Added Microtek ScanMaker 3700
+	  (05da/40cb). From Ian Beckwith.
+
+2005-05-06 Gerard Klaver <gerard at gkall dot hobby dot nl>
+
+	* backend/qcam.c -indent -gnu, bugreport 300128 free (devlist) added,
+	  DEBUG output added and some small fixes.
+	
+2005-05-05  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added Dell 922.
+	* backend/mustek.c backend/mustek.h doc/descriptions/mustek.desc
+	  doc/mustek/mustek.CHANGES: Added options to set the time after
+	  which the lamp of the A3 Pro is shut off and to shut it off
+	  immediately.
+	
+2005-05-02  Peter Fales  <peter@fales-lorenz.net>
+
+	* backend/gphoto2.c: Fix core dump when no port is specified in 
+	  the gphoto2 config  file.  (bug #301552)
+
+2005-04-29  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/sp15c.desc: Added ScanPartner 600C (bug
+	  #301528). 
+	* doc/descriptions/unsupported.desc: Removed several Brother
+	  scanner which are supported by the brother backend now.
+	* doc/descriptions-external/brother.desc: Fixed link.
+
+2005-04-28  Julien Blache <jb@jblache.org>
+
+	* backend/v4l.c: duplicate capability.name in attach() so that
+	  each device is listed with its actual name, not with the name of
+	  the last discovered device. Reported by Andreas Hartmann.
+
+2005-04-28  Mattias Ellert <mattias.ellert@tsl.uu.se>
+
+	* frontend/scanimage.c: Added missing braces
+
+2005-04-27  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* doc/descriptions/plustek.desc: Added UMAX Astranet ia101.
+
+2005-04-26  Julien Blache <jb@jblache.org>
+
+	* tools/hotplug/libsane.usermap: Added Epson Stylus CX3650
+	  (04b8/080e), from Daniel Sobe.
+
+2005-04-25  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* include/sane/sanei_pp.h, sanei/sanei_pp.c: Added outb_eppdata
+	  functionality (thanks to Anderson Lizardo).
+	* backend/plustek-pp_procs.h, backend/plustek-pp_io.c,
+	  backend/plustek-pp_misc.c: Fixed compilation problem for kernel
+	  module with gcc-3.4 compiler.
+	* doc/plustek/Plustek-PARPORT.changes: Update.
+	* backend/plustek-pp.c: Bumped build number.
+
+2005-04-24  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* tools/hotplug/libsane.usermap: Fixed Minolta Scan Dual III entry
+	  (bug #301512).
+	* doc/descriptions/mustek.desc: Added Mustek TwainScan II SP (bug
+	  #301217). 
+	* doc/descriptions-external/viceo.desc: Added Primax Colorado 2200
+	  USB.
+	* doc/descriptions/unsupported.desc: Added Canon PIXMA MP110.
+	* AUTHORS: Marked Kazuya Fukuda as active.
+	
+2005-04-23  Julien Blache <jb@jblache.org>
+
+	* LICENSE: Add an FAQ section.
+	* tools/hotplug/libsane.usermap: Added Genius ColorPage Vivid3xe
+	  (0458/2017), from Ramiro Aceves through Debian BTS.
+
+2005-04-18  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* backend/plustek-usbhw.c, backend/plustek-usbscan.c: Fixed
+	  problem, that has been reported in conjunction with backtracking
+	  and sensor-speedup option.
+	* doc/plustek/Plustek-USB.changes: Update.
+	* backend/plustek.c: Bumped build number.
+
+2005-04-16  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc
+	  doc/descriptions-external/genesys.desc: Added and updated
+	  several scanners.
+
+2005-04-15 Gerard Klaver <gerard at gkall dot hobby dot nl>
+
+	* sanei/sanei_usb.c More debug info for control and isochronous mode
+	  Detection added for endpoints for  configurations, interface and
+	  altsetting numbers > 0
+	  Routine added for changing configuration, interface or altsetting
+	  number
+	  sanei_usb_set_configuration
+	  sanei_usb_claim_interface
+	  sanei_usb_release_interface
+	  sanei_usb_set_altinterface
+	* include/sane/sanei_usb.h headers and text added for
+	  sanei_usb_set_configuration
+	  sanei_usb_claim_interface
+	  sanei_usb_release_interface
+	  sanei_usb_set_altinterface
+	* frontend/scanimage.c added -B option buf size
+	  split up printf command to remove warning ISO C89
+	  patch for bugreport 300160, ranges for width and height are wrong
+	* doc/scanimage.man added text -B option buf size
+	
+2005-04-13  Mattias Ellert <mattias.ellert@tsl.uu.se>
+
+	* backend/hp-option.c: Add missing SANE_I18N
+	* po/sane-backends.*.po: Regenerate .po files accordingly
+	* po/sane-backends.sv.po: Update Swedish translations
+
+2005-04-12  Mattias Ellert <mattias.ellert@tsl.uu.se>
+
+	* Various man page fixes: sane-agfafocus.man, sane-apple.man,
+	  sane-artec.man, sane-artec_eplus48u.man, sane-avision.man,
+	  sane-bh.man, sane-canon_pp.man, sane-coolscan.man,
+	  sane-coolscan2.man, sane-dll.man, sane-epson.man, sane-fujitsu.man,
+	  sane-hp.man, sane-leo.man, sane-matsushita.man, sane-microtek2.man,
+	  sane-mustek.man, sane-mustek_pp.man, sane-mustek_usb.man,
+	  sane-nec.man, sane-niash.man, sane-pie.man, sane-plustek.man,
+	  sane-plustek_pp.man, sane-sceptre.man, sane-scsi.man, sane-sharp.man,
+	  sane-sm3600.man, sane-sm3840.man, sane-sp15c.man, sane-teco1.man,
+	  sane-teco2.man, sane-teco3.man, sane-test.man, sane-u12.man,
+	  sane-umax.man, sane-umax1220u.man, sane-umax_pp.man, sane.man,
+	  saned.man
+
+2005-04-11  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* acinclude.m4, configure.in, configure: the locking feature will
+	  now be disabled, when the selected group could not be set.
+	  The configuration script should not fail any longer.
+
+2005-04-10  Julien Blache <jb@jblache.org>
+
+	* backend/hp5400_xfer.h, backend/hp5400_sanei.c, backend/hp5400.c:
+	  make non-SANE-standard functions static.
+
+2005-04-10  Jochen Eisinger <jochen@penguin-breeder.org>
+
+	* backend/mustek_pp.c, backend/mustek_pp.conf, sanei/sanei_pa4s2.c,
+	  include/sane/sanei_pa4s2.h, doc/sane-mustek_pp.man: added global
+	  option "no_epp" to work around a known bug in the linux parport
+	  code.
+
+2005-04-02  Julien Blache <jb@jblache.org>
+
+	* doc/sane.man: typo fix from A Costa.
+
+2005-04-01  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* README: Added some info about the --enable-locking switch.
+	* doc/descriptions/unsupported.desc
+	  doc/descriptions-external/genesys.desc: Moved some Plustek
+	  devices over to the genesys descriptions.
+	* tools/hotplug/libsane.usermap: Added some Plustek devices.
+	* mkinstalldirs: Added -o and -g options for changing the
+	  owner and group of an installed directory.
+	* acinclude.m4, configure.in, configure: Added --enable-locking
+	  and --with-group to enable device locking via sanei_access-lib
+	  and to specify the group of the locking directory.
+	* include/sane/config.h.in: ENABLE_LOCKING has been added
+	  by automake/autoconf.
+	* backend/Makefile.in: Added installation of 
+	  $(localstatesanedir)/lock/sane, were the lockfile should go to.
+	  Also added linking of sanei_access to the plustek backend.
+	* include/Makefile.in: Added sane/sanei_access.h.
+	* sanei/Makefile.in: Added sanei_access.c.
+	* include/sane/sanei_access.h sanei/sanei_access.c: Initial checkin.
+
+2005-03-31 Julien Blache <jb@jblache.org>
+
+	* doc/scanimage.man: fix typos, patch from A Costa.
+
+2005-03-20 Earle F. Philhower III <earle@ziplabel.com>
+
+	* backend/sm3840_scan.c: Big-endian graymode fix
+
+2005-03-17 Gerard Klaver <gerard at gkall dot hobby dot nl>
+
+	* doc/descriptions-external/samsung.desc added
+
+2005-03-16  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Removed Microtek ScanMaker
+	  4800 (supported by sm3840 now).
+
+2005-03-16  Earle F. Philhower III <earle@ziplabel.com>
+	* backend/sm3840.c backend/sm3840_scan.c backend/sm3840.conf
+	  backend/Makefile.in doc/descriptions/sm3840.desc
+	  doc/sane-sm3840.man: Added ScanMaker 4800 USB ID and
+	  documentation, fixed PPC endianness problems, fixed
+	  Makefile dependencies for sm3840 driver
+
+2005-03-13  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc
+	  doc/descriptions-external/genesys.desc: Added and updated
+	  various scanners. 
+
+2005-03-04  Gerard Klaver <gerard at gkall dot hobby dot nl>
+
+	* doc/sane-teco2.man: text update
+	  backends/teco2: use of __unused__
+
+2005-03-03  Julien Blache <jb@jblache.org>
+
+	* tools/hotplug-ng/libsane.hotplug: add missing quote in the grep line.
+
+2005-03-02  Julien Blache <jb@jblache.org>
+
+	* tools/hotplug-ng/libsane.hotplug: allow for several spaces
+	  between fields in the db file.
+
+2005-02-28  Julien Blache <jb@jblache.org>
+
+	* tools/hotplug-ng/libsane.hotplug: replace \t by [[:space:]] when
+	  grepping for the device in the db file.
+
+2005-02-21  Julien Blache <jb@jblache.org>
+
+	* tools/hotplug-ng: added new hotplug/hotplug-ng hook, with
+	scripts and documentation.
+
+2005-02-20  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Removed Genius
+	  ColorPage-Vivid Pro II, now in external backend. Added Visioneer
+	  9000.
+	* AUTHORS configure configure.in backend/Makefile.in
+	  backend/dll.conf backend/sm3840.c backend/sm3840.conf
+	  backend/sm3840.h backend/sm3840_lib.c backend/sm3840_lib.h
+	  backend/sm3840_params.h backend/sm3840_scan.c doc/Makefile.in
+	  doc/sane-sm3840.man doc/sane.man doc/descriptions/sm3840.desc:
+	  Added sm3840 backend (from "Earle F. Philhower, III"
+	  <earlephilhower@yahoo.com>).
+	* doc/descriptions-external/sm3840.desc: Removed (backend included
+	  in SANE).
+	* NEWS: Updated.
+
+2005-02-14  Gerhard Jaeger <gerhard@gjaeger.de>
+
+*	doc/descriptions-external: Added new external backend geniusvp2.
+
+2005-02-10  Karl Heinz Kremer <khk@khk.net>
+
+	* doc/descriptions/epson.desc: Added CX-3600 and 3650
+	  doc/sane-epson.man, backend/epson.conf: Added information about
+	  GT-6500 (bug #301100)
+
+2005-02-08  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.h backend/snapscan.conf
+	  Added IDs for Benq 5250C and 5000S
+
+2005-02-08  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* sanei/sanei_pp.c: Cleanup, uses now static array for parport
+	  management instead of dynamically allocated. Fixes at least a
+	  potential memory leak.
+
+2005-02-06  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* doc/descriptions/unsupported.desc doc/descriptions/snapscan.desc:
+	  Renamed "Benq" to "Benq (Acer)" for better access through the
+	  scanner search engine. Fixes bug #301158
+
+2005-02-06  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added several scanners. Minor
+	  fixes.
+	* doc/descriptions-external/sm3840.desc: Added new external
+	  backend sm3840.
+	* doc/descriptions-external/brother.desc: Updated status.
+	* po/Makefile.in po/sane-backends.pl.po: Added Polish translation
+	  (from Jerzy Szczudlowski
+	  <jerzy-guest@users.alioth.debian.org>). See bug #301054.
+	   
+2005-02-04  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* tools/hotplug/libsane.usermap: Added Epson CX6600 based on patch
+	  submitted by Aurelien Jarno <lists@aurel32.net>.
+
+2005-02-03  Ulrich Sigwanz <usigwanz@freesurf.ch>
+
+	* backend/niash_xfer.c:
+	* tools/hotplug/libsane.usermap:
+	  added ID for Silitek-HP-ScanJet-3400c-Clone
+          
+2005-01-19  Oliver Rauch <Oliver.Rauch@rauch-domain.de>
+
+	* backend/coolscan.c: added initilization of dev->scanning = SANE_FALSE
+
+2005-01-18  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.h: Added ID for Benq 5250C
+
+2005-01-16  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson_usb.c: Added IDs for RX-425 (from bug report #301114)
+	* doc/descriptsions/epson.desc: Added RX-425
+
+2005-01-16  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added UMAX Astraslim
+	  6000. Added Trust SCSI Scan 19200 -Excellence Series-. Added
+	  ColorPage-Vivid Pro II. 
+	* tools/hotplug/libsane.usermap: Added Epson Stylus RX425 based on
+	  bug report #301114.
+	* doc/sane-agfafocus.man doc/sane-artec.man: Fixed some macros
+	  (patch from esr@thyrsus.com).
+
+2005-01-12  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added Genius ColorPage-Slim
+	  1200 USB2.
+	* doc/descriptions-external/genesys.desc: Added Canon Lide 40.
+	* doc/descriptions-external/brother.desc: Added several scanners
+	  and updated the status of others based on user comments.
+
+2005-01-12  Julien Blache <jb@jblache.org>
+
+	* tools/hotplug/libusbscanner: use sysfs to get the device number,
+	  instead of guessing (it ended up being wrong in a number of
+	  cases...). Fix from Ubuntu, transmitted by Martin Pitt.
+
+2005-01-12  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* doc/plustek/Plustek-USB.changes: Update.
+	* backend/plustek.c: Bumped build number. Copyright Update.
+	* backend/plustek-usbscan.c backend/plustek-usbshading.c: 
+	  Using now PhyDpi.y as selector for the motor MCLK setting. 
+	  Copyright Update.
+	* backend/plustek-usbdevs.c: 
+	  Tweaked motor settings for EPSON and CANON1200. Copyright Update.
+	* backend/plustek-*.[ch]: Copyright Update.
+
+2005-01-09  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added Guillemot scanner.
+
+2005-01-09  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c: "flaming hack to get USB scanners working without timeouts 
+	  under linux" submitted by "Steve" (in comment to bug #300830)
+	* doc/descriptions/epson.desc, doc/sane-epson.man: 
+	  Added SCSI version of GT-5000 to supported list.
+
+2004-12-29  Julien Blache <jb@jblache.org>
+	* tools/sane-find-scanner.c: Added a hint about switching the
+	  scanner on and connecting it to the computer before doing
+	  anything.
+
+2004-12-26  Gerard Klaver <gerard at gkall dot hobby dot nl>
+
+	* doc/descriptions-external/hpaio.desc join two lines so html
+	  conversion possible
+	  doc/descriptions-external/stv680.desc added two webcams with
+	  different usb vid and pid 
+	  
+2004-12-26  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Added several scanners.
+
+2004-12-18  Karl Heinz Kremer <khk@khk.net>
+
+	* backend/epson.c backend/epson_usb.c: Added USB IDs for
+	  CX-3650 and CX-4600 and updated version number.
+
+2004-12-15  Gerard Klaver <gerard at gkall dot hobby dot nl>
+
+	* doc/descriptions-external/hpaio.desc stv680.desc 
+	  Info new external backends
+	  
+2004-12-01  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.c backend/snapscan-scsi.c backend/snapscan-options.c:
+	  Added quality calibration for Epson 2480 (implementd by Simon Munton)
+
+2004-12-07  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/gt68xx_devices.c: Disabled stop_scan command for Mustek
+	  BearPaw 2448 TA Plus.
+
+2004-12-05  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/sane-gphoto2.man doc/sane-microtek2.man: Fixed minor
+	  glitches based on patch from Eric S. Raymond <esr@thyrsus.com>.
+	* doc/descriptions/unsupported.desc: Added Benq 320p.
+
+2004-12-04  Julien Blache <jb@jblache.org>
+	* tools/hotplug/libsane.usermap: Added Epson Perfection 4870
+	  Photo, vendor 0x04b8 product 0x0128.
+
+2004-12-01  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.c: Applied fix for allocation of gamma tables
+	  (thanks to Simon Munton)
+
+2004-12-01  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* doc/descriptions/unsupported.desc: removed Epson Perfection 1270
+
+2004-12-01  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* backend/snapscan.h backend/snapscan.c backend/snapscan-scsi.c 
+	  backend/snapscan-options.c doc/descriptions/snapscan.desc: 
+	  Added support for Epson Perfection 1270
+
+2004-12-01  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/umax1220u.desc doc/descriptions/unsupported.desc
+	  doc/descriptions-external/genesys.desc: Added several scanners. Moved
+	  UMAX 2100U to umax1220u.desc. Moved Plustek S(T)12 to unsupported.desc.
+
+2004-11-28  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions-external/brother.desc. Updated comments. 9160 works.
+
+2004-11-21  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* doc/descriptions/unsupported.desc: Updated/added several scanners.
+
+2004-11-21  Gerhard Jaeger <gerhard@gjaeger.de>
+
+	* backend/plustek-usb.c: Fixed problem, when builing supported
+	  and connected device list.
+
+2004-11-19  Rene Rebe <rene@exactcode.de>
+
+	* sanei/sanei_usb.c configure.in: use usb_interrupt_read instead of
+	  usb_bulk_read for sanei_usb_read_int. Fixes bug #300878. Added a
+	  missing DBG output in sanei_usb_read_int. Check for
+	  usb_interrupt_read to make sure, we have at least version 0.1.8.
+
+2004-11-19  Rene Rebe <rene@exactcode.de>
+
+	* backend/avison.c doc/descriptions/avision.desc
+	  doc/descriptions/unsupported.desc: just added new IDs including
+	  moving the HP 82xx to the avision backend
+
+2004-11-19  Gerhard Jaeger <gerhard@gjaeger.de>
+	
+	* backend/plustek.c backend/plustek-usb*: Major update, see
+	  doc/plustek/Plustek-USB.changes. Esp. improved support for multiple
+	  devices and autodetection.
+	* doc/plustek/Plustek-USB.changes: Update.
+	* doc/descriptions/plustek.desc: Updated release number.
+
+2004-04-15  St�hane Voltz <svoltz@wanadoo.fr>
+
+	* backend/umax_pp_low.c: non i386 linux compilation fix,
+          1220P gray levels scan hang fix, 1220P color calibration tuning.
+
+2004-11-14  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* snapscan-sources.c: Applied patch by Julien Blache to change
+	  ch_past_init from SANE_Int to SANE_Bool
+
+2004-11-14  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/gt68xx.c backend/gt68xx_devices.c
+	  backend/gt68xx_gt6801.c backend/gt68xx_gt6816.c
+	  doc/descriptions/gt68xx.desc doc/gt68xx/gt68xx.CHANGES: Fixed test
+	  to move home sensor at the start of scan.  Fixed gray mode
+	  linemode test. That stopped e.g. the Plustek OpticPro U 16 B from
+	  working in gray mode.
+
+2004-11-13  Frank Zago <fzago at austin dot rr dot com>
+
+	* include/sane/sanei_backend.h: Added compiler attribute __unused__ 
+	  for unused variables/functions.
+
+	* backend/leo.c backend/teco3.c backend/matsushita.c
+	  backend/sceptre.c backend/teco1.c: use __unused__
+	* sanei/sanei_wire.c sanei/sanei_pa4s2.c sanei/sanei_scsi.c: 
+	  fixes for 64 bits platforms.
+	* backend/sp15c-scsi.h backend/sp15c.h backend/dc210.c backend/dc210.h:
+	  fixes some warnings.
+	
+2004-11-13  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* backend/v4l.c: 64 bit fix from Frank Zago <fzago at austin dot
+	  rr dot com>.
+
+2004-11-13  Julien Blache <jb@jblache.org>
+
+	* tools/hotplug/libsane.usermap: Added Epson Stylus Photo RX500,
+	  Epson Stylus Photo RX600 and Minolta Scan Dual II.
+
+2004-11-10  Oliver Schwartz <Oliver.Schwartz@gmx.de>
+
+	* snapscan-sources.c: First implementation of deinterlacer for epson
+	  scanners at high resolutions (thanks to Brad Johnson)
+
+2004-11-07  Henning Meier-Geinitz <henning@meier-geinitz.de>
+
+	* configure configure.in: Updated version. Enabled compilation
+	  warnings.
+	* doc/releases.txt: Updated according to current practice.
+
+Older entries can be found in ChangeLog-1.0.15.

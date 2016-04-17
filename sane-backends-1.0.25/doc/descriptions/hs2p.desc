@@ -1,0 +1,41 @@
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "hs2p"                 ; name of backend
+:url "http://www.acjlaw.net:8080/~jeremy/Ricoh/"
+:version "1.00"          ; version of backend
+;
+:manpage "sane-hs2p"            ; name of manpage (if it exists)
+:comment "This backend has been tested with the IS450DE (Duplex/Endorser). All major functions necessary for scanning are supported. This backend should work with all Ricoh scanners in the IS450 family as well as the IS420 series, but the IS420 has not yet been tested. Features provided by the optional Image Processing Unit (IPU) are not yet integrated into the backend, as my scanner lacks the IPU."
+
+:devicetype :scanner
+
+:mfg "Ricoh"                         ; name a manufacturer
+:url "http://www.ricoh.com/"
+
+:model "IS450"                  ; name models for above-specified mfg.
+:interface "SCSI"
+:status :complete
+:comment "All major scanning-related features are supported (except for IPU). Certain non-scanning features, such as those related to scanner maintenance, are not supported. Such features would be better implemented in a separate stand-alone tool. For instance, if you replace the ADF Unit, you must recalibrate the scanner optics using a Ricoh Test Sheet and reset the E^2PROM registers. Reports are welcome."
+
+:model "IS-410"
+:interface "SCSI"
+:status :untested
+:comment "Untested, please report!"
+
+:model "IS-420"
+:interface "SCSI"
+:status :untested
+:comment "Untested, please report!"
+
+:model "IS-430"
+:interface "SCSI"
+:status :untested
+:comment "Untested, please report!"

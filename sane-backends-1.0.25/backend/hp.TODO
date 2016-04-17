@@ -1,0 +1,52 @@
+These are Geoffreys TODOs:
+
+   Fix ifdef ENABLE_'s
+   Add emulation for color separation matrixes?
+   Gamma plot initialization?
+
+   Dither pattern option not working right.
+
+   More use of FAILED macro , maybe SUCCESS macro ?
+
+   Convert to single .h file?
+
+
+/** FIXME: ToDo
+ *
+ * Split up hp_scsi_open -- don't need full probe every time?
+ *   or if probing at least make sure answer is constant.
+ *
+ * Stale flage so don't download unchanged parameters?
+ *
+ * Fix or disable dither stuff.
+ *
+ * Add controls
+ *
+ *   Preview mode: fast, grayscale instead of halftone.
+ *   Separate X and Y resolutions + bind button.
+ *   10x8 tone maps?
+ *   Sharpening?
+ *   Matrixes - fix color separtion?
+ *   Dither pattern?  COlor dither pattern?
+ *
+ * check return values (of maybe others)?
+ * get rid of overly verbose DBG's
+ * add som DBG's
+ */
+
+New TODOs:
+
+ Find a way to set matrices in the frontend (gtk-table with sliders ?)
+
+ Find a way to set dither matrices in the frontend
+ (See the ENABLE_...-macros in hp.h to enable these features)
+
+ Fix problem with performance of reader-process. Communication through
+ the pipe might be too slow and make the scanner repeating several strips.
+
+ Fix various problems with PhotoScanner:
+  - rubbish on bottom of scanned image
+  - too few data that is received on bottom of scanned image for PhotoScanner
+  - scan time for slides at 2400 dpi is twice as long as under M$-Windows
+
+ Support 10/12-bits for greyscale

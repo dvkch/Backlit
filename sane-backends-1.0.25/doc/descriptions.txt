@@ -1,0 +1,130 @@
+SANE Backend specification files
+--------------------------------
+
+The specification files (e.g. epson.desc) describe the capabilities of the
+backends. They provide information about the backend itself (e.g., name and
+version) and about the supported devices (e.g., manufacturer and product
+names).  One file per backend should be used. Descriptions for backends
+included in the SANE distribution are located in
+`sane-backends/doc/descriptions/' while descriptions of external backends
+should be placed in `sane-backends/doc/descriptions-external/'.
+
+There is a special file `sane-backends/doc/descriptions/unsupported.desc' that
+doesn't belong to a backend but lists all (known) devices not supported by
+SANE. It may contain additional information about the device or links to
+non-SANE based programs.
+
+The specification files can be used to generate lists of backends and/or
+supported devices, hotplug/udev device lists, databases for search engines, and
+similar sources of information.  Currently the creation of ASCII output and HTML
+lists is supported by `tools/sane-desc.c'.  The generation of the HTML pages can
+be started by `make html-pages' in the doc/ directory.
+
+The file contents is basically emacs-lisp --- so ";" indicates comment to end
+of line.  Empty lines are ignored.
+
+All syntactic elements are keyword tokens, followed by a string or keyword
+argument, as specified.  All keyword tokens but ":backend" are optional.
+
+
+Backend-specific keyword tokens
+-------------------------------
+
+The keyword `:backend' must be specified exactly once.  It must be the first
+keyword in each specification file. It is followed by the name of the backend.
+Example: `:backend "epson"'
+
+The following backend-specific keyword tokens are optional. If they are used,
+they shouldn't be used more than once per file.
+
+`:version' has one string argument containing the backend's version
+number. The version should match the version used in the backend source code.
+Example: `:version: "12.3.5"'. If the backend isn't maintained, the version
+should be `unmaintained' or contain this tag together with the version number.
+
+`:new' indicates that the backend is brand-new in the latest SANE release if
+the keyword argument is `:yes'.  Otherwise, `:no' should be used or `:new'
+should be omitted at all.  
+Example: `:new :yes'
+
+The `:manpage' keyword token has one string argument that names the manual
+page for the backend.
+Example: `:manpage "sane-epson"'
+
+
+Device-specific keyword tokens
+------------------------------
+
+The keyword `:devicetype' starts a list of devices supported by the backend.
+It has one keyword argument.  The following types are possible: `:scanner',
+`:stillcam' (still camera), `:vidcam' (video camera), `:meta' (meta backend
+like dll), `:api' (API like PINT). `:devicetype' can be used more than
+once. Each instance starts a new list of devices.
+Example: `:devicetype :scanner'
+
+`:mfg' has one string argument that defines the name of the manufacturer of
+the following devices.  This keyword should be only used for hardware
+devicetypes (scanner, stillcam, vidcam). To avoid different spellings, the
+manufacturer list of the SANE standard should be used. `:mfg' can be used more
+than once.
+Example: `:mfg "Epson"'.
+
+The keyword token `:model' is used to specify the name of a hardware device in
+its string token. It must be preceded by a `:mfg' keyword. `:model' can be
+used more than once.
+Example: `:model "Perfection 636S"'
+
+`:interface' defines how the device is connected to the computer. Its string
+argument can be one or more of "SCSI", "USB", "Parport", "Serial port",
+"IEEE-1394", "JetDirect", "Ethernet", or "Proprietary". If neither one fits,
+please contact the SANE mailing list for advice. The "Parport" entries can be
+amended by "(SPP)", "(ECP)" and/or "(EPP)". The `:interface' keyword refers to
+the previous `:model', is optional and should be used only once per model.
+Example: `:interface "SCSI USB IEEE-1394"'
+
+`:usbid' defines the USB vendor and product ids of the device. It has two
+arguments which must be lower case hexadecimal (4 digits). The first one is the
+USB vendor id, the second one the USB product id. The keyword refers to the
+previous `:model', is optional, and applicable for devices with :interface "USB"
+only, and should be used only once per model. The special parameter "ignore" can
+be used if no vendor or product ids are given intentionally, e.g. for a group of
+scanners.
+Example: `:usbid "0x1234" "0x4321"'
+
+The keyword `:status' is an indication of the level of support for the model.
+It's followed by one of the following keyword arguments: `:unsupported',
+`:untested', `:minimal', `:basic', `:good', or `:complete'. The `:status'
+keyword refers to the previous `:model', is optional and should be used only
+once per model.
+`:unsupported' means the device is not supported at least by this backend. The
+keyword should only be used in the file `unsupported.desc', or to make clear
+that a specific scanner is not supported by a backend. `:untested' means the
+device may be supported but couldn't be tested. `:minimal' means that the
+device is detected and scans at least in one mode. But the quality is bad or
+important features won't work. `:basic' means it works at least in the most
+important modes but quality is not perfect. `:good' means the device is usable
+for day-to-day work. Some rather exotic features may be missing. `:complete'
+means the backends supports everything the device can do.  Example: `:status
+:untested'
+
+The `:desc' keyword token is used for non-hardware devices (API and meta). Its
+string argument describes the meta backend or API. It should be used only once
+per device type.
+Example: `:desc "Scanners with the machine-independent PINT interface"
+
+
+Multi-level keyword tokens
+--------------------------
+
+The following keyword tokens can be used after `:backend', `:mfg', `:model',
+and `:desc'. 
+
+One or more `:url' keyword tokens can be used to point to more information
+about the entry the keyword refers to.  The string argument contains a URL to
+e.g. a manufacturer's or backend's homepage.  The most important URL should be
+listed first.
+Example: `:url "http://www.epson.com/"'
+
+`:comment' is used to add more information to one of the entries. The string
+argument can e.g. contain comments on the level of support for a model.
+Example: `:comment "US version of GT-5000"'

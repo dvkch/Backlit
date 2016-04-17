@@ -1,0 +1,354 @@
+:backend "xerox_mfp"
+:version "1.0-13"
+:manpage "sane-xerox_mfp"
+:devicetype :scanner
+
+:mfg "Xerox"
+:url "http://www.office.xerox.com/"
+
+:model "Phaser 6110MFP"
+:interface "USB"
+:usbid "0x0924" "0x3d5d"
+:status :good
+
+:model "Phaser 3200MFP"
+:interface "USB"
+:usbid "0x0924" "0x3da4"
+:status :complete
+:url "http://www.office.xerox.com/multifunction-printer/multifunction-under-30ppm/phaser-3200mfp/spec-enus.html"
+
+:model "WorkCentre 3119 Series"
+:interface "USB"
+:usbid "0x0924" "0x4265"
+:status :good
+
+:model "WorkCentre 4118 Series"
+:interface "USB"
+:usbid "0x0924" "0x420c"
+:status :good
+
+:model "WorkCentre 3210"
+:interface "USB"
+:usbid "0x0924" "0x4293"
+:status :good
+
+:model "WorkCentre 3220"
+:interface "USB"
+:usbid "0x0924" "0x4294"
+:status :good
+
+:mfg "Dell"
+:url "http://www.dell.com/"
+
+:model "Dell MFP Laser Printer 1815dn"
+:interface "USB"
+:usbid "0x413c" "0x5124"
+:status :good
+
+:model "Dell 1235cn"
+:interface "USB"
+:usbid "0x413c" "0x5310"
+:status :good
+
+:mfg "Samsung"
+:url "http://www.samsung.com"
+
+:model "SCX-4x16"
+:interface "USB"
+:usbid "0x04e8" "0x3409"
+:status :untested
+
+:model "SCX-6x20"
+:interface "USB"
+:usbid "0x04e8" "0x340d"
+:status :untested
+
+:model "MFP-560"
+:interface "USB"
+:usbid "0x04e8" "0x340e"
+:status :untested
+
+:model "MFP-750"
+:interface "USB"
+:usbid "0x04e8" "0x340f"
+:status :untested
+
+:model "SCX-4x20"
+:interface "USB"
+:usbid "0x04e8" "0x3412"
+:status :untested
+
+:model "SCX-4100"
+:interface "USB"
+:usbid "0x04e8" "0x3413"
+:status :good
+
+:model "SCX-4x21"
+:interface "USB"
+:usbid "0x04e8" "0x3419"
+:status :untested
+
+:model "SCX-5x30"
+:interface "USB"
+:usbid "0x04e8" "0x341a"
+:status :untested
+
+:model "SCX-4200"
+:interface "USB"
+:usbid "0x04e8" "0x341b"
+:status :good
+
+:model "CLX-3160"
+:interface "USB"
+:usbid "0x04e8" "0x341c"
+:status :untested
+
+:model "SCX-6x22"
+:interface "USB"
+:usbid "0x04e8" "0x341d"
+:status :untested
+
+:model "SCX4725"
+:interface "USB"
+:usbid "0x04e8" "0x341f"
+:status :untested
+
+:model "SCX4725-FN"
+:interface "USB"
+:usbid "0x04e8" "0x341f"
+:status :good
+
+:model "SCX-6x45"
+:interface "USB"
+:usbid "0x04e8" "0x3420"
+:status :untested
+
+:model "CLX-8380"
+:interface "USB"
+:usbid "0x04e8" "0x3421"
+:status :untested
+
+:model "CLX-2160"
+:interface "USB"
+:usbid "0x04e8" "0x3425"
+:status :good
+
+:model "SCX-4500"
+:interface "USB"
+:usbid "0x04e8" "0x3426"
+:status :good
+
+:model "CLX-6200"
+:interface "USB"
+:usbid "0x04e8" "0x3427"
+:status :untested
+
+:model "CLX-6240"
+:interface "USB"
+:usbid "0x04e8" "0x3428"
+:status :untested
+
+:model "SCX-6x55"
+:interface "USB"
+:usbid "0x04e8" "0x3429"
+:status :good
+
+:model "CLX-3170fn (CLX-3170 Series)"
+:interface "USB"
+:usbid "0x04e8" "0x342a"
+:status :good
+
+:model "CLX-3175FW"
+:interface "USB"
+:usbid "0x04e8" "0x342a"
+:status :good
+
+:model "SCX-4500W"
+:interface "USB Ethernet"
+:usbid "0x04e8" "0x342b"
+:status :basic
+
+:model "SCX-4824 (SCX-4x24 Series)"
+:interface "USB"
+:usbid "0x04e8" "0x342c"
+:status :good
+
+:model "SCX-4828FN (SCX-4x28 Series)"
+:interface "USB"
+:usbid "0x04e8" "0x342d"
+:status :good
+
+:model "SCX-4300"
+:interface "USB"
+:usbid "0x04e8" "0x342e"
+:status :good
+
+:model "SCX-5835_5935"
+:interface "USB"
+:usbid "0x04e8" "0x342f"
+:status :good
+
+:model "SCX-5635"
+:interface "USB"
+:usbid "0x04e8" "0x3430"
+:status :untested
+
+:model "SCX-4x26"
+:interface "USB"
+:usbid "0x04e8" "0x3432"
+:status :untested
+
+:model "SCX-4600"
+:interface "USB"
+:usbid "0x04e8" "0x3433"
+:status :good
+
+:model "SCX-4623"
+:interface "USB"
+:usbid "0x04e8" "0x3434"
+:status :good
+
+:model "MFP-65x"
+:interface "USB"
+:usbid "0x04e8" "0x3435"
+:status :untested
+
+:model "SCX-6545"
+:interface "USB"
+:usbid "0x04e8" "0x3437"
+:status :good
+
+:model "CLX-8385"
+:interface "USB"
+:usbid "0x04e8" "0x3439"
+:status :untested
+
+:model "CLX-6220"
+:interface "USB"
+:usbid "0x04e8" "0x343a"
+:status :good
+
+:model "CLX-6250"
+:interface "USB"
+:usbid "0x04e8" "0x343b"
+:status :untested
+
+:model "SCX-4825FN (SCX-4x25 Series)"
+:interface "USB"
+:usbid "0x04e8" "0x343c"
+:status :good
+
+:model "CLX-3185"
+:interface "USB"
+:usbid "0x04e8" "0x343d"
+:status :good
+
+:model "CLX-8540"
+:interface "USB"
+:usbid "0x04e8" "0x343f"
+:status :untested
+
+:model "SCX-4623FW"
+:interface "USB"
+:usbid "0x04e8" "0x3440"
+:status :good
+
+:model "SCX-3205W (SCX-3200 Series)"
+:interface "USB Ethernet"
+:usbid "0x04e8" "0x3441"
+:status :good
+
+:model "SCX-6545X"
+:interface "USB"
+:usbid "0x04e8" "0x3442"
+:status :good
+
+:model "SCX-6x55X"
+:interface "USB"
+:usbid "0x04e8" "0x3443"
+:status :good
+
+:model "CLX-8385X"
+:interface "USB"
+:usbid "0x04e8" "0x3444"
+:status :good
+
+:model "SCX-5835_5935X"
+:interface "USB"
+:usbid "0x04e8" "0x3446"
+:status :good
+
+:model "SCX-4833FD"
+:interface "USB"
+:usbid "0x04e8" "0x344b"
+:status :good
+
+:model "SCX-4835FD"
+:interface "Ethernet"
+:usbid "0x04e8" "0x344b"
+:status :good
+
+:model "SCX-3405W"
+:interface "Ethernet"
+:status :basic
+
+:model "SCX-3400"
+:interface "USB"
+:usbid "0x04e8" "0x344f"
+:status :good
+
+:model "SF-760"
+:interface "USB"
+:usbid "0x04e8" "0x3450"
+:status :untested
+
+:model "SCX-4729FD"
+:interface "USB"
+:usbid "0x04e8" "0x3453"
+:status :basic
+
+:model "CLX-6260"
+:interface "USB"
+:usbid "0x04e8" "0x3455"
+:status :minimal
+
+:model "CLX-3300 Series"
+:interface "USB"
+:usbid "0x04e8" "0x3456"
+:status :basic
+
+:model "SCX-470x"
+:interface "USB"
+:usbid "0x04e8" "0x3457"
+:status :untested
+
+:model "CLX-4190"
+:interface "USB"
+:usbid "0x04e8" "0x345a"
+:status :minimal
+
+:model "SCX-4650 4x21S Series"
+:interface "USB"
+:usbid "0x04e8" "0x345b"
+:status :untested
+
+:model "M337x 387x 407x Series"
+:interface "USB"
+:usbid "0x04e8" "0x3460"
+:status :good
+
+:model "M267x 287x Series"
+:interface "USB"
+:usbid "0x04e8" "0x3461"
+:status :unsupported
+
+:model "SCX-681x"
+:interface "USB"
+:usbid "0x04e8" "0x3466"
+:status :untested
+
+:model "C460"
+:interface "USB"
+:usbid "0x04e8" "0x3468"
+:status :untested
+

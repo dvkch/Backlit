@@ -1,0 +1,10 @@
+TOOLS test suite
+================
+
+This directory contains test for tools programs. They are run by 'make check'.
+
+sane-desc
+---------
+	 sane-desc is ran for all known modes, using a test 'desc' file. 
+The output is compared to a reference file for the same mode. Test fails
+if they are different.

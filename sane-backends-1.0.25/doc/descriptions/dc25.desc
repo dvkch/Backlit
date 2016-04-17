@@ -1,0 +1,16 @@
+;Kodak DC25 backend .desc file by Peter Fales
+
+:backend "dc25"				; name of backend
+:version "1.2"  			; version of backend
+:manpage "sane-dc25"			; name of manpage (if it exists)
+:url "mailto:peter@fales-lorenz.net";
+:devicetype :stillcam			; start of a list of devices....
+:mfg "Kodak"				; Manufacturer
+:url "http://www.kodak.com/global/en/service/digCam/dc25/dc25.shtml";
+:model "DC25"				;
+:status :complete     			; untested, minimal, basic, complete
+:interface "Serial port"
+:model "DC20" 				;
+:status :basic     			; untested, minimal, basic, complete
+:interface "Serial port"
+:comment "DC-20 untested by author but reported to work"

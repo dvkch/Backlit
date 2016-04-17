@@ -1,0 +1,97 @@
+;
+; SANE Backend specification file for the epsonds backend
+;
+; Copyright (C) 2015 Alessandro Zummo
+; Released under GPLv2
+;
+
+:backend "epsonds"
+:version "1.0.18"
+:new :yes
+:manpage "sane-epsonds"
+
+:devicetype :scanner
+
+:mfg "Epson"
+:url "http://www.epson.com/"
+
+:model      "DS-5500"
+:interface  "USB"
+:usbid      "0x04b8" "0x0145"
+:status     :untested
+
+:model      "DS-6500"
+:interface  "USB"
+:usbid      "0x04b8" "0x0145"
+:status     :untested
+
+:model      "DS-7500"
+:interface  "USB"
+:usbid      "0x04b8" "0x0145"
+:status     :untested
+
+:model      "DS-50000"
+:interface  "USB"
+:usbid      "0x04b8" "0x0146"
+:status     :untested
+
+:model      "DS-60000"
+:interface  "USB"
+:usbid      "0x04b8" "0x0146"
+:status     :good
+
+:model      "DS-70000"
+:interface  "USB"
+:usbid      "0x04b8" "0x0146"
+:status     :untested
+
+:model      "DS-510"
+:interface  "USB"
+:usbid      "0x04b8" "0x014c"
+:status     :good
+
+:model      "DS-560"
+:interface  "USB"
+:usbid      "0x04b8" "0x014d"
+:status     :untested
+
+:model      "DS-40"
+:interface  "USB"
+:usbid      "0x04b8" "0x0150"
+:status     :untested
+
+:model      "DS-760"
+:interface  "USB"
+:usbid      "0x04b8" "0x0152"
+:status     :untested
+
+:model      "DS-860"
+:interface  "USB"
+:usbid      "0x04b8" "0x0152"
+:status     :untested
+
+:model      "DS-520"
+:interface  "USB"
+:usbid      "0x04b8" "0x0154"
+:status     :untested
+
+:model      "PX-M7050 Series"
+:interface  "USB"
+:usbid      "0x04b8" "0x08bc"
+:status     :untested
+
+:model      "WF-8510/8590 Series"
+:interface  "USB"
+:usbid      "0x04b8" "0x08bc"
+:status     :untested
+
+:model      "PX-M7050FX Series"
+:interface  "USB"
+:usbid      "0x04b8" "0x08cc"
+:status     :untested
+
+:model      "WF-R8590 Series"
+:interface  "USB"
+:usbid      "0x04b8" "0x08cc"
+:status     :untested
+

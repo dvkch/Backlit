@@ -1,0 +1,47 @@
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "hp3500"		; name of backend
+:version "1.1"			; version of backend
+:manpage "sane-hp3500"		; name of manpage (if it exists)
+:url "http://projects.troy.rollo.name/rt-scanners/" ; backend's web page
+:comment "HP3500 series scanners."
+
+:devicetype :scanner		; start of a list of devices....
+				; other types:  :stillcam, :vidcam,
+				;               :meta, :api
+
+:mfg "Hewlett-Packard"		; name a manufacturer
+:url "http://www.hp.com"
+
+:model "ScanJet 3500C"		; name models for above-specified mfg.
+:interface "USB"		; interface type of the device:
+				; "SCSI", "USB", "Parport (EPP)",
+				; "Parport (SPP)", "Parport (ECP)",
+				; "Serial port" or "Propretiary".
+:usbid "0x03f0" "0x2205"
+:status :good
+
+:model "ScanJet 3530C"		; name models for above-specified mfg.
+:interface "USB"		; interface type of the device:
+:usbid "0x03f0" "0x2005"
+:status :good
+
+:model "ScanJet 3570C"		; name models for above-specified mfg.
+:interface "USB"		; interface type of the device:
+:usbid "0x03f0" "0x2005"
+:status :good
+
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+; and at the top-level.
+
+
+

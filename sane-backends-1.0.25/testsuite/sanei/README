@@ -1,0 +1,40 @@
+SANEI test suite
+================
+
+This directory contains test programs for sanei functions. They are compiled
+and run by 'make check'.
+
+sanei_usb_test
+---------------
+	 Tests sanei_usb_* functions. No USB scanner needs to be plugged,
+but in this case less code is covered (open/close and claim/release 
+of real devices).
+Function currently tested are:
+	- sanei_usb_init()
+	- sanei_usb_open(): valid, invalid devname, already opened
+	- sanei_usb_get_vendor_product_byname(): valid and invalid devname
+	- sanei_usb_get_vendor_product(): valid and invalid devname
+	- sanei_usb_close()
+	- sanei_usb_exit()
+	- store_device()
+
+
+sanei_constrain_test
+--------------------
+	Tests for sanei_constrain_* functions
+Function currently tested are:
+	- sanei_constrain_value()
+
+
+sanei_check_test
+----------------
+	Tests for sanei_check_* functions
+Function currently tested are:
+	- sanei_check_value()
+
+
+sanei_config_test
+-----------------
+	Tests for sanei_configure_* functions
+Function currently tested are:
+	- sanei_configure_attach()

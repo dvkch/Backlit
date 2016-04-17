@@ -1,0 +1,36 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "leo"                    ; name of backend
+:version "1.0-10"                  ; version of backend
+:manpage "sane-leo"               ; name of manpage (if it exists)
+:url "http://www.zago.net/sane/#leo" ; backend's web page
+
+:devicetype :scanner              ; start of a list of devices....
+
+:mfg "LEO"
+:model "LEOScan S3" 
+:interface "SCSI"
+:comment "FCC ID LUZFS1130"
+:status :good
+
+:mfg "Across Technologies"
+:model "FS-1130"
+:interface "SCSI"
+:comment "FCC ID LUZFS1130"
+:status :good
+
+:mfg "Genius"
+:model "FS-1130 Colorpage Scanner"
+:interface "SCSI"
+:status :good
+
+

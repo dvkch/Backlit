@@ -1,0 +1,313 @@
+:backend "genesys"
+:version "1.0-63"
+:manpage "sane-genesys"
+:comment "Only the USB scanners mentioned below are currently supported."
+:url "http://www.meier-geinitz.de/sane/genesys-backend/"
+:devicetype :scanner
+
+; -----------------------------------------------------------------------------
+
+:mfg "Plustek"
+:url "http://www.plustek.de/"
+:url "http://www.plustek.com/"
+
+:model "OpticBook 3600"
+:interface "USB"
+:usbid "0x07b3" "0x0900"
+:status :basic
+:comment "Has a Primax USB ID"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Medion/Lifetec/Tevion/Cytron"
+:url "http://www.medion.com/"
+:url "http://www.medion.de/"
+
+:model "MD5345"
+:interface "USB"
+:usbid "0x0461" "0x0377"
+:status :good
+:comment "Has a Primax USB ID"
+
+:model "MD6228"
+:interface "USB"
+:usbid "0x0461" "0x0377"
+:status :good
+:comment "Has a Primax USB ID. Same as MD5345"
+
+:model "MD6471"
+:interface "USB"
+:usbid "0x0461" "0x0377"
+:status :complete
+:comment "Has a Primax USB ID. Same as MD5345"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Hewlett-Packard"
+:url "http://www.hp.com/"
+
+:model "ScanJet 2300C"
+:interface "USB"
+:usbid "0x03f0" "0x0901"
+:status :complete
+:comment "600x1200 dpi max"
+
+:model "ScanJet 2400C"
+:interface "USB"
+:usbid "0x03f0" "0x0a01"
+:status :complete
+:comment "1200x1200 dpi max"
+
+:model "ScanJet G2410"
+:interface "USB"
+:usbid "0x03f0" "0x0a01"
+:status :basic
+:comment "clone of the HP 2400C"
+
+:model "ScanJet 3670C"
+:interface "USB"
+:usbid "0x03f0" "0x1405"
+:status :complete
+:comment "1200x1200 dpi max, complete transparency adaptor support"
+
+:model "ScanJet 3690C"
+:interface "USB"
+:usbid "0x03f0" "0x1405"
+:status :complete
+:comment "1200x1200 dpi max, same as HP 3670C"
+
+:model "ScanJet 4850C"
+:interface "USB"
+:usbid "0x03f0" "0x1b05"
+:status :good
+:comment "resolution from 100 to 2400 supported, UTA not supported yet"
+
+:model "ScanJet G4010"
+:interface "USB"
+:usbid "0x03f0" "0x4505"
+:status :good
+:comment "resolution from 100 to 2400 supported, UTA not supported yet"
+
+:model "ScanJet G4050"
+:interface "USB"
+:usbid "0x03f0" "0x4605"
+:status :good
+:comment "resolution from 100 to 2400 supported, UTA not supported yet"
+
+:model "ScanJet N6310"
+:interface "USB"
+:usbid "0x03f0" "0x4705"
+:status :untested
+:comment "Not supported yet"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Canon"
+:url "http://www.canon.com/"
+
+:model "CanoScan LiDE 35"
+:interface "USB"
+:usbid "0x04a9" "0x2213"
+:status :good
+:comment "Same ids as LiDE 50."
+
+:model "CanoScan LiDE 40"
+:interface "USB"
+:usbid "0x04a9" "0x2213"
+:status :good
+:comment "Same ids as LiDE 50."
+
+:model "CanoScan LiDE 50"
+:interface "USB"
+:usbid "0x04a9" "0x2213"
+:status :good
+
+:model "CanoScan LiDE 60"
+:interface "USB"
+:usbid "0x04a9" "0x221c"
+:status :good
+
+:model "CanoScan LiDE 80"
+:interface "USB"
+:usbid "0x04a9" "0x2214"
+:status :basic
+:comment "No 2400 dpi support, slow speed at lower resolution"
+
+:model "CanoScan LiDE 100"
+:interface "USB"
+:usbid "0x04a9" "0x1904"
+:status :complete
+:comment "GL847 based, resolution from 75 to 2400 dpi"
+
+:model "CanoScan LiDE 110"
+:interface "USB"
+:usbid "0x04a9" "0x1909"
+:status :complete
+:comment "GL124 based, resolution from 75 to 2400 dpi"
+
+:model "CanoScan LiDE 120"
+:interface "USB"
+:usbid "0x04a9" "0x190e"
+:status :unsupported
+:comment "GL124+ based, resolution from 75 to 2400 dpi"
+
+:model "CanoScan LiDE 200"
+:interface "USB"
+:usbid "0x04a9" "0x1905"
+:status :complete
+:comment "GL847 based, resolution from 75 to 4800 dpi"
+
+:model "CanoScan LiDE 210"
+:interface "USB"
+:usbid "0x04a9" "0x190a"
+:status :complete
+:comment "GL124 based, resolution from 75 to 4800 dpi"
+
+:model "CanoScan LiDE 220"
+:interface "USB"
+:usbid "0x04a9" "0x190f"
+:status :complete
+:comment "GL124+ based, resolution from 75 to 4800 dpi"
+
+:model "CanoScan 4400f"
+:interface "USB"
+:usbid "0x04a9" "0x2228"
+:status :unsupported
+:comment "GL843 based, to be added to the genesys backend"
+
+:model "CanoScan 5600F"
+:interface "USB"
+:usbid "0x04a9" "0x1906"
+:status :unsupported
+:comment "GL847 based, to be added to the genesys backend"
+
+:model "CanoScan 700F"
+:interface "USB"
+:usbid "0x04a9" "0x1907"
+:status :good
+:comment "GL847 based, resolution from 75 to 4800 dpi"
+
+:model "Canon Image Formula 101"
+:interface "USB"
+:usbid "0x1083" "0x162e"
+:status :unsupported
+:comment "GL846 based, work in progress"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Visioneer"
+:url "http://www.visioneer.com/"
+
+:model "Strobe XP 100,r3"
+:interface "USB"
+:usbid  "0x04a7" "0x049b"
+:status :good
+:comment "All resolution and mode supported, calibration is available"
+
+:model "Strobe XP 200"
+:interface "USB"
+:usbid  "0x04a7" "0x0426"
+:status :good
+:comment "All resolution and mode supported, calibration is available"
+
+:model "Strobe XP 300"
+:interface "USB"
+:usbid  "0x04a7" "0x0474"
+:status :good
+:comment "All resolution and mode supported, calibration is available, front- and backside side-by-side, with backside mirrored horizontally."
+
+:model "Roadwarrior"
+:interface "USB"
+:usbid  "0x04a7" "0x0494"
+:status :basic
+:comment "All resolution and mode supported, calibration is available"
+
+:model "Visioneer OneTouch 7100"
+:interface "USB"
+:usbid "0x04a7" "0x0229"
+:status :complete
+:comment "Same as MD5345"
+
+; -----------------------------------------------------------------------------
+
+:mfg "Pentax"
+:url "http://www.pentaxtech.com/"
+:url "http://mobilesolutions.brother-usa.com/"
+
+:model "DSmobile 600"
+:interface "USB"
+:usbid  "0x0a17" "0x3210"
+:status :good
+:comment "All resolution and mode supported, calibration is available"
+
+:model "DSmobile 600"
+:interface "USB"
+:usbid  "0x04f9" "0x2038"
+:status :good
+:comment "All resolution and mode supported, calibration is available"
+
+; -----------------------------------------------------------------------------
+
+:mfg "DCT"
+:url "http://www.docucap.com/"
+:comment "Successor of Syscan in the USA"
+
+:model "DocketPort 487"
+:interface "USB"
+:usbid  "0x1dcc" "0x4810"
+:status :basic
+:comment "All resolution and mode supported, calibration is available, front- and backside side-by-side, with backside mirrored horizontally."
+
+; -----------------------------------------------------------------------------
+
+:mfg "Syscan"
+
+:model "DocketPort 485"
+:interface "USB"
+:usbid  "0x0a82" "0x4810"
+:status :basic
+:comment "All resolution and mode supported, front- and backside side-by-side, with backside mirrored horizontally."
+
+:model "DocketPort 465"
+:interface "USB"
+:usbid  "0x0a82" "0x4802"
+:status :untested
+:comment "All resolution and mode should be supported, but uncorrected scans"
+
+:model "DocketPort 665"
+:interface "USB"
+:usbid  "0x0a82" "0x4803"
+:status :basic
+:comment "All resolution and mode supported, calibration is available"
+
+:model "DocketPort 685/ Ambir DS685"
+:interface "USB"
+:usbid  "0x0a82" "0x480c"
+:status :good
+:comment "All resolution and mode supported, calibration is available, front- and backside side-by-side, with backside mirrored horizontally."
+
+:mfg "Xerox"
+:url "http://www.xerox.com/"
+
+:model "Travel Scanner 100"
+:interface "USB"
+:usbid  "0x04a7" "0x04ac"
+:status :good
+:comment "All resolution and mode supported, calibration is available"
+
+:model "2400 Onetouch"
+:interface "USB"
+:usbid "0x0461" "0x038b"
+:status :complete
+:comment "GL646 based, resolution from 75 to 2400 dpi"
+
+
+; -----------------------------------------------------------------------------
+
+:mfg "Panasonic"
+
+:model "KV-SS080"
+:interface "USB"
+:usbid  "0x04da" "0x100f"
+:status :complete
+:comment "All resolution and mode supported, calibration is available. Support sponsored by cncsolutions (http://www.cncsolutions.com.br)"

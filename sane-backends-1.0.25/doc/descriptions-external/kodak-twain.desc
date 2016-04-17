@@ -1,0 +1,87 @@
+:backend "kodak-twain"             ; name of backend
+:version "unknown"                 ; version of backend (or "unmaintained")
+:url "http://www.kodak.com/go/scanonlinux" ;
+:comment "External backend developed by Kodak.  Provides full access to the supported Kodak scanners by providing a SANE interface to the proprietary Kodak 32bit TWAIN stack.  Several Linux distributions are supported."
+
+:devicetype :scanner              ; start of a list of devices....
+:mfg "Kodak"                      ; name a manufacturer
+:url "http://www.kodak.com/"      ; manufacturer's URL
+
+:model "i1210"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x600a"
+:comment "No report yet."
+
+:model "i1220"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x600b"
+:comment "No report yet."
+
+:model "i1310"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x600c"
+:comment "No report yet."
+
+:model "i1320"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x600d"
+:comment "Reported to work on Fedora 12."
+
+:model "i1405"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x601a"
+:comment "No report yet."
+
+:model "i1410"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x600e"
+:comment "No report yet."
+
+:model "i1420"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x600f"
+:comment "No report yet."
+
+:model "i1440"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x6010"
+:comment "No report yet."
+
+:model "i2400"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x601c"
+:comment "No report yet."
+
+:model "i2600"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x601d"
+:comment "No report yet."
+
+:model "i2800"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x601e"
+:comment "No report yet."
+
+:model "i1000 A3 accessory"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x6012"
+:comment "Flatbed attachment for use with Kodak ADF scanner. Requires 12V power over usb cable. No report yet."
+
+:model "i1000 A4 accessory"
+:status :untested
+:interface "USB"
+:usbid "0x040a" "0x6011"
+:comment "Flatbed attachment for use with Kodak ADF scanner. Requires 12V power over usb cable. No report yet."
+

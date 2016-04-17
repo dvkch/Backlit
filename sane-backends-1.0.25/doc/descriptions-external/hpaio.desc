@@ -1,0 +1,2241 @@
+;
+; SANE Backend specification file
+;
+
+:backend "hpaio"                        ; name of backend
+:version ""                           ; version of backend
+:url "http://hpinkjet.sourceforge.net/" ; backend's web page
+:comment "This backend isn't included in SANE because it is included in the HPLIP software."
+
+:devicetype :scanner                    ; start of a list of devices....
+:mfg "Hewlett-Packard"                  ; name a manufacturer
+:url "http://www.hp.com/united-states/consumer/gateway/printing_multifunction.html"
+:model "HP Officejet v30 All-in-one Printer"
+:status :good
+
+:model "HP Officejet v40xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet v40s All-in-one Printer"
+:status :good
+
+:model "HP Officejet r40 All-in-one Printer"
+:status :good
+
+:model "HP Officejet v40 All-in-one Printer"
+:status :good
+
+:model "HP Officejet r40xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet t45xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet r45 All-in-one Printer"
+:status :good
+
+:model "HP Officejet v45 All-in-one Printer"
+:status :good
+
+:model "HP Officejet t45 All-in-one Printer"
+:status :good
+
+:model "HP Officejet g55 All-in-one Printer"
+:status :good
+
+:model "HP Officejet g55xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet k60 All-in-one Printer"
+:status :good
+
+:model "HP Officejet r60 All-in-one Printer"
+:status :good
+
+:model "HP Officejet k60xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet t65xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet t65 All-in-one Printer"
+:status :good
+
+:model "HP Officejet r65 All-in-one Printer"
+:status :good
+
+:model "HP Officejet k80 All-in-one Printer"
+:status :good
+
+:model "HP Officejet k80xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet r80xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet r80 All-in-one Printer"
+:status :good
+
+:model "HP Officejet g85 All-in-one Printer"
+:status :good
+
+:model "HP Officejet g85xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet g95 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart All-in-one Printer - b109d"
+:status :good
+
+:model "HP Photosmart All-in-one Printer - b109e"
+:status :good
+
+:model "HP Photosmart All-in-one Printer - b109c"
+:status :good
+
+:model "HP Photosmart All-in-one Printer - b109a"
+:status :good
+
+:model "HP Photosmart Wireless All-in-one Printer - b109q"
+:status :good
+
+:model "HP Photosmart Wireless All-in-one Printer - b109n"
+:status :good
+
+:model "HP Photosmart Wireless All-in-one Printer - b109q=r"
+:status :good
+
+:model "HP Officejet d125xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet d135 All-in-one Printer"
+:status :good
+
+:model "HP Officejet d135xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet d145xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet d145 All-in-one Printer"
+:status :good
+
+:model "HP Officejet d155xi All-in-one Printer"
+:status :good
+
+:model "HP Deskjet Ink Advantage k209a All-in-one Printer"
+:status :good
+
+:model "HP Photosmart Plus All-in-one Printer - b209a"
+:status :good
+
+:model "HP Photosmart Plus All-in-one Printer - b209b"
+:status :good
+
+:model "HP Photosmart Plus All-in-one Printer - b209c"
+:status :good
+
+:model "HP Printer Scanner Copier 300"
+:status :good
+
+:model "HP Photosmart Premium All-in-one Printer Series - c309h"
+:status :good
+
+:model "HP Photosmart Premium All-in-one Printer Series - c309g"
+:status :good
+
+:model "HP Photosmart Premium Fax All-in-one Printer - c309a"
+:status :good
+
+:model "HP Photosmart Premium Fax All-in-one Printer Series -c309c"
+:status :good
+
+:model "HP Photosmart Premium Fax All-in-one Printer Series -c309a"
+:status :good
+
+:model "HP Deskjet f310 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f325 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f335 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f340 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f350 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f370 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f375 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f378 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f379 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f380 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f385 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f388 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f390 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f394 All-in-one Printer"
+:status :good
+
+:model "HP PSC 500xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 500 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 500 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 520 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 570 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 580 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 590 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 600 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 610 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 630 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 635 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 700 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 710 All-in-one Printer"
+:status :good
+
+:model "HP PSC 720 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 720 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 725 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f735 All-in-one Printer"
+:status :good
+
+:model "HP PSC 750 All-in-one Printer"
+:status :good
+
+:model "HP PSC 750xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 760 All-in-one Printer"
+:status :good
+
+:model "HP PSC 780 All-in-one Printer"
+:status :good
+
+:model "HP PSC 780xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 900 All-in-one Printer"
+:status :good
+
+:model "HP 915 Inkjet All-in-one Printer"
+:status :good
+
+:model "HP PSC 920 All-in-one Printer"
+:status :good
+
+:model "HP PSC 950 All-in-one Printer"
+:status :good
+
+:model "HP PSC 950vr All-in-one Printer"
+:status :good
+
+:model "HP PSC 950xi All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m1005 Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm1015 Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm1017 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 1100a Xi All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 1100xi Printer"
+:status :good
+
+:model "HP LaserJet 1100a All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 1100 Printer"
+:status :good
+
+:model "HP LaserJet 1100a Se All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 1100se Printer"
+:status :good
+
+:model "HP PSC 1110v All-in-one Printer"
+:status :good
+
+:model "HP PSC 1110 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1118 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m1120 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m1120n Multifunction Printer"
+:status :good
+
+:model "HP Officejet Pro 1150c All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro 1150cse All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro 1170cse All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro 1170c All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro 1170cxi All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro 1175cxi All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro 1175cse All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro 1175c All-in-one Printer"
+:status :good
+
+:model "HP PSC 1200 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1205 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1209 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1210xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 1210v All-in-one Printer"
+:status :good
+
+:model "HP PSC 1210 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1213 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1215 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1216 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1217 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1218 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1219 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 1220 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 1220se All-in-one Printer"
+:status :good
+
+:model "HP PSC 1300 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1310 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1311 All-in-one Printer"
+:status :good
+
+:model "HP Color LaserJet cm1312 Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm1312nfi Multifunction Printer"
+:status :good
+
+:model "HP PSC 1312 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1315v All-in-one Printer"
+:status :good
+
+:model "HP PSC 1315s All-in-one Printer"
+:status :good
+
+:model "HP PSC 1315xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 1315 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1317 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1318 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m1319f Multifunction Printer"
+:status :good
+
+:model "HP PSC 1340 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1345 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1350xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 1350v All-in-one Printer"
+:status :good
+
+:model "HP PSC 1350 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1355 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1401 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1402 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1403 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1406 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1408 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1410 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1410v All-in-one Printer"
+:status :good
+
+:model "HP PSC 1410xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 1415 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1417 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1503 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1504 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1507 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1508 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1510s All-in-one Printer"
+:status :good
+
+:model "HP PSC 1510xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 1510 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1510v All-in-one Printer"
+:status :good
+
+:model "HP PSC 1513s All-in-one Printer"
+:status :good
+
+:model "HP PSC 1513 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1514 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m1522n Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m1522nf Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m1522 Multifunction Printer"
+:status :good
+
+:model "HP PSC 1600 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1603 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1605 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1608 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1610 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1610xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 1610v All-in-one Printer"
+:status :good
+
+:model "HP PSC 1613 All-in-one Printer"
+:status :good
+
+:model "HP PSC 1615 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2105 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2108 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2110 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2110 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2110v All-in-one Printer"
+:status :good
+
+:model "HP PSC 2110xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 2115 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2120 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2128 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2140 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2150 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2170 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2171 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2175 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2175v All-in-one Printer"
+:status :good
+
+:model "HP PSC 2175xi All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2179 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2179 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2180 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2185 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2187 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2188 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2200 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2210 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2210v All-in-one Printer"
+:status :good
+
+:model "HP PSC 2210xi All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2210 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2212 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2214 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2224 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2235 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2238 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2240 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2250 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2275 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2276 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2280 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2288 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2290 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2300 Series All-in-one Printer"
+:status :good
+
+:model "HP PSC 2310 All-in-one Printer"
+:status :good
+
+:model "HP Color LaserJet cm2320n Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm2320nf Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm2320fxi Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm2320 Multifuntion Printer"
+:status :good
+
+:model "HP PSC 2350 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2352 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2353p All-in-one Printer"
+:status :good
+
+:model "HP PSC 2353 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2355 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2355p All-in-one Printer"
+:status :good
+
+:model "HP PSC 2355xi All-in-one Printer"
+:status :good
+
+:model "HP PSC 2355v All-in-one Printer"
+:status :good
+
+:model "HP PSC 2357 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2358 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2405 Photosmart All-in-one Printer"
+:status :good
+
+:model "HP PSC 2410v Photosmart All-in-one Printer"
+:status :good
+
+:model "HP PSC 2410xi Photosmart All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2410 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2410 Photosmart All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2418 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2420 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2420 Photosmart All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2423 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2430 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2440 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2450 Photosmart All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2476 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2480 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2483 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2488 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2492 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f2493 All-in-one Printer"
+:status :good
+
+:model "HP PSC 2500 Photosmart All-in-one Printer"
+:status :good
+
+:model "HP PSC 2510 Photosmart All-in-one Printer"
+:status :good
+
+:model "HP PSC 2510xi Photosmart All-in-one Printer"
+:status :good
+
+:model "HP PSC 2550 Photosmart All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2570 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2571 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2573 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2574 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2575a All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2575v All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2575xi All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2575 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2578 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2605 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2608 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2610 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2610v All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2610xi All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2613 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2615 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2710 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2710xi All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 2713 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m2727nf Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m2727 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m2727nfs Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet 2800 All-in-one Printer"
+:status :good
+
+:model "HP Color LaserJet 2820 All-in-one Printer"
+:status :good
+
+:model "HP Color LaserJet 2830 All-in-one Printer"
+:status :good
+
+:model "HP Color LaserJet 2840 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3015 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3020 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3030 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m3035 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m3035xs Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 3050z All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3050 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3052 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3055 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3100xi All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3100se All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3100 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3108 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3110v All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3110 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3110 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3125 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3135 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3140 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3150se All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3150 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3150 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3150xi All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3170 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3173 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3175 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3180 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3183 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3188 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3190 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3193 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c3194 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3200 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3200m All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3207 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3210a All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3210v All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3210xi All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3210 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3213 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3214 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3300 Multifunction Printer"
+:status :good
+
+:model "HP Photosmart 3308 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3310 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3310xi All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3310 Digital Printer Copier"
+:status :good
+
+:model "HP Photosmart 3313 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart 3314 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3320n Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 3320 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 3330 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 3380 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3390 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 3392 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j3608 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j3625 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j3635 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j3640 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j3650 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j3680 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4100 Series All-in-one Printer"
+:status :good
+
+:model "HP LaserJet 4100 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 4101 Multifunction Printer"
+:status :good
+
+:model "HP Officejet 4105 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4110xi All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4110 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4110v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4110 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4115 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4135 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4140 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4140 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4150 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4150 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4170 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4172 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4173 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4175 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4175 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4180 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4180 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4183 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4185 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4188 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4188 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4190 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4190 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4193 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4194 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4194 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4200 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4205 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4210 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4210 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4211 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4212 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4213 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4215 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4215v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4215xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4219 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4224 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4230 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4235 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4235 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4238 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4240 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4240 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4250 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4250 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4251 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4252 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4255 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4256 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4259 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4270 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4272 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4272 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4273 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4273 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4274 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4275 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4275 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4280 All-in-one"
+:status :good
+
+:model "HP Photosmart c4280 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4280 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4283 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4283 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4285 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4288 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4288 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4292 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4293 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4293 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4294 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4294 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4308 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4311 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4312 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4314 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4315 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4315xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4315v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4317 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4319 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4338 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4340 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4342 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4343 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4344 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m4345 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 4345xm Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 4345 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m4345x Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m4345xs Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 4345xs Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 4345x Multifunction Printer"
+:status :good
+
+:model "HP Photosmart c4345 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m4345xm Multifunction Printer"
+:status :good
+
+:model "HP Photosmart c4348 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m4349 MFP"
+:status :good
+
+:model "HP Officejet 4352 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4353 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4355 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4357 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 4359 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4380 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4383 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4384 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4385 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4388 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4410 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4424 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4435 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4435 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4440 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4440 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4450 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4450 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4470 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4470 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4472 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4472 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4473 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4473 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4480 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4480 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4483 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4483 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4485 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4486 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4488 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4488 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4490 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4492 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4493 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4494 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet f4500 All-in-one Printer Series"
+:status :good
+
+:model "HP Designjet 4520mfp"
+:status :good
+
+:model "HP Officejet j4524 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4525 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4535 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4540 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4540 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4550 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4550 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4560 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4570 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4572 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4573 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4575 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4580c All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4580 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4580 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4583 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4585 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4585 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4588 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4593 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4599 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4610 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4635 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4640 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4650 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4660 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4670 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4673 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4680 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4680 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j4680c All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4683 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4688 All-in-one Printer"
+:status :good
+
+:model "HP Color LaserJet 4730x Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet 4730xs Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm4730 Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet 4730 Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm4730fsk Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm4730fm Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet cm4730f Multifunction Printer"
+:status :good
+
+:model "HP Color LaserJet 4730xm Multifunction Printer"
+:status :good
+
+:model "HP Photosmart c4740 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4750 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4780 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4783 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4785 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4788 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4793 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4795 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4798 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c4799 All-in-one Printer"
+:status :good
+
+:model "HP LaserJet m5035 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m5035xs Multifunction Printer"
+:status :good
+
+:model "HP LaserJet m5035x Multifunction Printer"
+:status :good
+
+:model "HP Officejet 5100 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5105 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5110 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5110v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5110xi All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5140 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5150 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5170 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5173 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5175 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5180 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5183 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5185 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5188 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5194 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5240 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5250 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5270 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5273 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5275 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5280 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5283 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5288 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5290 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5293 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5370 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5373 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5380 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5383 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5388 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5390 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5393 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5505 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5505 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5508 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5508 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5510v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5510v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5510xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5510 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5510xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5510 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5515 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5515 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5520 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5540 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5550 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5570 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c5580 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5600 Series All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5605 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5607 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5608 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5609 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5610v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5610xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5610 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5615 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5679 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 5680 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5725 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5730 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5735 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5738 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5740 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5750 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5780 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5783 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5785 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5788 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j5790 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6105 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6110v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6110 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6110xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6150 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6150 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6154 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6170 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6175 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6180 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6183 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6185 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6188 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6190 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6200 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6203 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6205 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6208 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6210xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6210v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6210 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6213 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6215 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6240 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6245 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6250 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6260 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6263 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6268 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6270 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6275 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6280 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6283 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6285 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6286 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6288 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6301 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6304 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6305 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6307 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6308 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6310 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6310xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6310v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6313 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6315 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6318 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6324 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6340 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6350 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6375 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6380 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6383 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c6388 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j6405 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j6410 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j6413 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j6415 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j6424 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j6450 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j6480 All-in-one Printer"
+:status :good
+
+:model "HP Officejet j6488 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 6500 Wireless All-in-one Printer - e709q"
+:status :good
+
+:model "HP Officejet 6500 Wireless All-in-one Printer - e709n"
+:status :good
+
+:model "HP Officejet 6500 All-in-one Printer - e709c"
+:status :good
+
+:model "HP Officejet 6500 All-in-one Printer - e709a"
+:status :good
+
+:model "HP Officejet 7100 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7110xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7110 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7115 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7130 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7130xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7135xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7140xi All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7150 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7154 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7170 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7180 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7183 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7185 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7188 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7190 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7205 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7208 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7210 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7210v All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7210xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7213 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7215 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7250 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7275 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7280 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7283 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c7288 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7300 Series All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7310xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7310 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7313 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7380 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7408 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7410xi All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7410 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 7413 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7480 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7500 Series All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7550 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7555 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7580 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7590 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7600 Series All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7650 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7680 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7681 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7700 Series All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7710 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7750 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro l7780 All-in-one Printer"
+:status :good
+
+:model "HP cm8050 Color Multifunction Printer With Edgeline Technology"
+:status :good
+
+:model "HP cm8060 Color Multifunction Printer With Edgeline Technology"
+:status :good
+
+:model "HP LaserJet 8100 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 8150 Multifunction Printer"
+:status :good
+
+:model "HP Photosmart c8150 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c8180 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c8183 All-in-one Printer"
+:status :good
+
+:model "HP Photosmart c8188 All-in-one Printer"
+:status :good
+
+:model "HP Officejet Pro 8500 Premier All-in-one Printer - a909n"
+:status :good
+
+:model "HP Officejet Pro 8500 Wireless All-in-one Printer - a909g"
+:status :good
+
+:model "HP Officejet Pro 8500 All-in-one Printer - a909a"
+:status :good
+
+:model "HP LaserJet 9000 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 9000l Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 9040 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 9050 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 9055 Multifunction Printer"
+:status :good
+
+:model "HP LaserJet 9065 Multifunction Printer"
+:status :good
+
+:model "HP Officejet 9110 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 9120 All-in-one Printer"
+:status :good
+
+:model "HP Officejet 9130 All-in-one Printer"
+:status :good
+
+:model "HP Color LaserJet 9500 Multifunction Printer"
+:status :good
+

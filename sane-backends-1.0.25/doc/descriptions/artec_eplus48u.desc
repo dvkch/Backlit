@@ -1,0 +1,106 @@
+;
+; SANE Backend specification file
+;
+
+:backend "artec_eplus48u"
+:version "unmaintained"
+:manpage "sane-artec_eplus48u"
+;:url "http://www.angelfire.com/linux/crapsite/"
+:devicetype :scanner
+
+:mfg "Artec/Ultima"
+:url "http://www.artecusa.com/"
+
+:model "E+ 48U"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4003"
+:comment "CIS scanner based on the GT6816 chip. Apparently all other devices are re-badged Artec scanners."
+
+:model "E+ Pro"
+:status :minimal
+:interface "USB"
+:usbid "0x05d8" "0x4004"
+:comment "Works up to 600dpi, but not 1200. Needs better calibration. See bug #310490"
+
+
+:mfg "Medion/Lifetec/Tevion/Cytron"
+:url "http://www.medion.com"
+:comment "Sold by Aldi and Tchibo."
+
+:model "MD9693"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4003"
+
+:model "MD9705"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4003"
+
+:model "MD4394"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4003"
+:comment "Only scanners with product id 0x4003 will work; try the gt68xx backend, if your scanner has product id 0x4002 "
+
+
+:mfg "Trust"
+:url "http://www.trust-site.com"
+
+:model "Easy Webscan 19200"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4006"
+
+:model "240H Easy Webscan Gold"
+:status :basic
+:interface "USB"
+:usbid "0x05d8" "0x4007"
+:comment "Works up to 600 dpi"
+
+
+:mfg "Memorex"
+:url "http://www.artecusa.com/"
+
+:model "MEM 48U"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4005"
+
+
+:mfg "Microstar"
+:url "http://www.microstar.de/"
+
+:model "MR 9791"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4003"
+
+
+:mfg "UMAX"
+:url "http://www.umax.com/"
+:url "http://www.umax.com.tw/"
+:url "http://www.umax.de/en"
+:url "http://www.umax-europe.com"
+:url "http://www.umaxjapan.co.jp"
+:url "http://www.umax.com.cn"
+
+:model "AstraSlim SE"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4009"
+
+:model "AstraSlim 1200 SE"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4010"
+
+
+:mfg "Yakumo"
+:url "http://www.yakumo.com/"
+
+:model "Scan50"
+:status :good
+:interface "USB"
+:usbid "0x05d8" "0x4011"

@@ -1,0 +1,2087 @@
+2009-05-03 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* Makefile.in, aclocal.m4, configure, */Makefile.in: Regenerated 
+	with newer automake.
+	* backend/Makefile.am, tools/sane-config.in: Add missing 
+	$GPHOTO2_LDFLAGS so library can be found.
+	* tools/Makefile.am: Add mising $SCSI_LIBS to sane-find-scanner.
+
+******  Release of sane-backends 1.0.20. End of code freeze ******
+
+2009-05-03  m. allan noah <kitno455 a t gmail d o t com>
+	* config.guess, config.sub: updated to latest versions
+	* NEWS, configure.in, configure: updated for 1.0.20
+	* sane-backends.lsm, doc/releases.txt: minor tweaks
+	* doc/descriptions/coolscan3.desc, doc/descriptions/rts8891.desc:
+	  add :new marker, correct manpage link
+
+2009-05-01  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c: copy_buffer() needs to count lines, or M309[12]
+	  cannot scan in duplex
+
+2009-04-30  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c: ignore errors in scanner_control(),
+	  M3091 has not worked since sane 1.0.19, due to this.
+
+2009-04-30  m. allan noah <kitno455 a t gmail d o t com>
+	* acinclude.m4, backend/gphoto2.c, configure, include/sane/config.h.in:
+	  deal with upcoming gphoto2 interface change (patch by Chris Bagwell)
+	* po/sane-backends.nl.po: updates from Martin Kho
+
+2009-04-29  m. allan noah <kitno455 a t gmail d o t com>
+	* po/sane-backends.nl.po: updates from Martin Kho
+	* po/sane-backends.de.po: updates from Burkhard Luck
+	* po/Makefile.am, po/Makefile.in, po/sane-backends.en_GB.po: new
+	  translation from Andrew Coles
+	* po/*.po: rebuilt with new strings
+
+2009-04-29  Stéphane Voltz <stef.dev@free.fr>
+	* doc/sane-genesys.man doc/sane-rts8891.man: documentation updates and
+	  cleanups
+
+2009-04-28 Julien Blache <jb@jblache.org>
+	* sanei/sanei_scsi.c: /proc/scsi is being deprecated in the Linux
+	kernel; use sysfs for SCSI device enumeration in
+	sanei_scsi_find_devices() by default, keep
+	sanei_proc_scsi_find_devices() as a fallback option.
+
+2009-04-27  Gerhard Jaeger <gerhard@gjaeger.de>
+	* backend/plustek-usbdevs.c:
+	  Tweaked highspeed settings for Epson 1260
+
+2009-04-27  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891.h backend/rts8891_devices.c
+	  backend/rts8891_low.c backend/rts8891_low.h backend/rts88xx_lib.c
+	  backend/rts88xx_lib.h: turn off scanner sharing option to off by default
+	  to keep on the safe side, copyright and internal version updates.
+
+2009-04-27  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys_gl646.c backend/genesys_devices.c:
+	shading calibration fixes for HP2300	
+
+2009-04-25  Alessandro Zummo <a.zummo@towertech.it>
+	* backend/epson2.c: fixed TPU warmup retry
+
+2009-04-23  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys_gl646.c backend/genesys_devices.c:
+	y scan position and shading calibration fixes for MD5345/MD6471
+
+2009-04-23  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/fujitsu.desc: update S1500 status to complete
+
+2009-04-22  m. allan noah <kitno455 a t gmail d o t com>
+	* include/sane/sane.h: convert new frame and status to #define
+
+2009-04-21  Nicolas Martin <nicols-guest at users.alioth.debian.org> 
+	* doc/sane-pixma.man, doc/descriptions/pixma.desc,
+	  backand/pixma_mp150.c:
+	  Updated documentation for Pixma MP240, reported to work fine by Nik.
+	  
+2009-04-21  Alex Belkin <abc@telekom.ru>
+	* backend/xerox_mfp.c: update version number.
+
+2009-04-20  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c, backend/fujitsu.conf.in,
+	  doc/descriptions/fujitsu.desc: add S1500 usb ids and status
+	* backend/canon_dr.c: update credits
+	* doc/sane-fujitsu.man, doc/sane-canon_dr.man: update version numbers,
+	  dates, credits and known issues
+	* doc/saned.man: remove section about uncontrolled data port range
+
+2009-04-20  Alessandro Zummo <a.zummo@towertech.it>
+	* backend/coolscan3.c: temporarily disable infrared.
+
+2009-04-17  Nicolas Martin <nicols-guest at users.alioth.debian.org> 
+	* doc/sane-pixma.man, doc/descriptions/pixma.desc:
+	  Updated documentation for Pixma MP540, reported to work fine by Rogge.
+	  
+2009-04-17  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys.c, backend/genesys_gl646.c,
+	  backend/genesys_gl841.c, backend/genesys_low.h: Always do shading
+	  calibration in color mode on gl841.
+	* backend/genesys.c, backend/genesys_gl841.c: Fix bugs introduced above.
+
+2009-04-16  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.h backend/genesys.c backend/genesys_gl646.c
+	  backend/genesys_devices.c: y scan position fixes
+	 - added a 'clear calibration cache button'
+
+2009-04-15  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys_gl646.c: calibration cache
+	 activation for gl646 based scanners
+
+2009-04-15  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c, doc/descriptions/fujitsu.desc: backend v93
+	- return cmd status for reads of sensor options
+	* backend/canon_dr.c, doc/descriptions/canon_dr.desc: backend v26
+	- return cmd status for reads of sensor options
+	- allow rs to adjust read length for all bad status responses
+
+2009-04-14  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys_devices.c backend/genesys_gl646.c:
+	  shading calibration rework for GL646 based scanners
+
+2009-04-13  m. allan noah <kitno455 a t gmail d o t com>
+	* tools/sane-desc.c: fix double summing of untested column
+
+2009-04-13  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: minor version change to test commit scripts
+
+2009-04-13  Stéphane Voltz <stef.dev@free.fr>
+	* backend/pnm.c: conditional handling of STATUS_HW_LOCKED
+	  and STATUS_WARMING_UP
+
+2009-04-12  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/doxygen-sanei.conf.in: update to recent version of doxygen
+
+2009-04-12  m. allan noah <kitno455 a t gmail d o t com>
+	* configure.in: change version to 1.0.20cvs
+	* configure: rebuild from configure.in
+	* include/sane/sane.h: hide API changes (minor, frame and status)
+	* backend/canon_dr.c, backend/fujitsu.c: SANE_FRAME_JPEG
+	* backend/coolscan3.c: SANE_FRAME_RGBI
+	* backend/genesys_gl646.c, backend/genesys_gl841.c: STATUS_HW_LOCKED
+	* backend/rts8891.c, frontend/scanimage.c: STATUS_WARMING_UP
+	* backend/pixma_io_sanei.c, backend/xerox_mfp.c,
+	  backend/sane_strstatus.c: STATUS_HW_LOCKED & STATUS_WARMING_UP
+	* doc/releases.txt: minor updates for new build system
+
+2009-04-07  Nicolas Martin <nicols-guest at users.alioth.debian.org> 
+	* doc/sane-pixma.man, doc/descriptions/pixma.desc:
+	  Updated documentation for i-SENSYS MF4018 support.
+	  
+2009-04-07 Julien Blache <jb@jblache.org>
+	* doc/descriptions-external/epkowa.desc: update for iScan 2.19.0,
+	from Olaf Meeuwissen.
+
+2009-04-05  Nicolas Martin <nicols-guest at users.alioth.debian.org> 
+	* backend/pixma_io.h, backend/pixma_io_sanei.c, doc/sane-pixma.man:
+	  Increased timeouts for read bulk and write bulk operations to 10s
+	  Changed minimum timeout for interrupt read to 100ms
+	  For MAC OS X : added a wrapper to sanei_usb_read_int as darwin libusb
+	  does not handle timeouts in interrupt reads. This disables button scan
+	  for MAC OS X, updated man page with this info.
+	* backend/pixma_mp150.c: 
+	  Added 2 new Canon Pixma models but usb pid/vid yet unknown.
+
+2009-04-05  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr.conf.in: backend v24
+	- fix DR-2510C duplex deinterlacing code
+	- rewrite sane_read helpers to read until EOF
+	- update sane_start for scanners that dont use object_position
+	- dont call sanei_usb_clear_halt() if device is not open
+	- increase default buffer size to 4 megs
+	- set buffermode on by default
+	- hide modes and resolutions that DR-2510C lies about
+	- read_panel() logs front-end access to sensors instead of timing
+	- rewrite do_usb_cmd() to use remainder from RS info
+	* doc/desciptions/canon_dr.desc: backend v24, update DR-2510C comment
+
+2009-03-31 Louis Lagendijk  <llagendijk-guest at users.alioth.debian.org>
+	* backend/pixma_bjnp.c:
+	- silenced some debug statements during scanner detections
+	- increased timeouts to 20 seconds as 10 seconds is apparently
+	- not enough for the combination of a Mac and an MX850.
+	
+2009-03-21 Alex Belkin <abc@telekom.ru>
+	* backend/xerox_mfp.conf.in: add Xerox Phaser 6110MFP
+	* backend/xerox_mfp.c: compatibility with scanners w/o feeder.
+
+2009-03-28 Julien Blache <jb@jblache.org>
+	* backend/avision.c: fix typos in error messages in
+	sense_handler().
+
+2009-03-27  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.h: backend v23
+	- rewrite all image data processing code
+	- handle more image interlacing formats
+	- re-enable binary mode on some scanners
+	- limit some machines to full-width scanning
+	* doc/desciptions/canon_dr.desc: v23, improved comments
+
+2009-03-25  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch]: backend v22
+	- add deinterlacing code for DR-2510C in duplex and color 
+
+2009-03-25  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys.c, backend/genesys_gl646.c,
+	backend/genesys_gl841.c, backend/genesys_low.h: Add calibration cache
+
+2009-03-24  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.h: backend v21
+	- correct rgb padding macro
+	- skip send_panel and ssm_df commands for DR-20xx scanners
+	* doc/desciptions/microtek2.desc: add ScanMaker 6400XL
+
+2009-03-24 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* doc/Makefile.am: Don't include any template.desc. into
+	generated HTML files.
+
+2009-03-23  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.h: backend v20
+	- improved macros for inquiry and set window
+	- shorten inquiry vpd length to match windows driver
+	- remove status-length config option
+	- add padded-read config option
+	- rewrite do_usb_cmd to pad reads and calloc/copy buffers
+	* backend/canon_dr.conf.in: s/status-length/padded-read/g
+
+2009-03-22  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch]: backend v19
+	- pad gray deinterlacing area for DR-2510C
+	- override tl_x and br_x for fixed width scanners
+	* doc/descriptions/canon_dr.desc: backend v19, update comments
+
+2009-03-21  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.h: backend v15 thru v18
+	- add byte-oriented duplex interlace code
+	- add RRGGBB color interlace code
+	- add basic support for DR-2580C, DR-2050C, DR-2080C, DR-2510C
+	- add more unknown setwindow bits
+	- add support for 16 byte status packets
+	- clean do_usb_cmd error handling (call reset more often)
+	- set status packet size from config file
+	- rewrite config file parsing to reset options after each scanner
+	- add config options for vendor, model, version
+	- dont call inquiry if those 3 options are set
+	- remove default config file from code
+	- add initial gray deinterlacing code for DR-2510C
+	- rename do_usb_reset to do_usb_clear
+	* doc/descriptions/canon_dr.desc: backend v18, update model status
+	* backend/canon_dr.conf.in: added better comments and new options
+
+2009-03-21  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_devices.c: Enable Motor again for combined
+	dark/bright calibration, fix calculation of pixel number used in
+	calibration
+	* backend/genesys_devices.c, backend/genesys_gl646.c,
+	backend/genesys_gl841.c, backend/genesys_low.h: Remove park_head
+	* backend/genesys_devices.c, backend/genesys_gl841.c: Calculate
+	shading coefficients using maximum input resolution available
+
+2009-03-21  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v91
+	- remove unused temp file code
+
+2009-03-20  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/hpljm1005.c: use private function instead of round() 
+
+2009-03-19  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_devices.c, backend/genesys.conf.in:
+	Add basic support for Visioneer XP100 rev 3 and USB IDs for
+	Syscan DocketPort 465
+
+2009-03-06 Louis Lagendijk  <llagendijk-guest at users.alioth.debian.org>
+	* backend/pixma_bjnp.c backend/pixma_bjnp.h
+	backend/pixma_bjnp_private.h backend/pixma_io_sanei.c:
+	Make bjnp protocol more resilient against packet loss and corruption
+	Changed timeout for all responses to be at least 10 seconds
+	Send all broadcasts for scanner detection 5 times
+	Made sure scanners are added to device list only once
+	Changed device-id for bjnp so it uses scanner hostname/ip-address
+	instead of mac address as this is more human friendly.
+	To make room, use scanner model instead of USB-id (which is bogus
+	for network scanners
+
+2009-03-17  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/desc/gt68xx.desc, backend/gt68xx.conf.in: add NeatReceipts
+	Mobile Scanner (from Kelly Price)
+
+2009-03-13  m. allan noah <kitno455 a t gmail d o t com>
+	* frontend/scanimage.c, doc/scanimage.man: make -B (buffer-size) 
+	selectable, and make long name consistent. (#309672 by Johannes Berg)
+
+2009-03-13  m. allan noah <kitno455 a t gmail d o t com>
+	* tools/sane-desc.c: remove 8859-1 chars from string cleaner,
+	enforce only printable ASCII on output
+
+2009-03-13  Ilia Sotnikov <hostcc@gmail.com>
+	* frontend/saned.c:
+	- Remove unnecessary 'res' variable assignment in check_host()
+	  (AF-indep version)
+
+2009-03-13 Julien Blache <jb@jblache.org>
+	* doc/descriptions-external/epkowa.desc: update for iScan 2.18.0,
+	from Olaf Meeuwissen.
+	* frontend/saned.c: rework Ilia's changes in
+	check_host(). Explicitly bind IPv6 addresses first, introduce
+	do_bindings_family() split off of do_bindings().
+
+2009-03-12  Ilia Sotnikov <hostcc@gmail.com>
+	* frontend/saned.c:
+	- Allow host checking to proceed if no local name was found
+
+2009-03-12  Ilia Sotnikov <hostcc@gmail.com>
+	* frontend/saned.c:
+	- Use hstrerror (h_errno) instead of strerror(errno) on gethostbyname()
+	  errors
+
+2009-03-12  Nicolas Martin <nicols-guest at users.alioth.debian.org> 
+	* doc/sane-pixma.man, doc/descriptions/pixma.desc:
+	  Added ImageClass MF4010 support in pixma backend docs.
+	* backend/pixma_imageclass.c:
+	  Removed ADF capability to ImageClass models without ADF
+	* backend/pixma.h, backend/pixma_common.c, backend/pixma_io_sanei.c:
+	  Added a PIXMA_EOF error return code
+
+2009-03-09 Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys.h backend/genesys_devices.c
+	  backend/genesys_gl646.c doc/descriptions/lexmark.desc: cleanups
+	  for genesys backend. Change in document detection for gl646
+	  sheetfed scanners.
+	  - lexmark backend description update
+
+2009-03-09 Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys_devices.c backend/genesys_gl646.c:
+	1200 dpi scan fix and head positionning fixes
+
+
+2009-03-07  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.c, backend/canon_dr.conf.in: backend version 14
+	- remove HARD_SELECT from counter (Legitimate, but API violation)
+	- attach to CR-series scanners as well
+
+2009-03-06 Louis Lagendijk  <llagendijk-guest at users.alioth.debian.org>
+	* backend/pixma_bjnp_private.h: disabled experimental/incomplete
+	button handling for bjnp protocol as it seems to cause problems
+	with xsane preview
+
+2009-03-06  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.c, backend/canon_dr.conf.in, 
+	  doc/descriptions/canon_dr.desc: backend version 13
+	- new vendor ID for recent machines
+	- add usb ids for several new machines
+	- DR-4010C reported good
+
+2009-03-05  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/umax1220u.c: set initial scan area dimensions to maximum
+
+2009-03-05 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in: Allow user to disable latex support; original
+	patch from Johnson Earls.
+
+2009-03-05  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions-external/epkowa.desc: update all broken urls
+
+2009-03-04  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/coolscan3.desc, doc/sane-coolscan3.man,
+	  doc/Makefile.in|am: add missing coolscan3 docs
+	* backend/dll.conf.in: # out epson and coolscan2, remove hpoj text
+	* doc/descriptions/epson2.desc: add Epson RX-620
+
+2009-03-03  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_gl841.c: Fix the generated generic gamma table.
+
+2009-02-28 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* tools/sane-config.in: Add space mistakenly removed during
+	last update.
+
+2009-03-03 Julien Blache <jb@jblache.org>
+	* doc/descriptions/epson.desc: add Epson RX-620 (0x04b8 0x0811),
+	reported by Heikki Kantola.
+
+2009-02-28 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* acinclude.m4, tools/sane-config.in: Add in missing libraries
+	to sane-config missed during fix to stop using LIBS to link everything.
+	Add back in code to move LDFLAGS out of $GPHOTO2_LIBS and into
+	GPHOTO2_LDFLAGS.
+
+2009-03-02 Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys_devices.c, backend/genesys_gl646.c: fix 400, 1200
+	and 2400 dpi scan modes for MD5345/MD6471
+
+2009-03-02 Julien Blache <jb@jblache.org>
+	* frontend/saned.c: work around backends that can't keep their
+	dirty fingers off stdin/stdout/stderr when run through inetd,
+	breaking the network dialog and crashing the remote net backend.
+
+2009-02-28 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* m4/byteorder.m4: Delete temporary file in all cases.
+	* backend/Makefile.am, japi/Makefile.am: Use BUILT_SOURCES
+	instead of dependency so that files are not compiled
+	during "dist" target.
+
+2009-02-28  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys.conf.in, backend/genesys_devices.c,
+	backend/genesys_gl841.c, backend/genesys_low.h: Add support for 
+	Ambir/Syscan DocketPORT 665
+	* backend/genesys.conf.in, backend/genesys_devices.c,
+	backend/genesys_low.h: Add support for Visioneer Roadwarrior
+	* backend/genesys_gl841.c: Adjust gl841 part to recent changes
+
+2009-02-27  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys.conf.in backend/genesys.h
+	backend/genesys_devices.c backend/genesys_gl646.c backend/genesys_gl841.c
+	backend/genesys_low.h: rewrite of gl646 internals to enable easy
+	scanner addition and better calibration process. Untested support for
+	hp3670. Use of id in genesys_devices structures to have more robust
+	descriptions.
+
+2009-02-25 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* acinclude.m4, backend/*.[ch], tools/*.[ch], frontend/*.[ch]:
+	Global replace of u_int??_t with C9x standard based uintxx_t
+	in order to remove some tricky and overlapping portability logic
+	from acinclude.m4 and leave it in only m4/stdint.m4.
+
+2009-02-24 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in, m4/stdint.m4: Update to latest version to
+	get latest fixes and use logic to not recreate _stdint.h if
+	no changes (to prevent unneeded recompiles).
+	* m4/byteorder.m4: Added support to reuse existing byteorder.h if
+	no changes to prevent timestamp causing a recompile.
+
+2009-02-24  m. allan noah <kitno455 a t gmail d o t com>
+	* frontend/scanimage.c: improved comments, simplified x/y option code,
+	removed buggy -1/+1 x/y code (#311172), expose non-settable options,
+	check for invalid caps on options, handle option descs with \n
+	* doc/releases.txt: add note about cvs checkout on alioth.
+
+2009-02-24  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/*.[ch]: more consistent #include "../include/sane/config.h"
+
+2009-02-24  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/Makefile.am/in, backend/xerox_mfp.conf.in: should use conf.in
+
+2009-02-23 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* backend/Makefile.am: Add back in deletion of $(sanelibdir)/libsane.*
+	for buggy libtools.  Add some minor documentation.
+	* doc/backend-writing.txt: Add minor document updates to reflect
+	conversions to automake.
+
+2009-02-23  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c, backend/fujitsu.conf.in,
+	doc/descriptions/fujitsu.desc, doc/sane-fujitsu.man: backend v90,
+	add S510M usb ID's, add fi-6010N to .desc
+	* backend/epjitsu.conf.in, doc/descriptions/epjitsu.desc,
+	doc/sane-epjitsu.man: add S300M usb ID's
+
+2009-02-23  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_devices.c, backend/genesys_gl841.c, 
+	backend/genesys_low.h: Add post_scan and eject_feed to struct 
+	Genesys_Model
+	* backend/genesys.c, backend/genesys_gl646.c,
+	backend/genesys_gl841.c: Move sanei_genesys_{start,stop}_motor into
+	chip specific sources
+	backend/genesys_gl841.c: Make start/stop_(motor, now)action
+	actually work, various warning cleanups
+
+2009-02-23 Jonathan Bravo Lopez <jkdsoft@gmail.com>
+	backend/hp3900_config.c: Fix area of negative/slide scans for
+	HP ScanJet G3110.
+
+2009-02-22 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* japi/Makefile.am: Add back -version-number to java library but
+	also add V_REV.
+	* backend/Makefile.am: Use variables to add libraries to backends
+	instead of direct substitution. Easier to touch up variables on
+	problem platforms then substitution.  Also, add back in creating
+	dll.d directory; missed during conversion.
+	* backend/genesys_gl841.c: Portablity fixes for strict
+	C compilers.
+
+2009-02-21 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* po/Makefile.am, configure.in: convert remaining directory,
+	po, to use automake.
+	* doc/Makefile.am: Get rid of unneeded gnu extensions to quieten
+	down autotools warnings.
+	* lib/getopt.c, lib/getopt1.c: Fix disabling getopt compile again.
+
+2009-02-20  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/avision.c: backend v290, fix reader_pid and NVRAM option
+	  issues, by Mattias Ellert.
+	* backend/fujitsu.c: backend v89, fi-4750 has no serial number support
+	* doc/descriptions/fujitsu.desc: backend v89, remove 'MAC/TWAIN' text
+	* doc/sane-fujitsu.man: backend v89
+	* backend/.cvsignore: ignore *.loT
+
+2009-02-01  Mattias Ellert <mattias.ellert@fysast.uu.se>
+	* tools/Makefile.am: Add missing liblib dependencies
+	* frontend/scanimage.c: Restore alloca include order
+
+2009-02-19 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in, Makefile.am, backend/Makefile.am: Have
+	configure define configdir so all makefiles can use
+	it (fixes bug introduce with sanei converted to automake).
+	Enable running testsuite during distcheck.
+	* japa/Makefile.am: Convert japi to automake.
+
+2009-02-19 Julien Blache <jb@jblache.org>
+	* configure.in: add --enable-libusb_1_0 and check for libusb-1.0
+	using pkg-config.
+	* sanei/sanei_usb.c: add support for libusb-1.0.
+	* tools/sane-find-scanner.c: add support for libusb-1.0.
+	* tools/check-usb-chip.c: compile as an empty file if libusb-1.0
+	is used.
+
+2009-02-18 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in, tools/Makefile.am: convert tools to automake.
+	Add tools/openbsd to distribution package.
+	* include/Makefile.am: include files should have been installed
+	under sane/ directory when converted to automake.
+	* doc/Makefile.am: Cleanup. Use automake's built in support to
+	install docs within subdirectories.
+	* Makefile.am, testsuite: Convert testsuite to automake.  Waiting 
+	for test backend bugfix before enabling this to run during "distcheck".
+
+2009-02-18 Julien Blache <jb@jblache.org>
+	* configure.in, configure: raise avahi-client dependency to
+	0.6.24, following a needed bugfix in this release.
+	* backend/net.c: do not lock the Avahi thread before stopping
+	it. It looks like it's no longer necessary to do so.
+	* frontend/saned.c: fix handling of Avahi server restart so it
+	actually works.
+
+2009-02-14 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in, doc/Makefile.am, frontend/Makefile.am, 
+	include/Makefile.am, sanei/Makefile.am, tools/Makefile.am:
+	convert frontend, include, and sanei directories to use
+	automake.  Only reference libsanei.la now. Use am_conditional
+	to compile sanei_jpeg.lo.  distcheck now runs sanei/wire_test.
+
+2009-02-13 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* Makefile.am, configure.in, doc/Makefile.am: Convert
+	doc/Makefile to use automake. Main difference is that
+	no longer installs man pages for backends that are not
+	compiled.  Moved install ownership of $top_srcdir docs
+	to $top_srcdir's Makefile.
+
+2009-02-06 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in, backend/Makefile.am: Add back change to
+	use -version-number even though its known not to work on
+	some platforms (OS/2). -version-info results in a variety of
+	version numbers in soname based on platform and would not
+	be easily mappable back to values currently return by
+	each backend's sane_init().  ltmain.sh will need to be
+	hand patched for any known issues.
+
+2009-02-08  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_gl841.c: Remove "init device" usb request.
+	* backend/genesys_gl841.c, backend/genesys_devices.c,
+	backend/genesys_low.h: Add support for uncalibrated scans in all
+	modes for Visioneer Strobe XP300. Front- and backside are
+	side-by-side, backside mirrored horizontally.
+	* doc/descriptions/genesys.desc: Added XP300 to the genesys
+	desc file.
+
+2009-02-06 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in, backend/Makefile.am: Add back in support for
+	optionally linking in sanei_jpeg.lo under backend directory; 
+	but using configure and not with GNU make extensions.
+	Move back to libtool's -version-info instead of -version-number
+	because the later has known bugs on platforms such as OS/2.
+
+2009-02-04 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in, acinclude.ac: Cleanup autoconf 2.63 warnings.  
+	add cv_ prefix to cached variable.  Remove AC_ARG_PROGRAM as
+	automake already invokes this. When prefered AC_USE_SYSTEM_EXTENSIONS
+	exists, use that instead of AC_GNU_SOURCE/AC_AIX/AC_MINUX.
+	Cleanup socket detection more by creating only a single
+	SOCKET_LIBS that contains list of all optional libraries
+	for any socket related funciton.  Make sure that checks
+	for socket related functions use SOCKET_LIBS when searching.
+	Check for getopt_long() and getopt.h.  Make OS/2 use
+	-no-undefined (same as windows).
+	* ltmain.sh, m4/libtool.m4: Upgrade to libtool 1.5.26.
+	* Makefile.am: Cleanups to match configure updates.
+	* frontend/scanimage.c, include/Makefile.in, lib/getopt.c
+	lib/getopt1.c, toosl/sane-desc.c, include/lgetopt.h:
+	Rename internal getopt.h to lgetopt.h to allow using
+	external getopt.h when it exists.  This allows to go
+	back to optionally compiling getopt()/getopt_long() and its 
+	prototypes and not have conflicts with external headers/symbols.
+
+2009-02-04  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* doc/sane-pixma.man doc/descriptions/pixma.desc: 
+	Added ImageClass MF4120 support in pixma backend docs.
+
+2009-02-03 Julien Blache <jb@jblache.org>
+	* tools/sane-desc.c: filter out unsupported/unknown models from
+	output (udev/hal).
+
+2009-02-02  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_common.c backend/pixma_common.h /backend/pixma_imageclass.c
+	backend/pixma_mp150.c backend/pixma_mp730.c backend/pixma_mp750.c:
+	Change ALIGN macro name to ALIGN_SUP for PPC compatibility.
+	Some cosmetic changes to source code alignment.
+
+2009-02-01 Alex Belkin <abc@telekom.ru>
+	* backend/xerox_mfp.c backend/xerox_mfp.h:
+	Proper handling of parameters (to fix xsane crash).
+	* backend/xerox_mfp.conf doc/descriptions/xerox_mfp.desc:
+	Added Dell MFP 1815dn.
+
+2009-02-01 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* aclocalm4: fix prototype of internal strcasestr and usleep.
+	* configure.in: Group all USB logic together and all SCSI
+	logic together to aid understanding of whats no longer
+	valid.  Allow sharing enable/disable options between all 
+	USB drivers on multiple platforms.  Combined CAM_LIBS and 
+	SCSI_LIBS since they are mutually exclusive.  
+	Skip some USB/SCSI checks when previous tests show it will always fail.
+	* backend/Makefile.am, tools/Makefile.in: Combine CAM_LIBS and 
+	SCSI_LIBS. Add missing SOCKET_LIBS to epson2.  Add USB_LIB.
+	* saned.c: Add limits.h for PATH_MAX.
+
+2009-02-01  Mattias Ellert <mattias.ellert@fysast.uu.se>
+	* acinclude.m4, backend/Makefile.am: Restore the removed
+	DYNAMIC_FLAG configuration.
+	* acinclude.m4, sanei/sanei_jpeg.c: Don't compile sanei_jpeg
+	if libjpeg is unavailable.
+	* backend/canon_dr.c, backend/hs2p-scsi.c, backend/xerox_mfp.c:
+	format fixes.
+	* backend/hs2p.c: fix missing return.
+	* backend/canon630u-common.c: avoid redefinition warning.
+
+2009-01-31 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* backend/Makefil.am: Add missing math library to coolscan2
+	and coolscan3.
+	* acinclude.m4, configure.in: Define JPEG objects based on
+	existence of JPEG library and not on the dc* backends alone
+	since more backends then that use JPEG support.
+
+2009-01-30 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* frontend/saned.c: Replace usage of getgrouplist() with
+	getgrent() and friends.  getgrouplist is not posix and not
+	on several platforms including cygwin.
+	* acinclude.m4, configure.in:  Put all libraries into their
+	own *_LIB variables instead of $LIB so that we do not have to 
+	link in the world to all executables. Modified SANE_CHECK_U_TYPES
+	to be a little more portable to platforms that use #define
+	for u_* types. Create SANE_CHECK_BACKENDS macro so that
+	PRELOADABLE_BACKENDS can also be valided.  Auto-populated
+	PRELAODABLE_BACKENDS when detect dlopen() won't work.
+	Various protability cleanups.
+	* backend/dll.c: Make dll-preload.c a .h since its an include and
+	not compilable byitself.
+	* frontend/Makefile.in, frontend/scanimage.c, include/laaloca.h,
+	lib/Makefile.am, lib/alloca.c, strcasestr.c, tools/Makefile.in,
+	tools/sane-desc.c: Convert lib/ to automake.  Create a liblib.la
+	for everyone to use and a libfelib.la for only frontend programs.
+	Make all internal programs be prefixed with sanei_ as not to conflict
+	with other programs libsane is linked in with that will also most
+	likely create similar internal utils on problem platforms.
+	* include/getopt.h, lib/getopt.c, lib/getopt1.c: Always compile
+	and link in getopt_long() but prefix it with sanei_.  Its
+	easier to always use internal version then try to figure out what
+	platforms support getopt_long() and what header files to use.
+	* backend/Makefile.am: Convert backend makefile to automake.
+	Initial version that is feature parity with original but uses
+	specific rules instead of wildcards and only links in libraries/objs
+	really required. Room for more cleanup of whats linked in once
+	all makefiles have been converted to automake.
+
+2009-01-29 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* backend/epson2.c backend/pixma_bjnp.c, include/sane/sanei_backend.h,
+	sanei/sanei_tcp.c, sanie/sanei_udp.c: Improve portablity by
+	removing usage of MSG_WAITALL since not all platforms support
+	that (cygwin).  Default is to be blocking anyways.  Changed
+	usage of MSG_NOTWAIT to use fcntl() function as needed as well.
+	* configure.in, lib/Makefile.in, lib/strcasestr.c: Add internal
+	strcasestr() for platforms missing it (cygwin).
+	* pixma_common.c: Make source match header prototype for picky
+	compilers (cygwin).
+	* backend/umax_pp_mid.c: Allow BACKEND_NAME to be filename
+	yet debug to be SANE_DEBUG_UMAX_PP to match man page. 
+
+2009-01-28 Julien Blache <jb@jblache.org>
+	* doc/descriptions/epson.desc: added :scsi data for the GT-7000
+	and Perfection1200S. Patch from Dieter Jurzitza.
+
+2009-01-27 Louis Lagendijk  <llagendijk-guest at users.alioth.debian.org>
+	* backend/pixma_bjnp.c: fixed bug that caused scanner discovery to
+	fail when it encountered a point to point link (check data returned
+	by getifaddrs()
+
+2009-01-26 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* configure.in: Add AM_MAINTAINER_MODE to disable regenerating
+	configure files.  This was behavior of Makefiles before automake
+	and works around various timestamp issues.
+
+2009-01-25  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_gl841.c: Change status code for locked head to 
+	SANE_STATUS_HW_LOCKED
+	
+2009-01-21  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/canon_dr.desc: correct version, status = new
+	* doc/descriptions/epjitsu.desc, doc/descriptions/fujitsu.desc: version
+	* doc/descriptions/umax1220u.desc: correct status of 1600U
+	* doc/descriptions/xerox_mfp.desc: status = new
+
+2009-01-23 Julien Blache <jb@jblache.org>
+	* doc/descriptions-external/epkowa.desc: Update for iScan 2.16.0,
+	from Olaf Meeuwissen.
+
+2009-01-22 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* Makefile.in: Submit Makefile.in from Makefile.am submitted
+	previously.
+	* backend/epson.c, backend/epson_scsi.c, backend/epson2_net.c,
+	backend/epson2_scsi.c, backend/genesys_gl646.c,
+	backend/genesys_gl841.c, backend/lexmark_low.c, backend/rts88xx_lib.c,
+	backend/umax_pp.c, backend/umax_pp_low.c, backend/umax_pp_mid.c,
+	doc/Makefile.in, doc/sane-epson.man, doc/sane-epson2.man:
+	Updated backends with EXTRA_* files to allow Makefile's
+	to always pass in BACKEND_NAME to be fixed to backend name
+	instead of filename; while still making sure that
+	SANE_DEBUG_${BACKEND}* exist as documented in man pages. 
+	Add references to epson and epson2 man pages about
+	SANE_DEBUG_EPSONx_SCSI and _NET options.
+	Created an epson2 man page; based mostly on epson page.
+	* backend/stubs.c: Currently, compiling stubs.c requires its
+	own compile rule simply to pass in -DSTUBS.  Since its always
+	required, just define it in stubs.c
+
+2009-01-22  Stéphane Voltz <stef.dev@free.fr>
+	* doc/Makefile.in doc/descriptions/genesys.desc : added the rts8891
+	man page to the generation and install . added XP200 to the genesys
+	desc file.
+
+2009-01-21 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* Makefile.am, lib/Makefile.in: Run all libcheck tests before
+	failure and look for both static and shared libraries.
+	Fixed $srcdir typo in lib/Makefile.in.
+
+2009-01-21  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/epjitsu.[ch], backend/fujitsu.[ch]:
+	- dont export private symbols
+
+2009-01-19  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions-external/brother2.desc: add MFC-7840W
+
+2009-01-19  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* pixma_imageclass.c:
+	Fixed select_source message length, and typo bug in last update.
+	Set MP4600 series for inverted checksumming. 
+
+2009-01-19  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys.conf.in backend/genesys.h
+	backend/genesys_devices.c backend/genesys_gl646.c 
+	backend/genesys_gl841.c backend/genesys_low.h: add support for
+	uncalibrated scans in all modes for Visioneer Strobe XP200. Add
+	support for buttons for MD5345/HP2300 and XP200
+
+2009-01-18  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/unsupported.desc: everything reported from 
+	2008-07 to 2009-01
+
+2009-01-18  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_low.h: Fix prototype of update_hardware_sensors.
+	Make half-ccd mode optional.
+	* backend/genesys_gl841.c: Make dpihw depend on sensor pixel count 
+	instead of sensor resolution. Make some Canon LiDE 35 specific
+	gpio handling conditional, add missing SCANMOD shift. Make
+	half-ccd mode optional. Reenable clock register setup from sensor
+	struct, set SCANMOD.
+	* backend/genesys_devices.c: Make half-ccd mode optional.
+	Reenable clock register setup from sensor struct, set SCANMOD.
+
+2009-01-17  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* pixma_mp150.c:
+	Fixed "Busy mode" exit processing. 
+
+2009-01-17 Julien Blache <jb@jblache.org>
+	* doc/descriptions/hp.desc: add SCSI identifiers for the ScanJet
+	IIc, from Daniel Golle (sane-devel, 20061105).
+	* frontend/scanimage.c: make batch mode create output files
+	atomically. Patch by Simon Matter <simon.matter@invoca.ch>.
+
+2009-01-16 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* .cvsignore, Makefile.in, aclocal.m4, config.sub, configure,
+	configure.in, backend/cvsignore, include/Makefile.in,
+	include/sane/config.h.in, INSTALL, Makefile.am, missing:
+	Convert top-level Makefile to be generated by automake.
+	"dist" target now includes m4 directory. Updated "libcheck"
+	target to look at dynamic libraries instead of static.
+
+2009-01-16 Chris Bagwell <cbagwell-guest at users.alioth.debian.org>
+	* doc/Makefile.in, frontend/Makefile.in, include/Makefile.in,
+	japi/Makefile.in, lib/Makefile.in, po/Makefile.in, 
+	sanei/Makefile.in, testsuite/Makefile.in, tools/Makefile.in,
+	backend/Makefile.in:
+	Updates to Makefiles to prepare for transition to automake.
+	Fix a few bugs with "all" and "uninstall" targets to work when
+	$(builddir) != $(srcdir).  Added $(DESTDIR) to uninstall target.
+	Made $(distdir) related to current directory to match automake.
+
+2009-01-16  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys.c, backend/genesys.h, backend/genesys_devices.c,
+	backend/genesys_gl646.c, backend/genesys_gl841.c, 
+	backend/genesys_low.h: Add support for buttons on 
+	Canon LiDE 35/40/50.
+
+2009-01-15  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* doc/sane-pixma.man, doc/descriptions/pixma.desc, 
+	pixma_mp150.c, AUTHORS:
+	Updated docs and comments in pixma backend. 
+	Added Dennis Lou to pixma backend authors
+
+2009-01-13 Louis Lagendijk  <llagendijk-guest at users.alioth.debian.org>
+        * AUTHORS: added myself as co-responsible for pixma backend
+
+2009-01-15  Alessandro Zummo <a.zummo@towertech.it>
+	* backend/epson2.c: do not use request_identity2 with
+	networked scanners, fixed generation of resolution
+	list.
+
+2009-01-13 Louis Lagendijk  <llagendijk-guest at users.alioth.debian.org>
+        * backend/pixma_bjnp.c: send broadcasts from bjnp port to make
+        firewalling easier
+
+2009-01-13 Julien Blache <jb@jblache.org>
+	* tools/sane-desc.c: replace opencoded device permissions and
+	ownership by proper definitions. Group USB devices by vendor in
+	the HAL FDI output. Replace obsolete SYSFS{} key by the newer
+	ATTR{} key in the udev output. Add a new :scsi keyword for SCSI
+	devices, add support for SCSI devices in the udev and HAL FDI
+	outputs.
+	* doc/descriptions/hp.desc, doc/descriptions/epson.desc: add :scsi
+	keyword to a handful of SCSI scanners known to advertise
+	themselves as type "Processor".
+
+	All of the above based on a patch contributed by Dieter Jurzitza.
+
+2009-01-10  m. allan noah <kitno455 a t gmail d o t com>
+	* sanei/sanei_usb.c: rescan usb every time sanei_usb_init() is called
+	- remove missing devices, add new devices to global lists
+	- based on code from stef.dev@free.fr
+
+2009-01-10  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.h: backend v11
+	- send_panel() can disable too
+	- add cancel() to send d8 command
+	- call cancel() only after final read from scanner
+	- stop button reqests cancel
+
+2009-01-10 Jeremy Johnson <jeremy a t acjlaw dot net>
+	* backend/hs2p.c: replaced ulong with u_long, 
+	added static keyword for SANE_Status update_hs2p_data()
+
+2009-01-06 Jonathan Bravo Lopez <jkdsoft@gmail.com>
+	* backend/hp3900_sane.c, backend/hp3900_config.c,
+	  backend/hp3900_types.c, backend/hp3900.conf.in, doc/sane-hp3900.man,
+	  doc/descriptions/hp3900.desc:
+	  Added support for HP Scanjet G3110 scanner.
+
+2009-01-05 Jeremy Johnson <jeremy a t acjlaw dot net>
+	Added code to read_data() to pad image data to
+	requested length and to zero out any garbage using
+	information from sense data command. Added new
+	MAINTENANCE_DATA struct and options to display
+	scanner's maintenance/callibration statistics.
+	*backend/hs2p.h
+	- added enum CONNECTION_TYPES
+	- added HS2P_DATA struct
+	- added SENSE_DATA struct to struct HS2P_Device
+	- added SANE_String_Const orientation_list[]
+	- added macros isset_ILI() and isset_EOM()
+	*backend/hs2p-scsi.h
+	- replaced request_sense struct with SENSE_DATA struct
+	- added #define DATA_TYPE_EOL (va_list sentinel)
+	- added MAINTENANCE_DATA struct
+	*backend/hs2p-saneopts.h
+	- added OPT_ORIENTATION
+	- added MAINTENANCE_DATA options
+	*backend/hs2p.c
+	- added MAINTENANCE_DATA options
+	- added unused connType to attach()
+	- added update_hs2p_data() to fill in options
+	- added hs2p_open() and hs2p_close()
+	- added get_hs2p_data() to read scanner data
+	- added print_maintenance_data()
+	- modified sane_control_options() to
+	  accomodate new maintenance options and to
+	  handle Portrait/Landscape option
+	  replaced adf_status macro with s->data.adf_status
+	- modified sane_read() to correctly zero out the
+	  missing bytes on an incomplete read and to pad
+	  to the requested length
+	*backend/hs2p-scsi.c
+	- replaced request_sense() with get_sense_data()
+	- added print_sense_data()
+	- added SENSE_DATA *sdp to sense_handler()
+	- modified read_data() to handler other data type codes/qualifiers
+	- read_adf_status() now is replaced with call to 
+	  read_data(fd,*buf,*bufsize,dtc,dtq)
+
+2009-01-04  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* doc/sane-pixma.man, doc/descriptions/pixma.desc:
+	Updated doc for pixma backend (ImageClass)
+
+2008-12-31  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c: restored warming up broken by a previuos commit
+
+2008-12-28  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_imageclass.c:
+	Change to include different checksumming for MF41xx and MF42xx series
+
+2008-12-26  Alessandro Zummo <a.zummo@towertech.it>
+	* backend/epson2.c: changed version code,
+	added protection from wrong settings.
+
+2008-12-21  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v87
+	- accept null pointer as empty device name
+	- track frontend reading sensor/button values to reload
+	- deactivate double feed options if df-action == default
+
+2008-12-21  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* doc/descriptions/pixma.desc, doc/sane-pixma.man, 
+	backend/pixma_mp150.c:
+	MP800/MP800R: Fixed bug and color planes shift issues, added TPU support
+	for 48 bits images depth up to 1200 dpi.
+	MP980: following a user feedback, declared as working.
+	Doc and man pages updated.
+
+2008-12-18  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v86
+	- get_pixelsize() sets back window ID for back side scans
+	* doc/sane-fujitsu.man, doc/descriptions/fujitsu.desc: backend v86
+
+2008-12-17  Julien Blache <jb@jblache.org>
+	* backend/v4l.c: unmap mapped buffer in sane_cancel(). Use libv4l1
+	for v4l device access, buys us some support for v4l2 devices for
+	free thanks to libv4l1, libv4l2 and libv4lconvert.
+	* configure.in, configure: check for libv4l1 availability.
+
+2008-12-15  Alex Belkin <abc@telekom.ru>
+	* AUTHORS, configure, configure.in, backend/Makefile.in,
+	backend/xerox_mfp.c, backend/xerox_mfp.h, doc/Makefile.in,
+	doc/descriptions/xerox_mfp.desc, doc/sane-xerox_mfp.man:
+	Initial commit ot xerox_mfp backed.
+
+2008-12-12  Julien Blache <jb@jblache.org>
+	* frontend/saned.c: add a data_portrange config file option to
+	saned to specify a port range for the data connection. Based on a
+	patch contributed by Oren Held.
+	* backend/saned.conf.in: add the data_portrange option to the
+	config file and rework the comments.
+	* doc/saned.man: document the data_portrange option.
+
+2008-12-11  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c doc/sane-rts8891.man doc/descriptions/rts8891.desc:
+	  scan register setting fix, documentation update
+
+2008-12-10  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v85
+	- round pixels_per_line down to arbitrary limits for fi-4990 & fi-4860
+	- fi-4860 returns random garbage to serial number queries
+	- initialize *info to 0 in sane_control_option()
+	* doc/descriptions/fujitsu.desc: backend v85, improve status/comments
+	* frontend/scanimage.c: initialize *info, fix buffer overwalk
+
+2008-12-10  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.c: backend v10
+	- add all documented request sense codes to sense_handler()
+	- fix color jpeg (remove unneeded BGR to RGB swapping code)
+	- add macros for LUT data
+	* backend/canon_dr.conf.in: add DR-2080C usb ID
+	* doc/descriptions/canon_dr.desc: backend v10, add DR 3020
+
+2008-12-08  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.h: backend v9
+	- add rollerdeskew and stapledetect options
+	- add rollerdeskew and stapledetect bits to ssm_df()
+	* doc/descriptions/canon_dr.desc: backend v9
+
+2008-12-08  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/avision.c: backend v289
+	- fix sending SIGTERM when reader_pid == 0
+
+2008-12-07  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.h: backend v8
+	- rename read/send_counter to read/send_panel
+	- enable control panel during init
+	- add options for all buttons
+	- call TUR twice in wait_scanner(), even if first succeeds
+	- disable rif
+	- enable brightness/contrast/threshold options
+	* doc/descriptions/canon_dr.desc, doc/sane-canon_dr.man: backend v8
+
+2008-12-06 Louis Lagendijk <llagendijk-guest at users.alioth.debian.org>
+	* backend/pixma_bjnp.c pixma_bjnp_private.h: 
+	  replaced getlogin/getenv by getpwuid(geteuid)
+
+2008-12-06 Louis Lagendijk <llagendijk-guest at users.alioth.debian.org>
+	* backend/pixma_bjnp.c pixma_bjnp_private.h: 
+	  On Ubuntu getlogin() returns NULL. So we now first try getlogin()
+	  and if that fails, we try getenv("USER") and if that fails we use
+	  a default user string
+
+2008-12-03  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891_low.c: possible fix for
+	  failed scan at 300 and 1200 dpi for HP4400, sensor type 2.
+
+2008-12-01  Julien Blache <jb@jblache.org>
+	* sanei/sanei_usb.c: fix assignment in if clause, reported on
+	sane-devel.
+
+2008-11-30  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* doc/descriptions/pixma.desc, doc/sane-pixma.man:
+	MP620 supported by pixma backend confirmed, doc and man pages updated.
+
+2008-11-29  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch]: backend v7
+	- jpeg support (size rounding and header overwrite)
+	- call object_position(load) between pages even if buffering is on
+	- use request sense info bytes on short scsi reads
+	- byte swap color BGR to RGB
+	- round image width down, not up
+	- round image height down to even # of lines
+	- always transfer even # of lines per block
+	- scsi and jpeg don't require reading extra lines to reach EOF
+	- rename buffer option to buffermode to avoid conflict with scanimage
+	- send ssm_do and ssm_df during sane_start
+	- improve sense_handler output
+	* doc/descriptions/canon_dr.desc: backend v7
+
+2008-11-29  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.c: backend v6
+	- fix adf simplex
+	- rename ssm_duplex to ssm_buffer
+	- add --buffer option
+	- reduce inter-page commands when buffering is enabled
+	- improve sense_handler output
+	- enable counter option
+	- drop unused code
+	* doc/descriptions/canon_dr.desc: backend v6
+
+2008-11-26  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/*.[ch]: nearly every backend used V_MAJOR
+	instead of SANE_CURRENT_MAJOR in sane_init()
+	* backend/snapscan.c: remove EXPECTED_VERSION check
+	since new SANE standard is forward compatible
+
+2008-11-25  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.c,
+	doc/descriptions/canon_dr.desc: backend v5
+	- remove EOF ejection code
+	- add SSM and GSM commands
+	- add dropout, doublefeed, and jpeg compression options
+	- disable adf backside
+	- fix adf duplex
+	- read two extra lines (ignore errors) at end of image
+	- only send scan command at beginning of batch
+	- fix bug in hexdump with 0 length string
+	- DR-7580 support
+
+2008-11-25  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma.c:
+	Fixed regression bug at end of scan for all PIXMA, noticeable 
+	in multipage ADF scan.
+
+2008-11-23  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, sane-backends/po/sane-backends.fr.po, 
+	doc/descriptions/pixma.desc, doc/sane-pixma.man:
+	Support for MP630 in pixma backend.
+	Updated docs for MP630, and network interface to various PIXMA models
+	in pixma.desc.
+	Fixed some typos in French translations.
+
+2008-11-20  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: fixes 'commit scan value' for HP4400.
+
+2008-11-20  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: calibration fixes for HP4400 sensor type 3.
+
+2008-11-18  Alessandro Zummo <a.zummo@towertech.it>
+	* backend/epson2.c: fixed bug when an extended command
+	was used with D8 level scanners. bug reported
+	by Kare Sars <kare.sars@kolumbus.fi>
+
+2008-11-17  Gerhard Jaeger <gerhard@gjaeger.de>
+	* doc/descriptions-external/epkowa.desc:
+	  iscan 2.14.0 updates on behalf of olaf.meeuwissen@avasys.jp
+
+2008-11-12  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: sensor detection fix. Lamp setting
+	  change for HP4400 sensor type 3.
+
+2008-11-11  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.c: backend v4
+	- eject document when sane_read() returns EOF
+
+2008-11-09  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/canon_dr.[ch], backend/canon_dr-cmd.h, doc/sane-canon_dr.man,
+	  backend/canon_dr.conf.in, doc/descriptions/canon_dr.desc:
+	- New Canon DR-series backend v3
+	- support all modes and resolutions of DR-9080C
+	- advanced options (MF detection, compression) not yet supported
+	- other larger models believed similar, smaller ones unknown
+	* doc/descriptions/unsupported.desc: remove Canon DR-series machines
+
+2008-11-07  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c: backend v84
+	- round lines down to even number to get even # of total bytes
+	- round binary bpl and Bpl down to byte boundary
+
+2008-11-06  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c: backend v83
+	- round binary bpl and Bpl up to byte boundary
+	- use s->params instead of user data in set_window()
+	- read_from_scanner() only grabs an even number of lines
+
+2008-10-31  Louis Lagendijk <llagendijk-guest at users.alioth.debian.org>
+	* Pixma backend (pixma.c/pixma_common.c/pixma_io_sanei.c/pixma_bjnp.c):
+	  bjnp tcp connection is now de-activated after initialization and
+	  re-activated at start of scanning. If we do not do this, the scanner
+	  closes its side of the connection after 30 secods of inactivity.
+	  Added a maximum to the retry of slect calls when signals are
+	  received
+	  Added blocksize detection for tcp read_bulk call
+
+2008-11-04  m. allan noah <kitno455 a t gmail d o t com>
+	* sanei/sanei_usb.c, include/sane/sanei_usb.h:
+	- shorten debug lines to fit in 80 chars
+	- add sanei_usb_clear_halt() required by upcoming canon_dr backend
+
+2008-10-31  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h,
+	  backend/fujitsu.conf.in, doc/descriptions/fujitsu.desc: backend v82
+	- improved front-side endorser vpd detection
+	- send scanner_control_ric during sane_read of each side
+	- add fi-6770A and fi-6670A USB ID's
+
+2008-10-31  Louis Lagendijk <llagendijk-guest at users.alioth.debian.org>
+	* backend/pixma_bjnp.c: corrected small typo
+
+2008-10-31  Louis Lagendijk <llagendijk-guest at users.alioth.debian.org>
+	* backend/pixma_bjnp.c:
+	   Added retry to select() calls when they get interrupted by a
+	   signal. This solves problems in xsane after a first scan completed.
+	   There is still an issue that scanner closes tcp connection after
+	   30 seconds of inactivity
+	   backend/pixma_bjnp.c backend/bjnp_private.h
+	   Marked local functions as static and removed them from ..private.h
+
+2008-10-31  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891_low.c backend/rts8891_low.h:
+	  added 600 and 1200 dpi scan for HP4400 and HP4470 with 'xpa' 
+	  sensor.
+
+2008-10-25  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, doc/sane-pixma.man doc/descriptions/pixma.desc:
+	Tweaks for TPU scan at 4800 dpi, and MP810 at 2400 dpi (now works).
+	Updated docs around that.
+
+2008-10-25  Louis Lagendijk  <llagendijk-guest at users.alioth.debian.org>
+	* Added configuration file support for pixma backend
+	Currently used only for configuration of network scanners.
+
+2008-10-22  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma.c, backend/pixma_io_sanei.c, backend/pixma_mp150.c:
+	TPU scanning in 48 bits mode now works fine on MP970, with Xsane or
+	scanimage.
+	Changed also minimum to 300 dpi for TPU scan, so that preview now works
+	in Xsane.
+	Added Legal paper dimensions (14") to ADF scan for MX850 and MX7600.
+	The rest is cosmetic only.
+
+2008-10-21  Louis Lagendijk <llagendijk-guest at users.alioth.debian.org>
+	* Added #ifdef around defintions of MIN and MAX in pixma_common.h 
+	- Re-enable includes in pixma_bjnp.c as they are needed on Freebsd
+	- Replaced getaddrinfo by gethostbyname in pixma_bjnp.c as this is 
+	  supported on OS/2 as well
+
+2008-10-21  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/fujitsu.desc: backend v81, fix fi-6240 usb id
+
+2008-10-20  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h: backend v81
+	- increase USB timeouts
+	- enable get_pixelsize() to update scan params after set_window()
+	- remove even_scan_line hack
+
+2008-10-19  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* configure.in, configure, backend/pixma_bjnp.c,
+	backend/pixma_bjnp.h, backend/pixma_bjnp_private.h,
+	pixma.h, doc/descriptions/pixma.desc:
+	From Louis Lagendijk for bjnp protocol on pixma backend, add a header
+	check for ifaddrs.h  (necessary on different platforms BeOS, OS/2, ...)
+	Increment pixma backend version number.
+
+2008-10-15  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: added 300 dpi scan for HP4400
+
+2008-10-15  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: fixed HP4400 sensor detection, added 150
+	  dpi scan mode for HP4400
+
+2008-10-14  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma*.c, backend/pixma*.h (all pixma backend files),  
+	doc/sane-pixma.man, doc/description/pixma.desc, 
+	backend/Makefile.in
+	Added 3 new files backend/pixma_bjnp.c, backend/pixma_bjnp.h, 
+	backend/pixma_bjnp_private.h:
+	- Thanks to Louis Lagendijk, added an implementation of Canon's BJNP
+	network protocol to the pixma backend, for scanning with PIXMA devices
+	over a LAN network.
+	- Fix for ADF scan reset session when ADF is loaded with more pages 
+	to scan than the frontend requests.
+	- Updated pixma backend documentation and file headers.
+
+2008-10-09  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/fujitsu.desc, doc/sane-fujitsu.man: backend v80
+
+2008-10-08  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c: backend v80
+	- front-side endorser uses data ID 0x80
+
+2008-10-06  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891.h: fixed configuration option
+	  bug
+
+2008-10-04  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma.c, backend/pixma.h, backend/pixma_common.c, 
+	backend/pixma_io_sanei.c, backend/pixma_mp150.c, 
+	doc/sane-pixma.man, doc/description/pixma.desc:
+	MP970 scanning improvements, up to 4800 dpi. On the way soon, 
+	network BJNP protocol designed by Louis Lagendijk to be added to CVS.
+	MX7600 reported to work fine with the backend.
+	ADF scanning: 
+	- improved for latest PIXMAs like MX850, MX310.
+	- bug fix in Sane_start, when scanning several pages with ADF.
+	ADF DUPLEX scanning:
+	- new code for ADF Duplex, (to be tested) based on a MX850 Snoop. Changes
+	might fit also MP830 (To be confirmed).
+	TPU scanning:
+	- MP970 TPU scanning: Protocol works, get scanned TPU images with 48 bits
+	to 24 bits conversion, full 48 bit version yet to be debugged.
+
+2008-10-03  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/epjitsu.[ch]: backend v17:
+	- increase scan height ~1/2 inch due to head offset
+	- change page length autodetection condition
+
+2008-10-03  Stéphane Voltz <stef.dev@free.fr>
+	* include/sane/sane.h: added a SANE_CURRENT_MINOR define 
+
+2008-10-02  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891.h backend/rts8891_low.h: 
+	add a 'sensornumber' option to override detected sensor model
+
+2008-10-02  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions-external/epkowa.desc:
+	- iscan 2.12.0 updates from olaf.meeuwissen@avasys.jp
+
+2008-10-01  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/fujitsu.desc, backend/fujitsu.conf.in,
+	  backend/fujitsu.[ch], backend/fujitsu-scsi.h: backend v79
+	- add usb ids for several models
+	- print additional hardware capability bits
+	- detect front-side endorser
+	- disable endorser-side controls if only one side installed
+	- add quirks for fi-6x70
+
+2008-10-01  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/epjitsu.[ch]: backend v16:
+	- split fill_frontback_buffers_S300 into 3 functions
+	- enable threshold-curve option
+	- add 1-D dynamic binary thresholding code
+	- remove y-resolution option
+	- pad 225x200 data to 225x225
+
+2008-10-01  Gerhard Jaeger <gerhard@gjaeger.de>
+	* doc/descriptions/plustek.desc: Added entry for UT12 devid 0x0013
+	* doc/descriptions/unsupported.desc: Removed entry for UT12 devid 0x0013
+	* doc/descriptions/gt68xx.desc: Added entry for OpticSlim 2400plus
+	* backends/gt68xx.conf.in: Added entry for OpticSlim 2400plus
+
+2008-09-26  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891_low.c: fix HP4400 head parking
+
+2008-09-25  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/epjitsu.[ch], backend/epjitsu-cmd.h: backend v 13, 14 and 15:
+	- add working page-height control
+	- add working brightness, contrast and threshold controls
+	- add disabled threshold curve and geometry controls
+	- move initialization code to sane_get_devices, for hotplugging
+	- support S300 on USB power
+	- support S300 225x200 and 600x600 scans
+	- support for automatic paper length detection (parm.lines = -1)
+	- expose hardware buttons/sensors as options for S300
+	* doc/descriptions/epjitsu.desc: change S300 status to good
+
+2008-09-25  m. allan noah <kitno455 a t gmail d o t com>
+	* include/sane/saneopts.h: underscore not allowed in option names
+	* frontend/scanimage.c: fix broken unknown length (-1) binary scans,
+	  fix invalid tiff height with unknown length scans, fix compiler warn 
+
+2008-09-20  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: fix typo in HP4400 variant detection
+
+2008-09-20  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891_low.c backend/rts8891_low.h: more
+	fix for HP4400 head parking, 75 dpi support for another HP4400 sensor
+	variant, better variant detector and initial setting
+
+2008-09-13  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, doc/sane-pixma.man, doc/description/pixma.desc:
+	Changes in pixma backend for PIXMA MP970 at 4800 dpi (to be continued).
+	Declare MX7600 but yet untested.
+
+2008-09-11  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891_low.c backend/rts8891_low.h: fix
+	parking for HP4400, tune dark calibration for HP4400
+
+2008-09-07  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c backend/pixma_imageclass.c backend/pixma_common.h
+	doc/sane-pixma.man doc/descriptions/pixma.desc:
+	- Updated doc for MF4140, MF4150 and MP810
+	- Remove white lines previously padded to image bottom for CCD sensors
+	- Modified scan area adjustments to enhance frontend area selection fit
+	but to be confirmed that it does not bring backward compatibility issues.
+
+2008-09-03  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891_low.c backend/rts8891_low.h
+	  backend/rts88xx_lib.c: minor changes for hp4400 support
+
+2008-09-02  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c:
+	Some tweaks to have PIXMA MP810 supported by the pixma backend.
+
+2008-08-29  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys_gl646.c backend/genesys_devices.c:
+	- move to configuration framework
+	- fix GL646 GPO value usage
+	- HP2400/G2410 tidbits
+	- don't reset ASIC anymore
+
+2008-08-27  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/fujitsu.desc: mark fi-6230 and fi-6240 complete
+
+2008-08-26  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c, doc/descriptions/fujitsu.desc: backend v78
+	- recent model names (fi-6xxx) dont end in 'C'
+	- simplify flatbed area overrides
+	- call scanner_control to change source during sane_start
+
+2008-08-26  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c, backend/fujitsu-scsi.h: backend v77
+	- override flatbed maximum area for fi-6230C and fi-6240C
+	- set PF bit in all mode_select(6) CDB's
+	- set SANE_CAP_INACTIVE on all disabled options
+	- fix bug in mode_select page for sleep timer
+
+2008-08-25  Gerhard Jaeger <gerhard@gjaeger.de>
+	* backend/plustek-usb.c backend/plustek-usbdevs.c:
+	  Added preliminary support for Visioneer XP100
+	  Tweaked entry for LM9831 version of Plustek UT12
+	* backend/plustek.c: Bumped build number
+	* doc/sane-plustek.man doc/plustek/Plustek-USB.changes: Update
+	* doc/descriptions/plustek.desc: Added entry for Strobe XP100
+	* doc/descriptions/unsupported.desc: Removed entry for Strobe XP100
+
+2008-08-21  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: calibration updating and 75 dpi scan for hp400
+
+2008-08-23  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/fujitsu.desc: set lots of scanners to complete :)
+
+2008-08-21  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891_devices.c backend/rts8891_low.c
+	  backend/rts88xx_lib.c: add sensor type field and use it in geometry
+	  detection.
+
+2008-08-14  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts88xx_lib.c: fix for hp4400 init
+
+2008-08-13  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v76
+	- add independent maximum area values for flatbed
+	- override said values for fi-4220C, fi-4220C2 and fi-5220C
+	* doc/descriptions/fujitsu.desc: bump version, add 2 untested scanners
+
+2008-08-07 Rene Rebe <rene@exactcode.de>
+	* backend/fujitsu.c, backend/fujitsu.conf.in,
+	  doc/descriptions/fujitsu.desc: backend v75
+	- added fi-6230 ID, updated fi-6130, fi-6230 status
+
+2008-08-05 Julien Blache <jb@jblache.org>
+	* frontend/saned.c: initialize runas_{u,g}id to 0 instead of -1;
+	initialize ngroups to 0.
+
+2008-08-04 Julien Blache <jb@jblache.org>
+	* frontend/scanimage.c: fetch_options(), actually get option
+	descriptor 0 before attempting to get the value of option 0.
+
+2008-08-04  Stéphane Voltz <stef.dev@free.fr>
+	* backend/umax_pp.c backend/umaxp_pp.h backend/umax_pp.conf.in: 
+	  use configuration framework
+
+2008-08-02  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c, backend/fujitsu-scsi.h: backend v74
+	 - replace global scsi blocks with local ones in each function
+
+2008-07-31 Julien Blache <jb@jblache.org>
+	* frontend/saned.c: set supplemental group list in addition to
+	setting euid and egid. Reported by Cameron Hutchison.
+
+2008-07-28 Julien Blache <jb@jblache.org>
+	* frontend/saned.c: call setegid() before seteuid(), aka while
+	we're still root. Patch from Nick Andrew <nick@nick-andrew.net>.
+
+2008-07-27  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c, backend/fujitsu.conf.in,
+	  doc/descriptions/fujitsu.desc: backend v73
+	- add fi-6130 usb ID
+	- correct overscan dimension calculation
+	- provide correct overscan size overrides for fi-5110C and fi-4x20C2
+	- fi-5750C can't handle 10 bit LUT via USB
+
+2008-07-25  m. allan noah <kitno455 a t gmail d o t com>
+	* AUTHORS: Earle has commit perms
+	* doc/descriptions/unsupported.desc: add Lexmark X7170
+	* include/sane/sanei_config.h: remove typedef so doxygen will shutup
+
+2008-07-25  m. allan noah <kitno455 a t gmail d o t com>
+	* include/sane/saneopts.h: separate x-resolution from resolution
+	* backend/abaton.c, backend/artec.c, backend/canon-sane.c,
+	  backend/epjitsu.c, backend/fujitsu.c, backend/microtek2.c,
+	  backend/sp15c.c, backend/umax.c: use SANE_NAME_SCAN_RESOLUTION
+	  instead of SANE_NAME_SCAN_X_RESOLUTION, to avoid ui change
+
+2008-07-20 Julien Blache <jb@jblache.org>
+	* backend/net.c: sane_control_option: when the frontend doesn't
+	care (info == NULL) and the remote backend asks for a reload,
+	perform the reload. Hopefully this brings the behaviour back in
+	line with standard backends.
+
+2008-07-15  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c:
+	Changed page scan end condition to handle correctly PIXMA ADF.
+
+2008-07-14 Julien Blache <jb@jblache.org>
+	* doc/*.man: Fix hyphen vs. minus sign issues in the manpages,
+	breaking copy/paste of command-lines and options in UTF-8
+	environments.
+
+2008-07-13  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v72,
+	- use mode_sense to determine background color support
+	- remove fi-5900 background color override
+
+2008-07-13  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v71,
+	- disable overscan option if vpd does not tell overscan size
+	- fi-5110EOX crops scan area based on absolute maximum, not paper
+	- fi-5330C and fi-5650C can't handle 10 bit LUT via USB
+	- fi-5900 has background color, though it reports otherwise
+
+2008-07-10  Stéphane Voltz <stef.dev@free.fr>
+	* sanei/sanei_config.c: handle cases where config or callback
+	  function is NULL 
+	* backend/rts8891.c: use new configuration parsing framework
+
+2008-07-10  Stéphane Voltz <stef.dev@free.fr>
+	* include/sane/sanei_config.h: doxygen fix for new function
+
+2008-07-10  Stéphane Voltz <stef.dev@free.fr>
+	* backend/sanei_constrain_value.c: add support for SANE_Bool
+	  in sanei_check_value
+	* backend/Makefile.in: add sanei_constrain_value.lo to libsane
+2008-07-10  Stéphane Voltz <stef.dev@free.fr>
+	* backend/sanei_constrain_value.c: add support for SANE_Bool
+	  in sanei_check_value
+	* backend/Makefile.in: add sanei_constrain_value.lo to libsane
+	dependencies
+	* sanei/Makefile.in: add makedepend for .lo files
+	* include/sane/sanei_config.h sanei/sanei_config.c: add configuration
+	parsing framework
+
+2008-07-05  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v70,
+	- fix bug in sane_get_parameters (failed to copy values)
+	- autodetect jpeg duplex interlacing mode by inspecting scan width
+
+2008-07-05  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma.c:
+	Fix in sane_control_option () for PIXMA ADF scan.
+	Change malformed test conditions for ADF/Duplex scan source.
+	Updated PIXMA MX850 description.
+
+2008-07-03  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch]: backend v69, support hot-unplugging scanners
+
+2008-07-02  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h: backend v68, 
+	- add halftone type and pattern options
+	- support M3097G with IPC and CMP options via modified VPD response
+	* doc/descriptions/fujitsu.desc, doc/sane-fujitsu.man: backend v68,
+	- manpage cleanup
+
+2008-07-01  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h: backend v67, 
+	- add IPC/DTC/SDTC options
+	- call check_for_cancel() in sane_cancel, unless reading flag is set
+
+2008-06-28  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c:
+	Removed "experimental" flag for PIXMA MX850.
+
+2008-06-26  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h: backend v66,
+	- restructure double feed detection options for finer-grained control
+	- add endorser side option
+	- prevent init_interlace() from overriding init_model()
+	- simplify sane_start() and fix interlaced duplex jpeg support
+	- simplify sane_read() and add non-interlaced duplex jpeg support
+	- removed unused code
+
+2008-06-26  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/test.[ch]: check for options being controlled before loading
+
+2008-06-25  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_imageclass.c:
+	Patch from Sam Varshavchik to deal with libusb 64 read issue, 
+	for ImageClass MFPs.
+
+2008-06-24  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h,
+	  doc/descriptions/fujitsu.desc, doc/sane-fujitsu.man:
+	  backend version 65, add endorser support, add quirks for fi-4990
+
+2008-06-24 Julien Blache <jb@jblache.org>
+	* backend/net.c: do not reload options behind the frontend's back
+	in sane_control_option; rather return SANE_STATUS_INVAL and warn
+	that the frontend is buggy. Fetch option descriptors in
+	sane_open() so a GET_VALUE on option 0 can still work without
+	having to get option descriptor 0 beforehand.
+	* frontend/saned.c: rework error/exit path in process_request()
+	to properly terminate the Avahi thread when in debug mode.
+
+2008-06-22 Julien Blache <jb@jblache.org>
+	* frontend/saned.c: terminate child processes before exiting in
+	debug mode.
+
+2008-06-19 Ilia Sotnikov <hostcc@gmail.com>
+	* backend/hp5590.c:
+	Fixed segmentation fault on invalid option passed to
+	sane_get_option_descriptor(), sane_control_option()
+	(thanks to Albert Cervera i Areny)
+
+2008-06-19 Ilia Sotnikov <hostcc@gmail.com>
+	* backend/hp5590.c, backend/hp5590_cmds.c, backend/hp5590_cmds.h
+	* backend/hp5590_low.c, backend/hp5590_low.h
+	* doc/descriptions/hp5590.desc, doc/sane-hp5590.man:
+	Added support for HP ScanJet 4570c (thanks to Markham Thomas)
+
+2008-06-15  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* doc/sane-pixma.man,
+	* backend/pixma.c, backend/pixma_mp150.c, backend/pixma_sane_options.c
+	* sane-backends/po/sane-backends.??.po:
+	Remove "experimental" in pixma buttons options and text.
+	Fix some French translation typos, and update man page.
+
+2008-06-10  Stéphane Voltz <stef.dev@free.fr>
+	* backend/sanei_constrain_value.c: add support for arrays of SANE_Word
+	  in sanei_constrain_value
+	* backend/umax_pp.c: remove now unneede 'hand made' constrain on
+	  gamma tables
+
+2008-06-09  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: fix for model with 'XPA' sensor
+
+2008-06-06  Julien Blache <jb@jblache.org>
+	* backend/net.c: lock the Avahi thread before stopping it and
+	tearing down the Avahi objects.
+
+2008-06-03  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys_gl646.c: fixed wrong offset for start
+	  of scanarea for MD6471 scanner.
+
+2008-05-30  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h,
+	  doc/descriptions/fujitsu.desc: backend version 64,
+	  use model and serial to build sane.name (idea from Ryan Duryea),
+	  allow both serial_name and device_name to sane_open scanner,
+	  simulate missing VPD data for M3097G, probe scanner for color
+	  interlacing mode instead of hardcoding, other minor cleanups
+
+2008-05-29  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* doc/sane-pixma.man: man update.
+	* backend/pixma_io_sanei.c: update status types, and take into 
+	account new ones.
+
+2008-05-15  Mattias Ellert <mattias.ellert@fysast.uu.se>
+	* backend/hp3900_sane.c: Correct typos.
+	* po/Makefile.in: add backend/rts8891.c to localization.
+	* po/sane-backends.sv.po: update Swedish localization.
+	
+2008-05-27  m. allan noah <kitno455 a t gmail d o t com>
+	* frontend/scanimage.c: add %n for newline to -f option
+
+2008-05-26 Jonathan Bravo Lopez <jkdsoft@gmail.com>
+	* po/sane-backends.es.po: added spanish translation about status strings
+	* po/Makefile.in: added backend/sane_strstatus.c to SRC_FILES section.
+
+2008-05-26  Rene Rebe <rene@exactcode.de>
+	* backend/avision.{c,h}: merged latest upstream SVN changes, bug fixes
+	  and device ID updates, including fixing uninitialized variables due
+	  former defect merge and exposure control for film / dia scanners
+
+2008-05-26  Stéphane Voltz <stef.dev@free.fr>
+	* backend/sane_strstatus.c: added new status and internationalization
+	  support
+	* frontend/scanimage.c, frontend/tstbackend.c: added handling of status
+	  SANE_STATUS_WARMING_UP
+	* backend/pnm.c: added 2 more virtual devices, one that is hardware
+	locked, and another that always do warming before scan.
+
+2008-05-26  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.[ch], backend/rts8891_low.[ch],
+	  backend/rts88xx_lib.[ch]: renamed per frontend struct, made use of
+	  new well-known option groups. Added warming-up handling in
+	  sane_start().
+
+2008-05-22  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c:
+	changed top of scan area detection for MD6228/MD6471 models
+
+2008-05-23  Jonathan Bravo Lopez <jkdsoft@gmail.com>
+	* backend/hp3900_sane.c: setting appropiate capabilities to some options.
+
+2008-05-22  Jonathan Bravo Lopez <jkdsoft@gmail.com>
+	* backend/hp3900_sane.c: use 1.1.0 well-known option group strings.
+	* backend/hp3900_config.c, backend/hp3900_debug.c, 
+	  backend/hp3900_rts8822.c, backend/hp3900_types.c,
+	  backend/hp3900_usb.c: Fixed reference position detection for
+	  HP3800/HPG2710 scanners. Code clean up.
+
+2008-05-22  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c:
+	minor tweak for scanjet 4470cx
+
+2008-05-21  m. allan noah <kitno455 a t gmail d o t com>
+	* include/sane/saneopts.h: add sane 1.1.0 well-known button options
+	* backend/fujitsu.c: v1.0.63, use sane 1.1.0 well-known option
+	  names for some buttons, remove 'button-' from others
+
+2008-05-20  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h: v1.0.62,
+	  check for all supported scsi commands, use well-known option
+	  group strings from saneopts.h, rename pagewidth to page-width
+	  to meet sane 1.1.0 spec, same for height, add unused get_window()
+	* doc/descriptions/fujitsu.desc: increase version to 1.0.62.
+
+2008-05-20  m. allan noah <kitno455 a t gmail d o t com>
+	* include/sane/sane.h: add SANE_STATUS_WARMING_UP and
+	  SANE_STATUS_HW_LOCKED, remove SANE_CAP_ALWAYS_SETTABLE,
+	  add SANE_FRAME_XML, improve comments on other new frame types.
+	* include/sane/saneopts.h: add common option groups, add new
+	  page-width and page-height well-known options
+
+2008-05-20  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/qcam.c, backend/v4l.c, frontend/tstbackend.c:
+	  remove undocumented and otherwise unused SANE_CAP_ALWAYS_SETTABLE
+
+2008-05-19  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c:
+	150/300 dpi shading calibration fixes for 'XPA' sensor HP4470 models
+
+2008-05-16  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c: inspect correct bool to enable prepick mode
+
+2008-05-15  m. allan noah <kitno455 a t gmail d o t com>
+	* doc/descriptions/cardscan.desc, doc/descriptions/epjitsu.desc,
+	  doc/descriptions/hp3900.desc, doc/descriptions/hp5590.desc,
+	  doc/descriptions/hpljm1005.desc, doc/descriptions/hs2p.desc:
+	  remove 'new' tag from sane 1.0.19 backends
+	* doc/descriptions/fujitsu.desc, backend/fujitsu.conf.in:
+	  add fi-5530C2 usb ID
+	* backend/cardscan.c: correct version number
+	* backend/epjitsu.conf.in: improved firmware directions
+	* backend/fujitsu.[ch]: update to backend v 1.0.61
+
+2008-05-15  Mattias Ellert <mattias.ellert@fysast.uu.se>
+	* doc/sane-genesys.man, doc/sane-lexmark.man, doc/sane-microtek2.man,
+	  doc/sane-mustek_pp.man, doc/sane-pixma.man, doc/sane-rts8891.man,
+	  doc/sane-umax_pp.man:	Man page fixes
+	* doc/descriptions-external/hp_rts88xx.desc: removed since its
+	  successor rts8891 is now included in the SANE distribution
+
+2008-05-15  Mattias Ellert <mattias.ellert@fysast.uu.se>
+	* backend/agfafocus.h, backend/artec_eplus48u.c,
+	  backend/artec_eplus48u.h, backend/avision.h, backend/coolscan.h,
+	  backend/hp-handle.c, backend/hp3500.c, backend/microtek2.h,
+	  backend/mustek.c, backend/mustek.h, backend/pie.c, backend/pixma.c,
+	  backend/plustek-pp.h, backend/plustek.c, backend/plustek.h,
+	  backend/plustek_pp.c, backend/snapscan.c, backend/snapscan.h,
+	  backend/sp15c.h, backend/tamarack.h, backend/test.c, backend/test.h,
+	  backend/u12.c, backend/u12.h, backend/umax.c, backend/umax.h,
+	  include/sane/sanei_thread.h, sanei/sanei_thread.c:
+	Fix for bug #306751: sanei-thread with pthreads on 64 bit
+
+2008-05-12  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c 
+	150/300 dpi mode fixes for 'XPA' sensor HP4470 models
+
+2008-05-08  Alessandro Zummo <a.zummo@towertech.it>
+	* AUTHORS: added myself :)
+
+2008-05-07  Julien Blache <jb@jblache.org>
+	* doc/sane-config.man: Fix man warning.
+	* backend/dll.c: look for dll.conf snippets in
+	$configdir/dll.d; this is a facility for external backends
+	to automatically add their backends to the dll backend
+	configuration without mucking with dll.conf.
+	* backend/Makefile.in: create $configdir/dll.d.
+
+2008-05-07  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_imageclass.c, doc/descriptions/pixma.desc:
+	USB IDs updates in imageClass backend (pixma), by Dennis Lou.
+
+2008-05-07  Jochen Eisinger <jochen@penguin-breeder.org>
+	* doc/sane-mustek_pp.man: fix catman warning. Reported by
+	  Raymond Chen.
+
+2008-05-05  Earle Philhower <earlephilhower@yahoo.com>
+	* doc/sane-sm3840.man: Add lineart and halftone options to page
+	* backend/sm3840*: Remove 64-bit compile warnings
+
+2008-04-05  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c backend/rts8891_low.c
+	doc/descriptions/rts8891.desc:
+	150 dpi mode fix for 'XPA' sensor HP4470 models, description
+	update
+
+2008-05-05  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* doc/sane-pixma.man, doc/descriptions/pixma.desc:
+	Description and man updates for PIXMA MX300.
+
+2008-05-04  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_imageclass.c, doc/descriptions/pixma.desc:
+	Code cleanup patch to imageClass backend (pixma) by Dennis Lou.
+
+2008-05-03  Julien Blache <jb@jblache.org>
+	* backend/epson2.c: initialize s->fd to -1 once the struct
+	Epson_Scanner is allocated and zeroed out in attach(). Otherwise
+	the backend sends inquiry data to fd 0, which it obviously
+	shouldn't do; this breaks scanning over saned.
+	* doc/net.tex: replace occurrences of SANE_STATUS_SUCCESS with
+	SANE_STATUS_GOOD, as SANE_STATUS_SUCCESS doesn't exist.
+
+2008-04-28  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/epjitsu.[ch]: backend v1.0.12, fix double free bug
+
+2008-04-27  m. allan noah <kitno455 a t gmail d o t com>
+	* sanei/sanei_usb.c: allow sanei_usb_init() to run once per second
+	* backend/fujitsu.c: backend v1.0.60, relocate call to sanei_usb_init(),
+	  free sane_devArray before calloc'ing a new one
+
+2008-04-22  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.c, backend/fujitsu.conf.in: backend v1.0.59,
+	add fi-6140 PID, and fi-6x40 color mode
+	* doc/descriptions/fujitsu.desc: add fi-6140 PID, mark as 'good'
+	* doc/descriptions/epjitsu.desc: add S300M, mark as 'untested'
+
+2008-04-22  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c:
+	Updated pixma backend to have MP970 (tested), and probably other 
+	CCD sensor MPs, working for Grayscale scan.
+
+2008-04-21  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma.c, backend/pixma_common.c, backend/pixma_rename.h
+	doc/sane-pixma.man, doc/descriptions/pixma.desc
+	(new) backend/pixma_imageclass.c, backend/Makefile.in:
+	Thanks to Dennis Lou, who adapted the pixma backend to add support
+	for Canon ImageCLASS series, fully tested for MF4270, and includes
+	PIDs declarations for other ImageCLASS devices, yet to be tested.
+	Fixes also a bug for ADF and ADF Duplex scan source selection.
+
+2008-04-20  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.h: remove #define SANE_FRAME_JPEG
+
+2008-04-19  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h: backend v1.0.58,
+	  rename page code 32 to 'unknown', compile if NDEBUG is set,
+	  proper async sane_cancel support, re-enable JPEG support
+	  various functions rewritten (shorter, more clear)
+	* doc/descriptions/fujitsu.desc: add new fi-6xxx machines
+
+2008-04-18  Alessandro Zummo <a.zummo@towertech.it>
+	* backend/epson2.c: fixed attach() error path.
+
+2008-04-14  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, backend/pixma.h, backend/pixma_mp150.c
+	doc/sane-pixma.man, doc/descriptions/pixma.desc:
+	With feedback from MP970 owner, updated pixma backend for MP970
+	CCD sensor support (yet in color only), and more generally, 
+	support for other CCD sensor PIXMA: MP800, MP810, MP830, MP960,
+	but yet untested, which produce shifted color planes 
+	scanned images. Current trim based on sample images provided 
+	in bug reports and other web pages, but might require some 
+	few and simple final tweaks.
+	Also fixed a bug for MP220 at 1200 dpi, MP220 is now reported 
+	to work fine.
+
+2008-04-13  Julien Blache <jb@jblache.org>
+	* frontend/saned.c: fix typo.
+	* backend/net.c: plug an information leak in the net backend. When
+	sending out a SANE_NET_CONTROL_OPTION RPC for the
+	SANE_ACTION_GET_VALUE action (and SANE_ACTION_SET_AUTO for the
+	network protocol versions < 3), the backend was not clearing the
+	memory area for the value argument before sending it over the
+	network, resulting in an information leak for the
+	SANE_ACTION_GET_VALUE case.
+
+2008-04-12  Mattias Ellert <mattias.ellert@fysast.uu.se>
+	* backend/rts8891.c, backend/rts88xx_lib.c: fix format warning
+	* doc/sane-rts8891.man: man page fixes
+	* AUTHORS: e-mail update
+
+2008-04-11  Julien Blache <jb@jblache.org>
+	* frontend/saned.c: announce the _sane-port._tcp service via mDNS
+	(Avahi) when running in standalone or debug mode. A separate
+	process is responsible for the announcement through Avahi.
+	* backend/net.c: look for _sane-port._tcp service announcements
+	via mDNS (Avahi). A separate thread listens to announcements
+	through Avahi. Start the thread as early as possible in
+	sane_init() so as to get as much data as possible until
+	sane_get_devices() is called.
+	* aclocal.m4, configure, configure.in, include/sane/config.h.in:
+	add autofoo stuff for Avahi support, disabled by default.
+
+2008-04-10  Julien Blache <jb@jblache.org>
+	* frontend/saned.c: do not use daemon(), as it's a 4.4BSD/glibc
+	function; OS/2 for instance does not have it. Use an open-coded
+	equivalent. Add a PID file. saned -a username now drops privileges
+2008-04-22  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma.c, backend/pixma_common.c, backend/pixma_rename.h
+	doc/sane-pixma.man, doc/descriptions/pixma.desc
+	(new) backend/pixma_imageclass.c, backend/Makefile.in:
+	Thanks to Dennis Lou, who adapted the pixma backend to add support
+	for Canon ImageCLASS series, fully tested for MF4270, and includes
+	PIDs declarations for other ImageCLASS devices, yet to be tested.
+	Fixes also a bug for ADF and ADF Duplex scan source selection.
+
+2008-04-20  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.h: remove #define SANE_FRAME_JPEG
+
+2008-04-19  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h: backend v1.0.58,
+	  rename page code 32 to 'unknown', compile if NDEBUG is set,
+	  proper async sane_cancel support, re-enable JPEG support
+	  various functions rewritten (shorter, more clear)
+	* doc/descriptions/fujitsu.desc: add new fi-6xxx machines
+
+2008-04-18  Alessandro Zummo <a.zummo@towertech.it>
+	* backend/epson2.c: fixed attach() error path.
+
+2008-04-14  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, backend/pixma.h, backend/pixma_mp150.c
+	doc/sane-pixma.man, doc/descriptions/pixma.desc:
+	With feedback from MP970 owner, updated pixma backend for MP970
+	CCD sensor support (yet in color only), and more generally, 
+	support for other CCD sensor PIXMA: MP800, MP810, MP830, MP960,
+	but yet untested, which produce shifted color planes 
+	scanned images. Current trim based on sample images provided 
+	in bug reports and other web pages, but might require some 
+	few and simple final tweaks.
+	Also fixed a bug for MP220 at 1200 dpi, MP220 is now reported 
+	to work fine.
+
+2008-04-13  Julien Blache <jb@jblache.org>
+	* frontend/saned.c: fix typo.
+	* backend/net.c: plug an information leak in the net backend. When
+	sending out a SANE_NET_CONTROL_OPTION RPC for the
+	SANE_ACTION_GET_VALUE action (and SANE_ACTION_SET_AUTO for the
+	network protocol versions < 3), the backend was not clearing the
+	memory area for the value argument before sending it over the
+	network, resulting in an information leak for the
+	SANE_ACTION_GET_VALUE case.
+
+2008-04-12  Mattias Ellert <mattias.ellert@fysast.uu.se>
+	* backend/rts8891.c, backend/rts88xx_lib.c: fix format warning
+	* doc/sane-rts8891.man: man page fixes
+	* AUTHORS: e-mail update
+
+2008-04-11  Julien Blache <jb@jblache.org>
+	* frontend/saned.c: announce the _sane-port._tcp service via mDNS
+	(Avahi) when running in standalone or debug mode. A separate
+	process is responsible for the announcement through Avahi.
+	* backend/net.c: look for _sane-port._tcp service announcements
+	via mDNS (Avahi). A separate thread listens to announcements
+	through Avahi. Start the thread as early as possible in
+	sane_init() so as to get as much data as possible until
+	sane_get_devices() is called.
+	* aclocal.m4, configure, configure.in, include/sane/config.h.in:
+	add autofoo stuff for Avahi support, disabled by default.
+
+2008-04-10  Julien Blache <jb@jblache.org>
+	* frontend/saned.c: do not use daemon(), as it's a 4.4BSD/glibc
+	function; OS/2 for instance does not have it. Use an open-coded
+	equivalent. Add a PID file. saned -a username now drops privileges
+	and runs as the given user (and group).
+	* doc/saned.man: document -a username.
+
+2008-04-06  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c: 
+	  Modifications for PIXMA MP970, to manage the CCD sensor
+	  with PIXMA generation 3 protocol. To be tested.
+
+2008-04-06  Julien Blache <jb@jblache.org>
+	* frontend/saned.c: add standalone daemon mode, building upon the
+	AF-indep/IPv6 debug mode. Reorganize code by splitting the main()
+	function into a series of functions. Factorize common code between
+	the old network code and the AF-indep code. There's now only one
+	version of main().
+	* doc/saned.man: document new -a flag, reorganize manpage
+	sections (separate inetd configuration under the INETD
+	CONFIGURATION section).
+
+2008-04-05  Stéphane Voltz <stef.dev@free.fr>
+	* backend/genesys.c backend/genesys.h backend/genesys_devices.c
+	  backend/genesys_gl646.c backend/genesys_low.h:
+	  Fixed double free problems, made OPT_COLOR_FILTER work for
+	  GL646 scanners, added OPT_CUSTOM_GAMMA and OPT_GAMMA_VECTOR*
+	  options, split sane_control_options to make it more readable,
+	  fixed 'reset stream' problem for MD6471.
+
+2008-04-05  Stéphane Voltz <stef.dev@free.fr>
+	* backend/rts8891.c: 
+	  split sane_control_option() to make it more readable
+
+2008-04-02  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, backend/pixma.c, doc/sane-pixma.man, 
+	  doc/descriptions/pixma.desc: 
+	  Added a 10s tempo before "NO PAPER" fail message appears in  ADF scan, 
+	  declared PIXMA MX850, moved MP970 to Generation 3 protocol, but yet
+	  untested.
+
+2008-03-28  Julien Blache <jb@jblache.org>
+	* sanei/sanei_usb.c, include/sane/sanei_usb.h: add
+	sanei_usb_get_vendor_product_byname().
+	* backend/snapscan-mutex.c: do not use ftok() in
+	snapscani_mutex_open(); ftok() will fail with anything for which
+	the devicename is not a filename. Construct an IPC key based on
+	the product ID, bus number and device number for libusb devices,
+	otherwise fallback to ftok() and check its return value.
+	* tools/sane-desc.c: HAL 0.5.11-rc2 does not support the info.bus
+	property anymore; superseded by info.subsystem. Unfortunately,
+	this is not backward-compatible, so add a new "hal-new" mode to
+	sane-desc.
+
+2008-03-28  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/hp-scl.c: add usleep to improve usb performance, from
+	  jim a t meyering d o t net
+
+2008-03-28  m. allan noah <kitno455 a t gmail d o t com>
+	* sanei/sanei_usb.c: add usb class 6 (imaging) to detected devices
+	* sanei/sanei_scsi.c: fix bug in sanei_scsi_find_devices() which
+	  caused early return if attach callback returned error.
+
+2008-03-22  Stéphane Voltz <stef.dev@free.fr>
+	* AUTHORS configure configure.in backend/dll.conf.in
+	  backend/Makefile.in backend/rts8891.c backend/rts8891.conf.in
+	  backend/rts8891_devices.c backend/rts8891.h backend/rts8891_low.c
+	  backend/rts8891_low.h backend/rts88xx_lib.c backend/rts88xx_lib.h
+	  doc/descriptions/rts8891.desc doc/descriptions/unsupported.desc
+	  doc/sane-rts8891.man:
+	  rts8891 backend inclusion
+
+2008-03-20  Julien Blache <jb@jblache.org>
+	* include/Makefile.in: remove _stdint.h and byteorder.h in
+	distclean target, autogenerated cruft.
+	* frontend/saned.c: fix debug messages around the getservbyname()
+	call in the IPv4 code as it still referred to the "sane" port
+	instead of "sane-port".
+
+2008-03-16  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, backend/pixma.h, doc/sane-pixma.man, 
+	  doc/descriptions/pixma.desc: 
+	  Changes to have new Canon PIXMA MX700 working with pixma backend
+	  Flatbed and ADF scan are supported.
+
+2008-03-15  Julien Blache <jb@jblache.org>
+	* include/sane/sanei_usb.h: typo fix.
+
+2008-03-02  Stéphane Voltz <stef.dev@free.fr>
+	* doc/descriptions/lexmark.desc: added X1195
+	* doc/descriptions/unsupported.desc: removed X11xx, X12xx and
+	  Dell A920 which are to be handled by the lexmark backend
+	* backend/umax_pp.h backend/umax_pp.c backend/umax_pp_mid.h
+	  backend/umax_pp_mid.c backend/umax_pp_low.h backend/umax_pp_low.c:
+	  copyright notice update
+
+2008-03-01  Gerard klaver <gerard at gkall dot hobby dot nl>
+	* doc/descriptions/as6e.desc added Dexxa 4800
+
+2008-02-26  Jonathan Bravo Lopez <jkdsoft@gmail.com>
+	* backend/hp3900_sane.c: Fixed optional grayscale emulation
+	* backend/hp3900_debug.c: Silence gcc warnings when tiffio.h
+	  is not used
+
+2008-02-25  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/fujitsu.[ch], backend/fujitsu-scsi.h:
+	  add mode sense for page code 32 (color interlacing?)
+	  and more debug output in init_ms(), for fi-5900
+
+2008-02-24  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, doc/sane-pixma.man, 
+	  doc/descriptions/pixma.desc: 
+	  Changes to have Canon PIXMA MP140 now working with pixma backend
+	  
+2008-02-23  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_gl841.c: Make LEDs go really dark when "lamp" is off
+
+2008-02-22  Nicolas Martin <nicols-guest at users.alioth.debian.org>
+	* backend/pixma_mp150.c, backend/pixma_mp730.c, 
+	  doc/sane-pixma.man, doc/descriptions/pixma.desc: 
+	  Changed MP140 to experimental cause not working yet
+	  Changed MP710 to non-ADF scanner
+
+2008-02-22  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_gl841.c: Fix debugging output of 
+	  gl841_bulk_write_register
+
+2008-02-21  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys.c, backend/genesys_gl646.c,
+	  backend/genesys_gl841.c, backend/genesys_low.h: Add LED exposure
+	control to gl841_set_lamp_power
+
+2008-02-20  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	* backend/genesys_gl841.c: Send 32 registers at once instead of 1
+
+2008-02-20  Mattias Ellert <mattias.ellert@tsl.uu.se>
+	* backend/Makefile.in, ltmain.sh: Library version definition fixes
+	* backend/coolscan3.c: Fix format warnings
+
+2008-02-18  Alessandro Zummo <a.zummo@towertech.it>
+	* backend/coolscan3.c: added new coolscan3 backend
+	with improved stability and infrared support.
+	* configure.in, include/sanei.h: bumped version
+	number to 1.1.0 and enabled 1.1 frame types.
+
+	  doc/sane-pixma.man, doc/descriptions/pixma.desc,
+	  doc/descriptions-external/canon_mfp.desc:
+	> New models changes: 
+	  - added: Pixma MP210, MP470, MP520, MP610, MP710
+	  - declared but untested: Pixma MP140, MP220, MP740
+	  - declared experimental and untested: MP970
+	>  Bugs and fixes
+	  - multipage documents scan no more fails in non-ADF scan
+	  - IO Fail bug when scanning large pages e.g. with Xsane
+	  - implement send_time message form MP710, MP730 family
+	  - run indent -gnu on all pixma_* source files.
+
+2008-02-14  m. allan noah <kitno455 a t gmail d o t com>
+	* backend/cardscan.c, backend/epjitsu.c, backend/fujitsu.c:
+	sanei_read_config has already cleaned string, fix bug #310597
+
+2008-02-13  Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
+	Patch by Stefan Lucke <stefan@lucke.in-berlin.de>
+	* backend/genesys_gl841.c: Fixes 3 possibilities for infinite
+	loops and adjusts loop threshold to given comments
+
+2008-02-13  Jonathan Bravo Lopez <jkdsoft@gmail.com>
+	* backend/hp3900.c, backend/hp3900_debug.c, backend/hp3900_rts8822.c,
+	  backend/hp3900_usb.c, backend/hp3900_sane.c, backend/hp3900_types.c,
+	  backend/hp3900_config.c, backend/hp3900.conf.in, /doc/sane-hp3900.man,
+	  doc/descriptions/hp3900.desc: Minor changes and added support for
+	  HP ScanJet G2710 scanner.
+
+2008-02-10  m. allan noah <kitno455 a t gmail d o t com>
+
+	* configure, configure.in: Changed version to 1.0.19-cvs. Enabled
+	  compilation warnings.
+	* Makefile.in: Added ChangeLog-1.0.19 to DISTFILES.
+
+Older entries can be found in ChangeLog-1.0.19.

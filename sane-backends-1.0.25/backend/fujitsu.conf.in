@@ -1,0 +1,162 @@
+# NOTE: any 'option' lines only apply to
+# scanners discovered later in this file
+
+# to set data buffer size, in bytes
+# the value ranges from 4096 - infinity
+# but old scanners may have scanning problems
+# with a value larger than 65536 (the default)
+# NOTE: this option is set to a larger value
+# later in this file, for more recent scanners
+option buffer-size 65536
+
+# To search for all FUJITSU scsi devices
+scsi FUJITSU
+
+# To use a specific scsi device
+#scsi /dev/sg1
+
+# For Fujitsu scanners connected via USB on a known device (kernel driver):
+#usb /dev/usb/scanner0
+
+# For Fujitsu scanners connected via USB using vendor and device ids (libusb):
+#usb VENDORID PRODUCTID
+
+# NOTE: if you have to add your device here- please send the id and model
+# to the author via email, so it can be included in next version. kitno455 at
+# gmail dot com - with Fujitsu in the subject line
+
+#fi-4x20C
+usb 0x04c5 0x1041
+usb 0x04c5 0x1042
+
+#fi-4530C
+usb 0x04c5 0x1078
+
+#fi-5750C
+usb 0x04c5 0x1095
+
+#fi-5110eox/2
+usb 0x04c5 0x1096
+
+#fi-5110C
+usb 0x04c5 0x1097
+
+#fi-5650C
+usb 0x04c5 0x10ad
+
+#fi-4x20C2
+usb 0x04c5 0x10ae
+usb 0x04c5 0x10af
+
+#fi-4340C
+usb 0x04c5 0x10cf
+
+#fi-5x20C
+usb 0x04c5 0x10e0
+usb 0x04c5 0x10e1
+
+#fi-5530C
+usb 0x04c5 0x10e2
+
+#fi-5110eox3
+usb 0x04c5 0x10e6
+
+#fi-5900C
+usb 0x04c5 0x10e7
+
+#fi-5110EOXM
+usb 0x04c5 0x10f2
+
+#ScanSnap S500
+usb 0x04c5 0x10fe
+
+#ScanSnap S500M
+usb 0x04c5 0x1135
+
+#fi-5530C2
+usb 0x04c5 0x114a
+
+# More recent scanners need a larger buffer for maximum speed
+option buffer-size 262144
+
+#fi-6140
+usb 0x04c5 0x114d
+
+#fi-6240
+usb 0x04c5 0x114e
+
+#fi-6130
+usb 0x04c5 0x114f
+
+#fi-6230
+usb 0x04c5 0x1150
+
+#ScanSnap S510
+usb 0x04c5 0x1155
+
+#ScanSnap S510M
+usb 0x04c5 0x116f
+
+#fi-6770
+usb 0x04c5 0x1174
+
+#fi-6770A
+usb 0x04c5 0x1175
+
+#fi-6670
+usb 0x04c5 0x1176
+
+#fi-6670A
+usb 0x04c5 0x1177
+
+#fi-6750S
+usb 0x04c5 0x1178
+
+#fi-6800
+usb 0x04c5 0x119d
+
+#fi-6800-CGA
+usb 0x04c5 0x119e
+
+#S1500 & S1500M
+usb 0x04c5 0x11a2
+
+#fi-6140Z
+usb 0x04c5 0x11f1
+
+#fi-6240Z
+usb 0x04c5 0x11f2
+
+#fi-6130Z
+usb 0x04c5 0x11f3
+
+#fi-6230Z
+usb 0x04c5 0x11f4
+
+#fi-6110
+usb 0x04c5 0x11fc
+
+#fi-5950
+usb 0x04c5 0x1213
+
+#ScanSnap SV600
+usb 0x04c5 0x128e
+
+#ScanSnap iX500
+usb 0x04c5 0x132b
+
+#fi-7180
+usb 0x04c5 0x132c
+
+#fi-7280
+usb 0x04c5 0x132d
+
+#fi-7160
+usb 0x04c5 0x132e
+
+#fi-7260
+usb 0x04c5 0x132f
+
+#ScanSnap iX100
+usb 0x04c5 0x13f4
+

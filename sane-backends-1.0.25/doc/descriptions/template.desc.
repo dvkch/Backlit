@@ -1,0 +1,81 @@
+;
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+; See doc/descriptions.txt for details.
+
+:backend "template"               ; name of backend
+:version "0.42"                   ; version of backend (or "unmaintained")
+:new :yes                         ; Is the backend new to this SANE release?
+                                  ; :yes or :no
+:manpage "sane-template"          ; name of manpage (if it exists)
+:url "http://www.luser.com/temp/" ; backend's web page
+:url "http://www.luser.com/b/"    ; another backend webpage
+:comment "This backend supports only the USB and SCSI models" 
+                                  ; comment about the backend
+
+:devicetype :scanner              ; start of a list of devices....
+                                  ; other types:  :stillcam, :vidcam,
+                                  ;               :meta, :api
+
+:mfg "TemPlate"                   ; name a manufacturer
+:url "http://www.template.com/"   ; manufacturer's URL
+:url "http://www.template.de/"    ; another manufacturer URL
+:comment "TemPlate scanners are sometimes labeled \"TMP\""
+                                  ; comment about the manufacturer
+
+:model "Templ Z"                  ; name models for above-specified mfg.
+:status :untested                 ; :minimal, :basic, :good, :complete
+                                  ; :untested, or :unsupported
+:interface "SCSI"                 ; interface type of the device:
+                                  ; "SCSI", "USB", "Parport (EPP)",
+                                  ; "Parport (SPP)", "Parport (ECP)",
+                                  ; "Serial port", "IEEE-1394", "JetDirect",
+                                  ; or "Proprietary".
+:usbid "0x1234" "0x4321"          ; Vendor and product ids of an USB device
+:url "http://www.tmp.com/z.html"  ; model's URL
+:comment "With Z-Axis scrolling"  ; comment about the model
+
+:model "Templ ZS"
+:interface "USB"
+:usbid "0x1234" "0x4322"
+:status :unsupported
+:comment "No support yet, but we have docs."
+
+:model "Templ ZQ"
+:interface "USB"
+:usbid "0x1234" "0x4323"
+:status :minimal
+
+:model "Templ ZY"
+:interface "SCSI"
+:status :basic
+
+:model "Templ ZZ"
+:interface "SCSI"
+:status :good
+
+:mfg "ArmorPlate"                 ; another manufacturer...
+:url "http://www.armorplate.com/"
+
+:model "AmplScan II"
+:interface "SCSI"
+:status :complete
+:comment "AmplScan *II*, not AmplScan!"
+
+:devicetype :api                  ; specify a different type
+:desc "Interface to FrObYz API"   ; describe a non-hardware device
+:comment "Only FrObYz version 2.0 is supported!"
+
+; :comment and :url specifiers are optional after :mfg, :model, :desc,
+;  and at the top-level.
+
+; :status specifier is optional after :model and at the top-level
+
+

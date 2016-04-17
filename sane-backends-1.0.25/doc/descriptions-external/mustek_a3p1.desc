@@ -1,0 +1,21 @@
+:backend "mustek_a3p1"
+;:version "1.0-3"
+;:manpage "sane-mustek_a3p1"
+:url "http://www.meier-geinitz.de/sane/mustek_a3p1-backend/"
+:comment "Only Mustek P 3600 A3 Pro is supported at the moment"
+:devicetype :scanner
+
+:mfg "Mustek"
+:url "http://www.mustek.com/"
+:url "http://www.mustek.com.tw/"
+:url "http://www.mustek.de/"
+
+:model "P 3600 A3 Pro"
+:interface "USB"
+:status :minimal
+:usbid "0x055f" "0x0401"
+:comment "Reports about scanning problems. 1800 dpi seems to work if only small scan areas are selected."
+
+
+
+

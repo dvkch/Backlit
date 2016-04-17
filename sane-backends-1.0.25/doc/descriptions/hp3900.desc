@@ -1,0 +1,82 @@
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+; See doc/descriptions.txt for details.
+
+:backend "hp3900"
+:version "0.12"
+:manpage "sane-hp3900"
+:url "http://sourceforge.net/projects/hp3900-series/"
+:comment "Still Beta"
+:devicetype :scanner
+
+; -----------------------------------------------------
+:mfg "Hewlett-Packard"
+:url "http://www.hp.com"
+
+:model "ScanJet 3800"
+:interface "USB"
+:status :basic
+:usbid "0x03f0" "0x2605"
+:comment "Works with resolutions equal and less than 600dpi"
+
+:model "ScanJet 3970c"
+:interface "USB"
+:status :good
+:usbid "0x03f0" "0x2305"
+
+:model "ScanJet 4070 Photosmart"
+:interface "USB"
+:status :good
+:usbid "0x03f0" "0x2405"
+
+:model "ScanJet 4370"
+:interface "USB"
+:usbid "0x03f0" "0x4105"
+:status :basic
+:comment "Works with resolutions lower than 1200dpi"
+
+:model "ScanJet G2710"
+:interface "USB"
+:usbid "0x03f0" "0x2805"
+:status :basic
+:comment "Similar to hp scanjet 3800"
+
+:model "ScanJet G3010"
+:interface "USB"
+:usbid "0x03f0" "0x4205"
+:status :basic
+:comment "Similar to hp scanjet 4370"
+
+:model "ScanJet G3110"
+:interface "USB"
+:usbid "0x03f0" "0x4305"
+:status :basic
+:comment "Similar to hp scanjet 4370"
+
+; -----------------------------------------------------
+:mfg "UMAX"
+:url "http://www.umax.com"
+
+:model "Astra 4900"
+:interface "USB"
+:usbid "0x06dc" "0x0020"
+:status :minimal
+:comment "developing yet"
+
+; -----------------------------------------------------
+:mfg "BenQ"
+:url "http://www.benq.com/"
+
+:model "5550"
+:interface "USB"
+:usbid "0x04a5" "0x2211"
+:status :minimal
+:comment "developing yet"
+

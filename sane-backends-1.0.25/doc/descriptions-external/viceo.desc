@@ -1,0 +1,75 @@
+; SANE Backend specification file
+;
+; It's basically emacs-lisp --- so ";" indicates comment to end of line.
+; All syntactic elements are keyword tokens, followed by a string or
+;  keyword argument, as specified.
+;
+; ":backend" *must* be specified.
+; All other information is optional (but what good is the file without it?).
+;
+
+:backend "viceo"                    ; name of backend
+:version "0.6"                      ; version of backend
+;:manpage "sane-viceo"               ; name of manpage (if it exists)
+:url "mailto:viceo@stevencherie.net" ; backend's web page
+:url "http://viceo.orcon.net.nz/"
+:comment "Supports E3 and E4 family USB scanners from Genius, Primax, IBM. The backend is not included because the license situation is unclear. Also it only works on Linux and needs a a patch for the kernel scanner driver which isn't available on 2.6."
+
+:devicetype :scanner
+
+:mfg "Genius"                         ; name a manufacturer
+:url "http://www.genius-kye.com/"
+:model "Vivid Pro USB"                  ; name models for above-specified mfg.
+:interface "USB"
+:usbid "0x0458"	"0x2001"
+:status :basic
+:comment "Linux 2.4 only, needs a kernel patch."
+
+:mfg "Primax"
+:url "http://www.primax.nl/"
+:model "Colorado USB 19200"
+:interface "USB"
+:usbid "0x0461"	"0x0360"
+:status :basic
+:comment "Linux 2.4 only, needs a kernel patch."
+
+:model "Colorado 2200 USB"
+:interface "USB"
+:usbid "0x0461" "0x0364"
+:status :untested
+:comment "Untested. See link for details. Linux 2.4 only, needs a kernel patch."
+:url "/unsupported/primax-colorado-2200-usb.html"
+
+:mfg "Visioneer"
+
+:model "OneTouch 6100"
+:interface "USB"
+:usbid "0x04a7"	"0x0231"
+:status :basic
+:comment "Linux 2.4 only, needs a kernel patch."
+
+:model "OneTouch 7600"
+:interface "USB"
+:usbid "0x04a7"	"0x0211"
+:status :basic
+:comment "Linux 2.4 only, needs a kernel patch."
+
+:model "OneTouch 8600"
+:interface "USB"
+:usbid "0x04a7"	"0x0331"
+:status :basic
+:comment "Linux 2.4 only, needs a kernel patch."
+
+:mfg "IBM"
+:url "http://www.ibm.com/"
+:model "IdeaScan 2000 USB"
+:interface "USB"
+:status :basic
+:comment "Linux 2.4 only, needs a kernel patch."
+
+:mfg "LG Electronics"
+:model "Scanworks 600U"
+:interface "USB"
+:usbid "0x0461"	"0x0364"
+:status :basic
+:comment "Linux 2.4 only, needs a kernel patch."

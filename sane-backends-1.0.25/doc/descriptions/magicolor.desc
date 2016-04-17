@@ -1,0 +1,42 @@
+;
+; SANE Backend specification file for the magicolor backend
+;
+; Copyright (C) 2010-11 Reinhold Kainhofer
+; Released under GPLv2
+;
+
+:backend "magicolor"
+:version "1.0.0"
+:manpage "sane-magicolor"
+:url "http://wiki.kainhofer.com/hardware/magicolor_scan"
+
+:devicetype :scanner
+
+:mfg "KONICA MINOLTA"
+:url "http://www.konicaminolta.com/"
+
+:model      "magicolor 1690MF"
+:interface  "USB Network"
+:usbid      "0x132b" "0x2089"
+:status     :good
+:comment    "Multi-function color laser printer with fax, scanner and network interface"
+:url        "http://www.konicaminolta.eu/business-solutions/products/laser-printers/all-in-one/magicolor-1690mf/key-features.html"
+
+:model      "magicolor 4690MF"
+:interface  "USB Network"
+:usbid      "0x132b" "0x2079"
+:status     :good
+:comment    "Multi-function color laser printer with fax, scanner and network interface"
+
+:model      "BizHub 162/132"
+:interface  "USB Network"
+:usbid      "ignore"
+:status     :unsupported
+:comment    "Uses a similar protocol as the magicolor 1690MF, according to Ilia Sotnikov."
+
+:model      "DiMage 1611"
+:interface  "USB Network"
+:usbid      "ignore"
+:status     :unsupported
+:comment    "Uses a similar protocol as the magicolor 1690MF, according to Ilia Sotnikov."
+
