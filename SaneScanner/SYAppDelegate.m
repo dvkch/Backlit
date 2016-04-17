@@ -21,7 +21,6 @@
 #import "MHGalleryController+SY.h"
 #import "UIImage+SY.h"
 #import "SYGalleryThumbsView.h"
-#include <stdlib.h>
 
 @interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic, strong) SYSplitVC *splitViewController;

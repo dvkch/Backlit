@@ -3,15 +3,21 @@
 
 # Created this way
 # - download sane-backends archive
-# - modified configure.in to always set CROSS_COMPILING to 1
+# - modified configure.in to always set CROSS_COMPILING to 1, replace AC_FUNC_MMAP by AC_CHECK_FUNCS(mmap)
+# - modified backend/kvs20xx_opt.c and backend/kvs40xx_opt.c by adding #include <stdlib.h>
+# - modified backend/pieusb_buffer.c to use mkstemp function instead of mkostemp
 # - modified sanei/sanei_ir.c to replace #include <values.h> with #include <limits.h> and #inlude <float.h>
-# - created patch with git format-patch HEAD^ --stdout > ios_crosscompiling.patch
+# - created patch with git format-patch HEAD^ --stdout > sane-backends-ios-crosscompiling.patch
 
 CUR_DIR="`pwd`"
 LIB_DIR="`pwd`/sane-libs"
 SRC_DIR="`pwd`/sane-backends"
 LOG_PATH="`pwd`/sane-log.txt"
 BACKENDS_VERSION="sane-backends-1.0.25"
+
+# compiling with USB support would require compiling libusb which itself needs iOS IOKit headers. Unfortunately
+# those are private and would prevent the app from being deployed to the AppStore
+ONLY_NET=1
 
 OPT_FLAGS="-O3 -g3"
 MAKE_JOBS=4
@@ -91,7 +97,14 @@ dobuild ()
     export CXXFLAGS="${HOST_FLAGS} ${OPT_FLAGS}"
     export LDFLAGS="${HOST_FLAGS}"
 
-    ./configure --host=${CHOST} --prefix="${LIB_DIR}/${ARCH}" --enable-static --disable-shared --disable-libusb --disable-warnings --enable-pthread --disable-local-backends --enable-silent-rules >> "${LOG_PATH}" 2>&1
+    CONFIGURE_OPTIONS="--enable-static --disable-shared --disable-warnings --enable-pthread --enable-silent-rules"
+    if [ $ONLY_NET -eq 0 ]; then
+        CONFIGURE_OPTIONS="${CONFIGURE_OPTIONS} --disable-local-backends --disable-libusb"
+    fi
+
+    ./configure --host=${CHOST} --prefix="${LIB_DIR}/${ARCH}" ${CONFIGURE_OPTIONS} >> "${LOG_PATH}" 2>&1
+
+    sed -i '' "/\(byte_order\)/d" include/byteorder.h
 
     echo_bold "   => Building"
     make clean                          >> "${LOG_PATH}" 2>&1
@@ -146,3 +159,6 @@ merge_libs 'sane' 'libsane-net.a'
 cp "${LIB_DIR}/armv7/include/sane/sane.h"     "${LIB_DIR}/all"
 cp "${LIB_DIR}/armv7/include/sane/saneopts.h" "${LIB_DIR}/all"
 
+if [ $ONLY_NET -eq 0 ]; then
+    cp "${LIB_DIR}/armv7/etc/sane.d/dll.conf"     "${LIB_DIR}/all"
+fi

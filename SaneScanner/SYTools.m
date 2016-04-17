@@ -131,10 +131,20 @@ BOOL CGRectSideIsVertical(CGRectSide side)
     return paths.firstObject;
 }
 
-+ (NSString *)appSupportPath
++ (NSString *)appSupportPath:(BOOL)create
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    return [paths.firstObject stringByAppendingPathComponent:@"SaneScanner"];
+    NSString *path = [paths.firstObject stringByAppendingPathComponent:@"SaneScanner"];
+
+    if (create && ![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:NULL])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+    }
+    
+    return path;
 }
 
 + (NSString *)pathForFile:(NSString *)filename

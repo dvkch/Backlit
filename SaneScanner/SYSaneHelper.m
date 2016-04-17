@@ -89,7 +89,11 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 - (void)initSane
 {
     // needed for Sane-net config file
-    [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools appSupportPath]];
+    [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools appSupportPath:YES]];
+    
+    // needed for dll.conf file
+    NSData *dllConf = [NSData dataWithContentsOfFile:@"dll.conf"];
+    [dllConf writeToFile:[SYTools appSupportPath:NO] atomically:YES];
     
     self.openedDevices = [NSMutableDictionary dictionary];
     self.devices = nil;
@@ -162,15 +166,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     NSString *hostsString = [self.hosts componentsJoinedByString:@"\n"];
     NSString *config = [NSString stringWithFormat:@"connect_timeout = 10\n%@", (hostsString ?: @"")];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[SYTools appSupportPath] isDirectory:NULL])
-    {
-        [[NSFileManager defaultManager] createDirectoryAtPath:[SYTools appSupportPath]
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:NULL];
-    }
-    
-    NSString *configPath = [[SYTools appSupportPath] stringByAppendingPathComponent:@"net.conf"];
+    NSString *configPath = [[SYTools appSupportPath:YES] stringByAppendingPathComponent:@"net.conf"];
     [config writeToFile:configPath atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     
     [[NSFileManager defaultManager] setAttributes:@{} ofItemAtPath:config error:NULL];

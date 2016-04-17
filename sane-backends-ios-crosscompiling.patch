@@ -1,15 +1,55 @@
-From de805dd8bf313935508438f6a6134c5b6559999f Mon Sep 17 00:00:00 2001
+From ffa2a1ba8d687fe9cd2e9db958c26535b4b96db5 Mon Sep 17 00:00:00 2001
 From: Stanislas Chevallier <contact@syan.me>
-Date: Wed, 9 Mar 2016 18:46:37 +0100
-Subject: [PATCH] make it compile for iOS
+Date: Sun, 17 Apr 2016 22:50:05 +0200
+Subject: [PATCH] Fixes for iOS static libs
 
 ---
- configure.in     | 2 +-
- sanei/sanei_ir.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ backend/kvs20xx_opt.c   | 1 +
+ backend/kvs40xx_opt.c   | 1 +
+ backend/pieusb_buffer.c | 2 +-
+ configure.in            | 4 ++--
+ sanei/sanei_ir.c        | 3 ++-
+ 5 files changed, 7 insertions(+), 4 deletions(-)
 
+diff --git a/backend/kvs20xx_opt.c b/backend/kvs20xx_opt.c
+index 83d3385..d511fef 100644
+--- a/backend/kvs20xx_opt.c
++++ b/backend/kvs20xx_opt.c
+@@ -8,6 +8,7 @@
+ 
+ #include "../include/sane/config.h"
+ 
++#include <stdlib.h>
+ #include <string.h>
+ 
+ #define DEBUG_DECLARE_ONLY
+diff --git a/backend/kvs40xx_opt.c b/backend/kvs40xx_opt.c
+index c4f478b..aee9e5f 100644
+--- a/backend/kvs40xx_opt.c
++++ b/backend/kvs40xx_opt.c
+@@ -8,6 +8,7 @@
+ 
+ #include "../include/sane/config.h"
+ 
++#include <stdlib.h>
+ #include <string.h>
+ #define DEBUG_DECLARE_ONLY
+ #define BACKEND_NAME kvs40xx
+diff --git a/backend/pieusb_buffer.c b/backend/pieusb_buffer.c
+index 53bd867..0df1fe0 100644
+--- a/backend/pieusb_buffer.c
++++ b/backend/pieusb_buffer.c
+@@ -163,7 +163,7 @@ sanei_pieusb_buffer_create(struct Pieusb_Read_Buffer* buffer, SANE_Int width, SA
+     snprintf(buffer->buffer_name, L_tmpnam, "/tmp/sane.XXXXXX");
+     if (buffer->data_file != 0) /* might still be open from previous invocation */
+       close(buffer->data_file);
+-    buffer->data_file = mkostemp(buffer->buffer_name, O_RDWR | O_CREAT | O_EXCL | O_TRUNC);
++    buffer->data_file = mkstemp(buffer->buffer_name);
+     if (buffer->data_file == -1) {
+         buffer->data_file = 0;
+         buffer->data = NULL;
 diff --git a/configure.in b/configure.in
-index 96a52e5..0cc87b2 100644
+index 96a52e5..52d8405 100644
 --- a/configure.in
 +++ b/configure.in
 @@ -77,7 +77,7 @@ AC_SUBST(MAKEINDEX)
@@ -21,6 +61,15 @@ index 96a52e5..0cc87b2 100644
  
  dnl ***********************************************************************
  dnl set compiler/linker flags
+@@ -306,7 +306,7 @@ if test "$ac_cv_header_be_kernel_OS_h" = "yes" ; then
+ fi
+ 
+ AC_FUNC_ALLOCA
+-AC_FUNC_MMAP
++AC_CHECK_FUNCS(mmap)
+ AC_CHECK_FUNCS(atexit ioperm i386_set_ioperm \
+     mkdir strftime strstr strtod  \
+     cfmakeraw tcsendbreak strcasecmp strncasecmp _portaccess \
 diff --git a/sanei/sanei_ir.c b/sanei/sanei_ir.c
 index 42e82ba..31afc99 100644
 --- a/sanei/sanei_ir.c
@@ -36,5 +85,5 @@ index 42e82ba..31afc99 100644
  
  #define BACKEND_NAME sanei_ir	/* name of this module for debugging */
 -- 
-2.5.4 (Apple Git-61)
+2.6.4 (Apple Git-63)
 
