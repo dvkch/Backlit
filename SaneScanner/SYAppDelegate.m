@@ -21,10 +21,11 @@
 #import "MHGalleryController+SY.h"
 #import "UIImage+SY.h"
 #import "SYGalleryThumbsView.h"
+#import "SYScanNC.h"
 
-@interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate, UINavigationControllerDelegate>
+@interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate>
 @property (nonatomic, strong) SYSplitVC *splitViewController;
-@property (nonatomic, strong) UINavigationController *scanNavigationController;
+@property (nonatomic, strong) SYScanNC *scanNavigationController;
 @property (nonatomic, strong) MHGalleryController *galleryViewController;
 @property (nonatomic, strong) SYEmptyGalleryVC *emptyVC;
 @end
@@ -46,19 +47,17 @@
     
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];
-    self.scanNavigationController =
-    [[UINavigationController alloc] initWithNavigationBarClass:nil toolbarClass:[SYToolbar class]];
+    self.scanNavigationController = [[SYScanNC alloc] init];
     [self.scanNavigationController setToolbarHidden:YES];
-    [(SYToolbar *)self.scanNavigationController.toolbar setHeight:64.];
-    [(SYToolbar *)self.scanNavigationController.toolbar setPadding:0.];
+    [self.scanNavigationController.toolbar setHeight:64.];
+    [self.scanNavigationController.toolbar setPadding:0.];
     [self.scanNavigationController.toolbar setTranslucent:NO];
-    [self.scanNavigationController setDelegate:self];
     [self.scanNavigationController setViewControllers:@[vc]];
     
     // gallery view controller
     self.galleryViewController =
     [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown];
-    [self.galleryViewController setHideDoneButton:YES];
+    [self.galleryViewController.UICustomization setHideDoneButton:YES];
     [self.galleryViewController.UICustomization
      setMHGalleryBackgroundColor:[UIColor groupTableViewBackgroundColor]
      forViewMode:MHGalleryViewModeImageViewerNavigationBarHidden];
@@ -94,32 +93,28 @@
     return YES;
 }
 
-- (void)updateToolbarAndGalleryForTraitCollection:(UITraitCollection *)traitCollection
+- (void)splitVCtraitCollectionWillChangeTo:(UITraitCollection *)traitCollection
 {
-    UITraitCollection *traits = traitCollection ?: self.splitViewController.traitCollection;
-    NSArray <MHGalleryItem *> *galleryItems = [[SYGalleryManager shared] galleryItems];
-
-    BOOL constrainedW = (traits.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
-    BOOL hasImages    = (galleryItems.count > 0);
-    [self.scanNavigationController setToolbarHidden:(!constrainedW || !hasImages) animated:YES];
+    BOOL constrainedW = (traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
+    BOOL constrainedH = (traitCollection.verticalSizeClass   == UIUserInterfaceSizeClassCompact);
     
-    [self.galleryViewController setGalleryItems:galleryItems];
-    
-    UIViewController *detailsViewController = [self.splitViewController.viewControllers nullableObjectAtIndex:1];
+    [self.scanNavigationController.toolbar setHeight:(constrainedH ? 34 : 64)];
     
     if (!constrainedW)
+    {
+        if ([self.scanNavigationController.presentedViewController isKindOfClass:[MHGalleryController class]])
+        {
+            MHGalleryController *currentGallery = (MHGalleryController *)self.scanNavigationController.presentedViewController;
+            if ([currentGallery isShowingOverview])
+                [self.galleryViewController openOverview];
+            else
+                [self.galleryViewController openImageViewForPage:currentGallery.imageViewerViewController.pageIndex];
+        }
+        
         [self.scanNavigationController dismissViewControllerAnimated:NO completion:nil];
+    }
     
-    if (!hasImages && detailsViewController == self.galleryViewController)
-        [self.splitViewController setViewControllers:@[self.scanNavigationController, self.emptyVC]];
-    
-    if (hasImages && detailsViewController != self.galleryViewController)
-        [self.splitViewController setViewControllers:@[self.scanNavigationController, self.galleryViewController]];
-    
-    if (traits.verticalSizeClass == UIUserInterfaceSizeClassCompact)
-        [(SYToolbar *)self.scanNavigationController.toolbar setHeight:34];
-    else
-        [(SYToolbar *)self.scanNavigationController.toolbar setHeight:64];
+    [self.scanNavigationController setToolbarHidden:(!constrainedW || ![[SYGalleryManager shared] galleryItems].count) animated:YES];
 }
 
 #pragma mark - GalleryManager
@@ -129,8 +124,20 @@
                newItem:(MHGalleryItem *)newItem
            removedItem:(MHGalleryItem *)removedItem
 {
-    [self updateToolbarAndGalleryForTraitCollection:nil];
+    BOOL constrainedW = (self.splitViewController.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
+    
+    [self.scanNavigationController setToolbarHidden:(!constrainedW || !items.count) animated:YES];
+
+    UIViewController *detailsViewController = [self.splitViewController.viewControllers nullableObjectAtIndex:1];
+    
+    if (!items.count && detailsViewController != self.emptyVC)
+        [self.splitViewController setViewControllers:@[self.scanNavigationController, self.emptyVC]];
+    
+    if ( items.count && detailsViewController != self.galleryViewController)
+        [self.splitViewController setViewControllers:@[self.scanNavigationController, self.galleryViewController]];
 }
+
+#pragma mark - SplitViewController
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController
 collapseSecondaryViewController:(UIViewController *)secondaryViewController
@@ -139,25 +146,21 @@ collapseSecondaryViewController:(UIViewController *)secondaryViewController
     return (splitViewController.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
 }
 
-#pragma mark - NavigationController
-
-- (void)navigationController:(UINavigationController *)navigationController
-      willShowViewController:(UIViewController *)viewController
-                    animated:(BOOL)animated
+- (UIViewController *)splitViewController:(UISplitViewController *)splitViewController
+separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController
 {
-    if (navigationController != self.scanNavigationController)
-        return;
-    
-    if ([viewController isKindOfClass:[SYDevicesVC class]] || [viewController isKindOfClass:[SYDeviceVC class]])
-    {
-        SYGalleryThumbsView *thumbsView = viewController.toolbarItems.firstObject.customView;
-        if ([thumbsView isKindOfClass:[SYGalleryThumbsView class]])
-        {
-            NSLog(@"do shit");
-        }
-    }
+    if ([[SYGalleryManager shared] galleryItems].count)
+        return self.galleryViewController;
+    else
+        return self.emptyVC;
 }
 
+- (void)splitViewController:(UISplitViewController *)svc willChangeToDisplayMode:(UISplitViewControllerDisplayMode)displayMode
+{
+    [self.galleryViewController.overViewViewController viewWillAppear:NO];
+}
+
+#pragma mark - Application
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

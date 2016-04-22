@@ -7,10 +7,10 @@
 //
 
 #import <MHOverviewController.h>
+#import <MHCustomization.h>
 
 @interface MHOverviewController (SY)
 
 + (void)sy_fix;
-- (void)updateCellSizesToWidth;
 
 @end

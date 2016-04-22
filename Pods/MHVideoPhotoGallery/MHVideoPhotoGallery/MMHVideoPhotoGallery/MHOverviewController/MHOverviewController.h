@@ -18,12 +18,14 @@
 
 @interface MHOverviewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) UICollectionView      *collectionView;
-@property (strong,nonatomic ) MHMediaPreviewCollectionViewCell *clickedCell;
-@property (nonatomic)         NSInteger             currentPage;
-@property (nonatomic, strong) NSArray               *galleryItems;
+@property (strong, nonatomic) UICollectionView                  *collectionView;
+@property (strong,nonatomic ) MHMediaPreviewCollectionViewCell  *clickedCell;
+@property (nonatomic)         NSInteger                         currentPage;
+@property (nonatomic, strong) NSArray                           *galleryItems;
+@property (nonatomic, strong) UICollectionViewLayout            *collectionViewLayout;
+@property (nonatomic, strong) MHUICustomization                 *UICustomization;
 
--(UICollectionViewFlowLayout*)layoutForOrientation:(UIInterfaceOrientation)orientation;
--(MHGalleryItem*)itemForIndex:(NSInteger)index;
--(void)pushToImageViewerForIndexPath:(NSIndexPath*)indexPath;
+- (MHGalleryItem*)itemForIndex:(NSInteger)index;
+- (void)pushToImageViewerForIndexPath:(NSIndexPath*)indexPath;
+
 @end

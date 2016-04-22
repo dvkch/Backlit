@@ -9,6 +9,9 @@
 #import "SYSaneDevice.h"
 #import "SYSaneOptionNumber.h"
 #import "SYTools.h"
+#import "saneopts.h"
+
+#define NSStringFromDef(string) ([NSString stringWithCString:string encoding:NSUTF8StringEncoding])
 
 @interface SYSaneDevice ()
 @property (nonatomic, strong, readwrite) NSString *name;
@@ -164,15 +167,18 @@
 
 @end
 
+
 NSString *NSStringFromSYSaneStandardOption(SYSaneStandardOption stdOption)
 {
-    NSDictionary <NSNumber *, NSString *> *dic = @{@(SYSaneStandardOptionPreview):          @"preview",
-                                                   @(SYSaneStandardOptionResolution):       @"resolution",
-                                                   @(SYSaneStandardOptionColorMode):        @"mode",
-                                                   @(SYSaneStandardOptionAreaTopLeftX):     @"tl-x",
-                                                   @(SYSaneStandardOptionAreaTopLeftY):     @"tl-y",
-                                                   @(SYSaneStandardOptionAreaBottomRightX): @"br-x",
-                                                   @(SYSaneStandardOptionAreaBottomRightY): @"br-y",
+    NSDictionary <NSNumber *, NSString *> *dic = @{@(SYSaneStandardOptionPreview):          NSStringFromDef(SANE_NAME_PREVIEW),
+                                                   @(SYSaneStandardOptionResolution):       NSStringFromDef(SANE_NAME_SCAN_RESOLUTION),
+                                                   @(SYSaneStandardOptionResolutionX):      NSStringFromDef(SANE_NAME_SCAN_X_RESOLUTION),
+                                                   @(SYSaneStandardOptionResolutionY):      NSStringFromDef(SANE_NAME_SCAN_Y_RESOLUTION),
+                                                   @(SYSaneStandardOptionColorMode):        NSStringFromDef(SANE_NAME_SCAN_MODE),
+                                                   @(SYSaneStandardOptionAreaTopLeftX):     NSStringFromDef(SANE_NAME_SCAN_TL_X),
+                                                   @(SYSaneStandardOptionAreaTopLeftY):     NSStringFromDef(SANE_NAME_SCAN_TL_Y),
+                                                   @(SYSaneStandardOptionAreaBottomRightX): NSStringFromDef(SANE_NAME_SCAN_BR_X),
+                                                   @(SYSaneStandardOptionAreaBottomRightY): NSStringFromDef(SANE_NAME_SCAN_BR_Y),
                                                    };
     
     return dic[@(stdOption)];
@@ -180,13 +186,15 @@ NSString *NSStringFromSYSaneStandardOption(SYSaneStandardOption stdOption)
 
 SYSaneStandardOption SYSaneStandardOptionFromNSString(NSString *stdOption)
 {
-    NSDictionary <NSNumber *, NSString *> *dic = @{@(SYSaneStandardOptionPreview):          @"preview",
-                                                   @(SYSaneStandardOptionResolution):       @"resolution",
-                                                   @(SYSaneStandardOptionColorMode):        @"mode",
-                                                   @(SYSaneStandardOptionAreaTopLeftX):     @"tl-x",
-                                                   @(SYSaneStandardOptionAreaTopLeftY):     @"tl-y",
-                                                   @(SYSaneStandardOptionAreaBottomRightX): @"br-x",
-                                                   @(SYSaneStandardOptionAreaBottomRightY): @"br-y",
+    NSDictionary <NSNumber *, NSString *> *dic = @{@(SYSaneStandardOptionPreview):          NSStringFromDef(SANE_NAME_PREVIEW),
+                                                   @(SYSaneStandardOptionResolution):       NSStringFromDef(SANE_NAME_SCAN_RESOLUTION),
+                                                   @(SYSaneStandardOptionResolutionX):      NSStringFromDef(SANE_NAME_SCAN_X_RESOLUTION),
+                                                   @(SYSaneStandardOptionResolutionY):      NSStringFromDef(SANE_NAME_SCAN_Y_RESOLUTION),
+                                                   @(SYSaneStandardOptionColorMode):        NSStringFromDef(SANE_NAME_SCAN_MODE),
+                                                   @(SYSaneStandardOptionAreaTopLeftX):     NSStringFromDef(SANE_NAME_SCAN_TL_X),
+                                                   @(SYSaneStandardOptionAreaTopLeftY):     NSStringFromDef(SANE_NAME_SCAN_TL_Y),
+                                                   @(SYSaneStandardOptionAreaBottomRightX): NSStringFromDef(SANE_NAME_SCAN_BR_X),
+                                                   @(SYSaneStandardOptionAreaBottomRightY): NSStringFromDef(SANE_NAME_SCAN_BR_Y),
                                                    };
     
     NSArray <NSNumber *> *keys = [dic allKeysForObject:stdOption];
@@ -198,6 +206,8 @@ SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption
     switch (stdOption) {
         case SYSaneStandardOptionColorMode:         return SYOptionValueAuto;
         case SYSaneStandardOptionResolution:        return SYOptionValueMin;
+        case SYSaneStandardOptionResolutionX:       return SYOptionValueMin;
+        case SYSaneStandardOptionResolutionY:       return SYOptionValueMin;
         case SYSaneStandardOptionAreaTopLeftX:      return SYOptionValueMin;
         case SYSaneStandardOptionAreaTopLeftY:      return SYOptionValueMin;
         case SYSaneStandardOptionAreaBottomRightX:  return SYOptionValueMax;

@@ -11,7 +11,7 @@ pod 'Masonry'
 pod 'PKYStepper'
 pod 'SYKit'
 pod 'SYPair'
-pod 'MHVideoPhotoGallery', :head
 pod 'DirectoryWatchdog'
 pod 'INSPullToRefresh'
 pod 'SpinKit'
+pod 'MHVideoPhotoGallery', :podspec => "https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec"

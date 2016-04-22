@@ -19,6 +19,7 @@
 #import "SYSaneOptionGroup.h"
 #import "SYSaneScanParameters.h"
 #import "sane.h"
+#import "saneopts.h"
 #import "UIImage+SY.h"
 #import "NSMutableData+SY.h"
 #import <NSObject+SYKit.h>
@@ -616,6 +617,8 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     else
     {
         NSArray <NSNumber *> *stdOptions = @[@(SYSaneStandardOptionResolution),
+                                             @(SYSaneStandardOptionResolutionX),
+                                             @(SYSaneStandardOptionResolutionY),
                                              @(SYSaneStandardOptionAreaTopLeftX),
                                              @(SYSaneStandardOptionAreaTopLeftY),
                                              @(SYSaneStandardOptionAreaBottomRightX),

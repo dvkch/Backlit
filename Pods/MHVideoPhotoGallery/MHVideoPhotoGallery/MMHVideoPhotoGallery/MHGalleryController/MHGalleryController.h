@@ -74,12 +74,34 @@
 - (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
 +(instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
 
+- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle UICustomization:(MHUICustomization *)UICustomization;
++(instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle UICustomization:(MHUICustomization *)UICustomization;
+
 @property (nonatomic, copy) void (^finishedCallback)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode);
 
 /**
  *  Reloads the View from the Datasource.
  */
 -(void)reloadData;
+
+/**
+ *  Determines if currently visible view controller is overview or image
+ *
+ *  @return `YES` if the current top view controller is the overview
+ */
+- (BOOL)isShowingOverview;
+
+/**
+ *  Opens the overview view controller
+ */
+- (void)openOverview;
+
+/**
+ *  Opens the image view controller, scrolled to a specific page index
+ *
+ *  @param page desired page index
+ */
+- (void)openImageViewForPage:(NSInteger)page;
 
 @end
 

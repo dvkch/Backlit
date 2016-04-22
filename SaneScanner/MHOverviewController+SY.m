@@ -9,6 +9,7 @@
 #import "MHOverviewController+SY.h"
 #import "MHGalleryController+SY.h"
 #import <NSObject+SYKit.h>
+#import "SYAppDelegate.h"
 
 @implementation MHOverviewController (SY)
 
@@ -18,7 +19,15 @@
     dispatch_once(&onceToken, ^{
         [self sy_swizzleSelector:@selector(viewWillTransitionToSize:withTransitionCoordinator:)
                     withSelector:@selector(sy_viewWillTransitionToSize:withTransitionCoordinator:)];
+        [self sy_swizzleSelector:@selector(viewWillAppear:)
+                    withSelector:@selector(sy_viewWillAppear:)];
     });
+}
+
+- (void)sy_viewWillAppear:(BOOL)animated
+{
+    [self sy_viewWillAppear:animated];
+    [self updateCellSizesToWidth:self.view.bounds.size.width yo:@"will appear"];
 }
 
 - (void)sy_viewWillTransitionToSize:(CGSize)size
@@ -26,16 +35,11 @@
 {
     [self sy_viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        [self updateCellSizesToWidth:size.width];
+        [self updateCellSizesToWidth:size.width yo:@"will size"];
     } completion:nil];
 }
 
-- (void)updateCellSizesToWidth
-{
-    [self updateCellSizesToWidth:self.view.bounds.size.width];
-}
-
-- (void)updateCellSizesToWidth:(CGFloat)width
+- (void)updateCellSizesToWidth:(CGFloat)width yo:(NSString *)yo
 {
     MHGalleryController *galleryController = (MHGalleryController *)self.navigationController;
     
@@ -45,6 +49,9 @@
     CGFloat cellSize = floor(availableWidth / numberOfItemsPerRow);
     
     [galleryController setThumbSize:CGSizeMake(cellSize, cellSize)];
+    
+    if ([[SYAppDelegate obtain] valueForKey:@"galleryViewController"] == self.navigationController)
+        NSLog(@"%.02lf -> %.lf (%@)", width, cellSize, yo);
 }
 
 @end

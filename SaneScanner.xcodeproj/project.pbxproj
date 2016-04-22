@@ -18,11 +18,12 @@
 		971BE2421C8E364A00B8F29C /* SYSaneOptionNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2411C8E364A00B8F29C /* SYSaneOptionNumber.m */; };
 		971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */; };
 		971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2471C8EEF4700B8F29C /* SYSanePreviewView.m */; };
+		9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */; };
 		97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */; };
 		9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */; };
 		9734E3621C90218E00B66797 /* SYAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9734E3611C90218E00B66797 /* SYAddCell.m */; };
 		9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */; };
-		9748E9531CC4349700327908 /* dll.conf in Resources */ = {isa = PBXBuildFile; fileRef = 9748E9521CC4349700327908 /* dll.conf */; };
+		974BB4171CCA753F0057128B /* SYScanNC.m in Sources */ = {isa = PBXBuildFile; fileRef = 974BB4161CCA753F0057128B /* SYScanNC.m */; };
 		974FB9871CA43EC900C741B1 /* SYRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FB9861CA43EC900C741B1 /* SYRefreshControl.m */; };
 		97521E6A1C88E8BA00C77209 /* SYSaneOptionBool.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E5F1C88E8BA00C77209 /* SYSaneOptionBool.m */; };
 		97521E6B1C88E8BA00C77209 /* SYSaneOptionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E611C88E8BA00C77209 /* SYSaneOptionButton.m */; };
@@ -33,7 +34,6 @@
 		975B78141C923B6D00804D86 /* SYPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78131C923B6D00804D86 /* SYPreferences.m */; };
 		975B78171C923C7200804D86 /* SYPrefVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78161C923C7200804D86 /* SYPrefVC.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
-		976371F81CC4390B00CA9480 /* sanei_usb.c in Sources */ = {isa = PBXBuildFile; fileRef = 976371F71CC4390B00CA9480 /* sanei_usb.c */; };
 		976B8DFF1CA08FA2009E5E7B /* MHOverviewController+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 976B8DFE1CA08FA2009E5E7B /* MHOverviewController+SY.m */; };
 		97BB76F41C89169F00A0823A /* SYSaneScanParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */; };
 		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
@@ -76,6 +76,8 @@
 		971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPreviewCell.m; sourceTree = "<group>"; };
 		971BE2461C8EEF4700B8F29C /* SYSanePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSanePreviewView.h; sourceTree = "<group>"; };
 		971BE2471C8EEF4700B8F29C /* SYSanePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSanePreviewView.m; sourceTree = "<group>"; };
+		9721226A1CCA56C1006610E6 /* MHUICustomization+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHUICustomization+SY.h"; sourceTree = "<group>"; };
+		9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHUICustomization+SY.m"; sourceTree = "<group>"; };
 		97221E071C9B7DDC0062268F /* SYGalleryThumbsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsCell.h; sourceTree = "<group>"; };
 		97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryThumbsCell.m; sourceTree = "<group>"; };
 		9724E7A21C8C60000046AE97 /* SYSaneOptionUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionUI.h; sourceTree = "<group>"; };
@@ -84,7 +86,8 @@
 		9734E3611C90218E00B66797 /* SYAddCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAddCell.m; sourceTree = "<group>"; };
 		9735E84D1C8CE66B0049CD13 /* DLAVAlertView+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DLAVAlertView+SY.h"; sourceTree = "<group>"; };
 		9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DLAVAlertView+SY.m"; sourceTree = "<group>"; };
-		9748E9521CC4349700327908 /* dll.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dll.conf; path = "sane-libs/all/dll.conf"; sourceTree = "<group>"; };
+		974BB4151CCA753F0057128B /* SYScanNC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYScanNC.h; sourceTree = "<group>"; };
+		974BB4161CCA753F0057128B /* SYScanNC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYScanNC.m; sourceTree = "<group>"; };
 		974FB9851CA43EC900C741B1 /* SYRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYRefreshControl.h; sourceTree = "<group>"; };
 		974FB9861CA43EC900C741B1 /* SYRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYRefreshControl.m; sourceTree = "<group>"; };
 		97521E5E1C88E8BA00C77209 /* SYSaneOptionBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionBool.h; sourceTree = "<group>"; };
@@ -105,7 +108,6 @@
 		975B78161C923C7200804D86 /* SYPrefVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPrefVC.m; sourceTree = "<group>"; };
 		975F9C981C8F15B7005A96AB /* SYCropMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYCropMaskView.h; sourceTree = "<group>"; };
 		975F9C991C8F15B7005A96AB /* SYCropMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYCropMaskView.m; sourceTree = "<group>"; };
-		976371F71CC4390B00CA9480 /* sanei_usb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sanei_usb.c; path = "sane-backends/sanei/sanei_usb.c"; sourceTree = "<group>"; };
 		976B8DFD1CA08FA2009E5E7B /* MHOverviewController+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHOverviewController+SY.h"; sourceTree = "<group>"; };
 		976B8DFE1CA08FA2009E5E7B /* MHOverviewController+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHOverviewController+SY.m"; sourceTree = "<group>"; };
 		97BB76F21C89169F00A0823A /* SYSaneScanParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneScanParameters.h; sourceTree = "<group>"; };
@@ -174,6 +176,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		972122691CCA561A006610E6 /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				970DE9DC1C9B6344001CD025 /* MHGalleryController+SY.h */,
+				970DE9DD1C9B6344001CD025 /* MHGalleryController+SY.m */,
+				970DE9DF1C9B6F5D001CD025 /* MHGalleryImageViewerViewController+SY.h */,
+				970DE9E01C9B6F5D001CD025 /* MHGalleryImageViewerViewController+SY.m */,
+				976B8DFD1CA08FA2009E5E7B /* MHOverviewController+SY.h */,
+				976B8DFE1CA08FA2009E5E7B /* MHOverviewController+SY.m */,
+				9721226A1CCA56C1006610E6 /* MHUICustomization+SY.h */,
+				9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */,
+			);
+			name = Gallery;
+			sourceTree = "<group>";
+		};
 		9734E3631C90219800B66797 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +207,8 @@
 		9734E3641C9031F300B66797 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
+				974BB4151CCA753F0057128B /* SYScanNC.h */,
+				974BB4161CCA753F0057128B /* SYScanNC.m */,
 				9710B41F1C9B257C00A55529 /* SYSplitVC.h */,
 				9710B4201C9B257C00A55529 /* SYSplitVC.m */,
 				F8CBD2171AF9A58C00B4C221 /* SYDevicesVC.h */,
@@ -217,12 +236,6 @@
 				971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */,
 				97DA07101C98927E007F522E /* UIColor+SY.h */,
 				97DA07111C98927E007F522E /* UIColor+SY.m */,
-				970DE9DC1C9B6344001CD025 /* MHGalleryController+SY.h */,
-				970DE9DD1C9B6344001CD025 /* MHGalleryController+SY.m */,
-				970DE9DF1C9B6F5D001CD025 /* MHGalleryImageViewerViewController+SY.h */,
-				970DE9E01C9B6F5D001CD025 /* MHGalleryImageViewerViewController+SY.m */,
-				976B8DFD1CA08FA2009E5E7B /* MHOverviewController+SY.h */,
-				976B8DFE1CA08FA2009E5E7B /* MHOverviewController+SY.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -287,13 +300,11 @@
 		F86584871AF9A9FB0028E039 /* sane-libs */ = {
 			isa = PBXGroup;
 			children = (
-				976371F71CC4390B00CA9480 /* sanei_usb.c */,
 				F804E06C1AFA4AF300CBE307 /* libsane-dll.a */,
 				F804E06D1AFA4AF300CBE307 /* libsane-net.a */,
 				F804E06E1AFA4AF300CBE307 /* libsane.a */,
 				F804E06F1AFA4AF300CBE307 /* sane.h */,
 				F804E0701AFA4AF300CBE307 /* saneopts.h */,
-				9748E9521CC4349700327908 /* dll.conf */,
 			);
 			name = "sane-libs";
 			sourceTree = "<group>";
@@ -321,6 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				97521E701C8912BD00C77209 /* Categories */,
+				972122691CCA561A006610E6 /* Gallery */,
 				9734E3641C9031F300B66797 /* VCs */,
 				F804E07A1AFA56A500CBE307 /* Views */,
 				9734E3631C90219800B66797 /* Cells */,
@@ -407,7 +419,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9748E9531CC4349700327908 /* dll.conf in Resources */,
 				F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,11 +481,12 @@
 				971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
 				970DE9DE1C9B6344001CD025 /* MHGalleryController+SY.m in Sources */,
-				976371F81CC4390B00CA9480 /* sanei_usb.c in Sources */,
 				975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */,
 				971BE23F1C8E288300B8F29C /* NSMutableData+SY.m in Sources */,
+				974BB4171CCA753F0057128B /* SYScanNC.m in Sources */,
 				97BB76F41C89169F00A0823A /* SYSaneScanParameters.m in Sources */,
 				97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */,
+				9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */,
 				F894F3AB1AFAAFAA00365036 /* SYOptionCell.m in Sources */,
 				F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */,
 				97521E6A1C88E8BA00C77209 /* SYSaneOptionBool.m in Sources */,

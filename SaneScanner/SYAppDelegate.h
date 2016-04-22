@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class MHGalleryController;
+
 @interface SYAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) UIWindow *window;
 
 + (instancetype)obtain;
 
-- (void)updateToolbarAndGalleryForTraitCollection:(UITraitCollection *)traitCollection;
+- (void)splitVCtraitCollectionWillChangeTo:(UITraitCollection *)traitCollection;
 
 @end
 

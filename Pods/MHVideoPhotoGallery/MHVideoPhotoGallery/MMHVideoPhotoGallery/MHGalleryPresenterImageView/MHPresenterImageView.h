@@ -29,6 +29,10 @@
  *  set the currentIndex
  */
 @property (nonatomic)        NSInteger currentImageIndex;
+/**
+ *  set the gallery uicustomization
+ */
+@property (nonatomic,strong) MHUICustomization *UICustomization;
 
 @property (nonatomic, copy) void (^finishedCallback)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode);
 
@@ -37,6 +41,7 @@
 -(void)setInseractiveGalleryPresentionWithItems:(NSArray*)galleryItems
                               currentImageIndex:(NSInteger)currentImageIndex
                           currentViewController:(UIViewController*)viewController
+                                UICustomization:(MHUICustomization *)UICustomization
                                  finishCallback:(void(^)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode)
                                                  )FinishBlock;
 @end

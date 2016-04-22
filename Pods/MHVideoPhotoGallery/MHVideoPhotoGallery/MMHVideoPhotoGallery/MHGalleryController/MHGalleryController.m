@@ -11,7 +11,12 @@
 
 @implementation MHGalleryController
 
-- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle{
+- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle {
+    self = [self initWithPresentationStyle:presentationStyle UICustomization:MHUICustomization.new];
+    return self;
+}
+
+- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle UICustomization:(MHUICustomization *)UICustomization {
     self = [super initWithNibName:nil bundle:nil];
     if (!self)
         return nil;
@@ -21,7 +26,7 @@
     self.preferredStatusBarStyleMH = UIStatusBarStyleDefault;
     self.presentationStyle = presentationStyle;
     self.transitionCustomization = MHTransitionCustomization.new;
-    self.UICustomization = MHUICustomization.new;
+    self.UICustomization = UICustomization ?: MHUICustomization.new;
     
     self.overViewViewController= MHOverviewController.new;
     self.imageViewerViewController = MHGalleryImageViewerViewController.new;
@@ -38,10 +43,22 @@
     return [self.class.alloc initWithPresentationStyle:presentationStyle];
 }
 
++(instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle UICustomization:(MHUICustomization *)UICustomization{
+    return [self.class.alloc initWithPresentationStyle:presentationStyle UICustomization:UICustomization];
+}
+
 -(void)setGalleryItems:(NSArray *)galleryItems{
-    self.overViewViewController.galleryItems = galleryItems;
-    self.imageViewerViewController.galleryItems = galleryItems;
-    _galleryItems = galleryItems;
+    [self setDataSource:self];
+    
+    if (!galleryItems.count)
+        _galleryItems = @[[MHGalleryItem itemWithImage:UIImage.new]];
+    else
+        _galleryItems = galleryItems;
+    
+    self.overViewViewController.galleryItems = _galleryItems;
+    self.imageViewerViewController.galleryItems = _galleryItems;
+
+    [self reloadData];
 }
 
 -(void)setPresentationIndex:(NSInteger)presentationIndex{
@@ -69,8 +86,37 @@
 }
 
 -(void)reloadData {
+    // views haven't been loaded yet
+    if (!self.imageViewerViewController.toolbar)
+        return;
+    
     [self.imageViewerViewController reloadData];
     [self.overViewViewController.collectionView reloadData];
+}
+
+- (BOOL)isShowingOverview
+{
+    return (self.topViewController == self.overViewViewController);
+}
+
+- (void)openOverview
+{
+    if (![self isShowingOverview])
+        [self popViewControllerAnimated:NO];
+}
+
+- (void)openImageViewForPage:(NSInteger)page
+{
+    if (page < 0 || page >= self.galleryItems.count)
+        return;
+    
+    if ([self isShowingOverview])
+        [self.overViewViewController pushToImageViewerForIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+    else
+    {
+        [self.imageViewerViewController setPageIndex:page];
+        [self.imageViewerViewController reloadData];
+    }
 }
 
 @end

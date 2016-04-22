@@ -16,7 +16,7 @@
 {
     [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        [[SYAppDelegate obtain] updateToolbarAndGalleryForTraitCollection:newCollection];
+        [[SYAppDelegate obtain] splitVCtraitCollectionWillChangeTo:newCollection];
     } completion:nil];
 }
 

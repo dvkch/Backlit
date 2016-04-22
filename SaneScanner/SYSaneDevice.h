@@ -14,6 +14,8 @@ typedef enum : NSUInteger {
     SYSaneStandardOptionUnknown,
     SYSaneStandardOptionPreview,
     SYSaneStandardOptionResolution,
+    SYSaneStandardOptionResolutionX,
+    SYSaneStandardOptionResolutionY,
     SYSaneStandardOptionColorMode,
     SYSaneStandardOptionAreaTopLeftX,
     SYSaneStandardOptionAreaTopLeftY,

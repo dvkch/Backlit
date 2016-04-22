@@ -22,10 +22,9 @@
 #import "MHGalleryController+SY.h"
 #import "SYRefreshControl.h"
 
-@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate, SYGalleryManagerDelegate>
+@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
-@property (nonatomic, strong) MHGalleryController *galleryVC;
 @end
 
 @implementation SYDevicesVC
@@ -55,7 +54,6 @@
     }];
     
     [[SYSaneHelper shared] setDelegate:self];
-    [[SYGalleryManager shared] addDelegate:self];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(@0);
@@ -75,28 +73,11 @@
     [self setTitle:@""];
 }
 
-- (void)presentViewController:(UIViewController *)viewController animated:(BOOL)flag completion:(void (^)(void))completion
-{
-    [super presentViewController:viewController animated:flag completion:completion];
-    if ([viewController isKindOfClass:[MHGalleryController class]])
-        self.galleryVC = (MHGalleryController *)viewController;
-}
-
 #pragma mark - IBActions
 
 - (void)buttonSettingsTap:(id)sender
 {
     [SYPrefVC showOnVC:self closeBlock:nil];
-}
-
-#pragma mark - GalleryManager
-
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager
- didUpdateGalleryItems:(NSArray<MHGalleryItem *> *)items
-               newItem:(MHGalleryItem *)newItem
-           removedItem:(MHGalleryItem *)removedItem
-{
-    [self.galleryVC setGalleryItems:items];
 }
 
 #pragma mark - SYSaneHelperDelegate

@@ -31,12 +31,11 @@
 #import "MHGalleryController+SY.h"
 #import "SYRefreshControl.h"
 
-@interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate, SYGalleryManagerDelegate>
+@interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIButton *buttonScan;
 @property (nonatomic, assign) BOOL refreshing;
-@property (nonatomic, weak) MHGalleryController *galleryVC;
 @end
 
 @implementation SYDeviceVC
@@ -88,8 +87,6 @@
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
     
-    [[SYGalleryManager shared] addDelegate:self];
-    
     // adding pull to refresh
     __weak SYDeviceVC *wSelf = self;
     [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scollView) {
@@ -101,13 +98,6 @@
 
     // initial refresh
     [self.tableView ins_beginPullToRefresh];
-}
-
-- (void)presentViewController:(UIViewController *)viewController animated:(BOOL)flag completion:(void (^)(void))completion
-{
-    [super presentViewController:viewController animated:flag completion:completion];
-    if ([viewController isKindOfClass:[MHGalleryController class]])
-        self.galleryVC = (MHGalleryController *)viewController;
 }
 
 - (void)dealloc
@@ -260,16 +250,6 @@
     [SYPrefVC showOnVC:self closeBlock:^{
         [self.tableView reloadData];
     }];
-}
-
-#pragma mark - GalleryManager
-
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager
- didUpdateGalleryItems:(NSArray<MHGalleryItem *> *)items
-               newItem:(MHGalleryItem *)newItem
-           removedItem:(MHGalleryItem *)removedItem
-{
-    [self.galleryVC setGalleryItems:items];
 }
 
 #pragma mark - UITableViewDataSource

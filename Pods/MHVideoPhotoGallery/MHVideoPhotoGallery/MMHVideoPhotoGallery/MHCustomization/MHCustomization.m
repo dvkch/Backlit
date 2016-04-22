@@ -60,25 +60,18 @@
                                                                                                 [[UIColor blackColor] colorWithAlphaComponent:0.70],
                                                                                                 [[UIColor blackColor] colorWithAlphaComponent:0.85]]}];
         
-        self.customBarButtonItem = nil;
+        self.hideDoneButton = NO;
+        self.overviewTitle = MHGalleryLocalizedString(@"overview.title.current");
+        
         
         CGSize screenSize = UIScreen.mainScreen.bounds.size;
-        UICollectionViewFlowLayout *flowLayoutLanscape = UICollectionViewFlowLayout.new;
-        flowLayoutLanscape.scrollDirection = UICollectionViewScrollDirectionVertical;
-        flowLayoutLanscape.sectionInset = UIEdgeInsetsMake(4, 0, 0, 0);
-        flowLayoutLanscape.minimumInteritemSpacing = 4;
-        flowLayoutLanscape.minimumLineSpacing = 10;
-        flowLayoutLanscape.itemSize = CGSizeMake(screenSize.width/3.1, screenSize.width/3.1);
-        self.overViewCollectionViewLayoutLandscape = flowLayoutLanscape;
-        
-        UICollectionViewFlowLayout *flowLayoutPort = UICollectionViewFlowLayout.new;
-        flowLayoutPort.scrollDirection = UICollectionViewScrollDirectionVertical;
-        flowLayoutPort.sectionInset = UIEdgeInsetsMake(4, 0, 0, 0);
-        flowLayoutPort.minimumInteritemSpacing = 4;
-        flowLayoutPort.minimumLineSpacing = 4;
-        flowLayoutPort.itemSize = CGSizeMake(screenSize.width/3.1, screenSize.width/3.1);
-        self.overViewCollectionViewLayoutPortrait = flowLayoutPort;
-        
+        UICollectionViewFlowLayout *flowLayout = UICollectionViewFlowLayout.new;
+        flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        flowLayout.sectionInset = UIEdgeInsetsMake(4, 0, 0, 0);
+        flowLayout.minimumInteritemSpacing = 4;
+        flowLayout.minimumLineSpacing = 10;
+        flowLayout.itemSize = CGSizeMake(screenSize.width/3.1, screenSize.width/3.1);
+        self.overviewCollectionViewLayout = flowLayout;
     }
     return self;
 }

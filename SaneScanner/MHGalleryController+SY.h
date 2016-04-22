@@ -7,13 +7,12 @@
 //
 
 #import <MHGalleryController.h>
+#import "SYGalleryManager.h"
 
-@interface MHGalleryController (SY) <MHGalleryDelegate>
+@interface MHGalleryController (SY) <MHGalleryDelegate, SYGalleryManagerDelegate>
 
 @property (nonatomic, assign) CGSize thumbSize;
 @property (nonatomic, assign) CGFloat thumbsMargin;
-@property (nonatomic, assign) BOOL hideDoneButton;
-@property (nonatomic, strong) UIColor *titleGradientTintColor;
 
 + (void)sy_fix;
 

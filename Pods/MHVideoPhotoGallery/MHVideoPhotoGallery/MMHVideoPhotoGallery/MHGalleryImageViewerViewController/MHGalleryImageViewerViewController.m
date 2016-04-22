@@ -125,9 +125,8 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     
-    
-    self.UICustomization          = self.galleryViewController.UICustomization;
-    self.transitionCustomization  = self.galleryViewController.transitionCustomization;
+    self.UICustomization = self.galleryViewController.UICustomization;
+    self.transitionCustomization = self.galleryViewController.transitionCustomization;
     
     if (!self.UICustomization.showOverView) {
         self.navigationItem.hidesBackButton = YES;
@@ -142,11 +141,12 @@
         }
     }
     
-    UIBarButtonItem *doneBarButton =  [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                                  target:self
-                                                                                  action:@selector(donePressed)];
-    
-    self.navigationItem.rightBarButtonItem = doneBarButton;
+    if (!self.UICustomization.hideDoneButton)
+    {
+        UIBarButtonItem *doneBarButton = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                     target:self action:@selector(donePressed)];
+        self.navigationItem.rightBarButtonItem = doneBarButton;
+    }
     
     self.view.backgroundColor = [self.UICustomization MHGalleryBackgroundColorForViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
     

@@ -7,6 +7,7 @@
 //
 
 #import "MHGalleryImageViewerViewController+SY.h"
+#import "MHUICustomization+SY.h"
 #import <NSObject+SYKit.h>
 
 @implementation MHGalleryImageViewerViewController (SY)
@@ -15,8 +16,6 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self sy_swizzleSelector:@selector(reloadData)
-                    withSelector:@selector(sy_reloadData)];
     });
 }
 

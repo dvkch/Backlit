@@ -29,15 +29,21 @@
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.UICustomization = self.galleryViewController.UICustomization;
     
-    self.title =  MHGalleryLocalizedString(@"overview.title.current");
+    self.title = self.UICustomization.overviewTitle;
     
-    UIBarButtonItem *doneBarButton = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)];
+    if (!self.UICustomization.hideDoneButton)
+    {
+        UIBarButtonItem *doneBarButton = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                     target:self action:@selector(donePressed)];
+        self.navigationItem.rightBarButtonItem = doneBarButton;
+    }
     
-    self.navigationItem.rightBarButtonItem = doneBarButton;
+    self.collectionViewLayout = self.UICustomization.overviewCollectionViewLayout;
     
     self.collectionView = [UICollectionView.alloc initWithFrame:self.view.bounds
-                                           collectionViewLayout:[self layoutForOrientation:UIApplication.sharedApplication.statusBarOrientation]];
+                                           collectionViewLayout:self.collectionViewLayout];
     
     self.collectionView.backgroundColor = [self.galleryViewController.UICustomization MHGalleryBackgroundColorForViewMode:MHGalleryViewModeOverView];
     self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
@@ -73,15 +79,13 @@
     
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
-    return self.galleryViewController.preferredStatusBarStyleMH;
+- (void)setCollectionViewLayout:(UICollectionViewLayout *)collectionViewLayout {
+    self->_collectionViewLayout = collectionViewLayout;
+    [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
 }
 
--(UICollectionViewFlowLayout*)layoutForOrientation:(UIInterfaceOrientation)orientation{
-    if (orientation == UIInterfaceOrientationPortrait ) {
-        return self.galleryViewController.UICustomization.overViewCollectionViewLayoutPortrait;
-    }
-    return self.galleryViewController.UICustomization.overViewCollectionViewLayoutLandscape;
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return self.galleryViewController.preferredStatusBarStyleMH;
 }
 
 -(MHGalleryController*)galleryViewController{
@@ -115,8 +119,6 @@
     
     return cell;
 }
-
-
 
 -(void)makeMHGalleryOverViewCell:(MHMediaPreviewCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath{
     
@@ -324,9 +326,14 @@
     }
 }
 
+/*
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    self.collectionView.collectionViewLayout = [self layoutForOrientation:toInterfaceOrientation];
-    [self.collectionView.collectionViewLayout invalidateLayout];
+    [self.collectionViewLayout invalidateLayout];
 }
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    [self.collectionViewLayout invalidateLayout];
+}
+*/
 
 @end
