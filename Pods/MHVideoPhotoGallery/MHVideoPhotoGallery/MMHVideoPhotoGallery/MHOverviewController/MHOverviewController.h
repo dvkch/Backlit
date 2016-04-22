@@ -27,5 +27,6 @@
 
 - (MHGalleryItem*)itemForIndex:(NSInteger)index;
 - (void)pushToImageViewerForIndexPath:(NSIndexPath*)indexPath;
+- (void)reloadData;
 
 @end

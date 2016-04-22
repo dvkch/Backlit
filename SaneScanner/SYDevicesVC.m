@@ -19,7 +19,7 @@
 #import <Masonry.h>
 #import "SYAppDelegate.h"
 #import "SYGalleryManager.h"
-#import "MHGalleryController+SY.h"
+#import "SYGalleryController.h"
 #import "SYRefreshControl.h"
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate>

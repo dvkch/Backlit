@@ -8,8 +8,6 @@
 
 #import "SYToolbar.h"
 
-static CGFloat kUIToolbar_SYHorizontalPadding = -1;
-
 @interface SYToolbar ()
 @property (nonatomic, strong) NSArray <UIBarButtonItem *> *realItems;
 @property (nonatomic, strong) NSNumber *paddingNumber;
@@ -81,32 +79,27 @@ static CGFloat kUIToolbar_SYHorizontalPadding = -1;
 
 + (CGFloat)systemPadding
 {
-    if (kUIToolbar_SYHorizontalPadding < 0)
-    {
-        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
-        
-        UIViewController *viewController = [[UIViewController alloc] init];
-        [viewController view];
-        
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-        [navController view];
-        [navController setToolbarHidden:NO animated:NO];
-        
-        UIWindow *window = [[UIWindow alloc] init];
-        [window setRootViewController:navController];
-        [window setBackgroundColor:[UIColor clearColor]];
-        [window setOpaque:NO];
-        [window setHidden:NO];
-        [mainWindow makeKeyAndVisible];
-        
-        UIView *subview = [[UIView alloc] init];
-        UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:subview];
-        [viewController setToolbarItems:@[barButton]];
-        
-        kUIToolbar_SYHorizontalPadding = subview.frame.origin.x;
-    }
+    UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
     
-    return kUIToolbar_SYHorizontalPadding;
+    UIViewController *viewController = [[UIViewController alloc] init];
+    [viewController view];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [navController view];
+    [navController setToolbarHidden:NO animated:NO];
+    
+    UIWindow *window = [[UIWindow alloc] init];
+    [window setRootViewController:navController];
+    [window setBackgroundColor:[UIColor clearColor]];
+    [window setOpaque:NO];
+    [window setHidden:NO];
+    [mainWindow makeKeyAndVisible];
+    
+    UIView *subview = [[UIView alloc] init];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:subview];
+    [viewController setToolbarItems:@[barButton]];
+    
+    return subview.frame.origin.x;
 }
 
 @end

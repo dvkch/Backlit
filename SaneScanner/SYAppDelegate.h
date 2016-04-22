@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class MHGalleryController;
-
 @interface SYAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;

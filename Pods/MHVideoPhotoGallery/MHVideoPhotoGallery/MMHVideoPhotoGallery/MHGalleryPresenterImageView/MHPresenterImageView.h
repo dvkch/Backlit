@@ -33,6 +33,10 @@
  *  set the gallery uicustomization
  */
 @property (nonatomic,strong) MHUICustomization *UICustomization;
+/**
+ *  set the gallery class to use, in case you need to sublacc MHGalleryController
+ */
+@property (nonatomic,strong) Class galleryClass;
 
 @property (nonatomic, copy) void (^finishedCallback)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode);
 
@@ -41,7 +45,6 @@
 -(void)setInseractiveGalleryPresentionWithItems:(NSArray*)galleryItems
                               currentImageIndex:(NSInteger)currentImageIndex
                           currentViewController:(UIViewController*)viewController
-                                UICustomization:(MHUICustomization *)UICustomization
                                  finishCallback:(void(^)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode)
                                                  )FinishBlock;
 @end

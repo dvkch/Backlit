@@ -1,5 +1,5 @@
 //
-//  MHGalleryController+SY.h
+//  SYGalleryController.h
 //  SaneScanner
 //
 //  Created by Stan Chevallier on 17/03/2016.
@@ -9,7 +9,7 @@
 #import <MHGalleryController.h>
 #import "SYGalleryManager.h"
 
-@interface MHGalleryController (SY) <MHGalleryDelegate, SYGalleryManagerDelegate>
+@interface SYGalleryController : MHGalleryController <MHGalleryDelegate, SYGalleryManagerDelegate>
 
 @property (nonatomic, assign) CGSize thumbSize;
 @property (nonatomic, assign) CGFloat thumbsMargin;

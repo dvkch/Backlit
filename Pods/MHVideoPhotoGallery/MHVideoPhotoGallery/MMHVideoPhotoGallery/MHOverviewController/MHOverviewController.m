@@ -326,6 +326,13 @@
     }
 }
 
+- (void)reloadData
+{
+    self.collectionView.collectionViewLayout = self.UICustomization.overviewCollectionViewLayout;
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    [self.collectionView reloadData];
+}
+
 /*
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     [self.collectionViewLayout invalidateLayout];

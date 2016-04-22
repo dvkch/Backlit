@@ -1,42 +1,33 @@
 //
-//  MHGalleryController+SY.m
+//  SYGalleryController.m
 //  SaneScanner
 //
 //  Created by Stan Chevallier on 17/03/2016.
 //  Copyright © 2016 Syan. All rights reserved.
 //
 
-#import "MHGalleryController+SY.h"
+#import "SYGalleryController.h"
 #import "MHGalleryImageViewerViewController+SY.h"
 #import "MHOverviewController+SY.h"
 #import <MHBarButtonItem.h>
 #import <NSObject+SYKit.h>
 #import <UIImage+SYKit.h>
-#import <objc/runtime.h>
 #import "DLAVAlertView+SY.h"
 #import "SYGalleryManager.h"
 #import "UIColor+SY.h"
 
-@implementation MHGalleryController (SY)
-
-@dynamic thumbSize;
+@implementation SYGalleryController
 
 + (void)sy_fix
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self sy_swizzleSelector:@selector(initWithPresentationStyle:)
-                    withSelector:@selector(sy_initWithPresentationStyle:)];
-    });
-    
     [MHGalleryImageViewerViewController sy_fix];
     [MHOverviewController sy_fix];
 }
 
-- (id)sy_initWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
+- (instancetype)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle UICustomization:(MHUICustomization *)UICustomization
 {
-    MHGalleryController *controller = [self sy_initWithPresentationStyle:presentationStyle];
-    if (controller)
+    self = [super initWithPresentationStyle:presentationStyle UICustomization:UICustomization];
+    if (self)
     {
         [self.transitionCustomization setDismissWithScrollGestureOnFirstAndLastImage:NO];
         
@@ -47,31 +38,18 @@
         
         [[SYGalleryManager shared] addDelegate:self];
     }
-    return controller;
-}
-
-- (CGSize)thumbSize {
-    return [(NSValue *)objc_getAssociatedObject(self, @selector(thumbSize)) CGSizeValue];
+    return self;
 }
 
 - (void)setThumbSize:(CGSize)thumbSize {
-    objc_setAssociatedObject(self, @selector(thumbSize),
-                             [NSValue valueWithCGSize:thumbSize],
-                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    self->_thumbSize = thumbSize;
     [(UICollectionViewFlowLayout *)self.UICustomization.overviewCollectionViewLayout setItemSize:thumbSize];
     [self.overViewViewController reloadData];
 }
 
-- (CGFloat)thumbsMargin
-{
-    return [objc_getAssociatedObject(self, @selector(thumbsMargin)) doubleValue];
-}
-
 - (void)setThumbsMargin:(CGFloat)thumbsMargin
 {
-    objc_setAssociatedObject(self, @selector(thumbsMargin),
-                             @(thumbsMargin),
-                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    self->_thumbsMargin = thumbsMargin;
     [(UICollectionViewFlowLayout *)self.UICustomization.overviewCollectionViewLayout setMinimumInteritemSpacing:thumbsMargin];
     [self.overViewViewController reloadData];
 }

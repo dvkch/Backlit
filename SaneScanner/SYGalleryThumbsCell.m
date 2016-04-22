@@ -10,6 +10,8 @@
 #import "SYGalleryManager.h"
 #import <MHPresenterImageView.h>
 #import <Masonry.h>
+#import "MHUICustomization+SY.h"
+#import "SYGalleryController.h"
 
 static CGFloat const kShadowRadius = 2;
 
@@ -51,6 +53,8 @@ static CGFloat const kShadowRadius = 2;
     UIImageView *(^dismissBlockCopy)(NSUInteger) = [dismissBlock copy];
     
     [self.imageView setImage:[[SYGalleryManager shared] thumbnailForItem:items[index]]];
+    [self.imageView setUICustomization:[MHUICustomization sy_defaultTheme]];
+    [self.imageView setGalleryClass:SYGalleryController.class];
     [self.imageView setInseractiveGalleryPresentionWithItems:items
                                            currentImageIndex:index
                                        currentViewController:parentController

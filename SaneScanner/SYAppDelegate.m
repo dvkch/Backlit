@@ -18,15 +18,16 @@
 #import "SYEmptyGalleryVC.h"
 #import "SYSplitVC.h"
 #import "NSArray+SY.h"
-#import "MHGalleryController+SY.h"
+#import "SYGalleryController.h"
 #import "UIImage+SY.h"
 #import "SYGalleryThumbsView.h"
 #import "SYScanNC.h"
+#import "MHUICustomization+SY.h"
 
 @interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate>
 @property (nonatomic, strong) SYSplitVC *splitViewController;
 @property (nonatomic, strong) SYScanNC *scanNavigationController;
-@property (nonatomic, strong) MHGalleryController *galleryViewController;
+@property (nonatomic, strong) SYGalleryController *galleryViewController;
 @property (nonatomic, strong) SYEmptyGalleryVC *emptyVC;
 @end
 
@@ -42,8 +43,8 @@
     // log
     NSLog(@"%@", [SYTools documentsPath]);
     
-    // init swizzlings
-    [MHGalleryController sy_fix];
+    // init swizzling
+    [SYGalleryController sy_fix];
     
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];
@@ -56,7 +57,8 @@
     
     // gallery view controller
     self.galleryViewController =
-    [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown];
+    [SYGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown
+                                      UICustomization:[MHUICustomization sy_defaultTheme]];
     [self.galleryViewController.UICustomization setHideDoneButton:YES];
     [self.galleryViewController.UICustomization
      setMHGalleryBackgroundColor:[UIColor groupTableViewBackgroundColor]
@@ -102,9 +104,9 @@
     
     if (!constrainedW)
     {
-        if ([self.scanNavigationController.presentedViewController isKindOfClass:[MHGalleryController class]])
+        if ([self.scanNavigationController.presentedViewController isKindOfClass:[SYGalleryController class]])
         {
-            MHGalleryController *currentGallery = (MHGalleryController *)self.scanNavigationController.presentedViewController;
+            SYGalleryController *currentGallery = (SYGalleryController *)self.scanNavigationController.presentedViewController;
             if ([currentGallery isShowingOverview])
                 [self.galleryViewController openOverview];
             else

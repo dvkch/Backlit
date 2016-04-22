@@ -28,7 +28,7 @@
 #import "UIColor+SY.h"
 #import "SYAppDelegate.h"
 #import <UIImage+SYKit.h>
-#import "MHGalleryController+SY.h"
+#import "SYGalleryController.h"
 #import "SYRefreshControl.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate>
@@ -301,9 +301,13 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat width = tableView.bounds.size.width;
+    CGFloat maxHeight = tableView.bounds.size.height * 2. / 3.;
+    
+    if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact)
+        maxHeight = 500;
     
     if (indexPath.section == 0)
-        return [SYPreviewCell cellHeightForDevice:self.device width:width maxHeight:600];
+        return [SYPreviewCell cellHeightForDevice:self.device width:width maxHeight:maxHeight];
     
     return [SYOptionCell cellHeightForOption:[self optionForTableViewIndexPath:indexPath]
                              showDescription:NO

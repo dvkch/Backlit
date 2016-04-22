@@ -36,12 +36,10 @@
 -(void)setInseractiveGalleryPresentionWithItems:(NSArray*)galleryItems
                               currentImageIndex:(NSInteger)currentImageIndex
                           currentViewController:(UIViewController*)viewController
-                                UICustomization:(MHUICustomization *)UICustomization
                                  finishCallback:(void(^)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode))FinishBlock{
     self.galleryItems = galleryItems;
     self.currentImageIndex = currentImageIndex;
     self.viewController = viewController;
-    self.UICustomization = UICustomization;
     self.finishedCallback = FinishBlock;
 }
 -(void)setShoudlUsePanGestureReconizer:(BOOL)shoudlUsePanGestureReconizer{
@@ -88,7 +86,10 @@
 
 -(void)didTapOnImage{
     
-    MHGalleryController *gallery = [MHGalleryController.alloc initWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown];
+    Class galleryClass = self.galleryClass ?: MHGalleryController.class;
+    
+    MHGalleryController *gallery = [galleryClass.alloc initWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown
+                                                                 UICustomization:self.UICustomization];
     gallery.galleryItems = self.galleryItems;
     gallery.presentingFromImageView = self;
     gallery.presentationIndex =  self.currentImageIndex;
@@ -106,8 +107,10 @@
     self.presenter.interactive = YES;
     
     
-    MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown
-                                                                     UICustomization:self.UICustomization];
+    Class galleryClass = self.galleryClass ?: MHGalleryController.class;
+    
+    MHGalleryController *gallery = [galleryClass.alloc initWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown
+                                                                 UICustomization:self.UICustomization];
     gallery.galleryItems = self.galleryItems;
     gallery.presentingFromImageView = self;
     gallery.presentationIndex =  self.currentImageIndex;

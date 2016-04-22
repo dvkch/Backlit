@@ -7,7 +7,7 @@
 //
 
 #import "MHOverviewController+SY.h"
-#import "MHGalleryController+SY.h"
+#import "SYGalleryController.h"
 #import <NSObject+SYKit.h>
 #import "SYAppDelegate.h"
 
@@ -41,7 +41,7 @@
 
 - (void)updateCellSizesToWidth:(CGFloat)width yo:(NSString *)yo
 {
-    MHGalleryController *galleryController = (MHGalleryController *)self.navigationController;
+    SYGalleryController *galleryController = (SYGalleryController *)self.navigationController;
     
     CGFloat maxSize = floor(320/3);
     NSUInteger numberOfItemsPerRow = floor(width / maxSize);

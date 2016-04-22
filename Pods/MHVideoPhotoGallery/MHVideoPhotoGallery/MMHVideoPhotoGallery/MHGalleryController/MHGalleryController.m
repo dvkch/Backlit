@@ -91,7 +91,7 @@
         return;
     
     [self.imageViewerViewController reloadData];
-    [self.overViewViewController.collectionView reloadData];
+    [self.overViewViewController reloadData];
 }
 
 - (BOOL)isShowingOverview
