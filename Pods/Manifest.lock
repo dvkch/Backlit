@@ -1,9 +1,29 @@
 PODS:
+  - CocoaAsyncSocket (7.4.3):
+    - CocoaAsyncSocket/All (= 7.4.3)
+  - CocoaAsyncSocket/All (7.4.3):
+    - CocoaAsyncSocket/GCD
+    - CocoaAsyncSocket/RunLoop
+  - CocoaAsyncSocket/GCD (7.4.3)
+  - CocoaAsyncSocket/RunLoop (7.4.3)
+  - CocoaHTTPServer (2.3):
+    - CocoaAsyncSocket
+    - CocoaLumberjack
+  - CocoaLumberjack (2.2.0):
+    - CocoaLumberjack/Default (= 2.2.0)
+    - CocoaLumberjack/Extensions (= 2.2.0)
+  - CocoaLumberjack/Core (2.2.0)
+  - CocoaLumberjack/Default (2.2.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.2.0):
+    - CocoaLumberjack/Default
   - DirectoryWatchdog (1.1.0)
   - DLAlertView (1.2.5)
+  - IFMDebugTool (1.0.3):
+    - CocoaHTTPServer
   - INSPullToRefresh (1.1.5)
   - Masonry (1.0.0)
-  - MHVideoPhotoGallery (2.1.7):
+  - MHVideoPhotoGallery (2.1.8):
     - Masonry
     - SDWebImage
     - TTTAttributedLabel (= 1.13.3)
@@ -22,6 +42,7 @@ PODS:
 DEPENDENCIES:
   - DirectoryWatchdog
   - DLAlertView
+  - IFMDebugTool
   - INSPullToRefresh
   - Masonry
   - MHVideoPhotoGallery (from `https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec`)
@@ -38,11 +59,15 @@ EXTERNAL SOURCES:
     :podspec: https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec
 
 SPEC CHECKSUMS:
+  CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
+  CocoaHTTPServer: 5624681fc3473d43b18202f635f9b3abb013b530
+  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   DirectoryWatchdog: 85f0a92a52bc0d3d66346d80629227b44500506a
   DLAlertView: 774c1242cc854177fdc07634ed3f8c250a38864d
+  IFMDebugTool: a2fbfc1153d83b73c09e269181fbccab8948e8ea
   INSPullToRefresh: 112ae2c295d2b3a76daa9dff86e7ef40ed002c47
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
-  MHVideoPhotoGallery: 293822b0c1b558f8f5c706e2429f2e32393e384f
+  MHVideoPhotoGallery: a687c60181d564937def7c779b346709528609e9
   NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
   PKYStepper: 8dacefbddf9fa2b6aaec2ef828b46a78daa2db7d
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461

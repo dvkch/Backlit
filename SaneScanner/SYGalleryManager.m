@@ -13,9 +13,46 @@
 #import <SGDirWatchdog.h>
 #import "UIColor+SY.h"
 
+@interface SYGalleryManagerWeakDelegate : NSObject
+@property (atomic, weak) id<SYGalleryManagerDelegate> delegate;
++ (instancetype)weakDelegateWithDelegate:(id<SYGalleryManagerDelegate>)delegate;
++ (NSPredicate *)nonEmptyPredicate;
+@end
+
+@implementation SYGalleryManagerWeakDelegate
++ (instancetype)weakDelegateWithDelegate:(id<SYGalleryManagerDelegate>)delegate
+{
+    SYGalleryManagerWeakDelegate *weakDelegate = [[self alloc] init];
+    [weakDelegate setDelegate:delegate];
+    return weakDelegate;
+}
+- (NSUInteger)hash
+{
+    return [self.delegate hash];
+}
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[SYGalleryManagerWeakDelegate class]])
+        return NO;
+    
+    if (!self.delegate && ![object delegate])
+        return YES;
+    
+    return [self.delegate isEqual:[object delegate]];
+}
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %p, delegate: %@>", self.class, self, self.delegate];
+}
++ (NSPredicate *)nonEmptyPredicate
+{
+    return [NSPredicate predicateWithFormat:@"SELF.delegate != nil"];
+}
+@end
+
 @interface SYGalleryManager ()
 @property (nonatomic, strong) NSCache <NSString *, UIImage *> *thumbanilCache;
-@property (nonatomic, strong) NSMutableSet <NSValue *> *delegates;
+@property (nonatomic, strong) NSMutableArray <SYGalleryManagerWeakDelegate *> *delegates;
 @property (nonatomic, strong) SGDirWatchdog *filesystemObserver;
 @property (nonatomic, strong) NSArray <NSString *> *imageNames;
 @end
@@ -37,7 +74,9 @@
     self = [super init];
     if (self)
     {
-        self.delegates = [NSMutableSet set];
+        // donnot use a set as it would work only with a collection of non mutable objects. here the pointer to delegate can change
+        self.delegates = [NSMutableArray array];
+        
         self.thumbanilCache = [[NSCache alloc] init];
         self.imageNames = [self listImageNames];
         
@@ -55,6 +94,9 @@
 
 - (MHGalleryItem *)galleryItemForImageWithName:(NSString *)imageName
 {
+    if (!imageName)
+        return nil;
+    
     MHGalleryItem *item = [MHGalleryItem itemWithURL:[self urlForImageWithName:imageName thumbnail:NO].absoluteString
                                         thumbnailURL:[self urlForImageWithName:imageName thumbnail:YES].absoluteString];
     
@@ -122,19 +164,25 @@
     {
         NSMutableArray *newImageNames = [imageNames mutableCopy];
         [newImageNames removeObjectsInArray:oldImageNames];
-        
-        if (newImageNames.count == 1 && [newImageNames.firstObject isEqualToString:imageNames.firstObject])
-            addedImage = imageNames.firstObject;
+        addedImage = newImageNames.firstObject;
     }
     
-    for (NSValue *weakDelegate in self.delegates)
+    NSString *removedImage;
     {
-        id <SYGalleryManagerDelegate> delegate = weakDelegate.nonretainedObjectValue;
+        NSMutableArray *newImageNames = [oldImageNames mutableCopy];
+        [newImageNames removeObjectsInArray:imageNames];
+        removedImage = newImageNames.firstObject;
+    }
+    
+    for (SYGalleryManagerWeakDelegate *weakDelegate in self.delegates)
+    {
+        //id <SYGalleryManagerDelegate> delegate = weakDelegate.nonretainedObjectValue;
+        id <SYGalleryManagerDelegate> delegate = weakDelegate.delegate;
         
         [delegate gallerymanager:self
            didUpdateGalleryItems:self.galleryItems
                          newItem:[self galleryItemForImageWithName:addedImage]
-                     removedItem:nil];
+                     removedItem:[self galleryItemForImageWithName:removedImage]];
     }
 }
 
@@ -174,12 +222,19 @@
 - (void)addDelegate:(id<SYGalleryManagerDelegate>)delegate
 {
     [delegate gallerymanager:self didUpdateGalleryItems:self.galleryItems newItem:nil removedItem:nil];
-    [self.delegates addObject:[NSValue valueWithNonretainedObject:delegate]];
+    [self.delegates addObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:delegate]];
+    [self cleanUpDelegates];
 }
 
 - (void)removeDelegate:(id<SYGalleryManagerDelegate>)delegate
 {
-    [self.delegates removeObject:[NSValue valueWithNonretainedObject:delegate]];
+    [self.delegates removeObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:delegate]];
+    [self cleanUpDelegates];
+}
+
+- (void)cleanUpDelegates
+{
+    [self.delegates removeObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:nil]];
 }
 
 - (NSArray<MHGalleryItem *> *)galleryItems

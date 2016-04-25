@@ -15,3 +15,5 @@ pod 'DirectoryWatchdog'
 pod 'INSPullToRefresh'
 pod 'SpinKit'
 pod 'MHVideoPhotoGallery', :podspec => "https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec"
+pod 'IFMDebugTool', :configurations => ['Debug']
+

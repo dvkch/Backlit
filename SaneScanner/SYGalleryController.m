@@ -7,8 +7,6 @@
 //
 
 #import "SYGalleryController.h"
-#import "MHGalleryImageViewerViewController+SY.h"
-#import "MHOverviewController+SY.h"
 #import <MHBarButtonItem.h>
 #import <NSObject+SYKit.h>
 #import <UIImage+SYKit.h>
@@ -18,40 +16,17 @@
 
 @implementation SYGalleryController
 
-+ (void)sy_fix
-{
-    [MHGalleryImageViewerViewController sy_fix];
-    [MHOverviewController sy_fix];
-}
-
 - (instancetype)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle UICustomization:(MHUICustomization *)UICustomization
 {
     self = [super initWithPresentationStyle:presentationStyle UICustomization:UICustomization];
     if (self)
     {
         [self.transitionCustomization setDismissWithScrollGestureOnFirstAndLastImage:NO];
-        
-        [self setThumbSize:CGSizeMake(150, 150)];
-        [self setThumbsMargin:4.];
-        
         [self setGalleryDelegate:self];
         
         [[SYGalleryManager shared] addDelegate:self];
     }
     return self;
-}
-
-- (void)setThumbSize:(CGSize)thumbSize {
-    self->_thumbSize = thumbSize;
-    [(UICollectionViewFlowLayout *)self.UICustomization.overviewCollectionViewLayout setItemSize:thumbSize];
-    [self.overViewViewController reloadData];
-}
-
-- (void)setThumbsMargin:(CGFloat)thumbsMargin
-{
-    self->_thumbsMargin = thumbsMargin;
-    [(UICollectionViewFlowLayout *)self.UICustomization.overviewCollectionViewLayout setMinimumInteritemSpacing:thumbsMargin];
-    [self.overViewViewController reloadData];
 }
 
 - (void)deleteImage:(id)sender
@@ -118,6 +93,29 @@
                newItem:(MHGalleryItem *)newItem
            removedItem:(MHGalleryItem *)removedItem
 {
+    if (![self isShowingOverview])
+    {
+        NSUInteger index = NSNotFound;
+        if (newItem)
+            index = [items indexOfObject:newItem];
+        if (removedItem)
+            index = [self.galleryItems indexOfObject:removedItem];
+        
+        if (index != NSNotFound)
+            NSLog(@"Current index: %d, updated index: %d", (int)self.imageViewerViewController.pageIndex, (int)index);
+            
+        if(newItem || removedItem)
+        {
+            CATransition *transition = [CATransition animation];
+            transition.duration = 0.3f;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            transition.type = kCATransitionPush;
+            transition.subtype = kCATransitionFromRight;
+            
+            [self.imageViewerViewController.pageViewController.view.layer addAnimation:transition forKey:kCATransition];
+        }
+    }
+
     [self setGalleryItems:items];
 }
 

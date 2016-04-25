@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Syan. All rights reserved.
 //
 
-#warning use consts in saneopts.h
-
 #import "SYSaneHelper.h"
 #import "SYTools.h"
 #import "SYSaneDevice.h"

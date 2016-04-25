@@ -7,6 +7,7 @@
 //
 
 #import "SYTools.h"
+#import <UIImage+SYKit.h>
 
 // https://gist.github.com/steipete/6ee378bd7d87f276f6e0
 BOOL NSObjectIsBlock(id object)
@@ -150,6 +151,22 @@ BOOL CGRectSideIsVertical(CGRectSide side)
 + (NSString *)pathForFile:(NSString *)filename
 {
     return [[self documentsPath] stringByAppendingPathComponent:filename];
+}
+
++ (void)createTestImages:(NSUInteger)count
+{
+    for (NSUInteger i = 0; i < count; ++i)
+    {
+        // https://gist.github.com/kylefox/1689973
+        CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+        CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+        CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+        UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+        
+        UIImage *image = [UIImage sy_imageWithColor:color size:CGSizeMake(10, 10) cornerRadius:0];
+        NSString *path = [SYTools pathForFile:[NSString stringWithFormat:@"testimage-%@.png", [[NSUUID UUID] UUIDString]]];
+        [UIImagePNGRepresentation(image) writeToFile:path atomically:YES];
+    }
 }
 
 @end

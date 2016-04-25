@@ -27,7 +27,8 @@
                                                                     weakSelf.image = image;
                                                                     [weakSelf setNeedsLayout];
                                                                 }
-                                                                if (succeedBlock) {                                                                     succeedBlock(image,videoDuration,error);
+                                                                if (succeedBlock) {
+                                                                    succeedBlock(image,videoDuration,error);
                                                                 }
                                                             });
                                                         }];
@@ -63,8 +64,15 @@
             placeholderURL = item.URLString;
         }
         
+        SDWebImageOptions options = 0;
+        
+        // prevents storing a copy of a file that's already available on disk, only keep it in memory
+        if ([[NSURL URLWithString:toLoadURL] isFileURL])
+            options |= SDWebImageCacheMemoryOnly;
+        
         [self sd_setImageWithURL:[NSURL URLWithString:toLoadURL]
                 placeholderImage:[SDImageCache.sharedImageCache imageFromDiskCacheForKey:placeholderURL]
+                         options:options
                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                            if (succeedBlock) {
                                succeedBlock (image,error);

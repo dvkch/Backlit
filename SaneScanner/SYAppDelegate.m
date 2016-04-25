@@ -23,6 +23,7 @@
 #import "SYGalleryThumbsView.h"
 #import "SYScanNC.h"
 #import "MHUICustomization+SY.h"
+#import <SDImageCache.h>
 
 @interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate>
 @property (nonatomic, strong) SYSplitVC *splitViewController;
@@ -43,8 +44,8 @@
     // log
     NSLog(@"%@", [SYTools documentsPath]);
     
-    // init swizzling
-    [SYGalleryController sy_fix];
+    // create test images if needed
+    //[SYTools createTestImages:100];
     
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];

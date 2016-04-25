@@ -7,6 +7,7 @@
 //
 
 #import "MHUICustomization+SY.h"
+#import "SYGridLayout.h"
 
 @implementation MHUICustomization (SY)
 
@@ -14,12 +15,17 @@
 {
     MHUICustomization *theme = [[self alloc] init];
     [theme setMHGalleryBackgroundColor:[UIColor groupTableViewBackgroundColor]
-                                          forViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
-    [theme setShowMHShareViewInsteadOfActivityViewController:NO];
+                           forViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
+    //[theme setShowMHShareViewInsteadOfActivityViewController:NO];
     [theme setShowOverView:YES];
     [theme setUseCustomBackButtonImageOnImageViewer:YES];
     [theme setBackButtonState:MHBackButtonStateWithBackArrow];
     [theme setOverviewTitle:@"All scans"];
+    
+    SYGridLayout *layout = [[SYGridLayout alloc] init];
+    [layout setMaxSize:320/3];
+    [layout setMargin:2.];
+    [theme setOverviewCollectionViewLayout:layout];
     
     return theme;
 }

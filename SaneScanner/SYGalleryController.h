@@ -11,9 +11,4 @@
 
 @interface SYGalleryController : MHGalleryController <MHGalleryDelegate, SYGalleryManagerDelegate>
 
-@property (nonatomic, assign) CGSize thumbSize;
-@property (nonatomic, assign) CGFloat thumbsMargin;
-
-+ (void)sy_fix;
-
 @end
