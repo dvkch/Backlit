@@ -24,6 +24,7 @@
 #import "SYScanNC.h"
 #import "MHUICustomization+SY.h"
 #import <SDImageCache.h>
+#import <SYWindow.h>
 
 @interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate>
 @property (nonatomic, strong) SYSplitVC *splitViewController;
@@ -45,7 +46,7 @@
     NSLog(@"%@", [SYTools documentsPath]);
     
     // create test images if needed
-    //[SYTools createTestImages:100];
+    //[SYTools createTestImages:3];
     
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];
@@ -75,12 +76,7 @@
     [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
     
     // creating window
-    self.window = [[UIWindow alloc] init];
-    [self.window makeKeyAndVisible];
-    [self.window setRootViewController:self.splitViewController];
-    [self.window setBackgroundColor:[UIColor whiteColor]];
-    [self.window.layer setMasksToBounds:YES];
-    [self.window.layer setOpaque:NO];
+    self.window = [SYWindow mainWindowWithRootViewController:self.splitViewController];
     
     // populate list for the first time
     [[SYSaneHelper shared] updateDevices:^(NSString *error) {

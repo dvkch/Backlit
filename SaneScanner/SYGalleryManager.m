@@ -10,8 +10,10 @@
 #import "SYTools.h"
 #import <MHGalleryItem.h>
 #import <UIImage+SYKit.h>
-#import <SGDirWatchdog.h>
 #import "UIColor+SY.h"
+#import <MHWDirectoryWatcher.h>
+#import "UIImage+SY.h"
+#import "MHGalleryItem+SY.h"
 
 @interface SYGalleryManagerWeakDelegate : NSObject
 @property (atomic, weak) id<SYGalleryManagerDelegate> delegate;
@@ -52,8 +54,9 @@
 
 @interface SYGalleryManager ()
 @property (nonatomic, strong) NSCache <NSString *, UIImage *> *thumbanilCache;
+@property (nonatomic, strong) NSCache <NSString *, NSValue *> *imageSizeCache;
 @property (nonatomic, strong) NSMutableArray <SYGalleryManagerWeakDelegate *> *delegates;
-@property (nonatomic, strong) SGDirWatchdog *filesystemObserver;
+@property (nonatomic, strong) MHWDirectoryWatcher *directoryWatcher;
 @property (nonatomic, strong) NSArray <NSString *> *imageNames;
 @end
 
@@ -78,12 +81,16 @@
         self.delegates = [NSMutableArray array];
         
         self.thumbanilCache = [[NSCache alloc] init];
+        self.imageSizeCache = [[NSCache alloc] init];
         self.imageNames = [self listImageNames];
         
-        self.filesystemObserver = [[SGDirWatchdog alloc] initWithPath:[SYTools documentsPath] update:^{
+        self.directoryWatcher = [MHWDirectoryWatcher directoryWatcherAtPath:[SYTools documentsPath]
+                                                           startImmediately:YES
+                                                             changesStarted:^
+        {
+        } changesEnded:^(BOOL allChangesFinished) {
             self.imageNames = [self listImageNames];
         }];
-        [self.filesystemObserver start];
     }
     return self;
 }
@@ -97,15 +104,14 @@
     if (!imageName)
         return nil;
     
-    MHGalleryItem *item = [MHGalleryItem itemWithURL:[self urlForImageWithName:imageName thumbnail:NO].absoluteString
-                                        thumbnailURL:[self urlForImageWithName:imageName thumbnail:YES].absoluteString];
+    NSString *imagePath = [self pathForImageWithName:imageName thumbnail:NO];
+    NSString *thumbPath = [self pathForImageWithName:imageName thumbnail:YES];
+    
+    MHGalleryItem *item = [MHGalleryItem itemWithURL:[NSURL fileURLWithPath:imagePath]
+                                        thumbnailURL:[NSURL fileURLWithPath:thumbPath]];
+    [item setImageName:imageName];
     
     return item;
-}
-
-- (NSString *)imageNameForGalleryItem:(MHGalleryItem *)item
-{
-    return [item.URLString lastPathComponent];
 }
 
 #pragma mark Paths
@@ -119,11 +125,6 @@
     return [[SYTools documentsPath] stringByAppendingPathComponent:filename];
 }
 
-- (NSURL *)urlForImageWithName:(NSString *)imageName thumbnail:(BOOL)thumbnail
-{
-    return [NSURL fileURLWithPath:[self pathForImageWithName:imageName thumbnail:thumbnail]];
-}
-
 #pragma mark Listing
 
 - (NSArray <NSString *> *)listImageNames
@@ -131,7 +132,9 @@
     NSString *path = [SYTools documentsPath];
     NSMutableDictionary <NSString *, NSDate *> *imageDates = [NSMutableDictionary dictionary];
     
-    NSArray <NSString *> *allItems = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
+    NSMutableArray <NSString *> *allItems = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL] mutableCopy];
+    [allItems removeObjectsInArray:self.directoryWatcher.filesBeingWrittenTo];
+    
     for (NSString *itemName in allItems)
     {
         if (![itemName.pathExtension isEqualToString:@"png"])
@@ -140,6 +143,12 @@
         NSString *itemPath = [path stringByAppendingPathComponent:itemName];
         NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:itemPath error:NULL];
         NSDate *date = attributes[NSFileCreationDate];
+        
+        // in case we are deleting multipe files the file will become inexistant while looping, we need to
+        // ignore missing dates
+        if (!date)
+            continue;
+        
         [imageDates setObject:date forKey:itemName];
     }
     
@@ -158,7 +167,7 @@
     if ([oldImageNames isEqualToArray:imageNames])
         return;
     
-    [self checkThumbsExist];
+    //[self checkThumbsExist];
     
     NSString *addedImage;
     {
@@ -176,7 +185,6 @@
     
     for (SYGalleryManagerWeakDelegate *weakDelegate in self.delegates)
     {
-        //id <SYGalleryManagerDelegate> delegate = weakDelegate.nonretainedObjectValue;
         id <SYGalleryManagerDelegate> delegate = weakDelegate.delegate;
         
         [delegate gallerymanager:self
@@ -193,17 +201,24 @@
     NSString *thumbPath = [self pathForImageWithName:imageName thumbnail:YES];
     NSString *fullPath  = [self pathForImageWithName:imageName thumbnail:NO];
     
+    if ([self.directoryWatcher.filesBeingWrittenTo containsObject:imageName])
+        return nil;
+    
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbPath])
         return nil;
     
-    UIImage *fullImage = (image ?: [UIImage imageWithContentsOfFile:fullPath]);
-    
     UIImage *thumb;
     
-    if (image.size.width > image.size.height)
-        thumb = [fullImage sy_imageResizedHeightTo:300];
-    else
-        thumb = [fullImage sy_imageResizedWidthTo:300];
+    @autoreleasepool {
+        UIImage *fullImage = (image ?: [UIImage sy_validImageWithContentsOfFile:fullPath]);
+        if (!fullImage)
+            NSLog(@"No full image: %@", imageName);
+        
+        if (image.size.width > image.size.height)
+            thumb = [fullImage sy_imageResizedHeightTo:300];
+        else
+            thumb = [fullImage sy_imageResizedWidthTo:300];
+    }
     
     [UIImageJPEGRepresentation(thumb, 0.7) writeToFile:thumbPath atomically:YES];
     
@@ -245,27 +260,35 @@
     return [items copy];
 }
 
-- (UIImage *)thumbnailForItem:(MHGalleryItem *)item
+- (void)thumbnailForItem:(MHGalleryItem *)item block:(void (^)(UIImage *))block
 {
-    NSString *imageName = [self imageNameForGalleryItem:item];
-    UIImage *thumb = [self.thumbanilCache objectForKey:imageName];
-    if (thumb)
-        return thumb;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *thumb = [self.thumbanilCache objectForKey:item.imageName];
     
-    thumb = [UIImage imageWithContentsOfFile:[self pathForImageWithName:imageName thumbnail:YES]];
-    if (!thumb)
-        thumb = [self generateThumbnailFileForImageWithName:imageName withImage:nil];
+        if (!thumb) {
+            thumb = [UIImage imageWithContentsOfFile:item.thumbnailPath];
+            if (thumb) {
+                [self.thumbanilCache setObject:thumb forKey:item.imageName];
+            }
+        }
     
-    [self.thumbanilCache setObject:thumb forKey:imageName];
-    return thumb;
+        if (!thumb)
+        {
+            thumb = [self generateThumbnailFileForImageWithName:item.imageName withImage:nil];
+            if (thumb) {
+                [self.thumbanilCache setObject:thumb forKey:item.imageName];
+            }
+        }
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(thumb);
+        });
+    });
 }
 
 - (NSString *)dateStringForItem:(MHGalleryItem *)item
 {
-    NSString *imageName = [self imageNameForGalleryItem:item];
-    NSString *imagePath = [self pathForImageWithName:imageName thumbnail:NO];
-    
-    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:imagePath error:NULL];
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:item.path error:NULL];
     NSDate *date = attributes[NSFileCreationDate];
     
     if (!date)
@@ -291,11 +314,21 @@
 
 - (void)deleteItem:(MHGalleryItem *)item
 {
-    NSString *imageName = [self imageNameForGalleryItem:item];
-    NSString *thumbPath = [self pathForImageWithName:imageName thumbnail:YES];
-    NSString *fullPath  = [self pathForImageWithName:imageName thumbnail:NO];
-    [[NSFileManager defaultManager] removeItemAtPath:thumbPath error:NULL];
-    [[NSFileManager defaultManager] removeItemAtPath:fullPath  error:NULL];
+    [[NSFileManager defaultManager] removeItemAtPath:item.path          error:NULL];
+    [[NSFileManager defaultManager] removeItemAtPath:item.thumbnailPath error:NULL];
+}
+
+- (CGSize)sizeOfItem:(MHGalleryItem *)item
+{
+    NSValue *sizeV = [self.imageSizeCache objectForKey:item.imageName];
+    if (sizeV)
+        return [sizeV CGSizeValue];
+    
+    CGSize imageSize = [UIImage sy_sizeOfImageAtURL:item.URL];
+    if (!CGSizeEqualToSize(CGSizeZero, imageSize))
+        [self.imageSizeCache setObject:[NSValue valueWithCGSize:imageSize] forKey:item.imageName];
+    
+    return imageSize;
 }
 
 @end

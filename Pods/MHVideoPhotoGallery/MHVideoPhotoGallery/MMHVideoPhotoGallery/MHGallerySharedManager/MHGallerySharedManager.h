@@ -86,7 +86,7 @@ typedef NS_ENUM(NSUInteger, MHYoutubeThumbQuality) {
  *  @param duration     the position on whicht the Thumbnail should be created
  *  @param succeedBlock returns the image the duration of the video and an error
  */
--(void)startDownloadingThumbImage:(NSString*)urlString
+-(void)startDownloadingThumbImage:(NSURL*)url
                      successBlock:(void (^)(UIImage *image,NSUInteger videoDuration,NSError *error))succeedBlock;
 
 
@@ -99,10 +99,10 @@ typedef NS_ENUM(NSUInteger, MHYoutubeThumbQuality) {
  *  @param succeedBlock you will get the absolute URL
  */
 
--(void)getURLForMediaPlayer:(NSString*)URLString
+-(void)getURLForMediaPlayer:(NSURL*)URL
                successBlock:(void (^)(NSURL *URL,NSError *error))succeedBlock;
 
--(void)getVimeoURLforMediaPlayer:(NSString*)URL
+-(void)getVimeoURLforMediaPlayer:(NSURL*)URL
                     successBlock:(void (^)(NSURL *URL,NSError *error))succeedBlock;
 /**
  *  To get the absolute URL for Youtube Videos. To change the Quality check youtubeVideoQuality
@@ -110,10 +110,10 @@ typedef NS_ENUM(NSUInteger, MHYoutubeThumbQuality) {
  *  @param URL          The URL as a String
  *  @param succeedBlock you will get the absolute URL
  */
--(void)getYoutubeURLforMediaPlayer:(NSString*)URL
+-(void)getYoutubeURLforMediaPlayer:(NSURL*)URL
                       successBlock:(void (^)(NSURL *URL,NSError *error))succeedBlock;
 
--(void)getImageFromAssetLibrary:(NSString*)urlString
+-(void)getImageFromAssetLibrary:(NSURL*)URL
                       assetType:(MHAssetImageType)type
                    successBlock:(void (^)(UIImage *image,NSError *error))succeedBlock;
 /**

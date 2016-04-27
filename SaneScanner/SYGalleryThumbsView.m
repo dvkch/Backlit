@@ -10,6 +10,7 @@
 #import "SYGalleryManager.h"
 #import <Masonry.h>
 #import "UIColor+SY.h"
+#import "UIImage+SY.h"
 #import "SYGalleryThumbsCell.h"
 #import <SYGradientView.h>
 #import <MHGallery.h>
@@ -37,7 +38,8 @@ static CGFloat const kGradientWidth = 30;
     [thumbsView setTintColor:color];
     [thumbsView setBackgroundColor:color];
     [thumbsView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [controller setToolbarItems:@[[[UIBarButtonItem alloc] initWithCustomView:thumbsView]]];
+    //[controller setToolbarItems:@[[[UIBarButtonItem alloc] initWithCustomView:thumbsView]]];
+    [controller setToolbarItems:@[[[UIBarButtonItem alloc] initWithTitle:@"YO" style:UIBarButtonItemStylePlain target:nil action:nil]]];
     return thumbsView;
 }
 
@@ -158,11 +160,6 @@ static CGFloat const kGradientWidth = 30;
     [self.collectionView setContentInset:UIEdgeInsetsMake(0, horizontalInset, 0, horizontalInset)];
 }
 
-- (UIImage *)imageForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [[SYGalleryManager shared] thumbnailForItem:self.galleryItems[indexPath.item]];
-}
-
 #pragma mark - SYGalleryManager
 
 - (void)gallerymanager:(SYGalleryManager *)gallerymanager
@@ -226,11 +223,13 @@ static CGFloat const kGradientWidth = 30;
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIImage *image = [self imageForItemAtIndexPath:indexPath];
-
+    CGSize imageSize = [[SYGalleryManager shared] sizeOfItem:self.galleryItems[indexPath.item]];
+    if (CGSizeEqualToSize(imageSize, CGSizeZero))
+        imageSize = CGSizeMake(100, 100);
+    
     CGFloat availableHeight = collectionView.bounds.size.height;
     CGSize size = CGSizeMake(availableHeight, availableHeight);
-    size.width = AVMakeRectWithAspectRatioInsideRect(image.size, (CGRect){CGPointZero, size}).size.width;
+    size.width = AVMakeRectWithAspectRatioInsideRect(imageSize, (CGRect){CGPointZero, size}).size.width;
     
     return size;
 }

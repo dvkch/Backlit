@@ -128,8 +128,13 @@ BOOL CGRectSideIsVertical(CGRectSide side)
 
 + (NSString *)documentsPath
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    return paths.firstObject;
+    static dispatch_once_t onceToken;
+    static NSString *path = nil;
+    dispatch_once(&onceToken, ^{
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        path = paths.firstObject;
+    });
+    return path;
 }
 
 + (NSString *)appSupportPath:(BOOL)create

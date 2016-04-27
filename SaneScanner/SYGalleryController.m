@@ -13,6 +13,7 @@
 #import "DLAVAlertView+SY.h"
 #import "SYGalleryManager.h"
 #import "UIColor+SY.h"
+#import "UIViewController+SYKit.h"
 
 @implementation SYGalleryController
 
@@ -93,18 +94,28 @@
                newItem:(MHGalleryItem *)newItem
            removedItem:(MHGalleryItem *)removedItem
 {
+    if (items.count == 0 && [self sy_isModal])
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+    
     if (![self isShowingOverview])
     {
+        NSUInteger currentIndex = self.imageViewerViewController.pageIndex;
         NSUInteger index = NSNotFound;
+        BOOL adding = YES;
+        
         if (newItem)
             index = [items indexOfObject:newItem];
-        if (removedItem)
-            index = [self.galleryItems indexOfObject:removedItem];
         
-        if (index != NSNotFound)
-            NSLog(@"Current index: %d, updated index: %d", (int)self.imageViewerViewController.pageIndex, (int)index);
-            
-        if(newItem || removedItem)
+        if (removedItem)
+        {
+            index = [self.galleryItems indexOfObject:removedItem];
+            adding = NO;
+        }
+        
+        if (index == currentIndex)
         {
             CATransition *transition = [CATransition animation];
             transition.duration = 0.3f;
@@ -112,10 +123,13 @@
             transition.type = kCATransitionPush;
             transition.subtype = kCATransitionFromRight;
             
+            if (adding || index == self.galleryItems.count - 1)
+                transition.subtype = kCATransitionFromLeft;
+            
             [self.imageViewerViewController.pageViewController.view.layer addAnimation:transition forKey:kCATransition];
         }
     }
-
+    
     [self setGalleryItems:items];
 }
 

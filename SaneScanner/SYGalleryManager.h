@@ -26,10 +26,12 @@
 
 - (NSArray <MHGalleryItem *> *)galleryItems;
 
-- (UIImage *)thumbnailForItem:(MHGalleryItem *)item;
+- (void)thumbnailForItem:(MHGalleryItem *)item block:(void(^)(UIImage *image))block;
 - (NSString *)dateStringForItem:(MHGalleryItem *)item;
 
 - (void)addImage:(UIImage *)image;
 - (void)deleteItem:(MHGalleryItem *)item;
+
+- (CGSize)sizeOfItem:(MHGalleryItem *)item;
 
 @end

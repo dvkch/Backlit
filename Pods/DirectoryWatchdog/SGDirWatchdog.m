@@ -69,7 +69,9 @@ static void KQCallback(CFFileDescriptorRef kqRef, CFOptionFlags callBackTypes, v
 	// If we pull a single available event out of the queue, assume the directory was updated
     struct kevent event;
     struct timespec timeout = {0, 0};
-    if (kevent(kq, NULL, 0, &event, 1, &timeout) == 1 && _update) {
+    
+    if (kevent(kq, NULL, 0, &event, 10, &timeout) > 0 && _update) {
+        NSLog(@"updated");
 		_update();
     }    
 	
@@ -98,12 +100,20 @@ static void KQCallback(CFFileDescriptorRef kqRef, CFOptionFlags callBackTypes, v
 		return;
 	}
     
+    //NOTE_DELETE
+    //NOTE_WRITE
+    //NOTE_EXTEND
+    //NOTE_ATTRIB
+    //NOTE_LINK
+    //NOTE_RENAME
+    //NOTE_REVOKE
+    
 	// Set up a kevent to monitor
     struct kevent eventToAdd;					// Register an (ident, filter) pair with the kqueue
     eventToAdd.ident  = dirFD;					// The object to watch (the directory FD)
     eventToAdd.filter = EVFILT_VNODE;			// Watch for certain events on the VNODE spec'd by ident
     eventToAdd.flags  = EV_ADD | EV_CLEAR;		// Add a resetting kevent
-    eventToAdd.fflags = NOTE_WRITE;				// The events to watch for on the VNODE spec'd by ident (writes)
+    eventToAdd.fflags = NOTE_WRITE | NOTE_EXTEND | NOTE_ATTRIB | NOTE_LINK | NOTE_RENAME | NOTE_REVOKE | NOTE_DELETE;				// The events to watch for on the VNODE spec'd by ident (writes)
     eventToAdd.data   = 0;						// No filter-specific data
     eventToAdd.udata  = NULL;					// No user data
     

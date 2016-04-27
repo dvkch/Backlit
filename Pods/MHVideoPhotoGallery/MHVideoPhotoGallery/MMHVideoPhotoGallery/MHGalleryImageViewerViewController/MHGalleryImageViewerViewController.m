@@ -1018,12 +1018,12 @@
             }];
             
         }else{
-            [MHGallerySharedManager.sharedManager startDownloadingThumbImage:self.item.URLString
+            [MHGallerySharedManager.sharedManager startDownloadingThumbImage:self.item.URL
                                                                 successBlock:^(UIImage *image,NSUInteger videoDuration,NSError *error) {
                                                                     if (!error) {
                                                                         [weakSelf handleGeneratedThumb:image
                                                                                          videoDuration:videoDuration
-                                                                                             urlString:self.item.URLString];
+                                                                                                   url:self.item.URL];
                                                                     }else{
                                                                         [weakSelf changeToErrorImage];
                                                                     }
@@ -1064,7 +1064,7 @@
             [weakSelf autoPlayVideo];
             return;
         }
-        [[MHGallerySharedManager sharedManager] getURLForMediaPlayer:self.item.URLString successBlock:^(NSURL *URL, NSError *error) {
+        [[MHGallerySharedManager sharedManager] getURLForMediaPlayer:self.item.URL successBlock:^(NSURL *URL, NSError *error) {
             if (error || URL == nil) {
                 [weakSelf changePlayButtonToUnPlay];
             }else{
@@ -1085,7 +1085,7 @@
 
 -(void)handleGeneratedThumb:(UIImage*)image
               videoDuration:(NSInteger)videoDuration
-                  urlString:(NSString*)urlString{
+                        url:(NSURL *)url{
     
     self.wholeTimeMovie = videoDuration;
     self.rightSliderLabel.text = [MHGallerySharedManager stringForMinutesAndSeconds:videoDuration addMinus:YES];

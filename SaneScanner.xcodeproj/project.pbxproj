@@ -13,6 +13,8 @@
 		970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 970DE9DD1C9B6344001CD025 /* SYGalleryController.m */; };
 		9710B41E1C9B10DC00A55529 /* SYEmptyGalleryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */; };
 		9710B4211C9B257C00A55529 /* SYSplitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9710B4201C9B257C00A55529 /* SYSplitVC.m */; };
+		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
+		971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */; };
 		971BE23F1C8E288300B8F29C /* NSMutableData+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */; };
 		971BE2421C8E364A00B8F29C /* SYSaneOptionNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2411C8E364A00B8F29C /* SYSaneOptionNumber.m */; };
 		971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */; };
@@ -37,6 +39,7 @@
 		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
 		97DA07151C989318007F522E /* SYToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07141C989318007F522E /* SYToolbar.m */; };
 		97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E2EE601CCD451700FA95AF /* SYGridLayout.m */; };
+		97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */; };
 		F804E0711AFA4AF300CBE307 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06C1AFA4AF300CBE307 /* libsane-dll.a */; };
 		F804E0721AFA4AF300CBE307 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06D1AFA4AF300CBE307 /* libsane-net.a */; };
 		F804E0731AFA4AF300CBE307 /* libsane.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06E1AFA4AF300CBE307 /* libsane.a */; };
@@ -65,6 +68,9 @@
 		9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYEmptyGalleryVC.m; sourceTree = "<group>"; };
 		9710B41F1C9B257C00A55529 /* SYSplitVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSplitVC.h; sourceTree = "<group>"; };
 		9710B4201C9B257C00A55529 /* SYSplitVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSplitVC.m; sourceTree = "<group>"; };
+		971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SYLaunchScreen.storyboard; sourceTree = "<group>"; };
+		971ABFE01CD0E1AF0086F600 /* MHGalleryItem+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHGalleryItem+SY.h"; sourceTree = "<group>"; };
+		971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHGalleryItem+SY.m"; sourceTree = "<group>"; };
 		971BE23D1C8E288300B8F29C /* NSMutableData+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableData+SY.h"; sourceTree = "<group>"; };
 		971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableData+SY.m"; sourceTree = "<group>"; };
 		971BE2401C8E364A00B8F29C /* SYSaneOptionNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionNumber.h; sourceTree = "<group>"; };
@@ -113,6 +119,8 @@
 		97DA07141C989318007F522E /* SYToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYToolbar.m; sourceTree = "<group>"; };
 		97E2EE5F1CCD451700FA95AF /* SYGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGridLayout.h; sourceTree = "<group>"; };
 		97E2EE601CCD451700FA95AF /* SYGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGridLayout.m; sourceTree = "<group>"; };
+		97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SYKit.h"; sourceTree = "<group>"; };
+		97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SYKit.m"; sourceTree = "<group>"; };
 		BD5626431CEA71F0459153C5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F804E06C1AFA4AF300CBE307 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/libsane-dll.a"; sourceTree = "<group>"; };
 		F804E06D1AFA4AF300CBE307 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/all/libsane-net.a"; sourceTree = "<group>"; };
@@ -182,6 +190,8 @@
 				9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */,
 				97E2EE5F1CCD451700FA95AF /* SYGridLayout.h */,
 				97E2EE601CCD451700FA95AF /* SYGridLayout.m */,
+				971ABFE01CD0E1AF0086F600 /* MHGalleryItem+SY.h */,
+				971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */,
 			);
 			name = Gallery;
 			sourceTree = "<group>";
@@ -231,6 +241,8 @@
 				971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */,
 				97DA07101C98927E007F522E /* UIColor+SY.h */,
 				97DA07111C98927E007F522E /* UIColor+SY.m */,
+				97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */,
+				97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -252,6 +264,7 @@
 				9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */,
 				97221E071C9B7DDC0062268F /* SYGalleryThumbsCell.h */,
 				97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */,
+				971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -415,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */,
+				971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +487,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */,
 				971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
 				970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */,
@@ -494,6 +509,7 @@
 				9734E3621C90218E00B66797 /* SYAddCell.m in Sources */,
 				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,
 				F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */,
+				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
 				9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */,
 				9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */,
 				F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */,

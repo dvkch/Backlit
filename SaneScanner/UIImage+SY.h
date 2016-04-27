@@ -18,4 +18,8 @@
 + (UIImage *)addIconWithColor:(UIColor *)color;
 + (UIImage *)addIconWithColor:(UIColor *)color size:(CGFloat)size borderWidth:(CGFloat)borderWidth;
 
++ (CGSize)sy_sizeOfImageAtURL:(NSURL *)url;
++ (NSNumber *)sy_isImageFileValidAtURL:(NSURL *)url;
++ (UIImage *)sy_validImageWithContentsOfFile:(NSString *)path;
+
 @end

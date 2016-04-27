@@ -20,7 +20,7 @@
 
 @implementation MHImageURL
 
-- (id)initWithURL:(NSString*)URL
+- (id)initWithURL:(NSURL*)URL
             image:(UIImage*)image{
     self = [super init];
     if (!self)
@@ -670,7 +670,7 @@
             if ([dataURL.image isKindOfClass:UIImage.class]) {
                 UIImage *image = dataURL.image;
                 if (image.images) {
-                    [picker addAttachmentData:[NSData dataWithContentsOfFile:[SDImageCache.sharedImageCache defaultCachePathForKey:dataURL.URL]]
+                    [picker addAttachmentData:[NSData dataWithContentsOfFile:[SDImageCache.sharedImageCache defaultCachePathForKey:dataURL.URL.absoluteString]]
                                typeIdentifier:(__bridge NSString *)kUTTypeGIF
                                      filename:@"animated.gif"];
                 }else{
@@ -701,7 +701,7 @@
             if ([dataURL.image isKindOfClass:UIImage.class]) {
                 UIImage *image = dataURL.image;
                 if (image.images) {
-                    [picker addAttachmentData:[NSData dataWithContentsOfFile:[[SDImageCache sharedImageCache] defaultCachePathForKey:dataURL.URL]]
+                    [picker addAttachmentData:[NSData dataWithContentsOfFile:[[SDImageCache sharedImageCache] defaultCachePathForKey:dataURL.URL.absoluteString]]
                                      mimeType:@"image/gif"
                                      fileName:@"pic.gif"];
                 }else{
@@ -826,10 +826,10 @@
         
         if (item.galleryType == MHGalleryTypeVideo) {
             if (!saveToCameraRoll) {
-                MHImageURL *imageURL = [MHImageURL.alloc initWithURL:item.URLString image:nil];
+                MHImageURL *imageURL = [MHImageURL.alloc initWithURL:item.URL image:nil];
                 [weakSelf addDataToDownloadArray:imageURL];
             }else{
-                [MHGallerySharedManager.sharedManager getURLForMediaPlayer:item.URLString successBlock:^(NSURL *URL, NSError *error) {
+                [MHGallerySharedManager.sharedManager getURLForMediaPlayer:item.URL successBlock:^(NSURL *URL, NSError *error) {
                     NSURLSession *session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
                     
                     [self.sessions addObject:session];
@@ -865,11 +865,11 @@
         
         if (item.galleryType == MHGalleryTypeImage) {
             
-            if ([item.URLString rangeOfString:MHAssetLibrary].location != NSNotFound && item.URLString) {
-                [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URLString
+            if ([item.URL.scheme isEqualToString:MHAssetLibrary]) {
+                [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URL
                                                                      assetType:MHAssetImageTypeFull
                                                                   successBlock:^(UIImage *image, NSError *error) {
-                                                                      MHImageURL *imageURL = [MHImageURL.alloc initWithURL:item.URLString
+                                                                      MHImageURL *imageURL = [MHImageURL.alloc initWithURL:item.URL
                                                                                                                      image:image];
                                                                       [weakSelf addDataToDownloadArray:imageURL];
                                                                   }];
@@ -877,9 +877,9 @@
                 [self addDataToDownloadArray:item.image];
             }else{
                 
-                [SDWebImageManager.sharedManager downloadImageWithURL:[NSURL URLWithString:item.URLString] options:SDWebImageContinueInBackground progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                [SDWebImageManager.sharedManager downloadImageWithURL:item.URL options:SDWebImageContinueInBackground progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                     
-                    MHImageURL *imageURLMH = [MHImageURL.alloc initWithURL:item.URLString
+                    MHImageURL *imageURLMH = [MHImageURL.alloc initWithURL:item.URL
                                                                      image:image];
                     [weakSelf addDataToDownloadArray:imageURLMH];
                 }];
@@ -972,7 +972,7 @@
                 NSData *data;
                 
                 if (imageToStore.images) {
-                    data = [NSData dataWithContentsOfFile:[[SDImageCache sharedImageCache] defaultCachePathForKey:dataURL.URL]];
+                    data = [NSData dataWithContentsOfFile:[[SDImageCache sharedImageCache] defaultCachePathForKey:dataURL.URL.absoluteString]];
                 }else{
                     data = UIImageJPEGRepresentation(imageToStore, 1.0);
                 }

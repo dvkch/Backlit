@@ -218,6 +218,10 @@ Adds some help to compute a cell height using auto layout. Implementation may no
 
 	@end
 
+####SYWindow
+
+`UIWindow` subclass allowing for easy creation of a the main window and ability to shake the device while in debug to slow down animations.
+
 
 License
 ===

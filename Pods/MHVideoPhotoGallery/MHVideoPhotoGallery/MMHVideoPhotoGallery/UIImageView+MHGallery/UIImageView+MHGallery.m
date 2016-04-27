@@ -12,7 +12,7 @@
 
 @implementation UIImageView (MHGallery)
 
--(void)setThumbWithURL:(NSString*)URL
+-(void)setThumbWithURL:(NSURL*)URL
           successBlock:(void (^)(UIImage *image,NSUInteger videoDuration,NSError *error))succeedBlock{
     
     __weak typeof(self) weakSelf = self;
@@ -40,14 +40,14 @@
     
     __weak typeof(self) weakSelf = self;
     
-    if ([item.URLString rangeOfString:MHAssetLibrary].location != NSNotFound && item.URLString) {
+    if ([item.URL.scheme isEqualToString:MHAssetLibrary]) {
         
         MHAssetImageType assetType = MHAssetImageTypeThumb;
         if (imageType == MHImageTypeFull) {
             assetType = MHAssetImageTypeFull;
         }
         
-        [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URLString
+        [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URL
                                                              assetType:assetType
                                                           successBlock:^(UIImage *image, NSError *error) {
                                                               [weakSelf setImageForImageView:image successBlock:succeedBlock];
@@ -56,22 +56,22 @@
         [self setImageForImageView:item.image successBlock:succeedBlock];
     }else{
         
-        NSString *placeholderURL = item.thumbnailURL;
-        NSString *toLoadURL = item.URLString;
+        NSURL *placeholderURL = item.thumbnailURL;
+        NSURL *toLoadURL = item.URL;
         
         if (imageType == MHImageTypeThumb) {
             toLoadURL = item.thumbnailURL;
-            placeholderURL = item.URLString;
+            placeholderURL = item.URL;
         }
         
         SDWebImageOptions options = 0;
         
         // prevents storing a copy of a file that's already available on disk, only keep it in memory
-        if ([[NSURL URLWithString:toLoadURL] isFileURL])
+        if ([toLoadURL isFileURL])
             options |= SDWebImageCacheMemoryOnly;
         
-        [self sd_setImageWithURL:[NSURL URLWithString:toLoadURL]
-                placeholderImage:[SDImageCache.sharedImageCache imageFromDiskCacheForKey:placeholderURL]
+        [self sd_setImageWithURL:toLoadURL
+                placeholderImage:[SDImageCache.sharedImageCache imageFromDiskCacheForKey:placeholderURL.absoluteString]
                          options:options
                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                            if (succeedBlock) {

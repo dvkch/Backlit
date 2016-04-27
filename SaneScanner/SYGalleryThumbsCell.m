@@ -16,6 +16,7 @@
 static CGFloat const kShadowRadius = 2;
 
 @interface SYGalleryThumbsCell ()
+@property (nonatomic, strong) MHGalleryItem *item;
 @end
 
 @implementation SYGalleryThumbsCell
@@ -52,7 +53,19 @@ static CGFloat const kShadowRadius = 2;
     __weak UIViewController *wParentController = parentController;
     UIImageView *(^dismissBlockCopy)(NSUInteger) = [dismissBlock copy];
     
-    [self.imageView setImage:[[SYGalleryManager shared] thumbnailForItem:items[index]]];
+    self.item = items[index];
+    [self.imageView setImage:nil];
+    [self.imageView setOpaque:YES];
+    [self.imageView.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
+    [self.imageView.layer setShouldRasterize:YES];
+    
+    __weak SYGalleryThumbsCell *wSelf = self;
+    [[SYGalleryManager shared] thumbnailForItem:items[index] block:^(UIImage *image) {
+        if (![wSelf.item isEqual:items[index]])
+            return;
+        
+        [wSelf.imageView setImage:image];
+    }];
     [self.imageView setUICustomization:[MHUICustomization sy_defaultTheme]];
     [self.imageView setGalleryClass:SYGalleryController.class];
     [self.imageView setInseractiveGalleryPresentionWithItems:items

@@ -258,13 +258,13 @@
     MHMediaPreviewCollectionViewCell *cell = (MHMediaPreviewCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     MHGalleryItem *item =  [self itemForIndex:indexPath.row];
     
-    UIImage *thumbImage = [SDImageCache.sharedImageCache imageFromDiskCacheForKey:item.URLString];
+    UIImage *thumbImage = [SDImageCache.sharedImageCache imageFromDiskCacheForKey:item.URL.absoluteString];
     if (thumbImage) {
         cell.thumbnail.image = thumbImage;
     }
-    if ([item.URLString rangeOfString:MHAssetLibrary].location != NSNotFound && item.URLString) {
+    if ([item.URL.scheme isEqualToString:MHAssetLibrary]) {
         
-        [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URLString
+        [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URL
                                                              assetType:MHAssetImageTypeFull
                                                           successBlock:^(UIImage *image, NSError *error) {
                                                               cell.thumbnail.image = image;
@@ -292,7 +292,7 @@
 -(void)getImageForItem:(MHGalleryItem*)item
         finishCallback:(void(^)(UIImage *image))FinishBlock{
     
-    [SDWebImageManager.sharedManager downloadImageWithURL:[NSURL URLWithString:item.URLString]
+    [SDWebImageManager.sharedManager downloadImageWithURL:item.URL
                                                   options:SDWebImageContinueInBackground
                                                  progress:nil
                                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
@@ -314,7 +314,7 @@
             if (image) {
                 UIPasteboard *pasteboard = UIPasteboard.generalPasteboard;
                 if (image.images) {
-                    NSData *data = [NSData dataWithContentsOfFile:[SDImageCache.sharedImageCache defaultCachePathForKey:item.URLString]];
+                    NSData *data = [NSData dataWithContentsOfFile:[SDImageCache.sharedImageCache defaultCachePathForKey:item.URL.absoluteString]];
                     [pasteboard setData:data forPasteboardType:(__bridge NSString *)kUTTypeGIF];
                 }else{
                     NSData *data = UIImagePNGRepresentation(image);

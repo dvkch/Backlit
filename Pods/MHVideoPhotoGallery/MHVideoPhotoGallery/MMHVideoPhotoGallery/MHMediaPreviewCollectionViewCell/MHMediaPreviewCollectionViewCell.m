@@ -82,7 +82,7 @@
     [self.activityIndicator startAnimating];
 
     if (galleryItem.galleryType == MHGalleryTypeVideo) {
-        [MHGallerySharedManager.sharedManager startDownloadingThumbImage:galleryItem.URLString
+        [MHGallerySharedManager.sharedManager startDownloadingThumbImage:galleryItem.URL
                                                             successBlock:^(UIImage *image,NSUInteger videoDuration,NSError *error) {
                                                                 if (error) {
                                                                     weakSelf.thumbnail.backgroundColor = UIColor.whiteColor;
