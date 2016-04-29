@@ -10,6 +10,16 @@
 
 @implementation UIImage (SYKit)
 
+// https://github.com/mbcharbonneau/UIImage-Categories/blob/master/UIImage%2BAlpha.m
+- (BOOL)sy_hasAlpha
+{
+    CGImageAlphaInfo alpha = CGImageGetAlphaInfo(self.CGImage);
+    return (alpha == kCGImageAlphaFirst ||
+            alpha == kCGImageAlphaLast ||
+            alpha == kCGImageAlphaPremultipliedFirst ||
+            alpha == kCGImageAlphaPremultipliedLast);
+}
+
 - (UIImage *)sy_imageByAddingPaddingTop:(CGFloat)top
                                    left:(CGFloat)left
                                   right:(CGFloat)right
@@ -24,10 +34,28 @@
 
 - (UIImage *)sy_imageResizedTo:(CGSize)size
 {
-    UIGraphicsBeginImageContextWithOptions(size, NO, self.scale);
-    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIImage *newImage = nil;
+    
+    CGFloat targetWidth = size.width;
+    CGFloat targetHeight = size.height;
+    
+    CGContextRef bitmap = CGBitmapContextCreate(NULL,
+                                                targetWidth,
+                                                targetHeight,
+                                                CGImageGetBitsPerComponent(self.CGImage),
+                                                4 * targetWidth, CGImageGetColorSpace(self.CGImage),
+                                                CGImageGetAlphaInfo(self.CGImage));
+    
+    if (!bitmap)
+        return nil;
+    
+    CGContextDrawImage(bitmap, CGRectMake(0, 0, targetWidth, targetHeight), self.CGImage);
+    
+    CGImageRef ref = CGBitmapContextCreateImage(bitmap);
+    newImage = [UIImage imageWithCGImage:ref];
+    
+    CGContextRelease(bitmap);
+    
     return newImage;
 }
 
@@ -152,9 +180,9 @@ CGContextRef NYXImageCreateARGBBitmapContext(const size_t width, const size_t he
     CGContextRotateCTM(bmContext, radians(angle));
     
     CGContextDrawImage(bmContext, (CGRect){.origin.x = -originalWidth  * 0.5f,
-                                           .origin.y = -originalHeight * 0.5f,
-                                           .size.width  = originalWidth,
-                                           .size.height = originalHeight}, cgImage);
+        .origin.y = -originalHeight * 0.5f,
+        .size.width  = originalWidth,
+        .size.height = originalHeight}, cgImage);
     
     CGImageRef rotatedImageRef = CGBitmapContextCreateImage(bmContext);
     UIImage* rotated = [UIImage imageWithCGImage:rotatedImageRef];

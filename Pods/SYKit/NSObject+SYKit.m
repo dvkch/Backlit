@@ -55,4 +55,25 @@
     }
 }
 
+// http://stackoverflow.com/questions/28737116/check-if-subclass-overrides-a-method
++ (BOOL)sy_instance:(id)instance overridesSelector:(SEL)selector
+{
+    Class superClass = [instance superclass];
+    BOOL isMethodOverridden = NO;
+    
+    while (superClass != Nil) {
+        
+        isMethodOverridden = ([superClass instancesRespondToSelector:selector] &&
+                              ([instance methodForSelector:selector] !=
+                               [superClass instanceMethodForSelector:selector]));
+        
+        if (isMethodOverridden)
+            break;
+        
+        superClass = [superClass superclass];
+    }
+    
+    return isMethodOverridden;
+}
+
 @end

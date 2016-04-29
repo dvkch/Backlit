@@ -10,7 +10,7 @@
 #import "SYGalleryManager.h"
 #import <Masonry.h>
 #import "UIColor+SY.h"
-#import "UIImage+SY.h"
+#import <UIImage+SYKit.h>
 #import "SYGalleryThumbsCell.h"
 #import <SYGradientView.h>
 #import <MHGallery.h>
@@ -30,7 +30,7 @@ static CGFloat const kGradientWidth = 30;
 + (instancetype)showInToolbarOfController:(UIViewController *)controller
                                 tintColor:(UIColor *)tintColor
 {
-    UIColor *color = (tintColor ?: controller.navigationController.toolbar.backgroundColor);
+    UIColor *color = (tintColor ?: [UIColor whiteColor]);
     
     CGRect thumbsViewInitialRect = controller.navigationController.toolbar.bounds;
     SYGalleryThumbsView *thumbsView = [[SYGalleryThumbsView alloc] initWithFrame:thumbsViewInitialRect];
@@ -38,8 +38,7 @@ static CGFloat const kGradientWidth = 30;
     [thumbsView setTintColor:color];
     [thumbsView setBackgroundColor:color];
     [thumbsView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    //[controller setToolbarItems:@[[[UIBarButtonItem alloc] initWithCustomView:thumbsView]]];
-    [controller setToolbarItems:@[[[UIBarButtonItem alloc] initWithTitle:@"YO" style:UIBarButtonItemStylePlain target:nil action:nil]]];
+    [controller setToolbarItems:@[[[UIBarButtonItem alloc] initWithCustomView:thumbsView]]];
     return thumbsView;
 }
 
@@ -192,10 +191,15 @@ static CGFloat const kGradientWidth = 30;
 {
     __weak SYGalleryThumbsView *wSelf = self;
     
+    UIColor *spinnerColor = [UIColor whiteColor];
+    if ([self.tintColor isEqual:[UIColor whiteColor]])
+        spinnerColor = [UIColor grayColor];
+    
     SYGalleryThumbsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     [cell updateWithItems:self.galleryItems
                     index:indexPath.item
          parentController:self.parentViewController
+             spinnerColor:spinnerColor
              dismissBlock:^UIImageView *(NSUInteger index)
     {
         if (index >= wSelf.galleryItems.count)
@@ -227,11 +231,17 @@ static CGFloat const kGradientWidth = 30;
     if (CGSizeEqualToSize(imageSize, CGSizeZero))
         imageSize = CGSizeMake(100, 100);
     
-    CGFloat availableHeight = collectionView.bounds.size.height;
+    CGRect bounds = UIEdgeInsetsInsetRect(collectionView.bounds, collectionView.contentInset);
+    bounds = UIEdgeInsetsInsetRect(bounds, [(UICollectionViewFlowLayout *)collectionViewLayout sectionInset]);
+    
+    CGFloat availableHeight = bounds.size.height;
     CGSize size = CGSizeMake(availableHeight, availableHeight);
     size.width = AVMakeRectWithAspectRatioInsideRect(imageSize, (CGRect){CGPointZero, size}).size.width;
     
     return size;
 }
-
+#warning use hopper with :
+#warning the behavior of the UICollectionViewFlowLayout is not defined because:
+#warning the item height must be less than the height of the UICollectionView minus the section insets top and bottom values
+#warning Please check the values return by the delegate.
 @end

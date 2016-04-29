@@ -12,5 +12,6 @@
 
 - (void)sy_performBlock:(void(^)(void))block onThread:(NSThread *)thread;
 + (void)sy_swizzleSelector:(SEL)originalSelector withSelector:(SEL)swizzledSelector;
++ (BOOL)sy_instance:(id)instance overridesSelector:(SEL)selector;
 
 @end

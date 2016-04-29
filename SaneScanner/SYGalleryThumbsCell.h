@@ -18,6 +18,7 @@
 - (void)updateWithItems:(NSArray <MHGalleryItem *> *)items
                   index:(NSUInteger)index
        parentController:(UIViewController *)parentController
+           spinnerColor:(UIColor *)spinnerColor
            dismissBlock:(UIImageView *(^)(NSUInteger index))dismissBlock;
 
 @end

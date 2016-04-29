@@ -15,8 +15,9 @@
 
 static CGFloat const kShadowRadius = 2;
 
-@interface SYGalleryThumbsCell ()
+@interface SYGalleryThumbsCell () <SYGalleryManagerDelegate>
 @property (nonatomic, strong) MHGalleryItem *item;
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @end
 
 @implementation SYGalleryThumbsCell
@@ -28,44 +29,73 @@ static CGFloat const kShadowRadius = 2;
     {
         [self.contentView.layer setShadowColor:[UIColor blackColor].CGColor];
         [self.contentView.layer setShadowOffset:CGSizeZero];
-        [self.contentView.layer setShadowOpacity:.6];
         [self.contentView.layer setShadowRadius:kShadowRadius];
         [self.contentView.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
-        [self.contentView.layer setShouldRasterize:YES];
         
         self.imageView = [[MHPresenterImageView alloc] init];
         [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
         [self.imageView setShoudlUsePanGestureReconizer:NO];
         [self.contentView addSubview:self.imageView];
         
+        self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [self.spinner setHidesWhenStopped:YES];
+        [self.contentView addSubview:self.spinner];
+        
         [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(@0);
         }];
+        
+        [self.spinner mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(@0);
+        }];
+        
+        [[SYGalleryManager shared] addDelegate:self];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[SYGalleryManager shared] removeDelegate:self];
+}
+
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager didCreatedThumb:(UIImage *)thumb forItem:(MHGalleryItem *)item
+{
+    if (![item isEqual:self.item])
+        return;
+    [self setImage:thumb];
+}
+
+- (void)setImage:(UIImage *)image
+{
+    [self.imageView setImage:image];
+    if (image)
+    {
+        [self.spinner stopAnimating];
+        [self.contentView.layer setShadowOpacity:.6];
+        [self.contentView.layer setShouldRasterize:YES];
+    }
+    else
+    {
+        [self.spinner startAnimating];
+        [self.contentView.layer setShadowOpacity:0];
+        [self.contentView.layer setShouldRasterize:NO];
+    }
 }
 
 - (void)updateWithItems:(NSArray<MHGalleryItem *> *)items
                   index:(NSUInteger)index
        parentController:(UIViewController *)parentController
+           spinnerColor:(UIColor *)spinnerColor
            dismissBlock:(UIImageView *(^)(NSUInteger))dismissBlock
 {
     __weak UIViewController *wParentController = parentController;
     UIImageView *(^dismissBlockCopy)(NSUInteger) = [dismissBlock copy];
     
-    self.item = items[index];
-    [self.imageView setImage:nil];
-    [self.imageView setOpaque:YES];
-    [self.imageView.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
-    [self.imageView.layer setShouldRasterize:YES];
+    [self.spinner setColor:spinnerColor];
     
-    __weak SYGalleryThumbsCell *wSelf = self;
-    [[SYGalleryManager shared] thumbnailForItem:items[index] block:^(UIImage *image) {
-        if (![wSelf.item isEqual:items[index]])
-            return;
-        
-        [wSelf.imageView setImage:image];
-    }];
+    self.item = items[index];
+    [self setImage:[[SYGalleryManager shared] thumbnailForItem:self.item]];
     [self.imageView setUICustomization:[MHUICustomization sy_defaultTheme]];
     [self.imageView setGalleryClass:SYGalleryController.class];
     [self.imageView setInseractiveGalleryPresentionWithItems:items

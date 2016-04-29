@@ -10,9 +10,7 @@
 
 @interface SYToolbar : UIToolbar
 
-@property (nonatomic) CGFloat padding;
+@property (nonatomic, assign) CGFloat padding;
 @property (nonatomic) CGFloat height;
-
-+ (CGFloat)systemPadding;
 
 @end

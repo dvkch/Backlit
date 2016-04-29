@@ -11,9 +11,12 @@
 #import <MHGalleryItem.h>
 #import <UIImage+SYKit.h>
 #import "UIColor+SY.h"
-#import <MHWDirectoryWatcher.h>
+#import "MHWDirectoryWatcher.h"
 #import "UIImage+SY.h"
 #import "MHGalleryItem+SY.h"
+#import <SDImageCache.h>
+#import <SYOperationQueue.h>
+#import <NSData+SYKit.h>
 
 @interface SYGalleryManagerWeakDelegate : NSObject
 @property (atomic, weak) id<SYGalleryManagerDelegate> delegate;
@@ -53,11 +56,13 @@
 @end
 
 @interface SYGalleryManager ()
-@property (nonatomic, strong) NSCache <NSString *, UIImage *> *thumbanilCache;
+@property (nonatomic, strong) NSCache <NSString *, UIImage *> *thumbnailCache;
 @property (nonatomic, strong) NSCache <NSString *, NSValue *> *imageSizeCache;
 @property (nonatomic, strong) NSMutableArray <SYGalleryManagerWeakDelegate *> *delegates;
 @property (nonatomic, strong) MHWDirectoryWatcher *directoryWatcher;
 @property (nonatomic, strong) NSArray <NSString *> *imageNames;
+@property (nonatomic, strong) NSMutableArray <NSString *> *thumbsBeingCreated;
+@property (nonatomic, strong) SYOperationQueue *thumbsQueue;
 @end
 
 @implementation SYGalleryManager
@@ -80,19 +85,43 @@
         // donnot use a set as it would work only with a collection of non mutable objects. here the pointer to delegate can change
         self.delegates = [NSMutableArray array];
         
-        self.thumbanilCache = [[NSCache alloc] init];
+        self.thumbnailCache = [[NSCache alloc] init];
         self.imageSizeCache = [[NSCache alloc] init];
         self.imageNames = [self listImageNames];
-        
+        self.thumbsBeingCreated = [NSMutableArray array];
+        self.thumbsQueue = [[SYOperationQueue alloc] init];
+        [self.thumbsQueue setMaxConcurrentOperationCount:1];
+        [self.thumbsQueue setMaxSurvivingOperations:0];
+        [self.thumbsQueue setMode:SYOperationQueueModeLIFO];
+
         self.directoryWatcher = [MHWDirectoryWatcher directoryWatcherAtPath:[SYTools documentsPath]
                                                            startImmediately:YES
                                                              changesStarted:^
         {
-        } changesEnded:^(BOOL allChangesFinished) {
+        } filesAdded:^(NSArray<NSString *> *addedFiles) {
+            if ([addedFiles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]]])
+                self.imageNames = [self listImageNames];
+        } filesRemoved:^(NSArray<NSString *> *filesRemoved) {
+            for (NSString *file in filesRemoved)
+            {
+                [self.thumbnailCache removeObjectForKey:file];
+                [self.imageSizeCache removeObjectForKey:file];
+            }
+            
+            if ([filesRemoved filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]]])
+                self.imageNames = [self listImageNames];
+        } changesEnded:^{
             self.imageNames = [self listImageNames];
         }];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }
     return self;
+}
+
+- (void)receivedMemoryWarning:(NSNotification *)notification
+{
+    [self.thumbnailCache removeAllObjects];
 }
 
 #pragma mark - Private
@@ -120,7 +149,7 @@
 {
     NSString *filename = imageName;
     if (thumbnail)
-        filename = [[filename stringByDeletingPathExtension] stringByAppendingPathExtension:@"thumb"];
+        filename = [[filename stringByDeletingPathExtension] stringByAppendingPathExtension:@"thumb.jpg"];
     
     return [[SYTools documentsPath] stringByAppendingPathComponent:filename];
 }
@@ -167,7 +196,10 @@
     if ([oldImageNames isEqualToArray:imageNames])
         return;
     
-    //[self checkThumbsExist];
+    if (!imageNames.count) {
+        [self.thumbnailCache removeAllObjects];
+        [self.imageSizeCache removeAllObjects];
+    }
     
     NSString *addedImage;
     {
@@ -186,11 +218,11 @@
     for (SYGalleryManagerWeakDelegate *weakDelegate in self.delegates)
     {
         id <SYGalleryManagerDelegate> delegate = weakDelegate.delegate;
-        
-        [delegate gallerymanager:self
-           didUpdateGalleryItems:self.galleryItems
-                         newItem:[self galleryItemForImageWithName:addedImage]
-                     removedItem:[self galleryItemForImageWithName:removedImage]];
+        if ([delegate respondsToSelector:@selector(gallerymanager:didUpdateGalleryItems:newItem:removedItem:)])
+            [delegate gallerymanager:self
+               didUpdateGalleryItems:self.galleryItems
+                             newItem:[self galleryItemForImageWithName:addedImage]
+                         removedItem:[self galleryItemForImageWithName:removedImage]];
     }
 }
 
@@ -209,34 +241,34 @@
     
     UIImage *thumb;
     
-    @autoreleasepool {
-        UIImage *fullImage = (image ?: [UIImage sy_validImageWithContentsOfFile:fullPath]);
-        if (!fullImage)
-            NSLog(@"No full image: %@", imageName);
+    UIImage *fullImage = image;
+    if (!fullImage)
+    {
+        NSData *data = [NSData dataWithContentsOfFile:fullPath options:(NSDataReadingMappedIfSafe) error:NULL];
         
-        if (image.size.width > image.size.height)
-            thumb = [fullImage sy_imageResizedHeightTo:300];
-        else
-            thumb = [fullImage sy_imageResizedWidthTo:300];
+        if (![data sy_imageDataIsValidPNG])
+            return nil;
+        
+        fullImage = [UIImage imageWithData:data];
     }
     
-    [UIImageJPEGRepresentation(thumb, 0.7) writeToFile:thumbPath atomically:YES];
+    if (image.size.width > image.size.height)
+        thumb = [fullImage sy_imageResizedHeightTo:200];
+    else
+        thumb = [fullImage sy_imageResizedWidthTo:200];
+    
+    [UIImageJPEGRepresentation(thumb, 0.6) writeToFile:thumbPath atomically:YES];
     
     return thumb;
-}
-
-- (void)checkThumbsExist
-{
-    NSArray <NSString *> *imageNames = [self imageNames];
-    for (NSString *imageName in imageNames)
-        [self generateThumbnailFileForImageWithName:imageName withImage:nil];
 }
 
 #pragma mark - Public
 
 - (void)addDelegate:(id<SYGalleryManagerDelegate>)delegate
 {
-    [delegate gallerymanager:self didUpdateGalleryItems:self.galleryItems newItem:nil removedItem:nil];
+    if ([delegate respondsToSelector:@selector(gallerymanager:didUpdateGalleryItems:newItem:removedItem:)])
+        [delegate gallerymanager:self didUpdateGalleryItems:self.galleryItems newItem:nil removedItem:nil];
+    
     [self.delegates addObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:delegate]];
     [self cleanUpDelegates];
 }
@@ -260,30 +292,49 @@
     return [items copy];
 }
 
-- (void)thumbnailForItem:(MHGalleryItem *)item block:(void (^)(UIImage *))block
+- (UIImage *)thumbnailForItem:(MHGalleryItem *)item
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *thumb = [self.thumbanilCache objectForKey:item.imageName];
+    UIImage *thumb = [self.thumbnailCache objectForKey:item.imageName];
+    if (thumb)
+        return thumb;
     
-        if (!thumb) {
-            thumb = [UIImage imageWithContentsOfFile:item.thumbnailPath];
-            if (thumb) {
-                [self.thumbanilCache setObject:thumb forKey:item.imageName];
-            }
-        }
+    thumb = [UIImage imageWithContentsOfFile:item.thumbnailPath];
+    if (thumb) {
+        [self.thumbnailCache setObject:thumb forKey:item.imageName];
+        return thumb;
+    }
     
-        if (!thumb)
-        {
+    if ([self.thumbsBeingCreated containsObject:item.imageName])
+        return nil;
+    
+    [self.thumbsBeingCreated addObject:item.imageName];
+    
+    [self.thumbsQueue addOperationWithBlock:^{
+        UIImage *thumb;
+        
+        @autoreleasepool {
             thumb = [self generateThumbnailFileForImageWithName:item.imageName withImage:nil];
-            if (thumb) {
-                [self.thumbanilCache setObject:thumb forKey:item.imageName];
-            }
         }
-    
+        
+        if (!thumb) {
+            [self.thumbsBeingCreated removeObject:item.imageName];
+            return;
+        }
+        
+        [self.thumbnailCache setObject:thumb forKey:item.imageName];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            block(thumb);
+            [self.thumbsBeingCreated removeObject:item.imageName];
+            for (SYGalleryManagerWeakDelegate *weakDelegate in self.delegates)
+            {
+                id <SYGalleryManagerDelegate> delegate = weakDelegate.delegate;
+                if ([delegate respondsToSelector:@selector(gallerymanager:didCreatedThumb:forItem:)])
+                    [delegate gallerymanager:self didCreatedThumb:thumb forItem:item];
+            }
         });
-    });
+    }];
+    
+    return nil;
 }
 
 - (NSString *)dateStringForItem:(MHGalleryItem *)item

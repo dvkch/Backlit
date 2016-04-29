@@ -204,6 +204,7 @@ Adds to methods to work with swizzling object methods and executing a block on a
 
 	- (void)sy_performBlock:(void(^)(void))block onThread:(NSThread *)thread;
 	+ (void)sy_swizzleSelector:(SEL)originalSelector withSelector:(SEL)swizzledSelector;
+	+ (BOOL)sy_instance:(id)instance overridesSelector:(SEL)selector;
 	
 	@end
 
@@ -221,6 +222,16 @@ Adds some help to compute a cell height using auto layout. Implementation may no
 ####SYWindow
 
 `UIWindow` subclass allowing for easy creation of a the main window and ability to shake the device while in debug to slow down animations.
+
+####NSData+SYKit
+
+Could be helpful to determine if a `NSData` is complete or not. For instance when showing all images in a folder but files are still being transfered.
+
+	@interface NSData (SYKit)
+
+	- (BOOL)sy_imageDataIsValidPNG;
+
+	@end
 
 
 License

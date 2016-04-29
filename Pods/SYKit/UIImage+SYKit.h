@@ -10,6 +10,7 @@
 
 @interface UIImage (SYKit)
 
+- (BOOL)sy_hasAlpha;
 - (UIImage *)sy_imageByAddingPaddingTop:(CGFloat)top
                                    left:(CGFloat)left
                                   right:(CGFloat)right

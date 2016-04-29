@@ -11,10 +11,16 @@
 @class SYGalleryManager;
 
 @protocol SYGalleryManagerDelegate <NSObject>
+@optional
 - (void)gallerymanager:(SYGalleryManager *)gallerymanager
+
  didUpdateGalleryItems:(NSArray <MHGalleryItem *> *)items
                newItem:(MHGalleryItem *)newItem
            removedItem:(MHGalleryItem *)removedItem;
+
+- (void)gallerymanager:(SYGalleryManager *)gallerymanager
+       didCreatedThumb:(UIImage *)thumb
+               forItem:(MHGalleryItem *)item;
 @end
 
 @interface SYGalleryManager : NSObject
@@ -26,7 +32,7 @@
 
 - (NSArray <MHGalleryItem *> *)galleryItems;
 
-- (void)thumbnailForItem:(MHGalleryItem *)item block:(void(^)(UIImage *image))block;
+- (UIImage *)thumbnailForItem:(MHGalleryItem *)item;
 - (NSString *)dateStringForItem:(MHGalleryItem *)item;
 
 - (void)addImage:(UIImage *)image;

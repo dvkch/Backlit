@@ -33,11 +33,15 @@ CGRect CGRectByMovingSideOfCGRectByDelta(CGRectSide side, CGRect rect, CGFloat d
 
 BOOL CGRectSideIsVertical(CGRectSide side);
 
+void logMemUsage(void);
+
 @interface SYTools : NSObject
 
 + (NSString *)documentsPath;
 + (NSString *)appSupportPath:(BOOL)create;
 + (NSString *)pathForFile:(NSString *)filename;
 + (void)createTestImages:(NSUInteger)count;
++ (NSDateFormatter *)logDateFormatter;
+
 
 @end

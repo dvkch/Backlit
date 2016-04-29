@@ -11,10 +11,9 @@ pod 'Masonry'
 pod 'PKYStepper'
 pod 'SYKit'
 pod 'SYPair'
-pod 'DirectoryWatchdog'
 pod 'INSPullToRefresh'
 pod 'SpinKit'
-pod 'MHWDirectoryWatcher'
+pod 'SYOperationQueue'
 pod 'MHVideoPhotoGallery', :podspec => "https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec"
 #pod 'IFMDebugTool', :configurations => ['Debug']
 
