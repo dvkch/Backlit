@@ -11,5 +11,6 @@
 @interface NSData (SYKit)
 
 - (BOOL)sy_imageDataIsValidPNG;
+- (BOOL)sy_imageDataIsValidJPEG;
 
 @end

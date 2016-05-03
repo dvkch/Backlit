@@ -6,6 +6,7 @@ PODS:
     - Masonry
     - SDWebImage
     - TTTAttributedLabel (= 1.13.3)
+  - MHWDirectoryWatcher (0.0.8)
   - NSDate+TimeAgo (1.0.6)
   - PKYStepper (0.0.1)
   - SDWebImage (3.7.5):
@@ -13,7 +14,7 @@ PODS:
   - SDWebImage/Core (3.7.5)
   - SpinKit (1.2.0)
   - SVProgressHUD (2.0.3)
-  - SYKit (0.0.20)
+  - SYKit (0.0.23)
   - SYLogRedirect (1.2.5)
   - SYOperationQueue (1.0.1)
   - SYPair (1.0)
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - INSPullToRefresh
   - Masonry
   - MHVideoPhotoGallery (from `https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec`)
+  - MHWDirectoryWatcher (from `https://raw.githubusercontent.com/dvkch/MHWDirectoryWatcher/master/MHWDirectoryWatcher.podspec`)
   - NSDate+TimeAgo
   - PKYStepper
   - SpinKit
@@ -36,18 +38,21 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   MHVideoPhotoGallery:
     :podspec: https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec
+  MHWDirectoryWatcher:
+    :podspec: https://raw.githubusercontent.com/dvkch/MHWDirectoryWatcher/master/MHWDirectoryWatcher.podspec
 
 SPEC CHECKSUMS:
   DLAlertView: 774c1242cc854177fdc07634ed3f8c250a38864d
   INSPullToRefresh: 112ae2c295d2b3a76daa9dff86e7ef40ed002c47
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
   MHVideoPhotoGallery: 23d831f0e198a13f858515a5052aa386ecaae5b7
+  MHWDirectoryWatcher: 61d37ce46c8bd6911e3361562147b9b25598d6c5
   NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
   PKYStepper: 8dacefbddf9fa2b6aaec2ef828b46a78daa2db7d
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
-  SYKit: 5fd26122834283f405632c207208d857bc98493b
+  SYKit: fee5c3ea2100874d4ae7ffdabcec34ff61a6527f
   SYLogRedirect: da3e42582f1621bcb60c33704a3144059b42b87d
   SYOperationQueue: d8287745159c3776294bbb09eefd0c579153c7d7
   SYPair: 53e6b705f98fc3b374df3f21c4a57dcacd2f1747

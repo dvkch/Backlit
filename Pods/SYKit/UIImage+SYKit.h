@@ -28,4 +28,6 @@
 + (UIImage *)sy_imageWithColor:(UIColor *)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius;
 - (UIImage *)sy_imageWithAngle:(CGFloat)angle;
 
++ (CGSize)sy_sizeOfImageAtURL:(NSURL *)url;
+
 @end

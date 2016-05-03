@@ -94,25 +94,27 @@
         [self.thumbsQueue setMaxSurvivingOperations:0];
         [self.thumbsQueue setMode:SYOperationQueueModeLIFO];
 
-        self.directoryWatcher = [MHWDirectoryWatcher directoryWatcherAtPath:[SYTools documentsPath]
-                                                           startImmediately:YES
-                                                             changesStarted:^
-        {
-        } filesAdded:^(NSArray<NSString *> *addedFiles) {
-            if ([addedFiles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]]])
-                self.imageNames = [self listImageNames];
-        } filesRemoved:^(NSArray<NSString *> *filesRemoved) {
-            for (NSString *file in filesRemoved)
-            {
-                [self.thumbnailCache removeObjectForKey:file];
-                [self.imageSizeCache removeObjectForKey:file];
-            }
-            
-            if ([filesRemoved filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]]])
-                self.imageNames = [self listImageNames];
-        } changesEnded:^{
-            self.imageNames = [self listImageNames];
-        }];
+        self.directoryWatcher =
+        [MHWDirectoryWatcher directoryWatcherAtPath:[SYTools documentsPath]
+                                   startImmediately:YES
+                                changesStartedBlock:nil
+                                    filesAddedBlock:^(NSArray<NSString *> *addedFiles) {
+                                        if ([addedFiles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]]])
+                                            self.imageNames = [self listImageNames];
+                                    }
+                                  filesRemovedBlock:^(NSArray<NSString *> *removedFiles) {
+                                      for (NSString *file in removedFiles)
+                                      {
+                                          [self.thumbnailCache removeObjectForKey:file];
+                                          [self.imageSizeCache removeObjectForKey:file];
+                                      }
+                                      
+                                      if ([removedFiles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]]])
+                                          self.imageNames = [self listImageNames];
+                                  }
+                                  changesEndedBlock:^{
+                                      self.imageNames = [self listImageNames];
+                                  }];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }

@@ -7,6 +7,7 @@
 //
 
 #import "UIImage+SYKit.h"
+#import <ImageIO/ImageIO.h>
 
 @implementation UIImage (SYKit)
 
@@ -32,6 +33,7 @@
     return img;
 }
 
+// http://www.lukaszielinski.de/blog/posts/2014/01/21/ios-how-to-resize-and-rotate-uiimages-in-a-thread-safe-fashion/
 - (UIImage *)sy_imageResizedTo:(CGSize)size
 {
     UIImage *newImage = nil;
@@ -191,6 +193,29 @@ CGContextRef NYXImageCreateARGBBitmapContext(const size_t width, const size_t he
     CGContextRelease(bmContext);
     
     return rotated;
+}
+
+// http://oleb.net/blog/2011/09/accessing-image-properties-without-loading-the-image-into-memory/
++ (CGSize)sy_sizeOfImageAtURL:(NSURL *)url
+{
+    CGImageSourceRef imageSource = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
+    
+    if (imageSource == NULL)
+        return CGSizeZero;
+    
+    CGSize imageSize = CGSizeZero;
+    
+    NSDictionary *options = @{(NSString *)kCGImageSourceShouldCache:@(NO)};
+    CFDictionaryRef imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, (CFDictionaryRef)options);
+    if (imageProperties) {
+        NSNumber *width = (NSNumber *)CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth);
+        NSNumber *height = (NSNumber *)CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelHeight);
+        imageSize = CGSizeMake(width.integerValue, height.integerValue);
+        CFRelease(imageProperties);
+    }
+    
+    CFRelease(imageSource);
+    return imageSize;
 }
 
 @end
