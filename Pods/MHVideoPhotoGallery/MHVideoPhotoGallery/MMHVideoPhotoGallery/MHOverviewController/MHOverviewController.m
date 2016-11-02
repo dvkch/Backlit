@@ -48,8 +48,8 @@
     self.collectionView.backgroundColor = [self.galleryViewController.UICustomization MHGalleryBackgroundColorForViewMode:MHGalleryViewModeOverView];
     self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     
-    [self.collectionView registerClass:MHMediaPreviewCollectionViewCell.class
-            forCellWithReuseIdentifier:NSStringFromClass(MHMediaPreviewCollectionViewCell.class)];
+    Class cellClass = (self.UICustomization.overviewCollectionViewCellClass ?: MHMediaPreviewCollectionViewCell.class);
+    [self.collectionView registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
     
     self.collectionView.dataSource = self;
     self.collectionView.alwaysBounceVertical = YES;
@@ -113,8 +113,10 @@
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    UICollectionViewCell *cell = (MHMediaPreviewCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(MHMediaPreviewCollectionViewCell.class) forIndexPath:indexPath];
-    [self makeMHGalleryOverViewCell:(MHMediaPreviewCollectionViewCell*)cell
+    Class cellClass = self.UICustomization.overviewCollectionViewCellClass ?: MHMediaPreviewCollectionViewCell.class;
+    
+    MHMediaPreviewCollectionViewCell *cell = (MHMediaPreviewCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(cellClass) forIndexPath:indexPath];
+    [self makeMHGalleryOverViewCell:cell
                         atIndexPath:indexPath];
     
     return cell;

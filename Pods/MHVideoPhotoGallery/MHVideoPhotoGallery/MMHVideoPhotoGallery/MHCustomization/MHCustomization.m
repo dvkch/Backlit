@@ -72,6 +72,8 @@
         flowLayout.minimumLineSpacing = 10;
         flowLayout.itemSize = CGSizeMake(screenSize.width/3.1, screenSize.width/3.1);
         self.overviewCollectionViewLayout = flowLayout;
+        
+        self.overviewCollectionViewCellClass = MHMediaPreviewCollectionViewCell.class;
     }
     return self;
 }

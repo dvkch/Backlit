@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D5EFD6B3082C499709140AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79433720B786F7579199C998 /* libPods.a */; };
+		62A207563B766B7AE988D97C /* libPods-SaneScanner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC43CF6C6714A1684DAC62FD /* libPods-SaneScanner.a */; };
 		9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */; };
 		9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559D1C972FF600BE9275 /* SYGalleryManager.m */; };
 		970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 970DE9DD1C9B6344001CD025 /* SYGalleryController.m */; };
 		9710B41E1C9B10DC00A55529 /* SYEmptyGalleryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */; };
 		9710B4211C9B257C00A55529 /* SYSplitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9710B4201C9B257C00A55529 /* SYSplitVC.m */; };
+		9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */; };
 		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
 		971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */; };
 		971BE23F1C8E288300B8F29C /* NSMutableData+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */; };
@@ -56,8 +57,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3B707C7C94B3F4CD87DAE05B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		79433720B786F7579199C998 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.release.xcconfig"; sourceTree = "<group>"; };
+		767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.debug.xcconfig"; sourceTree = "<group>"; };
 		970755991C972FE600BE9275 /* SYGalleryThumbsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsView.h; sourceTree = "<group>"; };
 		9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryThumbsView.m; sourceTree = "<group>"; };
 		9707559C1C972FF600BE9275 /* SYGalleryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryManager.h; sourceTree = "<group>"; };
@@ -68,6 +69,8 @@
 		9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYEmptyGalleryVC.m; sourceTree = "<group>"; };
 		9710B41F1C9B257C00A55529 /* SYSplitVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSplitVC.h; sourceTree = "<group>"; };
 		9710B4201C9B257C00A55529 /* SYSplitVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSplitVC.m; sourceTree = "<group>"; };
+		9715FC8B1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYMediaPreviewCollectionViewCell.h; sourceTree = "<group>"; };
+		9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYMediaPreviewCollectionViewCell.m; sourceTree = "<group>"; };
 		971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SYLaunchScreen.storyboard; sourceTree = "<group>"; };
 		971ABFE01CD0E1AF0086F600 /* MHGalleryItem+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHGalleryItem+SY.h"; sourceTree = "<group>"; };
 		971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHGalleryItem+SY.m"; sourceTree = "<group>"; };
@@ -121,7 +124,7 @@
 		97E2EE601CCD451700FA95AF /* SYGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGridLayout.m; sourceTree = "<group>"; };
 		97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SYKit.h"; sourceTree = "<group>"; };
 		97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SYKit.m"; sourceTree = "<group>"; };
-		BD5626431CEA71F0459153C5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		CC43CF6C6714A1684DAC62FD /* libPods-SaneScanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SaneScanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F804E06C1AFA4AF300CBE307 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/libsane-dll.a"; sourceTree = "<group>"; };
 		F804E06D1AFA4AF300CBE307 /* libsane-net.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-net.a"; path = "sane-libs/all/libsane-net.a"; sourceTree = "<group>"; };
 		F804E06E1AFA4AF300CBE307 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
@@ -154,29 +157,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D5EFD6B3082C499709140AF /* libPods.a in Frameworks */,
 				F804E0721AFA4AF300CBE307 /* libsane-net.a in Frameworks */,
 				F804E0731AFA4AF300CBE307 /* libsane.a in Frameworks */,
 				F804E0711AFA4AF300CBE307 /* libsane-dll.a in Frameworks */,
+				62A207563B766B7AE988D97C /* libPods-SaneScanner.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		760AA5EF6A9A1E84ACBCD23B /* Frameworks */ = {
+		06F2387C18FBB76B71AD189B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				79433720B786F7579199C998 /* libPods.a */,
+				CC43CF6C6714A1684DAC62FD /* libPods-SaneScanner.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		76B97EEB1D906F12B358E57B /* Pods */ = {
+		1D470155F708E88FADB3A792 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BD5626431CEA71F0459153C5 /* Pods.debug.xcconfig */,
-				3B707C7C94B3F4CD87DAE05B /* Pods.release.xcconfig */,
+				767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */,
+				685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -186,6 +189,8 @@
 			children = (
 				970DE9DC1C9B6344001CD025 /* SYGalleryController.h */,
 				970DE9DD1C9B6344001CD025 /* SYGalleryController.m */,
+				9715FC8B1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.h */,
+				9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */,
 				9721226A1CCA56C1006610E6 /* MHUICustomization+SY.h */,
 				9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */,
 				97E2EE5F1CCD451700FA95AF /* SYGridLayout.h */,
@@ -323,8 +328,8 @@
 				F86584871AF9A9FB0028E039 /* sane-libs */,
 				F8CBD20F1AF9A58C00B4C221 /* SaneScanner */,
 				F8CBD20E1AF9A58C00B4C221 /* Products */,
-				76B97EEB1D906F12B358E57B /* Pods */,
-				760AA5EF6A9A1E84ACBCD23B /* Frameworks */,
+				1D470155F708E88FADB3A792 /* Pods */,
+				06F2387C18FBB76B71AD189B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -372,12 +377,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8CBD2301AF9A58C00B4C221 /* Build configuration list for PBXNativeTarget "SaneScanner" */;
 			buildPhases = (
-				1E52D76D87236D5463EB4F29 /* Check Pods Manifest.lock */,
+				DCF69B669EC8701B2D500461 /* [CP] Check Pods Manifest.lock */,
 				F8CBD2091AF9A58C00B4C221 /* Sources */,
 				F8CBD20A1AF9A58C00B4C221 /* Frameworks */,
 				F8CBD20B1AF9A58C00B4C221 /* Resources */,
-				35119201CF2F9D572299E80F /* Copy Pods Resources */,
-				AE133C1AD8192617C1FF9ACD /* Embed Pods Frameworks */,
+				171667939EAA94657D430E6C /* [CP] Embed Pods Frameworks */,
+				CC2E4FFA415BA8B449AA451B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -395,7 +400,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8CBD20C1AF9A58C00B4C221 = {
@@ -435,49 +440,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1E52D76D87236D5463EB4F29 /* Check Pods Manifest.lock */ = {
+		171667939EAA94657D430E6C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		35119201CF2F9D572299E80F /* Copy Pods Resources */ = {
+		CC2E4FFA415BA8B449AA451B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AE133C1AD8192617C1FF9ACD /* Embed Pods Frameworks */ = {
+		DCF69B669EC8701B2D500461 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -511,6 +516,7 @@
 				F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
 				9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */,
+				9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */,
 				9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */,
 				F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */,
 				97586E941C89272300C37931 /* UIImage+SY.m in Sources */,
@@ -546,8 +552,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -592,8 +600,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -620,7 +630,7 @@
 		};
 		F8CBD2311AF9A58C00B4C221 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD5626431CEA71F0459153C5 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -644,7 +654,7 @@
 		};
 		F8CBD2321AF9A58C00B4C221 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B707C7C94B3F4CD87DAE05B /* Pods.release.xcconfig */;
+			baseConfigurationReference = 685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

@@ -1,1 +1,1 @@
-../../../SYKit/SYGradientView.h
+../../../SYKit/Common/SYGradientView.h

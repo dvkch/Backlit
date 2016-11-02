@@ -1,20 +1,22 @@
 PODS:
   - DLAlertView (1.2.5)
   - INSPullToRefresh (1.1.5)
-  - Masonry (1.0.0)
-  - MHVideoPhotoGallery (2.1.11):
+  - JGMethodSwizzler (2.0.1)
+  - Masonry (1.0.2)
+  - MHVideoPhotoGallery (2.1.12):
     - Masonry
     - SDWebImage
     - TTTAttributedLabel (= 1.13.3)
-  - MHWDirectoryWatcher (0.0.8)
+  - MHWDirectoryWatcher (0.0.9)
   - NSDate+TimeAgo (1.0.6)
   - PKYStepper (0.0.1)
-  - SDWebImage (3.7.5):
-    - SDWebImage/Core (= 3.7.5)
-  - SDWebImage/Core (3.7.5)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - SpinKit (1.2.0)
   - SVProgressHUD (2.0.3)
-  - SYKit (0.0.23)
+  - SYKit (0.0.32):
+    - JGMethodSwizzler
   - SYLogRedirect (1.2.5)
   - SYOperationQueue (1.0.1)
   - SYPair (1.0)
@@ -44,18 +46,21 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   DLAlertView: 774c1242cc854177fdc07634ed3f8c250a38864d
   INSPullToRefresh: 112ae2c295d2b3a76daa9dff86e7ef40ed002c47
-  Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
-  MHVideoPhotoGallery: 23d831f0e198a13f858515a5052aa386ecaae5b7
-  MHWDirectoryWatcher: 61d37ce46c8bd6911e3361562147b9b25598d6c5
+  JGMethodSwizzler: e0ea5c1c6c55304ec4ef3f54e441400c6735c899
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MHVideoPhotoGallery: 937079956f5403485c136db04c662b9fb1f08df7
+  MHWDirectoryWatcher: ab18b84bbc0d6967822e05f456d1ba8bc755b218
   NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
   PKYStepper: 8dacefbddf9fa2b6aaec2ef828b46a78daa2db7d
-  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
-  SYKit: fee5c3ea2100874d4ae7ffdabcec34ff61a6527f
+  SYKit: b7abd43c189ad8334d19819814e9975a51afdcbc
   SYLogRedirect: da3e42582f1621bcb60c33704a3144059b42b87d
   SYOperationQueue: d8287745159c3776294bbb09eefd0c579153c7d7
   SYPair: 53e6b705f98fc3b374df3f21c4a57dcacd2f1747
   TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 3d685e5e5f1eaa92347d1d31cdaa7b96bfc166fc
+
+COCOAPODS: 1.1.1

@@ -1,1 +1,1 @@
-../../../SYKit/UITableViewCell+SYKit.h
+../../../SYKit/Common/UITableViewCell+SYKit.h

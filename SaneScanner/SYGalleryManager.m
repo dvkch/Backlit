@@ -94,12 +94,14 @@
         [self.thumbsQueue setMaxSurvivingOperations:0];
         [self.thumbsQueue setMode:SYOperationQueueModeLIFO];
 
+        NSPredicate *pngPredicate = [NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]];
+        
         self.directoryWatcher =
         [MHWDirectoryWatcher directoryWatcherAtPath:[SYTools documentsPath]
                                    startImmediately:YES
                                 changesStartedBlock:nil
                                     filesAddedBlock:^(NSArray<NSString *> *addedFiles) {
-                                        if ([addedFiles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]]])
+                                        if ([addedFiles filteredArrayUsingPredicate:pngPredicate])
                                             self.imageNames = [self listImageNames];
                                     }
                                   filesRemovedBlock:^(NSArray<NSString *> *removedFiles) {
@@ -109,11 +111,13 @@
                                           [self.imageSizeCache removeObjectForKey:file];
                                       }
                                       
-                                      if ([removedFiles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]]])
+                                      if ([removedFiles filteredArrayUsingPredicate:pngPredicate])
                                           self.imageNames = [self listImageNames];
                                   }
-                                  changesEndedBlock:^{
-                                      self.imageNames = [self listImageNames];
+                                  changesEndedBlock:^(MHWDirectoryChanges *changes){
+                                      if ([changes.addedFiles   filteredArrayUsingPredicate:pngPredicate] ||
+                                          [changes.removedFiles filteredArrayUsingPredicate:pngPredicate])
+                                          self.imageNames = [self listImageNames];
                                   }];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
@@ -160,30 +164,35 @@
 
 - (NSArray <NSString *> *)listImageNames
 {
-    NSString *path = [SYTools documentsPath];
-    NSMutableDictionary <NSString *, NSDate *> *imageDates = [NSMutableDictionary dictionary];
+    NSMutableDictionary <NSString *, NSDate *> *imageNames = [NSMutableDictionary dictionary];
     
-    NSMutableArray <NSString *> *allItems = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL] mutableCopy];
-    [allItems removeObjectsInArray:self.directoryWatcher.filesBeingWrittenTo];
+    NSArray<NSURL *> *items =
+    [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL fileURLWithPath:[SYTools documentsPath]]
+                                  includingPropertiesForKeys:@[NSURLIsDirectoryKey, NSURLCreationDateKey]
+                                                     options:NSDirectoryEnumerationSkipsSubdirectoryDescendants
+                                                       error:NULL];
     
-    for (NSString *itemName in allItems)
+    NSNumber *isDir = nil;
+    NSDate *dateCreated = nil;
+    
+    for (NSURL *item in items)
     {
-        if (![itemName.pathExtension isEqualToString:@"png"])
+        if (![item.pathExtension isEqualToString:@"png"])
             continue;
         
-        NSString *itemPath = [path stringByAppendingPathComponent:itemName];
-        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:itemPath error:NULL];
-        NSDate *date = attributes[NSFileCreationDate];
-        
-        // in case we are deleting multipe files the file will become inexistant while looping, we need to
-        // ignore missing dates
-        if (!date)
+        if (![item getResourceValue:&isDir forKey:NSURLIsDirectoryKey error:NULL])
             continue;
         
-        [imageDates setObject:date forKey:itemName];
+        if (![item getResourceValue:&dateCreated forKey:NSURLCreationDateKey error:NULL])
+            continue;
+        
+        if (isDir.boolValue || !dateCreated)
+            continue;
+        
+        [imageNames setObject:dateCreated forKey:item.path.lastPathComponent];
     }
     
-    NSArray <NSString *> *sortedImageNames = [imageDates keysSortedByValueUsingComparator:^NSComparisonResult(NSDate *obj1, NSDate *obj2) {
+    NSArray <NSString *> *sortedImageNames = [imageNames keysSortedByValueUsingComparator:^NSComparisonResult(NSDate *obj1, NSDate *obj2) {
         return [obj2 compare:obj1];
     }];
     
@@ -226,42 +235,82 @@
                              newItem:[self galleryItemForImageWithName:addedImage]
                          removedItem:[self galleryItemForImageWithName:removedImage]];
     }
+    
+    //[self checkThumbs];
 }
 
 #pragma mark Thumbs
 
-- (UIImage *)generateThumbnailFileForImageWithName:(NSString *)imageName withImage:(UIImage *)image
+- (void)checkThumbs
 {
-    NSString *thumbPath = [self pathForImageWithName:imageName thumbnail:YES];
-    NSString *fullPath  = [self pathForImageWithName:imageName thumbnail:NO];
+    NSArray <NSString *> *imageNames = [self listImageNames];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        for (NSString *imageName in imageNames)
+            [self generateThumbAsyncForItem:[self galleryItemForImageWithName:imageName] fullImage:nil tellDelegates:YES];
+    });
+}
+
+- (void)generateThumbAsyncForItem:(MHGalleryItem *)item fullImage:(UIImage *)fullImage tellDelegates:(BOOL)tellDelegates
+{
+    if ([self.thumbsBeingCreated containsObject:item.imageName])
+        return;
     
-    if ([self.directoryWatcher.filesBeingWrittenTo containsObject:imageName])
-        return nil;
+    [self.thumbsBeingCreated addObject:item.imageName];
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbPath])
-        return nil;
-    
-    UIImage *thumb;
-    
-    UIImage *fullImage = image;
-    if (!fullImage)
+    if ([self.directoryWatcher.filesBeingWrittenTo containsObject:item.imageName] ||
+        [[NSFileManager defaultManager] fileExistsAtPath:item.thumbnailPath] ||
+        ![[NSFileManager defaultManager] fileExistsAtPath:item.path])
     {
-        NSData *data = [NSData dataWithContentsOfFile:fullPath options:(NSDataReadingMappedIfSafe) error:NULL];
-        
-        if (![data sy_imageDataIsValidPNG])
-            return nil;
-        
-        fullImage = [UIImage imageWithData:data];
+        [self.thumbsBeingCreated removeObject:item.imageName];
+        return;
     }
     
-    if (image.size.width > image.size.height)
-        thumb = [fullImage sy_imageResizedHeightTo:200];
-    else
-        thumb = [fullImage sy_imageResizedWidthTo:200];
-    
-    [UIImageJPEGRepresentation(thumb, 0.6) writeToFile:thumbPath atomically:YES];
-    
-    return thumb;
+    [self.thumbsQueue addOperationWithBlock:^{
+        UIImage *thumb;
+        
+        @autoreleasepool {
+            UIImage *image = fullImage;
+            if (!image)
+            {
+                NSData *data = [NSData dataWithContentsOfFile:item.path options:(NSDataReadingMappedIfSafe) error:NULL];
+                
+                if (![data sy_imageDataIsValidPNG]) {
+                    [self.thumbsBeingCreated removeObject:item.imageName];
+                    return;
+                }
+                
+                image = [UIImage imageWithData:data];
+            }
+            
+            if (image.size.width > image.size.height)
+                thumb = [image sy_imageResizedHeightTo:200];
+            else
+                thumb = [image sy_imageResizedWidthTo:200];
+            
+            [UIImageJPEGRepresentation(thumb, 0.6) writeToURL:item.thumbnailURL atomically:YES];
+        }
+        
+        if (!thumb) {
+            [self.thumbsBeingCreated removeObject:item.imageName];
+            return;
+        }
+        
+        [self.thumbnailCache setObject:thumb forKey:item.imageName];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.thumbsBeingCreated removeObject:item.imageName];
+            
+            if (!tellDelegates)
+                return;
+            
+            for (SYGalleryManagerWeakDelegate *weakDelegate in self.delegates)
+            {
+                id <SYGalleryManagerDelegate> delegate = weakDelegate.delegate;
+                if ([delegate respondsToSelector:@selector(gallerymanager:didCreatedThumb:forItem:)])
+                    [delegate gallerymanager:self didCreatedThumb:thumb forItem:item];
+            }
+        });
+    }];
 }
 
 #pragma mark - Public
@@ -306,36 +355,7 @@
         return thumb;
     }
     
-    if ([self.thumbsBeingCreated containsObject:item.imageName])
-        return nil;
-    
-    [self.thumbsBeingCreated addObject:item.imageName];
-    
-    [self.thumbsQueue addOperationWithBlock:^{
-        UIImage *thumb;
-        
-        @autoreleasepool {
-            thumb = [self generateThumbnailFileForImageWithName:item.imageName withImage:nil];
-        }
-        
-        if (!thumb) {
-            [self.thumbsBeingCreated removeObject:item.imageName];
-            return;
-        }
-        
-        [self.thumbnailCache setObject:thumb forKey:item.imageName];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.thumbsBeingCreated removeObject:item.imageName];
-            for (SYGalleryManagerWeakDelegate *weakDelegate in self.delegates)
-            {
-                id <SYGalleryManagerDelegate> delegate = weakDelegate.delegate;
-                if ([delegate respondsToSelector:@selector(gallerymanager:didCreatedThumb:forItem:)])
-                    [delegate gallerymanager:self didCreatedThumb:thumb forItem:item];
-            }
-        });
-    }];
-    
+    [self generateThumbAsyncForItem:item fullImage:nil tellDelegates:YES];
     return nil;
 }
 
@@ -361,8 +381,10 @@
     
     NSString *imageName = [[formatter stringFromDate:[NSDate date]] stringByAppendingPathExtension:@"png"];
     
-    [UIImagePNGRepresentation(image) writeToFile:[self pathForImageWithName:imageName thumbnail:NO] atomically:YES];
-    [self generateThumbnailFileForImageWithName:imageName withImage:image];
+    MHGalleryItem *item = [self galleryItemForImageWithName:imageName];
+    
+    [UIImagePNGRepresentation(image) writeToFile:item.path atomically:YES];
+    [self generateThumbAsyncForItem:item fullImage:image tellDelegates:YES];
 }
 
 - (void)deleteItem:(MHGalleryItem *)item

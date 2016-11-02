@@ -53,4 +53,18 @@
     return [self sy_pointInside:point withEvent:event];
 }
 
+- (NSArray<UIView *> *)sy_findSubviewsOfClass:(Class)class recursive:(BOOL)recursive
+{
+    NSMutableArray <UIView *> *views = [NSMutableArray array];
+    for (UIView *subview in self.subviews)
+    {
+        if (recursive)
+            [views addObjectsFromArray:[subview sy_findSubviewsOfClass:class recursive:recursive]];
+        
+        if ([subview isKindOfClass:class])
+            [views addObject:subview];
+    }
+    return [views copy];
+}
+
 @end

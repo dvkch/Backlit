@@ -1,1 +1,1 @@
-../../../SYKit/SYScreenHelper.h
+../../../SYKit/Common/SYScreenHelper.h

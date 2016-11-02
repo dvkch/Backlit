@@ -1,1 +1,1 @@
-../../../SYKit/SYWindow.h
+../../../SYKit/Common/SYWindow.h

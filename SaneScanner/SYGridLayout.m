@@ -56,7 +56,9 @@
     // using floor would mean preferring using a bigger size but bigger margins, using floor we know the best size to keep fixed margins
     NSUInteger numberOfItemsPerRow = ceil(collectionSpace / self.maxSize);
     CGFloat availableSpace = collectionSpace - (numberOfItemsPerRow - 1) * self.margin;
-    CGFloat cellSize = floor(availableSpace / numberOfItemsPerRow);
+    
+    // donnot use floor, it would mess up margins, returning float works just fine
+    CGFloat cellSize = availableSpace / numberOfItemsPerRow;
     
     return CGSizeMake(cellSize, cellSize);
 }

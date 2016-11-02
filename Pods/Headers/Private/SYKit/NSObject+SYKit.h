@@ -1,1 +1,1 @@
-../../../SYKit/NSObject+SYKit.h
+../../../SYKit/Common/NSObject+SYKit.h

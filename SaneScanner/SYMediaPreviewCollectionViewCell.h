@@ -6,7 +6,7 @@
 //  Copyright © 2016 Syan. All rights reserved.
 //
 
-#import <MHVideoPhotoGallery/MHVideoPhotoGallery.h>
+#import <MHMediaPreviewCollectionViewCell.h>
 
 @interface SYMediaPreviewCollectionViewCell : MHMediaPreviewCollectionViewCell
 

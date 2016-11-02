@@ -5,6 +5,13 @@
 
 #import <Foundation/Foundation.h>
 
+@interface MHWDirectoryChanges : NSObject
+
+@property (nonatomic, strong, readonly) NSArray <NSString *> *addedFiles;
+@property (nonatomic, strong, readonly) NSArray <NSString *> *removedFiles;
+
+@end
+
 @interface MHWDirectoryWatcher : NSObject
 
 /**
@@ -41,7 +48,7 @@
                             changesStartedBlock:(void(^)(void))changesStartedBlock
                                 filesAddedBlock:(void(^)(NSArray <NSString *> *addedFiles))filesAddedBlock
                               filesRemovedBlock:(void(^)(NSArray <NSString *> *removedFiles))filesRemovedBlock
-                              changesEndedBlock:(void(^)(void))changesEndedBlock;
+                              changesEndedBlock:(void(^)(MHWDirectoryChanges *changes))changesEndedBlock;
 
 
 /**
@@ -63,7 +70,7 @@
 /**
  *  Called when all changes in the folder are finished
  */
-@property (atomic, copy) void(^changesEndedBlock)(void);
+@property (atomic, copy) void(^changesEndedBlock)(MHWDirectoryChanges *changes);
 
 /**
  *  The path being watched

@@ -42,6 +42,7 @@ typedef NS_ENUM(NSUInteger, MHBackButtonState) {
 @property (nonatomic,assign) BOOL hideDoneButton;
 @property (nonatomic,strong) NSString *overviewTitle;
 @property (nonatomic,strong) UICollectionViewLayout *overviewCollectionViewLayout;
+@property (nonatomic,strong) Class overviewCollectionViewCellClass;
 
 -(void)setMHGradients:(NSArray<UIColor*>*)colors forDirection:(MHGradientDirection)direction;
 -(NSArray<UIColor*>*)MHGradientColorsForDirection:(MHGradientDirection)direction;

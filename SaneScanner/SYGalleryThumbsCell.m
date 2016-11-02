@@ -74,12 +74,14 @@ static CGFloat const kShadowRadius = 2;
         [self.spinner stopAnimating];
         [self.contentView.layer setShadowOpacity:.6];
         [self.contentView.layer setShouldRasterize:YES];
+        //[self setBackgroundColor:[UIColor redColor]];
     }
     else
     {
         [self.spinner startAnimating];
         [self.contentView.layer setShadowOpacity:0];
         [self.contentView.layer setShouldRasterize:NO];
+        //[self setBackgroundColor:[UIColor greenColor]];
     }
 }
 

@@ -46,7 +46,7 @@
     NSLog(@"%@", [SYTools documentsPath]);
     
     // create test images if needed
-    //[SYTools createTestImages:3];
+    //[SYTools createTestImages:400];
     
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];
@@ -59,7 +59,7 @@
     
     // gallery view controller
     self.galleryViewController =
-    [SYGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown
+    [SYGalleryController galleryWithPresentationStyle:MHGalleryViewModeOverView
                                       UICustomization:[MHUICustomization sy_defaultTheme]];
     [self.galleryViewController.UICustomization setHideDoneButton:YES];
     [self.galleryViewController.UICustomization

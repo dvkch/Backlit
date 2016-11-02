@@ -1,1 +1,1 @@
-../../../SYKit/UIScreen+SYKit.h
+../../../SYKit/Common/UIScreen+SYKit.h

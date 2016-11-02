@@ -1,1 +1,1 @@
-../../../SYKit/UIImage+SYKit.h
+../../../SYKit/Common/UIImage+SYKit.h

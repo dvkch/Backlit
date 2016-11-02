@@ -9,8 +9,42 @@
 typedef NSDictionary        <NSString *, id> MHWMetadata;
 typedef NSMutableDictionary <NSString *, id> MHWMutableMetadata;
 
-static double const kMHWDirectoryWatcherDefaultFileChangesTimeout = 0.5;
+static double const kMHWDirectoryWatcherDefaultFileChangesTimeout      = 0.5;
 static double const kMHWDirectoryWatcherDefaultDirectoryChangesTimeout = 0.1;
+
+@interface MHWDirectoryChanges ()
+@property (nonatomic, strong, readwrite) NSArray <NSString *> *addedFiles;
+@property (nonatomic, strong, readwrite) NSArray <NSString *> *removedFiles;
+@end
+
+@implementation MHWDirectoryChanges
+
+- (instancetype)initWithPreviousMetadata:(MHWMetadata *)oldMetadata newMetadata:(MHWMetadata *)newMetadata
+{
+    self = [super init];
+    if (self)
+    {
+        NSArray <NSString *> *oldFileList = oldMetadata.allKeys;
+        NSArray <NSString *> *newFileList = newMetadata.allKeys;
+        
+        // Deal with removed files
+        {
+            NSMutableArray <NSString *> *removedItems = [oldFileList mutableCopy];
+            [removedItems removeObjectsInArray:newFileList];
+            self.removedFiles = removedItems;
+        }
+        
+        // Deal with new files
+        {
+            NSMutableArray <NSString *> *addedItems = [newFileList mutableCopy];
+            [addedItems removeObjectsInArray:oldFileList];
+            self.addedFiles = addedItems;
+        }
+    }
+    return self;
+}
+
+@end
 
 @interface MHWDirectoryWatcher ()
 
@@ -18,6 +52,7 @@ static double const kMHWDirectoryWatcherDefaultDirectoryChangesTimeout = 0.1;
 @property (atomic) dispatch_source_t timerSource;
 @property (atomic, copy, readwrite) NSString *watchedPath;
 @property (atomic, strong) MHWMetadata *previousMetadata;
+@property (atomic, strong) MHWMetadata *changesStartedMetadata;
 @property (atomic, strong) NSMutableArray <MHWFileWatcher *> *fileWatchers;
 @property (atomic, strong) NSMutableArray <MHWDirectoryWatcher *> *subdirWatchers;
 @property (atomic, strong) NSLock *lockFiles;
@@ -57,7 +92,7 @@ static double const kMHWDirectoryWatcherDefaultDirectoryChangesTimeout = 0.1;
                             changesStartedBlock:(void(^)(void))changesStartedBlock
                                 filesAddedBlock:(void(^)(NSArray <NSString *> *addedFiles))filesAddedBlock
                               filesRemovedBlock:(void(^)(NSArray <NSString *> *removedFiles))filesRemovedBlock
-                              changesEndedBlock:(void(^)(void))changesEndedBlock
+                              changesEndedBlock:(void(^)(MHWDirectoryChanges *))changesEndedBlock
 {
     NSAssert(watchedPath != nil, @"The directory to watch must not be nil");
     MHWDirectoryWatcher *directoryWatcher = [[MHWDirectoryWatcher alloc] initWithPath:watchedPath];
@@ -89,23 +124,23 @@ static double const kMHWDirectoryWatcherDefaultDirectoryChangesTimeout = 0.1;
         _timerSource = NULL;
     }
     
-    [self.lockFiles lock];
+    [self.lockSubdirs lock];
     {
         for (MHWDirectoryWatcher *subdirWatcher in self.subdirWatchers) {
             [subdirWatcher stopWatching];
         }
         [self.subdirWatchers removeAllObjects];
     }
-    [self.lockFiles unlock];
+    [self.lockSubdirs unlock];
     
-    [self.lockSubdirs lock];
+    [self.lockFiles lock];
     {
         for (MHWFileWatcher *fileWatcher in self.fileWatchers) {
             [fileWatcher stopWatcher];
         }
         [self.fileWatchers removeAllObjects];
     }
-    [self.lockSubdirs unlock];
+    [self.lockFiles unlock];
 }
 
 - (BOOL)startWatching
@@ -199,7 +234,7 @@ static double const kMHWDirectoryWatcherDefaultDirectoryChangesTimeout = 0.1;
     NSMutableArray <NSString *> *items = [NSMutableArray array];
     [self.lockSubdirs lock];
     {
-        for (MHWFileWatcher *watcher in self.fileWatchers)
+        for (MHWDirectoryWatcher *watcher in self.subdirWatchers)
             [items addObject:watcher.watchedPath];
     }
     [self.lockSubdirs unlock];
@@ -226,10 +261,13 @@ static double const kMHWDirectoryWatcherDefaultDirectoryChangesTimeout = 0.1;
     if (!filesEnded || !subdirEnded)
         return;
     
+    MHWMetadata *newMetadata = [self directoryMetadata];
+    MHWDirectoryChanges *changes = [[MHWDirectoryChanges alloc] initWithPreviousMetadata:self.changesStartedMetadata newMetadata:newMetadata];
+    
     self.directoryIsChanging = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.changesEndedBlock)
-            self.changesEndedBlock();
+            self.changesEndedBlock(changes);
     });
 }
 
@@ -289,7 +327,7 @@ static double const kMHWDirectoryWatcherDefaultDirectoryChangesTimeout = 0.1;
                                                                 changesEndedBlock:nil];
         
         __weak typeof(subdirWatcher) wWatcher = subdirWatcher;
-        [subdirWatcher setChangesEndedBlock:^{
+        [subdirWatcher setChangesEndedBlock:^(MHWDirectoryChanges *changes){
             [wSelf watchedSubdirCompleted:wWatcher];
         }];
         [subdirWatcher setFileChangesTimeout:self.fileChangesTimeout];
@@ -368,6 +406,7 @@ static double const kMHWDirectoryWatcherDefaultDirectoryChangesTimeout = 0.1;
     if (!self.directoryIsChanging)
     {
         self.directoryIsChanging = YES;
+        self.changesStartedMetadata = newMetadata;
         
         // Tell the delegate changes have started
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -1,1 +1,1 @@
-../../../SYKit/UIDevice+SYKit.h
+../../../SYKit/Common/UIDevice+SYKit.h

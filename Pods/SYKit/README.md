@@ -191,11 +191,13 @@ Category on `UIButton` to add some new features.
 
 ####UIView+SYKit
 
-Adds a way to override `pointInside:withEvent:` to "grow" your view touch areas outside of their natural bounds.
-
 	@interface UIView (SYKit)
 	
+	// override `pointInside:withEvent:` to "grow" your view touch areas outside of their natural bounds.
 	@property (nonatomic, assign) UIEdgeInsets sy_tapInsets;
+	
+	// find all subviews of a given class
+	- (NSArray <UIView *> *)sy_findSubviewsOfClass:(Class)class recursive:(BOOL)recursive;
 	
 	@end
 
@@ -237,6 +239,92 @@ Could be helpful to determine if a `NSData` is complete or not. For instance whe
 
 	@end
 
+
+####NSString+SYKit
+
+	@interface NSString (SYKit)
+	
+	/**
+	 *  Returns a string without the white and new line characters at beginning and ending
+	 *
+	 *  @return Trimmed string
+	 */
+	- (instancetype)sy_stringByTrimmingWhiteCharacters;
+	
+	@end
+
+
+####NSAttributedString+SYKit
+
+Various methods to created new attributed strings, concatenate them, and estimate their size when displayed.
+
+	@interface NSAttributedString (SYKit)
+	
+	+ (NSAttributedString *)sy_stringWithText:(NSString *)text font:(UIFont *)font color:(UIColor *)color;
+	+ (NSAttributedString *)sy_stringWithStrings:(NSArray <NSAttributedString *> *)strings;
+	+ (NSAttributedString *)sy_stringWithStrings:(NSArray <NSAttributedString *> *)strings addLineBreak:(BOOL)addLineBreak;
+	
+	- (CGSize)sy_sizeInBoundingSize:(CGSize)size;
+	- (CGSize)sy_sizeInBoundingWidth:(CGFloat)width;
+	
+	@end
+
+####NSLayoutConstraint+SYKit
+
+Create autolayout constraints quickly. Definitely not the best option out here, but it prevents the need to have `Masonry` or similar as a dependency of this library.
+
+	@interface NSLayoutConstraint (SYKit)
+	
+	+ (instancetype)sy_equalConstraintWithItems:(NSArray *)items
+	                                  attribute:(NSLayoutAttribute)attribute;
+	
+	+ (instancetype)sy_equalConstraintWithItems:(NSArray *)items
+	                                  attribute:(NSLayoutAttribute)attribute
+	                                     offset:(CGFloat)offset;
+	
+	+ (instancetype)sy_equalConstraintWithItems:(NSArray *)items
+	                                 attribute1:(NSLayoutAttribute)attribute1
+	                                 attribute2:(NSLayoutAttribute)attribute2
+	                                     offset:(CGFloat)offset;
+	
+	+ (instancetype)sy_constraintWithItems:(NSArray *)items
+	                             attribute:(NSLayoutAttribute)attribute
+	                             relatedBy:(NSLayoutRelation)relation
+	                                offset:(CGFloat)offset;
+	
+	+ (instancetype)sy_constraintWithItems:(NSArray *)items
+	                            attribute1:(NSLayoutAttribute)attribute1
+	                            attribute2:(NSLayoutAttribute)attribute2
+	                             relatedBy:(NSLayoutRelation)relation
+	                                offset:(CGFloat)offset;
+
+	@end
+
+
+####UIScrollView+SYKit
+
+Gives the ability to know when the `contentSize` has changed. Tested on `UICollectionView` and `UITextView`.
+
+	@interface UIScrollView (SYKit)
+
+	- (void)sy_setContentSizeChangedBlock:(void(^)(CGSize newSize))block;
+
+	@end
+
+Common use case: keep the size of a `UITextView` or `UICollectionView` equal to its content height.
+
+    [self.collectionView sy_setContentSizeChangedBlock:^(CGSize newSize) {
+        [self.collectionViewHeightConstraint setConstant:newSize.height];
+    }];
+
+
+	// Because the reported contentSize's height is wrong we compute it
+	// ourself using NSAtttributedString+SYKit methods
+	
+    [self.labelDetails sy_setContentSizeChangedBlock:^(CGSize newSize) {
+        [self.labelDetailsHeightConstraint setConstant:
+         [self.labelDetails.attributedText sy_sizeInBoundingWidth:newSize.width].height];
+    }];
 
 License
 ===
