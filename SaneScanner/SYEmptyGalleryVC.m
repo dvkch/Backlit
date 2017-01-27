@@ -25,8 +25,14 @@
      [[NSAttributedString alloc] initWithString:@"No images yet"
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                   NSForegroundColorAttributeName:[UIColor darkGrayColor]}]];
+    
     [text appendAttributedString:
-     [[NSAttributedString alloc] initWithString:@"\n\nScan a document with one of the devices on the left and it will appear here"
+     [[NSAttributedString alloc] initWithString:$$("\n\n")
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                                                  NSForegroundColorAttributeName:[UIColor grayColor]}]];
+    
+    [text appendAttributedString:
+     [[NSAttributedString alloc] initWithString:@"Scan a document with one of the devices on the left and it will appear here"
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
                                                   NSForegroundColorAttributeName:[UIColor grayColor]}]];
     

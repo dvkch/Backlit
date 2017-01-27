@@ -110,20 +110,20 @@
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit
 {
-    NSString *unitString = @"";
+    NSString *unitString = $$("");
     if (self.unit != SANE_UNIT_NONE)
-        unitString = [NSString stringWithFormat:@" %@", NSStringFromSANE_Unit(self.unit)];
+        unitString = [NSString stringWithFormat:$$(" %@"), NSStringFromSANE_Unit(self.unit)];
     
     if (self.type == SANE_TYPE_INT)
-        return [NSString stringWithFormat:@"%d%@",        [value intValue], unitString];
+        return [NSString stringWithFormat:$$("%d%@"),        [value intValue], unitString];
     else
-        return [NSString stringWithFormat:@"%.02lf%@", [value doubleValue], unitString];
+        return [NSString stringWithFormat:$$("%.02lf%@"), [value doubleValue], unitString];
 }
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
     if (self.capInactive)
-        return @"";
+        return $$("");
     
     return [self stringForValue:self.value withUnit:withUnit];
 }

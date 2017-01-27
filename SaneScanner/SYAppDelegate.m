@@ -43,7 +43,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // log
-    NSLog(@"%@", [SYTools documentsPath]);
+    NSLog($$("Document path: %@"), [SYTools documentsPath]);
     
     // create test images if needed
     //[SYTools createTestImages:400];

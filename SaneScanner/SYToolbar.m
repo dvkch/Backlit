@@ -21,8 +21,8 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString *sText  = [@[@"_te",  @"xtB", @"utt", @"onMa", @"rgin"] componentsJoinedByString:@""];
-        NSString *sImage = [@[@"_im", @"ageB", @"utt", @"onMa", @"rgin"] componentsJoinedByString:@""];
+        NSString *sText  = [@[$$("_te"),  $$("xtB"), $$("utt"), $$("onMa"), $$("rgin")] componentsJoinedByString:$$("")];
+        NSString *sImage = [@[$$("_im"), $$("ageB"), $$("utt"), $$("onMa"), $$("rgin")] componentsJoinedByString:$$("")];
         
         IMP impNew = class_getMethodImplementation([self class], @selector(padding));
         class_addMethod([self class], NSSelectorFromString(sText),  impNew, "f@:");

@@ -1,0 +1,17 @@
+//
+//  PrecompiledHeader.pch
+//  Clarify
+//
+//  Created by Stan Chevallier on 16/09/2016.
+//  Copyright © 2016 Playbac. All rights reserved.
+//
+
+#ifndef PrecompiledHeader_h
+#define PrecompiledHeader_h
+
+#define $(text)  NSLocalizedString(@text, @text)
+#define $$(text) @text
+
+#import <NSObject+SYKit.h>
+
+#endif /* PrecompiledHeader_h */

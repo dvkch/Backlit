@@ -72,7 +72,7 @@ static CGFloat const kGradientWidth = 30;
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
-    [self.collectionView registerClass:[SYGalleryThumbsCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.collectionView registerClass:[SYGalleryThumbsCell class] forCellWithReuseIdentifier:[SYGalleryThumbsCell sy_className]];
     [self.collectionView setContentInset:UIEdgeInsetsMake(0, kGradientWidth, 0, kGradientWidth)];
     [self.collectionView setScrollIndicatorInsets:UIEdgeInsetsMake(0, kGradientWidth, 0, kGradientWidth)];
     [self.collectionView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh
@@ -195,7 +195,7 @@ static CGFloat const kGradientWidth = 30;
     if ([self.tintColor isEqual:[UIColor whiteColor]])
         spinnerColor = [UIColor grayColor];
     
-    SYGalleryThumbsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    SYGalleryThumbsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[SYGalleryThumbsCell sy_className] forIndexPath:indexPath];
     [cell updateWithItems:self.galleryItems
                     index:indexPath.item
          parentController:self.parentViewController
@@ -240,8 +240,5 @@ static CGFloat const kGradientWidth = 30;
     
     return size;
 }
-#warning use hopper with :
-#warning the behavior of the UICollectionViewFlowLayout is not defined because:
-#warning the item height must be less than the height of the UICollectionView minus the section insets top and bottom values
-#warning Please check the values return by the delegate.
+
 @end

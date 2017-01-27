@@ -37,8 +37,8 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
-    [self.tableView registerClass:[SYAddCell class]       forCellReuseIdentifier:@"SYAddCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[UITableViewCell sy_className]];
+    [self.tableView registerClass:[SYAddCell class]       forCellReuseIdentifier:[SYAddCell sy_className]];
     [self.view addSubview:self.tableView];
     
     self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self tintColor:nil];
@@ -150,21 +150,21 @@ needsAuthForDevice:(NSString *)device
     {
         if (indexPath.row < [[SYSaneHelper shared] allHosts].count)
         {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[UITableViewCell sy_className]];
             [cell.textLabel setText:[[SYSaneHelper shared] allHosts][indexPath.row]];
             [cell setAccessoryType:UITableViewCellAccessoryNone];
             return cell;
         }
         else
         {
-            SYAddCell *cell = (SYAddCell *)[tableView dequeueReusableCellWithIdentifier:@"SYAddCell"];
+            SYAddCell *cell = (SYAddCell *)[tableView dequeueReusableCellWithIdentifier:[SYAddCell sy_className]];
             [cell setText:@"Add new host"];
             return cell;
         }
     }
     else
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[UITableViewCell sy_className]];
         [cell.textLabel setText:[[SYSaneHelper shared] allDevices][indexPath.row].model];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         return cell;

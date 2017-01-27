@@ -151,7 +151,7 @@ void logMemUsage(void) {
     
     if (memUsageDiff > 100000 || memUsageDiff < -100000) {
         prevMemUsage = curMemUsage;
-        NSLog(@"Memory used %7.1f (%+5.0f), free %7.1f kb", curMemUsage/1000.0f, memUsageDiff/1000.0f, freeMemory()/1000.0f);
+        NSLog($$("Memory used %7.1f (%+5.0f), free %7.1f kb"), curMemUsage/1000.0f, memUsageDiff/1000.0f, freeMemory()/1000.0f);
     }
 }
 
@@ -171,7 +171,7 @@ void logMemUsage(void) {
 + (NSString *)appSupportPath:(BOOL)create
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *path = [paths.firstObject stringByAppendingPathComponent:@"SaneScanner"];
+    NSString *path = [paths.firstObject stringByAppendingPathComponent:$$("SaneScanner")];
 
     if (create && ![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:NULL])
     {
@@ -200,7 +200,7 @@ void logMemUsage(void) {
         UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
         
         UIImage *image = [UIImage sy_imageWithColor:color size:CGSizeMake(10, 10) cornerRadius:0];
-        NSString *path = [SYTools pathForFile:[NSString stringWithFormat:@"testimage-%@.png", [[NSUUID UUID] UUIDString]]];
+        NSString *path = [SYTools pathForFile:[NSString stringWithFormat:$$("testimage-%@.png"), [[NSUUID UUID] UUIDString]]];
         [UIImagePNGRepresentation(image) writeToFile:path atomically:YES];
     }
 }
@@ -211,8 +211,8 @@ void logMemUsage(void) {
     static NSDateFormatter *formatter;
     dispatch_once(&onceToken, ^{
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
-        [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+        [formatter setDateFormat:$$("yyyy-MM-dd HH:mm:ss.SSS")];
+        [formatter setLocale:[NSLocale localeWithLocaleIdentifier:$$("en_US_POSIX")]];
     });
     return formatter;
 }

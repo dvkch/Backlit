@@ -39,17 +39,17 @@
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
-    return @"";
+    return $$("");
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p, %d, %@, group containing: \n%@>",
+    return [NSString stringWithFormat:$$("<%@: %p, %d, %@, group containing: \n%@>"),
             [self class],
             self,
             (int)self.index,
             self.title,
-            [self.items componentsJoinedByString:@"\n"]];
+            [self.items componentsJoinedByString:$$("\n")]];
 }
 
 @end

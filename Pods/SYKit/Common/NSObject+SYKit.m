@@ -76,4 +76,14 @@
     return isMethodOverridden;
 }
 
+- (NSString *)sy_className
+{
+    return NSStringFromClass(self.class);
+}
+    
++ (NSString *)sy_className
+{
+    return NSStringFromClass(self.class);
+}
+
 @end

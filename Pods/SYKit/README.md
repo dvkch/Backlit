@@ -203,7 +203,7 @@ Category on `UIButton` to add some new features.
 
 ####NSObject+SYKit
 
-Adds to methods to work with swizzling object methods and executing a block on a specific `NSThread`
+Adds to methods to work with swizzling object methods, executing a block on a specific `NSThread` and obtaining a class name as `NSString` easily.
 
 	@interface NSObject (SYKit)
 
@@ -211,6 +211,9 @@ Adds to methods to work with swizzling object methods and executing a block on a
 	+ (void)sy_swizzleSelector:(SEL)originalSelector withSelector:(SEL)swizzledSelector;
 	+ (BOOL)sy_instance:(id)instance overridesSelector:(SEL)selector;
 	
+	+ (NSString *)sy_className;
+	+ (NSString *)sy_className;
+
 	@end
 
 ####UITableViewCell+SYKit

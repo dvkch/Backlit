@@ -51,8 +51,8 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
-    [self.tableView registerClass:[SYPreviewCell class] forCellReuseIdentifier:@"SYPreviewCell"];
-    [self.tableView registerClass:[SYOptionCell  class] forCellReuseIdentifier:@"SYOptionCell"];
+    [self.tableView registerClass:[SYPreviewCell class] forCellReuseIdentifier:[SYPreviewCell sy_className]];
+    [self.tableView registerClass:[SYOptionCell  class] forCellReuseIdentifier:[SYOptionCell sy_className]];
     [self.view addSubview:self.tableView];
     
     self.buttonScan = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -66,7 +66,7 @@
     self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self tintColor:[UIColor vividBlueColor]];
     
     [self.navigationItem setLeftBarButtonItem:
-     [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"]
+     [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:$$("back")]
                                       style:UIBarButtonItemStyleDone
                                      target:self action:@selector(backButtonTap:)]];
     
@@ -274,13 +274,13 @@
 {
     if (indexPath.section == 0)
     {
-        SYPreviewCell *cell = (SYPreviewCell*)[tableView dequeueReusableCellWithIdentifier:@"SYPreviewCell"];
+        SYPreviewCell *cell = (SYPreviewCell*)[tableView dequeueReusableCellWithIdentifier:[SYPreviewCell sy_className]];
         [cell setDevice:self.device];
         return cell;
     }
     else
     {
-        SYOptionCell *cell = (SYOptionCell*)[tableView dequeueReusableCellWithIdentifier:@"SYOptionCell"];
+        SYOptionCell *cell = (SYOptionCell*)[tableView dequeueReusableCellWithIdentifier:[SYOptionCell sy_className]];
         SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
         
         [cell setOption:opt];

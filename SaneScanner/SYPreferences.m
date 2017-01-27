@@ -8,9 +8,9 @@
 
 #import "SYPreferences.h"
 
-static NSString * const kPrefKey_PreviewWithAutoColorMode   = @"PreviewWithAutoColorMode";
-static NSString * const kPrefKey_ShowAdvancedOptions        = @"ShowAdvancedOptions";
-static NSString * const kPrefKey_ShowIncompleteScanImages   = @"ShowIncompleteScanImages";
+static NSString * const kPrefKey_PreviewWithAutoColorMode   = $$("PreviewWithAutoColorMode");
+static NSString * const kPrefKey_ShowAdvancedOptions        = $$("ShowAdvancedOptions");
+static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncompleteScanImages");
 
 @implementation SYPreferences
 
@@ -50,7 +50,7 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = @"ShowIncompleteSc
 - (NSString *)titleForKey:(NSString *)key
 {
     SEL selector = NSSelectorFromString(key);
-    NSAssert1([self respondsToSelector:selector], @"The key %@ is not a valid preferences key", key);
+    NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
     
     if (selector == @selector(previewWithAutoColorMode))
         return @"Preview with default color mode";
@@ -67,7 +67,7 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = @"ShowIncompleteSc
 - (NSString *)descriptionForKey:(NSString *)key
 {
     SEL selector = NSSelectorFromString(key);
-    NSAssert1([self respondsToSelector:selector], @"The key %@ is not a valid preferences key", key);
+    NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
     
     if (selector == @selector(previewWithAutoColorMode))
         return @"Will use the default color mode, if auto value is supported and option is found. Allows for more consistent render accross previews, whatever the option you set, but can reduce preview speed and reset other options depending on the device.";
@@ -84,7 +84,7 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = @"ShowIncompleteSc
 - (SYPreferenceType)typeForKey:(NSString *)key
 {
     SEL selector = NSSelectorFromString(key);
-    NSAssert1([self respondsToSelector:selector], @"The key %@ is not a valid preferences key", key);
+    NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
     
     if (selector == @selector(previewWithAutoColorMode))
         return SYPreferenceTypeBool;
@@ -101,14 +101,14 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = @"ShowIncompleteSc
 - (id)objectForKey:(NSString *)key
 {
     SEL selector = NSSelectorFromString(key);
-    NSAssert1([self respondsToSelector:selector], @"The key %@ is not a valid preferences key", key);
+    NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
     return [self valueForKey:key];
 }
 
 - (void)setObject:(id)object forKey:(NSString *)key
 {
     SEL selector = NSSelectorFromString(key);
-    NSAssert1([self respondsToSelector:selector], @"The key %@ is not a valid preferences key", key);
+    NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
     
     [self setValue:object forKey:key];
 }

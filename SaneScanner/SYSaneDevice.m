@@ -44,7 +44,10 @@
 
 - (NSString *)humanName
 {
-    return [NSString stringWithFormat:@"%@ %@", self.vendor, self.model];
+    NSMutableArray <NSString *> *parts = [NSMutableArray array];
+    if (self.vendor.length) [parts addObject:self.vendor];
+    if (self.model.length)  [parts addObject:self.model];
+    return [parts componentsJoinedByString:$$(" ")];
 }
 
 - (CGFloat)previewImageRatio

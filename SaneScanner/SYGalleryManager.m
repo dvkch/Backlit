@@ -18,6 +18,10 @@
 #import <SYOperationQueue.h>
 #import <NSData+SYKit.h>
 
+static NSString * const kImageExtensionPNG = $$("png");
+static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
+
+// TODO: create as POD
 @interface SYGalleryManagerWeakDelegate : NSObject
 @property (atomic, weak) id<SYGalleryManagerDelegate> delegate;
 + (instancetype)weakDelegateWithDelegate:(id<SYGalleryManagerDelegate>)delegate;
@@ -47,11 +51,14 @@
 }
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p, delegate: %@>", self.class, self, self.delegate];
+    return [NSString stringWithFormat:$$("<%@: %p, delegate: %@>"),
+            self.class,
+            self,
+            self.delegate];
 }
 + (NSPredicate *)nonEmptyPredicate
 {
-    return [NSPredicate predicateWithFormat:@"SELF.delegate != nil"];
+    return [NSPredicate predicateWithFormat:$$("SELF.delegate != nil")];
 }
 @end
 
@@ -94,7 +101,7 @@
         [self.thumbsQueue setMaxSurvivingOperations:0];
         [self.thumbsQueue setMode:SYOperationQueueModeLIFO];
 
-        NSPredicate *pngPredicate = [NSPredicate predicateWithFormat:@"pathExtension IN %@", @[@"png"]];
+        NSPredicate *pngPredicate = [NSPredicate predicateWithFormat:$$("pathExtension IN %@"), @[kImageExtensionPNG]];
         
         self.directoryWatcher =
         [MHWDirectoryWatcher directoryWatcherAtPath:[SYTools documentsPath]
@@ -155,7 +162,7 @@
 {
     NSString *filename = imageName;
     if (thumbnail)
-        filename = [[filename stringByDeletingPathExtension] stringByAppendingPathExtension:@"thumb.jpg"];
+        filename = [[filename stringByDeletingPathExtension] stringByAppendingPathExtension:kImageThumbsSuffix];
     
     return [[SYTools documentsPath] stringByAppendingPathComponent:filename];
 }
@@ -177,7 +184,7 @@
     
     for (NSURL *item in items)
     {
-        if (![item.pathExtension isEqualToString:@"png"])
+        if (![item.pathExtension isEqualToString:kImageExtensionPNG])
             continue;
         
         if (![item getResourceValue:&isDir forKey:NSURLIsDirectoryKey error:NULL])
@@ -379,10 +386,10 @@
 - (void)addImage:(UIImage *)image
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];
-    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+    [formatter setDateFormat:$$("yyyy-MM-dd_HH-mm-ss")];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:$$("en_US_POSIX")]];
     
-    NSString *imageName = [[formatter stringFromDate:[NSDate date]] stringByAppendingPathExtension:@"png"];
+    NSString *imageName = [[formatter stringFromDate:[NSDate date]] stringByAppendingPathExtension:kImageExtensionPNG];
     
     MHGalleryItem *item = [self galleryItemForImageWithName:imageName];
     

@@ -26,7 +26,7 @@
 
 + (UIBarButtonItem *)barButtonItemWithTarget:(id)target action:(SEL)action
 {
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings"]
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:$$("settings")]
                                                                style:UIBarButtonItemStylePlain
                                                               target:target action:action];
     return button;
@@ -50,7 +50,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    [self.tableView registerClass:[SYOptionCell class] forCellReuseIdentifier:@"SYOptionCell"];
+    [self.tableView registerClass:[SYOptionCell class] forCellReuseIdentifier:[SYOptionCell sy_className]];
     [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
     [self.view addSubview:self.tableView];
  
@@ -90,7 +90,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *prefKey = self.keysGroups[indexPath.section].object2[indexPath.row];
-    SYOptionCell *cell = (SYOptionCell *)[tableView dequeueReusableCellWithIdentifier:@"SYOptionCell"];
+    SYOptionCell *cell = (SYOptionCell *)[tableView dequeueReusableCellWithIdentifier:[SYOptionCell sy_className]];
     [cell setPrefKey:prefKey];
     [cell setShowDescription:YES];
     return cell;

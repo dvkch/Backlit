@@ -73,19 +73,19 @@
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
-    [NSException raise:@"Not implemented" format:@""];
+    [NSException raise:$$("Not implemented") format:$("")];
     return nil;
 }
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit;
 {
-    [NSException raise:@"Not implemented" format:@""];
+    [NSException raise:$$("Not implemented") format:$("")];
     return nil;
 }
 
 - (void)refreshValue:(void(^)(NSString *error))block
 {
-    [NSException raise:@"Not implemented" format:@""];
+    [NSException raise:$$("Not implemented") format:$("")];
 }
 
 - (NSString *)descriptionConstraint
@@ -137,7 +137,7 @@
 
 - (NSString *)descriptionHuman
 {
-    return [NSString stringWithFormat:@"<#%d, %@, %@, %@, %@, %@>",
+    return [NSString stringWithFormat:$$("<#%d, %@, %@, %@, %@, %@>"),
             (int)self.index,
             self.title,
             NSStringFromSANE_Value_Type(self.type),
@@ -148,7 +148,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p, %d, %@, %@, %@>",
+    return [NSString stringWithFormat:$$("<%@: %p, %d, %@, %@, %@>"),
             [self class],
             self,
             (int)self.index,
@@ -202,29 +202,29 @@
 
 NSString *NSStringFromSANE_Value_Type(SANE_Value_Type type)
 {
-    NSString *s = @"unknown";
+    NSString *s = $$("unknown");
     switch (type) {
-        case SANE_TYPE_BOOL:    s = @"bool";    break;
-        case SANE_TYPE_BUTTON:  s = @"button";  break;
-        case SANE_TYPE_FIXED:   s = @"fixed";   break;
-        case SANE_TYPE_GROUP:   s = @"group";   break;
-        case SANE_TYPE_INT:     s = @"int";     break;
-        case SANE_TYPE_STRING:  s = @"string";  break;
+        case SANE_TYPE_BOOL:    s = $$("bool");    break;
+        case SANE_TYPE_BUTTON:  s = $$("button");  break;
+        case SANE_TYPE_FIXED:   s = $$("fixed");   break;
+        case SANE_TYPE_GROUP:   s = $$("group");   break;
+        case SANE_TYPE_INT:     s = $$("int");     break;
+        case SANE_TYPE_STRING:  s = $$("string");  break;
     }
     return s;
 }
 
 NSString *NSStringFromSANE_Unit(SANE_Unit unit)
 {
-    NSString *s = @"unknown";
+    NSString *s = $$("unknown");
     switch (unit) {
-        case SANE_UNIT_NONE:        s = @"none"; break;
-        case SANE_UNIT_PIXEL:       s = @"px";   break;
-        case SANE_UNIT_BIT:         s = @"bits"; break;
-        case SANE_UNIT_MM:          s = @"mm";   break;
-        case SANE_UNIT_DPI:         s = @"dpi";  break;
-        case SANE_UNIT_PERCENT:     s = @"%";    break;
-        case SANE_UNIT_MICROSECOND: s = @"ms";   break;
+        case SANE_UNIT_NONE:        s = $$("none"); break;
+        case SANE_UNIT_PIXEL:       s = $$("px");   break;
+        case SANE_UNIT_BIT:         s = $$("bits"); break;
+        case SANE_UNIT_MM:          s = $$("mm");   break;
+        case SANE_UNIT_DPI:         s = $$("dpi");  break;
+        case SANE_UNIT_PERCENT:     s = $$("%");    break;
+        case SANE_UNIT_MICROSECOND: s = $$("ms");   break;
     }
     return s;
 }

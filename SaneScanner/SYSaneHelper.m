@@ -36,11 +36,13 @@ NSDate *perfDate = [NSDate date]
 
 #define PERF_END(min)   \
 if ([[NSDate date] timeIntervalSinceDate:perfDate] > ((double)min)/1000.) \
-    NSLog(@"%@: %.03lfs", NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSinceDate:perfDate])
+    NSLog($$("%@: %.03lfs"), NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSinceDate:perfDate])
 
 #define PERF_MIN_MS (1000)
 
-static NSString * const SYSaneHelper_PrefKey_Hosts = @"hosts";
+static NSString * const SYSaneHelper_PrefKey_Hosts = $$("hosts");
+static NSString * const SYSaneHelper_ConfFileName  = $$("dll.conf");
+static NSString * const SYSaneHelper_NetFileName   = $$("net.conf");
 
 void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *password);
 
@@ -69,7 +71,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     if (self)
     {
         self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadKeepAlive) object:nil];
-        [self.thread setName:@"SYSaneHelper"];
+        [self.thread setName:$$("SYSaneHelper")];
         [self.thread start];
         
         NSArray <NSString *> *savedHosts = [[NSUserDefaults standardUserDefaults] arrayForKey:SYSaneHelper_PrefKey_Hosts];
@@ -91,7 +93,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools appSupportPath:YES]];
     
     // needed for dll.conf file
-    NSData *dllConf = [NSData dataWithContentsOfFile:@"dll.conf"];
+    NSData *dllConf = [NSData dataWithContentsOfFile:SYSaneHelper_ConfFileName];
     [dllConf writeToFile:[SYTools appSupportPath:NO] atomically:YES];
     
     self.openedDevices = [NSMutableDictionary dictionary];
@@ -162,10 +164,10 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 {
     [[NSUserDefaults standardUserDefaults] setObject:self.hosts.copy forKey:SYSaneHelper_PrefKey_Hosts];
     
-    NSString *hostsString = [self.hosts componentsJoinedByString:@"\n"];
-    NSString *config = [NSString stringWithFormat:@"connect_timeout = 10\n%@", (hostsString ?: @"")];
+    NSString *hostsString = [self.hosts componentsJoinedByString:$$("\n")];
+    NSString *config = [NSString stringWithFormat:$$("connect_timeout = 10\n%@"), (hostsString ?: $$(""))];
     
-    NSString *configPath = [[SYTools appSupportPath:YES] stringByAppendingPathComponent:@"net.conf"];
+    NSString *configPath = [[SYTools appSupportPath:YES] stringByAppendingPathComponent:SYSaneHelper_NetFileName];
     [config writeToFile:configPath atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     
     [[NSFileManager defaultManager] setAttributes:@{} ofItemAtPath:config error:NULL];
@@ -651,7 +653,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
                 
                 if (bestValue != SYOptionValueAuto)
                 {
-                    NSLog(@"Unsupported configuration : option %@ is a string but cannot be set to auto", option.name);
+                    NSLog($$("Unsupported configuration : option %@ is a string but cannot be set to auto"), option.name);
                     continue;
                 }
                 
@@ -660,7 +662,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
             }
             else
             {
-                NSLog(@"Unsupported configuration : option type for %@ is not supported", option.name);
+                NSLog($$("Unsupported configuration : option type for %@ is not supported"), option.name);
             }
             
             [self setValue:newValue orAutoValue:useAuto forOption:option block:^(BOOL reloadAllOptions, NSString *error) {
