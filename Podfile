@@ -5,6 +5,7 @@ platform :ios, '8.0'
 target :'SaneScanner' do
 	#pod 'AKPickerView'
 	pod 'SVProgressHUD'
+	pod 'M13ProgressSuite'
 	pod 'NSDate+TimeAgo'
 	pod 'SYLogRedirect'
 	pod 'DLAlertView'

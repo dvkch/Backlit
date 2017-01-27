@@ -74,4 +74,6 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
 - (instancetype)initWithImage:(UIImage*)image;
 + (instancetype)itemWithImage:(UIImage*)image;
 
+- (void)getImageWithCompletion:(void(^)(UIImage *image, NSError *error))completion;
+
 @end

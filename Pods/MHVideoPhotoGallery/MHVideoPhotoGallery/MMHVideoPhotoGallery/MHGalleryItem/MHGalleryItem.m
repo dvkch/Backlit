@@ -7,6 +7,7 @@
 //
 
 #import "MHGalleryItem.h"
+#import <SDWebImageManager.h>
 
 @implementation MHGalleryItem
 
@@ -116,6 +117,46 @@
         return self.image == castedObject.image;
     
     return self == castedObject;
+}
+
+- (void)getImageWithCompletion:(void (^)(UIImage *, NSError *))completion{
+    
+    if (self.galleryType == MHGalleryTypeVideo) {
+        completion(nil, nil);
+        return;
+    }
+    
+    if ([self.URL.scheme isEqualToString:MHAssetLibrary]) {
+        
+        MHAssetImageType assetType = MHAssetImageTypeFull;
+        
+        [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:self.URL
+                                                             assetType:assetType
+                                                          successBlock:^(UIImage *image, NSError *error) {
+                                                              completion(image, error);
+                                                          }];
+    }else if(self.image){
+        completion(self.image, nil);
+    }else if(self.URL){
+        
+        SDWebImageOptions options = 0;
+        
+        // prevents storing a copy of a file that's already available on disk, only keep it in memory
+        if ([self.URL isFileURL])
+            options |= SDWebImageCacheMemoryOnly;
+        
+        [SDWebImageManager.sharedManager downloadImageWithURL:self.URL
+                                                      options:options
+                                                     progress:nil
+                                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
+        {
+            completion(image, error);
+        }];
+        
+    }else{
+        completion(nil, nil);
+    }
+    
 }
 
 @end

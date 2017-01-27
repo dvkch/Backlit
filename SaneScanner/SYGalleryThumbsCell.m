@@ -54,11 +54,6 @@ static CGFloat const kShadowRadius = 2;
     return self;
 }
 
-- (void)dealloc
-{
-    [[SYGalleryManager shared] removeDelegate:self];
-}
-
 - (void)gallerymanager:(SYGalleryManager *)gallerymanager didCreatedThumb:(UIImage *)thumb forItem:(MHGalleryItem *)item
 {
     if (![item isEqual:self.item])

@@ -45,6 +45,7 @@
         self.hideShare = NO;
         self.backButtonState = MHBackButtonStateWithBackArrow;
         self.videoProgressTintColor = UIColor.blackColor;
+        self.allowMultipleSelection = YES;
         
         self.backgroundColorsForViewModes = [NSMutableDictionary  dictionaryWithDictionary:@{@"0":UIColor.blackColor,
                                                                                              @"1":UIColor.whiteColor,
@@ -62,7 +63,6 @@
         
         self.hideDoneButton = NO;
         self.overviewTitle = MHGalleryLocalizedString(@"overview.title.current");
-        
         
         CGSize screenSize = UIScreen.mainScreen.bounds.size;
         UICollectionViewFlowLayout *flowLayout = UICollectionViewFlowLayout.new;

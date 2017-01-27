@@ -38,8 +38,8 @@
 {
     UIImage *newImage = nil;
     
-    CGFloat targetWidth = size.width * self.scale;
-    CGFloat targetHeight = size.height * self.scale;
+    size_t targetWidth  = (size_t)(size.width  * self.scale);
+    size_t targetHeight = (size_t)(size.height * self.scale);
     
     CGContextRef bitmap = CGBitmapContextCreate(NULL,
                                                 targetWidth,

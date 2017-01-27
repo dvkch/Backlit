@@ -14,6 +14,7 @@
 #import "SYGalleryManager.h"
 #import "UIColor+SY.h"
 #import "UIViewController+SYKit.h"
+#import "SYOverviewController.h"
 
 @implementation SYGalleryController
 
@@ -22,6 +23,14 @@
     self = [super initWithPresentationStyle:presentationStyle UICustomization:UICustomization];
     if (self)
     {
+        self.overViewViewController = SYOverviewController.new;
+        
+        if (presentationStyle != MHGalleryViewModeOverView) {
+            self.viewControllers = @[self.overViewViewController,self.imageViewerViewController];
+        }else{
+            self.viewControllers = @[self.overViewViewController];
+        }
+        
         [self.transitionCustomization setDismissWithScrollGestureOnFirstAndLastImage:NO];
         [self setGalleryDelegate:self];
         

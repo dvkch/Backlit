@@ -154,7 +154,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)buttonScanTap:(id)sender
+- (void)buttonScanTap2:(id)sender
 {
     [SVProgressHUD showWithStatus:@"Scanning..."];
     [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
@@ -171,7 +171,7 @@
     }];
 }
 
-- (void)buttonScanTap2:(id)sender
+- (void)buttonScanTap:(id)sender
 {
     __block DLAVAlertView *alertView;
     __block UIImageView *alertViewImageView;

@@ -8,12 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
+@class SYMutablePair;
+
 @interface SYPair <ObjectType1, ObjectType2> : NSObject
+
+@property (nonatomic, strong, readonly) ObjectType1 object1;
+@property (nonatomic, strong, readonly) ObjectType2 object2;
 
 + (instancetype)pairWithObject:(ObjectType1)object1 andObject:(ObjectType2)object2;
 - (instancetype)initWithObject:(ObjectType1)object1 andObject:(ObjectType2)object2 NS_DESIGNATED_INITIALIZER;
 
-- (ObjectType1)object1;
-- (ObjectType2)object2;
+- (SYMutablePair *)mutableCopy;
+
+@end
+
+@interface SYMutablePair <ObjectType1, ObjectType2> : SYPair
+
+@property (nonatomic, strong, readwrite) ObjectType1 object1;
+@property (nonatomic, strong, readwrite) ObjectType2 object2;
+
+- (SYPair *)copy;
 
 @end

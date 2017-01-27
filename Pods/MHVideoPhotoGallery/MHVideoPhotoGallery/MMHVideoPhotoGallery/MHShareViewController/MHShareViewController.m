@@ -538,21 +538,10 @@
     cell.thumbnail.backgroundColor = [UIColor colorWithWhite:0 alpha:0.1];
     cell.thumbnail.contentMode = UIViewContentModeScaleAspectFill;
     cell.selectionImageView.hidden = NO;
-    
-    cell.selectionImageView.layer.borderWidth = 1;
-    cell.selectionImageView.layer.cornerRadius = 11;
-    cell.selectionImageView.layer.borderColor = UIColor.whiteColor.CGColor;
-    cell.selectionImageView.image =  nil;
-    cell.selectionImageView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.45];
-    
-    if ([self.selectedRows containsObject:indexPath]) {
-        cell.selectionImageView.backgroundColor = UIColor.whiteColor;
-        cell.selectionImageView.tintColor = [UIColor colorWithRed:0 green:0.46 blue:1 alpha:1];
-        cell.selectionImageView.image =  MHTemplateImage(@"EditControlSelected");
-    }
+    cell.selected = [self.selectedRows containsObject:indexPath];
     cell.tag = indexPath.row;
-    
 }
+
 -(NSArray*)sortObjectsWithFrame:(NSArray*)objects{
     NSComparator comparatorBlock = ^(id obj1, id obj2) {
         if ([obj1 frame].origin.x > [obj2 frame].origin.x) {

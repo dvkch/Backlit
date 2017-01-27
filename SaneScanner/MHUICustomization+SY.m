@@ -17,7 +17,7 @@
     MHUICustomization *theme = [[self alloc] init];
     [theme setMHGalleryBackgroundColor:[UIColor groupTableViewBackgroundColor]
                            forViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
-    //[theme setShowMHShareViewInsteadOfActivityViewController:NO];
+    [theme setShowMHShareViewInsteadOfActivityViewController:NO];
     [theme setShowOverView:YES];
     [theme setUseCustomBackButtonImageOnImageViewer:YES];
     [theme setBackButtonState:MHBackButtonStateWithBackArrow];

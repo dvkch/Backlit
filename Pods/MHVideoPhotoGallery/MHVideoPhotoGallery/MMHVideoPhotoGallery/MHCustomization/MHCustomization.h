@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, MHBackButtonState) {
 @property (nonatomic)        MHBackButtonState backButtonState; //Default MHBackButtonStateWithBackArrow
 
 @property (nonatomic,assign) BOOL hideDoneButton;
+@property (nonatomic,assign) BOOL allowMultipleSelection;
 @property (nonatomic,strong) NSString *overviewTitle;
 @property (nonatomic,strong) UICollectionViewLayout *overviewCollectionViewLayout;
 @property (nonatomic,strong) Class overviewCollectionViewCellClass;

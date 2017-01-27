@@ -326,7 +326,10 @@
 
 - (void)removeDelegate:(id<SYGalleryManagerDelegate>)delegate
 {
-    [self.delegates removeObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:delegate]];
+    // keep the delegate object valid as long as we need it
+    __strong id <SYGalleryManagerDelegate> sDelegate = delegate;
+    
+    [self.delegates removeObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:sDelegate]];
     [self cleanUpDelegates];
 }
 

@@ -69,9 +69,11 @@
         _selectionImageView = [UIImageView.alloc initWithFrame:CGRectMake(self.bounds.size.width-30,  self.bounds.size.height-30, 22, 22)];
         self.selectionImageView.image = MHGalleryImage(@"videoIcon");
         self.selectionImageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.selectionImageView.layer.borderWidth = 1;
+        self.selectionImageView.layer.cornerRadius = 11;
+        self.selectionImageView.layer.borderColor = UIColor.whiteColor.CGColor;
         self.selectionImageView.hidden = YES;
         [self.contentView addSubview:self.selectionImageView];
-        
     }
     return self;
 }
@@ -112,6 +114,21 @@
 - (void)saveImage:(id)sender {
     self.saveImage(YES);
 }
+
+- (void)setSelected:(BOOL)selected{
+    [super setSelected:selected];
+
+    if (selected){
+        self.selectionImageView.backgroundColor = UIColor.whiteColor;
+        self.selectionImageView.tintColor = [UIColor colorWithRed:0 green:0.46 blue:1 alpha:1];
+        self.selectionImageView.image = MHTemplateImage(@"EditControlSelected");
+    }
+    else{
+        self.selectionImageView.image = nil;
+        self.selectionImageView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.45];
+    }
+}
+
 
 @end
 

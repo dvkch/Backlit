@@ -11,6 +11,7 @@
 #import "MHGallerySharedManagerPrivate.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "SDWebImageManager.h"
+#import <SVProgressHUD.h>
 
 @implementation MHIndexPinchGestureRecognizer
 @end
@@ -33,12 +34,10 @@
     
     self.title = self.UICustomization.overviewTitle;
     
-    if (!self.UICustomization.hideDoneButton)
-    {
-        UIBarButtonItem *doneBarButton = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                                     target:self action:@selector(donePressed)];
-        self.navigationItem.rightBarButtonItem = doneBarButton;
-    }
+    self.editing = NO;
+    
+    self.toolbarItems = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharePressed)]];
     
     self.collectionViewLayout = self.UICustomization.overviewCollectionViewLayout;
     
@@ -108,6 +107,90 @@
     }
 }
 
+-(void)setEditing:(BOOL)editing{
+    [super setEditing:editing];
+    
+    if (!self.UICustomization.hideDoneButton && !self.editing){
+        self.navigationItem.leftBarButtonItem =
+        [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                    target:self action:@selector(donePressed)];
+    }
+    else{
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+    
+    if (self.UICustomization.allowMultipleSelection){
+        self.navigationItem.rightBarButtonItem =
+        [UIBarButtonItem.alloc initWithBarButtonSystemItem:(self.editing ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit)
+                                                    target:self action:@selector(selectPressed)];
+    }
+    else{
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    
+    self.collectionView.allowsMultipleSelection = self.UICustomization.allowMultipleSelection && self.editing;
+    
+    // cells hide their "slectionImageView" when not in multiple selection mode. needs to refresh
+    // when we toggle it
+    [self.collectionView reloadData];
+    
+    self.navigationController.toolbarHidden = !self.editing;
+}
+
+-(void)selectPressed{
+    self.editing = !self.editing;
+}
+
+-(void)sharePressed{
+    
+    [SVProgressHUD show];
+    
+    NSMutableDictionary <NSNumber*, UIImage *> *orderedImages = [NSMutableDictionary dictionary];
+    dispatch_group_t group = dispatch_group_create();
+    
+    for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems){
+        dispatch_group_enter(group);
+        [[self itemForIndex:indexPath.item] getImageWithCompletion:^(UIImage *image, NSError *error) {
+            if (image) orderedImages[@(indexPath.item)] = image;
+            dispatch_group_leave(group);
+        }];
+    }
+    
+    dispatch_notify(group, dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+        
+        NSArray <NSNumber *> *sortedKeys = [[orderedImages allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        NSArray <UIImage *> *images = [orderedImages objectsForKeys:sortedKeys notFoundMarker:[UIImage new]];
+        [self shareImages:images];
+    });
+}
+
+-(void)shareImages:(NSArray <UIImage *> *)images{
+    
+    if (!images.count)
+        return;
+    
+    UIActivityViewController *activityViewController =
+    [[UIActivityViewController alloc] initWithActivityItems:images
+                                      applicationActivities:nil];
+    activityViewController.popoverPresentationController.barButtonItem = self.toolbarItems.lastObject;
+    [self presentViewController:activityViewController animated:YES completion:nil];
+}
+
+-(void)updateTitle{
+    
+    if (self.editing) {
+        NSString *format = MHGalleryLocalizedString(@"shareview.title.select.plural");
+        if (self.collectionView.indexPathsForSelectedItems.count <= 1 )
+            format = MHGalleryLocalizedString(@"shareview.title.select.singular");
+        
+        self.title = [NSString stringWithFormat:format, @(self.collectionView.indexPathsForSelectedItems.count).stringValue];
+    } else {
+        self.title = self.UICustomization.overviewTitle;
+
+    }
+}
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return [self.galleryViewController.dataSource numberOfItemsInGallery:self.galleryViewController];
 }
@@ -147,6 +230,8 @@
     
     cell.thumbnail.userInteractionEnabled =YES;
     
+    cell.selectionImageView.hidden = !self.UICustomization.allowMultipleSelection || !self.editing;
+    
     MHIndexPinchGestureRecognizer *pinch = [MHIndexPinchGestureRecognizer.alloc initWithTarget:self
                                                                                         action:@selector(userDidPinch:)];
     pinch.indexPath = indexPath;
@@ -156,13 +241,11 @@
                                                                                      action:@selector(userDidRoate:)];
     rotate.delegate = self;
     [cell.thumbnail addGestureRecognizer:rotate];
-    
-    
 }
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     return YES;
 }
-
 
 -(void)userDidRoate:(UIRotationGestureRecognizer*)recognizer{
     if (self.interactivePushTransition) {
@@ -240,6 +323,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    self.editing = NO;
+    
     if (self.navigationController.delegate == self) {
         self.navigationController.delegate = nil;
     }
@@ -255,9 +340,16 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
+    MHMediaPreviewCollectionViewCell *cell = (MHMediaPreviewCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    if (self.editing) {
+        [cell setSelected:!cell.selected];
+        [self updateTitle];
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
     
-    MHMediaPreviewCollectionViewCell *cell = (MHMediaPreviewCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     MHGalleryItem *item =  [self itemForIndex:indexPath.row];
     
     UIImage *thumbImage = [SDImageCache.sharedImageCache imageFromDiskCacheForKey:item.URL.absoluteString];
@@ -275,6 +367,10 @@
     }else{
         [self pushToImageViewerForIndexPath:indexPath];
     }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self updateTitle];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -333,6 +429,7 @@
     self.collectionView.collectionViewLayout = self.UICustomization.overviewCollectionViewLayout;
     [self.collectionView.collectionViewLayout invalidateLayout];
     [self.collectionView reloadData];
+    [self updateTitle];
 }
 
 /*
