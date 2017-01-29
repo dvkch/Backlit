@@ -1,0 +1,78 @@
+/* 
+  Localizable.strings
+  SaneScanner
+
+  Created by Stanislas Chevallier on 28/01/2017.
+  Copyright © 2017 Syan. All rights reserved.
+*/
+
+// Common actions
+"ACTION CANCEL"     = "Cancel";
+"ACTION CONTINUE"   = "Continue";
+"ACTION CLOSE"      = "Close";
+"ACTION DELETE"     = "Delete";
+"ACTION REMOVE"     = "Remove";
+"ACTION SHARE"      = "Share";
+"ACTION ADD"        = "Add";
+"ACTION SCAN"       = "Scan";
+
+"LOADING"           = "Loading...";
+"SCANNING"          = "Scanning...";
+"PREVIEWING"        = "Generating preview...";
+
+// Devices list screen
+"DEVICES SECTION HOSTS"     = "Hosts";
+"DEVICES SECTION DEVICES"   = "Devices";
+"DEVICES ROW ADD HOST"      = "Add new host";
+
+// Device screen
+"DEVICE SECTION PREVIEW"        = "Preview";
+"DEVICE BUTTON UPDATE PREVIEW"  = "Update preview";
+
+// Preferences
+"PREFERENCES TITLE"         = "Preferences";
+
+"PREFERENCES SECTION SCAN"      = "Scan";
+"PREFERENCES SECTION PREVIEW"   = "Preview";
+
+"PREFERENCES TITLE PREVIEW DEFAULT COLOR MODE"      = "Preview with default color mode";
+"PREFERENCES TITLE SHOW INCOMPLETE SCAN"            = "Show incomplete scan image";
+"PREFERENCES TITLE SHOW ADVANCED OPTIONS"           = "Show advanced options";
+
+"PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE"    = "Will use the default color mode, if auto value is supported and option is found. Allows for more consistent render accross previews, whatever the option you set, but can reduce preview speed and reset other options depending on the device.";
+"PREFERENCES MESSAGE SHOW INCOMPLETE SCAN"          = "If enabled the incomplete image during a scan operation (preview or actual scan) will be displayed on screen. On an old device or when scanning with a high resolution this is not recommended.";
+"PREFERENCES MESSAGE SHOW ADVANCED OPTIONS"         = "Some devices have advanced options, toggling this setting ON will allow you to access them.";
+
+// Gallery
+"GALLERY EMPTY TITLE"       = "No images yet";
+"GALLERY EMPTY SUBTITLE"    = "Scan a document with one of the devices on the left and it will appear here";
+
+// Gallery overview
+"GALLERY OVERVIEW TITLE"    = "All scans";
+
+// Dialogs
+"DIALOG TITLE ADD HOST"             = "Add a host";
+"DIALOG MESSAGE ADD HOST"           = "Enter the hostname or IP address for the new host";
+
+"DIALOG TITLE AUTH"                 = "Authentication needed";
+"DIALOG MESSAGE AUTH %@"            = "Please enter the username and password for %@";
+
+"DIALOG TITLE DELETE SCAN"          = "Confirmation";
+"DIALOG MESSAGE DELETE SCAN"        = "Are you sure you want to delete this scan?";
+
+"DIALOG TITLE DELETE SCANS"         = "Confirmation";
+"DIALOG MESSAGE DELETE SCANS %d"    = "Are you sure you want to delete %d scans?";
+
+"DIALOG TITLE COULDNT OPEN DEVICE"  = "Couldn't open device";
+
+"DIALOG TITLE SCANNED IMAGE"    = "Scanned image";
+
+// Constraints
+"CONSTRAINT LIST"                           = "Constrained to list";
+"CONSTRAINT RANGE"                          = "Constrained to range";
+"CONSTRAINT LIST %@"                        = "Constrained to list: %@";
+"CONSTRAINT RANGE FROM TO %@ %@"            = "Constrained to range from %@ to %@";
+"CONSTRAINT RANGE FROM TO STEP %@ %@ %@"    = "Constrained to range from %@ to %@ with step of %@";
+"CONSTRAINT NOT CONSTRAINED"                = "Not constrained";
+
+

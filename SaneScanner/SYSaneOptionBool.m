@@ -23,7 +23,7 @@
     return self;
 }
 
-- (void)refreshValue:(void(^)(NSString *error))block
+- (void)refreshValue:(void(^)(NSError *error))block
 {
     if (self.capInactive)
     {
@@ -32,7 +32,7 @@
         return;
     }
     
-    [[SYSaneHelper shared] getValueForOption:self block:^(id value, NSString *error) {
+    [[SYSaneHelper shared] getValueForOption:self block:^(id value, NSError *error) {
         if (!error)
             self.value = [value boolValue];
         
@@ -49,7 +49,7 @@
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
     if (self.capInactive)
-        return @"";
+        return $$("");
     
     return [self stringForValue:@(self.value) withUnit:withUnit];
 }

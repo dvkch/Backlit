@@ -79,8 +79,8 @@
     self.window = [SYWindow mainWindowWithRootViewController:self.splitViewController];
     
     // populate list for the first time
-    [[SYSaneHelper shared] updateDevices:^(NSString *error) {
-        [SVProgressHUD showErrorWithStatus:error];
+    [[SYSaneHelper shared] updateDevices:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
     }];
     
     // customize HUD

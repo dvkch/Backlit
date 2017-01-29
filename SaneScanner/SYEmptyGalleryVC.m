@@ -22,7 +22,7 @@
     
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
     [text appendAttributedString:
-     [[NSAttributedString alloc] initWithString:@"No images yet"
+     [[NSAttributedString alloc] initWithString:$("GALLERY EMPTY TITLE")
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                   NSForegroundColorAttributeName:[UIColor darkGrayColor]}]];
     
@@ -32,7 +32,7 @@
                                                   NSForegroundColorAttributeName:[UIColor grayColor]}]];
     
     [text appendAttributedString:
-     [[NSAttributedString alloc] initWithString:@"Scan a document with one of the devices on the left and it will appear here"
+     [[NSAttributedString alloc] initWithString:$("GALLERY EMPTY SUBTITLE")
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
                                                   NSForegroundColorAttributeName:[UIColor grayColor]}]];
     

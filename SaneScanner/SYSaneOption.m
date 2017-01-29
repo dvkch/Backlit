@@ -83,7 +83,7 @@
     return nil;
 }
 
-- (void)refreshValue:(void(^)(NSString *error))block
+- (void)refreshValue:(void(^)(NSError *error))block
 {
     [NSException raise:$$("Not implemented") format:$("")];
 }
@@ -91,58 +91,58 @@
 - (NSString *)descriptionConstraint
 {
     if(self.constraintType == SANE_CONSTRAINT_RANGE) {
-        return @"Constrained to range";
+        return $("CONSTRAINT RANGE");
     }
     else if (self.constraintType == SANE_CONSTRAINT_STRING_LIST) {
-        return @"Constrained to string list";
+        return $("CONSTRAINT LIST");
     }
     else if (self.constraintType == SANE_CONSTRAINT_WORD_LIST) {
-        return @"Constrained to value list";
+        return $("CONSTRAINT LIST");
     }
-    return @"not constrained";
+    return $("CONSTRAINT NOT CONSTRAINED");
 }
 
-- (NSString *)descriptionCapabilities
+- (NSString *)debugDescriptionCapabilities
 {
     NSMutableArray <NSString *> *descriptions = [NSMutableArray array];
     
     if (self.capReadable)
-        [descriptions addObject:@"readable"];
+        [descriptions addObject:$$("readable")];
     else
-        [descriptions addObject:@"not readable"];
+        [descriptions addObject:$$("not readable")];
     
     if (self.cap & SANE_CAP_SOFT_SELECT)
-        [descriptions addObject:@"settable via software"];
+        [descriptions addObject:$$("settable via software")];
     
     if (self.cap & SANE_CAP_HARD_SELECT)
-        [descriptions addObject:@"settable via hardware"];
+        [descriptions addObject:$$("settable via hardware")];
     
     if (!(self.cap & SANE_CAP_SOFT_SELECT) && !(self.cap & SANE_CAP_HARD_SELECT))
-        [descriptions addObject:@"not settable"];
+        [descriptions addObject:$$("not settable")];
     
     if (self.capSetAuto)
-        [descriptions addObject:@"has auto value"];
+        [descriptions addObject:$$("has auto value")];
     
     if (self.capInactive)
-        [descriptions addObject:@"inactive"];
+        [descriptions addObject:$$("inactive")];
     
     if (self.capAdvanced)
-        [descriptions addObject:@"advanced"];
+        [descriptions addObject:$$("advanced")];
     
     if (self.capEmulated)
-        [descriptions addObject:@"emulated"];
+        [descriptions addObject:$$("emulated")];
     
-    return [descriptions componentsJoinedByString:@", "];
+    return [descriptions componentsJoinedByString:$$(", ")];
 }
 
-- (NSString *)descriptionHuman
+- (NSString *)debugDescriptionHuman
 {
     return [NSString stringWithFormat:$$("<#%d, %@, %@, %@, %@, %@>"),
             (int)self.index,
             self.title,
             NSStringFromSANE_Value_Type(self.type),
             NSStringFromSANE_Unit(self.unit),
-            self.descriptionCapabilities,
+            self.debugDescriptionCapabilities,
             self.descriptionConstraint];
 }
 

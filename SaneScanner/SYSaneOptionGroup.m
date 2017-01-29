@@ -23,7 +23,7 @@
     return self;
 }
 
-- (void)refreshValue:(void(^)(NSString *error))block
+- (void)refreshValue:(void(^)(NSError *error))block
 {
     if (block)
         block(nil);

@@ -201,7 +201,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     }
 }
 
-- (void)updateDevices:(void(^)(NSString *error))block
+- (void)updateDevices:(void(^)(NSError *error))block
 {
     if(self.isUpdatingDevices)
         return;
@@ -218,8 +218,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     SANE_Status s = sane_get_devices(&devices, SANE_FALSE);
     if(s != SANE_STATUS_GOOD)
     {
-        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
-        RUN_BLOCK_ON_THREAD(YES, block, status);
+        RUN_BLOCK_ON_THREAD(YES, block, [NSError sy_errorWithSaneStatus:s]);
         self.devices = nil;
         self.isUpdatingDevices = NO;
         return;
@@ -240,12 +239,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     PERF_END(PERF_MIN_MS);
 }
 
-- (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSString *error))block
+- (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSError *error))block
 {
     [self openDevice:device block:block useMainThread:[NSThread isMainThread]];
 }
 
-- (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSString *error))block useMainThread:(BOOL)useMainThread
+- (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSError *error))block useMainThread:(BOOL)useMainThread
 {
     if(!device)
         return;
@@ -265,8 +264,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     if(s != SANE_STATUS_GOOD)
     {
-        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
-        RUN_BLOCK_ON_THREAD(useMainThread, block, status);
+        RUN_BLOCK_ON_THREAD(useMainThread, block, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
     
@@ -360,36 +358,36 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 }
 
 - (void)getValueForOption:(SYSaneOption *)option
-                    block:(void(^)(id value, NSString *error))block
+                    block:(void(^)(id value, NSError *error))block
 {
     [self getValueForOption:option block:block useMainThread:[NSThread isMainThread]];
 }
 
 - (void)getValueForOption:(SYSaneOption *)option
-                    block:(void(^)(id value, NSString *error))block
+                    block:(void(^)(id value, NSError *error))block
             useMainThread:(BOOL)useMainThread
 {
     if (![self isDeviceOpen:option.device]) {
         if (block)
-            block(nil, @"Device not opened");
+            block(nil, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
         return;
     }
     
     if (option.type == SANE_TYPE_GROUP) {
         if (block)
-            block(nil, @"No value for type GROUP");
+            block(nil, [NSError sy_errorWithCode:SYErrorCode_GetValueForTypeGroup]);
         return;
     }
     
     if (option.type == SANE_TYPE_BUTTON) {
         if (block)
-            block(nil, @"No value for type BUTTON");
+            block(nil, [NSError sy_errorWithCode:SYErrorCode_GetValueForTypeButton]);
         return;
     }
     
     if (option.capInactive) {
         if (block)
-            block(nil, @"Cannot get value for inactive option");
+            block(nil, [NSError sy_errorWithCode:SYErrorCode_GetValueForInactiveOption]);
         return;
     }
     
@@ -407,8 +405,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
     if(s != SANE_STATUS_GOOD)
     {
-        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
-        RUN_BLOCK_ON_THREAD(useMainThread, block, nil, status);
+        RUN_BLOCK_ON_THREAD(useMainThread, block, nil, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
     
@@ -434,12 +431,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 - (void)setCropArea:(CGRect)cropArea
             useAuto:(BOOL)useAuto
           forDevice:(SYSaneDevice *)device
-              block:(void(^)(BOOL reloadAllOptions, NSString *error))block
+              block:(void(^)(BOOL reloadAllOptions, NSError *error))block
       useMainThread:(BOOL)useMainThread
 {
     if(![self isDeviceOpen:device]) {
         if (block)
-            block(NO, @"Device not opened");
+            block(NO, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
         return;
     }
     
@@ -448,7 +445,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     });
     
     __block BOOL finalReloadAllOptions = NO;
-    __block NSString *finalError;
+    __block NSError *finalError;
     
     NSArray <NSNumber *> *stdOptions = @[@(SYSaneStandardOptionAreaTopLeftX),
                                          @(SYSaneStandardOptionAreaTopLeftY),
@@ -464,7 +461,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     {
         SYSaneStandardOption stdOpt = stdOptions[i].unsignedIntegerValue;
         SYSaneOptionNumber *option = (SYSaneOptionNumber *)[device standardOption:stdOpt];
-        [self setValue:values[i] orAutoValue:NO forOption:option block:^(BOOL reloadAllOptions, NSString *error) {
+        [self setValue:values[i] orAutoValue:NO forOption:option block:^(BOOL reloadAllOptions, NSError *error) {
             finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions;
             finalError = error;
         }];
@@ -482,7 +479,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 - (void)setValue:(id)value
      orAutoValue:(BOOL)autoValue
        forOption:(SYSaneOption *)option
-           block:(void(^)(BOOL reloadAllOptions, NSString *error))block
+           block:(void(^)(BOOL reloadAllOptions, NSError *error))block
 {
     [self setValue:value orAutoValue:autoValue forOption:option block:block useMainThread:[NSThread isMainThread]];
 }
@@ -490,18 +487,18 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 - (void)setValue:(id)value
      orAutoValue:(BOOL)autoValue
        forOption:(SYSaneOption *)option
-           block:(void(^)(BOOL reloadAllOptions, NSString *error))block
+           block:(void(^)(BOOL reloadAllOptions, NSError *error))block
    useMainThread:(BOOL)useMainThread
 {
     if(![self isDeviceOpen:option.device]) {
         if (block)
-            block(NO, @"Device not opened");
+            block(NO, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
         return;
     }
     
     if(option.type == SANE_TYPE_GROUP) {
         if (block)
-            block(NO, @"No value for type GROUP");
+            block(NO, [NSError sy_errorWithCode:SYErrorCode_SetValueForTypeGroup]);
         return;
     }
     
@@ -574,8 +571,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     if (s != SANE_STATUS_GOOD)
     {
-        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
-        RUN_BLOCK_ON_THREAD(useMainThread, block, NO, status);
+        RUN_BLOCK_ON_THREAD(useMainThread, block, NO, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
     
@@ -587,19 +583,19 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 - (void)previewWithDevice:(SYSaneDevice *)device
             progressBlock:(void (^)(float, UIImage *))progressBlock
-             successBlock:(void (^)(UIImage *, NSString *))successBlock
+             successBlock:(void (^)(UIImage *, NSError *))successBlock
 {
     [self previewWithDevice:device progressBlock:progressBlock successBlock:successBlock useMainThread:[NSThread isMainThread]];
 }
 
 - (void)previewWithDevice:(SYSaneDevice *)device
             progressBlock:(void (^)(float, UIImage *))progressBlock
-             successBlock:(void (^)(UIImage *, NSString *))successBlock
+             successBlock:(void (^)(UIImage *, NSError *))successBlock
             useMainThread:(BOOL)useMainThread
 {
     if(![self isDeviceOpen:device]) {
         if (successBlock)
-            successBlock(nil, @"Device not opened");
+            successBlock(nil, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
         return;
     }
     
@@ -665,7 +661,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
                 NSLog($$("Unsupported configuration : option type for %@ is not supported"), option.name);
             }
             
-            [self setValue:newValue orAutoValue:useAuto forOption:option block:^(BOOL reloadAllOptions, NSString *error) {
+            [self setValue:newValue orAutoValue:useAuto forOption:option block:^(BOOL reloadAllOptions, NSError *error) {
                 if (reloadAllOptions)
                     [[SYSaneHelper shared] listOptionsForDevice:device block:nil useMainThread:NO];
             } useMainThread:NO];
@@ -673,12 +669,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     }
     
     __block UIImage *previewImage;
-    __block NSString *previewError;
+    __block NSError *previewError;
     
     [self scanWithDevice:device
          useScanCropArea:NO
            progressBlock:progressBlock
-            successBlock:^(UIImage *image, NSString *error)
+            successBlock:^(UIImage *image, NSError *error)
     {
         previewImage = image;
         previewError = error;
@@ -695,7 +691,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
             SYSaneStandardOption stdOption = stdOptionN.unsignedIntegerValue;
             SYSaneOption *option = [device standardOption:stdOption];
             
-            [self setValue:oldOptions[stdOptionN] orAutoValue:NO forOption:option block:^(BOOL reloadAllOptions, NSString *error) {
+            [self setValue:oldOptions[stdOptionN] orAutoValue:NO forOption:option block:^(BOOL reloadAllOptions, NSError *error) {
                 if (reloadAllOptions)
                     [[SYSaneHelper shared] listOptionsForDevice:device block:nil useMainThread:NO];
             } useMainThread:NO];
@@ -708,7 +704,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 - (void)scanWithDevice:(SYSaneDevice *)device
          progressBlock:(void (^)(float, UIImage *))progressBlock
-          successBlock:(void (^)(UIImage *, NSString *))successBlock
+          successBlock:(void (^)(UIImage *, NSError *))successBlock
 {
     [self scanWithDevice:device
          useScanCropArea:YES
@@ -720,12 +716,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 - (void)scanWithDevice:(SYSaneDevice *)device
        useScanCropArea:(BOOL)useScanCropArea
          progressBlock:(void (^)(float, UIImage *))progressBlock
-          successBlock:(void (^)(UIImage *, NSString *))successBlock
+          successBlock:(void (^)(UIImage *, NSError *))successBlock
          useMainThread:(BOOL)useMainThread
 {
     if(![self isDeviceOpen:device]) {
         if (successBlock)
-            successBlock(nil, @"Device not opened");
+            successBlock(nil, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
         return;
     }
     
@@ -749,16 +745,14 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     if(s != SANE_STATUS_GOOD)
     {
-        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, status);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
     
     s = sane_set_io_mode(h, NO);
     if(s != SANE_STATUS_GOOD)
     {
-        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, status);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
     
@@ -805,15 +799,14 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
     if(s != SANE_STATUS_EOF)
     {
-        NSString *status = [NSString stringWithCString:sane_strstatus(s) encoding:NSUTF8StringEncoding];
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, status);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
 
     if (parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY && parameters.depth == 1)
         [data invertBitByBit];
     
-    NSString *error;
+    NSError *error;
     UIImage *image = [UIImage imageFromRGBData:data saneParameters:parameters error:&error];
     
     RUN_BLOCK_ON_THREAD(useMainThread, successBlock, image, error);

@@ -21,6 +21,7 @@
 #import "SYGalleryManager.h"
 #import "SYGalleryController.h"
 #import "SYRefreshControl.h"
+#import "UIApplication+SY.h"
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -47,9 +48,9 @@
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scrollView) {
-        [[SYSaneHelper shared] updateDevices:^(NSString *error) {
+        [[SYSaneHelper shared] updateDevices:^(NSError *error) {
             if (error)
-                [SVProgressHUD showErrorWithStatus:error];
+                [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         }];
     }];
     
@@ -63,14 +64,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setTitle:@"SaneScanner"];
+    [self setTitle:[[UIApplication sharedApplication] sy_localizedName]];
     [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self setTitle:@""];
+    // TODO: use empty back button text, but not like this
+    [self setTitle:$("")];
 }
 
 #pragma mark - IBActions
@@ -103,13 +105,15 @@ needsAuthForDevice:(NSString *)device
     __block NSString *outUsername;
     __block NSString *outPassword;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *message = [NSString stringWithFormat:@"Please enter the username and password for %@", device];
-        DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:@"Authentication needed"
-                                                                message:message
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"Cancel"
-                                                      otherButtonTitles:@"Continue", nil];
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+        DLAVAlertView *alertView =
+        [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE AUTH")
+                                     message:[NSString stringWithFormat:$("DIALOG MESSAGE AUTH %@"), device]
+                                    delegate:nil
+                           cancelButtonTitle:$("ACTION CANCEL")
+                           otherButtonTitles:$("ACTION CONTINUE"), nil];
+        
         [alertView setAlertViewStyle:DLAVAlertViewStyleLoginAndPasswordInput];
         [[alertView textFieldAtIndex:0] setBorderStyle:UITextBorderStyleNone];
         [[alertView textFieldAtIndex:1] setBorderStyle:UITextBorderStyleNone];
@@ -158,7 +162,7 @@ needsAuthForDevice:(NSString *)device
         else
         {
             SYAddCell *cell = (SYAddCell *)[tableView dequeueReusableCellWithIdentifier:[SYAddCell sy_className]];
-            [cell setText:@"Add new host"];
+            [cell setText:$("DEVICES ROW ADD HOST")];
             return cell;
         }
     }
@@ -173,7 +177,7 @@ needsAuthForDevice:(NSString *)device
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return section == 0 ? @"Hosts" : @"Devices";
+    return section == 0 ? $("DEVICES SECTION HOSTS") : $("DEVICES SECTION DEVICES");
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -208,7 +212,7 @@ needsAuthForDevice:(NSString *)device
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return @"Remove";
+    return $("ACTION REMOVE");
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -217,11 +221,11 @@ needsAuthForDevice:(NSString *)device
     
     if (indexPath.section == 0 && indexPath.row >= [[SYSaneHelper shared] allHosts].count)
     {
-        DLAVAlertView *av = [[DLAVAlertView alloc] initWithTitle:@"Add a host"
-                                                         message:@"Enter the hostname or IP address for the new host"
+        DLAVAlertView *av = [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE ADD HOST")
+                                                         message:$("DIALOG MESSAGE ADD HOST")
                                                         delegate:nil
-                                               cancelButtonTitle:@"Cancel"
-                                               otherButtonTitles:@"Add", nil];
+                                               cancelButtonTitle:$("ACTION CANCEL")
+                                               otherButtonTitles:$("ACTION ADD"), nil];
         
         [av setAlertViewStyle:DLAVAlertViewStylePlainTextInput];
         [[av textFieldAtIndex:0] setBorderStyle:UITextBorderStyleNone];
@@ -241,17 +245,16 @@ needsAuthForDevice:(NSString *)device
     
     SYSaneDevice *device = [[SYSaneHelper shared] allDevices][indexPath.row];
     
-    [SVProgressHUD showWithStatus:@"Loading..."];
-    [[SYSaneHelper shared] openDevice:device block:^(NSString *error) {
+    [SVProgressHUD showWithStatus:$("LOADING")];
+    [[SYSaneHelper shared] openDevice:device block:^(NSError *error) {
         [SVProgressHUD dismiss];
         if(error)
         {
-            NSString *msg = [NSString stringWithFormat:@"Couldn't open device: %@", error];
-            [[[UIAlertView alloc] initWithTitle:device.model
-                                        message:msg
+            [[[UIAlertView alloc] initWithTitle:$("DIALOG TITLE COULDNT OPEN DEVICE")
+                                        message:error.sy_alertMessage
                                        delegate:nil
                               cancelButtonTitle:nil
-                              otherButtonTitles:@"Close", nil] show];
+                              otherButtonTitles:$("ACTION CLOSE"), nil] show];
         }
         else
         {

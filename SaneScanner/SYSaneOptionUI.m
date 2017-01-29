@@ -24,11 +24,11 @@
     [[[DLAVAlertView alloc] initWithTitle:option.title
                                  message:option.desc
                                 delegate:nil
-                       cancelButtonTitle:@"Close"
+                       cancelButtonTitle:$("ACTION CLOSE")
                        otherButtonTitles:nil] show];
 }
 
-+ (void)showDetailsAndInputForOption:(SYSaneOption *)option block:(void (^)(BOOL, NSString *))block
++ (void)showDetailsAndInputForOption:(SYSaneOption *)option block:(void (^)(BOOL, NSError *))block
 {
     if (option.readOnlyOrSingleOption)
     {
@@ -78,18 +78,18 @@
 }
 
 + (void)showInputForButtonOption:(SYSaneOption *)option
-                           block:(void(^)(BOOL reloadAllOptions, NSString *error))block
+                           block:(void(^)(BOOL reloadAllOptions, NSError *error))block
 {
     [[[DLAVAlertView alloc] initWithTitle:option.title
                                   message:option.desc
                                  delegate:nil
-                        cancelButtonTitle:@"Close"
+                        cancelButtonTitle:$("ACTION CLOSE")
                         otherButtonTitles:@"Press", nil]
      showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
          if (buttonIndex == alertView.cancelButtonIndex)
              return;
          
-         [(SYSaneOptionButton *)option press:^(BOOL reloadAllOptions, NSString *error) {
+         [(SYSaneOptionButton *)option press:^(BOOL reloadAllOptions, NSError *error) {
              if (block)
                  block(reloadAllOptions, error);
          }];
@@ -97,7 +97,7 @@
 }
 
 + (void)showInputWithTextFieldForOption:(SYSaneOption *)option
-                                  block:(void(^)(BOOL reloadAllOptions, NSString *error))block
+                                  block:(void(^)(BOOL reloadAllOptions, NSError *error))block
 {
     DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:option.title
                                                             message:option.desc
@@ -109,7 +109,7 @@
         [alertView addButtonWithTitle:@"Auto"];
     
     [alertView addButtonWithTitle:@"Update value"];
-    [alertView addButtonWithTitle:@"Close"];
+    [alertView addButtonWithTitle:$("ACTION CLOSE")];
     
     [alertView setAlertViewStyle:DLAVAlertViewStylePlainTextInput];
     [[alertView textFieldAtIndex:0] setBorderStyle:UITextBorderStyleNone];
@@ -144,7 +144,7 @@
 }
 
 + (void)showInputWithSliderForOption:(SYSaneOption *)option
-                               block:(void(^)(BOOL reloadAllOptions, NSString *error))block
+                               block:(void(^)(BOOL reloadAllOptions, NSError *error))block
 {
     DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:option.title
                                                             message:option.desc
@@ -155,7 +155,7 @@
     if (option.capSetAuto)
         [alertView addButtonWithTitle:@"Auto"];
     [alertView addButtonWithTitle:@"Update value"];
-    [alertView addButtonWithTitle:@"Close"];
+    [alertView addButtonWithTitle:$("ACTION CLOSE")];
     
     NSUInteger updateButtonIndex = alertView.firstOtherButtonIndex + (option.capSetAuto ? 1 : 0);
     
@@ -212,7 +212,7 @@
 + (void)showInputForOptionsTitles:(NSArray <NSString *> *)titles
                      optionValues:(NSArray *)values
                         forOption:(SYSaneOption *)option
-                            block:(void(^)(BOOL reloadAllOptions, NSString *error))block
+                            block:(void(^)(BOOL reloadAllOptions, NSError *error))block
 {
     NSMutableArray <NSString *> *optionsTitles = [NSMutableArray array];
     NSMutableArray              *optionsValues = [NSMutableArray array];
@@ -235,7 +235,7 @@
     for (NSString *title in optionsTitles)
         [alertView addButtonWithTitle:title];
     
-    [alertView addButtonWithTitle:@"Close"];
+    [alertView addButtonWithTitle:$("ACTION CLOSE")];
     
     [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
         if (alertView.lastOtherButtonIndex == buttonIndex)

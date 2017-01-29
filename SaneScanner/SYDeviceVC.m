@@ -59,7 +59,7 @@
     [self.buttonScan addTarget:self action:@selector(buttonScanTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonScan setBackgroundColor:[UIColor vividBlueColor]];
     [self.buttonScan setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.buttonScan setTitle:@"SCAN" forState:UIControlStateNormal];
+    [self.buttonScan setTitle:$("ACTION SCAN").localizedUppercaseString forState:UIControlStateNormal];
     [self.buttonScan.titleLabel setFont:[UIFont systemFontOfSize:17]];
     [self.view addSubview:self.buttonScan];
     
@@ -156,13 +156,13 @@
 
 - (void)buttonScanTap2:(id)sender
 {
-    [SVProgressHUD showWithStatus:@"Scanning..."];
+    [SVProgressHUD showWithStatus:$("SCANNING")];
     [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
         [SVProgressHUD showProgress:progress];
-    } successBlock:^(UIImage *image, NSString *error) {
+    } successBlock:^(UIImage *image, NSError *error) {
         
         if (error)
-            [SVProgressHUD showErrorWithStatus:error];
+            [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         else
         {
             [[SYGalleryManager shared] addImage:image];
@@ -177,15 +177,16 @@
     __block UIImageView *alertViewImageView;
     __block UIImage *completeImage;
     
-    [SVProgressHUD showWithStatus:@"Scanning..."];
-    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
+    [SVProgressHUD showWithStatus:$("SCANNING")];
+    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage)
+    {
         if (!alertView && incompleteImage)
         {
-            alertView = [[DLAVAlertView alloc] initWithTitle:@"Scanned image"
+            alertView = [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE SCANNED IMAGE")
                                                      message:nil
                                                     delegate:nil
-                                           cancelButtonTitle:@"Close"
-                                           otherButtonTitles:@"Share", nil];
+                                           cancelButtonTitle:$("ACTION CLOSE")
+                                           otherButtonTitles:$("ACTION SHARE"), nil];
             
             alertViewImageView = [alertView addImageViewForImage:incompleteImage];
             [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
@@ -208,12 +209,13 @@
         if (incompleteImage)
             [alertViewImageView setImage:incompleteImage];
         
-    } successBlock:^(UIImage *image, NSString *error) {
+    } successBlock:^(UIImage *image, NSError *error)
+    {
         completeImage = image;
         if (error)
         {
             [alertView dismissWithClickedButtonIndex:alertView.cancelButtonIndex animated:NO];
-            [SVProgressHUD showErrorWithStatus:error];
+            [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         }
         else
         {
@@ -221,11 +223,11 @@
             
             if (!alertView)
             {
-                alertView = [[DLAVAlertView alloc] initWithTitle:@"Scanned image"
+                alertView = [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE SCANNED IMAGE")
                                                          message:nil
                                                         delegate:nil
-                                               cancelButtonTitle:@"Close"
-                                               otherButtonTitles:@"Share", nil];
+                                               cancelButtonTitle:$("ACTION CLOSE")
+                                               otherButtonTitles:$("ACTION SHARE"), nil];
                 
                 alertViewImageView = [alertView addImageViewForImage:completeImage];
                 [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
@@ -293,7 +295,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 0)
-        return @"Preview";
+        return $("DEVICE SECTION PREVIEW");
     
     return [self optionGroupForTableViewSection:section].title;
 }
@@ -325,13 +327,13 @@
     
     SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
     
-    [SYSaneOptionUI showDetailsAndInputForOption:opt block:^(BOOL reloadAllOptions, NSString *error) {
+    [SYSaneOptionUI showDetailsAndInputForOption:opt block:^(BOOL reloadAllOptions, NSError *error) {
         if (reloadAllOptions)
         {
             [[SYSaneHelper shared] listOptionsForDevice:self.device block:^ {
                 [self.tableView reloadData];
                 if (error)
-                    [SVProgressHUD showErrorWithStatus:error];
+                    [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
                 else
                     [SVProgressHUD showSuccessWithStatus:nil];
             }];
@@ -340,7 +342,7 @@
         
         [self.tableView reloadData];
         if (error)
-            [SVProgressHUD showErrorWithStatus:error];
+            [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         else
             [SVProgressHUD showSuccessWithStatus:nil];
     }];

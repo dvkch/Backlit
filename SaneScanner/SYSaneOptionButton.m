@@ -23,12 +23,12 @@
     return self;
 }
 
-- (void)press:(void (^)(BOOL reloadAllOptions, NSString *))block
+- (void)press:(void (^)(BOOL reloadAllOptions, NSError *))block
 {
     [[SYSaneHelper shared] setValue:@(YES)
                         orAutoValue:NO
                           forOption:self
-                              block:^(BOOL reloadAllOptions, NSString *error)
+                              block:^(BOOL reloadAllOptions, NSError *error)
     {
         block(reloadAllOptions, error);
     }];
@@ -36,10 +36,10 @@
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
-    return @"";
+    return $$("");
 }
 
-- (void)refreshValue:(void(^)(NSString *error))block
+- (void)refreshValue:(void(^)(NSError *error))block
 {
     if (block)
         block(nil);

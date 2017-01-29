@@ -47,11 +47,12 @@
     NSInteger index = self.imageViewerViewController.pageIndex;
     MHGalleryItem *item = [self.dataSource itemForIndex:index];
     
-    [[[DLAVAlertView alloc] initWithTitle:@"Confirmation"
-                                  message:@"Are you sure you want to delete this picture?"
+    // TODO: add confirmation in overview
+    [[[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE DELETE SCAN")
+                                  message:$("DIALOG MESSAGE DELETE SCAN")
                                  delegate:nil
-                        cancelButtonTitle:@"Cancel"
-                        otherButtonTitles:@"Delete", nil]
+                        cancelButtonTitle:$("ACTION CANCEL")
+                        otherButtonTitles:$("ACTION DELETE"), nil]
      showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
          if (alertView.cancelButtonIndex == buttonIndex)
              return;

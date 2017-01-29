@@ -39,10 +39,10 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncomplete
 {
     NSArray <NSString *> *previewKeys = @[NSStringFromSelector(@selector(previewWithAutoColorMode)),
                                           NSStringFromSelector(@selector(showIncompleteScanImages))];
-    SYPair<NSString *, NSArray <NSString *> *> *previewGroup = [SYPair pairWithObject:@"Scan" andObject:previewKeys];
+    SYPair<NSString *, NSArray <NSString *> *> *previewGroup = [SYPair pairWithObject:$("PREFERENCES SECTION SCAN") andObject:previewKeys];
 
     NSArray <NSString *> *deviceKeys = @[NSStringFromSelector(@selector(showAdvancedOptions))];
-    SYPair<NSString *, NSArray <NSString *> *> *deviceGroup = [SYPair pairWithObject:@"Preview" andObject:deviceKeys];
+    SYPair<NSString *, NSArray <NSString *> *> *deviceGroup = [SYPair pairWithObject:$("PREFERENCES SECTION PREVIEW") andObject:deviceKeys];
 
     return @[deviceGroup, previewGroup];
 }
@@ -53,13 +53,13 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncomplete
     NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
     
     if (selector == @selector(previewWithAutoColorMode))
-        return @"Preview with default color mode";
+        return $("PREFERENCES TITLE PREVIEW DEFAULT COLOR MODE");
     
     if (selector == @selector(showIncompleteScanImages))
-        return @"Show incomplete scan image";
+        return $("PREFERENCES TITLE SHOW INCOMPLETE SCAN");
     
     if (selector == @selector(showAdvancedOptions))
-        return @"Show advanced options";
+        return $("PREFERENCES TITLE SHOW ADVANCED OPTIONS");
 
     return nil;
 }
@@ -70,13 +70,13 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncomplete
     NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
     
     if (selector == @selector(previewWithAutoColorMode))
-        return @"Will use the default color mode, if auto value is supported and option is found. Allows for more consistent render accross previews, whatever the option you set, but can reduce preview speed and reset other options depending on the device.";
-
+        return $("PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE");
+    
     if (selector == @selector(showIncompleteScanImages))
-        return @"If enabled the incomplete image during a scan operation (preview or actual scan) will be displayed on screen. On an old device or when scanning with a high resolution this is not recommended.";
+        return $("PREFERENCES MESSAGE SHOW INCOMPLETE SCAN");
     
     if (selector == @selector(showAdvancedOptions))
-        return @"Some devices have advanced options, toggling this setting ON will allow you to access them.";
+        return $("PREFERENCES MESSAGE SHOW ADVANCED OPTIONS");
 
     return nil;
 }

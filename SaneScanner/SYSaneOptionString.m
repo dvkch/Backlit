@@ -54,7 +54,7 @@
     }
 }
 
-- (void)refreshValue:(void (^)(NSString *))block
+- (void)refreshValue:(void (^)(NSError *))block
 {
     if (self.capInactive)
     {
@@ -63,7 +63,7 @@
         return;
     }
     
-    [[SYSaneHelper shared] getValueForOption:self block:^(id value, NSString *error) {
+    [[SYSaneHelper shared] getValueForOption:self block:^(id value, NSError *error) {
         if (!error)
             self.value = value;
         
@@ -74,17 +74,18 @@
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit
 {
-    NSString *unitString = @"";
-    if (self.unit != SANE_UNIT_NONE)
-        unitString = [NSString stringWithFormat:@" %@", NSStringFromSANE_Unit(self.unit)];
+    NSMutableArray <NSString *> *parts = [NSMutableArray array];
     
-    return [NSString stringWithFormat:@"%@%@", value, unitString];
+    if (value)                       [parts addObject:[value description]];
+    if (self.unit != SANE_UNIT_NONE) [parts addObject:NSStringFromSANE_Unit(self.unit)];
+    
+    return [parts componentsJoinedByString:$$(" ")];
 }
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
     if (self.capInactive)
-        return @"";
+        return $$("");
     
     return [self stringForValue:self.value withUnit:withUnit];
 }
@@ -101,10 +102,10 @@
 - (NSString *)descriptionConstraint
 {
     if (self.constraintType == SANE_CONSTRAINT_STRING_LIST) {
-        return [NSString stringWithFormat:@"Constrained to list: %@",
-                [self.constraintValues componentsJoinedByString:@", "]];
+        return [NSString stringWithFormat:$("CONSTRAINT LIST %@"),
+                [self.constraintValues componentsJoinedByString:$$(", ")]];
     }
-    return @"not constrained";
+    return $("CONSTRAINT NOT CONSTRAINED");
 }
 
 @end

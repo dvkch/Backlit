@@ -14,19 +14,20 @@
 
 + (UIImage *)imageFromRGBData:(NSData *)imageBytes
                saneParameters:(SYSaneScanParameters *)parameters
-                        error:(NSString **)error
+                        error:(NSError **)error
 {
+    // TODO: use more generic errors!
+    
     if (parameters.currentlyAcquiredChannel != SANE_FRAME_RGB &&
         parameters.currentlyAcquiredChannel != SANE_FRAME_GRAY)
     {
         if (error)
-            *error = [NSString stringWithFormat:@"Unsupported frame type %@",
-                      NSStringFromSANE_Frame(parameters.currentlyAcquiredChannel)];
+            *error = [NSError sy_errorWithCode:SYErrorCode_UnsupportedChannels];
         return nil;
     }
     
     if (!imageBytes) {
-        if (error) *error = @"No image data";
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_NoImageData];
         return nil;
     }
     
@@ -39,7 +40,7 @@
         colorSpaceRef = CGColorSpaceCreateDeviceGray();
     
     if (!colorSpaceRef) {
-        if (error) *error = @"Error allocating color space";
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotAllocateColorSpace];
         return nil;
     }
     
@@ -63,7 +64,7 @@
                   kCGRenderingIntentDefault);
     
     if (!sourceImageRef) {
-        if (error) *error = @"Error allocating source image ref";
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotAllocateSourceImageRef];
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
         return nil;
@@ -81,7 +82,7 @@
     void* pixels = malloc(parameters.width * parameters.height * destNumberOfComponents);
     
     if (!pixels) {
-        if (error) *error = @"Error allocating memory for bitmap";
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotAllocateMemoryForBitmap];
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
         CGImageRelease(sourceImageRef);
@@ -98,7 +99,7 @@
                           destBitmapInfo);
     
     if (!context) {
-        if (error) *error = @"Error creating image context";
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotCreateImageContext];
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
         CGImageRelease(sourceImageRef);
@@ -124,7 +125,7 @@
     return image;
 }
 
-+ (UIImage *)imageFromIncompleteRGBData:(NSData *)data saneParameters:(SYSaneScanParameters *)parameters error:(NSString **)error
++ (UIImage *)imageFromIncompleteRGBData:(NSData *)data saneParameters:(SYSaneScanParameters *)parameters error:(NSError **)error
 {
     SYSaneScanParameters *incompleteParams = [SYSaneScanParameters parametersForIncompleteDataOfLength:data.length
                                                                                     completeParameters:parameters];

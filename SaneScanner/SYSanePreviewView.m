@@ -62,7 +62,7 @@ static CGFloat const kMargin = 15.;
     [self addSubview:self.cropMaskView];
     
     self.buttonAcquirePreview = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.buttonAcquirePreview setTitle:@"Update preview" forState:UIControlStateNormal];
+    [self.buttonAcquirePreview setTitle:$("DEVICE BUTTON UPDATE PREVIEW") forState:UIControlStateNormal];
     [self.buttonAcquirePreview setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.buttonAcquirePreview setBackgroundColor:[UIColor whiteColor]];
     [self.buttonAcquirePreview.titleLabel setFont:[UIFont systemFontOfSize:17]];
@@ -133,13 +133,13 @@ static CGFloat const kMargin = 15.;
 
 - (void)buttonAcquirePreviewTap:(id)sender
 {
-    [SVProgressHUD showWithStatus:@"Generating preview..."];
+    [SVProgressHUD showWithStatus:$("PREVIEWING")];
     [[SYSaneHelper shared] previewWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
         [self.imageView setImage:incompleteImage];
         [SVProgressHUD showProgress:progress];
-    } successBlock:^(UIImage *image, NSString *error) {
+    } successBlock:^(UIImage *image, NSError *error) {
         if (error)
-            [SVProgressHUD showErrorWithStatus:error];
+            [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         else
             [SVProgressHUD dismiss];
         

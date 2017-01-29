@@ -14,6 +14,6 @@
 
 + (void)showDetailsForOption:(SYSaneOption *)option;
 + (void)showDetailsAndInputForOption:(SYSaneOption *)option
-                               block:(void(^)(BOOL reloadAllOptions, NSString *error))block;
+                               block:(void(^)(BOOL reloadAllOptions, NSError *error))block;
 
 @end

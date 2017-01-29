@@ -42,13 +42,13 @@ NSString *NSStringFromSANE_Unit(SANE_Unit unit);
 - (BOOL)readOnlyOrSingleOption;
 
 - (NSString *)descriptionConstraint;
-- (NSString *)descriptionCapabilities;
-- (NSString *)descriptionHuman;
+- (NSString *)debugDescriptionCapabilities;
+- (NSString *)debugDescriptionHuman;
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit;
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit;
 
-- (void)refreshValue:(void(^)(NSString *error))block;
+- (void)refreshValue:(void(^)(NSError *error))block;
 
 + (NSArray <SYSaneOptionGroup *> *)groupedElements:(NSArray <SYSaneOption *> *)elements
                                  removeEmptyGroups:(BOOL)removeEmptyGroups;

@@ -84,7 +84,7 @@
     }
 }
 
-- (void)refreshValue:(void (^)(NSString *))block
+- (void)refreshValue:(void (^)(NSError *))block
 {
     if (self.capInactive)
     {
@@ -93,7 +93,7 @@
         return;
     }
     
-    [[SYSaneHelper shared] getValueForOption:self block:^(id value, NSString *error) {
+    [[SYSaneHelper shared] getValueForOption:self block:^(id value, NSError *error) {
         if (!error)
         {
             if (self.type == SANE_TYPE_INT)
@@ -195,20 +195,20 @@
 {
     if(self.constraintType == SANE_CONSTRAINT_RANGE) {
         if (self.stepValue)
-            return [NSString stringWithFormat:@"Constrained to range from %@ to %@ with step of %@",
+            return [NSString stringWithFormat:$("CONSTRAINT RANGE FROM TO STEP %@ %@ %@"),
                     [self stringForValue:self.minValue withUnit:YES],
                     [self stringForValue:self.maxValue withUnit:YES],
                     [self stringForValue:self.stepValue withUnit:YES]];
         else
-            return [NSString stringWithFormat:@"Constrained to range from %@ to %@",
+            return [NSString stringWithFormat:$("CONSTRAINT RANGE FROM TO %@ %@"),
                     [self stringForValue:self.minValue withUnit:YES],
                     [self stringForValue:self.maxValue withUnit:YES]];
     }
     else if (self.constraintType == SANE_CONSTRAINT_WORD_LIST) {
-        return [NSString stringWithFormat:@"Constrained to list: %@",
-                [self.constraintValues componentsJoinedByString:@", "]];
+        return [NSString stringWithFormat:$("CONSTRAINT LIST %@"),
+                [self.constraintValues componentsJoinedByString:$$(", ")]];
     }
-    return @"not constrained";
+    return $("CONSTRAINT NOT CONSTRAINED");
 }
 
 @end

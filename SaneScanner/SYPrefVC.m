@@ -44,7 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setTitle:@"Preferences"];
+    [self setTitle:$("PREFERENCES TITLE")];
     [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];

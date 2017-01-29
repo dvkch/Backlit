@@ -21,7 +21,7 @@
     [theme setShowOverView:YES];
     [theme setUseCustomBackButtonImageOnImageViewer:YES];
     [theme setBackButtonState:MHBackButtonStateWithBackArrow];
-    [theme setOverviewTitle:@"All scans"];
+    [theme setOverviewTitle:$("GALLERY OVERVIEW TITLE")];
     [theme setOverviewCollectionViewCellClass:SYMediaPreviewCollectionViewCell.class];
     
     SYGridLayout *layout = [[SYGridLayout alloc] init];

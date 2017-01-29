@@ -37,27 +37,27 @@ needsAuthForDevice:(NSString *)device
 
 - (NSArray <SYSaneDevice *> *)allDevices;
 - (SYSaneDevice *)deviceWithName:(NSString *)name;
-- (void)updateDevices:(void(^)(NSString *error))block;
+- (void)updateDevices:(void(^)(NSError *error))block;
 
-- (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSString *error))block;
+- (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSError *error))block;
 - (void)closeDevice:(SYSaneDevice *)device;
 
 - (void)listOptionsForDevice:(SYSaneDevice *)device block:(void(^)(void))block;
 
 - (void)getValueForOption:(SYSaneOption *)option
-                    block:(void(^)(id value, NSString *error))block;
+                    block:(void(^)(id value, NSError *error))block;
 
 - (void)setValue:(id)value
      orAutoValue:(BOOL)autoValue
        forOption:(SYSaneOption *)option
-           block:(void(^)(BOOL reloadAllOptions, NSString *error))block;
+           block:(void(^)(BOOL reloadAllOptions, NSError *error))block;
 
 - (void)previewWithDevice:(SYSaneDevice *)device
             progressBlock:(void(^)(float progress, UIImage *incompleteImage))progressBlock
-             successBlock:(void(^)(UIImage *image, NSString *error))successBlock;
+             successBlock:(void(^)(UIImage *image, NSError *error))successBlock;
 
 - (void)scanWithDevice:(SYSaneDevice *)device
          progressBlock:(void(^)(float progress, UIImage *incompleteImage))progressBlock
-          successBlock:(void(^)(UIImage *image, NSString *error))successBlock;
+          successBlock:(void(^)(UIImage *image, NSError *error))successBlock;
 
 @end
