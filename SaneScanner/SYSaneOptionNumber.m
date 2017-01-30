@@ -195,20 +195,20 @@
 {
     if(self.constraintType == SANE_CONSTRAINT_RANGE) {
         if (self.stepValue)
-            return [NSString stringWithFormat:$("CONSTRAINT RANGE FROM TO STEP %@ %@ %@"),
+            return [NSString stringWithFormat:$("OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@"),
                     [self stringForValue:self.minValue withUnit:YES],
                     [self stringForValue:self.maxValue withUnit:YES],
                     [self stringForValue:self.stepValue withUnit:YES]];
         else
-            return [NSString stringWithFormat:$("CONSTRAINT RANGE FROM TO %@ %@"),
+            return [NSString stringWithFormat:$("OPTION CONSTRAINED RANGE FROM TO %@ %@"),
                     [self stringForValue:self.minValue withUnit:YES],
                     [self stringForValue:self.maxValue withUnit:YES]];
     }
     else if (self.constraintType == SANE_CONSTRAINT_WORD_LIST) {
-        return [NSString stringWithFormat:$("CONSTRAINT LIST %@"),
+        return [NSString stringWithFormat:$("OPTION CONSTRAINED LIST %@"),
                 [self.constraintValues componentsJoinedByString:$$(", ")]];
     }
-    return $("CONSTRAINT NOT CONSTRAINED");
+    return $("OPTION CONSTRAINED NOT CONSTRAINED");
 }
 
 @end

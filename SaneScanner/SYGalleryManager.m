@@ -383,7 +383,7 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     return [dateFormatter stringFromDate:date];
 }
 
-- (void)addImage:(UIImage *)image
+- (MHGalleryItem *)addImage:(UIImage *)image
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:$$("yyyy-MM-dd_HH-mm-ss")];
@@ -395,6 +395,8 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     
     [UIImagePNGRepresentation(image) writeToFile:item.path atomically:YES];
     [self generateThumbAsyncForItem:item fullImage:image tellDelegates:YES];
+    
+    return item;
 }
 
 - (void)deleteItem:(MHGalleryItem *)item

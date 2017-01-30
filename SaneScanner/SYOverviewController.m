@@ -9,6 +9,7 @@
 #import "SYOverviewController.h"
 #import <SVProgressHUD.h>
 #import "SYGalleryManager.h"
+#import "DLAVAlertView+SY.h"
 
 @interface SYOverviewController ()
 
@@ -32,12 +33,35 @@
     if (!self.collectionView.indexPathsForSelectedItems.count)
         return;
     
-    [SVProgressHUD show];
+    NSString *title   = $("DIALOG TITLE DELETE SCAN");
+    NSString *message = $("DIALOG MESSAGE DELETE SCAN");
     
-    for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems)
-        [[SYGalleryManager shared] deleteItem:[self itemForIndex:indexPath.row]];
+    if (self.collectionView.indexPathsForSelectedItems.count > 1)
+    {
+        title   = $("DIALOG TITLE DELETE SCANS");
+        message = [NSString stringWithFormat:$("DIALOG MESSAGE DELETE SCANS %d"),
+                   (int)self.collectionView.indexPathsForSelectedItems.count];
+    }
     
-    [SVProgressHUD dismiss];
+    [[[DLAVAlertView alloc] initWithTitle:title
+                                  message:message
+                                 delegate:nil
+                        cancelButtonTitle:$("ACTION CANCEL")
+                        otherButtonTitles:$("ACTION DELETE"), nil]
+     showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex)
+    {
+        if (alertView.cancelButtonIndex == buttonIndex)
+            return;
+        
+        [SVProgressHUD show];
+        
+        for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems)
+            [[SYGalleryManager shared] deleteItem:[self itemForIndex:indexPath.row]];
+        
+        [SVProgressHUD dismiss];
+        
+        [self setEditing:NO];
+    }];
 }
 
 @end

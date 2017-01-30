@@ -46,7 +46,7 @@
     NSLog($$("Document path: %@"), [SYTools documentsPath]);
     
     // create test images if needed
-    //[SYTools createTestImages:400];
+    //[SYTools createTestImages:200];
     
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];

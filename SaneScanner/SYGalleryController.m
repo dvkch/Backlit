@@ -47,25 +47,25 @@
     NSInteger index = self.imageViewerViewController.pageIndex;
     MHGalleryItem *item = [self.dataSource itemForIndex:index];
     
-    // TODO: add confirmation in overview
     [[[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE DELETE SCAN")
                                   message:$("DIALOG MESSAGE DELETE SCAN")
                                  delegate:nil
                         cancelButtonTitle:$("ACTION CANCEL")
                         otherButtonTitles:$("ACTION DELETE"), nil]
-     showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
-         if (alertView.cancelButtonIndex == buttonIndex)
-             return;
-         
-         if ([self.dataSource numberOfItemsInGallery:self] == 1)
-         {
-             [self dismissViewControllerAnimated:YES
-                                dismissImageView:self.imageViewerViewController.dismissFromImageView
-                                      completion:nil];
-         }
-         
-         [[SYGalleryManager shared] deleteItem:item];
-     }];
+     showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex)
+    {
+        if (alertView.cancelButtonIndex == buttonIndex)
+            return;
+        
+        if ([self.dataSource numberOfItemsInGallery:self] == 1)
+        {
+            [self dismissViewControllerAnimated:YES
+                               dismissImageView:self.imageViewerViewController.dismissFromImageView
+                                     completion:nil];
+        }
+        
+        [[SYGalleryManager shared] deleteItem:item];
+    }];
 }
 
 -(NSArray<MHBarButtonItem *>*)customizeableToolBarItems:(NSArray<MHBarButtonItem *>*)toolBarItems

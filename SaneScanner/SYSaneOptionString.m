@@ -102,10 +102,10 @@
 - (NSString *)descriptionConstraint
 {
     if (self.constraintType == SANE_CONSTRAINT_STRING_LIST) {
-        return [NSString stringWithFormat:$("CONSTRAINT LIST %@"),
+        return [NSString stringWithFormat:$("OPTION CONSTRAINED LIST %@"),
                 [self.constraintValues componentsJoinedByString:$$(", ")]];
     }
-    return $("CONSTRAINT NOT CONSTRAINED");
+    return $("OPTION CONSTRAINED NOT CONSTRAINED");
 }
 
 @end

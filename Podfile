@@ -14,6 +14,7 @@ target :'SaneScanner' do
 	pod 'INSPullToRefresh'
 	pod 'SpinKit'
 	pod 'SYOperationQueue'
+	pod 'WeakUniqueCollection'
 	pod 'MHVideoPhotoGallery', :podspec => "https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec"
 	pod 'MHWDirectoryWatcher', :podspec => "https://raw.githubusercontent.com/dvkch/MHWDirectoryWatcher/master/MHWDirectoryWatcher.podspec"
 	#pod 'IFMDebugTool', :configurations => ['Debug']

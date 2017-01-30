@@ -18,4 +18,18 @@
     || [self.tabBarController.presentingViewController isKindOfClass:[UITabBarController class]];
 }
 
+- (void)sy_setBackButtonWithText:(NSString *)text font:(UIFont *)font
+{
+    NSString *title = text.length ? text : $$(" ");
+    
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:title
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:nil action:nil];
+    
+    [back setTitleTextAttributes:@{NSFontAttributeName:(font ?: [UIFont systemFontOfSize:14])} forState:UIControlStateNormal];
+    [back setBackButtonTitlePositionAdjustment:UIOffsetZero forBarMetrics:UIBarMetricsDefault];
+    [self.navigationItem setBackBarButtonItem:back];
+
+}
+
 @end

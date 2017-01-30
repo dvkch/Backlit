@@ -119,7 +119,7 @@
         switch ([[SYPreferences shared] typeForKey:self.prefKey])
         {
             case SYPreferenceTypeBool:
-                [self.labelValue setText:[[[SYPreferences shared] objectForKey:self.prefKey] boolValue] ? @"On" : @"Off"];
+                [self.labelValue setText:[[[SYPreferences shared] objectForKey:self.prefKey] boolValue] ? $("OPTION BOOL ON") : $("OPTION BOOL OFF")];
                 break;
             case SYPreferenceTypeInt:
                 [self.labelValue setText:[[[SYPreferences shared] objectForKey:self.prefKey] stringValue]];

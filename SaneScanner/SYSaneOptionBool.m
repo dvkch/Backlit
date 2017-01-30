@@ -43,7 +43,7 @@
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit
 {
-    return [value boolValue] ? @"On" : @"Off";
+    return [value boolValue] ? $("OPTION BOOL ON") : $("OPTION BOOL OFF");
 }
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit

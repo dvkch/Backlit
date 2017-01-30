@@ -91,15 +91,15 @@
 - (NSString *)descriptionConstraint
 {
     if(self.constraintType == SANE_CONSTRAINT_RANGE) {
-        return $("CONSTRAINT RANGE");
+        return $("OPTION CONSTRAINED RANGE");
     }
     else if (self.constraintType == SANE_CONSTRAINT_STRING_LIST) {
-        return $("CONSTRAINT LIST");
+        return $("OPTION CONSTRAINED LIST");
     }
     else if (self.constraintType == SANE_CONSTRAINT_WORD_LIST) {
-        return $("CONSTRAINT LIST");
+        return $("OPTION CONSTRAINED LIST");
     }
-    return $("CONSTRAINT NOT CONSTRAINED");
+    return $("OPTION CONSTRAINED NOT CONSTRAINED");
 }
 
 - (NSString *)debugDescriptionCapabilities

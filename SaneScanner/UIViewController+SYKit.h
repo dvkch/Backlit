@@ -11,5 +11,6 @@
 @interface UIViewController (SYKit)
 
 - (BOOL)sy_isModal;
+- (void)sy_setBackButtonWithText:(NSString *)text font:(UIFont *)font;
 
 @end

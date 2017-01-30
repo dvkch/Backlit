@@ -22,6 +22,7 @@
 #import "SYGalleryController.h"
 #import "SYRefreshControl.h"
 #import "UIApplication+SY.h"
+#import "UIViewController+SYKit.h"
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -59,6 +60,11 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(@0);
     }];
+    
+    [self sy_setBackButtonWithText:nil font:nil];
+    // TODO: no scanner right after adding host ?
+    // TODO: no scanner if multiple apps are launched ?
+    // TODO: long timeout if using wrong ip, removing doesn't stop refresh
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -66,13 +72,6 @@
     [super viewWillAppear:animated];
     [self setTitle:[[UIApplication sharedApplication] sy_localizedName]];
     [self.tableView reloadData];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    // TODO: use empty back button text, but not like this
-    [self setTitle:$("")];
 }
 
 #pragma mark - IBActions

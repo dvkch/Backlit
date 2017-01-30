@@ -38,7 +38,10 @@
     
     switch (option.type) {
         case SANE_TYPE_BOOL:
-            [self showInputForOptionsTitles:@[@"On", @"Off"] optionValues:@[@(YES), @(NO)] forOption:option block:block];
+            [self showInputForOptionsTitles:@[$("OPTION BOOL ON"), $("OPTION BOOL OFF")]
+                               optionValues:@[@(YES), @(NO)]
+                                  forOption:option
+                                      block:block];
             break;
         case SANE_TYPE_INT:
         case SANE_TYPE_FIXED:
@@ -84,7 +87,7 @@
                                   message:option.desc
                                  delegate:nil
                         cancelButtonTitle:$("ACTION CLOSE")
-                        otherButtonTitles:@"Press", nil]
+                        otherButtonTitles:$("ACTION PRESS"), nil]
      showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
          if (buttonIndex == alertView.cancelButtonIndex)
              return;
@@ -106,9 +109,9 @@
                                                   otherButtonTitles:nil];
     
     if (option.capSetAuto)
-        [alertView addButtonWithTitle:@"Auto"];
+        [alertView addButtonWithTitle:$("OPTION VALUE AUTO")];
     
-    [alertView addButtonWithTitle:@"Update value"];
+    [alertView addButtonWithTitle:$("ACTION SET VALUE")];
     [alertView addButtonWithTitle:$("ACTION CLOSE")];
     
     [alertView setAlertViewStyle:DLAVAlertViewStylePlainTextInput];
@@ -153,8 +156,8 @@
                                                   otherButtonTitles:nil];
     
     if (option.capSetAuto)
-        [alertView addButtonWithTitle:@"Auto"];
-    [alertView addButtonWithTitle:@"Update value"];
+        [alertView addButtonWithTitle:$("OPTION VALUE AUTO")];
+    [alertView addButtonWithTitle:$("ACTION SET VALUE")];
     [alertView addButtonWithTitle:$("ACTION CLOSE")];
     
     NSUInteger updateButtonIndex = alertView.firstOtherButtonIndex + (option.capSetAuto ? 1 : 0);
@@ -182,7 +185,7 @@
                             updateBlock:^(DLAVAlertView *alertView, float value)
              {
                  NSString *valueString = [option stringForValue:@(value) withUnit:YES];
-                 NSString *buttonTitle = [NSString stringWithFormat:@"Set to %@", valueString];
+                 NSString *buttonTitle = [NSString stringWithFormat:$("ACTION SET VALUE TO %@"), valueString];
                  [alertView setText:buttonTitle forButtonAtIndex:updateButtonIndex];
              }];
         }
@@ -219,7 +222,7 @@
     
     if (option.capSetAuto)
     {
-        [optionsTitles addObject:@"Auto"];
+        [optionsTitles addObject:$("OPTION VALUE AUTO")];
         [optionsValues addObject:[NSNull null]];
     }
     

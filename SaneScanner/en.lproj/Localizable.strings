@@ -7,14 +7,17 @@
 */
 
 // Common actions
-"ACTION CANCEL"     = "Cancel";
-"ACTION CONTINUE"   = "Continue";
-"ACTION CLOSE"      = "Close";
-"ACTION DELETE"     = "Delete";
-"ACTION REMOVE"     = "Remove";
-"ACTION SHARE"      = "Share";
-"ACTION ADD"        = "Add";
-"ACTION SCAN"       = "Scan";
+"ACTION CANCEL"             = "Cancel";
+"ACTION CONTINUE"           = "Continue";
+"ACTION CLOSE"              = "Close";
+"ACTION DELETE"             = "Delete";
+"ACTION REMOVE"             = "Remove";
+"ACTION SHARE"              = "Share";
+"ACTION ADD"                = "Add";
+"ACTION SCAN"               = "Scan";
+"ACTION PRESS"              = "Press";
+"ACTION SET VALUE"          = "Update value";
+"ACTION SET VALUE TO %@"    = "Set value to %@";
 
 "LOADING"           = "Loading...";
 "SCANNING"          = "Scanning...";
@@ -68,11 +71,14 @@
 "DIALOG TITLE SCANNED IMAGE"    = "Scanned image";
 
 // Constraints
-"CONSTRAINT LIST"                           = "Constrained to list";
-"CONSTRAINT RANGE"                          = "Constrained to range";
-"CONSTRAINT LIST %@"                        = "Constrained to list: %@";
-"CONSTRAINT RANGE FROM TO %@ %@"            = "Constrained to range from %@ to %@";
-"CONSTRAINT RANGE FROM TO STEP %@ %@ %@"    = "Constrained to range from %@ to %@ with step of %@";
-"CONSTRAINT NOT CONSTRAINED"                = "Not constrained";
+"OPTION CONSTRAINED LIST"                           = "Constrained to list";
+"OPTION CONSTRAINED RANGE"                          = "Constrained to range";
+"OPTION CONSTRAINED LIST %@"                        = "Constrained to list: %@";
+"OPTION CONSTRAINED RANGE FROM TO %@ %@"            = "Constrained to range from %@ to %@";
+"OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@"    = "Constrained to range from %@ to %@ with step of %@";
+"OPTION CONSTRAINED NOT CONSTRAINED"                = "Not constrained";
 
+"OPTION BOOL ON"    = "On";
+"OPTION BOOL OFF"   = "Off";
+"OPTION VALUE AUTO" = "Auto";
 

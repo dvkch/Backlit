@@ -30,6 +30,7 @@
 #import <UIImage+SYKit.h>
 #import "SYGalleryController.h"
 #import "SYRefreshControl.h"
+#import "UIViewController+SYKit.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
@@ -59,16 +60,11 @@
     [self.buttonScan addTarget:self action:@selector(buttonScanTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonScan setBackgroundColor:[UIColor vividBlueColor]];
     [self.buttonScan setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.buttonScan setTitle:$("ACTION SCAN").localizedUppercaseString forState:UIControlStateNormal];
+    [self.buttonScan setTitle:$("ACTION SCAN").uppercaseString forState:UIControlStateNormal];
     [self.buttonScan.titleLabel setFont:[UIFont systemFontOfSize:17]];
     [self.view addSubview:self.buttonScan];
     
     self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self tintColor:[UIColor vividBlueColor]];
-    
-    [self.navigationItem setLeftBarButtonItem:
-     [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:$$("back")]
-                                      style:UIBarButtonItemStyleDone
-                                     target:self action:@selector(backButtonTap:)]];
     
     [self.navigationItem setRightBarButtonItem:
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
@@ -175,12 +171,28 @@
 {
     __block DLAVAlertView *alertView;
     __block UIImageView *alertViewImageView;
-    __block UIImage *completeImage;
+    __block MHGalleryItem *item;
     
-    [SVProgressHUD showWithStatus:$("SCANNING")];
-    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage)
+    void(^block)(float progress, BOOL finished, UIImage *image, NSError *error) =
+    ^(float progress, BOOL finished, UIImage *image, NSError *error)
     {
-        if (!alertView && incompleteImage)
+        // Finished with error
+        if (error)
+        {
+            [alertView dismissWithClickedButtonIndex:alertView.cancelButtonIndex animated:NO];
+            [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
+            return;
+        }
+        
+        // Finished without error
+        if (finished)
+        {
+            item = [[SYGalleryManager shared] addImage:image];
+            [SVProgressHUD dismiss];
+        }
+        
+        // need to show image (finished or partial with preview)
+        if (!alertView && image)
         {
             alertView = [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE SCANNED IMAGE")
                                                      message:nil
@@ -188,62 +200,38 @@
                                            cancelButtonTitle:$("ACTION CLOSE")
                                            otherButtonTitles:$("ACTION SHARE"), nil];
             
-            alertViewImageView = [alertView addImageViewForImage:incompleteImage];
-            [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
+            alertViewImageView = [alertView addImageViewForImage:image];
+            [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex)
+            {
                 if (buttonIndex == alertView.cancelButtonIndex)
                     return;
                 
-                UIActivityViewController *activityViewController =
-                [[UIActivityViewController alloc] initWithActivityItems:@[completeImage]
-                                                  applicationActivities:nil];
-                [self presentViewController:activityViewController animated:YES completion:nil];
+                [self shareItem:item];
             }];
-            [alertView setButtonsEnabled:NO];
             [SVProgressHUD dismiss];
         }
-        else
+        
+        // update alertview
+        [alertView setButtonsEnabled:finished];
+        
+        // update image for partial preview
+        if (image)
+        {
+            [alertViewImageView setImage:image];
+        }
+        
+        // update progress when no partial preview
+        if (!finished && !image)
         {
             [SVProgressHUD showProgress:progress];
         }
-        
-        if (incompleteImage)
-            [alertViewImageView setImage:incompleteImage];
-        
-    } successBlock:^(UIImage *image, NSError *error)
-    {
-        completeImage = image;
-        if (error)
-        {
-            [alertView dismissWithClickedButtonIndex:alertView.cancelButtonIndex animated:NO];
-            [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
-        }
-        else
-        {
-            [SVProgressHUD dismiss];
-            
-            if (!alertView)
-            {
-                alertView = [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE SCANNED IMAGE")
-                                                         message:nil
-                                                        delegate:nil
-                                               cancelButtonTitle:$("ACTION CLOSE")
-                                               otherButtonTitles:$("ACTION SHARE"), nil];
-                
-                alertViewImageView = [alertView addImageViewForImage:completeImage];
-                [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
-                    if (buttonIndex == alertView.cancelButtonIndex)
-                        return;
-                    
-                    UIActivityViewController *activityViewController =
-                    [[UIActivityViewController alloc] initWithActivityItems:@[completeImage]
-                                                      applicationActivities:nil];
-                    [self presentViewController:activityViewController animated:YES completion:nil];
-                }];
-            }
-            
-            [alertViewImageView setImage:completeImage];
-            [alertView setButtonsEnabled:YES];
-        }
+    };
+    
+    [SVProgressHUD showWithStatus:$("SCANNING")];
+    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
+        block(progress, NO, incompleteImage, nil);
+    } successBlock:^(UIImage *image, NSError *error) {
+        block(1., YES, image, error);
     }];
 }
 
@@ -252,6 +240,26 @@
     [SYPrefVC showOnVC:self closeBlock:^{
         [self.tableView reloadData];
     }];
+}
+
+- (void)shareItem:(MHGalleryItem *)item
+{
+    if (!item.URL)
+        return;
+        
+    UIActivityViewController *activityViewController =
+    [[UIActivityViewController alloc] initWithActivityItems:@[item.URL]
+                                      applicationActivities:nil];
+    
+    UIViewController *sourceVC = self.splitViewController;
+    
+    UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
+    [popover setPermittedArrowDirections:0];
+    [popover setSourceView:sourceVC.view];
+    [popover setSourceRect:CGRectMake(CGRectGetMidX(sourceVC.view.frame) - .5,
+                                      CGRectGetMaxY(sourceVC.view.frame) - 1., 1, 1)];
+    
+    [sourceVC presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource

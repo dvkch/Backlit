@@ -132,7 +132,7 @@
     
     // cells hide their "slectionImageView" when not in multiple selection mode. needs to refresh
     // when we toggle it
-    [self.collectionView reloadData];
+    [self reloadData];
     
     self.navigationController.toolbarHidden = !self.editing;
 }
@@ -316,14 +316,15 @@
         return nil;
     }
 }
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.navigationController.delegate = self;
+    self.editing = NO;
 }
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    self.editing = NO;
     
     if (self.navigationController.delegate == self) {
         self.navigationController.delegate = nil;
