@@ -17,55 +17,16 @@
 #import <SDImageCache.h>
 #import <SYOperationQueue.h>
 #import <NSData+SYKit.h>
+#import <WeakUniqueCollection.h>
 
 static NSString * const kImageExtensionPNG = $$("png");
 static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
 
-// TODO: create as POD
-@interface SYGalleryManagerWeakDelegate : NSObject
-@property (atomic, weak) id<SYGalleryManagerDelegate> delegate;
-+ (instancetype)weakDelegateWithDelegate:(id<SYGalleryManagerDelegate>)delegate;
-+ (NSPredicate *)nonEmptyPredicate;
-@end
-
-@implementation SYGalleryManagerWeakDelegate
-+ (instancetype)weakDelegateWithDelegate:(id<SYGalleryManagerDelegate>)delegate
-{
-    SYGalleryManagerWeakDelegate *weakDelegate = [[self alloc] init];
-    [weakDelegate setDelegate:delegate];
-    return weakDelegate;
-}
-- (NSUInteger)hash
-{
-    return [self.delegate hash];
-}
-- (BOOL)isEqual:(id)object
-{
-    if (![object isKindOfClass:[SYGalleryManagerWeakDelegate class]])
-        return NO;
-    
-    if (!self.delegate && ![object delegate])
-        return YES;
-    
-    return [self.delegate isEqual:[object delegate]];
-}
--(NSString *)description
-{
-    return [NSString stringWithFormat:$$("<%@: %p, delegate: %@>"),
-            self.class,
-            self,
-            self.delegate];
-}
-+ (NSPredicate *)nonEmptyPredicate
-{
-    return [NSPredicate predicateWithFormat:$$("SELF.delegate != nil")];
-}
-@end
 
 @interface SYGalleryManager ()
 @property (nonatomic, strong) NSCache <NSString *, UIImage *> *thumbnailCache;
 @property (nonatomic, strong) NSCache <NSString *, NSValue *> *imageSizeCache;
-@property (nonatomic, strong) NSMutableArray <SYGalleryManagerWeakDelegate *> *delegates;
+@property (nonatomic, strong) WeakUniqueCollection <id <SYGalleryManagerDelegate>> *delegates;
 @property (nonatomic, strong) MHWDirectoryWatcher *directoryWatcher;
 @property (nonatomic, strong) NSArray <NSString *> *imageNames;
 @property (nonatomic, strong) NSMutableArray <NSString *> *thumbsBeingCreated;
@@ -90,7 +51,7 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     if (self)
     {
         // donnot use a set as it would work only with a collection of non mutable objects. here the pointer to delegate can change
-        self.delegates = [NSMutableArray array];
+        self.delegates = [[WeakUniqueCollection alloc] init];
         
         self.thumbnailCache = [[NSCache alloc] init];
         self.imageSizeCache = [[NSCache alloc] init];
@@ -134,7 +95,8 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
 
 - (void)receivedMemoryWarning:(NSNotification *)notification
 {
-    [self.thumbnailCache removeAllObjects];
+    self.thumbnailCache = [[NSCache alloc] init];
+    self.imageSizeCache = [[NSCache alloc] init];
 }
 
 #pragma mark - Private
@@ -233,9 +195,8 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
         removedImage = newImageNames.firstObject;
     }
     
-    for (SYGalleryManagerWeakDelegate *weakDelegate in self.delegates)
+    for (id <SYGalleryManagerDelegate> delegate in self.delegates.allObjects)
     {
-        id <SYGalleryManagerDelegate> delegate = weakDelegate.delegate;
         if ([delegate respondsToSelector:@selector(gallerymanager:didUpdateGalleryItems:newItem:removedItem:)])
             [delegate gallerymanager:self
                didUpdateGalleryItems:self.galleryItems
@@ -310,9 +271,8 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
             if (!tellDelegates)
                 return;
             
-            for (SYGalleryManagerWeakDelegate *weakDelegate in self.delegates)
+            for (id <SYGalleryManagerDelegate> delegate in self.delegates.allObjects)
             {
-                id <SYGalleryManagerDelegate> delegate = weakDelegate.delegate;
                 if ([delegate respondsToSelector:@selector(gallerymanager:didCreatedThumb:forItem:)])
                     [delegate gallerymanager:self didCreatedThumb:thumb forItem:item];
             }
@@ -327,8 +287,7 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     if ([delegate respondsToSelector:@selector(gallerymanager:didUpdateGalleryItems:newItem:removedItem:)])
         [delegate gallerymanager:self didUpdateGalleryItems:self.galleryItems newItem:nil removedItem:nil];
     
-    [self.delegates addObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:delegate]];
-    [self cleanUpDelegates];
+    [self.delegates addObject:delegate];
 }
 
 - (void)removeDelegate:(id<SYGalleryManagerDelegate>)delegate
@@ -336,13 +295,7 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     // keep the delegate object valid as long as we need it
     __strong id <SYGalleryManagerDelegate> sDelegate = delegate;
     
-    [self.delegates removeObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:sDelegate]];
-    [self cleanUpDelegates];
-}
-
-- (void)cleanUpDelegates
-{
-    [self.delegates removeObject:[SYGalleryManagerWeakDelegate weakDelegateWithDelegate:nil]];
+    [self.delegates removeObject:sDelegate];
 }
 
 - (NSArray<MHGalleryItem *> *)galleryItems
