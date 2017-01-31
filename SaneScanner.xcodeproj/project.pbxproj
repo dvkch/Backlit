@@ -35,6 +35,8 @@
 		97586E941C89272300C37931 /* UIImage+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97586E931C89272300C37931 /* UIImage+SY.m */; };
 		975B78141C923B6D00804D86 /* SYPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78131C923B6D00804D86 /* SYPreferences.m */; };
 		975B78171C923C7200804D86 /* SYPrefVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78161C923C7200804D86 /* SYPrefVC.m */; };
+		975EC2901E40DCDF00A8AFFD /* SYDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC28F1E40DCDF00A8AFFD /* SYDeviceCell.m */; };
+		975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
 		9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */; };
 		9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
@@ -116,6 +118,10 @@
 		975B78131C923B6D00804D86 /* SYPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPreferences.m; sourceTree = "<group>"; };
 		975B78151C923C7200804D86 /* SYPrefVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPrefVC.h; sourceTree = "<group>"; };
 		975B78161C923C7200804D86 /* SYPrefVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPrefVC.m; sourceTree = "<group>"; };
+		975EC28E1E40DCDF00A8AFFD /* SYDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDeviceCell.h; sourceTree = "<group>"; };
+		975EC28F1E40DCDF00A8AFFD /* SYDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDeviceCell.m; sourceTree = "<group>"; };
+		975EC2911E40E5F500A8AFFD /* SVProgressHUD+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+SY.h"; sourceTree = "<group>"; };
+		975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD+SY.m"; sourceTree = "<group>"; };
 		975F9C981C8F15B7005A96AB /* SYCropMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYCropMaskView.h; sourceTree = "<group>"; };
 		975F9C991C8F15B7005A96AB /* SYCropMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYCropMaskView.m; sourceTree = "<group>"; };
 		976E5BAD1E3BA5350057B599 /* PrecompiledHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrecompiledHeader.pch; sourceTree = "<group>"; };
@@ -224,6 +230,8 @@
 				971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */,
 				9734E3601C90218E00B66797 /* SYAddCell.h */,
 				9734E3611C90218E00B66797 /* SYAddCell.m */,
+				975EC28E1E40DCDF00A8AFFD /* SYDeviceCell.h */,
+				975EC28F1E40DCDF00A8AFFD /* SYDeviceCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -266,6 +274,8 @@
 				97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */,
 				9785C5691E3E1754006CD4F1 /* UIApplication+SY.h */,
 				9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */,
+				975EC2911E40E5F500A8AFFD /* SVProgressHUD+SY.h */,
+				975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -562,6 +572,7 @@
 				F804E0761AFA4EC300CBE307 /* SYSaneDevice.m in Sources */,
 				9710B41E1C9B10DC00A55529 /* SYEmptyGalleryVC.m in Sources */,
 				9734E3621C90218E00B66797 /* SYAddCell.m in Sources */,
+				975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */,
 				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,
 				F8C3EE441AF9B163003A991F /* SYSaneHelper.m in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
@@ -575,6 +586,7 @@
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
 				F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */,
 				9710B4211C9B257C00A55529 /* SYSplitVC.m in Sources */,
+				975EC2901E40DCDF00A8AFFD /* SYDeviceCell.m in Sources */,
 				9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */,
 				97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */,
 				F8CBD2131AF9A58C00B4C221 /* main.m in Sources */,

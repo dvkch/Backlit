@@ -34,7 +34,7 @@
 
 - (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
 {
-    if(!opt)
+    if (!opt)
         return nil;
     
     self = [super init];
@@ -90,7 +90,7 @@
 
 - (NSString *)descriptionConstraint
 {
-    if(self.constraintType == SANE_CONSTRAINT_RANGE) {
+    if (self.constraintType == SANE_CONSTRAINT_RANGE) {
         return $("OPTION CONSTRAINED RANGE");
     }
     else if (self.constraintType == SANE_CONSTRAINT_STRING_LIST) {
@@ -164,11 +164,11 @@
     NSMutableArray <SYSaneOption *> *groupElements = nil;
     SYSaneOptionGroup *group = nil;
     
-    for(SYSaneOption *item in elements)
+    for (SYSaneOption *item in elements)
     {
-        if(item.type == SANE_TYPE_GROUP)
+        if (item.type == SANE_TYPE_GROUP)
         {
-            if(group)
+            if (group)
             {
                 group.items = [groupElements copy];
                 [groups addObject:group];

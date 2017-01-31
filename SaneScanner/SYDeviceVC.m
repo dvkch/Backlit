@@ -31,6 +31,7 @@
 #import "SYGalleryController.h"
 #import "SYRefreshControl.h"
 #import "UIViewController+SYKit.h"
+#import "SVProgressHUD+SY.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
@@ -111,7 +112,7 @@
 
 - (void)refresh
 {
-    if(self.refreshing)
+    if (self.refreshing)
         return;
     
     self.refreshing = YES;
@@ -155,14 +156,14 @@
     [SVProgressHUD showWithStatus:$("SCANNING")];
     [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
         [SVProgressHUD showProgress:progress];
-    } successBlock:^(UIImage *image, NSError *error) {
-        
+    } successBlock:^(UIImage *image, NSError *error)
+    {
         if (error)
             [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         else
         {
             [[SYGalleryManager shared] addImage:image];
-            [SVProgressHUD showSuccessWithStatus:nil];
+            [SVProgressHUD showSuccessWithStatus:nil duration:1];
         }
     }];
 }
@@ -189,6 +190,7 @@
         {
             item = [[SYGalleryManager shared] addImage:image];
             [SVProgressHUD dismiss];
+            [self updatePreviewImageCellWithImage:image];
         }
         
         // need to show image (finished or partial with preview)
@@ -260,6 +262,20 @@
                                       CGRectGetMaxY(sourceVC.view.frame) - 1., 1, 1)];
     
     [sourceVC presentViewController:activityViewController animated:YES completion:nil];
+}
+
+- (void)updatePreviewImageCellWithImage:(UIImage *)image
+{
+    SYPreviewCell *previewCell;
+    
+    for (UITableViewCell *cell in self.tableView.visibleCells)
+        if ([cell isKindOfClass:[SYPreviewCell class]])
+            previewCell = (SYPreviewCell *)cell;
+    
+    if (!previewCell)
+        return;
+    
+    [previewCell setScanImage:image];
 }
 
 #pragma mark - UITableViewDataSource
@@ -343,7 +359,7 @@
                 if (error)
                     [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
                 else
-                    [SVProgressHUD showSuccessWithStatus:nil];
+                    [SVProgressHUD dismiss];
             }];
             return;
         }
@@ -352,7 +368,7 @@
         if (error)
             [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         else
-            [SVProgressHUD showSuccessWithStatus:nil];
+            [SVProgressHUD dismiss];
     }];
 }
 

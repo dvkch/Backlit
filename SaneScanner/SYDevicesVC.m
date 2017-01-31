@@ -23,6 +23,7 @@
 #import "SYRefreshControl.h"
 #import "UIApplication+SY.h"
 #import "UIViewController+SYKit.h"
+#import "SYDeviceCell.h"
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -40,6 +41,7 @@
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[UITableViewCell sy_className]];
+    [self.tableView registerClass:[SYDeviceCell class]    forCellReuseIdentifier:[SYDeviceCell sy_className]];
     [self.tableView registerClass:[SYAddCell class]       forCellReuseIdentifier:[SYAddCell sy_className]];
     [self.view addSubview:self.tableView];
     
@@ -62,7 +64,7 @@
     }];
     
     [self sy_setBackButtonWithText:nil font:nil];
-    // TODO: no scanner right after adding host ?
+    // TODO: crash after going to background
     // TODO: no scanner if multiple apps are launched ?
     // TODO: long timeout if using wrong ip, removing doesn't stop refresh
 }
@@ -167,9 +169,8 @@ needsAuthForDevice:(NSString *)device
     }
     else
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[UITableViewCell sy_className]];
-        [cell.textLabel setText:[[SYSaneHelper shared] allDevices][indexPath.row].model];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        SYDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYDeviceCell sy_className]];
+        [cell setDevice:[[SYSaneHelper shared] allDevices][indexPath.row]];
         return cell;
     }
 }
@@ -191,10 +192,16 @@ needsAuthForDevice:(NSString *)device
     
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.section == 0 ? 44 : 60;
+}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -247,7 +254,7 @@ needsAuthForDevice:(NSString *)device
     [SVProgressHUD showWithStatus:$("LOADING")];
     [[SYSaneHelper shared] openDevice:device block:^(NSError *error) {
         [SVProgressHUD dismiss];
-        if(error)
+        if (error)
         {
             [[[UIAlertView alloc] initWithTitle:$("DIALOG TITLE COULDNT OPEN DEVICE")
                                         message:error.sy_alertMessage

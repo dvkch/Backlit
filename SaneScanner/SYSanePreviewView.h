@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) SYSaneDevice *device;
 
+- (void)setScanImage:(UIImage *)scanImage;
+
 @end

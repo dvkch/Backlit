@@ -33,6 +33,8 @@ NSString *NSStringFromSYSaneStandardOption(SYSaneStandardOption stdOption);
 SYSaneStandardOption SYSaneStandardOptionFromNSString(NSString *stdOption);
 SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption);
 
+// TODO: determine EXIF (TIFF) data
+
 @interface SYSaneDevice : NSObject
 
 @property (nonatomic, strong, readonly) NSString *name;
@@ -48,6 +50,7 @@ SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption
 - (instancetype)initWithCDevice:(const SANE_Device *)device;
 
 - (NSString *)humanName;
+- (NSString *)host;
 
 - (CGFloat)previewImageRatio;
 

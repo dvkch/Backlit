@@ -67,7 +67,7 @@
         if (!error)
             self.value = value;
         
-        if(block)
+        if (block)
             block(error);
     }];
 }

@@ -28,7 +28,7 @@
 
 - (instancetype)initWithCDevice:(const SANE_Device *)device
 {
-    if(!device)
+    if (!device)
         return nil;
     
     self = [super init];
@@ -48,6 +48,12 @@
     if (self.vendor.length) [parts addObject:self.vendor];
     if (self.model.length)  [parts addObject:self.model];
     return [parts componentsJoinedByString:$$(" ")];
+}
+
+- (NSString *)host
+{
+    // seems to be working that way, can change
+    return [self.name componentsSeparatedByString:$$(":")].firstObject;
 }
 
 - (CGFloat)previewImageRatio

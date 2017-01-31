@@ -36,7 +36,7 @@
         if (!error)
             self.value = [value boolValue];
         
-        if(block)
+        if (block)
             block(error);
     }];
 }

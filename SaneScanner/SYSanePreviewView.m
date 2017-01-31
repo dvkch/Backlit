@@ -129,6 +129,11 @@ static CGFloat const kMargin = 15.;
     [self refresh];
 }
 
+- (void)setScanImage:(UIImage *)scanImage
+{
+    [self.imageView setImage:scanImage];
+}
+
 #pragma mark - IBActions
 
 - (void)buttonAcquirePreviewTap:(id)sender

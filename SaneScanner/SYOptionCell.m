@@ -29,7 +29,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if(self)
+    if (self)
     {
         // prevents constraint errors when cell width is still 0
         [self setTranslatesAutoresizingMaskIntoConstraints:NO];

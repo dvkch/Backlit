@@ -26,7 +26,7 @@
         if (self.constraintType == SANE_CONSTRAINT_WORD_LIST)
         {
             NSMutableArray *values = [NSMutableArray array];
-            for(uint i = 0; i < opt->constraint.word_list[0]; ++i)
+            for (uint i = 0; i < opt->constraint.word_list[0]; ++i)
             {
                 NSNumber *value;
                 if (self.type == SANE_TYPE_INT)
@@ -103,7 +103,7 @@
                 self.value = @(SANE_UNFIX([value intValue]));
         }
         
-        if(block)
+        if (block)
             block(error);
     }];
 }
@@ -193,7 +193,7 @@
 
 - (NSString *)descriptionConstraint
 {
-    if(self.constraintType == SANE_CONSTRAINT_RANGE) {
+    if (self.constraintType == SANE_CONSTRAINT_RANGE) {
         if (self.stepValue)
             return [NSString stringWithFormat:$("OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@"),
                     [self stringForValue:self.minValue withUnit:YES],

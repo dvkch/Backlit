@@ -7,6 +7,7 @@
 # - modified backend/kvs20xx_opt.c and backend/kvs40xx_opt.c by adding #include <stdlib.h>
 # - modified backend/pieusb_buffer.c to use mkstemp function instead of mkostemp
 # - modified sanei/sanei_ir.c to replace #include <values.h> with #include <limits.h> and #inlude <float.h>
+# - modified backend/net.x to add a timeout to the socket connect phase. using already existing connect_timeout setting
 # - created patch with git format-patch HEAD^ --stdout > sane-backends-ios-crosscompiling.patch
 
 CUR_DIR="`pwd`"
@@ -19,7 +20,10 @@ BACKENDS_VERSION="sane-backends-1.0.25"
 # those are private and would prevent the app from being deployed to the AppStore
 ONLY_NET=1
 
-OPT_FLAGS="-O3 -g3"
+# enable debugging
+DEBUG=1
+
+OPT_FLAGS="-O0 -g3 -U NDEBUG -D DEBUG=1"
 MAKE_JOBS=4
 VERBOSE=0
 
@@ -98,9 +102,11 @@ dobuild ()
     export LDFLAGS="${HOST_FLAGS}"
 
     CONFIGURE_OPTIONS="--enable-static --disable-shared --disable-warnings --enable-pthread --enable-silent-rules"
-    if [ $ONLY_NET -eq 0 ]; then
+    if [ $ONLY_NET -eq 1 ]; then
         CONFIGURE_OPTIONS="${CONFIGURE_OPTIONS} --disable-local-backends --disable-libusb"
     fi
+
+    DATE_START=$(date +%s)
 
     ./configure --host=${CHOST} --prefix="${LIB_DIR}/${ARCH}" ${CONFIGURE_OPTIONS} >> "${LOG_PATH}" 2>&1
 
@@ -110,6 +116,11 @@ dobuild ()
     make clean                          >> "${LOG_PATH}" 2>&1
     make V=${VERBOSE} -j${MAKE_JOBS}    >> "${LOG_PATH}" 2>&1
     make install                        >> "${LOG_PATH}" 2>&1
+
+    DATE_END=$(date +%s)
+    TIME_ELAPSED=$(python -c "print(${DATE_END} - ${DATE_START})")
+    echo_bold "   => Time: ${TIME_ELAPSED} seconds"
+
     echo
 }
 
@@ -162,3 +173,5 @@ cp "${LIB_DIR}/armv7/include/sane/saneopts.h" "${LIB_DIR}/all"
 if [ $ONLY_NET -eq 0 ]; then
     cp "${LIB_DIR}/armv7/etc/sane.d/dll.conf"     "${LIB_DIR}/all"
 fi
+
+tput bel
