@@ -15,6 +15,7 @@ target :'SaneScanner' do
 	pod 'SpinKit'
 	pod 'SYOperationQueue'
 	pod 'WeakUniqueCollection'
+	pod 'libextobjc/EXTScope'
 	pod 'MHVideoPhotoGallery', :podspec => "https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec"
 	pod 'MHWDirectoryWatcher', :podspec => "https://raw.githubusercontent.com/dvkch/MHWDirectoryWatcher/master/MHWDirectoryWatcher.podspec"
 	#pod 'IFMDebugTool', :configurations => ['Debug']

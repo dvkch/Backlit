@@ -49,7 +49,6 @@ SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption
 
 - (instancetype)initWithCDevice:(const SANE_Device *)device;
 
-- (NSString *)humanName;
 - (NSString *)host;
 
 - (CGFloat)previewImageRatio;

@@ -28,6 +28,7 @@
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
+@property (nonatomic, strong) NSArray <SYSaneDevice *> *devices;
 @end
 
 @implementation SYDevicesVC
@@ -51,7 +52,11 @@
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scrollView) {
-        [[SYSaneHelper shared] updateDevices:^(NSError *error) {
+        [[SYSaneHelper shared] updateDevices:^(NSArray <SYSaneDevice *> *devices, NSError *error)
+        {
+            self.devices = devices;
+            [self.tableView reloadData];
+            
             if (error)
                 [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         }];
@@ -64,9 +69,6 @@
     }];
     
     [self sy_setBackButtonWithText:nil font:nil];
-    // TODO: crash after going to background
-    // TODO: no scanner if multiple apps are launched ?
-    // TODO: long timeout if using wrong ip, removing doesn't stop refresh
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -74,6 +76,9 @@
     [super viewWillAppear:animated];
     [self setTitle:[[UIApplication sharedApplication] sy_localizedName]];
     [self.tableView reloadData];
+    
+    if (!self.devices)
+        [self.tableView ins_beginPullToRefresh];
 }
 
 #pragma mark - IBActions
@@ -146,7 +151,7 @@ needsAuthForDevice:(NSString *)device
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? ([[SYSaneHelper shared] allHosts].count+1) : [[SYSaneHelper shared] allDevices].count;
+    return section == 0 ? ([[SYSaneHelper shared] allHosts].count+1) : self.devices.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -170,7 +175,7 @@ needsAuthForDevice:(NSString *)device
     else
     {
         SYDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYDeviceCell sy_className]];
-        [cell setDevice:[[SYSaneHelper shared] allDevices][indexPath.row]];
+        [cell setDevice:self.devices[indexPath.row]];
         return cell;
     }
 }
@@ -192,8 +197,9 @@ needsAuthForDevice:(NSString *)device
     
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
+    
+    [self.tableView ins_beginPullToRefresh];
 }
 
 #pragma mark - UITableViewDelegate
@@ -235,12 +241,15 @@ needsAuthForDevice:(NSString *)device
         
         [av setAlertViewStyle:DLAVAlertViewStylePlainTextInput];
         [[av textFieldAtIndex:0] setBorderStyle:UITextBorderStyleNone];
-        [av showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
+        [av showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex)
+        {
             if (buttonIndex == alertView.cancelButtonIndex)
                 return;
+            
             NSString *host = [[av textFieldAtIndex:0] text];
             [[SYSaneHelper shared] addHost:host];
             [self.tableView reloadData];
+            [self.tableView ins_beginPullToRefresh];
         }];
         
         return;
@@ -249,10 +258,11 @@ needsAuthForDevice:(NSString *)device
     else if (indexPath.section == 0)
         return;
     
-    SYSaneDevice *device = [[SYSaneHelper shared] allDevices][indexPath.row];
+    SYSaneDevice *device = self.devices[indexPath.row];
     
     [SVProgressHUD showWithStatus:$("LOADING")];
-    [[SYSaneHelper shared] openDevice:device block:^(NSError *error) {
+    [[SYSaneHelper shared] openDevice:device block:^(NSError *error)
+    {
         [SVProgressHUD dismiss];
         if (error)
         {

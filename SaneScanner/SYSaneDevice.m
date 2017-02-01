@@ -42,14 +42,6 @@
     return self;
 }
 
-- (NSString *)humanName
-{
-    NSMutableArray <NSString *> *parts = [NSMutableArray array];
-    if (self.vendor.length) [parts addObject:self.vendor];
-    if (self.model.length)  [parts addObject:self.model];
-    return [parts componentsJoinedByString:$$(" ")];
-}
-
 - (NSString *)host
 {
     // seems to be working that way, can change

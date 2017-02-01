@@ -20,7 +20,7 @@
 /**
  *  set your Current ViewController
  */
-@property (nonatomic,strong) UIViewController *viewController;
+@property (nonatomic,weak)   UIViewController *viewController;
 /**
  *  set your the Data Source
  */

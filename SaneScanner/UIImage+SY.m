@@ -16,8 +16,6 @@
                saneParameters:(SYSaneScanParameters *)parameters
                         error:(NSError **)error
 {
-    // TODO: use more generic errors!
-    
     if (parameters.currentlyAcquiredChannel != SANE_FRAME_RGB &&
         parameters.currentlyAcquiredChannel != SANE_FRAME_GRAY)
     {
@@ -40,7 +38,7 @@
         colorSpaceRef = CGColorSpaceCreateDeviceGray();
     
     if (!colorSpaceRef) {
-        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotAllocateColorSpace];
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotGenerateImage];
         return nil;
     }
     
@@ -64,7 +62,7 @@
                   kCGRenderingIntentDefault);
     
     if (!sourceImageRef) {
-        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotAllocateSourceImageRef];
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotGenerateImage];
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
         return nil;
@@ -82,7 +80,7 @@
     void* pixels = malloc(parameters.width * parameters.height * destNumberOfComponents);
     
     if (!pixels) {
-        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotAllocateMemoryForBitmap];
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotGenerateImage];
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
         CGImageRelease(sourceImageRef);
@@ -99,7 +97,7 @@
                           destBitmapInfo);
     
     if (!context) {
-        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotCreateImageContext];
+        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotGenerateImage];
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
         CGImageRelease(sourceImageRef);

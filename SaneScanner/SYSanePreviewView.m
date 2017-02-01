@@ -36,8 +36,6 @@ static CGFloat const kMargin = 15.;
     if (self.imageView)
         return;
     
-    __weak SYSanePreviewView *wSelf = self;
-    
     [self setBackgroundColor:[UIColor clearColor]];
     
     self.imageView = [[UIImageView alloc] init];
@@ -55,9 +53,11 @@ static CGFloat const kMargin = 15.;
     [self.lineView setBackgroundColor:[UIColor colorWithRed:200./255. green:199./255. blue:204./255. alpha:1.]];
     [self addSubview:self.lineView];
     
+    @weakify(self);
     self.cropMaskView = [[SYCropMaskView alloc] init];
     [self.cropMaskView setCropAreaDidChangeBlock:^(CGRect newCropArea) {
-        wSelf.device.cropArea = newCropArea;
+        @strongify(self)
+        self.device.cropArea = newCropArea;
     }];
     [self addSubview:self.cropMaskView];
     
@@ -139,7 +139,9 @@ static CGFloat const kMargin = 15.;
 - (void)buttonAcquirePreviewTap:(id)sender
 {
     [SVProgressHUD showWithStatus:$("PREVIEWING")];
-    [[SYSaneHelper shared] previewWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
+    [[SYSaneHelper shared] previewWithDevice:self.device
+                               progressBlock:^(float progress, UIImage *incompleteImage)
+    {
         [self.imageView setImage:incompleteImage];
         [SVProgressHUD showProgress:progress];
     } successBlock:^(UIImage *image, NSError *error) {

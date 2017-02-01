@@ -20,10 +20,7 @@ typedef enum : NSUInteger {
     SYErrorCode_GetValueForInactiveOption,
     SYErrorCode_SetValueForTypeGroup,
     SYErrorCode_NoImageData,
-    SYErrorCode_CannotAllocateColorSpace,
-    SYErrorCode_CannotAllocateSourceImageRef,
-    SYErrorCode_CannotAllocateMemoryForBitmap,
-    SYErrorCode_CannotCreateImageContext,
+    SYErrorCode_CannotGenerateImage,
     SYErrorCode_UnsupportedChannels,
 } SYErrorCode;
 

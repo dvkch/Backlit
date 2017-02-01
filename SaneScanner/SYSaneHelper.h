@@ -35,9 +35,7 @@ needsAuthForDevice:(NSString *)device
 - (void)addHost:(NSString *)host;
 - (void)removeHost:(NSString *)host;
 
-- (NSArray <SYSaneDevice *> *)allDevices;
-- (SYSaneDevice *)deviceWithName:(NSString *)name;
-- (void)updateDevices:(void(^)(NSError *error))block;
+- (void)updateDevices:(void(^)(NSArray <SYSaneDevice *> *devices, NSError *error))block;
 
 - (void)openDevice:(SYSaneDevice *)device block:(void(^)(NSError *error))block;
 - (void)closeDevice:(SYSaneDevice *)device;
@@ -59,5 +57,7 @@ needsAuthForDevice:(NSString *)device
 - (void)scanWithDevice:(SYSaneDevice *)device
          progressBlock:(void(^)(float progress, UIImage *incompleteImage))progressBlock
           successBlock:(void(^)(UIImage *image, NSError *error))successBlock;
+
+- (void)stopCurrentScan;
 
 @end

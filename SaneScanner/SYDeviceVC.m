@@ -85,9 +85,10 @@
     }];
     
     // adding pull to refresh
-    __weak SYDeviceVC *wSelf = self;
+    @weakify(self);
     [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scollView) {
-        [wSelf refresh];
+        @strongify(self)
+        [self refresh];
     }];
 
     // prevent tableView width to be 0 and have a constraint issue when computing cell size
@@ -117,11 +118,12 @@
     
     self.refreshing = YES;
     
-    __weak SYDeviceVC *wSelf = self;
+    @weakify(self);
     [[SYSaneHelper shared] listOptionsForDevice:self.device block:^ {
-        [wSelf.tableView reloadData];
-        wSelf.refreshing = NO;
-        [wSelf.tableView ins_endPullToRefresh];
+        @strongify(self)
+        [self.tableView reloadData];
+        self.refreshing = NO;
+        [self.tableView ins_endPullToRefresh];
     }];
 }
 
@@ -174,9 +176,11 @@
     __block UIImageView *alertViewImageView;
     __block MHGalleryItem *item;
     
+    @weakify(self);
     void(^block)(float progress, BOOL finished, UIImage *image, NSError *error) =
     ^(float progress, BOOL finished, UIImage *image, NSError *error)
     {
+        @strongify(self)
         // Finished with error
         if (error)
         {

@@ -189,12 +189,11 @@ static CGFloat const kGradientWidth = 30;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    __weak SYGalleryThumbsView *wSelf = self;
-    
     UIColor *spinnerColor = [UIColor whiteColor];
     if ([self.tintColor isEqual:[UIColor whiteColor]])
         spinnerColor = [UIColor grayColor];
     
+    @weakify(self);
     SYGalleryThumbsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[SYGalleryThumbsCell sy_className] forIndexPath:indexPath];
     [cell updateWithItems:self.galleryItems
                     index:indexPath.item
@@ -202,20 +201,22 @@ static CGFloat const kGradientWidth = 30;
              spinnerColor:spinnerColor
              dismissBlock:^UIImageView *(NSUInteger index)
     {
-        if (index >= wSelf.galleryItems.count)
+        @strongify(self)
+        
+        if (index >= self.galleryItems.count)
             return nil;
         
         NSIndexPath *dismissIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
-        [wSelf.collectionView scrollToItemAtIndexPath:dismissIndexPath
+        [self.collectionView scrollToItemAtIndexPath:dismissIndexPath
                                      atScrollPosition:(UICollectionViewScrollPositionCenteredVertically |
                                                        UICollectionViewScrollPositionCenteredHorizontally)
                                              animated:NO];
         
         // needed to be sure the cell is loaded
-        [wSelf.collectionView layoutIfNeeded];
+        [self.collectionView layoutIfNeeded];
         
         SYGalleryThumbsCell *dismissCell =
-        (SYGalleryThumbsCell *)[wSelf.collectionView cellForItemAtIndexPath:dismissIndexPath];
+        (SYGalleryThumbsCell *)[self.collectionView cellForItemAtIndexPath:dismissIndexPath];
         
         return dismissCell.imageView;
     }];
