@@ -270,6 +270,14 @@
 
 - (void)updatePreviewImageCellWithImage:(UIImage *)image
 {
+    // update only if we scanned without cropping
+    if (!CGRectEqualToRect(self.device.cropArea, self.device.maxCropArea))
+        return;
+    
+    // update only if we don't require color mode to be set at auto, or when auto is not available
+    if ([[SYPreferences shared] previewWithAutoColorMode] && [self.device standardOption:SYSaneStandardOptionColorMode].capSetAuto)
+        return;
+    
     SYPreviewCell *previewCell;
     
     for (UITableViewCell *cell in self.tableView.visibleCells)

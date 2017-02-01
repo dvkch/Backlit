@@ -136,7 +136,7 @@
     if (image)
     {
         CGRect fullRect = CGRectMake(0, 0, parameters.width, parameters.height);
-        UIGraphicsBeginImageContextWithOptions(fullRect.size, NO, 1.0);
+        UIGraphicsBeginImageContextWithOptions(fullRect.size, YES, 1.0);
         [[UIColor whiteColor] setFill];
         [[UIBezierPath bezierPathWithRect:fullRect] fill];
         [image drawInRect:(CGRect){CGPointZero, image.size}];

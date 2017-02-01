@@ -830,6 +830,8 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     sane_get_parameters(h, &estimatedParams);
     SYSaneScanParameters *estimatedParameters = [[SYSaneScanParameters alloc] initWithCParams:estimatedParams];
     
+    // TODO: handle big scans gracefully, for instance scan to file directly, and generate image only if device seems capable
+    
     //NSString *filename = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.tmp")];
     //NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filename];
     
@@ -843,12 +845,20 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     int previousLogLevel = sanei_debug_net;
     sanei_debug_net = 0;
     
+    // generate incomplete image preview every 2%
+    float progressForLastIncompletePreview = 0.;
+    float incompletePreviewStep = 0.02;
+    
     while (s == SANE_STATUS_GOOD)
     {
-        if (progressBlock && parameters.fileSize) {
+        if (progressBlock && parameters.fileSize)
+        {
             float progress = (double)data.length / (double)parameters.fileSize;
-            if ([[SYPreferences shared] showIncompleteScanImages])
+            if ([[SYPreferences shared] showIncompleteScanImages] &&
+                progress > progressForLastIncompletePreview + incompletePreviewStep)
             {
+                progressForLastIncompletePreview = progress;
+                
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     // image creation needs to be done on main thread
                     UIImage *incompleteImage = [UIImage imageFromIncompleteRGBData:[data copy] saneParameters:parameters error:NULL];
@@ -877,6 +887,13 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
             sane_get_parameters(h, &params);
             parameters = [[SYSaneScanParameters alloc] initWithCParams:params];
         }
+
+        // lineart requires inverting pixel values
+        if (parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY && parameters.depth == 1)
+        {
+            for (int i = 0; i < bufferActualSize; ++i)
+                buffer[i] = ~buffer[i];
+        }
     }
     
     free(buffer);
@@ -889,9 +906,6 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         return;
     }
 
-    if (parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY && parameters.depth == 1)
-        [data invertBitByBit];
-    
     NSError *error;
     UIImage *image = [UIImage imageFromRGBData:data saneParameters:parameters error:&error];
     
