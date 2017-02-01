@@ -9,6 +9,7 @@
 #import "MHUICustomization+SY.h"
 #import "SYGridLayout.h"
 #import "SYMediaPreviewCollectionViewCell.h"
+#import <MHGallery.h>
 
 @implementation MHUICustomization (SY)
 
@@ -28,6 +29,10 @@
     [layout setMaxSize:320/3];
     [layout setMargin:2.];
     [theme setOverviewCollectionViewLayout:layout];
+    
+    MHGalleryCustomLocalizationBlock(^NSString *(NSString *stringToLocalize) {
+        return NSLocalizedString(stringToLocalize, nil);
+    });
     
     return theme;
 }

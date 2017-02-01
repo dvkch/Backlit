@@ -31,6 +31,8 @@ needsAuthForDevice:(NSString *)device
 
 + (instancetype)shared;
 
+- (NSString *)translationForKey:(NSString *)key;
+
 - (NSArray <NSString *> *)allHosts;
 - (void)addHost:(NSString *)host;
 - (void)removeHost:(NSString *)host;

@@ -22,6 +22,7 @@
 #import "NSMutableData+SY.h"
 #import <NSObject+SYKit.h>
 #import "SYPreferences.h"
+#import "SYGettextTranslation.h"
 
 extern int sanei_debug_net;
 
@@ -52,6 +53,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 @property (atomic, strong) NSThread *thread;
 @property (atomic, strong) NSMutableArray <NSString *> *hosts;
 @property (atomic, strong) NSDictionary <NSString *, NSValue *> *openedDevices;
+@property (atomic, strong) SYGettextTranslation *gettextTranslation;
 @property (atomic, strong) NSLock *lockIsUpdating;
 @property (atomic, assign) BOOL saneStarted;
 @property (atomic, assign) BOOL stopScanOperation;
@@ -76,6 +78,8 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     self = [super init];
     if (self)
     {
+        [self loadTranslationFile];
+        
         NSArray <NSString *> *savedHosts = [[NSUserDefaults standardUserDefaults] arrayForKey:SYSaneHelper_PrefKey_Hosts];
         self.hosts = [NSMutableArray arrayWithArray:savedHosts];
         [self commitHosts];
@@ -154,6 +158,31 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     while (running && [runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]) {
         //run loop spinned ones
     }
+}
+
+#pragma mark - Translation
+
+- (void)loadTranslationFile
+{
+    NSString *translationFilenameFormat = $$("translations/sane_strings_%@.po");
+    NSArray <NSString *> *localeIDs = @[[NSLocale currentLocale].localeIdentifier,
+                                        [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode]];
+    
+    for (NSString *localeID in localeIDs)
+    {
+        NSString *translationFilename = [NSString stringWithFormat:translationFilenameFormat, localeID];
+        NSString *translationPath = [[NSBundle mainBundle] pathForResource:translationFilename ofType:nil];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:translationPath])
+        {
+            self.gettextTranslation = [SYGettextTranslation gettextTranslationWithContentsOfFile:translationPath];
+            break;
+        }
+    }
+}
+
+- (NSString *)translationForKey:(NSString *)key
+{
+    return ([self.gettextTranslation translationForKey:key] ?: key);
 }
 
 #pragma mark - Hosts

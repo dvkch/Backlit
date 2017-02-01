@@ -1,0 +1,100 @@
+/* 
+  Localizable.strings
+  SaneScanner
+
+  Created by Stanislas Chevallier on 28/01/2017.
+  Copyright © 2017 Syan. All rights reserved.
+*/
+
+// Common actions
+"ACTION CANCEL"             = "Annuler";
+"ACTION CONTINUE"           = "Continuer";
+"ACTION CLOSE"              = "Fermer";
+"ACTION DELETE"             = "Supprimer";
+"ACTION REMOVE"             = "Supprimer";
+"ACTION SHARE"              = "Partager";
+"ACTION ADD"                = "Ajouter";
+"ACTION SCAN"               = "Scanner";
+"ACTION PRESS"              = "Presser";
+"ACTION SET VALUE"          = "Mettre à jour";
+"ACTION SET VALUE TO %@"    = "Définir : %@";
+
+"LOADING"           = "Chargement...";
+"SCANNING"          = "Acquisition...";
+"PREVIEWING"        = "Aperçu en cours...";
+
+// Errors
+"ERROR MESSAGE SANE ERROR"                  = "Erreur SANE";
+"ERROR MESSAGE USER CANCELLED"              = "Opération annulée";
+"ERROR MESSAGE DEVICE NOT OPENED"           = "Le périphérique n'est pas disponible";
+"ERROR MESSAGE GET VALUE TYPE BUTTON"       = "Ne peut pas lire la valeur d'une option de type boutton";
+"ERROR MESSAGE GET VALUE TYPE GROUP"        = "Ne peut pas lire la valeur d'une option de type groupe";
+"ERROR MESSAGE GET VALUE INACTIVE OPTION"   = "Ne peut pas lire la valeur d'une option inactive";
+"ERROR MESSAGE SET VALUE TYPE GROUP"        = "Ne peut pas définir la valeur d'une option de type groupe";
+"ERROR MESSAGE NO IMAGE DATA"               = "Pas de données image";
+"ERROR MESSAGE CANNOT GENERATE IMAGE"       = "L'image n'a pas pu être générée";
+"ERROR MESSAGE UNSUPPORTED CHANNELS"        = "Type d'image non supporté";
+
+
+// Devices list screen
+"DEVICES SECTION HOSTS"     = "Serveurs";
+"DEVICES SECTION DEVICES"   = "Périphériques";
+"DEVICES ROW ADD HOST"      = "Ajouter";
+
+// Device screen
+"DEVICE SECTION PREVIEW"        = "Aperçu";
+"DEVICE BUTTON UPDATE PREVIEW"  = "Générer l'aperçu";
+
+// Preferences
+"PREFERENCES TITLE"         = "Préférences";
+
+"PREFERENCES SECTION SCAN"      = "Acquisition";
+"PREFERENCES SECTION PREVIEW"   = "Aperçu";
+
+"PREFERENCES TITLE PREVIEW DEFAULT COLOR MODE"      = "Mode de couleurs par défaut";
+"PREFERENCES TITLE SHOW INCOMPLETE SCAN"            = "Afficher le scan incomplet";
+"PREFERENCES TITLE SHOW ADVANCED OPTIONS"           = "Afficher les options avancées";
+
+"PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE"    = "Utiliser le mode de couleur par défaut lors d'un aperçu, si l'option est disponible pour le périphérique en cours. Ceci permet d'avoir des aperçus cohérents quelles que soient les options que vous définissez, mais peut augmenter le temps d'acquisition.";
+"PREFERENCES MESSAGE SHOW INCOMPLETE SCAN"          = "Si activé, le rendu partiel du document sera affiché à l'écran pendant une opération d'acquisition ou d'aperçu. Cette option est déconseillée lors de l'acquisition avec une grande résolution ou sur les vieux appareils.";
+"PREFERENCES MESSAGE SHOW ADVANCED OPTIONS"         = "Certains périphériques ont des options avancées, utilisez ce réglage pour y accéder.";
+
+// Gallery
+"GALLERY EMPTY TITLE"       = "Pas de documents";
+"GALLERY EMPTY SUBTITLE"    = "Scannez un document en utilisant un des périphériques sur la gauche et il apparaitra ici";
+
+"shareview.title.select.plural"   = "%@ documents sélectionnés";
+"shareview.title.select.singular" = "%@ document sélectionné";
+
+// Gallery overview
+"GALLERY OVERVIEW TITLE"    = "Documents";
+
+// Dialogs
+"DIALOG TITLE ADD HOST"             = "Ajouter";
+"DIALOG MESSAGE ADD HOST"           = "Entrez le nom d'hôte ou l'adresse IP du nouvel hôte";
+
+"DIALOG TITLE AUTH"                 = "Authentification requise";
+"DIALOG MESSAGE AUTH %@"            = "Veuillez entrer votre nom d'utilisateur et mot de passe pour %@";
+
+"DIALOG TITLE DELETE SCAN"          = "Confirmation";
+"DIALOG MESSAGE DELETE SCAN"        = "Etes vous sûr de vouloir supprimer ce document ?";
+
+"DIALOG TITLE DELETE SCANS"         = "Confirmation";
+"DIALOG MESSAGE DELETE SCANS %d"    = "Etes vous sûr de vouloir supprimer %d documents ?";
+
+"DIALOG TITLE COULDNT OPEN DEVICE"  = "Accès au périphérique échoué";
+
+"DIALOG TITLE SCANNED IMAGE"    = "Document";
+
+// Constraints
+"OPTION CONSTRAINED LIST"                           = "Contraint à une liste";
+"OPTION CONSTRAINED RANGE"                          = "Contraint à un interval";
+"OPTION CONSTRAINED LIST %@"                        = "Contraint à la liste : %@";
+"OPTION CONSTRAINED RANGE FROM TO %@ %@"            = "Contraint à un interval entre %@ et %@";
+"OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@"    = "Contraint à un interval entre %@ et %@ par pas de %@";
+"OPTION CONSTRAINED NOT CONSTRAINED"                = "Sans contrainte";
+
+"OPTION BOOL ON"    = "On";
+"OPTION BOOL OFF"   = "Off";
+"OPTION VALUE AUTO" = "Auto";
+

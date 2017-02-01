@@ -57,6 +57,10 @@
         self.capSettableViaSoftware = opt->cap & SANE_CAP_SOFT_SELECT;
         self.capSettableViaHardware = opt->cap & SANE_CAP_HARD_SELECT;
         self.constraintType         = opt->constraint_type;
+        
+        self.name   = [[SYSaneHelper shared] translationForKey:self.name];
+        self.title  = [[SYSaneHelper shared] translationForKey:self.title];
+        self.desc   = [[SYSaneHelper shared] translationForKey:self.desc];
     }
     return self;
 }

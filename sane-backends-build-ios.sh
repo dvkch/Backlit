@@ -170,6 +170,13 @@ merge_libs 'sane' 'libsane-net.a'
 cp "${LIB_DIR}/armv7/include/sane/sane.h"     "${LIB_DIR}/all"
 cp "${LIB_DIR}/armv7/include/sane/saneopts.h" "${LIB_DIR}/all"
 
+# Copy translations
+TRANSLATIONS_PATH="${LIB_DIR}/all/translations"
+[ -d "${TRANSLATIONS_PATH}" ] || mkdir "${TRANSLATIONS_PATH}"
+cp "${SRC_DIR}"/po/*.po "${TRANSLATIONS_PATH}"
+cd "${TRANSLATIONS_PATH}"
+for f in *.po; do mv "$f" "sane_strings_$f"; done
+
 if [ $ONLY_NET -eq 0 ]; then
     cp "${LIB_DIR}/armv7/etc/sane.d/dll.conf"     "${LIB_DIR}/all"
 fi

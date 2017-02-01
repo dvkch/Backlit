@@ -16,6 +16,7 @@
 #import "SYPreferences.h"
 #import <Masonry.h>
 #import <UITableViewCell+SYKit.h>
+#import "SYSaneHelper.h"
 
 @interface SYOptionCell ()
 @property (nonatomic, strong) UILabel *labelTitle;
@@ -38,11 +39,13 @@
         
         self.labelTitle = [[UILabel alloc] init];
         [self.labelTitle setBackgroundColor:[UIColor clearColor]];
+        [self.labelTitle setNumberOfLines:0];
         [self.contentView addSubview:self.labelTitle];
         
         self.labelValue = [[UILabel alloc] init];
         [self.labelValue setBackgroundColor:[UIColor clearColor]];
         [self.labelValue setTextAlignment:NSTextAlignmentRight];
+        [self.labelValue setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
         [self.contentView addSubview:self.labelValue];
         
         self.labelDescr = [[UILabel alloc] init];

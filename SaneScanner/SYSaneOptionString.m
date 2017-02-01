@@ -26,10 +26,14 @@
         {
             NSMutableArray <NSString *> *values = [NSMutableArray array];
             uint i = 0;
-            while (opt->constraint.string_list[i]) {
+            while (opt->constraint.string_list[i])
+            {
                 NSString *value = [NSString stringWithCString:opt->constraint.string_list[i]
                                                      encoding:NSUTF8StringEncoding];
+
+                value = [[SYSaneHelper shared] translationForKey:value];
                 [values addObject:value];
+                
                 ++i;
             }
             self.constraintValues = [values copy];
@@ -74,9 +78,12 @@
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit
 {
+    NSString *stringValue = [value description];
+    stringValue = [[SYSaneHelper shared] translationForKey:stringValue];
+    
     NSMutableArray <NSString *> *parts = [NSMutableArray array];
     
-    if (value)                       [parts addObject:[value description]];
+    if (stringValue)                 [parts addObject:stringValue];
     if (self.unit != SANE_UNIT_NONE) [parts addObject:NSStringFromSANE_Unit(self.unit)];
     
     return [parts componentsJoinedByString:$$(" ")];

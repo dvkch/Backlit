@@ -39,12 +39,12 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncomplete
 {
     NSArray <NSString *> *previewKeys = @[NSStringFromSelector(@selector(previewWithAutoColorMode)),
                                           NSStringFromSelector(@selector(showIncompleteScanImages))];
-    SYPair<NSString *, NSArray <NSString *> *> *previewGroup = [SYPair pairWithObject:$("PREFERENCES SECTION SCAN") andObject:previewKeys];
+    SYPair<NSString *, NSArray <NSString *> *> *previewGroup = [SYPair pairWithObject:$("PREFERENCES SECTION PREVIEW") andObject:previewKeys];
 
     NSArray <NSString *> *deviceKeys = @[NSStringFromSelector(@selector(showAdvancedOptions))];
-    SYPair<NSString *, NSArray <NSString *> *> *deviceGroup = [SYPair pairWithObject:$("PREFERENCES SECTION PREVIEW") andObject:deviceKeys];
+    SYPair<NSString *, NSArray <NSString *> *> *deviceGroup = [SYPair pairWithObject:$("PREFERENCES SECTION SCAN") andObject:deviceKeys];
 
-    return @[deviceGroup, previewGroup];
+    return @[previewGroup, deviceGroup];
 }
 
 - (NSString *)titleForKey:(NSString *)key
