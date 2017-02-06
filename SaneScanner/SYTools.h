@@ -38,6 +38,8 @@ void logMemUsage(void);
 @interface SYTools : NSObject
 
 + (NSString *)documentsPath;
++ (NSString *)cachePath;
+
 + (NSString *)appSupportPath:(BOOL)create;
 + (NSString *)pathForFile:(NSString *)filename;
 + (void)createTestImages:(NSUInteger)count;

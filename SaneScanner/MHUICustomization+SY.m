@@ -31,7 +31,10 @@
     [theme setOverviewCollectionViewLayout:layout];
     
     MHGalleryCustomLocalizationBlock(^NSString *(NSString *stringToLocalize) {
-        return NSLocalizedString(stringToLocalize, nil);
+        NSString *translation = NSLocalizedString(stringToLocalize, nil);
+        if ([translation isEqualToString:stringToLocalize])
+            return nil;
+        return translation;
     });
     
     return theme;

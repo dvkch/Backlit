@@ -742,7 +742,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     [self scanWithDevice:device
          useScanCropArea:NO
            progressBlock:progressBlock
-            successBlock:^(UIImage *image, NSError *error)
+            successBlock:^(UIImage *image, SYSaneScanParameters *parameters, NSError *error)
     {
         previewImage = image;
         previewError = error;
@@ -772,7 +772,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 - (void)scanWithDevice:(SYSaneDevice *)device
          progressBlock:(void (^)(float, UIImage *))progressBlock
-          successBlock:(void (^)(UIImage *, NSError *))successBlock
+          successBlock:(void (^)(UIImage *, SYSaneScanParameters *, NSError *))successBlock
 {
     [self scanWithDevice:device
          useScanCropArea:YES
@@ -784,12 +784,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 - (void)scanWithDevice:(SYSaneDevice *)device
        useScanCropArea:(BOOL)useScanCropArea
          progressBlock:(void (^)(float, UIImage *))progressBlock
-          successBlock:(void (^)(UIImage *, NSError *))successBlock
+          successBlock:(void (^)(UIImage *, SYSaneScanParameters *, NSError *))successBlock
          useMainThread:(BOOL)useMainThread
 {
     if (![self isDeviceOpen:device]) {
         if (successBlock)
-            successBlock(nil, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
+            successBlock(nil, nil, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
         return;
     }
     
@@ -815,14 +815,14 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     if (s != SANE_STATUS_GOOD)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
     
     s = sane_set_io_mode(h, NO);
     if (s != SANE_STATUS_GOOD)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
     
@@ -854,17 +854,19 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         if (progressBlock && parameters.fileSize)
         {
             float progress = (double)data.length / (double)parameters.fileSize;
-            if ([[SYPreferences shared] showIncompleteScanImages] &&
-                progress > progressForLastIncompletePreview + incompletePreviewStep)
+            if ([[SYPreferences shared] showIncompleteScanImages])
             {
-                progressForLastIncompletePreview = progress;
-                
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    // image creation needs to be done on main thread
-                    UIImage *incompleteImage = [UIImage imageFromIncompleteRGBData:[data copy] saneParameters:parameters error:NULL];
-                    if (progressBlock)
-                        progressBlock(progress, incompleteImage);
-                });
+                if (progress > progressForLastIncompletePreview + incompletePreviewStep)
+                {
+                    progressForLastIncompletePreview = progress;
+                    
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        // image creation needs to be done on main thread
+                        UIImage *incompleteImage = [UIImage sy_imageFromIncompleteRGBData:[data copy] saneParameters:parameters error:NULL];
+                        if (progressBlock)
+                            progressBlock(progress, incompleteImage);
+                    });
+                }
             }
             else
                 RUN_BLOCK_ON_THREAD(YES, progressBlock, progress, nil);
@@ -902,14 +904,14 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
     if (s != SANE_STATUS_EOF)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError sy_errorWithSaneStatus:s]);
         return;
     }
 
     NSError *error;
-    UIImage *image = [UIImage imageFromRGBData:data saneParameters:parameters error:&error];
+    UIImage *image = [UIImage sy_imageFromRGBData:data saneParameters:parameters error:&error];
     
-    RUN_BLOCK_ON_THREAD(useMainThread, successBlock, image, error);
+    RUN_BLOCK_ON_THREAD(useMainThread, successBlock, image, parameters, error);
 }
 
 - (void)stopCurrentScan

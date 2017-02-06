@@ -5,6 +5,9 @@ PODS:
   - libextobjc/EXTScope (0.4.1):
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4.1)
+  - Mantle (2.1.0):
+    - Mantle/extobjc (= 2.1.0)
+  - Mantle/extobjc (2.1.0)
   - Masonry (1.0.2)
   - MHVideoPhotoGallery (2.2.5):
     - Masonry
@@ -24,6 +27,8 @@ PODS:
   - SYLogRedirect (1.2.5)
   - SYOperationQueue (1.0.1)
   - SYPair (1.2)
+  - SYPictureMetadata (1.4.1):
+    - Mantle
   - TTTAttributedLabel (1.13.3)
   - WeakUniqueCollection (0.2.1)
 
@@ -42,6 +47,7 @@ DEPENDENCIES:
   - SYLogRedirect
   - SYOperationQueue
   - SYPair
+  - SYPictureMetadata
   - WeakUniqueCollection
 
 EXTERNAL SOURCES:
@@ -55,6 +61,7 @@ SPEC CHECKSUMS:
   INSPullToRefresh: 112ae2c295d2b3a76daa9dff86e7ef40ed002c47
   JGMethodSwizzler: e0ea5c1c6c55304ec4ef3f54e441400c6735c899
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
+  Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MHVideoPhotoGallery: e5d82e4123ea3ba9159f49d3f64b603096697c63
   MHWDirectoryWatcher: ab18b84bbc0d6967822e05f456d1ba8bc755b218
@@ -67,9 +74,10 @@ SPEC CHECKSUMS:
   SYLogRedirect: da3e42582f1621bcb60c33704a3144059b42b87d
   SYOperationQueue: d8287745159c3776294bbb09eefd0c579153c7d7
   SYPair: 66926046f01e8e4c195b2694a5c63203c1130208
+  SYPictureMetadata: 40e148a01d1b2ec784eea6836bab37a44aa86b71
   TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
   WeakUniqueCollection: 58fa257bfdca7d2c0fc06060c28f5892bd66e80f
 
-PODFILE CHECKSUM: e2166202ebb8a8244f5fa342b7ffedce5803bd3a
+PODFILE CHECKSUM: 07b5c39acfb7a618c8c34c7ac6a32941df8047ce
 
 COCOAPODS: 1.2.0

@@ -16,6 +16,7 @@ target :'SaneScanner' do
 	pod 'SYOperationQueue'
 	pod 'WeakUniqueCollection'
 	pod 'libextobjc/EXTScope'
+	pod 'SYPictureMetadata'
 	pod 'MHVideoPhotoGallery', :podspec => "https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec"
 	pod 'MHWDirectoryWatcher', :podspec => "https://raw.githubusercontent.com/dvkch/MHWDirectoryWatcher/master/MHWDirectoryWatcher.podspec"
 end

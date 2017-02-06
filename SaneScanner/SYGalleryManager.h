@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @class MHGalleryItem;
 @class SYGalleryManager;
+@class SYMetadata;
 
 @protocol SYGalleryManagerDelegate <NSObject>
 @optional
@@ -35,7 +36,7 @@
 - (UIImage *)thumbnailForItem:(MHGalleryItem *)item;
 - (NSString *)dateStringForItem:(MHGalleryItem *)item;
 
-- (MHGalleryItem *)addImage:(UIImage *)image;
+- (MHGalleryItem *)addImage:(UIImage *)image metadata:(SYMetadata *)metadata;
 - (void)deleteItem:(MHGalleryItem *)item;
 
 - (CGSize)sizeOfItem:(MHGalleryItem *)item;

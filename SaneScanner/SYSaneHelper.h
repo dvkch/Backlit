@@ -11,6 +11,7 @@
 @class SYSaneDevice;
 @class SYSaneOption;
 @class SYSaneHelper;
+@class SYSaneScanParameters;
 
 @protocol SYSaneHelperDelegate <NSObject>
 
@@ -58,7 +59,7 @@ needsAuthForDevice:(NSString *)device
 
 - (void)scanWithDevice:(SYSaneDevice *)device
          progressBlock:(void(^)(float progress, UIImage *incompleteImage))progressBlock
-          successBlock:(void(^)(UIImage *image, NSError *error))successBlock;
+          successBlock:(void(^)(UIImage *image, SYSaneScanParameters *parameters, NSError *error))successBlock;
 
 - (void)stopCurrentScan;
 

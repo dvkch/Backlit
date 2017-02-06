@@ -1,0 +1,1 @@
+../../../SYPictureMetadata/SYPictureMetadata/SYMetadataGIF.h

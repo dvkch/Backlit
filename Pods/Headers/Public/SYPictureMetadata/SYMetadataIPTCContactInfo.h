@@ -1,0 +1,1 @@
+../../../SYPictureMetadata/SYPictureMetadata/SYMetadataIPTCContactInfo.h

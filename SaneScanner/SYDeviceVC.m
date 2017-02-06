@@ -32,6 +32,9 @@
 #import "SYRefreshControl.h"
 #import "UIViewController+SYKit.h"
 #import "SVProgressHUD+SY.h"
+#import <SYMetadata.h>
+#import "SYSaneScanParameters.h"
+#import "UIApplication+SY.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
@@ -142,6 +145,35 @@
     return self.optionGroups[indexPath.section-1].items[indexPath.row];
 }
 
+- (SYMetadata *)metadataForSaneParameters:(SYSaneScanParameters *)parameters
+{
+    SYSaneOptionNumber *optionResX = (SYSaneOptionNumber *)[self.device standardOption:SYSaneStandardOptionResolutionX];
+    SYSaneOptionNumber *optionResY = (SYSaneOptionNumber *)[self.device standardOption:SYSaneStandardOptionResolutionY];
+    SYSaneOptionNumber *optionRes  = (SYSaneOptionNumber *)[self.device standardOption:SYSaneStandardOptionResolution];
+    
+    NSNumber *resXinches = (optionResX.value ?: optionRes.value);
+    NSNumber *resYinches = (optionResY.value ?: optionRes.value);
+    
+    NSUInteger resXmeters = (NSUInteger)(resXinches.doubleValue / 2.54 * 100.);
+    NSUInteger resYmeters = (NSUInteger)(resYinches.doubleValue / 2.54 * 100.);
+    
+    SYMetadata *metadata = [[SYMetadata alloc] init];
+    
+    metadata.metadataTIFF = [[SYMetadataTIFF alloc] init];
+    [metadata.metadataTIFF setOrientation:@(SYPictureTiffOrientation_TopLeft)];
+    [metadata.metadataTIFF setMake:self.device.vendor];
+    [metadata.metadataTIFF setModel:self.device.model];
+    [metadata.metadataTIFF setSoftware:[[UIApplication sharedApplication] sy_localizedName]];
+    [metadata.metadataTIFF setXResolution:resXinches];
+    [metadata.metadataTIFF setYResolution:resYinches];
+    
+    metadata.metadataPNG = [[SYMetadataPNG alloc] init];
+    [metadata.metadataPNG setXPixelsPerMeter:(resXinches ? @(resXmeters) : nil)];
+    [metadata.metadataPNG setYPixelsPerMeter:(resYinches ? @(resYmeters) : nil)];
+    
+    return metadata;
+}
+
 #pragma mark - IBActions
 
 - (void)backButtonTap:(id)sender
@@ -158,13 +190,14 @@
     [SVProgressHUD showWithStatus:$("SCANNING")];
     [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
         [SVProgressHUD showProgress:progress];
-    } successBlock:^(UIImage *image, NSError *error)
+    } successBlock:^(UIImage *image, SYSaneScanParameters *parameters, NSError *error)
     {
         if (error)
             [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         else
         {
-            [[SYGalleryManager shared] addImage:image];
+            SYMetadata *metadata = [self metadataForSaneParameters:parameters];
+            [[SYGalleryManager shared] addImage:image metadata:metadata];
             [SVProgressHUD showSuccessWithStatus:nil duration:1];
         }
     }];
@@ -177,8 +210,8 @@
     __block MHGalleryItem *item;
     
     @weakify(self);
-    void(^block)(float progress, BOOL finished, UIImage *image, NSError *error) =
-    ^(float progress, BOOL finished, UIImage *image, NSError *error)
+    void(^block)(float progress, BOOL finished, UIImage *image, SYSaneScanParameters *parameters, NSError *error) =
+    ^(float progress, BOOL finished, UIImage *image, SYSaneScanParameters *parameters, NSError *error)
     {
         @strongify(self)
         // Finished with error
@@ -192,7 +225,8 @@
         // Finished without error
         if (finished)
         {
-            item = [[SYGalleryManager shared] addImage:image];
+            SYMetadata *metadata = [self metadataForSaneParameters:parameters];
+            item = [[SYGalleryManager shared] addImage:image metadata:metadata];
             [SVProgressHUD dismiss];
             [self updatePreviewImageCellWithImage:image];
         }
@@ -235,9 +269,9 @@
     
     [SVProgressHUD showWithStatus:$("SCANNING")];
     [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
-        block(progress, NO, incompleteImage, nil);
-    } successBlock:^(UIImage *image, NSError *error) {
-        block(1., YES, image, error);
+        block(progress, NO, incompleteImage, nil, nil);
+    } successBlock:^(UIImage *image,SYSaneScanParameters *parameters, NSError *error) {
+        block(1., YES, image, parameters, error);
     }];
 }
 
@@ -256,6 +290,10 @@
     UIActivityViewController *activityViewController =
     [[UIActivityViewController alloc] initWithActivityItems:@[item.URL]
                                       applicationActivities:nil];
+    [activityViewController setCompletionWithItemsHandler:^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
+        if (activityError)
+            [SVProgressHUD showErrorWithStatus:activityError.sy_alertMessage];
+    }];
     
     UIViewController *sourceVC = self.splitViewController;
     

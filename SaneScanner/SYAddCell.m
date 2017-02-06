@@ -21,9 +21,9 @@ static CGFloat const kPlusIconBorderWidth = 2.;
     UIColor *addGreyColor = [UIColor colorWithRed:199./255. green:199./255. blue:204./255. alpha:1.];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kPlusIconSize, kPlusIconSize)];
-    [imageView setImage:[UIImage addIconWithColor:addGreyColor
-                                             size:kPlusIconSize
-                                      borderWidth:kPlusIconBorderWidth]];
+    [imageView setImage:[UIImage sy_addIconWithColor:addGreyColor
+                                                size:kPlusIconSize
+                                         borderWidth:kPlusIconBorderWidth]];
     [self setAccessoryView:imageView];
     
     self.textLabel.text = text;

@@ -168,6 +168,16 @@ void logMemUsage(void) {
     return path;
 }
 
++ (NSString *)cachePath
+{
+    static dispatch_once_t onceToken;
+    static NSString *path = nil;
+    dispatch_once(&onceToken, ^{
+        path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject;
+    });
+    return path;
+}
+
 + (NSString *)appSupportPath:(BOOL)create
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);

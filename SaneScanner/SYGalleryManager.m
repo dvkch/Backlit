@@ -18,6 +18,7 @@
 #import <SYOperationQueue.h>
 #import <NSData+SYKit.h>
 #import <WeakUniqueCollection.h>
+#import <SYMetadata.h>
 
 static NSString * const kImageExtensionPNG = $$("png");
 static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
@@ -122,11 +123,16 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
 
 - (NSString *)pathForImageWithName:(NSString *)imageName thumbnail:(BOOL)thumbnail
 {
-    NSString *filename = imageName;
     if (thumbnail)
-        filename = [[filename stringByDeletingPathExtension] stringByAppendingPathExtension:kImageThumbsSuffix];
-    
-    return [[SYTools documentsPath] stringByAppendingPathComponent:filename];
+    {
+        return [[SYTools cachePath] stringByAppendingPathComponent:
+                [[imageName stringByDeletingPathExtension] stringByAppendingPathExtension:kImageThumbsSuffix]];
+    }
+    else
+    {
+        return [[SYTools documentsPath] stringByAppendingPathComponent:
+                imageName];
+    }
 }
 
 #pragma mark Listing
@@ -336,7 +342,7 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     return [dateFormatter stringFromDate:date];
 }
 
-- (MHGalleryItem *)addImage:(UIImage *)image
+- (MHGalleryItem *)addImage:(UIImage *)image metadata:(SYMetadata *)metadata
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:$$("yyyy-MM-dd_HH-mm-ss")];
@@ -346,7 +352,13 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     
     MHGalleryItem *item = [self galleryItemForImageWithName:imageName];
     
-    [UIImagePNGRepresentation(image) writeToFile:item.path atomically:YES];
+    NSData *imageData = UIImagePNGRepresentation(image);
+    NSData *imageDataWithMetadata;
+    if (metadata)
+        imageDataWithMetadata = [SYMetadata dataWithImageData:imageData andMetadata:metadata];
+    
+    NSData *dataToWrite = imageDataWithMetadata ?: imageData;
+    [dataToWrite writeToFile:item.path atomically:YES];
     [self generateThumbAsyncForItem:item fullImage:image tellDelegates:YES];
     
     return item;

@@ -12,9 +12,9 @@
 
 @implementation UIImage (SY)
 
-+ (UIImage *)imageFromRGBData:(NSData *)imageBytes
-               saneParameters:(SYSaneScanParameters *)parameters
-                        error:(NSError **)error
++ (UIImage *)sy_imageFromRGBData:(NSData *)imageBytes
+                  saneParameters:(SYSaneScanParameters *)parameters
+                           error:(NSError **)error
 {
     if (parameters.currentlyAcquiredChannel != SANE_FRAME_RGB &&
         parameters.currentlyAcquiredChannel != SANE_FRAME_GRAY)
@@ -123,7 +123,9 @@
     return image;
 }
 
-+ (UIImage *)imageFromIncompleteRGBData:(NSData *)data saneParameters:(SYSaneScanParameters *)parameters error:(NSError **)error
++ (UIImage *)sy_imageFromIncompleteRGBData:(NSData *)data
+                            saneParameters:(SYSaneScanParameters *)parameters
+                                     error:(NSError **)error
 {
     SYSaneScanParameters *incompleteParams = [SYSaneScanParameters parametersForIncompleteDataOfLength:data.length
                                                                                     completeParameters:parameters];
@@ -131,7 +133,9 @@
     if (!incompleteParams.fileSize)
         return nil;
     
-    UIImage *image = [self imageFromRGBData:data saneParameters:incompleteParams error:error];
+    UIImage *image = [self sy_imageFromRGBData:data
+                                saneParameters:incompleteParams
+                                         error:error];
     
     if (image)
     {
@@ -147,13 +151,17 @@
     return image;
 }
 
-+ (UIImage *)addIconWithColor:(UIColor *)color
++ (UIImage *)sy_addIconWithColor:(UIColor *)color
 {
     // iOS defaults @2x for UIBarButtonItemSystemAdd
-    return [self addIconWithColor:color size:35. borderWidth:3.];
+    return [self sy_addIconWithColor:color
+                                size:35.
+                         borderWidth:3.];
 }
 
-+ (UIImage *)addIconWithColor:(UIColor *)color size:(CGFloat)size borderWidth:(CGFloat)borderWidth
++ (UIImage *)sy_addIconWithColor:(UIColor *)color
+                            size:(CGFloat)size
+                     borderWidth:(CGFloat)borderWidth
 {
     CGRect verticalRect   = CGRectMake((size - borderWidth)/2., 0, borderWidth, size);
     CGRect horizontalRect = CGRectMake(0, (size - borderWidth)/2., size, borderWidth);
