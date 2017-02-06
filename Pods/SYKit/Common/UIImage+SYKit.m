@@ -219,4 +219,27 @@ CGContextRef NYXImageCreateARGBBitmapContext(const size_t width, const size_t he
     return imageSize;
 }
 
+// http://stackoverflow.com/a/5860390/1439489
++ (UIImage *)sy_imageThumbnailForFileAtPath:(NSString *)filePath maxEdgeSize:(CGFloat)maxEdgeSize
+{
+    CGImageSourceRef imageSource = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:filePath], NULL);
+    if (!imageSource)
+        return nil;
+    
+    NSDictionary *options = @{(id)kCGImageSourceCreateThumbnailWithTransform:       (id)kCFBooleanTrue,
+                              (id)kCGImageSourceCreateThumbnailFromImageIfAbsent:   (id)kCFBooleanTrue,
+                              (id)kCGImageSourceThumbnailMaxPixelSize:              @(maxEdgeSize)};
+    
+    CGImageRef thumbRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (CFDictionaryRef)options);
+    if (!thumbRef)
+        return nil;
+    
+    UIImage *thumb = [UIImage imageWithCGImage:thumbRef];
+    
+    CGImageRelease(thumbRef);
+    CFRelease(imageSource);
+    
+    return thumb;
+}
+
 @end

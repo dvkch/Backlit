@@ -9,10 +9,12 @@
 #import "UIImage+SY.h"
 #import "SYSaneScanParameters.h"
 #import <ImageIO/ImageIO.h>
+#import "SYTools.h"
 
 @implementation UIImage (SY)
 
 + (UIImage *)sy_imageFromRGBData:(NSData *)imageBytes
+                       orFileURL:(NSURL *)fileURL
                   saneParameters:(SYSaneScanParameters *)parameters
                            error:(NSError **)error
 {
@@ -24,7 +26,7 @@
         return nil;
     }
     
-    if (!imageBytes) {
+    if (!imageBytes && ![[NSFileManager defaultManager] fileExistsAtPath:fileURL.path]) {
         if (error) *error = [NSError sy_errorWithCode:SYErrorCode_NoImageData];
         return nil;
     }
@@ -42,11 +44,15 @@
         return nil;
     }
     
-    CGDataProviderRef provider =
-    CGDataProviderCreateWithData(NULL,
-                                 imageBytes.bytes,
-                                 imageBytes.length,
-                                 NULL);
+    
+    CGDataProviderRef provider = NULL;
+    if (fileURL)
+        provider = CGDataProviderCreateWithURL((CFURLRef)fileURL);
+    else
+        provider = CGDataProviderCreateWithData(NULL,
+                                                imageBytes.bytes,
+                                                imageBytes.length,
+                                                NULL);
     
     CGImageRef sourceImageRef =
     CGImageCreate(parameters.width,
@@ -68,6 +74,13 @@
         return nil;
     }
     
+    /*
+    UIImage *img = [UIImage imageWithCGImage:sourceImageRef
+                                         scale:1.
+                                   orientation:UIImageOrientationUp];
+    return img;
+     */
+    
     CGBitmapInfo destBitmapInfo = (kCGBitmapByteOrderDefault | kCGImageAlphaNoneSkipLast);
     int destNumberOfComponents = 4;
     
@@ -77,18 +90,8 @@
         destNumberOfComponents = 1;
     }
     
-    void* pixels = malloc(parameters.width * parameters.height * destNumberOfComponents);
-    
-    if (!pixels) {
-        if (error) *error = [NSError sy_errorWithCode:SYErrorCode_CannotGenerateImage];
-        CGDataProviderRelease(provider);
-        CGColorSpaceRelease(colorSpaceRef);
-        CGImageRelease(sourceImageRef);
-        return nil;
-    }
-
     CGContextRef context =
-    CGBitmapContextCreate(pixels,
+    CGBitmapContextCreate(NULL, // let iOS deal with allocating the memory
                           parameters.width,
                           parameters.height,
                           8,
@@ -101,7 +104,6 @@
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
         CGImageRelease(sourceImageRef);
-        free(pixels);
         return nil;
     }
     
@@ -118,12 +120,12 @@
     CGImageRelease(sourceImageRef);
     CGImageRelease(destImageRef);
     CGContextRelease(context);
-    free(pixels);
     
     return image;
 }
 
 + (UIImage *)sy_imageFromIncompleteRGBData:(NSData *)data
+                                 orFileURL:(NSURL *)fileURL
                             saneParameters:(SYSaneScanParameters *)parameters
                                      error:(NSError **)error
 {
@@ -134,6 +136,7 @@
         return nil;
     
     UIImage *image = [self sy_imageFromRGBData:data
+                                     orFileURL:fileURL
                                 saneParameters:incompleteParams
                                          error:error];
     
@@ -179,6 +182,30 @@
     UIGraphicsEndImageContext();
     
     return img;
+}
+
+// TODO: work on big images
++ (void)sy_convertTempImage
+{
+    SYSaneScanParameters *params = [[SYSaneScanParameters alloc] init];
+    params.acquiringLastChannel = YES;
+    params.currentlyAcquiredChannel = SANE_FRAME_RGB;
+    params.width = 10208;
+    params.height = 14032;
+    params.bytesPerLine = params.width * 3;
+    params.depth = 8;
+    
+    
+    NSString *sourceFileName = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.tmp")];
+    NSString *destinationFileName = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.png")];
+    
+    NSDate *date = [NSDate date];
+    
+    UIImage *img = [self sy_imageFromRGBData:nil orFileURL:[NSURL fileURLWithPath:sourceFileName] saneParameters:params error:NULL];
+    NSData *data = UIImagePNGRepresentation(img);
+    [data writeToFile:destinationFileName atomically:YES];
+    
+    NSLog($$("-> %@ in %.03lfs"), img, [[NSDate date] timeIntervalSinceDate:date]);
 }
 
 @end

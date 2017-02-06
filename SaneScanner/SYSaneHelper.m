@@ -830,11 +830,6 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     sane_get_parameters(h, &estimatedParams);
     SYSaneScanParameters *estimatedParameters = [[SYSaneScanParameters alloc] initWithCParams:estimatedParams];
     
-    // TODO: handle big scans gracefully, for instance scan to file directly, and generate image only if device seems capable
-    
-    //NSString *filename = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.tmp")];
-    //NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filename];
-    
     NSMutableData *data = [NSMutableData dataWithCapacity:estimatedParameters.fileSize];
     SANE_Int bufferMaxSize = MAX(100*1000, (int)estimatedParameters.fileSize / 100);
     SANE_Byte *buffer = malloc(bufferMaxSize);
@@ -862,7 +857,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
                     
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         // image creation needs to be done on main thread
-                        UIImage *incompleteImage = [UIImage sy_imageFromIncompleteRGBData:[data copy] saneParameters:parameters error:NULL];
+                        UIImage *incompleteImage = [UIImage sy_imageFromIncompleteRGBData:[data copy] orFileURL:nil saneParameters:parameters error:NULL];
                         if (progressBlock)
                             progressBlock(progress, incompleteImage);
                     });
@@ -909,7 +904,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     }
 
     NSError *error;
-    UIImage *image = [UIImage sy_imageFromRGBData:data saneParameters:parameters error:&error];
+    UIImage *image = [UIImage sy_imageFromRGBData:data orFileURL:nil saneParameters:parameters error:&error];
     
     RUN_BLOCK_ON_THREAD(useMainThread, successBlock, image, parameters, error);
 }

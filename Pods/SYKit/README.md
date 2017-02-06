@@ -123,6 +123,8 @@ Some methods to play with images, mainly to create resized copies of images or n
 	// access image size without loading it into memory
 	+ (CGSize)sy_sizeOfImageAtURL:(NSURL *)url
 
+	// uses way less memory than usual methods for big images
+	+ (UIImage *)sy_imageThumbnailForFileAtPath:(NSString *)filePath maxEdgeSize:(CGFloat)maxEdgeSize;
 
 ####SYSearchBar
 

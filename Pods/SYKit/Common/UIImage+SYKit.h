@@ -28,6 +28,10 @@
 + (UIImage *)sy_imageWithColor:(UIColor *)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius;
 - (UIImage *)sy_imageWithAngle:(CGFloat)angle;
 
+// doesn't need to read the whole file, just metadata
 + (CGSize)sy_sizeOfImageAtURL:(NSURL *)url;
+
+// uses way less memory than usual methods for big images
++ (UIImage *)sy_imageThumbnailForFileAtPath:(NSString *)filePath maxEdgeSize:(CGFloat)maxEdgeSize;
 
 @end

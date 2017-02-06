@@ -25,6 +25,8 @@
 #import "MHUICustomization+SY.h"
 #import <SDImageCache.h>
 #import <SYWindow.h>
+#import "UIImage+SY.h"
+#import "MHGalleryItem+SY.h"
 
 @interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate>
 @property (nonatomic, strong) SYSplitVC *splitViewController;

@@ -22,6 +22,7 @@
 
 static NSString * const kImageExtensionPNG = $$("png");
 static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
+static NSString * const kImageThumbsFolder = $$("thumbs");
 
 
 @interface SYGalleryManager ()
@@ -51,6 +52,13 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     self = [super init];
     if (self)
     {
+        // create folder for thumbanils if needed
+        NSError *error;
+        [[NSFileManager defaultManager] createDirectoryAtPath:[self thumbnailsFolderPath]
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:&error];
+        
         // donnot use a set as it would work only with a collection of non mutable objects. here the pointer to delegate can change
         self.delegates = [[WeakUniqueCollection alloc] init];
         
@@ -121,18 +129,20 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
 
 #pragma mark Paths
 
+- (NSString *)thumbnailsFolderPath
+{
+    return [[SYTools cachePath] stringByAppendingPathComponent:kImageThumbsFolder];
+}
+
 - (NSString *)pathForImageWithName:(NSString *)imageName thumbnail:(BOOL)thumbnail
 {
     if (thumbnail)
     {
-        return [[SYTools cachePath] stringByAppendingPathComponent:
-                [[imageName stringByDeletingPathExtension] stringByAppendingPathExtension:kImageThumbsSuffix]];
+        NSString *filename = [[imageName stringByDeletingPathExtension] stringByAppendingPathExtension:kImageThumbsSuffix];
+        return [[self thumbnailsFolderPath] stringByAppendingPathComponent:filename];
     }
-    else
-    {
-        return [[SYTools documentsPath] stringByAppendingPathComponent:
-                imageName];
-    }
+    
+    return [[SYTools documentsPath] stringByAppendingPathComponent:imageName];
 }
 
 #pragma mark Listing
@@ -240,29 +250,36 @@ static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
     }
     
     [self.thumbsQueue addOperationWithBlock:^{
-        UIImage *thumb;
         
-        @autoreleasepool {
-            UIImage *image = fullImage;
-            if (!image)
-            {
-                NSData *data = [NSData dataWithContentsOfFile:item.path options:(NSDataReadingMappedIfSafe) error:NULL];
-                
-                if (![data sy_imageDataIsValidPNG]) {
-                    [self.thumbsBeingCreated removeObject:item.imageName];
-                    return;
+        // this first method is a bit longer to generate images, but uses far less memory on the device
+        UIImage *thumb = [UIImage sy_imageThumbnailForFileAtPath:item.URL.path maxEdgeSize:200];
+        
+        // in case the first method fails we do it the old way
+        if (!thumb)
+        {
+            @autoreleasepool {
+                UIImage *image = fullImage;
+                if (!image)
+                {
+                    NSData *data = [NSData dataWithContentsOfFile:item.path options:(NSDataReadingMappedIfSafe) error:NULL];
+                    
+                    if (![data sy_imageDataIsValidPNG]) {
+                        [self.thumbsBeingCreated removeObject:item.imageName];
+                        return;
+                    }
+                    
+                    image = [UIImage imageWithData:data];
                 }
                 
-                image = [UIImage imageWithData:data];
+                if (image.size.width > image.size.height)
+                    thumb = [image sy_imageResizedHeightTo:200];
+                else
+                    thumb = [image sy_imageResizedWidthTo:200];
             }
-            
-            if (image.size.width > image.size.height)
-                thumb = [image sy_imageResizedHeightTo:200];
-            else
-                thumb = [image sy_imageResizedWidthTo:200];
-            
-            [UIImageJPEGRepresentation(thumb, 0.6) writeToURL:item.thumbnailURL atomically:YES];
         }
+        
+        if (thumb)
+            [UIImageJPEGRepresentation(thumb, 0.6) writeToURL:item.thumbnailURL atomically:YES];
         
         if (!thumb) {
             [self.thumbsBeingCreated removeObject:item.imageName];
