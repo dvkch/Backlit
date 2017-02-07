@@ -117,7 +117,6 @@ static CGFloat const kMargin = 15.;
 
 - (void)refresh
 {
-    //self.cropMaskView.hidden = !self.device.lastPreviewImage || !self.device.canCrop;
     self.cropMaskView.hidden = !self.device.canCrop;
     [self.imageView setImage:self.device.lastPreviewImage];
     [self.cropMaskView setCropArea:self.device.cropArea andMaxCropArea:self.device.maxCropArea];
@@ -127,11 +126,6 @@ static CGFloat const kMargin = 15.;
 {
     self->_device = device;
     [self refresh];
-}
-
-- (void)setScanImage:(UIImage *)scanImage
-{
-    [self.imageView setImage:scanImage];
 }
 
 #pragma mark - IBActions

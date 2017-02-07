@@ -57,6 +57,9 @@
             self.devices = devices;
             [self.tableView reloadData];
             
+            // in case it was opened (e.g. for screenshots)
+            [SVProgressHUD dismiss];
+            
             if (error)
                 [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         }];
@@ -263,7 +266,9 @@ needsAuthForDevice:(NSString *)device
     [SVProgressHUD showWithStatus:$("LOADING")];
     [[SYSaneHelper shared] openDevice:device block:^(NSError *error)
     {
-        [SVProgressHUD dismiss];
+        if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_None)
+            [SVProgressHUD dismiss];
+        
         if (error)
         {
             [[[UIAlertView alloc] initWithTitle:$("DIALOG TITLE COULDNT OPEN DEVICE")

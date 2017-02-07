@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum : NSUInteger {
+    SYSnapshotType_None,
+    SYSnapshotType_DevicePreview,
+    SYSnapshotType_DeviceOptions,
+    SYSnapshotType_DeviceOptionPopup,
+    SYSnapshotType_Other,
+} SYSnapshotType;
+
 @interface SYAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, assign, readonly) SYSnapshotType snapshotType;
 
 + (instancetype)obtain;
 

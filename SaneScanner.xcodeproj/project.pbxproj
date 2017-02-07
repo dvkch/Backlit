@@ -43,11 +43,14 @@
 		9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */; };
 		9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */; };
+		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
+		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		97BB76F41C89169F00A0823A /* SYSaneScanParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */; };
 		97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */; };
 		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
 		97DA07151C989318007F522E /* SYToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07141C989318007F522E /* SYToolbar.m */; };
 		97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E2EE601CCD451700FA95AF /* SYGridLayout.m */; };
+		97EDB9191E4924D40012CB7E /* SaneScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */; };
 		97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */; };
 		F804E0711AFA4AF300CBE307 /* libsane-dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06C1AFA4AF300CBE307 /* libsane-dll.a */; };
 		F804E0721AFA4AF300CBE307 /* libsane-net.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F804E06D1AFA4AF300CBE307 /* libsane-net.a */; };
@@ -63,6 +66,16 @@
 		F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */; };
 		F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		97EDB91B1E4924D40012CB7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8CBD20C1AF9A58C00B4C221;
+			remoteInfo = SaneScanner;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4F576EA538D7D9C5B8AF9E6E /* libPods-SaneScanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SaneScanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +150,7 @@
 		9785C5671E3D247A006CD4F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9785C5691E3E1754006CD4F1 /* UIApplication+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+SY.h"; sourceTree = "<group>"; };
 		9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+SY.m"; sourceTree = "<group>"; };
+		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		97BB76F21C89169F00A0823A /* SYSaneScanParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneScanParameters.h; sourceTree = "<group>"; };
 		97BB76F31C89169F00A0823A /* SYSaneScanParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneScanParameters.m; sourceTree = "<group>"; };
 		97D430FB1E3B9CF100B8E9C0 /* SYOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYOverviewController.h; sourceTree = "<group>"; };
@@ -147,6 +161,9 @@
 		97DA07141C989318007F522E /* SYToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYToolbar.m; sourceTree = "<group>"; };
 		97E2EE5F1CCD451700FA95AF /* SYGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGridLayout.h; sourceTree = "<group>"; };
 		97E2EE601CCD451700FA95AF /* SYGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGridLayout.m; sourceTree = "<group>"; };
+		97EDB9161E4924D40012CB7E /* SaneScannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaneScannerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaneScannerUITests.swift; sourceTree = "<group>"; };
+		97EDB91A1E4924D40012CB7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SYKit.h"; sourceTree = "<group>"; };
 		97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SYKit.m"; sourceTree = "<group>"; };
 		F804E06C1AFA4AF300CBE307 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/libsane-dll.a"; sourceTree = "<group>"; };
@@ -177,6 +194,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		97EDB9131E4924D40012CB7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8CBD20A1AF9A58C00B4C221 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -286,6 +310,16 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		97EDB9171E4924D40012CB7E /* SaneScannerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */,
+				97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */,
+				97EDB91A1E4924D40012CB7E /* Info.plist */,
+			);
+			path = SaneScannerUITests;
+			sourceTree = "<group>";
+		};
 		F804E07A1AFA56A500CBE307 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +398,7 @@
 			children = (
 				F86584871AF9A9FB0028E039 /* sane-libs */,
 				F8CBD20F1AF9A58C00B4C221 /* SaneScanner */,
+				97EDB9171E4924D40012CB7E /* SaneScannerUITests */,
 				F8CBD20E1AF9A58C00B4C221 /* Products */,
 				1D470155F708E88FADB3A792 /* Pods */,
 				06F2387C18FBB76B71AD189B /* Frameworks */,
@@ -374,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */,
+				97EDB9161E4924D40012CB7E /* SaneScannerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -412,6 +448,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		97EDB9151E4924D40012CB7E /* SaneScannerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97EDB91F1E4924D40012CB7E /* Build configuration list for PBXNativeTarget "SaneScannerUITests" */;
+			buildPhases = (
+				97EDB9121E4924D40012CB7E /* Sources */,
+				97EDB9131E4924D40012CB7E /* Frameworks */,
+				97EDB9141E4924D40012CB7E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97EDB91C1E4924D40012CB7E /* PBXTargetDependency */,
+			);
+			name = SaneScannerUITests;
+			productName = SaneScannerUITests;
+			productReference = 97EDB9161E4924D40012CB7E /* SaneScannerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		F8CBD20C1AF9A58C00B4C221 /* SaneScanner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8CBD2301AF9A58C00B4C221 /* Build configuration list for PBXNativeTarget "SaneScanner" */;
@@ -441,9 +495,16 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SY;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
+					97EDB9151E4924D40012CB7E = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 79RY8264V4;
+						ProvisioningStyle = Automatic;
+						TestTargetID = F8CBD20C1AF9A58C00B4C221;
+					};
 					F8CBD20C1AF9A58C00B4C221 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 79RY8264V4;
@@ -465,11 +526,20 @@
 			projectRoot = "";
 			targets = (
 				F8CBD20C1AF9A58C00B4C221 /* SaneScanner */,
+				97EDB9151E4924D40012CB7E /* SaneScannerUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		97EDB9141E4924D40012CB7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8CBD20B1AF9A58C00B4C221 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -559,6 +629,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		97EDB9121E4924D40012CB7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97EDB9191E4924D40012CB7E /* SaneScannerUITests.swift in Sources */,
+				9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8CBD2091AF9A58C00B4C221 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -615,6 +694,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		97EDB91C1E4924D40012CB7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8CBD20C1AF9A58C00B4C221 /* SaneScanner */;
+			targetProxy = 97EDB91B1E4924D40012CB7E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		9785C5681E3D247A006CD4F1 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -628,6 +715,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		97EDB91D1E4924D40012CB7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				INFOPLIST_FILE = SaneScannerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScannerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SaneScanner;
+			};
+			name = Debug;
+		};
+		97EDB91E1E4924D40012CB7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				INFOPLIST_FILE = SaneScannerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScannerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SaneScanner;
+			};
+			name = Release;
+		};
 		F8CBD22E1AF9A58C00B4C221 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -778,6 +901,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		97EDB91F1E4924D40012CB7E /* Build configuration list for PBXNativeTarget "SaneScannerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97EDB91D1E4924D40012CB7E /* Debug */,
+				97EDB91E1E4924D40012CB7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F8CBD2081AF9A58C00B4C221 /* Build configuration list for PBXProject "SaneScanner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -27,6 +27,8 @@
 #import <SYWindow.h>
 #import "UIImage+SY.h"
 #import "MHGalleryItem+SY.h"
+#import "SYPreferences.h"
+#import "SYSaneHelper.h"
 
 @interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate>
 @property (nonatomic, strong) SYSplitVC *splitViewController;
@@ -85,6 +87,26 @@
     
     // auto manage toolbar visibility
     [[SYGalleryManager shared] addDelegate:self];
+    
+    // Snapshots
+    {
+        if ([[NSProcessInfo processInfo].arguments containsObject:$$("DOING_SNAPSHOT")])
+        {
+            self->_snapshotType = SYSnapshotType_Other;
+            [[SYSaneHelper shared] clearHosts];
+            [[SYSaneHelper shared] addHost:$$("192.168.1.42")];
+            [SVProgressHUD show];
+        }
+        
+        if ([[NSProcessInfo processInfo].arguments containsObject:$$("SNAPSHOT_PREVIEW")])
+            self->_snapshotType = SYSnapshotType_DevicePreview;
+        
+        if ([[NSProcessInfo processInfo].arguments containsObject:$$("SNAPSHOT_OPTIONS")])
+            self->_snapshotType = SYSnapshotType_DeviceOptions;
+        
+        if ([[NSProcessInfo processInfo].arguments containsObject:$$("SNAPSHOT_OPTION_POPUP")])
+            self->_snapshotType = SYSnapshotType_DeviceOptionPopup;
+    }
     
     return YES;
 }

@@ -45,9 +45,9 @@
     [self.previewView setDevice:device];
 }
 
-- (void)setScanImage:(UIImage *)scanImage
+- (void)refresh
 {
-    [self.previewView setScanImage:scanImage];
+    [self.previewView refresh];
 }
 
 + (CGFloat)cellHeightForDevice:(SYSaneDevice *)device

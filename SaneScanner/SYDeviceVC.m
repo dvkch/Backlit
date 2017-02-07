@@ -106,6 +106,38 @@
     [[SYSaneHelper shared] closeDevice:self.device];
 }
 
+#pragma mark - Snapshots
+
+- (void)prepareForSnapshotting
+{
+    if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_None)
+        return;
+    
+    if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DevicePreview)
+    {
+        CGRect rect = CGRectMake(0.1, 0.2, 0.8, 0.6);
+        self.device.lastPreviewImage = [UIImage imageNamed:$$("test_scan_image")];
+        [self updatePreviewCellWithCropAreaPercent:rect];
+    }
+    
+    if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptions)
+    {
+        NSIndexPath *firstOption = [NSIndexPath indexPathForRow:0 inSection:1];
+        [self.tableView scrollToRowAtIndexPath:firstOption atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
+    
+    if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptionPopup)
+    {
+        NSIndexPath *firstOption = [NSIndexPath indexPathForRow:0 inSection:1];
+        [self.tableView scrollToRowAtIndexPath:firstOption atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self tableView:self.tableView didSelectRowAtIndexPath:firstOption];
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
+}
+
 #pragma mark - Data
 
 - (void)setDevice:(SYSaneDevice *)device
@@ -127,6 +159,10 @@
         [self.tableView reloadData];
         self.refreshing = NO;
         [self.tableView ins_endPullToRefresh];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self prepareForSnapshotting];
+        });
     }];
 }
 
@@ -137,12 +173,20 @@
 
 - (SYSaneOptionGroup *)optionGroupForTableViewSection:(NSUInteger)section
 {
+    if (section >= self.optionGroups.count)
+        return nil;
+
     return self.optionGroups[section-1];
 }
 
 - (SYSaneOption *)optionForTableViewIndexPath:(NSIndexPath *)indexPath
 {
-    return self.optionGroups[indexPath.section-1].items[indexPath.row];
+    SYSaneOptionGroup *group = [self optionGroupForTableViewSection:indexPath.section];
+    
+    if (indexPath.row >= group.items.count)
+        return nil;
+    
+    return group.items[indexPath.row];
 }
 
 - (SYMetadata *)metadataForSaneParameters:(SYSaneScanParameters *)parameters
@@ -306,6 +350,29 @@
     [sourceVC presentViewController:activityViewController animated:YES completion:nil];
 }
 
+- (void)updatePreviewCellWithCropAreaPercent:(CGRect)rect
+{
+    if (!self.device.canCrop)
+        return;
+    
+    SYPreviewCell *previewCell;
+    
+    for (UITableViewCell *cell in self.tableView.visibleCells)
+        if ([cell isKindOfClass:[SYPreviewCell class]])
+            previewCell = (SYPreviewCell *)cell;
+    
+    if (!previewCell)
+        return;
+    
+    CGRect cropArea = CGRectMake(self.device.maxCropArea.origin.x + CGRectGetWidth (self.device.maxCropArea) * rect.origin.x,
+                                 self.device.maxCropArea.origin.y + CGRectGetHeight(self.device.maxCropArea) * rect.origin.y,
+                                 CGRectGetWidth (self.device.maxCropArea) * rect.size.width,
+                                 CGRectGetHeight(self.device.maxCropArea) * rect.size.height);
+    
+    self.device.cropArea = CGRectIntersection(self.device.maxCropArea, cropArea);
+    [previewCell refresh];
+}
+
 - (void)updatePreviewImageCellWithImage:(UIImage *)image
 {
     // update only if we scanned without cropping
@@ -325,7 +392,8 @@
     if (!previewCell)
         return;
     
-    [previewCell setScanImage:image];
+    self.device.lastPreviewImage = image;
+    [previewCell refresh];
 }
 
 #pragma mark - UITableViewDataSource
@@ -400,6 +468,8 @@
         return;
     
     SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
+    if (!opt)
+        return;
     
     [SYSaneOptionUI showDetailsAndInputForOption:opt block:^(BOOL reloadAllOptions, NSError *error) {
         if (reloadAllOptions)

@@ -199,7 +199,6 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     [self.hosts addObject:host];
     [self commitHosts];
-    [self updateDevices:nil];
 }
 
 - (void)removeHost:(NSString *)host
@@ -209,7 +208,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     [self.hosts removeObject:host];
     [self commitHosts];
-    [self updateDevices:nil];
+}
+
+- (void)clearHosts
+{
+    [self.hosts removeAllObjects];
+    [self commitHosts];
 }
 
 - (void)commitHosts

@@ -37,6 +37,7 @@ needsAuthForDevice:(NSString *)device
 - (NSArray <NSString *> *)allHosts;
 - (void)addHost:(NSString *)host;
 - (void)removeHost:(NSString *)host;
+- (void)clearHosts;
 
 - (void)updateDevices:(void(^)(NSArray <SYSaneDevice *> *devices, NSError *error))block;
 
