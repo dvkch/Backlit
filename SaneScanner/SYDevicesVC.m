@@ -88,7 +88,10 @@
 
 - (void)buttonSettingsTap:(id)sender
 {
-    [SYPrefVC showOnVC:self closeBlock:nil];
+    SYPrefVC *prefVC = [[SYPrefVC alloc] init];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:prefVC];
+    [nc setModalPresentationStyle:UIModalPresentationFormSheet];
+    [self presentViewController:nc animated:YES completion:nil];
 }
 
 #pragma mark - SYSaneHelperDelegate

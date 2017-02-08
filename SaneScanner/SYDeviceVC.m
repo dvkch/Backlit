@@ -93,6 +93,11 @@
         @strongify(self)
         [self refresh];
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(prefsChangedNotification:)
+                                                 name:SYPreferencesChangedNotification
+                                               object:nil];
 
     // prevent tableView width to be 0 and have a constraint issue when computing cell size
     [self.view layoutIfNeeded];
@@ -104,6 +109,7 @@
 - (void)dealloc
 {
     [[SYSaneHelper shared] closeDevice:self.device];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SYPreferencesChangedNotification object:nil];
 }
 
 #pragma mark - Snapshots
@@ -120,8 +126,13 @@
         [self updatePreviewCellWithCropAreaPercent:rect];
     }
     
-    if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptions)
+    if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptions ||
+        [SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptionPopup)
     {
+        CGRect rect = CGRectMake(0.1, 0.2, 0.8, 0.6);
+        self.device.lastPreviewImage = [UIImage imageNamed:$$("test_scan_image")];
+        [self updatePreviewCellWithCropAreaPercent:rect];
+        
         NSIndexPath *firstOption = [NSIndexPath indexPathForRow:0 inSection:1];
         [self.tableView scrollToRowAtIndexPath:firstOption atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
@@ -129,7 +140,6 @@
     if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptionPopup)
     {
         NSIndexPath *firstOption = [NSIndexPath indexPathForRow:0 inSection:1];
-        [self.tableView scrollToRowAtIndexPath:firstOption atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [self tableView:self.tableView didSelectRowAtIndexPath:firstOption];
     }
     
@@ -216,6 +226,13 @@
     [metadata.metadataPNG setYPixelsPerMeter:(resYinches ? @(resYmeters) : nil)];
     
     return metadata;
+}
+
+#pragma mark - Notifications
+
+- (void)prefsChangedNotification:(NSNotification *)notification
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark - IBActions
@@ -321,9 +338,10 @@
 
 - (void)buttonSettingsTap:(id)sender
 {
-    [SYPrefVC showOnVC:self closeBlock:^{
-        [self.tableView reloadData];
-    }];
+    SYPrefVC *prefVC = [[SYPrefVC alloc] init];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:prefVC];
+    [nc setModalPresentationStyle:UIModalPresentationFormSheet];
+    [self presentViewController:nc animated:YES completion:nil];
 }
 
 - (void)shareItem:(MHGalleryItem *)item

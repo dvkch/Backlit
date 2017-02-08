@@ -12,13 +12,16 @@
 #import "SYOptionCell.h"
 #import <UIImage+SYKit.h>
 #import "UIImage+SY.h"
+#import "UIApplication+SY.h"
+#import "SYEmailHelper.h"
+
+static NSString * const kContactAddress = $$("contact@syan.me");
 
 @interface SYPrefVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIBarButtonItem *buttonClose;
 @property (nonatomic, strong) NSArray<SYPair<NSString *, NSArray<NSString *> *> *> *keysGroups;
-@property (nonatomic, copy) void(^closeBlock)(void);
 
 @end
 
@@ -30,15 +33,6 @@
                                                                style:UIBarButtonItemStylePlain
                                                               target:target action:action];
     return button;
-}
-
-+ (void)showOnVC:(UIViewController *)vc closeBlock:(void(^)(void))closeBlock
-{
-    SYPrefVC *prefVC = [[self alloc] init];
-    [prefVC setCloseBlock:closeBlock];
-    
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:prefVC];
-    [vc presentViewController:nc animated:YES completion:nil];
 }
 
 - (void)viewDidLoad
@@ -69,9 +63,6 @@
 
 - (void)buttonCloseTap:(id)sender
 {
-    if (self.closeBlock)
-        self.closeBlock();
-    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -79,40 +70,97 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.keysGroups.count;
+    return self.keysGroups.count + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.keysGroups[section].object2.count;
+    if (section < self.keysGroups.count)
+        return self.keysGroups[section].object2.count;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *prefKey = self.keysGroups[indexPath.section].object2[indexPath.row];
     SYOptionCell *cell = (SYOptionCell *)[tableView dequeueReusableCellWithIdentifier:[SYOptionCell sy_className]];
-    [cell setPrefKey:prefKey];
-    [cell setShowDescription:YES];
+    if (indexPath.section < self.keysGroups.count)
+    {
+        NSString *prefKey = self.keysGroups[indexPath.section].object2[indexPath.row];
+        [cell setPrefKey:prefKey];
+        [cell setShowDescription:YES];
+    }
+    else
+    {
+        if (indexPath.row == 0)
+        {
+            [cell updateWithLeftText:$("PREFERENCES TITLE CONTACT")
+                           rightText:kContactAddress];
+        }
+        else
+        {
+            [cell updateWithLeftText:$("PREFERENCES TITLE VERSION")
+                           rightText:[UIApplication sy_appVersionAndBuild]];
+        }
+    }
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.keysGroups[section].object1;
+    if (section < self.keysGroups.count)
+        return self.keysGroups[section].object1;
+    return $("PREFERENCES SECTION ABOUT APP");
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *prefKey = self.keysGroups[indexPath.section].object2[indexPath.row];
-    return [SYOptionCell cellHeightForPrefKey:prefKey showDescription:YES width:tableView.bounds.size.width];
+    if (indexPath.section < self.keysGroups.count)
+    {
+        NSString *prefKey = self.keysGroups[indexPath.section].object2[indexPath.row];
+        return [SYOptionCell cellHeightForPrefKey:prefKey showDescription:YES width:tableView.bounds.size.width];
+    }
+    
+    if (indexPath.row == 0)
+        return [SYOptionCell cellHeightForLeftText:$("PREFERENCES TITLE CONTACT")
+                                         rightText:kContactAddress
+                                             width:tableView.bounds.size.width];
+    else
+        return [SYOptionCell cellHeightForLeftText:$("PREFERENCES TITLE VERSION")
+                                         rightText:[UIApplication sy_appVersionAndBuild]
+                                             width:tableView.bounds.size.width];
+
+    return UITableViewAutomaticDimension;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    // ABOUT APP section
+    if (indexPath.section >= self.keysGroups.count)
+    {
+        if (indexPath.row == 0)
+        {
+            NSString *subject = [NSString stringWithFormat:$("CONTACT SUBJECT ABOUT APP %@"),
+                                 [[UIApplication sharedApplication] sy_localizedName]];
+            subject = [subject stringByAppendingFormat:$(" %@"), [UIApplication sy_appVersionAndBuild]];
+            
+            [SYEmailServicePasteboard setName:$("MAIL COPY PASTEBOARD NAME")];
+            [[SYEmailHelper shared] composeEmailWithAddress:kContactAddress
+                                                    subject:subject
+                                                       body:nil
+                                               presentingVC:self
+                                                 completion:^(BOOL actionLaunched, SYEmailService *service, NSError *error)
+            {
+                NSLog($$("Completion: %@ %d %@"), service.name, actionLaunched, error);
+            }];
+        }
+        return;
+    }
+    
     NSString *prefKey = self.keysGroups[indexPath.section].object2[indexPath.row];
-    switch ([[SYPreferences shared] typeForKey:prefKey]) {
+    switch ([[SYPreferences shared] typeForKey:prefKey])
+    {
         case SYPreferenceTypeBool:
         {
             BOOL oldValue = [[[SYPreferences shared] objectForKey:prefKey] boolValue];

@@ -40,12 +40,14 @@
         self.labelTitle = [[UILabel alloc] init];
         [self.labelTitle setBackgroundColor:[UIColor clearColor]];
         [self.labelTitle setNumberOfLines:0];
+        [self.labelTitle setLineBreakMode:NSLineBreakByWordWrapping];
+        [self.labelTitle setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
         [self.contentView addSubview:self.labelTitle];
         
         self.labelValue = [[UILabel alloc] init];
         [self.labelValue setBackgroundColor:[UIColor clearColor]];
         [self.labelValue setTextAlignment:NSTextAlignmentRight];
-        [self.labelValue setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+        [self.labelValue setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [self.contentView addSubview:self.labelValue];
         
         self.labelDescr = [[UILabel alloc] init];
@@ -53,12 +55,13 @@
         [self.labelDescr setNumberOfLines:0];
         [self.labelDescr setLineBreakMode:NSLineBreakByWordWrapping];
         [self.labelDescr setFont:[UIFont systemFontOfSize:self.labelDescr.font.pointSize - 2]];
+        [self.labelDescr setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
         [self.contentView addSubview:self.labelDescr];
         
         [self.labelTitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(@10);
             make.left.equalTo(@10);
-            make.right.equalTo(self.labelValue.mas_left).offset(-10);
+            make.right.equalTo(self.labelValue.mas_left).offset(-20);
         }];
         
         [self.labelValue mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -67,11 +70,12 @@
         }];
         
         [self.labelDescr mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.labelTitle.mas_bottom).offset(self.showDescription ? 10 : 0);
             make.left.equalTo(@10);
             make.right.equalTo(@(-10));//.priorityLow();
             make.bottom.equalTo(@(-10)).priorityLow();
         }];
+        
+        [self setNeedsUpdateConstraints];
     }
     return self;
 }
@@ -88,6 +92,17 @@
     self->_option  = option;
     self->_prefKey = nil;
     [self updateTexts];
+}
+
+- (void)updateWithLeftText:(NSString *)leftText rightText:(NSString *)rightText
+{
+    self->_option = nil;
+    self->_prefKey = nil;
+    [self updateTexts];
+    [self.labelTitle setText:leftText];
+    [self.labelValue setText:rightText];
+    [self.labelDescr setText:nil];
+    [self setShowDescription:NO];
 }
 
 - (void)updateTexts
@@ -143,8 +158,6 @@
 
 - (void)updateConstraints
 {
-    [super updateConstraints];
-    
     if (self.showDescription && self.constraingLabelDescrHeight)
     {
         [self.constraingLabelDescrHeight uninstall];
@@ -153,10 +166,16 @@
     
     if (!self.showDescription && !self.constraingLabelDescrHeight)
     {
-        [self.labelDescr mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.labelDescr mas_updateConstraints:^(MASConstraintMaker *make) {
             self.constraingLabelDescrHeight = make.height.equalTo(@0);
         }];
     }
+    
+    [self.labelDescr mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.labelTitle.mas_bottom).offset(self.showDescription ? 10 : 0);
+    }];
+    
+    [super updateConstraints];
 }
 
 + (CGFloat)cellHeightForOption:(SYSaneOption *)option showDescription:(BOOL)showDescription width:(CGFloat)width
@@ -172,6 +191,14 @@
     return [self sy_cellHeightForWidth:width configurationBlock:^(UITableViewCell *sizingCell) {
         [(SYOptionCell *)sizingCell setPrefKey:prefKey];
         [(SYOptionCell *)sizingCell setShowDescription:showDescription];
+    }];
+}
+
++ (CGFloat)cellHeightForLeftText:(NSString *)leftText rightText:(NSString *)rightText width:(CGFloat)width
+{
+    return [self sy_cellHeightForWidth:width configurationBlock:^(UITableViewCell *sizingCell) {
+        [(SYOptionCell *)sizingCell updateWithLeftText:leftText rightText:rightText];
+        [(SYOptionCell *)sizingCell setShowDescription:NO];
     }];
 }
 

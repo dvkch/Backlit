@@ -11,6 +11,5 @@
 @interface SYPrefVC : UIViewController
 
 + (UIBarButtonItem *)barButtonItemWithTarget:(id)target action:(SEL)action;
-+ (void)showOnVC:(UIViewController *)vc closeBlock:(void(^)(void))closeBlock;
 
 @end

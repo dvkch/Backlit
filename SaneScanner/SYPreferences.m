@@ -12,6 +12,8 @@ static NSString * const kPrefKey_PreviewWithAutoColorMode   = $$("PreviewWithAut
 static NSString * const kPrefKey_ShowAdvancedOptions        = $$("ShowAdvancedOptions");
 static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncompleteScanImages");
 
+NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNotification");
+
 @implementation SYPreferences
 
 + (SYPreferences *)shared
@@ -111,6 +113,8 @@ static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncomplete
     NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
     
     [self setValue:object forKey:key];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SYPreferencesChangedNotification object:nil];
 }
 
 #pragma mark - Preferences

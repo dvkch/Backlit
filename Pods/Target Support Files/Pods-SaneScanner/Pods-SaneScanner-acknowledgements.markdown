@@ -258,6 +258,12 @@ including Freepik Icons. Please consult their
 respective headers for the terms of their individual licenses.
 
 
+## SYEmailHelper
+
+Use it as you like in every project you want, redistribute with mentions of my name and don't blame me if it breaks :)
+
+-- dvkch
+
 ## SYKit
 
 Use it as you like in every project you want, redistribute with mentions of my name and don't blame me if it breaks :)

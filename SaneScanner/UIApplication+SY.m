@@ -15,4 +15,21 @@
     return [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
 }
 
++ (NSString *)sy_appVersion
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:$$("CFBundleShortVersionString")];
+}
+
++ (NSString *)sy_buildVersion
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:$$("CFBundleVersion")];
+}
+
++ (NSString *)sy_appVersionAndBuild
+{
+    return [NSString stringWithFormat:$$("%@ (%@)"),
+            [self sy_appVersion],
+            [self sy_buildVersion]];
+}
+
 @end

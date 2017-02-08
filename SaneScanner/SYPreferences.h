@@ -16,6 +16,8 @@ typedef enum : NSUInteger {
     SYPreferenceTypeString,
 } SYPreferenceType;
 
+extern NSString * const SYPreferencesChangedNotification;
+
 @interface SYPreferences : NSObject
 
 + (SYPreferences *)shared;

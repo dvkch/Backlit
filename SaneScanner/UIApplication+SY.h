@@ -11,5 +11,8 @@
 @interface UIApplication (SY)
 
 - (NSString *)sy_localizedName;
++ (NSString *)sy_appVersion;
++ (NSString *)sy_buildVersion;
++ (NSString *)sy_appVersionAndBuild;
 
 @end
