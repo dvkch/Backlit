@@ -122,7 +122,7 @@
     if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DevicePreview)
     {
         CGRect rect = CGRectMake(0.1, 0.2, 0.8, 0.6);
-        self.device.lastPreviewImage = [UIImage imageNamed:$$("test_scan_image")];
+        self.device.lastPreviewImage = [UIImage imageNamed:[SYAppDelegate obtain].snapshotTestScanImagePath];
         [self updatePreviewCellWithCropAreaPercent:rect];
     }
     
@@ -130,7 +130,7 @@
         [SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptionPopup)
     {
         CGRect rect = CGRectMake(0.1, 0.2, 0.8, 0.6);
-        self.device.lastPreviewImage = [UIImage imageNamed:$$("test_scan_image")];
+        self.device.lastPreviewImage = [UIImage imageNamed:[SYAppDelegate obtain].snapshotTestScanImagePath];
         [self updatePreviewCellWithCropAreaPercent:rect];
         
         NSIndexPath *firstOption = [NSIndexPath indexPathForRow:0 inSection:1];
@@ -457,7 +457,7 @@
     if (section == 0)
         return $("DEVICE SECTION PREVIEW");
     
-    return [self optionGroupForTableViewSection:section].title;
+    return [self optionGroupForTableViewSection:section].localizedTitle;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

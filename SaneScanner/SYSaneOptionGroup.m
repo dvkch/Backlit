@@ -48,7 +48,7 @@
             [self class],
             self,
             (int)self.index,
-            self.title,
+            self.localizedTitle,
             [self.items componentsJoinedByString:$$("\n")]];
 }
 

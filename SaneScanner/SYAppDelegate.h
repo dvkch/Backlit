@@ -20,6 +20,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, assign, readonly) SYSnapshotType snapshotType;
+@property (nonatomic, strong, readonly) NSString *snapshotTestScanImagePath;
 
 + (instancetype)obtain;
 

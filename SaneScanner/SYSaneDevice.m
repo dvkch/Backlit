@@ -85,13 +85,13 @@
 
 - (SYSaneOption *)standardOption:(SYSaneStandardOption)stdOption
 {
-    return [self optionWithName:NSStringFromSYSaneStandardOption(stdOption)];
+    return [self optionWithIdentifier:NSStringFromSYSaneStandardOption(stdOption)];
 }
 
-- (SYSaneOption *)optionWithName:(NSString *)name
+- (SYSaneOption *)optionWithIdentifier:(NSString *)identifier
 {
     for (SYSaneOption *option in self.allOptions)
-        if ([option.name isEqualToString:name])
+        if ([option.identifier isEqualToString:identifier])
             return option;
     return nil;
 }
@@ -117,7 +117,7 @@
         for (SYSaneOption *option in cropOptions)
         {
             SYSaneOptionNumber *castedOption = (SYSaneOptionNumber *)option;
-            SYSaneStandardOption stdOption = SYSaneStandardOptionFromNSString(option.name);
+            SYSaneStandardOption stdOption = SYSaneStandardOptionFromNSString(option.identifier);
             
             if (stdOption == SYSaneStandardOptionAreaTopLeftX)
                 tlX = castedOption.bestValueForPreview.doubleValue;

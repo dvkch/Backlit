@@ -125,9 +125,9 @@
     
     if (self.option)
     {
-        [self.labelTitle setText:self.option.title];
+        [self.labelTitle setText:self.option.localizedTitle];
         [self.labelValue setText:[self.option valueStringWithUnit:YES]];
-        [self.labelDescr setText:self.option.desc];
+        [self.labelDescr setText:self.option.localizedDesc];
     }
     else if (self.prefKey)
     {

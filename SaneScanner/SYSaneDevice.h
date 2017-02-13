@@ -55,7 +55,7 @@ SYOptionValue SYBestValueForPreviewValueForOption(SYSaneStandardOption stdOption
 
 - (NSArray <SYSaneOption *> *)standardOptions:(NSArray <NSNumber *> *)stdOptions;
 - (SYSaneOption *)standardOption:(SYSaneStandardOption)stdOption;
-- (SYSaneOption *)optionWithName:(NSString *)name;
+- (SYSaneOption *)optionWithIdentifier:(NSString *)identifier;
 
 - (void)setOptions:(NSArray <SYSaneOption *> *)options;
 

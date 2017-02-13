@@ -40,14 +40,14 @@
     self = [super init];
     if (self)
     {
-        self.index  = index;
-        self.device = device;
-        self.name   = [NSString stringWithCString:(opt->name  ?: "") encoding:NSUTF8StringEncoding];
-        self.title  = [NSString stringWithCString:(opt->title ?: "") encoding:NSUTF8StringEncoding];
-        self.desc   = [NSString stringWithCString:(opt->desc  ?: "") encoding:NSUTF8StringEncoding];
-        self.type   = opt->type;
-        self.unit   = opt->unit;
-        self.size   = opt->size;
+        self.index          = index;
+        self.device         = device;
+        self.identifier     = [NSString stringWithCString:(opt->name  ?: "") encoding:NSUTF8StringEncoding];
+        self.localizedTitle = [NSString stringWithCString:(opt->title ?: "") encoding:NSUTF8StringEncoding];
+        self.localizedDesc  = [NSString stringWithCString:(opt->desc  ?: "") encoding:NSUTF8StringEncoding];
+        self.type                   = opt->type;
+        self.unit                   = opt->unit;
+        self.size                   = opt->size;
         self.cap                    = opt->cap;
         self.capReadable            = opt->cap & SANE_CAP_SOFT_DETECT;
         self.capSetAuto             = opt->cap & SANE_CAP_AUTOMATIC;
@@ -58,9 +58,8 @@
         self.capSettableViaHardware = opt->cap & SANE_CAP_HARD_SELECT;
         self.constraintType         = opt->constraint_type;
         
-        self.name   = [[SYSaneHelper shared] translationForKey:self.name];
-        self.title  = [[SYSaneHelper shared] translationForKey:self.title];
-        self.desc   = [[SYSaneHelper shared] translationForKey:self.desc];
+        self.localizedTitle = [[SYSaneHelper shared] translationForKey:self.localizedTitle];
+        self.localizedDesc  = [[SYSaneHelper shared] translationForKey:self.localizedDesc];
     }
     return self;
 }
@@ -143,7 +142,7 @@
 {
     return [NSString stringWithFormat:$$("<#%d, %@, %@, %@, %@, %@>"),
             (int)self.index,
-            self.title,
+            self.localizedTitle,
             NSStringFromSANE_Value_Type(self.type),
             NSStringFromSANE_Unit(self.unit),
             self.debugDescriptionCapabilities,
@@ -156,7 +155,7 @@
             [self class],
             self,
             (int)self.index,
-            self.title,
+            self.localizedTitle,
             NSStringFromSANE_Value_Type(self.type),
             NSStringFromSANE_Unit(self.unit)];
 }

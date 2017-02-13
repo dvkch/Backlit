@@ -21,8 +21,8 @@
 
 + (void)showDetailsForOption:(SYSaneOption *)option;
 {
-    [[[DLAVAlertView alloc] initWithTitle:option.title
-                                 message:option.desc
+    [[[DLAVAlertView alloc] initWithTitle:option.localizedTitle
+                                 message:option.localizedDesc
                                 delegate:nil
                        cancelButtonTitle:$("ACTION CLOSE")
                        otherButtonTitles:nil] show];
@@ -83,8 +83,8 @@
 + (void)showInputForButtonOption:(SYSaneOption *)option
                            block:(void(^)(BOOL reloadAllOptions, NSError *error))block
 {
-    [[[DLAVAlertView alloc] initWithTitle:option.title
-                                  message:option.desc
+    [[[DLAVAlertView alloc] initWithTitle:option.localizedTitle
+                                  message:option.localizedDesc
                                  delegate:nil
                         cancelButtonTitle:$("ACTION CLOSE")
                         otherButtonTitles:$("ACTION PRESS"), nil]
@@ -102,8 +102,8 @@
 + (void)showInputWithTextFieldForOption:(SYSaneOption *)option
                                   block:(void(^)(BOOL reloadAllOptions, NSError *error))block
 {
-    DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:option.title
-                                                            message:option.desc
+    DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:option.localizedTitle
+                                                            message:option.localizedDesc
                                                            delegate:nil
                                                   cancelButtonTitle:nil
                                                   otherButtonTitles:nil];
@@ -149,8 +149,8 @@
 + (void)showInputWithSliderForOption:(SYSaneOption *)option
                                block:(void(^)(BOOL reloadAllOptions, NSError *error))block
 {
-    DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:option.title
-                                                            message:option.desc
+    DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:option.localizedTitle
+                                                            message:option.localizedDesc
                                                            delegate:nil
                                                   cancelButtonTitle:nil
                                                   otherButtonTitles:nil];
@@ -229,8 +229,8 @@
     [optionsValues addObjectsFromArray:values];
     [optionsTitles addObjectsFromArray:titles];
     
-    DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:option.title
-                                                            message:option.desc
+    DLAVAlertView *alertView = [[DLAVAlertView alloc] initWithTitle:option.localizedTitle
+                                                            message:option.localizedDesc
                                                            delegate:nil
                                                   cancelButtonTitle:nil
                                                   otherButtonTitles:nil];

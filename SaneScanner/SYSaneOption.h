@@ -19,9 +19,9 @@ NSString *NSStringFromSANE_Unit(SANE_Unit unit);
 
 @property (nonatomic, assign) int index;
 @property (nonatomic, strong) SYSaneDevice *device;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *desc;
+@property (nonatomic, strong) NSString *identifier;
+@property (nonatomic, strong) NSString *localizedTitle;
+@property (nonatomic, strong) NSString *localizedDesc;
 @property (nonatomic, assign) SANE_Value_Type type;
 @property (nonatomic, assign) SANE_Unit unit;
 @property (nonatomic, assign) int size;

@@ -108,6 +108,16 @@
         
         if ([[NSProcessInfo processInfo].arguments containsObject:$$("SNAPSHOT_OPTION_POPUP")])
             self->_snapshotType = SYSnapshotType_DeviceOptionPopup;
+        
+        NSString *pathPrefix = $$("SNAPSHOT_TEST_IMAGE_PATH=");
+        for (NSString *argument in [NSProcessInfo processInfo].arguments)
+        {
+            if ([argument containsString:pathPrefix])
+            {
+                self->_snapshotTestScanImagePath = [argument substringFromIndex:pathPrefix.length];
+                break;
+            }
+        }
     }
     
     return YES;

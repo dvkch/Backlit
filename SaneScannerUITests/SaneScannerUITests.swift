@@ -52,12 +52,16 @@ class SaneScannerUITests: XCTestCase {
     override func setUp() {
         super.setUp()
         
+        let testScanImagePath = Bundle(for: SaneScannerUITests.self).path(forResource: "test_scan_image", ofType: "png")
+        
         continueAfterFailure = false
         let app = XCUIApplication()
         Snapshot.setupSnapshot(app)
         app.launchArguments.append("DOING_SNAPSHOT")
         app.launchArguments.append(snapshotType)
+        app.launchArguments.append("SNAPSHOT_TEST_IMAGE_PATH=" + testScanImagePath!);
         app.launch()
+        
         
         // Landscape on iPad
         if (UIDevice.current.userInterfaceIdiom == .pad)

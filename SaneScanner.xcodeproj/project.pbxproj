@@ -26,6 +26,8 @@
 		9734E3621C90218E00B66797 /* SYAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9734E3611C90218E00B66797 /* SYAddCell.m */; };
 		9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */; };
 		9740E5AE1E420459003D8832 /* translations in Resources */ = {isa = PBXBuildFile; fileRef = 9740E5AD1E420459003D8832 /* translations */; };
+		9747AF0C1E5256C70090E6B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */; };
+		9747AF101E5257080090E6B2 /* test_scan_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9747AF0F1E5257080090E6B2 /* test_scan_image.png */; };
 		974BB4171CCA753F0057128B /* SYScanNC.m in Sources */ = {isa = PBXBuildFile; fileRef = 974BB4161CCA753F0057128B /* SYScanNC.m */; };
 		974FB9871CA43EC900C741B1 /* SYRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FB9861CA43EC900C741B1 /* SYRefreshControl.m */; };
 		97521E6A1C88E8BA00C77209 /* SYSaneOptionBool.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E5F1C88E8BA00C77209 /* SYSaneOptionBool.m */; };
@@ -65,7 +67,6 @@
 		F8CBD2131AF9A58C00B4C221 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2121AF9A58C00B4C221 /* main.m */; };
 		F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */; };
 		F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */; };
-		F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		9735E84D1C8CE66B0049CD13 /* DLAVAlertView+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DLAVAlertView+SY.h"; sourceTree = "<group>"; };
 		9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DLAVAlertView+SY.m"; sourceTree = "<group>"; };
 		9740E5AD1E420459003D8832 /* translations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = translations; path = "sane-libs/all/translations"; sourceTree = "<group>"; };
+		9747AF0F1E5257080090E6B2 /* test_scan_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_scan_image.png; sourceTree = "<group>"; };
 		974BB4151CCA753F0057128B /* SYScanNC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYScanNC.h; sourceTree = "<group>"; };
 		974BB4161CCA753F0057128B /* SYScanNC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYScanNC.m; sourceTree = "<group>"; };
 		974FB9851CA43EC900C741B1 /* SYRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYRefreshControl.h; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 		97EDB9171E4924D40012CB7E /* SaneScannerUITests */ = {
 			isa = PBXGroup;
 			children = (
+				9747AF0F1E5257080090E6B2 /* test_scan_image.png */,
 				9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */,
 				97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */,
 				97EDB91A1E4924D40012CB7E /* Info.plist */,
@@ -339,7 +342,6 @@
 				9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */,
 				97221E071C9B7DDC0062268F /* SYGalleryThumbsCell.h */,
 				97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */,
-				971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -430,6 +432,7 @@
 				F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */,
 				F86584841AF9A8290028E039 /* SYTools.h */,
 				F86584851AF9A8290028E039 /* SYTools.m */,
+				971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */,
 				9785C5681E3D247A006CD4F1 /* Localizable.strings */,
 				F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */,
 				F8CBD2101AF9A58C00B4C221 /* Supporting Files */,
@@ -540,6 +543,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */,
+				9747AF101E5257080090E6B2 /* test_scan_image.png in Resources */,
+				9747AF0C1E5256C70090E6B2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,7 +552,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8CBD21E1AF9A58C00B4C221 /* Images.xcassets in Resources */,
 				9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */,
 				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
 				9740E5AE1E420459003D8832 /* translations in Resources */,

@@ -721,7 +721,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
                 
                 if (bestValue != SYOptionValueAuto)
                 {
-                    NSLog($$("Unsupported configuration : option %@ is a string but cannot be set to auto"), option.name);
+                    NSLog($$("Unsupported configuration : option %@ is a string but cannot be set to auto"), option.identifier);
                     continue;
                 }
                 
@@ -730,7 +730,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
             }
             else
             {
-                NSLog($$("Unsupported configuration : option type for %@ is not supported"), option.name);
+                NSLog($$("Unsupported configuration : option type for %@ is not supported"), option.identifier);
             }
             
             [self setValue:newValue orAutoValue:useAuto forOption:option block:^(BOOL reloadAllOptions, NSError *error) {

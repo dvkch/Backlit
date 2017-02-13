@@ -173,7 +173,7 @@
 
 - (NSNumber *)bestValueForPreview
 {
-    SYSaneStandardOption std = SYSaneStandardOptionFromNSString(self.name);
+    SYSaneStandardOption std = SYSaneStandardOptionFromNSString(self.identifier);
     SYOptionValue value = SYBestValueForPreviewValueForOption(std);
     
     if (value == SYOptionValueAuto)
