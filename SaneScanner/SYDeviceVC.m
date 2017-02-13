@@ -119,7 +119,9 @@
     if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_None)
         return;
     
-    if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DevicePreview)
+    if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DevicePreview ||
+        [SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptions ||
+        [SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptionPopup)
     {
         CGRect rect = CGRectMake(0.1, 0.2, 0.8, 0.6);
         self.device.lastPreviewImage = [UIImage imageNamed:[SYAppDelegate obtain].snapshotTestScanImagePath];
@@ -129,10 +131,6 @@
     if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptions ||
         [SYAppDelegate obtain].snapshotType == SYSnapshotType_DeviceOptionPopup)
     {
-        CGRect rect = CGRectMake(0.1, 0.2, 0.8, 0.6);
-        self.device.lastPreviewImage = [UIImage imageNamed:[SYAppDelegate obtain].snapshotTestScanImagePath];
-        [self updatePreviewCellWithCropAreaPercent:rect];
-        
         NSIndexPath *firstOption = [NSIndexPath indexPathForRow:0 inSection:1];
         [self.tableView scrollToRowAtIndexPath:firstOption atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
