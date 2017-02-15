@@ -86,12 +86,13 @@
 }
 
 -(void)reloadData {
-    // views haven't been loaded yet
-    if (!self.imageViewerViewController.toolbar)
-        return;
+    // checks are needed to be sure views have been loaded
     
-    [self.imageViewerViewController reloadData];
-    [self.overViewViewController reloadData];
+    if (self.imageViewerViewController.toolbar)
+        [self.imageViewerViewController reloadData];
+    
+    if (self.overViewViewController.collectionView)
+        [self.overViewViewController reloadData];
 }
 
 - (BOOL)isShowingOverview

@@ -102,15 +102,16 @@ NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNo
 
 - (id)objectForKey:(NSString *)key
 {
-    SEL selector = NSSelectorFromString(key);
-    NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
+    NSAssert1([self respondsToSelector:NSSelectorFromString(key)],
+              $$("The key %@ is not a valid preferences key"), key);
+    
     return [self valueForKey:key];
 }
 
 - (void)setObject:(id)object forKey:(NSString *)key
 {
-    SEL selector = NSSelectorFromString(key);
-    NSAssert1([self respondsToSelector:selector], $$("The key %@ is not a valid preferences key"), key);
+    NSAssert1([self respondsToSelector:NSSelectorFromString(key)],
+              $$("The key %@ is not a valid preferences key"), key);
     
     [self setValue:object forKey:key];
     

@@ -44,8 +44,6 @@
     return (SYAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-// TODO: appIcon, launchScreen, testScanImage
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // log

@@ -22,6 +22,9 @@ scheme "SaneScanner"
 output_directory "./screenshots"
 
 clear_previous_screenshots true
+skip_open_summary true
+clean false
+stop_after_first_error true
 
 workspace "./SaneScanner.xcworkspace"
 
