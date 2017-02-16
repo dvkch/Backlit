@@ -197,7 +197,7 @@ static CGFloat const kGradientWidth = 30;
     SYGalleryThumbsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[SYGalleryThumbsCell sy_className] forIndexPath:indexPath];
     [cell updateWithItems:self.galleryItems
                     index:indexPath.item
-         parentController:self.parentViewController
+         parentController:self.parentViewController.navigationController
              spinnerColor:spinnerColor
              dismissBlock:^UIImageView *(NSUInteger index)
     {
