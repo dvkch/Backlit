@@ -10,6 +10,9 @@
 #import <SVProgressHUD.h>
 #import "SYGalleryManager.h"
 #import "DLAVAlertView+SY.h"
+#import "UIImage+SY.h"
+#import "SYTools.h"
+#import "SYPDFMaker.h"
 
 @interface SYOverviewController ()
 
@@ -21,10 +24,15 @@
 {
     [super viewDidLoad];
     
-    // add trash icon
-    NSMutableArray <UIBarButtonItem *> *toolbarItems = [self.toolbarItems mutableCopy];
+    // add trash and PDF buttons
     UIBarButtonItem *trashBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashPressed)];
+    UIBarButtonItem *spaceBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem   *pdfBarButton = [[UIBarButtonItem alloc] initWithTitle:$$("PDF") style:UIBarButtonItemStylePlain target:self action:@selector(pdfPressed:)];
+    
+    NSMutableArray <UIBarButtonItem *> *toolbarItems = [self.toolbarItems mutableCopy];
     [toolbarItems insertObject:trashBarButton atIndex:0];
+    [toolbarItems insertObject:spaceBarButton atIndex:1];
+    [toolbarItems insertObject:pdfBarButton   atIndex:2];
     self.toolbarItems = toolbarItems;
 }
 
@@ -62,6 +70,61 @@
         
         [self setEditing:NO];
     }];
+}
+
+- (void)pdfPressed:(UIBarButtonItem *)barButtonItem
+{
+    if (!self.collectionView.indexPathsForSelectedItems.count)
+        return;
+    
+    [SVProgressHUD show];
+    
+    // needed to let SVProgressHUD appear, even if PDF is generated on main thread
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self sharePDFForSelectedItems:barButtonItem];
+    });
+}
+
+- (void)sharePDFForSelectedItems:(UIBarButtonItem *)barButtonItem
+{
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:$$("item") ascending:NO];
+    NSArray <NSIndexPath *> *sortedIndexPaths = [self.collectionView.indexPathsForSelectedItems sortedArrayUsingDescriptors:@[sortDescriptor]];
+    NSMutableArray <NSURL *> *selectedItemsURLs = [NSMutableArray array];
+    
+    for (NSIndexPath *indexPath in sortedIndexPaths)
+        [selectedItemsURLs addObject:[self itemForIndex:indexPath.item].URL];
+    
+    if (!selectedItemsURLs.count)
+        return;
+    
+    NSString *tempPath = [[SYGalleryManager shared] tempPDFPath];
+    
+    [SYPDFMaker createPDFAtURL:[NSURL fileURLWithPath:tempPath]
+              fromImagesAtURLs:selectedItemsURLs
+                   aspectRatio:210./297.
+                   jpegQuality:JPEG_COMP
+                 fixedPageSize:YES];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:tempPath])
+    {
+        [SVProgressHUD showErrorWithStatus:$("ERROR PDF NOT CREATED")];
+        return;
+    }
+    
+    [SVProgressHUD dismiss];
+    
+    UIActivityViewController *activityViewController =
+    [[UIActivityViewController alloc] initWithActivityItems:@[[NSURL fileURLWithPath:tempPath]]
+                                      applicationActivities:nil];
+    activityViewController.popoverPresentationController.barButtonItem = barButtonItem;
+    [activityViewController setCompletionWithItemsHandler:^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError)
+    {
+        // is called when the interaction with the PDF is done. It's either been copied, imported,
+        // displayed, shared or printed, but we can dispose of it
+        [[SYGalleryManager shared] deleteTempPDFs];
+    }];
+    
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 @end

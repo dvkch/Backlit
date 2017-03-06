@@ -218,10 +218,15 @@
     [metadata.metadataTIFF setSoftware:[[UIApplication sharedApplication] sy_localizedName]];
     [metadata.metadataTIFF setXResolution:resXinches];
     [metadata.metadataTIFF setYResolution:resYinches];
+    [metadata.metadataTIFF setResolutionUnit:@(2)]; // 2 = inches, let's hope it'll make sense for every device
     
     metadata.metadataPNG = [[SYMetadataPNG alloc] init];
     [metadata.metadataPNG setXPixelsPerMeter:(resXinches ? @(resXmeters) : nil)];
     [metadata.metadataPNG setYPixelsPerMeter:(resYinches ? @(resYmeters) : nil)];
+    
+    metadata.metadataJFIF = [[SYMetadataJFIF alloc] init];
+    [metadata.metadataJFIF setXDensity:resXinches];
+    [metadata.metadataJFIF setYDensity:resYinches];
     
     return metadata;
 }
@@ -346,7 +351,7 @@
 {
     if (!item.URL)
         return;
-        
+    
     UIActivityViewController *activityViewController =
     [[UIActivityViewController alloc] initWithActivityItems:@[item.URL]
                                       applicationActivities:nil];

@@ -76,4 +76,8 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
 
 - (void)getImageWithCompletion:(void(^)(UIImage *image, NSError *error))completion;
 
++ (void)getImagesForItems:(NSArray <MHGalleryItem *> *)items completion:(void(^)(NSArray <UIImage *> *images, NSArray <NSError *> *errors))completion;
+
++ (void)getImagesOrFileURLsForItems:(NSArray <MHGalleryItem *> *)items completion:(void(^)(NSArray *imagesOrURLs, NSArray <NSError *> *errors))completion;
+
 @end

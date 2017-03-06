@@ -19,10 +19,15 @@
 #import <NSData+SYKit.h>
 #import <WeakUniqueCollection.h>
 #import <SYMetadata.h>
+#import "SYPreferences.h"
 
-static NSString * const kImageExtensionPNG = $$("png");
-static NSString * const kImageThumbsSuffix = $$("thumbs.jpg");
-static NSString * const kImageThumbsFolder = $$("thumbs");
+static NSString * const kImageExtensionPNG  = $$("png");
+static NSString * const kImageExtensionJPG  = $$("jpg");
+static NSString * const kImageThumbsSuffix  = $$("thumbs.jpg");
+static NSString * const kImageThumbsFolder  = $$("thumbs");
+static NSString * const kImagePDFFolder     = $$("PDF");
+static NSString * const kImagePDFPrefix     = $$("SaneScanner_");
+static NSString * const kImageExtensionPDF  = $$("pdf");
 
 
 @interface SYGalleryManager ()
@@ -54,10 +59,18 @@ static NSString * const kImageThumbsFolder = $$("thumbs");
     {
         // create folder for thumbanils if needed
         NSError *error;
+        
         [[NSFileManager defaultManager] createDirectoryAtPath:[self thumbnailsFolderPath]
                                   withIntermediateDirectories:YES
                                                    attributes:nil
                                                         error:&error];
+        
+        [[NSFileManager defaultManager] createDirectoryAtPath:[self pdfFolderPath]
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:&error];
+        
+        [self deleteTempPDFs];
         
         // donnot use a set as it would work only with a collection of non mutable objects. here the pointer to delegate can change
         self.delegates = [[WeakUniqueCollection alloc] init];
@@ -71,14 +84,14 @@ static NSString * const kImageThumbsFolder = $$("thumbs");
         [self.thumbsQueue setMaxSurvivingOperations:0];
         [self.thumbsQueue setMode:SYOperationQueueModeLIFO];
 
-        NSPredicate *pngPredicate = [NSPredicate predicateWithFormat:$$("pathExtension IN %@"), @[kImageExtensionPNG]];
+        NSPredicate *imgPredicate = [NSPredicate predicateWithFormat:$$("pathExtension IN[cd] %@"), @[kImageExtensionPNG, kImageExtensionJPG]];
         
         self.directoryWatcher =
         [MHWDirectoryWatcher directoryWatcherAtPath:[SYTools documentsPath]
                                    startImmediately:YES
                                 changesStartedBlock:nil
                                     filesAddedBlock:^(NSArray<NSString *> *addedFiles) {
-                                        if ([addedFiles filteredArrayUsingPredicate:pngPredicate])
+                                        if ([addedFiles filteredArrayUsingPredicate:imgPredicate])
                                             self.imageNames = [self listImageNames];
                                     }
                                   filesRemovedBlock:^(NSArray<NSString *> *removedFiles) {
@@ -88,12 +101,12 @@ static NSString * const kImageThumbsFolder = $$("thumbs");
                                           [self.imageSizeCache removeObjectForKey:file];
                                       }
                                       
-                                      if ([removedFiles filteredArrayUsingPredicate:pngPredicate])
+                                      if ([removedFiles filteredArrayUsingPredicate:imgPredicate])
                                           self.imageNames = [self listImageNames];
                                   }
                                   changesEndedBlock:^(MHWDirectoryChanges *changes){
-                                      if ([changes.addedFiles   filteredArrayUsingPredicate:pngPredicate] ||
-                                          [changes.removedFiles filteredArrayUsingPredicate:pngPredicate])
+                                      if ([changes.addedFiles   filteredArrayUsingPredicate:imgPredicate] ||
+                                          [changes.removedFiles filteredArrayUsingPredicate:imgPredicate])
                                           self.imageNames = [self listImageNames];
                                   }];
         
@@ -134,6 +147,11 @@ static NSString * const kImageThumbsFolder = $$("thumbs");
     return [[SYTools cachePath] stringByAppendingPathComponent:kImageThumbsFolder];
 }
 
+- (NSString *)pdfFolderPath
+{
+    return [[SYTools cachePath] stringByAppendingPathComponent:kImagePDFFolder];
+}
+
 - (NSString *)pathForImageWithName:(NSString *)imageName thumbnail:(BOOL)thumbnail
 {
     if (thumbnail)
@@ -162,7 +180,7 @@ static NSString * const kImageThumbsFolder = $$("thumbs");
     
     for (NSURL *item in items)
     {
-        if (![item.pathExtension isEqualToString:kImageExtensionPNG])
+        if (![@[kImageExtensionPNG.uppercaseString, kImageExtensionJPG.uppercaseString] containsObject:item.pathExtension.uppercaseString])
             continue;
         
         if (![item getResourceValue:&isDir forKey:NSURLIsDirectoryKey error:NULL])
@@ -263,7 +281,7 @@ static NSString * const kImageThumbsFolder = $$("thumbs");
                 {
                     NSData *data = [NSData dataWithContentsOfFile:item.path options:(NSDataReadingMappedIfSafe) error:NULL];
                     
-                    if (![data sy_imageDataIsValidPNG]) {
+                    if (![data sy_imageDataIsValidPNG] && ![data sy_imageDataIsValidJPEG]) {
                         [self.thumbsBeingCreated removeObject:item.imageName];
                         return;
                     }
@@ -359,17 +377,48 @@ static NSString * const kImageThumbsFolder = $$("thumbs");
     return [dateFormatter stringFromDate:date];
 }
 
+- (void)deleteTempPDFs
+{
+    // remove pdf files in cache / PDF
+    NSArray <NSString *> *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[self pdfFolderPath] error:NULL];
+    
+    for (NSString *file in files)
+    {
+        NSString *fullPath = [[self pdfFolderPath] stringByAppendingPathComponent:file];
+        [[NSFileManager defaultManager] removeItemAtPath:fullPath error:NULL];
+    }
+}
+
+- (NSString *)tempPDFPath
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:$$("yyyy-MM-dd_HH-mm-ss")];
+    [formatter setLocale:[NSLocale localeWithLocaleIdentifier:$$("en_US_POSIX")]];
+    
+    NSString *imageName = [NSString stringWithFormat:$$("%@%@.%@"),
+                           kImagePDFPrefix,
+                           [formatter stringFromDate:[NSDate date]],
+                           kImageExtensionPDF];
+    
+    return [[self pdfFolderPath] stringByAppendingPathComponent:imageName];
+}
+
 - (MHGalleryItem *)addImage:(UIImage *)image metadata:(SYMetadata *)metadata
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:$$("yyyy-MM-dd_HH-mm-ss")];
     [formatter setLocale:[NSLocale localeWithLocaleIdentifier:$$("en_US_POSIX")]];
     
-    NSString *imageName = [[formatter stringFromDate:[NSDate date]] stringByAppendingPathExtension:kImageExtensionPNG];
+    NSString *imageName = [[formatter stringFromDate:[NSDate date]] stringByAppendingPathExtension:kImageExtensionJPG];
     
     MHGalleryItem *item = [self galleryItemForImageWithName:imageName];
     
-    NSData *imageData = UIImagePNGRepresentation(image);
+    NSData *imageData;
+    if ([[SYPreferences shared] saveAsPNG])
+        imageData = UIImagePNGRepresentation(image);
+    else
+        imageData = UIImageJPEGRepresentation(image, 0.9);
+    
     NSData *imageDataWithMetadata;
     if (metadata)
         imageDataWithMetadata = [SYMetadata dataWithImageData:imageData andMetadata:metadata];

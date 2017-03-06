@@ -32,7 +32,6 @@
 #import <HockeySDK/HockeySDK.h>
 
 // TODO: send in chronological order, older to newer
-// TODO: create PDF
 
 @interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate>
 @property (nonatomic, strong) SYSplitVC *splitViewController;

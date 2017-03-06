@@ -11,7 +11,6 @@
 #import "MHGallerySharedManagerPrivate.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "SDWebImageManager.h"
-#import <SVProgressHUD.h>
 
 @implementation MHIndexPinchGestureRecognizer
 @end
@@ -100,7 +99,7 @@
 
 -(void)donePressed{
     self.navigationController.transitioningDelegate = nil;
-
+    
     MHGalleryController *galleryViewController = [self galleryViewController];
     if (galleryViewController.finishedCallback) {
         galleryViewController.finishedCallback(0,nil,nil,MHGalleryViewModeOverView);
@@ -143,38 +142,25 @@
 
 -(void)sharePressed{
     
-    [SVProgressHUD show];
+    NSMutableArray <MHGalleryItem *> *selectedItems = [NSMutableArray array];
     
-    NSMutableDictionary <NSNumber*, UIImage *> *orderedImages = [NSMutableDictionary dictionary];
-    dispatch_group_t group = dispatch_group_create();
-    
-    for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems){
-        dispatch_group_enter(group);
-        [[self itemForIndex:indexPath.item] getImageWithCompletion:^(UIImage *image, NSError *error) {
-            if (image) orderedImages[@(indexPath.item)] = image;
-            dispatch_group_leave(group);
-        }];
+    for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems)
+    {
+        MHGalleryItem *item = [self itemForIndex:indexPath.item];
+        [selectedItems addObject:item];
     }
     
-    dispatch_notify(group, dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
+    
+    [MHGalleryItem getImagesOrFileURLsForItems:selectedItems completion:^(NSArray *imagesOrURLs, NSArray<NSError *> *errors) {
+        if (!imagesOrURLs.count)
+            return;
         
-        NSArray <NSNumber *> *sortedKeys = [[orderedImages allKeys] sortedArrayUsingSelector:@selector(compare:)];
-        NSArray <UIImage *> *images = [orderedImages objectsForKeys:sortedKeys notFoundMarker:[UIImage new]];
-        [self shareImages:images];
-    });
-}
-
--(void)shareImages:(NSArray <UIImage *> *)images{
-    
-    if (!images.count)
-        return;
-    
-    UIActivityViewController *activityViewController =
-    [[UIActivityViewController alloc] initWithActivityItems:images
-                                      applicationActivities:nil];
-    activityViewController.popoverPresentationController.barButtonItem = self.toolbarItems.lastObject;
-    [self presentViewController:activityViewController animated:YES completion:nil];
+        UIActivityViewController *activityViewController =
+        [[UIActivityViewController alloc] initWithActivityItems:imagesOrURLs
+                                          applicationActivities:nil];
+        activityViewController.popoverPresentationController.barButtonItem = self.toolbarItems.lastObject;
+        [self presentViewController:activityViewController animated:YES completion:nil];
+    }];
 }
 
 -(void)updateTitle{
@@ -187,7 +173,7 @@
         self.title = [NSString stringWithFormat:format, @(self.collectionView.indexPathsForSelectedItems.count).stringValue];
     } else {
         self.title = self.UICustomization.overviewTitle;
-
+        
     }
 }
 
@@ -434,13 +420,13 @@
 }
 
 /*
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    [self.collectionViewLayout invalidateLayout];
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
-    [self.collectionViewLayout invalidateLayout];
-}
-*/
+ -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+ [self.collectionViewLayout invalidateLayout];
+ }
+ 
+ - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+ [self.collectionViewLayout invalidateLayout];
+ }
+ */
 
 @end

@@ -41,6 +41,7 @@
 		975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
 		976D4D091E422765002C59EC /* SYGettextTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = 976D4D081E422765002C59EC /* SYGettextTranslation.m */; };
+		977D041A1E6DBC4400E636F1 /* SYPDFMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 977D04191E6DBC4400E636F1 /* SYPDFMaker.m */; };
 		9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */; };
 		9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */; };
@@ -148,6 +149,8 @@
 		976D4D071E422765002C59EC /* SYGettextTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGettextTranslation.h; sourceTree = "<group>"; };
 		976D4D081E422765002C59EC /* SYGettextTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGettextTranslation.m; sourceTree = "<group>"; };
 		976E5BAD1E3BA5350057B599 /* PrecompiledHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrecompiledHeader.pch; sourceTree = "<group>"; };
+		977D04181E6DBC4400E636F1 /* SYPDFMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPDFMaker.h; sourceTree = "<group>"; };
+		977D04191E6DBC4400E636F1 /* SYPDFMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPDFMaker.m; sourceTree = "<group>"; };
 		9785C5611E3D1CEA006CD4F1 /* NSError+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+SY.h"; sourceTree = "<group>"; };
 		9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+SY.m"; sourceTree = "<group>"; };
 		9785C5671E3D247A006CD4F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -355,6 +358,8 @@
 				975B78131C923B6D00804D86 /* SYPreferences.m */,
 				9707559C1C972FF600BE9275 /* SYGalleryManager.h */,
 				9707559D1C972FF600BE9275 /* SYGalleryManager.m */,
+				977D04181E6DBC4400E636F1 /* SYPDFMaker.h */,
+				977D04191E6DBC4400E636F1 /* SYPDFMaker.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -695,6 +700,7 @@
 				975B78171C923C7200804D86 /* SYPrefVC.m in Sources */,
 				975B78141C923B6D00804D86 /* SYPreferences.m in Sources */,
 				97521E6F1C88E8BA00C77209 /* SYSaneOptionString.m in Sources */,
+				977D041A1E6DBC4400E636F1 /* SYPDFMaker.m in Sources */,
 				F804E0821AFA8E6B00CBE307 /* SYSaneOption.m in Sources */,
 				97521E6B1C88E8BA00C77209 /* SYSaneOptionButton.m in Sources */,
 			);

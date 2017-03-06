@@ -290,7 +290,10 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     uint i = 0;
     while (devices[i])
     {
-        [devicesObjects addObject:[[SYSaneDevice alloc] initWithCDevice:devices[i]]];
+        SYSaneDevice *device = [[SYSaneDevice alloc] initWithCDevice:devices[i]];
+        if (device)
+            [devicesObjects addObject:device];
+        
         ++i;
     }
 

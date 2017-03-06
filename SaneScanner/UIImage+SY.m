@@ -7,6 +7,7 @@
 //
 
 #import "UIImage+SY.h"
+#import <UIImage+SYKit.h>
 #import "SYSaneScanParameters.h"
 #import <ImageIO/ImageIO.h>
 #import "SYTools.h"
@@ -197,12 +198,12 @@
     
     
     NSString *sourceFileName = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.tmp")];
-    NSString *destinationFileName = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.png")];
+    NSString *destinationFileName = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.jpg")];
     
     NSDate *date = [NSDate date];
     
     UIImage *img = [self sy_imageFromRGBData:nil orFileURL:[NSURL fileURLWithPath:sourceFileName] saneParameters:params error:NULL];
-    NSData *data = UIImagePNGRepresentation(img);
+    NSData *data = UIImageJPEGRepresentation(img, JPEG_COMP);
     [data writeToFile:destinationFileName atomically:YES];
     
     NSLog($$("-> %@ in %.03lfs"), img, [[NSDate date] timeIntervalSinceDate:date]);

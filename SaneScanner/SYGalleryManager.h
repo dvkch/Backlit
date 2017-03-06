@@ -41,4 +41,7 @@
 
 - (CGSize)sizeOfItem:(MHGalleryItem *)item;
 
+- (void)deleteTempPDFs;
+- (NSString *)tempPDFPath;
+
 @end

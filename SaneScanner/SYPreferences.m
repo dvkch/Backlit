@@ -11,6 +11,7 @@
 static NSString * const kPrefKey_PreviewWithAutoColorMode   = $$("PreviewWithAutoColorMode");
 static NSString * const kPrefKey_ShowAdvancedOptions        = $$("ShowAdvancedOptions");
 static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncompleteScanImages");
+static NSString * const kPrefKey_SaveAsPNG                  = $$("SaveAsPNG");
 
 NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNotification");
 
@@ -40,7 +41,9 @@ NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNo
 - (NSArray<SYPair<NSString *,NSArray<NSString *> *> *> *)allKeysGrouped
 {
     NSArray <NSString *> *previewKeys = @[NSStringFromSelector(@selector(previewWithAutoColorMode)),
-                                          NSStringFromSelector(@selector(showIncompleteScanImages))];
+                                          NSStringFromSelector(@selector(showIncompleteScanImages)),
+                                          NSStringFromSelector(@selector(saveAsPNG)),
+                                          ];
     SYPair<NSString *, NSArray <NSString *> *> *previewGroup = [SYPair pairWithObject:$("PREFERENCES SECTION PREVIEW") andObject:previewKeys];
 
     NSArray <NSString *> *deviceKeys = @[NSStringFromSelector(@selector(showAdvancedOptions))];
@@ -62,7 +65,10 @@ NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNo
     
     if (selector == @selector(showAdvancedOptions))
         return $("PREFERENCES TITLE SHOW ADVANCED OPTIONS");
-
+    
+    if (selector == @selector(saveAsPNG))
+        return $("PREFERENCES TITLE SAVE AS PNG");
+    
     return nil;
 }
 
@@ -79,7 +85,10 @@ NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNo
     
     if (selector == @selector(showAdvancedOptions))
         return $("PREFERENCES MESSAGE SHOW ADVANCED OPTIONS");
-
+    
+    if (selector == @selector(saveAsPNG))
+        return $("PREFERENCES MESSAGE SAVE AS PNG");
+    
     return nil;
 }
 
@@ -95,6 +104,9 @@ NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNo
         return SYPreferenceTypeBool;
     
     if (selector == @selector(showAdvancedOptions))
+        return SYPreferenceTypeBool;
+    
+    if (selector == @selector(saveAsPNG))
         return SYPreferenceTypeBool;
     
     return SYPreferenceTypeUnknown;
@@ -153,6 +165,18 @@ NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNo
 - (void)setShowIncompleteScanImages:(BOOL)showIncompleteScanImages
 {
     [[NSUserDefaults standardUserDefaults] setBool:showIncompleteScanImages forKey:kPrefKey_ShowIncompleteScanImages];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)saveAsPNG
+{
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{kPrefKey_SaveAsPNG:@(NO)}];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefKey_SaveAsPNG];
+}
+
+- (void)setSaveAsPNG:(BOOL)saveAsPNG
+{
+    [[NSUserDefaults standardUserDefaults] setBool:saveAsPNG forKey:kPrefKey_SaveAsPNG];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

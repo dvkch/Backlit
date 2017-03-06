@@ -9,8 +9,12 @@
 #ifndef PrecompiledHeader_h
 #define PrecompiledHeader_h
 
+#import <Foundation/Foundation.h>
+
 #define $(text)  NSLocalizedString(@text, @text)
 #define $$(text) @text
+
+#define JPEG_COMP (0.9f)
 
 #import <NSObject+SYKit.h>
 #import <EXTScope.h>

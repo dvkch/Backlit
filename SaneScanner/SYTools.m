@@ -210,8 +210,8 @@ void logMemUsage(void) {
         UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
         
         UIImage *image = [UIImage sy_imageWithColor:color size:CGSizeMake(10, 10) cornerRadius:0];
-        NSString *path = [SYTools pathForFile:[NSString stringWithFormat:$$("testimage-%@.png"), [[NSUUID UUID] UUIDString]]];
-        [UIImagePNGRepresentation(image) writeToFile:path atomically:YES];
+        NSString *path = [SYTools pathForFile:[NSString stringWithFormat:$$("testimage-%@.jpg"), [[NSUUID UUID] UUIDString]]];
+        [UIImageJPEGRepresentation(image, JPEG_COMP) writeToFile:path atomically:YES];
     }
 }
 

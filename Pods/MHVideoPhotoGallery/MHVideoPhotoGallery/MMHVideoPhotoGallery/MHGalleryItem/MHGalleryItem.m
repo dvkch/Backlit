@@ -159,5 +159,71 @@
     
 }
 
++ (void)getImagesForItems:(NSArray <MHGalleryItem *> *)items
+               orFileURLs:(BOOL)useFileURLs
+               completion:(void(^)(NSArray *images, NSArray <NSError *> *errors))completion
+{
+    NSMutableDictionary <NSNumber *, id> *orderedImages = [NSMutableDictionary dictionary];
+    NSMutableDictionary <NSNumber *, id> *orderedErrors = [NSMutableDictionary dictionary];
+    
+    dispatch_group_t group = dispatch_group_create();
+    NSUInteger groupCount = 0;
+    
+    for (NSUInteger i = 0; i < items.count; ++i)
+    {
+        MHGalleryItem *item = items[i];
+        
+        if (useFileURLs && item.URL.isFileURL)
+        {
+            orderedImages[@(i)] = item.URL;
+            continue;
+        }
+        
+        ++groupCount;
+        dispatch_group_enter(group);
+        [item getImageWithCompletion:^(UIImage *image, NSError *error) {
+            if (image) orderedImages[@(i)] = image;
+            if (error) orderedErrors[@(i)] = error;
+            dispatch_group_leave(group);
+        }];
+    }
+    
+    void(^block)(void) = ^
+    {
+        NSArray <NSNumber *> *sortedImageKeys = [[orderedImages allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        NSArray <NSNumber *> *sortedErrorKeys = [[orderedErrors allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        
+        NSMutableArray *images = [[orderedImages objectsForKeys:sortedImageKeys notFoundMarker:[NSNull null]] mutableCopy];
+        NSMutableArray *errors = [[orderedErrors objectsForKeys:sortedErrorKeys notFoundMarker:[NSNull null]] mutableCopy];
+        
+        [images removeObject:[NSNull null]];
+        [errors removeObject:[NSNull null]];
+        
+        if (completion)
+            completion(images.copy, errors.copy);
+    };
+    
+    if (groupCount)
+    {
+        dispatch_notify(group, dispatch_get_main_queue(), ^{
+            block();
+        });
+    }
+    else
+    {
+        block();
+    }
+}
+
++ (void)getImagesForItems:(NSArray <MHGalleryItem *> *)items completion:(void (^)(NSArray<UIImage *> *, NSArray<NSError *> *))completion
+{
+    [self getImagesForItems:items orFileURLs:NO completion:completion];
+}
+
++ (void)getImagesOrFileURLsForItems:(NSArray <MHGalleryItem *> *)items completion:(void (^)(NSArray *, NSArray<NSError *> *))completion
+{
+    [self getImagesForItems:items orFileURLs:YES completion:completion];
+}
+
 @end
 

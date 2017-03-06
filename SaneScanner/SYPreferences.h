@@ -25,6 +25,7 @@ extern NSString * const SYPreferencesChangedNotification;
 @property (nonatomic) BOOL previewWithAutoColorMode;
 @property (nonatomic) BOOL showAdvancedOptions;
 @property (nonatomic) BOOL showIncompleteScanImages;
+@property (nonatomic) BOOL saveAsPNG;
 
 - (NSArray <SYPair<NSString *, NSArray <NSString *> *> *> *)allKeysGrouped;
 

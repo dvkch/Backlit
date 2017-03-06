@@ -401,7 +401,13 @@
     }else{
         MHImageViewController *imageViewController = (MHImageViewController*)self.pageViewController.viewControllers.firstObject;
         if (imageViewController.imageView.image != nil) {
-            UIActivityViewController *act = [UIActivityViewController.alloc initWithActivityItems:@[imageViewController.imageView.image] applicationActivities:nil];
+            NSArray *items = @[imageViewController.imageView.image];
+            
+            // use file URL if available, uses less memory
+            if ([imageViewController.item.URL isFileURL])
+                items = @[imageViewController.item.URL];
+            
+            UIActivityViewController *act = [UIActivityViewController.alloc initWithActivityItems:items applicationActivities:nil];
             [self presentViewController:act animated:YES completion:nil];
             
             if ([act respondsToSelector:@selector(popoverPresentationController)]) {
