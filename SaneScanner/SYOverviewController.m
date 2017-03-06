@@ -99,15 +99,15 @@
     
     NSString *tempPath = [[SYGalleryManager shared] tempPDFPath];
     
-    [SYPDFMaker createPDFAtURL:[NSURL fileURLWithPath:tempPath]
-              fromImagesAtURLs:selectedItemsURLs
-                   aspectRatio:210./297.
-                   jpegQuality:JPEG_COMP
-                 fixedPageSize:YES];
+    BOOL result = [SYPDFMaker createPDFAtURL:[NSURL fileURLWithPath:tempPath]
+                            fromImagesAtURLs:selectedItemsURLs
+                                 aspectRatio:210./297.
+                                 jpegQuality:JPEG_COMP
+                               fixedPageSize:YES];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:tempPath])
+    if (!result || ![[NSFileManager defaultManager] fileExistsAtPath:tempPath])
     {
-        [SVProgressHUD showErrorWithStatus:$("ERROR PDF NOT CREATED")];
+        [SVProgressHUD showErrorWithStatus:$("ERROR MESSAGE PDF NOT CREATED")];
         return;
     }
     
