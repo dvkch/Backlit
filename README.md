@@ -14,11 +14,11 @@ Scanned documents can be shared as a multi-page PDF or as individual images via 
 
 ## Screenshots
 
-<img src="screenshots/en-US/iPhone6-01-Devices-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" width="240"/>
-<img src="screenshots/en-US/iPhone6-02-DeviceWithPreview-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" style="width: 240px;"/>
-<img src="screenshots/en-US/iPhone6-03-DeviceWithOptions-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" style="width: 240px;"/>
-<img src="screenshots/en-US/iPhone6-04-DeviceWithOptionPopup-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" style="width: 240px;"/>
-<img src="screenshots/en-US/iPhone6-05-Settings-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" style="width: 240px;"/>
+<img src="screenshots/en-US/iPhone6-01-Devices-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" width="240" />
+<img src="screenshots/en-US/iPhone6-02-DeviceWithPreview-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" width="240" />
+<img src="screenshots/en-US/iPhone6-03-DeviceWithOptions-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" width="240" />
+<img src="screenshots/en-US/iPhone6-04-DeviceWithOptionPopup-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" width="240" />
+<img src="screenshots/en-US/iPhone6-05-Settings-d41d8cd98f00b204e9800998ecf8427e.png?raw=true" alt="Devices" width="240" />
 
 ## Useful links
 
