@@ -29,7 +29,6 @@
 #import "MHGalleryItem+SY.h"
 #import "SYPreferences.h"
 #import "SYSaneHelper.h"
-#import <HockeySDK/HockeySDK.h>
 
 // TODO: send in chronological order, older to newer
 
@@ -54,12 +53,6 @@
     
     // create test images if needed
     //[SYTools createTestImages:200];
-    
-    // HockeyApp
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:$$("a44ed67b6d1843cbbe6d212107b213eb")];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-    [[BITHockeyManager sharedHockeyManager].authenticator setIdentificationType:BITAuthenticatorIdentificationTypeAnonymous];
-    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     
     // creating navigation controller
     SYDevicesVC *vc = [[SYDevicesVC alloc] init];
