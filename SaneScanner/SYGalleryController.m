@@ -15,6 +15,7 @@
 #import "UIColor+SY.h"
 #import "UIViewController+SYKit.h"
 #import "SYOverviewController.h"
+#import "UIActivityViewController+SY.h"
 
 @implementation SYGalleryController
 
@@ -68,7 +69,21 @@
     }];
 }
 
--(NSArray<MHBarButtonItem *>*)customizeableToolBarItems:(NSArray<MHBarButtonItem *>*)toolBarItems
+- (void)shareImage:(id)sender
+{
+    if (self.imageViewerViewController.userScrolls)
+        return;
+    
+    NSInteger index = self.imageViewerViewController.pageIndex;
+    MHGalleryItem *item = [self.dataSource itemForIndex:index];
+    
+    [UIActivityViewController sy_showForUrls:@[item.URL]
+                           fromBarButtonItem:sender
+                                presentingVC:self
+                                  completion:nil];
+}
+
+- (NSArray<MHBarButtonItem *>*)customizeableToolBarItems:(NSArray<MHBarButtonItem *>*)toolBarItems
                                          forGalleryItem:(MHGalleryItem*)galleryItem
 {
     if (galleryItem.galleryType == MHGalleryTypeVideo)
@@ -84,17 +99,17 @@
                                      style:UIBarButtonItemStylePlain target:nil action:nil];
     [dateButton setType:MHBarButtonItemTypeCustom];
     
-    MHBarButtonItem *shareButton;
-    MHBarButtonItem *flexibleSpace;
-    for (MHBarButtonItem *item in toolBarItems)
-    {
-        if (item.type == MHBarButtonItemTypeShare)
-            shareButton = item;
-        if (item.type == MHBarButtonItemTypeFlexible)
-            flexibleSpace = item;
-    }
+    MHBarButtonItem *shareButton =
+    [[MHBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                  target:self action:@selector(shareImage:)];
+    [shareButton setType:MHBarButtonItemTypeShare];
     
-    return @[shareButton, flexibleSpace, dateButton, flexibleSpace, deleteButton];
+    MHBarButtonItem *flexibleSpace =
+    [[MHBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                  target:nil action:nil];
+    [flexibleSpace setType:MHBarButtonItemTypeFlexible];
+    
+    return @[deleteButton, flexibleSpace, dateButton, flexibleSpace, shareButton];
 }
 
 #pragma mark - SYGalleryManager

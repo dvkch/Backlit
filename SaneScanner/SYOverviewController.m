@@ -13,6 +13,7 @@
 #import "UIImage+SY.h"
 #import "SYTools.h"
 #import "SYPDFMaker.h"
+#import "UIActivityViewController+SY.h"
 
 @interface SYOverviewController ()
 
@@ -25,18 +26,15 @@
     [super viewDidLoad];
     
     // add trash and PDF buttons
-    UIBarButtonItem *trashBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashPressed)];
+    UIBarButtonItem *trashBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(buttonTrashTap:)];
+    UIBarButtonItem   *pdfBarButton = [[UIBarButtonItem alloc] initWithTitle:$$("PDF") style:UIBarButtonItemStylePlain target:self action:@selector(buttonPDFTap:)];
+    UIBarButtonItem *shareBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(buttonShareTap:)];
     UIBarButtonItem *spaceBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem   *pdfBarButton = [[UIBarButtonItem alloc] initWithTitle:$$("PDF") style:UIBarButtonItemStylePlain target:self action:@selector(pdfPressed:)];
     
-    NSMutableArray <UIBarButtonItem *> *toolbarItems = [self.toolbarItems mutableCopy];
-    [toolbarItems insertObject:trashBarButton atIndex:0];
-    [toolbarItems insertObject:spaceBarButton atIndex:1];
-    [toolbarItems insertObject:pdfBarButton   atIndex:2];
-    self.toolbarItems = toolbarItems;
+    self.toolbarItems = @[trashBarButton, spaceBarButton, pdfBarButton, spaceBarButton, shareBarButton];
 }
 
-- (void)trashPressed
+- (void)buttonTrashTap:(id)sender
 {
     if (!self.collectionView.indexPathsForSelectedItems.count)
         return;
@@ -72,7 +70,7 @@
     }];
 }
 
-- (void)pdfPressed:(UIBarButtonItem *)barButtonItem
+- (void)buttonPDFTap:(UIBarButtonItem *)barButtonItem
 {
     if (!self.collectionView.indexPathsForSelectedItems.count)
         return;
@@ -85,7 +83,7 @@
     });
 }
 
-- (void)sharePDFForSelectedItems:(UIBarButtonItem *)barButtonItem
+- (NSArray <NSURL *> *)selectedURLs
 {
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:$$("item") ascending:NO];
     NSArray <NSIndexPath *> *sortedIndexPaths = [self.collectionView.indexPathsForSelectedItems sortedArrayUsingDescriptors:@[sortDescriptor]];
@@ -93,6 +91,13 @@
     
     for (NSIndexPath *indexPath in sortedIndexPaths)
         [selectedItemsURLs addObject:[self itemForIndex:indexPath.item].URL];
+    
+    return [selectedItemsURLs copy];
+}
+
+- (void)sharePDFForSelectedItems:(UIBarButtonItem *)barButtonItem
+{
+    NSArray <NSURL *> *selectedItemsURLs = [self selectedURLs];
     
     if (!selectedItemsURLs.count)
         return;
@@ -113,18 +118,28 @@
     
     [SVProgressHUD dismiss];
     
-    UIActivityViewController *activityViewController =
-    [[UIActivityViewController alloc] initWithActivityItems:@[[NSURL fileURLWithPath:tempPath]]
-                                      applicationActivities:nil];
-    activityViewController.popoverPresentationController.barButtonItem = barButtonItem;
-    [activityViewController setCompletionWithItemsHandler:^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError)
+    [UIActivityViewController sy_showForUrls:@[[NSURL fileURLWithPath:tempPath]]
+                        fromBarButtonItem:barButtonItem
+                                presentingVC:self
+                                  completion:^
     {
         // is called when the interaction with the PDF is done. It's either been copied, imported,
         // displayed, shared or printed, but we can dispose of it
         [[SYGalleryManager shared] deleteTempPDFs];
     }];
+}
+
+- (void)buttonShareTap:(id)sender
+{
+    NSArray <NSURL *> *selectedItemsURLs = [self selectedURLs];
     
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    if (!selectedItemsURLs.count)
+        return;
+    
+    [UIActivityViewController sy_showForUrls:selectedItemsURLs
+                           fromBarButtonItem:sender
+                                presentingVC:self
+                                  completion:nil];
 }
 
 @end

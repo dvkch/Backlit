@@ -27,24 +27,12 @@
 
 - (NSString *)path
 {
-    NSString *path = objc_getAssociatedObject(self, @selector(path));
-    if (!path && self.URL.isFileURL)
-    {
-        path = self.URL.path;
-        objc_setAssociatedObject(self, @selector(path), path, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    }
-    return path;
+    return (self.URL.isFileURL ? self.URL.path : nil);
 }
 
 - (NSString *)thumbnailPath
 {
-    NSString *thumbnailPath = objc_getAssociatedObject(self, @selector(thumbnailPath));
-    if (!thumbnailPath && self.thumbnailURL.isFileURL)
-    {
-        thumbnailPath = self.thumbnailURL.path;
-        objc_setAssociatedObject(self, @selector(thumbnailPath), thumbnailPath, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    }
-    return thumbnailPath;
+    return (self.thumbnailURL.isFileURL ? self.thumbnailURL.path : nil);
 }
 
 @end

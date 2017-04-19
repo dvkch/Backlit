@@ -35,6 +35,7 @@
 #import <SYMetadata.h>
 #import "SYSaneScanParameters.h"
 #import "UIApplication+SY.h"
+#import "UIActivityViewController+SY.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
@@ -352,23 +353,9 @@
     if (!item.URL)
         return;
     
-    UIActivityViewController *activityViewController =
-    [[UIActivityViewController alloc] initWithActivityItems:@[item.URL]
-                                      applicationActivities:nil];
-    [activityViewController setCompletionWithItemsHandler:^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
-        if (activityError)
-            [SVProgressHUD showErrorWithStatus:activityError.sy_alertMessage];
-    }];
-    
-    UIViewController *sourceVC = self.splitViewController;
-    
-    UIPopoverPresentationController *popover = activityViewController.popoverPresentationController;
-    [popover setPermittedArrowDirections:0];
-    [popover setSourceView:sourceVC.view];
-    [popover setSourceRect:CGRectMake(CGRectGetMidX(sourceVC.view.frame) - .5,
-                                      CGRectGetMaxY(sourceVC.view.frame) - 1., 1, 1)];
-    
-    [sourceVC presentViewController:activityViewController animated:YES completion:nil];
+    [UIActivityViewController sy_showForUrls:@[item.URL]
+                        bottomInPresentingVC:self.splitViewController
+                                  completion:nil];
 }
 
 - (void)updatePreviewCellWithCropAreaPercent:(CGRect)rect
