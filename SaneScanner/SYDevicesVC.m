@@ -274,11 +274,11 @@ needsAuthForDevice:(NSString *)device
         
         if (error)
         {
-            [[[UIAlertView alloc] initWithTitle:$("DIALOG TITLE COULDNT OPEN DEVICE")
-                                        message:error.sy_alertMessage
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:$("ACTION CLOSE"), nil] show];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:$("DIALOG TITLE COULDNT OPEN DEVICE")
+                                                                           message:error.sy_alertMessage
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:$("ACTION CLOSE") style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
         }
         else
         {
