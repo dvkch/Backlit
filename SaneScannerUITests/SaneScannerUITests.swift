@@ -66,7 +66,7 @@ class SaneScannerUITests: XCTestCase {
         // Landscape on iPad
         if (UIDevice.current.userInterfaceIdiom == .pad)
         {
-            XCUIDevice.shared().orientation = .landscapeRight
+            XCUIDevice.shared.orientation = .landscapeRight
         }
     }
     
@@ -76,7 +76,7 @@ class SaneScannerUITests_Others : SaneScannerUITests {
     func testDevices()
     {
         waitForProgessHUDToAppearThenDisappear();
-        Snapshot.snapshot("01-Devices", waitForLoadingIndicator: true)
+        Snapshot.snapshot("01-Devices")
     }
     
     func testSettings()
@@ -86,7 +86,7 @@ class SaneScannerUITests_Others : SaneScannerUITests {
         let app = XCUIApplication()
         app.navigationBars["SaneScanner"].buttons["settings"].tap()
         
-        Snapshot.snapshot("05-Settings", waitForLoadingIndicator: true)
+        Snapshot.snapshot("05-Settings")
     }
 }
 
@@ -108,7 +108,7 @@ class SaneScannerUITests_Preview : SaneScannerUITests {
         
         waitForProgessHUDToAppearThenDisappear()
         
-        Snapshot.snapshot("02-DeviceWithPreview", waitForLoadingIndicator: true);
+        Snapshot.snapshot("02-DeviceWithPreview");
     }
 }
 
@@ -130,7 +130,7 @@ class SaneScannerUITests_Options : SaneScannerUITests {
         
         waitForProgessHUDToAppearThenDisappear()
         
-        Snapshot.snapshot("03-DeviceWithOptions", waitForLoadingIndicator: true);
+        Snapshot.snapshot("03-DeviceWithOptions");
     }
 }
 
@@ -152,6 +152,6 @@ class SaneScannerUITests_OptionPopup : SaneScannerUITests {
         
         waitForProgessHUDToAppearThenDisappear()
         
-        Snapshot.snapshot("04-DeviceWithOptionPopup", waitForLoadingIndicator: true);
+        Snapshot.snapshot("04-DeviceWithOptionPopup");
     }
 }
