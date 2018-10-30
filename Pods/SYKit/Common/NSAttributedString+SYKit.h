@@ -69,3 +69,32 @@
 - (CGSize)sy_sizeInBoundingWidth:(CGFloat)width;
 
 @end
+
+
+@interface NSMutableAttributedString (SYKit)
+
+/**
+ *  Appends the given attributed string
+ *
+ *  @param string Attributed string to append to the receiver
+ */
+- (void)sy_append:(NSAttributedString *)string;
+
+/**
+ *  Appends a new attributed string created with the given text, font and color
+ *
+ *  @param string Text to append
+ *  @param font   Font for the text to append
+ *  @param color  Color for the text to append
+ */
+- (void)sy_appendString:(NSString *)string font:(UIFont *)font color:(UIColor *)color;
+
+/**
+ *  Applies a paragraphStyle attribute to the whole attributed string using the given alignment and spacing
+ *
+ *  @param alignment        Text alignment
+ *  @param paragraphSpacing Spacing
+ */
+- (void)sy_setAlignment:(NSTextAlignment)alignment paragraphSpacing:(CGFloat)paragraphSpacing;
+
+@end

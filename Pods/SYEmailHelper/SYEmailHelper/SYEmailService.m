@@ -60,22 +60,9 @@
 {
     NSMutableArray <SYEmailServiceApp *> *services = [NSMutableArray array];
     
-    [services addObject:
-     [SYEmailServiceApp serviceWithName:@"Gmail"
-                                baseURL:@"googlegmail://co"
-                       parameterAddress:@"to"
-                       parameterSubject:@"subject"
-                          parameterBody:@"body"
-                      parameterCallback:nil]];
-    
-    [services addObject:
-     [SYEmailServiceApp serviceWithName:@"Google Inbox"
-                                baseURL:@"inbox-gmail://co"
-                       parameterAddress:@"to"
-                       parameterSubject:@"subject"
-                          parameterBody:@"body"
-                      parameterCallback:nil]];
-    
+    [services addObject:[self gmailService]];
+    [services addObject:[self googleInboxService]];
+    [services addObject:[self microsoftOutlookService]];
     
     return [services copy];
 }
@@ -85,6 +72,36 @@
     return [[self allThirdPartyApps] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(SYEmailServiceApp *service, id _) {
         return service.isAvailable;
     }]];
+}
+
++ (instancetype)gmailService
+{
+    return [SYEmailServiceApp serviceWithName:@"Gmail"
+                                      baseURL:@"googlegmail://co"
+                             parameterAddress:@"to"
+                             parameterSubject:@"subject"
+                                parameterBody:@"body"
+                            parameterCallback:nil];
+}
+
++ (instancetype)googleInboxService
+{
+    return [SYEmailServiceApp serviceWithName:@"Google Inbox"
+                                      baseURL:@"inbox-gmail://co"
+                             parameterAddress:@"to"
+                             parameterSubject:@"subject"
+                                parameterBody:@"body"
+                            parameterCallback:nil];
+}
+
++ (instancetype)microsoftOutlookService
+{
+    return [SYEmailServiceApp serviceWithName:@"Microsoft Outlook"
+                                      baseURL:@"ms-outlook://compose"
+                             parameterAddress:@"to"
+                             parameterSubject:@"subject"
+                                parameterBody:@"body"
+                            parameterCallback:nil];
 }
 
 + (instancetype)serviceWithName:(NSString *)name

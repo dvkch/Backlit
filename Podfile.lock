@@ -1,6 +1,6 @@
 PODS:
   - DLAlertView (1.2.5)
-  - INSPullToRefresh (1.1.5)
+  - INSPullToRefresh (1.2.0)
   - JGMethodSwizzler (2.0.1)
   - libextobjc/EXTScope (0.4.1):
     - libextobjc/RuntimeExtensions
@@ -8,23 +8,23 @@ PODS:
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
-  - Masonry (1.0.2)
+  - Masonry (1.1.0)
   - MHVideoPhotoGallery (2.2.9):
     - Masonry
     - SDWebImage (~> 3)
     - TTTAttributedLabel (= 1.13.3)
   - MHWDirectoryWatcher (0.0.9)
-  - NSDate+TimeAgo (1.0.6)
+  - "NSDate+TimeAgo (1.0.6)"
   - PKYStepper (0.0.1)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
   - SpinKit (1.2.0)
-  - SVProgressHUD (2.1.2)
-  - SYEmailHelper (1.0)
-  - SYKit (0.0.35):
+  - SVProgressHUD (2.2.5)
+  - SYEmailHelper (1.1)
+  - SYKit (0.0.38):
     - JGMethodSwizzler
-  - SYLogRedirect (1.2.5)
+  - SYLogRedirect (1.2.7)
   - SYOperationQueue (1.0.1)
   - SYPair (1.2)
   - SYPictureMetadata (1.4.1):
@@ -39,7 +39,7 @@ DEPENDENCIES:
   - Masonry
   - MHVideoPhotoGallery (from `https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec`)
   - MHWDirectoryWatcher (from `https://raw.githubusercontent.com/dvkch/MHWDirectoryWatcher/master/MHWDirectoryWatcher.podspec`)
-  - NSDate+TimeAgo
+  - "NSDate+TimeAgo"
   - PKYStepper
   - SpinKit
   - SVProgressHUD
@@ -51,6 +51,28 @@ DEPENDENCIES:
   - SYPictureMetadata
   - WeakUniqueCollection
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - DLAlertView
+    - INSPullToRefresh
+    - JGMethodSwizzler
+    - libextobjc
+    - Mantle
+    - Masonry
+    - "NSDate+TimeAgo"
+    - PKYStepper
+    - SDWebImage
+    - SpinKit
+    - SVProgressHUD
+    - SYEmailHelper
+    - SYKit
+    - SYLogRedirect
+    - SYOperationQueue
+    - SYPair
+    - SYPictureMetadata
+    - TTTAttributedLabel
+    - WeakUniqueCollection
+
 EXTERNAL SOURCES:
   MHVideoPhotoGallery:
     :podspec: https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec
@@ -59,27 +81,27 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   DLAlertView: 774c1242cc854177fdc07634ed3f8c250a38864d
-  INSPullToRefresh: 112ae2c295d2b3a76daa9dff86e7ef40ed002c47
+  INSPullToRefresh: d34f0046ccca6b32f6386f053d730ef41b3f35b7
   JGMethodSwizzler: e0ea5c1c6c55304ec4ef3f54e441400c6735c899
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
-  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MHVideoPhotoGallery: f37f50be51c122d9af8756f835138665507257b4
   MHWDirectoryWatcher: ab18b84bbc0d6967822e05f456d1ba8bc755b218
-  NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
+  "NSDate+TimeAgo": 35601c619b2d59290055e4fe76e61d97677a2360
   PKYStepper: 8dacefbddf9fa2b6aaec2ef828b46a78daa2db7d
-  SDWebImage: '098e97e6176540799c27e804c96653ee0833d13c'
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
-  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
-  SYEmailHelper: 7a3bd9e499922efcc9c67be9c845c6e5aa8201d9
-  SYKit: 83903dace2b4ac77c3eada69d86262f7331f3e62
-  SYLogRedirect: da3e42582f1621bcb60c33704a3144059b42b87d
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SYEmailHelper: 5d8e2ff55226f50a07ca2729763f11d01153acec
+  SYKit: d580d3aa388fdb4ada8d255ae7eba1614c629cd0
+  SYLogRedirect: 0ff25841b9080eb5881bc17a3ce1467b2746f842
   SYOperationQueue: d8287745159c3776294bbb09eefd0c579153c7d7
   SYPair: 66926046f01e8e4c195b2694a5c63203c1130208
   SYPictureMetadata: 40e148a01d1b2ec784eea6836bab37a44aa86b71
   TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
   WeakUniqueCollection: 58fa257bfdca7d2c0fc06060c28f5892bd66e80f
 
-PODFILE CHECKSUM: bb05d1388fe87697186968797ab0b5045d032235
+PODFILE CHECKSUM: b204c0597c8274114b9efed4ee8886d9477258eb
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.5.3

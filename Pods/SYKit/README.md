@@ -5,7 +5,7 @@ SYKit
 Some useful categories and other classes on UIKit and Foundation
 
 
-####UIDevice+SYCategories
+#### UIDevice+SYCategories
 
 Obtain an enum value representing the current device model:
 
@@ -50,7 +50,7 @@ Methods to access and use the iOS version string:
 	+ (BOOL)sy_iOSis7Plus;
 	+ (BOOL)sy_iOSis8Plus;
 
-####UIScreen+SYCategories
+#### UIScreen+SYCategories
 
 In iOS8 Apple changed the behavior of `-[UIScreen bounds]` method. It used to return the size of the screen independently of the interface orientation, but this is no longer the case. The following method restores this behavior:
 
@@ -63,7 +63,7 @@ If like me you still support old iOS versions and therefore don't use auto-layou
         	      ignoreStatusBariOSOver7:(BOOL)ignoreStatusBariOSOver7;
 
 
-####SYScreenHelper
+#### SYScreenHelper
 
 Wrapper around `UIScreen (SYCategories)` methods to create frames representing the full screen or usable screen space (uses y offset to ignore iOS7+ statys bar). 
 
@@ -75,7 +75,7 @@ Methods:
 	- (CGRect)sy_screenRect:(UIInterfaceOrientation)orientation; // has offset (origin.y != 0) on iOS >= 7
 	- (CGRect)sy_fullScreenRect:(UIInterfaceOrientation)orientation; // ignores status bar
 
-####CGTools
+#### CGTools
 
 Contains C functions to work with `CGRect`s
 
@@ -83,7 +83,7 @@ Contains C functions to work with `CGRect`s
 	CGRect CGRectCenteredSquarreInsideRectWithSize(CGRect inside, CGFloat size, BOOL fromOutside);
 	CGRect CGRectInsetPercent(CGRect rect, CGFloat percentX, CGFloat percentY);
 
-####UIImage+SYKit
+#### UIImage+SYKit
 
 Some methods to play with images, mainly to create resized copies of images or new images from a plain color
 
@@ -126,7 +126,7 @@ Some methods to play with images, mainly to create resized copies of images or n
 	// uses way less memory than usual methods for big images
 	+ (UIImage *)sy_imageThumbnailForFileAtPath:(NSString *)filePath maxEdgeSize:(CGFloat)maxEdgeSize;
 
-####SYSearchBar
+#### SYSearchBar
 
 Simple reproduction of iOS Safari search/URL bar. There is no simple way to customize this yet, but if you need just ask me and I'll update with some customization methods.
 
@@ -140,7 +140,7 @@ Simple reproduction of iOS Safari search/URL bar. There is no simple way to cust
 	@end
 
 
-####SYButton
+#### SYButton
 
 Button class to look a bit like material design buttons, ya know the round ones with a drop shadow — oO — ya, those.
 
@@ -155,11 +155,11 @@ Button class to look a bit like material design buttons, ya know the round ones 
 	
 	@end
 
-####SYShapeView and SYGradientView
+#### SYShapeView and SYGradientView
 
 `UIView` subclasses that changes the type of the layer to `CAShapeLayer` and `CAGradientLayer`, and allowing you to update the shape/gradient using its `layoutSubviewsBlock` block.
 
-######SYShapeView.h
+###### SYShapeView.h
 
 	@interface SYShapeView : UIView
 	
@@ -175,7 +175,7 @@ Button class to look a bit like material design buttons, ya know the round ones 
 	
 	@end
 
-######SYGradientView.h
+###### SYGradientView.h
 
 	@interface SYGradientView : UIView
 
@@ -184,14 +184,14 @@ Button class to look a bit like material design buttons, ya know the round ones 
 
 	@end
 
-####UIButton+SYKit
+#### UIButton+SYKit
 
 Category on `UIButton` to add some new features.
 
 	// creates a 1x1 image of color buttonColor and associates it as a background for the given state
 	-(void)sy_setButtonBackgroundColor:(UIColor *)buttonColor forState:(UIControlState)state;
 
-####UIView+SYKit
+#### UIView+SYKit
 
 	@interface UIView (SYKit)
 	
@@ -203,7 +203,7 @@ Category on `UIButton` to add some new features.
 	
 	@end
 
-####NSObject+SYKit
+#### NSObject+SYKit
 
 Adds to methods to work with swizzling object methods, executing a block on a specific `NSThread` and obtaining a class name as `NSString` easily.
 
@@ -218,7 +218,7 @@ Adds to methods to work with swizzling object methods, executing a block on a sp
 
 	@end
 
-####UITableViewCell+SYKit
+#### UITableViewCell+SYKit
 
 Adds some help to compute a cell height using auto layout. Implementation may not be perfect, feel free to send PR my way if you have any suggestion.
 
@@ -229,11 +229,11 @@ Adds some help to compute a cell height using auto layout. Implementation may no
 
 	@end
 
-####SYWindow
+#### SYWindow
 
 `UIWindow` subclass allowing for easy creation of a the main window and ability to shake the device while in debug to slow down animations.
 
-####NSData+SYKit
+#### NSData+SYKit
 
 Could be helpful to determine if a `NSData` is complete or not. For instance when showing all images in a folder but files are still being transfered.
 
@@ -245,7 +245,7 @@ Could be helpful to determine if a `NSData` is complete or not. For instance whe
 	@end
 
 
-####NSString+SYKit
+#### NSString+SYKit
 
 	@interface NSString (SYKit)
 	
@@ -259,7 +259,7 @@ Could be helpful to determine if a `NSData` is complete or not. For instance whe
 	@end
 
 
-####NSAttributedString+SYKit
+#### NSAttributedString+SYKit
 
 Various methods to created new attributed strings, concatenate them, and estimate their size when displayed.
 
@@ -273,8 +273,17 @@ Various methods to created new attributed strings, concatenate them, and estimat
 	- (CGSize)sy_sizeInBoundingWidth:(CGFloat)width;
 	
 	@end
+	
+	
+	@interface NSMutableString (SYKit)
+	
+	- (void)sy_append:(NSAttributedString *)string;
+	- (void)sy_appendString:(NSString *)string font:(UIFont *)font color:(UIColor *)color;
+	- (void)sy_setAlignment:(NSTextAlignment)alignment paragraphSpacing:(CGFloat)paragraphSpacing;
+	
+	@end
 
-####NSLayoutConstraint+SYKit
+#### NSLayoutConstraint+SYKit
 
 Create autolayout constraints quickly. Definitely not the best option out here, but it prevents the need to have `Masonry` or similar as a dependency of this library.
 
@@ -306,7 +315,7 @@ Create autolayout constraints quickly. Definitely not the best option out here, 
 	@end
 
 
-####UIScrollView+SYKit
+#### UIScrollView+SYKit
 
 Gives the ability to know when the `contentSize` has changed. Tested on `UICollectionView` and `UITextView`.
 
@@ -330,6 +339,44 @@ Common use case: keep the size of a `UITextView` or `UICollectionView` equal to 
         [self.labelDetailsHeightConstraint setConstant:
          [self.labelDetails.attributedText sy_sizeInBoundingWidth:newSize.width].height];
     }];
+
+
+#### SYScrollMaskView
+
+```
+typedef NS_ENUM(NSInteger, SYScrollMask) {
+    SYScrollMaskNone,
+    SYScrollMaskVertical,
+    SYScrollMaskHorizontal,
+};
+
+/**
+ * @class SYScrollMaskView
+ *
+ * Container for UIScrollView and subclasses, used to mask the top and
+ * bottom (or left and right) of a scrollview. This creates an effect
+ * that shows the user there is something so scroll to.
+ *  
+ * The only way to achieve that is to add the scrollView to this view, which
+ * is itself masked to achieve the desired effect, since scrollViews can't be
+ * directly masked (shows weird glitches, tableView cells are dropped, gradient
+ * moves when we scroll etc)
+ *
+ * You should position this view as you would have your scrollView, set the
+ * scrollView property (this will add the scrollView to this container) and
+ * set the desired mask orientation and size.
+ *
+ */
+
+@interface SYScrollMaskView : UIView
+
+@property (nonatomic, weak) UIScrollView *scrollView;
+
+@property (nonatomic, assign) SYScrollMask scrollMask;
+@property (nonatomic, assign) CGFloat scrollMaskSize;
+
+@end
+```
 
 License
 ===

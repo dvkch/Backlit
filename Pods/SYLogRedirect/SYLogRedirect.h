@@ -48,7 +48,7 @@ void SYLogSetEnabledTypesMask(NSInteger enabledTypesMask);
 NSString* SYLogFilePath(BOOL nilIfDisabled);
 
 /** Empties log file and reopens it to continue logging immediately */
-void SYLogClear();
+void SYLogClear(void);
 
 ///---------------------------------------------------------------------------------------
 /// @name Redirect Macros

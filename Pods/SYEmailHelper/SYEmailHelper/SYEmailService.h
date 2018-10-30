@@ -43,6 +43,10 @@
 + (NSArray <SYEmailServiceApp *> *)allThirdPartyApps;
 + (NSArray <SYEmailServiceApp *> *)availableThirdPartyApps;
 
++ (instancetype)gmailService;
++ (instancetype)googleInboxService;
++ (instancetype)microsoftOutlookService;
+
 @end
 
 @interface SYEmailServiceNative : SYEmailService

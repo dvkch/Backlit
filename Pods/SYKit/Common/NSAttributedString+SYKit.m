@@ -86,3 +86,29 @@ static UILabel *SYKit_NSAttributedString_sizingLabel;
 }
 
 @end
+
+@implementation NSMutableAttributedString (SYKit)
+
+- (void)sy_append:(NSAttributedString *)string
+{
+    if (string)
+        [self appendAttributedString:string];
+}
+
+- (void)sy_appendString:(NSString *)string font:(UIFont *)font color:(UIColor *)color
+{
+    NSAttributedString *attr = [NSAttributedString sy_stringWithText:string font:font color:color];
+    [self sy_append:attr];
+}
+
+- (void)sy_setAlignment:(NSTextAlignment)alignment paragraphSpacing:(CGFloat)paragraphSpacing
+{
+    NSMutableParagraphStyle *paragraph = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [paragraph setAlignment:alignment];
+    [paragraph setParagraphSpacing:paragraphSpacing];
+    [self addAttribute:NSParagraphStyleAttributeName value:paragraph range:NSMakeRange(0, self.length)];
+}
+
+@end
+
+

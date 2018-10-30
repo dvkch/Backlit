@@ -117,7 +117,7 @@ void SYLogWithFileLineAndMethod(NSInteger type, BOOL showDate, const char* file,
     SYLog(type, showDate, string1);
 }
 
-void SYLogClear()
+void SYLogClear(void)
 {
     [_fileHandle closeFile];
     SYLogOpenFile(YES);

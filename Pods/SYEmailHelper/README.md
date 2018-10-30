@@ -25,7 +25,6 @@ You can:
 
 Example:
 
-```
     [SYEmailServicePasteboard setName:@"Copy email address to pasteboard"];
     [[SYEmailHelper shared] setShowCopyToPasteboard:YES];
     [[SYEmailHelper shared] setActionSheetTitleText:@"Which app you wanna use bro?"];
@@ -46,20 +45,18 @@ Example:
         else
             self.labelCompletion.text = [NSString stringWithFormat:@"No error, used service %@", service.name];
     }];
-```
 
 Don't forget
 ============
 
 You'll need to add the list of supported apps inside your `Info.plist`. Here are the needed items for the current list of supported apps.
 
-```
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlegmail</string>
 		<string>inbox-gmail</string>
+		<string>ms-outlook</string>
 	</array>
-```
 
 Screenshots
 ===========
