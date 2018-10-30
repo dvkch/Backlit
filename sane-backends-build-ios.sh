@@ -52,7 +52,7 @@ download_and_patch_sources ()
 {
     echo_bold "Downloading ${BACKENDS_VERSION}.tar.gz"
     rm -rf "${SRC_DIR}"
-    curl -O "https://alioth.debian.org/frs/download.php/file/4146/${BACKENDS_VERSION}.tar.gz" >> "${LOG_PATH}" 2>&1
+    curl -O "https://gitlab.com/sane-project/backends/uploads/c2e9cd2bcae2f13fd54dc58b755e6fbe/sane-backends-1.0.25.tar.gz" >> "${LOG_PATH}" 2>&1
 
     echo_bold "Extracting ${BACKENDS_VERSION}.tar.gz"
     tar -xzf "${BACKENDS_VERSION}.tar.gz"
@@ -154,11 +154,11 @@ fi
 
 # Build for real devices then simulators
 cd "${SRC_DIR}"
-dobuild 0 "armv7"  6.0 "arm-apple-darwin"
-dobuild 0 "armv7s" 6.0 "arm-apple-darwin"
-dobuild 0 "arm64"  7.0 "armv64-apple-darwin"
-dobuild 1 "i386"   6.0 "i386-apple-darwin"
-dobuild 1 "x86_64" 7.0 "x86_64-apple-darwin"
+dobuild 0 "armv7"  8.0 "arm-apple-darwin"
+dobuild 0 "armv7s" 8.0 "arm-apple-darwin"
+dobuild 0 "arm64"  8.0 "armv64-apple-darwin"
+dobuild 1 "i386"   8.0 "i386-apple-darwin"
+dobuild 1 "x86_64" 8.0 "x86_64-apple-darwin"
 
 ## Merge libs
 [ -d "${LIB_DIR}/all" ] || mkdir "${LIB_DIR}/all"
