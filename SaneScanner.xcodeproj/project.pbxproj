@@ -610,7 +610,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh",
 				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/activityMH.png",
 				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/activtyMH@2x.png",
 				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/EditControl.png",
@@ -649,7 +649,6 @@
 				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/MHGallery.bundle",
 				"${PODS_ROOT}/NSDate+TimeAgo/NSDateTimeAgo.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/SYKit/SYSearchField.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -691,11 +690,10 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MHGallery.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/NSDateTimeAgo.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SYSearchField.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DCF69B669EC8701B2D500461 /* [CP] Check Pods Manifest.lock */ = {

@@ -14,7 +14,7 @@
 + (void)sy_swizzleSelector:(SEL)originalSelector withSelector:(SEL)swizzledSelector;
 + (BOOL)sy_instance:(id)instance overridesSelector:(SEL)selector;
 
-- (NSString *)sy_className;
-+ (NSString *)sy_className;
+@property (class, nonnull, readonly) NSString *sy_className;
+@property (nonnull, readonly) NSString *sy_className;
 
 @end

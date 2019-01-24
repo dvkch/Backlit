@@ -1,10 +1,9 @@
 PODS:
   - DLAlertView (1.2.5)
   - INSPullToRefresh (1.2.0)
-  - JGMethodSwizzler (2.0.1)
-  - libextobjc/EXTScope (0.4.1):
+  - libextobjc/EXTScope (0.6):
     - libextobjc/RuntimeExtensions
-  - libextobjc/RuntimeExtensions (0.4.1)
+  - libextobjc/RuntimeExtensions (0.6)
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
@@ -22,8 +21,7 @@ PODS:
   - SpinKit (1.2.0)
   - SVProgressHUD (2.2.5)
   - SYEmailHelper (1.1)
-  - SYKit (0.0.38):
-    - JGMethodSwizzler
+  - SYKit (0.0.46)
   - SYLogRedirect (1.2.7)
   - SYOperationQueue (1.0.1)
   - SYPair (1.2)
@@ -55,7 +53,6 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - DLAlertView
     - INSPullToRefresh
-    - JGMethodSwizzler
     - libextobjc
     - Mantle
     - Masonry
@@ -82,8 +79,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   DLAlertView: 774c1242cc854177fdc07634ed3f8c250a38864d
   INSPullToRefresh: d34f0046ccca6b32f6386f053d730ef41b3f35b7
-  JGMethodSwizzler: e0ea5c1c6c55304ec4ef3f54e441400c6735c899
-  libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
+  libextobjc: aed8b7d2b07f511c1a7ecaacb33ea03e327c69b7
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MHVideoPhotoGallery: f37f50be51c122d9af8756f835138665507257b4
@@ -94,7 +90,7 @@ SPEC CHECKSUMS:
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SYEmailHelper: 5d8e2ff55226f50a07ca2729763f11d01153acec
-  SYKit: d580d3aa388fdb4ada8d255ae7eba1614c629cd0
+  SYKit: 4be6d4c5994f79585f699c9b423c7a94275dbbcc
   SYLogRedirect: 0ff25841b9080eb5881bc17a3ce1467b2746f842
   SYOperationQueue: d8287745159c3776294bbb09eefd0c579153c7d7
   SYPair: 66926046f01e8e4c195b2694a5c63203c1130208
@@ -104,4 +100,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b204c0597c8274114b9efed4ee8886d9477258eb
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.2

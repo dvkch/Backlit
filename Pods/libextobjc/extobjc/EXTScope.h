@@ -88,9 +88,15 @@
     _Pragma("clang diagnostic pop")
 
 /*** implementation details follow ***/
-typedef void (^ext_cleanupBlock_t)();
+typedef void (^ext_cleanupBlock_t)(void);
 
-void ext_executeCleanupBlock (__strong ext_cleanupBlock_t *block);
+#if defined(__cplusplus)
+extern "C" {
+#endif
+    void ext_executeCleanupBlock (__strong ext_cleanupBlock_t *block);
+#if defined(__cplusplus)
+}
+#endif
 
 #define ext_weakify_(INDEX, CONTEXT, VAR) \
     CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
@@ -109,7 +115,7 @@ void ext_executeCleanupBlock (__strong ext_cleanupBlock_t *block);
 // compromise is to use @autorelease in DEBUG builds to maintain compiler
 // analysis, and to use @try/@catch otherwise to avoid insertion of unnecessary
 // autorelease pools.
-#if DEBUG
+#if defined(DEBUG) && !defined(NDEBUG)
 #define ext_keywordify autoreleasepool {}
 #else
 #define ext_keywordify try {} @catch (...) {}
