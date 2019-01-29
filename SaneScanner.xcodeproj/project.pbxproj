@@ -497,7 +497,7 @@
 			buildPhases = (
 				DCF69B669EC8701B2D500461 /* [CP] Check Pods Manifest.lock */,
 				97DF1B511E3BA42A00AD8A92 /* TODOs etc */,
-				976E5BAC1E3BA4630057B599 /* ShellScript */,
+				976E5BAC1E3BA4630057B599 /* TRANSLATE */,
 				F8CBD2091AF9A58C00B4C221 /* Sources */,
 				F8CBD20A1AF9A58C00B4C221 /* Frameworks */,
 				F8CBD20B1AF9A58C00B4C221 /* Resources */,
@@ -534,6 +534,7 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 79RY8264V4;
 						LastSwiftMigration = 0820;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -581,13 +582,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		976E5BAC1E3BA4630057B599 /* ShellScript */ = {
+		976E5BAC1E3BA4630057B599 /* TRANSLATE */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = TRANSLATE;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -877,6 +879,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 14;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -902,6 +905,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -936,6 +940,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 14;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -955,6 +960,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -965,6 +971,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 79RY8264V4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrecompiledHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -980,9 +988,10 @@
 					"$(PROJECT_DIR)/sane-libs/all/sane",
 					"$(PROJECT_DIR)/sane-libs/all",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner Development";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -992,8 +1001,10 @@
 			baseConfigurationReference = 685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 79RY8264V4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrecompiledHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1009,9 +1020,10 @@
 					"$(PROJECT_DIR)/sane-libs/all/sane",
 					"$(PROJECT_DIR)/sane-libs/all",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner AppStore";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
