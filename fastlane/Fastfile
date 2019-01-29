@@ -1,35 +1,50 @@
-update_fastlane
-
-fastlane_version "2.14.2"
-
-default_platform :ios
+default_platform(:ios)
 
 platform :ios do
+    before_all do |lane, options|
+      xcversion(version: "~> 10.1")
+    end
 
-  before_all do
-    cocoapods
-  end
+    desc "Create signing certs and provisioning profiles if needed"
+    lane :signing do
+        cert(development: true)
+        sigh(development: true)
 
-  desc "Submit a new Beta Build to Apple TestFlight"
-  lane :beta do
-    gym(scheme: "SaneScanner")
-    pilot
-  end
+        cert
+        sigh
+        sigh(adhoc: true)
+    
+        system "rm ../*.mobileprovision"
+        system "rm ../*.cer"
+        system "rm ../*.p12"
+        system "rm ../*.certSigningRequest"
+    end
 
-  desc "Deploy a new version to the App Store"
-  lane :release do
-    gym(scheme: "SaneScanner")
-    deliver(force: true)
-  end
+    def promptIncrementBuild
+        if UI.confirm("Do you want to increase the build number before building the apps?")
+            increment_build_number
+        end
+    end
 
-  desc "Create snapshots"
-  lane :snaps do
-    snapshot
-  end
+    desc "Push a new beta build to TestFlight"
+    lane :beta do
+        promptIncrementBuild
+        build_app(
+            workspace: "SaneScanner.xcworkspace", 
+            scheme: "SaneScanner",
+            output_directory: "./build",
+        )
+        upload_to_testflight(skip_waiting_for_build_processing: true)
+    end
 
-  after_all do |lane|
-  end
+    desc "Deploy a new version to the App Store"
+    lane :release do
+        beta
+        deliver(force: true)
+    end
 
-  error do |lane, exception|
-  end
+    desc "Create snapshots"
+    lane :snaps do
+        snapshot
+    end
 end
