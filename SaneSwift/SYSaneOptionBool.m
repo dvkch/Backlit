@@ -43,8 +43,7 @@
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit
 {
-    // TODO: add translations
-    return [value boolValue] ? @"OPTION BOOL ON" : @"OPTION BOOL OFF";
+    return [Sane.shared translationFor:[value boolValue] ? @"On" : @"Off"];
 }
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit

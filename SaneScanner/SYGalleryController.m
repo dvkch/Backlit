@@ -7,7 +7,7 @@
 //
 
 #import "SYGalleryController.h"
-#import <MHBarButtonItem.h>
+#import <MHVideoPhotoGallery/MHVideoPhotoGallery-umbrella.h>
 #import <NSObject+SYKit.h>
 #import <UIImage+SYKit.h>
 #import "DLAVAlertView+SY.h"

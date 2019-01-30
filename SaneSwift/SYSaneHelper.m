@@ -21,7 +21,7 @@
 // TODO: #import "NSMutableData+SY.h"
 #import "NSObject+SY.h"
 #import "NSError+SY.h"
-#import "SYGettextTranslation.h"
+#import <SaneSwift/SaneSwift-Swift.h>
 
 extern int sanei_debug_net;
 
@@ -55,7 +55,7 @@ BOOL SYPreferences_showIncompleteScanImages;
 @property (atomic, strong) NSThread *thread;
 @property (atomic, strong) NSMutableArray <NSString *> *hosts;
 @property (atomic, strong) NSDictionary <NSString *, NSValue *> *openedDevices;
-@property (atomic, strong) SYGettextTranslation *gettextTranslation;
+@property (atomic, strong) Translation *currentTranslation;
 @property (atomic, strong) NSLock *lockIsUpdating;
 @property (atomic, assign) BOOL saneStarted;
 @property (atomic, assign) BOOL stopScanOperation;
@@ -80,8 +80,9 @@ BOOL SYPreferences_showIncompleteScanImages;
     self = [super init];
     if (self)
     {
-        [self loadTranslationFile];
-        
+        self.currentTranslation = [[Translation alloc] initWithLocale:NSLocale.currentLocale];
+        NSLog(@"---> %@", [self.currentTranslation translationFor:@"Auto focus"]);
+
         NSArray <NSString *> *savedHosts = [[NSUserDefaults standardUserDefaults] arrayForKey:SYSaneHelper_PrefKey_Hosts];
         self.hosts = [NSMutableArray arrayWithArray:savedHosts];
         [self commitHosts];
@@ -171,27 +172,9 @@ BOOL SYPreferences_showIncompleteScanImages;
 
 #pragma mark - Translation
 
-- (void)loadTranslationFile
-{
-    NSString *translationFilenameFormat = @"translations/sane_strings_%@.po";
-    NSArray <NSString *> *localeIDs = @[[NSLocale currentLocale].localeIdentifier,
-                                        [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode]];
-    
-    for (NSString *localeID in localeIDs)
-    {
-        NSString *translationFilename = [NSString stringWithFormat:translationFilenameFormat, localeID];
-        NSString *translationPath = [[NSBundle mainBundle] pathForResource:translationFilename ofType:nil];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:translationPath])
-        {
-            self.gettextTranslation = [SYGettextTranslation gettextTranslationWithContentsOfFile:translationPath];
-            break;
-        }
-    }
-}
-
 - (NSString *)translationForKey:(NSString *)key
 {
-    return ([self.gettextTranslation translationForKey:key] ?: key);
+    return [self.currentTranslation translationFor:key] ?: key;
 }
 
 #pragma mark - Hosts
