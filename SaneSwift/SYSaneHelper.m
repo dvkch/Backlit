@@ -17,7 +17,6 @@
 #import "SYSaneScanParameters.h"
 #import "sane.h"
 #import "saneopts.h"
-#import "UIImage+SY.h"
 // TODO: #import "NSMutableData+SY.h"
 #import "NSObject+SY.h"
 #import "NSError+SY.h"
@@ -48,8 +47,8 @@ static NSString * const SYSaneHelper_NetFileName   = @"net.conf";
 
 void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *password);
 
-BOOL SYPreferences_previewWithAutoColorMode;
-BOOL SYPreferences_showIncompleteScanImages;
+BOOL SYPreferences_previewWithAutoColorMode = YES;
+BOOL SYPreferences_showIncompleteScanImages = YES;
 
 @interface SYSaneHelper ()
 @property (atomic, strong) NSThread *thread;
@@ -107,8 +106,18 @@ BOOL SYPreferences_showIncompleteScanImages;
 
 - (NSString *)appSupportPath:(BOOL)create
 {
-    // TODO: implement
-    return @"";
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths.firstObject stringByAppendingPathComponent:@"SaneScanner"];
+    
+    if (create && ![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:NULL])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+    }
+    
+    return path;
 }
 
 - (void)startSaneIfNeeded
@@ -856,7 +865,7 @@ BOOL SYPreferences_showIncompleteScanImages;
                     
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         // image creation needs to be done on main thread
-                        UIImage *incompleteImage = [UIImage sy_imageFromIncompleteRGBData:[data copy] orFileURL:nil saneParameters:parameters error:NULL];
+                        UIImage *incompleteImage = [UIImage sy_imageFromIncompleteSaneWithData:data parameters:parameters error:NULL];
                         if (progressBlock)
                             progressBlock(progress, incompleteImage);
                     });
@@ -903,7 +912,7 @@ BOOL SYPreferences_showIncompleteScanImages;
     }
 
     NSError *error;
-    UIImage *image = [UIImage sy_imageFromRGBData:data orFileURL:nil saneParameters:parameters error:&error];
+    UIImage *image = [UIImage sy_imageFromSaneWithData:data url:NULL parameters:parameters error:&error];
     
     RUN_BLOCK_ON_THREAD(useMainThread, successBlock, image, parameters, error);
 }

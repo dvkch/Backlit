@@ -21,7 +21,6 @@
 #import "SYSaneOptionNumber.h"
 #import "SYSaneOptionString.h"
 #import "SYSaneScanParameters.h"
-#import "UIImage+SY.h"
 #import "sane.h"
 #import "saneopts.h"
 
