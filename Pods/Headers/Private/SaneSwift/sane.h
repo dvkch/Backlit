@@ -1,1 +1,0 @@
-../../../../sane-libs/all/sane.h

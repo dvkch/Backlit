@@ -1,1 +1,0 @@
-../../../SYPictureMetadata/SYPictureMetadata/SYMetadata8BIM.h

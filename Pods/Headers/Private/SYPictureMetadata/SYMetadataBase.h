@@ -1,1 +1,0 @@
-../../../SYPictureMetadata/SYPictureMetadata/SYMetadataBase.h

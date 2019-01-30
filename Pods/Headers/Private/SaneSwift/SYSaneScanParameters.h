@@ -1,1 +1,0 @@
-../../../../SaneSwift/SYSaneScanParameters.h

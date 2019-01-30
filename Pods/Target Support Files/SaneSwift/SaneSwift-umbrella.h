@@ -12,7 +12,6 @@
 
 #import "NSError+SY.h"
 #import "NSObject+SY.h"
-#import "SYGettextTranslation.h"
 #import "SYSaneDevice.h"
 #import "SYSaneHelper.h"
 #import "SYSaneOption.h"

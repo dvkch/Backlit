@@ -7,7 +7,7 @@
 //
 
 #import "MHGalleryItem.h"
-#import <SDWebImageManager.h>
+#import <SDWebImage/SDWebImageManager.h>
 
 @implementation MHGalleryItem
 

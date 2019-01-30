@@ -1,1 +1,0 @@
-../../../../SaneSwift/SYGettextTranslation.h

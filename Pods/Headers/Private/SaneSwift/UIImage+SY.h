@@ -1,1 +1,0 @@
-../../../../SaneSwift/UIImage+SY.h

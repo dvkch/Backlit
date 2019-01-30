@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		783B63EEB070F8C7B2FFBFB7 /* libPods-SaneScanner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F576EA538D7D9C5B8AF9E6E /* libPods-SaneScanner.a */; };
 		9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */; };
 		9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559D1C972FF600BE9275 /* SYGalleryManager.m */; };
 		970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 970DE9DD1C9B6344001CD025 /* SYGalleryController.m */; };
@@ -50,6 +49,7 @@
 		97EDB9191E4924D40012CB7E /* SaneScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */; };
 		97F0A2651E52687F008C4690 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */; };
 		97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */; };
+		E380CA5C5F90A86D8A42FE99 /* Pods_SaneScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */; };
 		F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F804E0781AFA569B00CBE307 /* SYDeviceVC.m */; };
 		F86584861AF9A8290028E039 /* SYTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F86584851AF9A8290028E039 /* SYTools.m */; };
 		F894F3AB1AFAAFAA00365036 /* SYOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */; };
@@ -69,7 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4F576EA538D7D9C5B8AF9E6E /* libPods-SaneScanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SaneScanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaneScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.release.xcconfig"; sourceTree = "<group>"; };
 		767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.debug.xcconfig"; sourceTree = "<group>"; };
 		970755991C972FE600BE9275 /* SYGalleryThumbsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsView.h; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				783B63EEB070F8C7B2FFBFB7 /* libPods-SaneScanner.a in Frameworks */,
+				E380CA5C5F90A86D8A42FE99 /* Pods_SaneScanner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,7 +192,7 @@
 			children = (
 				97C3D85821FE72DD0015BA72 /* libsane-dll.a */,
 				97C3D85621FE72D10015BA72 /* libsane.a */,
-				4F576EA538D7D9C5B8AF9E6E /* libPods-SaneScanner.a */,
+				23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -416,7 +416,7 @@
 				F8CBD2091AF9A58C00B4C221 /* Sources */,
 				F8CBD20A1AF9A58C00B4C221 /* Frameworks */,
 				F8CBD20B1AF9A58C00B4C221 /* Resources */,
-				CC2E4FFA415BA8B449AA451B /* [CP] Copy Pods Resources */,
+				93CC2C1AFE9AE5B01609E587 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -496,6 +496,68 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		93CC2C1AFE9AE5B01609E587 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DLAlertView/DLAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/INSPullToRefresh/INSPullToRefresh.framework",
+				"${BUILT_PRODUCTS_DIR}/MHVideoPhotoGallery/MHVideoPhotoGallery.framework",
+				"${BUILT_PRODUCTS_DIR}/MHWDirectoryWatcher/MHWDirectoryWatcher.framework",
+				"${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/NSDate+TimeAgo/NSDate_TimeAgo.framework",
+				"${BUILT_PRODUCTS_DIR}/PKYStepper/PKYStepper.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SYEmailHelper/SYEmailHelper.framework",
+				"${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SYLogRedirect/SYLogRedirect.framework",
+				"${BUILT_PRODUCTS_DIR}/SYOperationQueue/SYOperationQueue.framework",
+				"${BUILT_PRODUCTS_DIR}/SYPair/SYPair.framework",
+				"${BUILT_PRODUCTS_DIR}/SYPictureMetadata/SYPictureMetadata.framework",
+				"${BUILT_PRODUCTS_DIR}/SaneSwift/SaneSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SpinKit/SpinKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/WeakUniqueCollection/WeakUniqueCollection.framework",
+				"${BUILT_PRODUCTS_DIR}/libextobjc/libextobjc.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DLAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/INSPullToRefresh.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MHVideoPhotoGallery.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MHWDirectoryWatcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mantle.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSDate_TimeAgo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKYStepper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYEmailHelper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYLogRedirect.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYOperationQueue.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYPair.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYPictureMetadata.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SaneSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpinKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WeakUniqueCollection.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libextobjc.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		976E5BAC1E3BA4630057B599 /* TRANSLATE */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -523,100 +585,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"ASK:\" \"WAITING:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/${PROJECT_NAME}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneSwift\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
-		};
-		CC2E4FFA415BA8B449AA451B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/activityMH.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/activtyMH@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/EditControl.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/EditControl@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/EditControlSelected.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/EditControlSelected@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/error.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/error@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/facebookMH.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/facebookMH@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/ic_square.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/ic_square@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/left_arrow.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/left_arrow@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/mailMH.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/mailMH@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/messageMH.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/messageMH@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/pause.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/pause@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/play.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/play@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/playButton.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/playButton@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/right_arrow.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/right_arrow@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/saveMH@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/sliderPoint.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/sliderPoint@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/twitterMH.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/twitterMH@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/unplay.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/unplay@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/videoIcon.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/Images/videoIcon@2x.png",
-				"${PODS_ROOT}/MHVideoPhotoGallery/MHVideoPhotoGallery/MMHVideoPhotoGallery/MHGallery.bundle",
-				"${PODS_ROOT}/NSDate+TimeAgo/NSDateTimeAgo.bundle",
-				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/SaneSwift/SaneTranslations.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/activityMH.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/activtyMH@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EditControl.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EditControl@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EditControlSelected.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EditControlSelected@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/error.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/error@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/facebookMH.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/facebookMH@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_square.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_square@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/left_arrow.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/left_arrow@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/mailMH.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/mailMH@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/messageMH.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/messageMH@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pause.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pause@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/play.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/play@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/playButton.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/playButton@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/right_arrow.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/right_arrow@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/saveMH@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/sliderPoint.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/sliderPoint@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/twitterMH.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/twitterMH@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/unplay.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/unplay@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/videoIcon.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/videoIcon@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MHGallery.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/NSDateTimeAgo.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SaneTranslations.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		DCF69B669EC8701B2D500461 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

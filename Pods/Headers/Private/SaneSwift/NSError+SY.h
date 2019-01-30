@@ -1,1 +1,0 @@
-../../../../SaneSwift/NSError+SY.h

@@ -1,1 +1,0 @@
-../../../../SaneSwift/NSObject+SY.h

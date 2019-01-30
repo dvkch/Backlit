@@ -1,1 +1,0 @@
-../../../../SaneSwift/SYSaneOptionString.h

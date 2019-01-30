@@ -1,1 +1,0 @@
-../../../../SaneSwift/SYSaneOptionBool.h

@@ -1,1 +1,0 @@
-../../../SYPictureMetadata/SYPictureMetadata/NSDictionary+SY.h

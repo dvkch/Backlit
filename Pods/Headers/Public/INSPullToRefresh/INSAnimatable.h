@@ -1,1 +1,0 @@
-../../../INSPullToRefresh/INSPullToRefreshSampleControls/INSAnimatable.h
