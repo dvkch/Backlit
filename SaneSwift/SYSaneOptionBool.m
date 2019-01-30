@@ -43,13 +43,14 @@
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit
 {
-    return [value boolValue] ? $("OPTION BOOL ON") : $("OPTION BOOL OFF");
+    // TODO: add translations
+    return [value boolValue] ? @"OPTION BOOL ON" : @"OPTION BOOL OFF";
 }
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
     if (self.capInactive)
-        return $$("");
+        return @"";
     
     return [self stringForValue:@(self.value) withUnit:withUnit];
 }

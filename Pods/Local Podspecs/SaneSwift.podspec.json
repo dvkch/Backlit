@@ -1,0 +1,30 @@
+{
+  "name": "SaneSwift",
+  "platforms": {
+    "ios": "8.0"
+  },
+  "version": "1.0.0",
+  "license": "Custom",
+  "summary": "Swift wrapper for SANE backends",
+  "homepage": "https://github.com/dvkch/SaneScanner",
+  "authors": {
+    "Stan Chevallier": "contact@stanislaschevallier.fr"
+  },
+  "source": {
+    "git": "https://github.com/dvkch/SaneScanner.git",
+    "tag": "1.0.0"
+  },
+  "swift_version": "4.2",
+  "source_files": [
+    "SaneSwift/*.{h,c,m,swift}",
+    "sane-libs/**/*.h"
+  ],
+  "vendored_libraries": "sane-libs/all/**/libsane-net.a",
+  "resource_bundles": {
+    "SaneTranslations": "sane-libs/all/translations/*.po"
+  },
+  "requires_arc": true,
+  "xcconfig": {
+    "CLANG_MODULES_AUTOLINK": "YES"
+  }
+}

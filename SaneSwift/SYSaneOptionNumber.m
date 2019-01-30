@@ -110,20 +110,20 @@
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit
 {
-    NSString *unitString = $$("");
+    NSString *unitString = @"";
     if (self.unit != SANE_UNIT_NONE)
-        unitString = [NSString stringWithFormat:$$(" %@"), NSStringFromSANE_Unit(self.unit)];
+        unitString = [NSString stringWithFormat:@" %@", NSStringFromSANE_Unit(self.unit)];
     
     if (self.type == SANE_TYPE_INT)
-        return [NSString stringWithFormat:$$("%d%@"),        [value intValue], unitString];
+        return [NSString stringWithFormat:@"%d%@",        [value intValue], unitString];
     else
-        return [NSString stringWithFormat:$$("%.02lf%@"), [value doubleValue], unitString];
+        return [NSString stringWithFormat:@"%.02lf%@", [value doubleValue], unitString];
 }
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
     if (self.capInactive)
-        return $$("");
+        return @"";
     
     return [self stringForValue:self.value withUnit:withUnit];
 }
@@ -193,22 +193,23 @@
 
 - (NSString *)descriptionConstraint
 {
+    // TODO: translate
     if (self.constraintType == SANE_CONSTRAINT_RANGE) {
         if (self.stepValue)
-            return [NSString stringWithFormat:$("OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@"),
+            return [NSString stringWithFormat:@"OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@",
                     [self stringForValue:self.minValue withUnit:YES],
                     [self stringForValue:self.maxValue withUnit:YES],
                     [self stringForValue:self.stepValue withUnit:YES]];
         else
-            return [NSString stringWithFormat:$("OPTION CONSTRAINED RANGE FROM TO %@ %@"),
+            return [NSString stringWithFormat:@"OPTION CONSTRAINED RANGE FROM TO %@ %@",
                     [self stringForValue:self.minValue withUnit:YES],
                     [self stringForValue:self.maxValue withUnit:YES]];
     }
     else if (self.constraintType == SANE_CONSTRAINT_WORD_LIST) {
-        return [NSString stringWithFormat:$("OPTION CONSTRAINED LIST %@"),
-                [self.constraintValues componentsJoinedByString:$$(", ")]];
+        return [NSString stringWithFormat:@"OPTION CONSTRAINED LIST %@",
+                [self.constraintValues componentsJoinedByString:@", "]];
     }
-    return $("OPTION CONSTRAINED NOT CONSTRAINED");
+    return @"OPTION CONSTRAINED NOT CONSTRAINED";
 }
 
 @end

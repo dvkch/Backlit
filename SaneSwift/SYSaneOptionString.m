@@ -86,13 +86,13 @@
     if (stringValue)                 [parts addObject:stringValue];
     if (self.unit != SANE_UNIT_NONE) [parts addObject:NSStringFromSANE_Unit(self.unit)];
     
-    return [parts componentsJoinedByString:$$(" ")];
+    return [parts componentsJoinedByString:@" "];
 }
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
     if (self.capInactive)
-        return $$("");
+        return @"";
     
     return [self stringForValue:self.value withUnit:withUnit];
 }
@@ -108,11 +108,12 @@
 
 - (NSString *)descriptionConstraint
 {
+    // TODO: translate
     if (self.constraintType == SANE_CONSTRAINT_STRING_LIST) {
-        return [NSString stringWithFormat:$("OPTION CONSTRAINED LIST %@"),
-                [self.constraintValues componentsJoinedByString:$$(", ")]];
+        return [NSString stringWithFormat:@"OPTION CONSTRAINED LIST %@",
+                [self.constraintValues componentsJoinedByString:@", "]];
     }
-    return $("OPTION CONSTRAINED NOT CONSTRAINED");
+    return @"OPTION CONSTRAINED NOT CONSTRAINED";
 }
 
 @end

@@ -36,7 +36,7 @@
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
-    return $$("");
+    return @"";
 }
 
 - (void)refreshValue:(void(^)(NSError *error))block

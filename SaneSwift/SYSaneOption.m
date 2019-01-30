@@ -76,33 +76,34 @@
 
 - (NSString *)valueStringWithUnit:(BOOL)withUnit
 {
-    [NSException raise:$$("Not implemented") format:$("")];
+    [NSException raise:@"Not implemented" format:@""];
     return nil;
 }
 
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit;
 {
-    [NSException raise:$$("Not implemented") format:$("")];
+    [NSException raise:@"Not implemented" format:@""];
     return nil;
 }
 
 - (void)refreshValue:(void(^)(NSError *error))block
 {
-    [NSException raise:$$("Not implemented") format:$("")];
+    [NSException raise:@"Not implemented" format:@""];
 }
 
 - (NSString *)descriptionConstraint
 {
+    // TODO: translate
     if (self.constraintType == SANE_CONSTRAINT_RANGE) {
-        return $("OPTION CONSTRAINED RANGE");
+        return @"OPTION CONSTRAINED RANGE";
     }
     else if (self.constraintType == SANE_CONSTRAINT_STRING_LIST) {
-        return $("OPTION CONSTRAINED LIST");
+        return @"OPTION CONSTRAINED LIST";
     }
     else if (self.constraintType == SANE_CONSTRAINT_WORD_LIST) {
-        return $("OPTION CONSTRAINED LIST");
+        return @"OPTION CONSTRAINED LIST";
     }
-    return $("OPTION CONSTRAINED NOT CONSTRAINED");
+    return @"OPTION CONSTRAINED NOT CONSTRAINED";
 }
 
 - (NSString *)debugDescriptionCapabilities
@@ -110,37 +111,37 @@
     NSMutableArray <NSString *> *descriptions = [NSMutableArray array];
     
     if (self.capReadable)
-        [descriptions addObject:$$("readable")];
+        [descriptions addObject:@"readable"];
     else
-        [descriptions addObject:$$("not readable")];
+        [descriptions addObject:@"not readable"];
     
     if (self.cap & SANE_CAP_SOFT_SELECT)
-        [descriptions addObject:$$("settable via software")];
+        [descriptions addObject:@"settable via software"];
     
     if (self.cap & SANE_CAP_HARD_SELECT)
-        [descriptions addObject:$$("settable via hardware")];
+        [descriptions addObject:@"settable via hardware"];
     
     if (!(self.cap & SANE_CAP_SOFT_SELECT) && !(self.cap & SANE_CAP_HARD_SELECT))
-        [descriptions addObject:$$("not settable")];
+        [descriptions addObject:@"not settable"];
     
     if (self.capSetAuto)
-        [descriptions addObject:$$("has auto value")];
+        [descriptions addObject:@"has auto value"];
     
     if (self.capInactive)
-        [descriptions addObject:$$("inactive")];
+        [descriptions addObject:@"inactive"];
     
     if (self.capAdvanced)
-        [descriptions addObject:$$("advanced")];
+        [descriptions addObject:@"advanced"];
     
     if (self.capEmulated)
-        [descriptions addObject:$$("emulated")];
+        [descriptions addObject:@"emulated"];
     
-    return [descriptions componentsJoinedByString:$$(", ")];
+    return [descriptions componentsJoinedByString:@", "];
 }
 
 - (NSString *)debugDescriptionHuman
 {
-    return [NSString stringWithFormat:$$("<#%d, %@, %@, %@, %@, %@>"),
+    return [NSString stringWithFormat:@"<#%d, %@, %@, %@, %@, %@>",
             (int)self.index,
             self.localizedTitle,
             NSStringFromSANE_Value_Type(self.type),
@@ -151,7 +152,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:$$("<%@: %p, %d, %@, %@, %@>"),
+    return [NSString stringWithFormat:@"<%@: %p, %d, %@, %@, %@>",
             [self class],
             self,
             (int)self.index,
@@ -205,29 +206,29 @@
 
 NSString *NSStringFromSANE_Value_Type(SANE_Value_Type type)
 {
-    NSString *s = $$("unknown");
+    NSString *s = @"unknown";
     switch (type) {
-        case SANE_TYPE_BOOL:    s = $$("bool");    break;
-        case SANE_TYPE_BUTTON:  s = $$("button");  break;
-        case SANE_TYPE_FIXED:   s = $$("fixed");   break;
-        case SANE_TYPE_GROUP:   s = $$("group");   break;
-        case SANE_TYPE_INT:     s = $$("int");     break;
-        case SANE_TYPE_STRING:  s = $$("string");  break;
+        case SANE_TYPE_BOOL:    s = @"bool";    break;
+        case SANE_TYPE_BUTTON:  s = @"button";  break;
+        case SANE_TYPE_FIXED:   s = @"fixed";   break;
+        case SANE_TYPE_GROUP:   s = @"group";   break;
+        case SANE_TYPE_INT:     s = @"int";     break;
+        case SANE_TYPE_STRING:  s = @"string";  break;
     }
     return s;
 }
 
 NSString *NSStringFromSANE_Unit(SANE_Unit unit)
 {
-    NSString *s = $$("unknown");
+    NSString *s = @"unknown";
     switch (unit) {
-        case SANE_UNIT_NONE:        s = $$("none"); break;
-        case SANE_UNIT_PIXEL:       s = $$("px");   break;
-        case SANE_UNIT_BIT:         s = $$("bits"); break;
-        case SANE_UNIT_MM:          s = $$("mm");   break;
-        case SANE_UNIT_DPI:         s = $$("dpi");  break;
-        case SANE_UNIT_PERCENT:     s = $$("%");    break;
-        case SANE_UNIT_MICROSECOND: s = $$("ms");   break;
+        case SANE_UNIT_NONE:        s = @"none"; break;
+        case SANE_UNIT_PIXEL:       s = @"px";   break;
+        case SANE_UNIT_BIT:         s = @"bits"; break;
+        case SANE_UNIT_MM:          s = @"mm";   break;
+        case SANE_UNIT_DPI:         s = @"dpi";  break;
+        case SANE_UNIT_PERCENT:     s = @"%";    break;
+        case SANE_UNIT_MICROSECOND: s = @"ms";   break;
     }
     return s;
 }

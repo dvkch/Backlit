@@ -27,10 +27,10 @@
 
 - (void)loadFromString:(NSString *)content
 {
-    NSArray <NSString *> *lines = [content componentsSeparatedByString:$$("\n")];
+    NSArray <NSString *> *lines = [content componentsSeparatedByString:@"\n"];
     
-    NSString *keyToken = $$("msgid \"");
-    NSString *valueToken = $$("msgstr \"");
+    NSString *keyToken = @"msgid \"";
+    NSString *valueToken = @"msgstr \"";
     
     // keep only lines that start with:
     // - "
@@ -41,7 +41,7 @@
         NSMutableArray <NSString *> *filteredLines = [NSMutableArray arrayWithCapacity:2500];
         for (NSString *line in lines)
         {
-            if ([line hasPrefix:$$("\"")] || [line hasPrefix:keyToken] || [line hasPrefix:valueToken])
+            if ([line hasPrefix:@"\""] || [line hasPrefix:keyToken] || [line hasPrefix:valueToken])
             {
                 [filteredLines addObject:line];
             }
@@ -59,10 +59,10 @@
         {
             NSString *line = lines[i];
 
-            while (i < lines.count - 1 && [lines[i+1] hasPrefix:$$("\"")])
+            while (i < lines.count - 1 && [lines[i+1] hasPrefix:@"\""])
             {
                 line = [line stringByAppendingString:lines[i+1]];
-                line = [line stringByReplacingOccurrencesOfString:$$("\"\"") withString:$$("")];
+                line = [line stringByReplacingOccurrencesOfString:@"\"\"" withString:@""];
                 ++i;
             }
             
@@ -82,14 +82,14 @@
             if ([line hasPrefix:keyToken])
             {
                 key = [line substringWithRange:NSMakeRange(keyToken.length, line.length - keyToken.length - 1)];
-                key = [key stringByReplacingOccurrencesOfString:$$("\\\"") withString:$$("\"")];
+                key = [key stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
                 continue;
             }
             
             if ([line hasPrefix:valueToken])
             {
                 NSString *value = [line substringWithRange:NSMakeRange(valueToken.length, line.length - valueToken.length - 1)];
-                value = [value stringByReplacingOccurrencesOfString:$$("\\\"") withString:$$("\"")];
+                value = [value stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
                 
                 if (value.length && key.length)
                     translations[key] = value;

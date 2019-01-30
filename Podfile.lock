@@ -15,6 +15,7 @@ PODS:
   - MHWDirectoryWatcher (0.0.9)
   - "NSDate+TimeAgo (1.0.6)"
   - PKYStepper (0.0.1)
+  - SaneSwift (1.0.0)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -39,6 +40,7 @@ DEPENDENCIES:
   - MHWDirectoryWatcher (from `https://raw.githubusercontent.com/dvkch/MHWDirectoryWatcher/master/MHWDirectoryWatcher.podspec`)
   - "NSDate+TimeAgo"
   - PKYStepper
+  - SaneSwift (from `./`)
   - SpinKit
   - SVProgressHUD
   - SYEmailHelper
@@ -75,6 +77,8 @@ EXTERNAL SOURCES:
     :podspec: https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec
   MHWDirectoryWatcher:
     :podspec: https://raw.githubusercontent.com/dvkch/MHWDirectoryWatcher/master/MHWDirectoryWatcher.podspec
+  SaneSwift:
+    :path: "./"
 
 SPEC CHECKSUMS:
   DLAlertView: 774c1242cc854177fdc07634ed3f8c250a38864d
@@ -86,6 +90,7 @@ SPEC CHECKSUMS:
   MHWDirectoryWatcher: ab18b84bbc0d6967822e05f456d1ba8bc755b218
   "NSDate+TimeAgo": 35601c619b2d59290055e4fe76e61d97677a2360
   PKYStepper: 8dacefbddf9fa2b6aaec2ef828b46a78daa2db7d
+  SaneSwift: 81e0b6042326a3a71159b6fd17635e752bd99b85
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
@@ -98,6 +103,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
   WeakUniqueCollection: 58fa257bfdca7d2c0fc06060c28f5892bd66e80f
 
-PODFILE CHECKSUM: b204c0597c8274114b9efed4ee8886d9477258eb
+PODFILE CHECKSUM: e7a5f5dd4fe046748b29cc9c4383b691062adbf2
 
 COCOAPODS: 1.6.0.beta.2

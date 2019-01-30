@@ -8,7 +8,6 @@
 
 #import "SYSaneDevice.h"
 #import "SYSaneOptionNumber.h"
-#import "SYTools.h"
 #import "saneopts.h"
 #import "SYSaneHelper.h"
 
@@ -48,7 +47,7 @@
 - (NSString *)host
 {
     // seems to be working that way, can change
-    return [self.name componentsSeparatedByString:$$(":")].firstObject;
+    return [self.name componentsSeparatedByString:@":"].firstObject;
 }
 
 - (CGFloat)previewImageRatio

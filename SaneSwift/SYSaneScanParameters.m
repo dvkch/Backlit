@@ -55,7 +55,7 @@
 
 - (NSString *)description
 {    
-    return [NSString stringWithFormat:$$("<%@: %p, %ld*%ld*%ld, channel: %@, isLastChannel: %d, bytesPerLine: %ld>"),
+    return [NSString stringWithFormat:@"<%@: %p, %ld*%ld*%ld, channel: %@, isLastChannel: %d, bytesPerLine: %ld>",
             self.class, self,
             (long)self.width, (long)self.height, (long)self.depth,
             NSStringFromSANE_Frame(self.currentlyAcquiredChannel),
@@ -67,13 +67,13 @@
 
 NSString *NSStringFromSANE_Frame(SANE_Frame frame)
 {
-    NSString *string = $$("unknown");
+    NSString *string = @"unknown";
     switch (frame) {
-        case SANE_FRAME_RGB:    string = $$("RGB");  break;
-        case SANE_FRAME_RED:    string = $$("R");    break;
-        case SANE_FRAME_GREEN:  string = $$("G");    break;
-        case SANE_FRAME_BLUE:   string = $$("B");    break;
-        case SANE_FRAME_GRAY:   string = $$("GREY"); break;
+        case SANE_FRAME_RGB:    string = @"RGB";  break;
+        case SANE_FRAME_RED:    string = @"R";    break;
+        case SANE_FRAME_GREEN:  string = @"G";    break;
+        case SANE_FRAME_BLUE:   string = @"B";    break;
+        case SANE_FRAME_GRAY:   string = @"GREY"; break;
     }
     return string;
 }

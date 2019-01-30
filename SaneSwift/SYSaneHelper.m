@@ -7,7 +7,6 @@
 //
 
 #import "SYSaneHelper.h"
-#import "SYTools.h"
 #import "SYSaneDevice.h"
 #import "SYSaneOption.h"
 #import "SYSaneOptionBool.h"
@@ -19,9 +18,9 @@
 #import "sane.h"
 #import "saneopts.h"
 #import "UIImage+SY.h"
-#import "NSMutableData+SY.h"
-#import <NSObject+SYKit.h>
-#import "SYPreferences.h"
+// TODO: #import "NSMutableData+SY.h"
+#import "NSObject+SY.h"
+#import "NSError+SY.h"
 #import "SYGettextTranslation.h"
 
 extern int sanei_debug_net;
@@ -39,15 +38,18 @@ NSDate *perfDate = [NSDate date]
 
 #define PERF_END(min)   \
 if ([[NSDate date] timeIntervalSinceDate:perfDate] > ((double)min)/1000.) \
-    NSLog($$("%@: %.03lfs"), NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSinceDate:perfDate])
+    NSLog(@"%@: %.03lfs", NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSinceDate:perfDate])
 
 #define PERF_MIN_MS (1000)
 
-static NSString * const SYSaneHelper_PrefKey_Hosts = $$("hosts");
-static NSString * const SYSaneHelper_ConfFileName  = $$("dll.conf");
-static NSString * const SYSaneHelper_NetFileName   = $$("net.conf");
+static NSString * const SYSaneHelper_PrefKey_Hosts = @"hosts";
+static NSString * const SYSaneHelper_ConfFileName  = @"dll.conf";
+static NSString * const SYSaneHelper_NetFileName   = @"net.conf";
 
 void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *password);
+
+BOOL SYPreferences_previewWithAutoColorMode;
+BOOL SYPreferences_showIncompleteScanImages;
 
 @interface SYSaneHelper ()
 @property (atomic, strong) NSThread *thread;
@@ -84,10 +86,10 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         self.hosts = [NSMutableArray arrayWithArray:savedHosts];
         [self commitHosts];
         
-        NSLog($$("Loaded hosts: %@"), [self.hosts componentsJoinedByString:$$(", ")]);
+        NSLog(@"Loaded hosts: %@", [self.hosts componentsJoinedByString:@", "]);
         
         self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadKeepAlive) object:nil];
-        [self.thread setName:$$("SYSaneHelper")];
+        [self.thread setName:@"SYSaneHelper"];
         [self.thread start];
         
         self.lockIsUpdating = [[NSLock alloc] init];
@@ -102,6 +104,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     sane_exit();
 }
 
+- (NSString *)appSupportPath:(BOOL)create
+{
+    // TODO: implement
+    return @"";
+}
+
 - (void)startSaneIfNeeded
 {
     ENSURE_RUNNING_THREAD(self.thread, ^{
@@ -112,11 +120,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         return;
     
     // needed for Sane-net config file
-    [[NSFileManager defaultManager] changeCurrentDirectoryPath:[SYTools appSupportPath:YES]];
+    [[NSFileManager defaultManager] changeCurrentDirectoryPath:[self appSupportPath:YES]];
     
     // needed for dll.conf file
+    // TODO: path: wtf?
     NSData *dllConf = [NSData dataWithContentsOfFile:SYSaneHelper_ConfFileName];
-    [dllConf writeToFile:[SYTools appSupportPath:NO] atomically:YES];
+    [dllConf writeToFile:[self appSupportPath:NO] atomically:YES];
     
     self.openedDevices = [NSMutableDictionary dictionary];
     self.isUpdatingDevices = NO;
@@ -131,7 +140,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     }
     
     self.saneStarted = (s == SANE_STATUS_GOOD);
-    NSLog($$("Sane started: %d"), self.saneStarted);
+    NSLog(@"Sane started: %d", self.saneStarted);
 }
 
 - (void)stopSane
@@ -147,7 +156,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     sane_exit();
     
     self.saneStarted = NO;
-    NSLog($$("Sane stopped"));
+    NSLog(@"Sane stopped");
 }
 
 - (void)threadKeepAlive
@@ -164,7 +173,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
 - (void)loadTranslationFile
 {
-    NSString *translationFilenameFormat = $$("translations/sane_strings_%@.po");
+    NSString *translationFilenameFormat = @"translations/sane_strings_%@.po";
     NSArray <NSString *> *localeIDs = @[[NSLocale currentLocale].localeIdentifier,
                                         [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode]];
     
@@ -222,12 +231,12 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     NSMutableArray <NSString *> *lines = [NSMutableArray array];
     [lines addObjectsFromArray:self.hosts];
-    [lines addObject:$$("connect_timeout = 10")];
-    NSString *config = [lines componentsJoinedByString:$$("\n")];
+    [lines addObject:@"connect_timeout = 10"];
+    NSString *config = [lines componentsJoinedByString:@"\n"];
     
-    NSLog($$("Updating config to:\n%@"), config);
+    NSLog(@"Updating config to:\n%@", config);
     
-    NSString *configPath = [[SYTools appSupportPath:YES] stringByAppendingPathComponent:SYSaneHelper_NetFileName];
+    NSString *configPath = [[self appSupportPath:YES] stringByAppendingPathComponent:SYSaneHelper_NetFileName];
     [config writeToFile:configPath atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     
     [[NSFileManager defaultManager] setAttributes:@{} ofItemAtPath:config error:NULL];
@@ -280,7 +289,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     if (s != SANE_STATUS_GOOD)
     {
-        RUN_BLOCK_ON_THREAD(YES, block, nil, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(YES, block, nil, [NSError ss_errorWithSaneStatus:s]);
         self.isUpdatingDevices = NO;
         return;
     }
@@ -331,7 +340,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     if (s != SANE_STATUS_GOOD)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, block, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, block, [NSError ss_errorWithSaneStatus:s]);
         return;
     }
     
@@ -444,25 +453,25 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 {
     if (![self isDeviceOpen:option.device]) {
         if (block)
-            block(nil, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
+            block(nil, [NSError ss_errorWithCode:SSErrorCode_DeviceNotOpened]);
         return;
     }
     
     if (option.type == SANE_TYPE_GROUP) {
         if (block)
-            block(nil, [NSError sy_errorWithCode:SYErrorCode_GetValueForTypeGroup]);
+            block(nil, [NSError ss_errorWithCode:SSErrorCode_GetValueForTypeGroup]);
         return;
     }
     
     if (option.type == SANE_TYPE_BUTTON) {
         if (block)
-            block(nil, [NSError sy_errorWithCode:SYErrorCode_GetValueForTypeButton]);
+            block(nil, [NSError ss_errorWithCode:SSErrorCode_GetValueForTypeButton]);
         return;
     }
     
     if (option.capInactive) {
         if (block)
-            block(nil, [NSError sy_errorWithCode:SYErrorCode_GetValueForInactiveOption]);
+            block(nil, [NSError ss_errorWithCode:SSErrorCode_GetValueForInactiveOption]);
         return;
     }
     
@@ -480,7 +489,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
     if (s != SANE_STATUS_GOOD)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, block, nil, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, block, nil, [NSError ss_errorWithSaneStatus:s]);
         return;
     }
     
@@ -511,7 +520,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 {
     if (![self isDeviceOpen:device]) {
         if (block)
-            block(NO, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
+            block(NO, [NSError ss_errorWithCode:SSErrorCode_DeviceNotOpened]);
         return;
     }
     
@@ -567,13 +576,13 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 {
     if (![self isDeviceOpen:option.device]) {
         if (block)
-            block(NO, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
+            block(NO, [NSError ss_errorWithCode:SSErrorCode_DeviceNotOpened]);
         return;
     }
     
     if (option.type == SANE_TYPE_GROUP) {
         if (block)
-            block(NO, [NSError sy_errorWithCode:SYErrorCode_SetValueForTypeGroup]);
+            block(NO, [NSError ss_errorWithCode:SSErrorCode_SetValueForTypeGroup]);
         return;
     }
     
@@ -646,7 +655,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     if (s != SANE_STATUS_GOOD)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, block, NO, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, block, NO, [NSError ss_errorWithSaneStatus:s]);
         return;
     }
     
@@ -670,7 +679,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 {
     if (![self isDeviceOpen:device]) {
         if (successBlock)
-            successBlock(nil, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
+            successBlock(nil, [NSError ss_errorWithCode:SSErrorCode_DeviceNotOpened]);
         return;
     }
     
@@ -695,7 +704,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
                                              @(SYSaneStandardOptionAreaBottomRightX),
                                              @(SYSaneStandardOptionAreaBottomRightY)];
         
-        if ([[SYPreferences shared] previewWithAutoColorMode])
+        if (SYPreferences_previewWithAutoColorMode)
             stdOptions = [stdOptions arrayByAddingObject:@(SYSaneStandardOptionColorMode)];
         
         for (NSNumber *stdOptionN in stdOptions)
@@ -724,7 +733,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
                 
                 if (bestValue != SYOptionValueAuto)
                 {
-                    NSLog($$("Unsupported configuration : option %@ is a string but cannot be set to auto"), option.identifier);
+                    NSLog(@"Unsupported configuration : option %@ is a string but cannot be set to auto", option.identifier);
                     continue;
                 }
                 
@@ -733,7 +742,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
             }
             else
             {
-                NSLog($$("Unsupported configuration : option type for %@ is not supported"), option.identifier);
+                NSLog(@"Unsupported configuration : option type for %@ is not supported", option.identifier);
             }
             
             [self setValue:newValue orAutoValue:useAuto forOption:option block:^(BOOL reloadAllOptions, NSError *error) {
@@ -796,7 +805,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 {
     if (![self isDeviceOpen:device]) {
         if (successBlock)
-            successBlock(nil, nil, [NSError sy_errorWithCode:SYErrorCode_DeviceNotOpened]);
+            successBlock(nil, nil, [NSError ss_errorWithCode:SSErrorCode_DeviceNotOpened]);
         return;
     }
     
@@ -822,14 +831,14 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
     
     if (s != SANE_STATUS_GOOD)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError ss_errorWithSaneStatus:s]);
         return;
     }
     
     s = sane_set_io_mode(h, NO);
     if (s != SANE_STATUS_GOOD)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError ss_errorWithSaneStatus:s]);
         return;
     }
     
@@ -856,7 +865,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
         if (progressBlock && parameters.fileSize)
         {
             float progress = (double)data.length / (double)parameters.fileSize;
-            if ([[SYPreferences shared] showIncompleteScanImages])
+            if (SYPreferences_showIncompleteScanImages)
             {
                 if (progress > progressForLastIncompletePreview + incompletePreviewStep)
                 {
@@ -906,7 +915,7 @@ void sane_auth(SANE_String_Const resource, SANE_Char *username, SANE_Char *passw
 
     if (s != SANE_STATUS_EOF)
     {
-        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError sy_errorWithSaneStatus:s]);
+        RUN_BLOCK_ON_THREAD(useMainThread, successBlock, nil, nil, [NSError ss_errorWithSaneStatus:s]);
         return;
     }
 

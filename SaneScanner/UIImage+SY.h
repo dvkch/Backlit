@@ -8,19 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class SYSaneScanParameters;
-
 @interface UIImage (SY)
-
-+ (UIImage *)sy_imageFromRGBData:(NSData *)data
-                       orFileURL:(NSURL *)fileURL
-                  saneParameters:(SYSaneScanParameters *)parameters
-                           error:(NSError **)error;
-
-+ (UIImage *)sy_imageFromIncompleteRGBData:(NSData *)data
-                                 orFileURL:(NSURL *)fileURL
-                            saneParameters:(SYSaneScanParameters *)parameters
-                                     error:(NSError **)error;
 
 + (UIImage *)sy_addIconWithColor:(UIColor *)color;
 + (UIImage *)sy_addIconWithColor:(UIColor *)color size:(CGFloat)size borderWidth:(CGFloat)borderWidth;

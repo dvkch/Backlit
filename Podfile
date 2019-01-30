@@ -3,6 +3,8 @@ inhibit_all_warnings!
 platform :ios, '9.0'
 
 target :'SaneScanner' do
+    pod 'SaneSwift', :path => "./"
+
 	pod 'SVProgressHUD'
 	pod 'NSDate+TimeAgo'
 	pod 'SYLogRedirect'

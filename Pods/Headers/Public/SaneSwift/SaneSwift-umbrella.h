@@ -1,0 +1,1 @@
+/Volumes/Data/Dev/iOS/MyApps/SaneScanner/SaneScanner/Pods/Target Support Files/SaneSwift/SaneSwift-umbrella.h
