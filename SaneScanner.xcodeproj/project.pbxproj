@@ -49,8 +49,8 @@
 		97DA07151C989318007F522E /* SYToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07141C989318007F522E /* SYToolbar.m */; };
 		97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E2EE601CCD451700FA95AF /* SYGridLayout.m */; };
 		97EDB9191E4924D40012CB7E /* SaneScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */; };
-		97EF42262205FF7900D45FC8 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EF42242205FF7900D45FC8 /* AddCell.swift */; };
-		97EF42272205FF7900D45FC8 /* AddCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EF42252205FF7900D45FC8 /* AddCell.xib */; };
+		97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EF42242205FF7900D45FC8 /* HostCell.swift */; };
+		97EF42272205FF7900D45FC8 /* HostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EF42252205FF7900D45FC8 /* HostCell.xib */; };
 		97F0A2651E52687F008C4690 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */; };
 		97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */; };
 		E380CA5C5F90A86D8A42FE99 /* Pods_SaneScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */; };
@@ -153,8 +153,8 @@
 		97EDB9161E4924D40012CB7E /* SaneScannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaneScannerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaneScannerUITests.swift; sourceTree = "<group>"; };
 		97EDB91A1E4924D40012CB7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		97EF42242205FF7900D45FC8 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
-		97EF42252205FF7900D45FC8 /* AddCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCell.xib; sourceTree = "<group>"; };
+		97EF42242205FF7900D45FC8 /* HostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostCell.swift; sourceTree = "<group>"; };
+		97EF42252205FF7900D45FC8 /* HostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HostCell.xib; sourceTree = "<group>"; };
 		97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SYKit.h"; sourceTree = "<group>"; };
 		97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SYKit.m"; sourceTree = "<group>"; };
 		F804E0771AFA569B00CBE307 /* SYDeviceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDeviceVC.h; sourceTree = "<group>"; };
@@ -233,8 +233,8 @@
 			children = (
 				971BE2431C8EEEC100B8F29C /* SYPreviewCell.h */,
 				971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */,
-				97EF42242205FF7900D45FC8 /* AddCell.swift */,
-				97EF42252205FF7900D45FC8 /* AddCell.xib */,
+				97EF42242205FF7900D45FC8 /* HostCell.swift */,
+				97EF42252205FF7900D45FC8 /* HostCell.xib */,
 				97D0E03F220607E500AC74D0 /* DeviceCell.swift */,
 				97D0E040220607E500AC74D0 /* DeviceCell.xib */,
 				97CC34E12205F48B00304345 /* OptionCell.swift */,
@@ -498,7 +498,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */,
-				97EF42272205FF7900D45FC8 /* AddCell.xib in Resources */,
+				97EF42272205FF7900D45FC8 /* HostCell.xib in Resources */,
 				97F0A2651E52687F008C4690 /* Images.xcassets in Resources */,
 				97CC34E42205F48B00304345 /* OptionCell.xib in Resources */,
 				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
@@ -633,7 +633,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97CC34E72205F9D200304345 /* String+SY.swift in Sources */,
-				97EF42262205FF7900D45FC8 /* AddCell.swift in Sources */,
+				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
 				971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */,
 				971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */,

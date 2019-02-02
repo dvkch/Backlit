@@ -1,5 +1,5 @@
 //
-//  AddCell.swift
+//  HostCell.swift
 //  SaneScanner
 //
 //  Created by Stanislas Chevallier on 02/02/2019.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class AddCell: UITableViewCell {
+class HostCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        accessoryView = UIImageView(image: UIImage(named: "button-add"))
         
+        accessoryType = .none
         if #available(iOS 10.0, *) {
             label.adjustsFontForContentSizeCategory = true
         }
@@ -26,5 +26,11 @@ class AddCell: UITableViewCell {
     @objc var title: String? {
         get { return label.text }
         set { label.text = newValue }
+    }
+    
+    @objc var showAddIndicator: Bool = false {
+        didSet {
+            accessoryView = showAddIndicator ? UIImageView(image: UIImage(named: "button-add")) : nil
+        }
     }
 }

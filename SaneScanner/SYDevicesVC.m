@@ -40,9 +40,8 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[UITableViewCell sy_className]];
     [self.tableView registerNib:[UINib nibWithNibName:$$("DeviceCell") bundle:nil] forCellReuseIdentifier:DeviceCell.sy_className];
-    [self.tableView registerNib:[UINib nibWithNibName:$$("AddCell") bundle:nil] forCellReuseIdentifier:AddCell.sy_className];
+    [self.tableView registerNib:[UINib nibWithNibName:$$("HostCell") bundle:nil] forCellReuseIdentifier:HostCell.sy_className];
     [self.view addSubview:self.tableView];
     
     self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self tintColor:nil];
@@ -160,19 +159,18 @@
 {
     if (indexPath.section == 0)
     {
+        HostCell *cell = (HostCell *)[tableView dequeueReusableCellWithIdentifier:HostCell.sy_className];
         if (indexPath.row < Sane.shared.configuration.hosts.count)
         {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[UITableViewCell sy_className]];
-            [cell.textLabel setText:Sane.shared.configuration.hosts[indexPath.row]];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-            return cell;
+            cell.title = Sane.shared.configuration.hosts[indexPath.row];
+            cell.showAddIndicator = NO;
         }
         else
         {
-            AddCell *cell = (AddCell *)[tableView dequeueReusableCellWithIdentifier:AddCell.sy_className];
-            [cell setTitle:$("DEVICES ROW ADD HOST")];
-            return cell;
+            cell.title = $("DEVICES ROW ADD HOST");
+            cell.showAddIndicator = YES;
         }
+        return cell;
     }
     else
     {
