@@ -97,7 +97,7 @@ extension Sane {
     }
 
     @objc private func runOnSaneThread(block: (() -> ())?) {
-        self.sy_perform(block, on: thread)
+        self.ss_perform(block, on: thread)
     }
 }
 
@@ -257,28 +257,30 @@ extension Sane {
         runOnSaneThread {
             guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else { return }
             
-            // TODO: PERF_START()
-            var count = SANE_Int(0)
-            
-            // needed for sane to update the value of the option count
-            var descriptor = sane_get_option_descriptor(handle, 0);
-            
-            let s = sane_control_option(handle, 0, SANE_ACTION_GET_VALUE, &count, nil);
-            guard s == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion?() } }
-                else { completion?() }
-                return
-            }
-            
             var options = [SYSaneOption]()
-            for i in 1..<count {
-                descriptor = sane_get_option_descriptor(handle, i)
-                options.append(SYSaneOption.bestOption(withCOpt: descriptor, index: i, device: device)!)
+            
+            Sane.logTime {
+                
+                var count = SANE_Int(0)
+                
+                // needed for sane to update the value of the option count
+                var descriptor = sane_get_option_descriptor(handle, 0);
+                
+                let s = sane_control_option(handle, 0, SANE_ACTION_GET_VALUE, &count, nil);
+                guard s == SANE_STATUS_GOOD else {
+                    if mainThread { DispatchQueue.main.async { completion?() } }
+                    else { completion?() }
+                    return
+                }
+                
+                for i in 1..<count {
+                    descriptor = sane_get_option_descriptor(handle, i)
+                    options.append(SYSaneOption.bestOption(withCOpt: descriptor, index: i, device: device)!)
+                }
+                
+                options.forEach { $0.refreshValue(nil) }
+                
             }
-            
-            options.forEach { $0.refreshValue(nil) }
-            
-            // PERF_END(PERF_MIN_MS);
             
             device.setOptions(options)
             

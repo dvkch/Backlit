@@ -8,9 +8,9 @@
 
 #import "NSObject+SY.h"
 
-@implementation NSObject (SYKit)
+@implementation NSObject (SaneSwift)
 
-- (void)sy_performBlock:(void(^)(void))block onThread:(NSThread *)thread
+- (void)ss_performBlock:(void(^)(void))block onThread:(NSThread *)thread
 {
     if (thread == [NSThread currentThread])
     {
@@ -22,7 +22,7 @@
     [self performSelector:@selector(sy_runBlock:) onThread:thread withObject:block waitUntilDone:NO];
 }
 
-- (void)sy_runBlock:(void(^)(void))block
+- (void)ss_runBlock:(void(^)(void))block
 {
     if (block)
         block();

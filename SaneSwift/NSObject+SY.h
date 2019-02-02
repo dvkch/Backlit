@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (SYKit)
+@interface NSObject (SaneSwift)
 
-- (void)sy_performBlock:(void(^)(void))block onThread:(NSThread *)thread;
+- (void)ss_performBlock:(void(^)(void))block onThread:(NSThread *)thread;
 
 @end
