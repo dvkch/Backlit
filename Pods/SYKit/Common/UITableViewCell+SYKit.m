@@ -10,37 +10,28 @@
 
 @implementation UITableViewCell (SYKit)
 
-+ (CGFloat)sy_cellHeightForWidth:(CGFloat)width
-              configurationBlock:(void(^)(UITableViewCell *sizingCell))configurationBlock
+- (CGFloat)sy_cellHeightForWidth:(CGFloat)width NS_AVAILABLE_IOS(6_0);
 {
-    static UITableViewCell *sizingCell = nil;
-    if (!sizingCell)
-    {
-        sizingCell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sizingCell"];
-        [sizingCell setTranslatesAutoresizingMaskIntoConstraints:NO];
-    }
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    if (configurationBlock)
-        configurationBlock(sizingCell);
+    [self setFrame:CGRectMake(0, 0, width, 8000.)];
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
     
-    [sizingCell setFrame:CGRectMake(0, 0, width, 8000.)];
-    [sizingCell setNeedsUpdateConstraints];
-    [sizingCell updateConstraintsIfNeeded];
-    [sizingCell setNeedsLayout];
-    [sizingCell layoutIfNeeded];
-    
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:sizingCell.contentView
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
                                                                        attribute:NSLayoutAttributeWidth
                                                                        relatedBy:NSLayoutRelationEqual
                                                                           toItem:nil
                                                                        attribute:NSLayoutAttributeNotAnAttribute
                                                                       multiplier:1.
                                                                         constant:width];
-    [sizingCell.contentView addConstraint:widthConstraint];
-    [sizingCell.contentView layoutIfNeeded];
+    [self.contentView addConstraint:widthConstraint];
+    [self.contentView layoutIfNeeded];
     
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 8000)];
-    [sizingCell.contentView removeConstraint:widthConstraint];
+    CGSize size = [self.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 8000)];
+    [self.contentView removeConstraint:widthConstraint];
     
     return ceil(size.height);
 }

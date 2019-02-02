@@ -10,7 +10,6 @@
 
 @interface UITableViewCell (SYKit)
 
-+ (CGFloat)sy_cellHeightForWidth:(CGFloat)width
-              configurationBlock:(void(^)(UITableViewCell *sizingCell))configurationBlock NS_AVAILABLE_IOS(6_0);
+- (CGFloat)sy_cellHeightForWidth:(CGFloat)width NS_AVAILABLE_IOS(6_0);
 
 @end

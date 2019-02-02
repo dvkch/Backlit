@@ -9,18 +9,18 @@
 #import <Foundation/Foundation.h>
 #import <SYPair.h>
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, SYPreferenceType) {
     SYPreferenceTypeUnknown,
     SYPreferenceTypeBool,
     SYPreferenceTypeInt,
     SYPreferenceTypeString,
-} SYPreferenceType;
+};
 
 extern NSString * const SYPreferencesChangedNotification;
 
 @interface SYPreferences : NSObject
 
-+ (SYPreferences *)shared;
+@property (nonatomic, readonly, class, nonnull) SYPreferences *shared;
 
 @property (nonatomic) BOOL previewWithAutoColorMode;
 @property (nonatomic) BOOL showAdvancedOptions;
@@ -29,9 +29,9 @@ extern NSString * const SYPreferencesChangedNotification;
 
 - (NSArray <SYPair<NSString *, NSArray <NSString *> *> *> *)allKeysGrouped;
 
-- (NSString *)titleForKey:(NSString *)key;
-- (NSString *)descriptionForKey:(NSString *)key;
-- (SYPreferenceType)typeForKey:(NSString *)key;
+- (NSString *)titleForKey:(nonnull NSString *)key;
+- (NSString *)descriptionForKey:(nonnull NSString *)key;
+- (SYPreferenceType)typeForKey:(nonnull NSString *)key;
 - (id)objectForKey:(NSString *)key;
 - (void)setObject:(id)object forKey:(NSString *)key;
 

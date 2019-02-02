@@ -9,7 +9,7 @@
 #import "SYPrefVC.h"
 #import <Masonry.h>
 #import "SYPreferences.h"
-#import "SYOptionCell.h"
+#import "SaneScanner-Swift.h"
 #import <UIImage+SYKit.h>
 #import "UIImage+SY.h"
 #import "UIApplication+SY.h"
@@ -44,7 +44,7 @@ static NSString * const kContactAddress = $$("contact@syan.me");
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    [self.tableView registerClass:[SYOptionCell class] forCellReuseIdentifier:[SYOptionCell sy_className]];
+    [self.tableView registerNib:[UINib nibWithNibName:$$("OptionCell") bundle:nil] forCellReuseIdentifier:OptionCell.sy_className];
     [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
     [self.view addSubview:self.tableView];
  
@@ -82,11 +82,11 @@ static NSString * const kContactAddress = $$("contact@syan.me");
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SYOptionCell *cell = (SYOptionCell *)[tableView dequeueReusableCellWithIdentifier:[SYOptionCell sy_className]];
+    OptionCell *cell = (OptionCell *)[tableView dequeueReusableCellWithIdentifier:OptionCell.sy_className];
     if (indexPath.section < self.keysGroups.count)
     {
         NSString *prefKey = self.keysGroups[indexPath.section].object2[indexPath.row];
-        [cell setPrefKey:prefKey];
+        [cell updateWithPrefKey:prefKey];
         [cell setShowDescription:YES];
     }
     else
@@ -117,17 +117,17 @@ static NSString * const kContactAddress = $$("contact@syan.me");
     if (indexPath.section < self.keysGroups.count)
     {
         NSString *prefKey = self.keysGroups[indexPath.section].object2[indexPath.row];
-        return [SYOptionCell cellHeightForPrefKey:prefKey showDescription:YES width:tableView.bounds.size.width];
+        return [OptionCell cellHeightWithPrefKey:prefKey showDescription:YES width:tableView.bounds.size.width];
     }
     
     if (indexPath.row == 0)
-        return [SYOptionCell cellHeightForLeftText:$("PREFERENCES TITLE CONTACT")
-                                         rightText:kContactAddress
-                                             width:tableView.bounds.size.width];
+        return [OptionCell cellHeightWithLeftText:$("PREFERENCES TITLE CONTACT")
+                                        rightText:kContactAddress
+                                            width:tableView.bounds.size.width];
     else
-        return [SYOptionCell cellHeightForLeftText:$("PREFERENCES TITLE VERSION")
-                                         rightText:[UIApplication sy_appVersionAndBuild]
-                                             width:tableView.bounds.size.width];
+        return [OptionCell cellHeightWithLeftText:$("PREFERENCES TITLE VERSION")
+                                        rightText:[UIApplication sy_appVersionAndBuild]
+                                            width:tableView.bounds.size.width];
 
     return UITableViewAutomaticDimension;
 }

@@ -40,6 +40,9 @@
 		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
+		97CC34E32205F48B00304345 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E12205F48B00304345 /* OptionCell.swift */; };
+		97CC34E42205F48B00304345 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97CC34E22205F48B00304345 /* OptionCell.xib */; };
+		97CC34E72205F9D200304345 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E62205F9D200304345 /* String+SY.swift */; };
 		97CE773D1EA7666D00A2646E /* SYPDFActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE773C1EA7666D00A2646E /* SYPDFActivity.m */; };
 		97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */; };
 		97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */; };
@@ -52,7 +55,6 @@
 		E380CA5C5F90A86D8A42FE99 /* Pods_SaneScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */; };
 		F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F804E0781AFA569B00CBE307 /* SYDeviceVC.m */; };
 		F86584861AF9A8290028E039 /* SYTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F86584851AF9A8290028E039 /* SYTools.m */; };
-		F894F3AB1AFAAFAA00365036 /* SYOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */; };
 		F8CBD2131AF9A58C00B4C221 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2121AF9A58C00B4C221 /* main.m */; };
 		F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */; };
 		F8CBD2191AF9A58C00B4C221 /* SYDevicesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2181AF9A58C00B4C221 /* SYDevicesVC.m */; };
@@ -135,6 +137,10 @@
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		97C3D85621FE72D10015BA72 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
 		97C3D85821FE72DD0015BA72 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/sane/libsane-dll.a"; sourceTree = "<group>"; };
+		97CC34E02205F48B00304345 /* SaneScanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SaneScanner-Bridging-Header.h"; sourceTree = "<group>"; };
+		97CC34E12205F48B00304345 /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
+		97CC34E22205F48B00304345 /* OptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionCell.xib; sourceTree = "<group>"; };
+		97CC34E62205F9D200304345 /* String+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+SY.swift"; sourceTree = "<group>"; };
 		97CE773B1EA7666D00A2646E /* SYPDFActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPDFActivity.h; sourceTree = "<group>"; };
 		97CE773C1EA7666D00A2646E /* SYPDFActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPDFActivity.m; sourceTree = "<group>"; };
 		97CE773E1EA788A400A2646E /* UIActivityViewController+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+SY.h"; sourceTree = "<group>"; };
@@ -156,8 +162,6 @@
 		F804E0781AFA569B00CBE307 /* SYDeviceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDeviceVC.m; sourceTree = "<group>"; };
 		F86584841AF9A8290028E039 /* SYTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTools.h; sourceTree = "<group>"; };
 		F86584851AF9A8290028E039 /* SYTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTools.m; sourceTree = "<group>"; };
-		F894F3A91AFAAFAA00365036 /* SYOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYOptionCell.h; sourceTree = "<group>"; };
-		F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYOptionCell.m; sourceTree = "<group>"; };
 		F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaneScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8CBD2111AF9A58C00B4C221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8CBD2121AF9A58C00B4C221 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -228,14 +232,14 @@
 		9734E3631C90219800B66797 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				F894F3A91AFAAFAA00365036 /* SYOptionCell.h */,
-				F894F3AA1AFAAFAA00365036 /* SYOptionCell.m */,
 				971BE2431C8EEEC100B8F29C /* SYPreviewCell.h */,
 				971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */,
 				9734E3601C90218E00B66797 /* SYAddCell.h */,
 				9734E3611C90218E00B66797 /* SYAddCell.m */,
 				975EC28E1E40DCDF00A8AFFD /* SYDeviceCell.h */,
 				975EC28F1E40DCDF00A8AFFD /* SYDeviceCell.m */,
+				97CC34E12205F48B00304345 /* OptionCell.swift */,
+				97CC34E22205F48B00304345 /* OptionCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -286,6 +290,14 @@
 				97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		97CC34E52205F9C700304345 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				97CC34E62205F9D200304345 /* String+SY.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		97EDB9171E4924D40012CB7E /* SaneScannerUITests */ = {
@@ -356,6 +368,7 @@
 		F8CBD20F1AF9A58C00B4C221 /* SaneScanner */ = {
 			isa = PBXGroup;
 			children = (
+				97CC34E52205F9C700304345 /* Extensions */,
 				97521E701C8912BD00C77209 /* Categories */,
 				972122691CCA561A006610E6 /* Gallery */,
 				9734E3641C9031F300B66797 /* VCs */,
@@ -366,6 +379,7 @@
 				F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */,
 				F86584841AF9A8290028E039 /* SYTools.h */,
 				F86584851AF9A8290028E039 /* SYTools.m */,
+				97CC34E02205F48B00304345 /* SaneScanner-Bridging-Header.h */,
 				971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */,
 				9785C5681E3D247A006CD4F1 /* Localizable.strings */,
 				F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */,
@@ -448,7 +462,7 @@
 					F8CBD20C1AF9A58C00B4C221 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 79RY8264V4;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -488,6 +502,7 @@
 			files = (
 				9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */,
 				97F0A2651E52687F008C4690 /* Images.xcassets in Resources */,
+				97CC34E42205F48B00304345 /* OptionCell.xib in Resources */,
 				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
 				971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */,
 			);
@@ -618,6 +633,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97CC34E72205F9D200304345 /* String+SY.swift in Sources */,
+				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
 				971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */,
 				971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
@@ -630,7 +647,6 @@
 				97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */,
 				9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */,
 				97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */,
-				F894F3AB1AFAAFAA00365036 /* SYOptionCell.m in Sources */,
 				F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */,
 				97DA07151C989318007F522E /* SYToolbar.m in Sources */,
 				971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */,
@@ -687,6 +703,7 @@
 		97EDB91D1E4924D40012CB7E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -706,6 +723,7 @@
 		97EDB91E1E4924D40012CB7E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEVELOPMENT_TEAM = 79RY8264V4;
@@ -841,6 +859,7 @@
 			baseConfigurationReference = 767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -864,6 +883,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner Development";
+				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -873,6 +894,7 @@
 			baseConfigurationReference = 685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -896,6 +918,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner AppStore";
+				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

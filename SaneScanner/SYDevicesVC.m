@@ -58,7 +58,7 @@
     Sane.shared.delegate = self;
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(@0);
+        make.edges.equalTo(self.view);
     }];
     
     [self sy_setBackButtonWithText:nil font:nil];
@@ -72,7 +72,7 @@
     
     // TODO: remove ability to call block, should run Sane refresh instead that itself triggers this
     if (!self.devices)
-        [self.tableView sy_showPullToRefreshAndRunBlock:YES];
+        [self refreshDevices];
 }
 
 #pragma mark - IBActions

@@ -14,7 +14,6 @@
 #import "SYSaneOptionString.h"
 #import "SYSaneOptionButton.h"
 #import "SYSaneOptionGroup.h"
-#import "SYOptionCell.h"
 #import "SYPreviewCell.h"
 #import "SVProgressHUD.h"
 #import "DLAVAlertView+SY.h"
@@ -36,6 +35,7 @@
 #import "SYSaneScanParameters.h"
 #import "UIApplication+SY.h"
 #import "UIActivityViewController+SY.h"
+#import "SaneScanner-Swift.h"
 
 @interface SYDeviceVC () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
@@ -58,7 +58,7 @@
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
     [self.tableView registerClass:[SYPreviewCell class] forCellReuseIdentifier:[SYPreviewCell sy_className]];
-    [self.tableView registerClass:[SYOptionCell  class] forCellReuseIdentifier:[SYOptionCell sy_className]];
+    [self.tableView registerNib:[UINib nibWithNibName:$$("OptionCell") bundle:nil] forCellReuseIdentifier:OptionCell.sy_className];
     [self.view addSubview:self.tableView];
     
     self.buttonScan = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -431,10 +431,10 @@
     }
     else
     {
-        SYOptionCell *cell = (SYOptionCell*)[tableView dequeueReusableCellWithIdentifier:[SYOptionCell sy_className]];
+        OptionCell *cell = (OptionCell*)[tableView dequeueReusableCellWithIdentifier:OptionCell.sy_className];
         SYSaneOption *opt = [self optionForTableViewIndexPath:indexPath];
         
-        [cell setOption:opt];
+        [cell updateWithOption:opt];
         [cell setShowDescription:NO];
         
         return cell;
@@ -460,9 +460,9 @@
     if (indexPath.section == 0)
         return [SYPreviewCell cellHeightForDevice:self.device width:width maxHeight:maxHeight];
     
-    return [SYOptionCell cellHeightForOption:[self optionForTableViewIndexPath:indexPath]
-                             showDescription:NO
-                                       width:width];
+    return [OptionCell cellHeightWithOption:[self optionForTableViewIndexPath:indexPath]
+                            showDescription:NO
+                                      width:width];
 }
 
 #pragma mark - UITableViewDelegate
