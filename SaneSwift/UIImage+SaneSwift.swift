@@ -1,9 +1,9 @@
 //
-//  UIImage+SY.m
+//  UIImage+SaneSwift.swift
 //  SaneScanner
 //
-//  Created by Stan Chevallier on 04/03/2016.
-//  Copyright © 2016 Syan. All rights reserved.
+//  Created by Stanislas Chevallier on 30/01/19.
+//  Copyright (c) 2019 Syan. All rights reserved.
 //
 
 import UIKit

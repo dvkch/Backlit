@@ -10,7 +10,7 @@
 #import "sane.h"
 #import "SYSaneOptionGroup.h"
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, SYSaneStandardOption) {
     SYSaneStandardOptionUnknown,
     SYSaneStandardOptionPreview,
     SYSaneStandardOptionResolution,
@@ -21,13 +21,13 @@ typedef enum : NSUInteger {
     SYSaneStandardOptionAreaTopLeftY,
     SYSaneStandardOptionAreaBottomRightX,
     SYSaneStandardOptionAreaBottomRightY,
-} SYSaneStandardOption;
+};
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, SYOptionValue) {
     SYOptionValueAuto,
     SYOptionValueMin,
     SYOptionValueMax,
-} SYOptionValue;
+};
 
 NSString *NSStringFromSYSaneStandardOption(SYSaneStandardOption stdOption);
 SYSaneStandardOption SYSaneStandardOptionFromNSString(NSString *stdOption);

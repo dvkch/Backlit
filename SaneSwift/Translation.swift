@@ -2,8 +2,8 @@
 //  Translation.swift
 //  SaneScanner
 //
-//  Created by Stanislas Chevallier on 01/02/2017.
-//  Copyright © 2017 Syan. All rights reserved.
+//  Created by Stanislas Chevallier on 30/01/19.
+//  Copyright (c) 2019 Syan. All rights reserved.
 //
 
 @objc public class Translation: NSObject {
