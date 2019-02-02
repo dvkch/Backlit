@@ -14,6 +14,8 @@ import Foundation
     private enum CodingKeys: String, CodingKey {
         case hosts = "hosts"
         case connectTimeout = "connect_timeout"
+        case previewWithAutoColorMode = "preview_auto_color_mode"
+        case showIncompleteScanImages = "show_incomplete_scan_images"
     }
     
     // MARK: Properties
@@ -38,17 +40,17 @@ import Foundation
         }
     }
     
-    @objc func addHost(_ host: String) {
+    @objc public func addHost(_ host: String) {
         hosts.append(host)
     }
     
-    @objc func removeHost(_ host: String) {
+    @objc public func removeHost(_ host: String) {
         while let index = hosts.index(of: host) {
             hosts.remove(at: index)
         }
     }
     
-    @objc func clearHosts() {
+    @objc public func clearHosts() {
         hosts = []
     }
 }

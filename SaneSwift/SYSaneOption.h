@@ -34,7 +34,7 @@ NSString *NSStringFromSANE_Unit(SANE_Unit unit);
 @property (nonatomic, assign) BOOL capSettableViaHardware;
 @property (nonatomic, assign) SANE_Constraint_Type constraintType;
 
-+ (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device;
++ (instancetype)bestOptionWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device;
 
 - (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device;
 

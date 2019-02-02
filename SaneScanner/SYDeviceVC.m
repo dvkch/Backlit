@@ -8,7 +8,7 @@
 
 #import "SYDeviceVC.h"
 #import "SYSaneDevice.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-umbrella.h>
 #import "SYSaneOptionBool.h"
 #import "SYSaneOptionNumber.h"
 #import "SYSaneOptionString.h"
@@ -109,7 +109,7 @@
 
 - (void)dealloc
 {
-    [[SYSaneHelper shared] closeDevice:self.device];
+    [Sane.shared closeDevice:self.device];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SYPreferencesChangedNotification object:nil];
 }
 
@@ -163,7 +163,7 @@
     self.refreshing = YES;
     
     @weakify(self);
-    [[SYSaneHelper shared] listOptionsForDevice:self.device block:^ {
+    [Sane.shared listOptionsFor:self.device completion:^{
         @strongify(self)
         [self.tableView reloadData];
         self.refreshing = NO;
@@ -253,10 +253,9 @@
 - (void)buttonScanTap2:(id)sender
 {
     [SVProgressHUD showWithStatus:$("SCANNING")];
-    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
+    [Sane.shared scanWithDevice:self.device progress:^(float progress, UIImage * _Nullable incompleteImage) {
         [SVProgressHUD showProgress:progress];
-    } successBlock:^(UIImage *image, SYSaneScanParameters *parameters, NSError *error)
-    {
+    } completion:^(UIImage *image, SYSaneScanParameters *parameters, NSError *error) {
         if (error)
             [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         else
@@ -333,9 +332,9 @@
     };
     
     [SVProgressHUD showWithStatus:$("SCANNING")];
-    [[SYSaneHelper shared] scanWithDevice:self.device progressBlock:^(float progress, UIImage *incompleteImage) {
+    [Sane.shared scanWithDevice:self.device progress:^(float progress, UIImage * _Nullable incompleteImage) {
         block(progress, NO, incompleteImage, nil, nil);
-    } successBlock:^(UIImage *image,SYSaneScanParameters *parameters, NSError *error) {
+    } completion:^(UIImage *image,SYSaneScanParameters *parameters, NSError *error) {
         block(1., YES, image, parameters, error);
     }];
 }
@@ -482,7 +481,7 @@
     [SYSaneOptionUI showDetailsAndInputForOption:opt block:^(BOOL reloadAllOptions, NSError *error) {
         if (reloadAllOptions)
         {
-            [[SYSaneHelper shared] listOptionsForDevice:self.device block:^ {
+            [Sane.shared listOptionsFor:self.device completion:^{
                 [self.tableView reloadData];
                 if (error)
                     [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];

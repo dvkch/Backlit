@@ -7,7 +7,7 @@
 //
 
 #import "SYSaneOptionNumber.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-Swift.h>
 #import "SYSaneDevice.h"
 
 @interface SYSaneOptionNumber ()
@@ -93,9 +93,8 @@
         return;
     }
     
-    [[SYSaneHelper shared] getValueForOption:self block:^(id value, NSError *error) {
-        if (!error)
-        {
+    [Sane.shared valueForOption:self completion:^(id _Nullable value, NSError * _Nullable error) {
+        if (!error) {
             if (self.type == SANE_TYPE_INT)
                 self.value = value;
             

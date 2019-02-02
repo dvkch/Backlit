@@ -14,7 +14,7 @@
 #import "SYSaneOptionGroup.h"
 #import "SVProgressHUD.h"
 #import <PKYStepper.h>
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-umbrella.h>
 #import "DLAVAlertView+SY.h"
 
 @implementation SYSaneOptionUI
@@ -139,10 +139,7 @@
         
         BOOL useAuto = (buttonIndex == alertView.firstOtherButtonIndex && option.capSetAuto);
         [SVProgressHUD show];
-        [[SYSaneHelper shared] setValue:[alertView textFieldAtIndex:0].text
-                            orAutoValue:useAuto
-                              forOption:option
-                                  block:block];
+        [Sane.shared setValueForOptionWithValue:[alertView textFieldAtIndex:0].text auto:useAuto option:option completion:block];
     }];
 }
 
@@ -204,10 +201,7 @@
         if ([alertView.contentView isKindOfClass:[PKYStepper class]])
             value = [(PKYStepper *)alertView.contentView value];
         
-        [[SYSaneHelper shared] setValue:@(value)
-                            orAutoValue:useAuto
-                              forOption:option
-                                  block:block];
+        [Sane.shared setValueForOptionWithValue:@(value) auto:useAuto option:option completion:block];
     }];
 
 }
@@ -248,10 +242,7 @@
         BOOL useAuto = [value isEqual:[NSNull null]];
         
         [SVProgressHUD show];
-        [[SYSaneHelper shared] setValue:value
-                            orAutoValue:useAuto
-                              forOption:option
-                                  block:block];
+        [Sane.shared setValueForOptionWithValue:value auto:useAuto option:option completion:block];
     }];
 }
 

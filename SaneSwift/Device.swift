@@ -7,7 +7,12 @@
 //
 
 @objc public class DeviceAuthentication: NSObject {
-    @objc var username: String?
-    @objc var password: String?
+    var username: String?
+    var password: String?
+    
+    @objc public init(username: String?, password: String?) {
+        self.username = username
+        self.password = password
+    }
 }
 

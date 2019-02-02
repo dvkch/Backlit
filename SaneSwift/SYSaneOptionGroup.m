@@ -7,7 +7,7 @@
 //
 
 #import "SYSaneOptionGroup.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-Swift.h>
 
 @interface SYSaneOptionGroup ()
 @end

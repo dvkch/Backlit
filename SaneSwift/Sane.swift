@@ -65,9 +65,6 @@ import Foundation
         }
     }
     
-    var previewWithAutoColorMode: Bool = false
-    var showIncompleteScanImages: Bool = false
-    
     // MARK: Private properties
     private var thread: Thread!
     private var saneStarted = false
@@ -276,7 +273,7 @@ extension Sane {
             var options = [SYSaneOption]()
             for i in 1..<count {
                 descriptor = sane_get_option_descriptor(handle, i)
-                options.append(SYSaneOption(cOpt: descriptor, index: i, device: device))
+                options.append(SYSaneOption.bestOption(withCOpt: descriptor, index: i, device: device)!)
             }
             
             options.forEach { $0.refreshValue(nil) }
@@ -484,7 +481,7 @@ extension Sane {
                                   .areaTopLeftX, .areaTopLeftY,
                                   .areaBottomRightX, .areaBottomRightY]
 
-                if self.previewWithAutoColorMode {
+                if self.configuration.previewWithAutoColorMode {
                     stdOptions.append(.colorMode)
                 }
                 
@@ -496,7 +493,7 @@ extension Sane {
                     var useAuto = false
                     
                     if let castedOption = option as? SYSaneOptionNumber {
-                        newValue = castedOption.bestValueForPreview
+                        newValue = castedOption.bestValueForPreview()
                         useAuto  = (bestValue == SYOptionValue.auto)
                         oldOptions[stdOption] = castedOption.value
                     }
@@ -618,7 +615,7 @@ extension Sane {
                 if let parameters = parameters, let progress = progress, parameters.fileSize() > 0 {
                     let percent = Float(data.count) / Float(parameters.fileSize())
                     
-                    if self.showIncompleteScanImages {
+                    if self.configuration.showIncompleteScanImages {
                         if percent > progressForLastIncompletePreview + incompletePreviewStep {
                             progressForLastIncompletePreview = percent
                             
@@ -664,7 +661,7 @@ extension Sane {
             
             SaneSetLogLevel(prevLogLevel)
             
-            guard status == SANE_STATUS_GOOD, parameters != nil else {
+            guard status == SANE_STATUS_EOF, parameters != nil else {
                 if mainThread { DispatchQueue.main.async { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) } }
                 else { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) }
                 return
@@ -674,7 +671,7 @@ extension Sane {
                 let image = try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: parameters!)
 
                 if mainThread { DispatchQueue.main.async { completion?(image, parameters, nil) } }
-                else { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) }
+                else { completion?(image, parameters, nil) }
             }
             catch {
                 if mainThread { DispatchQueue.main.async { completion?(nil, nil, error) } }

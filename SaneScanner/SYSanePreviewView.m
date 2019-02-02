@@ -8,7 +8,7 @@
 
 #import "SYSanePreviewView.h"
 #import "SYCropMaskView.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-umbrella.h>
 #import "SYSaneDevice.h"
 #import <Masonry.h>
 #import "SVProgressHUD.h"
@@ -133,12 +133,10 @@ static CGFloat const kMargin = 15.;
 - (void)buttonAcquirePreviewTap:(id)sender
 {
     [SVProgressHUD showWithStatus:$("PREVIEWING")];
-    [[SYSaneHelper shared] previewWithDevice:self.device
-                               progressBlock:^(float progress, UIImage *incompleteImage)
-    {
+    [Sane.shared previewWithDevice:self.device progress:^(float progress, UIImage * _Nullable incompleteImage) {
         [self.imageView setImage:incompleteImage];
         [SVProgressHUD showProgress:progress];
-    } successBlock:^(UIImage *image, NSError *error) {
+    } completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
         if (error)
             [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
         else

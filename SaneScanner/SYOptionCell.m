@@ -16,7 +16,7 @@
 #import "SYPreferences.h"
 #import <Masonry.h>
 #import <UITableViewCell+SYKit.h>
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-umbrella.h>
 
 @interface SYOptionCell ()
 @property (nonatomic, strong) UILabel *labelTitle;

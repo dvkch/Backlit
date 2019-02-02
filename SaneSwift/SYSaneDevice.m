@@ -9,7 +9,7 @@
 #import "SYSaneDevice.h"
 #import "SYSaneOptionNumber.h"
 #import "saneopts.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-Swift.h>
 
 #define NSStringFromDef(string) ([NSString stringWithCString:string encoding:NSUTF8StringEncoding])
 
@@ -39,7 +39,7 @@
         self.vendor = [NSString stringWithCString:(device->vendor ?: "") encoding:NSUTF8StringEncoding];
         self.type   = [NSString stringWithCString:(device->type   ?: "") encoding:NSUTF8StringEncoding];
         
-        self.type   = [[SYSaneHelper shared] translationForKey:self.type];
+        self.type   = [Sane.shared translationFor:self.type];
     }
     return self;
 }

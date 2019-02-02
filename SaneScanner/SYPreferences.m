@@ -7,10 +7,9 @@
 //
 
 #import "SYPreferences.h"
+#import <SaneSwift-Swift.h>
 
-static NSString * const kPrefKey_PreviewWithAutoColorMode   = $$("PreviewWithAutoColorMode");
 static NSString * const kPrefKey_ShowAdvancedOptions        = $$("ShowAdvancedOptions");
-static NSString * const kPrefKey_ShowIncompleteScanImages   = $$("ShowIncompleteScanImages");
 static NSString * const kPrefKey_SaveAsPNG                  = $$("SaveAsPNG");
 
 NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNotification");
@@ -134,14 +133,12 @@ NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNo
 
 - (BOOL)previewWithAutoColorMode
 {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{kPrefKey_PreviewWithAutoColorMode:@(YES)}];
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefKey_PreviewWithAutoColorMode];
+    return Sane.shared.configuration.previewWithAutoColorMode;
 }
 
 - (void)setPreviewWithAutoColorMode:(BOOL)previewWithAutoColorMode
 {
-    [[NSUserDefaults standardUserDefaults] setBool:previewWithAutoColorMode forKey:kPrefKey_PreviewWithAutoColorMode];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    Sane.shared.configuration.previewWithAutoColorMode = previewWithAutoColorMode;
 }
 
 - (BOOL)showAdvancedOptions
@@ -158,14 +155,12 @@ NSString * const SYPreferencesChangedNotification   = $$("SYPreferencesChangedNo
 
 - (BOOL)showIncompleteScanImages
 {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{kPrefKey_ShowIncompleteScanImages:@(YES)}];
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kPrefKey_ShowIncompleteScanImages];
+    return Sane.shared.configuration.showIncompleteScanImages;
 }
 
 - (void)setShowIncompleteScanImages:(BOOL)showIncompleteScanImages
 {
-    [[NSUserDefaults standardUserDefaults] setBool:showIncompleteScanImages forKey:kPrefKey_ShowIncompleteScanImages];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    Sane.shared.configuration.showIncompleteScanImages = showIncompleteScanImages;
 }
 
 - (BOOL)saveAsPNG

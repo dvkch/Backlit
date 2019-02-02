@@ -7,7 +7,7 @@
 //
 
 #import "SYSaneOptionButton.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-Swift.h>
 
 @interface SYSaneOptionButton ()
 @end
@@ -25,11 +25,7 @@
 
 - (void)press:(void (^)(BOOL reloadAllOptions, NSError *))block
 {
-    [[SYSaneHelper shared] setValue:@(YES)
-                        orAutoValue:NO
-                          forOption:self
-                              block:^(BOOL reloadAllOptions, NSError *error)
-    {
+    [Sane.shared setValueForOptionWithValue:@YES auto:NO option:self completion:^(BOOL reloadAllOptions, NSError *error) {
         block(reloadAllOptions, error);
     }];
 }

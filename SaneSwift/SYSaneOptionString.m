@@ -7,7 +7,7 @@
 //
 
 #import "SYSaneOptionString.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-Swift.h>
 
 @interface SYSaneOptionString ()
 @end
@@ -31,7 +31,7 @@
                 NSString *value = [NSString stringWithCString:opt->constraint.string_list[i]
                                                      encoding:NSUTF8StringEncoding];
 
-                value = [[SYSaneHelper shared] translationForKey:value];
+                value = [Sane.shared translationFor:value];
                 [values addObject:value];
                 
                 ++i;
@@ -67,7 +67,7 @@
         return;
     }
     
-    [[SYSaneHelper shared] getValueForOption:self block:^(id value, NSError *error) {
+    [Sane.shared valueForOption:self completion:^(id _Nullable value, NSError * _Nullable error) {
         if (!error)
             self.value = value;
         
@@ -79,7 +79,7 @@
 - (NSString *)stringForValue:(id)value withUnit:(BOOL)withUnit
 {
     NSString *stringValue = [value description];
-    stringValue = [[SYSaneHelper shared] translationForKey:stringValue];
+    stringValue = [Sane.shared translationFor:stringValue];
     
     NSMutableArray <NSString *> *parts = [NSMutableArray array];
     

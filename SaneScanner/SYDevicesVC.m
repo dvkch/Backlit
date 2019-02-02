@@ -8,7 +8,7 @@
 
 #import "SYDevicesVC.h"
 #import "SYTools.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-umbrella.h>
 #import "SYSaneDevice.h"
 #import <DLAVAlertView.h>
 #import "SYDeviceVC.h"
@@ -25,7 +25,7 @@
 #import "UIViewController+SYKit.h"
 #import "SYDeviceCell.h"
 
-@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SYSaneHelperDelegate>
+@interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SaneDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SYGalleryThumbsView *thumbsView;
 @property (nonatomic, strong) NSArray <SYSaneDevice *> *devices;
@@ -52,8 +52,7 @@
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scrollView) {
-        [[SYSaneHelper shared] updateDevices:^(NSArray <SYSaneDevice *> *devices, NSError *error)
-        {
+        [Sane.shared updateDevicesWithCompletion:^(NSArray<SYSaneDevice *> * _Nullable devices, NSError * _Nullable error) {
             self.devices = devices;
             [self.tableView reloadData];
             
@@ -65,7 +64,7 @@
         }];
     }];
     
-    [[SYSaneHelper shared] setDelegate:self];
+    Sane.shared.delegate = self;
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(@0);
@@ -96,21 +95,18 @@
 
 #pragma mark - SYSaneHelperDelegate
 
-- (void)saneHelperDidStartUpdatingDevices:(SYSaneHelper *)saneHelper
+- (void)saneDidStartUpdatingDevices:(Sane *)sane
 {
     [self.tableView ins_beginPullToRefresh];
 }
 
-- (void)saneHelperDidEndUpdatingDevices:(SYSaneHelper *)saneHelper
+- (void)saneDidEndUpdatingDevices:(Sane *)sane
 {
     [self.tableView reloadData];
-    [self.tableView ins_endPullToRefresh];
+    // TODO: [self.tableView ins_endPullToRefresh];
 }
 
-- (void)saneHelper:(SYSaneHelper *)saneHelper
-needsAuthForDevice:(NSString *)device
-       outUsername:(NSString **)username
-       outPassword:(NSString **)password
+- (DeviceAuthentication *)saneNeedsAuth:(Sane *)sane for:(NSString *)device
 {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
@@ -141,11 +137,7 @@ needsAuthForDevice:(NSString *)device
     
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
-    if (username)
-        *username = outUsername;
-    
-    if (password)
-        *password = outPassword;
+    return [[DeviceAuthentication alloc] initWithUsername:outUsername password:outPassword];
 }
 
 #pragma mark - UITableViewDataSource
@@ -157,17 +149,17 @@ needsAuthForDevice:(NSString *)device
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? ([[SYSaneHelper shared] allHosts].count+1) : self.devices.count;
+    return section == 0 ? (Sane.shared.configuration.hosts.count + 1) : self.devices.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
     {
-        if (indexPath.row < [[SYSaneHelper shared] allHosts].count)
+        if (indexPath.row < Sane.shared.configuration.hosts.count)
         {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[UITableViewCell sy_className]];
-            [cell.textLabel setText:[[SYSaneHelper shared] allHosts][indexPath.row]];
+            [cell.textLabel setText:Sane.shared.configuration.hosts[indexPath.row]];
             [cell setAccessoryType:UITableViewCellAccessoryNone];
             return cell;
         }
@@ -196,10 +188,10 @@ needsAuthForDevice:(NSString *)device
     if (indexPath.section != 0)
         return;
     
-    if (indexPath.row >= [[SYSaneHelper shared] allHosts].count)
+    if (indexPath.row >= Sane.shared.configuration.hosts.count)
         return;
     
-    [[SYSaneHelper shared] removeHost:[[SYSaneHelper shared] allHosts][indexPath.row]];
+    [Sane.shared.configuration removeHost:Sane.shared.configuration.hosts[indexPath.row]];
     
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
@@ -219,7 +211,7 @@ needsAuthForDevice:(NSString *)device
 {
     if (indexPath.section == 0)
     {
-        if (indexPath.row < [[SYSaneHelper shared] allHosts].count)
+        if (indexPath.row < Sane.shared.configuration.hosts.count)
             return UITableViewCellEditingStyleDelete;
         else
             return UITableViewCellEditingStyleNone;
@@ -237,7 +229,7 @@ needsAuthForDevice:(NSString *)device
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 0 && indexPath.row >= [[SYSaneHelper shared] allHosts].count)
+    if (indexPath.section == 0 && indexPath.row >= Sane.shared.configuration.hosts.count)
     {
         DLAVAlertView *av = [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE ADD HOST")
                                                          message:$("DIALOG MESSAGE ADD HOST")
@@ -253,7 +245,7 @@ needsAuthForDevice:(NSString *)device
                 return;
             
             NSString *host = [[av textFieldAtIndex:0] text];
-            [[SYSaneHelper shared] addHost:host];
+            [Sane.shared.configuration addHost:host];
             [self.tableView reloadData];
             [self.tableView ins_beginPullToRefresh];
         }];
@@ -267,8 +259,7 @@ needsAuthForDevice:(NSString *)device
     SYSaneDevice *device = self.devices[indexPath.row];
     
     [SVProgressHUD showWithStatus:$("LOADING")];
-    [[SYSaneHelper shared] openDevice:device block:^(NSError *error)
-    {
+    [Sane.shared openDevice:device completion:^(NSError * _Nullable error) {
         if ([SYAppDelegate obtain].snapshotType == SYSnapshotType_None)
             [SVProgressHUD dismiss];
         

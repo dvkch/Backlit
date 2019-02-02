@@ -10,7 +10,6 @@
 #import "SYTools.h"
 #import "SYDevicesVC.h"
 #import "SYDeviceVC.h"
-#import "SYSaneHelper.h"
 #import "SYToolbar.h"
 #import "SYGalleryManager.h"
 #import "SVProgressHUD.h"
@@ -28,7 +27,7 @@
 #import "UIImage+SY.h"
 #import "MHGalleryItem+SY.h"
 #import "SYPreferences.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-umbrella.h>
 
 // TODO: send in chronological order, older to newer
 
@@ -95,8 +94,8 @@
         if ([[NSProcessInfo processInfo].arguments containsObject:$$("DOING_SNAPSHOT")])
         {
             self->_snapshotType = SYSnapshotType_Other;
-            [[SYSaneHelper shared] clearHosts];
-            [[SYSaneHelper shared] addHost:$$("192.168.1.42")];
+            [Sane.shared.configuration clearHosts];
+            [Sane.shared.configuration addHost:$$("192.168.69.42")];
             [SVProgressHUD show];
         }
         
@@ -127,7 +126,7 @@
 {
     UIBackgroundTaskIdentifier taskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
     
-    [[SYSaneHelper shared] stopCurrentScan];
+    [Sane.shared cancelCurrentScan];
     
     for (UIViewController *vc in self.splitViewController.viewControllers)
         if ([vc isKindOfClass:[SYScanNC class]])

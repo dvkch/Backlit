@@ -12,7 +12,7 @@
 #import "SYSaneOptionString.h"
 #import "SYSaneOptionButton.h"
 #import "SYSaneOptionGroup.h"
-#import "SYSaneHelper.h"
+#import <SaneSwift/SaneSwift-Swift.h>
 
 @interface SYSaneOption ()
 @property (nonatomic, assign) SANE_Int cap;
@@ -20,7 +20,7 @@
 
 @implementation SYSaneOption
 
-+ (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
++ (instancetype)bestOptionWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
 {
     switch (opt->type) {
         case SANE_TYPE_BOOL:    return [[SYSaneOptionBool   alloc] initWithCOpt:opt index:index device:device];
@@ -58,8 +58,8 @@
         self.capSettableViaHardware = opt->cap & SANE_CAP_HARD_SELECT;
         self.constraintType         = opt->constraint_type;
         
-        self.localizedTitle = [[SYSaneHelper shared] translationForKey:self.localizedTitle];
-        self.localizedDesc  = [[SYSaneHelper shared] translationForKey:self.localizedDesc];
+        self.localizedTitle = [Sane.shared translationFor:self.localizedTitle];
+        self.localizedDesc  = [Sane.shared translationFor:self.localizedDesc];
     }
     return self;
 }
