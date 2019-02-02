@@ -15,7 +15,6 @@ target :'SaneScanner' do
 	pod 'PKYStepper'
 	pod 'SYKit'
 	pod 'SYPair'
-	pod 'INSPullToRefresh'
 	pod 'SpinKit'
 	pod 'SYOperationQueue'
 	pod 'WeakUniqueCollection'

@@ -82,6 +82,10 @@
 
 - (void)sy_showPullToRefreshAndRunBlock:(BOOL)runBlock
 {
+    if (self.sy_refreshControl.isRefreshing) {
+        return;
+    }
+    
     [self.sy_refreshControl beginRefreshing];
     // 60 is the average height for the refreshControl. we can't use UIRefreshControl.frame.size.height because
     // when it is closed its height is 0.5px...

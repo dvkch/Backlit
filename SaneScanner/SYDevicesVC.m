@@ -52,16 +52,7 @@
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
     [self.tableView sy_addPullToResfreshWithBlock:^(UIScrollView * _) {
-        [Sane.shared updateDevicesWithCompletion:^(NSArray<SYSaneDevice *> * _Nullable devices, NSError * _Nullable error) {
-            self.devices = devices;
-            [self.tableView reloadData];
-            
-            // in case it was opened (e.g. for screenshots)
-            [SVProgressHUD dismiss];
-            
-            if (error)
-                [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
-        }];
+        [self refreshDevices];
     }];
     
     Sane.shared.delegate = self;
@@ -85,6 +76,19 @@
 }
 
 #pragma mark - IBActions
+
+- (void)refreshDevices {
+    [Sane.shared updateDevicesWithCompletion:^(NSArray<SYSaneDevice *> * _Nullable devices, NSError * _Nullable error) {
+        self.devices = devices;
+        [self.tableView reloadData];
+        
+        // in case it was opened (e.g. for screenshots)
+        [SVProgressHUD dismiss];
+        
+        if (error)
+            [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
+    }];
+}
 
 - (void)buttonSettingsTap:(id)sender
 {
