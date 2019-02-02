@@ -28,7 +28,6 @@
 		9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */; };
 		975B78141C923B6D00804D86 /* SYPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78131C923B6D00804D86 /* SYPreferences.m */; };
 		975B78171C923C7200804D86 /* SYPrefVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78161C923C7200804D86 /* SYPrefVC.m */; };
-		975EC2901E40DCDF00A8AFFD /* SYDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC28F1E40DCDF00A8AFFD /* SYDeviceCell.m */; };
 		975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
 		977D041A1E6DBC4400E636F1 /* SYPDFMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 977D04191E6DBC4400E636F1 /* SYPDFMaker.m */; };
@@ -43,6 +42,8 @@
 		97CC34E72205F9D200304345 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E62205F9D200304345 /* String+SY.swift */; };
 		97CE773D1EA7666D00A2646E /* SYPDFActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE773C1EA7666D00A2646E /* SYPDFActivity.m */; };
 		97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */; };
+		97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E03F220607E500AC74D0 /* DeviceCell.swift */; };
+		97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E040220607E500AC74D0 /* DeviceCell.xib */; };
 		97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */; };
 		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
 		97DA07151C989318007F522E /* SYToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07141C989318007F522E /* SYToolbar.m */; };
@@ -115,8 +116,6 @@
 		975B78131C923B6D00804D86 /* SYPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPreferences.m; sourceTree = "<group>"; };
 		975B78151C923C7200804D86 /* SYPrefVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPrefVC.h; sourceTree = "<group>"; };
 		975B78161C923C7200804D86 /* SYPrefVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPrefVC.m; sourceTree = "<group>"; };
-		975EC28E1E40DCDF00A8AFFD /* SYDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDeviceCell.h; sourceTree = "<group>"; };
-		975EC28F1E40DCDF00A8AFFD /* SYDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDeviceCell.m; sourceTree = "<group>"; };
 		975EC2911E40E5F500A8AFFD /* SVProgressHUD+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+SY.h"; sourceTree = "<group>"; };
 		975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD+SY.m"; sourceTree = "<group>"; };
 		975F9C981C8F15B7005A96AB /* SYCropMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYCropMaskView.h; sourceTree = "<group>"; };
@@ -141,6 +140,8 @@
 		97CE773C1EA7666D00A2646E /* SYPDFActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPDFActivity.m; sourceTree = "<group>"; };
 		97CE773E1EA788A400A2646E /* UIActivityViewController+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+SY.h"; sourceTree = "<group>"; };
 		97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+SY.m"; sourceTree = "<group>"; };
+		97D0E03F220607E500AC74D0 /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
+		97D0E040220607E500AC74D0 /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 		97D430FB1E3B9CF100B8E9C0 /* SYOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYOverviewController.h; sourceTree = "<group>"; };
 		97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYOverviewController.m; sourceTree = "<group>"; };
 		97DA07101C98927E007F522E /* UIColor+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SY.h"; sourceTree = "<group>"; };
@@ -232,10 +233,10 @@
 			children = (
 				971BE2431C8EEEC100B8F29C /* SYPreviewCell.h */,
 				971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */,
-				975EC28E1E40DCDF00A8AFFD /* SYDeviceCell.h */,
-				975EC28F1E40DCDF00A8AFFD /* SYDeviceCell.m */,
 				97EF42242205FF7900D45FC8 /* AddCell.swift */,
 				97EF42252205FF7900D45FC8 /* AddCell.xib */,
+				97D0E03F220607E500AC74D0 /* DeviceCell.swift */,
+				97D0E040220607E500AC74D0 /* DeviceCell.xib */,
 				97CC34E12205F48B00304345 /* OptionCell.swift */,
 				97CC34E22205F48B00304345 /* OptionCell.xib */,
 			);
@@ -501,6 +502,7 @@
 				97F0A2651E52687F008C4690 /* Images.xcassets in Resources */,
 				97CC34E42205F48B00304345 /* OptionCell.xib in Resources */,
 				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
+				97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */,
 				971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -643,6 +645,7 @@
 				97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */,
 				974BB4171CCA753F0057128B /* SYScanNC.m in Sources */,
 				97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */,
+				97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */,
 				9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */,
 				97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */,
 				F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */,
@@ -663,7 +666,6 @@
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
 				F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */,
 				9710B4211C9B257C00A55529 /* SYSplitVC.m in Sources */,
-				975EC2901E40DCDF00A8AFFD /* SYDeviceCell.m in Sources */,
 				9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */,
 				97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */,
 				F8CBD2131AF9A58C00B4C221 /* main.m in Sources */,

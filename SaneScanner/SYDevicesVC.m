@@ -22,7 +22,6 @@
 #import "UIScrollView+SY.h"
 #import "UIApplication+SY.h"
 #import "UIViewController+SYKit.h"
-#import "SYDeviceCell.h"
 #import "SaneScanner-Swift.h"
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SaneDelegate>
@@ -42,7 +41,7 @@
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[UITableViewCell sy_className]];
-    [self.tableView registerClass:[SYDeviceCell class]    forCellReuseIdentifier:[SYDeviceCell sy_className]];
+    [self.tableView registerNib:[UINib nibWithNibName:$$("DeviceCell") bundle:nil] forCellReuseIdentifier:DeviceCell.sy_className];
     [self.tableView registerNib:[UINib nibWithNibName:$$("AddCell") bundle:nil] forCellReuseIdentifier:AddCell.sy_className];
     [self.view addSubview:self.tableView];
     
@@ -177,7 +176,7 @@
     }
     else
     {
-        SYDeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYDeviceCell sy_className]];
+        DeviceCell *cell = [tableView dequeueReusableCellWithIdentifier:[DeviceCell sy_className]];
         [cell setDevice:self.devices[indexPath.row]];
         return cell;
     }
@@ -209,7 +208,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section == 0 ? 44 : 60;
+    return indexPath.section == 0 ? 44 : 52;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
