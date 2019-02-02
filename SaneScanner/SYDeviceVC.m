@@ -29,7 +29,7 @@
 #import "SYAppDelegate.h"
 #import <UIImage+SYKit.h>
 #import "SYGalleryController.h"
-#import "SYRefreshControl.h"
+#import "UIScrollView+SY.h"
 #import "UIViewController+SYKit.h"
 #import "SVProgressHUD+SY.h"
 #import <SYMetadata.h>
@@ -90,7 +90,7 @@
     
     // adding pull to refresh
     @weakify(self);
-    [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scollView) {
+    [self.tableView sy_addPullToResfreshWithBlock:^(UIScrollView * _) {
         @strongify(self)
         [self refresh];
     }];
@@ -104,7 +104,7 @@
     [self.view layoutIfNeeded];
 
     // initial refresh
-    [self.tableView ins_beginPullToRefresh];
+    [self.tableView sy_showPullToRefreshAndRunBlock:YES];
 }
 
 - (void)dealloc
@@ -167,7 +167,7 @@
         @strongify(self)
         [self.tableView reloadData];
         self.refreshing = NO;
-        [self.tableView ins_endPullToRefresh];
+        [self.tableView sy_endPullToRefresh];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self prepareForSnapshotting];

@@ -20,7 +20,7 @@
 #import "SYAppDelegate.h"
 #import "SYGalleryManager.h"
 #import "SYGalleryController.h"
-#import "SYRefreshControl.h"
+#import "UIScrollView+SY.h"
 #import "UIApplication+SY.h"
 #import "UIViewController+SYKit.h"
 #import "SYDeviceCell.h"
@@ -51,7 +51,7 @@
     [self.navigationItem setRightBarButtonItem:
      [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
     
-    [SYRefreshControl addRefreshControlToScrollView:self.tableView triggerBlock:^(UIScrollView *scrollView) {
+    [self.tableView sy_addPullToResfreshWithBlock:^(UIScrollView * _) {
         [Sane.shared updateDevicesWithCompletion:^(NSArray<SYSaneDevice *> * _Nullable devices, NSError * _Nullable error) {
             self.devices = devices;
             [self.tableView reloadData];
@@ -79,8 +79,9 @@
     [self setTitle:[[UIApplication sharedApplication] sy_localizedName]];
     [self.tableView reloadData];
     
+    // TODO: remove ability to call block, should run Sane refresh instead that itself triggers this
     if (!self.devices)
-        [self.tableView ins_beginPullToRefresh];
+        [self.tableView sy_showPullToRefreshAndRunBlock:YES];
 }
 
 #pragma mark - IBActions
@@ -97,13 +98,13 @@
 
 - (void)saneDidStartUpdatingDevices:(Sane *)sane
 {
-    [self.tableView ins_beginPullToRefresh];
+    [self.tableView sy_showPullToRefreshAndRunBlock:NO];
 }
 
 - (void)saneDidEndUpdatingDevices:(Sane *)sane
 {
     [self.tableView reloadData];
-    // TODO: [self.tableView ins_endPullToRefresh];
+    [self.tableView sy_endPullToRefresh];
 }
 
 - (DeviceAuthentication *)saneNeedsAuth:(Sane *)sane for:(NSString *)device
@@ -197,7 +198,7 @@
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
     [self.tableView endUpdates];
     
-    [self.tableView ins_beginPullToRefresh];
+    [self.tableView sy_showPullToRefreshAndRunBlock:YES];
 }
 
 #pragma mark - UITableViewDelegate
@@ -247,7 +248,7 @@
             NSString *host = [[av textFieldAtIndex:0] text];
             [Sane.shared.configuration addHost:host];
             [self.tableView reloadData];
-            [self.tableView ins_beginPullToRefresh];
+            [self.tableView sy_showPullToRefreshAndRunBlock:YES];
         }];
         
         return;

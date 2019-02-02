@@ -25,9 +25,9 @@
 		9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */; };
 		9747AF101E5257080090E6B2 /* test_scan_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9747AF0F1E5257080090E6B2 /* test_scan_image.png */; };
 		974BB4171CCA753F0057128B /* SYScanNC.m in Sources */ = {isa = PBXBuildFile; fileRef = 974BB4161CCA753F0057128B /* SYScanNC.m */; };
-		974FB9871CA43EC900C741B1 /* SYRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FB9861CA43EC900C741B1 /* SYRefreshControl.m */; };
 		97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E721C8912CA00C77209 /* NSArray+SY.m */; };
 		97586E941C89272300C37931 /* UIImage+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97586E931C89272300C37931 /* UIImage+SY.m */; };
+		9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */; };
 		975B78141C923B6D00804D86 /* SYPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78131C923B6D00804D86 /* SYPreferences.m */; };
 		975B78171C923C7200804D86 /* SYPrefVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B78161C923C7200804D86 /* SYPrefVC.m */; };
 		975EC2901E40DCDF00A8AFFD /* SYDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC28F1E40DCDF00A8AFFD /* SYDeviceCell.m */; };
@@ -107,12 +107,12 @@
 		9747AF0F1E5257080090E6B2 /* test_scan_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_scan_image.png; sourceTree = "<group>"; };
 		974BB4151CCA753F0057128B /* SYScanNC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYScanNC.h; sourceTree = "<group>"; };
 		974BB4161CCA753F0057128B /* SYScanNC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYScanNC.m; sourceTree = "<group>"; };
-		974FB9851CA43EC900C741B1 /* SYRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYRefreshControl.h; sourceTree = "<group>"; };
-		974FB9861CA43EC900C741B1 /* SYRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYRefreshControl.m; sourceTree = "<group>"; };
 		97521E711C8912CA00C77209 /* NSArray+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+SY.h"; sourceTree = "<group>"; };
 		97521E721C8912CA00C77209 /* NSArray+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+SY.m"; sourceTree = "<group>"; };
 		97586E921C89272300C37931 /* UIImage+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SY.h"; sourceTree = "<group>"; };
 		97586E931C89272300C37931 /* UIImage+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SY.m"; sourceTree = "<group>"; };
+		9759B5E82205DE7F000B53AA /* UIScrollView+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SY.h"; sourceTree = "<group>"; };
+		9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SY.m"; sourceTree = "<group>"; };
 		975B78121C923B6D00804D86 /* SYPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPreferences.h; sourceTree = "<group>"; };
 		975B78131C923B6D00804D86 /* SYPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPreferences.m; sourceTree = "<group>"; };
 		975B78151C923C7200804D86 /* SYPrefVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPrefVC.h; sourceTree = "<group>"; };
@@ -270,18 +270,20 @@
 				9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */,
 				971BE23D1C8E288300B8F29C /* NSMutableData+SY.h */,
 				971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */,
-				97DA07101C98927E007F522E /* UIColor+SY.h */,
-				97DA07111C98927E007F522E /* UIColor+SY.m */,
-				97586E921C89272300C37931 /* UIImage+SY.h */,
-				97586E931C89272300C37931 /* UIImage+SY.m */,
-				97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */,
-				97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */,
-				9785C5691E3E1754006CD4F1 /* UIApplication+SY.h */,
-				9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */,
 				975EC2911E40E5F500A8AFFD /* SVProgressHUD+SY.h */,
 				975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */,
 				97CE773E1EA788A400A2646E /* UIActivityViewController+SY.h */,
 				97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */,
+				9785C5691E3E1754006CD4F1 /* UIApplication+SY.h */,
+				9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */,
+				97DA07101C98927E007F522E /* UIColor+SY.h */,
+				97DA07111C98927E007F522E /* UIColor+SY.m */,
+				97586E921C89272300C37931 /* UIImage+SY.h */,
+				97586E931C89272300C37931 /* UIImage+SY.m */,
+				9759B5E82205DE7F000B53AA /* UIScrollView+SY.h */,
+				9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */,
+				97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */,
+				97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -300,8 +302,6 @@
 		F804E07A1AFA56A500CBE307 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				974FB9851CA43EC900C741B1 /* SYRefreshControl.h */,
-				974FB9861CA43EC900C741B1 /* SYRefreshControl.m */,
 				9724E7A21C8C60000046AE97 /* SYSaneOptionUI.h */,
 				9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */,
 				971BE2461C8EEF4700B8F29C /* SYSanePreviewView.h */,
@@ -643,6 +643,7 @@
 				97CE773D1EA7666D00A2646E /* SYPDFActivity.m in Sources */,
 				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
+				9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */,
 				9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */,
 				9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */,
 				9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */,
@@ -656,7 +657,6 @@
 				9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */,
 				97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */,
 				F8CBD2131AF9A58C00B4C221 /* main.m in Sources */,
-				974FB9871CA43EC900C741B1 /* SYRefreshControl.m in Sources */,
 				975B78171C923C7200804D86 /* SYPrefVC.m in Sources */,
 				975B78141C923B6D00804D86 /* SYPreferences.m in Sources */,
 				977D041A1E6DBC4400E636F1 /* SYPDFMaker.m in Sources */,
