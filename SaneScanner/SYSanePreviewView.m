@@ -24,9 +24,16 @@ static CGFloat const kMargin = 15.;
 
 @implementation SYSanePreviewView
 
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super init];
+    self = [super initWithFrame:frame];
+    if (self) [self customInit];
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
     if (self) [self customInit];
     return self;
 }

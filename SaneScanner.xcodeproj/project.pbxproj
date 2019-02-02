@@ -16,7 +16,6 @@
 		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
 		971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */; };
 		971BE23F1C8E288300B8F29C /* NSMutableData+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */; };
-		971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */; };
 		971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2471C8EEF4700B8F29C /* SYSanePreviewView.m */; };
 		9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */; };
 		97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */; };
@@ -44,6 +43,8 @@
 		97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */; };
 		97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E03F220607E500AC74D0 /* DeviceCell.swift */; };
 		97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E040220607E500AC74D0 /* DeviceCell.xib */; };
+		97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E04322060C5700AC74D0 /* PreviewCell.swift */; };
+		97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E04422060C5700AC74D0 /* PreviewCell.xib */; };
 		97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */; };
 		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
 		97DA07151C989318007F522E /* SYToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07141C989318007F522E /* SYToolbar.m */; };
@@ -93,8 +94,6 @@
 		971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHGalleryItem+SY.m"; sourceTree = "<group>"; };
 		971BE23D1C8E288300B8F29C /* NSMutableData+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableData+SY.h"; sourceTree = "<group>"; };
 		971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableData+SY.m"; sourceTree = "<group>"; };
-		971BE2431C8EEEC100B8F29C /* SYPreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPreviewCell.h; sourceTree = "<group>"; };
-		971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPreviewCell.m; sourceTree = "<group>"; };
 		971BE2461C8EEF4700B8F29C /* SYSanePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSanePreviewView.h; sourceTree = "<group>"; };
 		971BE2471C8EEF4700B8F29C /* SYSanePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSanePreviewView.m; sourceTree = "<group>"; };
 		9721226A1CCA56C1006610E6 /* MHUICustomization+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHUICustomization+SY.h"; sourceTree = "<group>"; };
@@ -142,6 +141,8 @@
 		97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+SY.m"; sourceTree = "<group>"; };
 		97D0E03F220607E500AC74D0 /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		97D0E040220607E500AC74D0 /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
+		97D0E04322060C5700AC74D0 /* PreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
+		97D0E04422060C5700AC74D0 /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
 		97D430FB1E3B9CF100B8E9C0 /* SYOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYOverviewController.h; sourceTree = "<group>"; };
 		97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYOverviewController.m; sourceTree = "<group>"; };
 		97DA07101C98927E007F522E /* UIColor+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SY.h"; sourceTree = "<group>"; };
@@ -231,14 +232,14 @@
 		9734E3631C90219800B66797 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				971BE2431C8EEEC100B8F29C /* SYPreviewCell.h */,
-				971BE2441C8EEEC100B8F29C /* SYPreviewCell.m */,
-				97EF42242205FF7900D45FC8 /* HostCell.swift */,
-				97EF42252205FF7900D45FC8 /* HostCell.xib */,
 				97D0E03F220607E500AC74D0 /* DeviceCell.swift */,
 				97D0E040220607E500AC74D0 /* DeviceCell.xib */,
+				97EF42242205FF7900D45FC8 /* HostCell.swift */,
+				97EF42252205FF7900D45FC8 /* HostCell.xib */,
 				97CC34E12205F48B00304345 /* OptionCell.swift */,
 				97CC34E22205F48B00304345 /* OptionCell.xib */,
+				97D0E04322060C5700AC74D0 /* PreviewCell.swift */,
+				97D0E04422060C5700AC74D0 /* PreviewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -499,6 +500,7 @@
 			files = (
 				9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */,
 				97EF42272205FF7900D45FC8 /* HostCell.xib in Resources */,
+				97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */,
 				97F0A2651E52687F008C4690 /* Images.xcassets in Resources */,
 				97CC34E42205F48B00304345 /* OptionCell.xib in Resources */,
 				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
@@ -636,7 +638,6 @@
 				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
 				971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */,
-				971BE2451C8EEEC100B8F29C /* SYPreviewCell.m in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
 				97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */,
 				970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */,
@@ -646,6 +647,7 @@
 				974BB4171CCA753F0057128B /* SYScanNC.m in Sources */,
 				97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */,
 				97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */,
+				97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */,
 				9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */,
 				97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */,
 				F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */,

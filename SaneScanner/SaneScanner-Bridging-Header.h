@@ -3,3 +3,4 @@
 //
 
 #import "SYPreferences.h"
+#import "SYSanePreviewView.h"

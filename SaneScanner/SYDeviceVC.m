@@ -14,7 +14,6 @@
 #import "SYSaneOptionString.h"
 #import "SYSaneOptionButton.h"
 #import "SYSaneOptionGroup.h"
-#import "SYPreviewCell.h"
 #import "SVProgressHUD.h"
 #import "DLAVAlertView+SY.h"
 #import "SYSaneOptionUI.h"
@@ -57,7 +56,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
-    [self.tableView registerClass:[SYPreviewCell class] forCellReuseIdentifier:[SYPreviewCell sy_className]];
+    [self.tableView registerNib:[UINib nibWithNibName:$$("PreviewCell") bundle:nil] forCellReuseIdentifier:PreviewCell.sy_className];
     [self.tableView registerNib:[UINib nibWithNibName:$$("OptionCell") bundle:nil] forCellReuseIdentifier:OptionCell.sy_className];
     [self.view addSubview:self.tableView];
     
@@ -362,11 +361,11 @@
     if (!self.device.canCrop)
         return;
     
-    SYPreviewCell *previewCell;
+    PreviewCell *previewCell;
     
     for (UITableViewCell *cell in self.tableView.visibleCells)
-        if ([cell isKindOfClass:[SYPreviewCell class]])
-            previewCell = (SYPreviewCell *)cell;
+        if ([cell isKindOfClass:[PreviewCell class]])
+            previewCell = (PreviewCell *)cell;
     
     if (!previewCell)
         return;
@@ -390,11 +389,11 @@
     if ([[SYPreferences shared] previewWithAutoColorMode] && [self.device standardOption:SYSaneStandardOptionColorMode].capSetAuto)
         return;
     
-    SYPreviewCell *previewCell;
+    PreviewCell *previewCell;
     
     for (UITableViewCell *cell in self.tableView.visibleCells)
-        if ([cell isKindOfClass:[SYPreviewCell class]])
-            previewCell = (SYPreviewCell *)cell;
+        if ([cell isKindOfClass:[PreviewCell class]])
+            previewCell = (PreviewCell *)cell;
     
     if (!previewCell)
         return;
@@ -425,7 +424,7 @@
 {
     if (indexPath.section == 0)
     {
-        SYPreviewCell *cell = (SYPreviewCell*)[tableView dequeueReusableCellWithIdentifier:[SYPreviewCell sy_className]];
+        PreviewCell *cell = (PreviewCell*)[tableView dequeueReusableCellWithIdentifier:[PreviewCell sy_className]];
         [cell setDevice:self.device];
         return cell;
     }
@@ -458,7 +457,7 @@
         maxHeight = 500;
     
     if (indexPath.section == 0)
-        return [SYPreviewCell cellHeightForDevice:self.device width:width maxHeight:maxHeight];
+        return [PreviewCell cellHeightWithDevice:self.device width:width maxHeight:maxHeight];
     
     return [OptionCell cellHeightWithOption:[self optionForTableViewIndexPath:indexPath]
                             showDescription:NO
