@@ -18,13 +18,11 @@
 #import "SYSplitVC.h"
 #import "NSArray+SY.h"
 #import "SYGalleryController.h"
-#import "UIImage+SY.h"
 #import "SYGalleryThumbsView.h"
 #import "SYScanNC.h"
 #import "MHUICustomization+SY.h"
 #import <SDImageCache.h>
 #import <SYWindow.h>
-#import "UIImage+SY.h"
 #import "MHGalleryItem+SY.h"
 #import "SYPreferences.h"
 #import <SaneSwift/SaneSwift-umbrella.h>

@@ -10,7 +10,6 @@
 #import <SVProgressHUD.h>
 #import "SYGalleryManager.h"
 #import "DLAVAlertView+SY.h"
-#import "UIImage+SY.h"
 #import "SYTools.h"
 #import "SYPDFMaker.h"
 #import "UIActivityViewController+SY.h"

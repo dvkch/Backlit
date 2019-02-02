@@ -12,7 +12,6 @@
 #import "SYSaneDevice.h"
 #import <DLAVAlertView.h>
 #import "SYDeviceVC.h"
-#import "SYAddCell.h"
 #import "SVProgressHUD.h"
 #import "SYPrefVC.h"
 #import "SYGalleryThumbsView.h"
@@ -24,6 +23,7 @@
 #import "UIApplication+SY.h"
 #import "UIViewController+SYKit.h"
 #import "SYDeviceCell.h"
+#import "SaneScanner-Swift.h"
 
 @interface SYDevicesVC () <UITableViewDataSource, UITableViewDelegate, SaneDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -43,7 +43,7 @@
     [self.tableView setDelegate:self];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[UITableViewCell sy_className]];
     [self.tableView registerClass:[SYDeviceCell class]    forCellReuseIdentifier:[SYDeviceCell sy_className]];
-    [self.tableView registerClass:[SYAddCell class]       forCellReuseIdentifier:[SYAddCell sy_className]];
+    [self.tableView registerNib:[UINib nibWithNibName:$$("AddCell") bundle:nil] forCellReuseIdentifier:AddCell.sy_className];
     [self.view addSubview:self.tableView];
     
     self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self tintColor:nil];
@@ -170,8 +170,8 @@
         }
         else
         {
-            SYAddCell *cell = (SYAddCell *)[tableView dequeueReusableCellWithIdentifier:[SYAddCell sy_className]];
-            [cell setText:$("DEVICES ROW ADD HOST")];
+            AddCell *cell = (AddCell *)[tableView dequeueReusableCellWithIdentifier:AddCell.sy_className];
+            [cell setTitle:$("DEVICES ROW ADD HOST")];
             return cell;
         }
     }

@@ -11,7 +11,6 @@
 #import "SYPreferences.h"
 #import "SaneScanner-Swift.h"
 #import <UIImage+SYKit.h>
-#import "UIImage+SY.h"
 #import "UIApplication+SY.h"
 #import "SYEmailHelper.h"
 

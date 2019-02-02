@@ -12,7 +12,6 @@
 #import <UIImage+SYKit.h>
 #import "UIColor+SY.h"
 #import "MHWDirectoryWatcher.h"
-#import "UIImage+SY.h"
 #import "MHGalleryItem+SY.h"
 #import <SDImageCache.h>
 #import <SYOperationQueue.h>
