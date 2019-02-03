@@ -103,19 +103,19 @@ class OptionCell: UITableViewCell {
     // MARK: Layout
     private static let sizingCell = UINib(nibName: "OptionCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! OptionCell
     
-    static func cellHeight(option: SYSaneOption, showDescription: Bool, width: CGFloat) -> CGFloat {
+    @objc static func cellHeight(option: SYSaneOption, showDescription: Bool, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(option: option)
         sizingCell.showDescription = showDescription
         return sizingCell.sy_cellHeight(forWidth: width)
     }
     
-    static func cellHeight(prefKey: String, showDescription: Bool, width: CGFloat) -> CGFloat {
+    @objc static func cellHeight(prefKey: String, showDescription: Bool, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(prefKey: prefKey)
         sizingCell.showDescription = showDescription
         return sizingCell.sy_cellHeight(forWidth: width)
     }
     
-    static func cellHeight(leftText: String, rightText: String, width: CGFloat) -> CGFloat {
+    @objc static func cellHeight(leftText: String, rightText: String, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(leftText: leftText, rightText: rightText)
         sizingCell.showDescription = false
         return sizingCell.sy_cellHeight(forWidth: width)

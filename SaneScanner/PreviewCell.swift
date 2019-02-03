@@ -33,7 +33,7 @@ class PreviewCell: UITableViewCell {
     }
     
     // MARK: Layout
-    static func cellHeight(device: SYSaneDevice, width: CGFloat, maxHeight: CGFloat) -> CGFloat {
+    @objc static func cellHeight(device: SYSaneDevice, width: CGFloat, maxHeight: CGFloat) -> CGFloat {
         let bestHeight = width / device.previewImageRatio()
         return min(max(bestHeight, width), maxHeight)
     }
