@@ -22,4 +22,11 @@
 
 - (UIImageView *)addImageViewForImage:(UIImage *)image;
 
+- (nonnull instancetype)initWithTitle:(NSString *)title
+                              message:(NSString *)message
+                             delegate:(id)delegate
+                               cancel:(NSString *)cancel
+                               others:(NSArray <NSString *> *)others;
+
+
 @end

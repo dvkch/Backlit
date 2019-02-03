@@ -108,4 +108,17 @@
     return imageView;
 }
 
+- (instancetype)initWithTitle:(NSString *)title
+                      message:(NSString *)message
+                     delegate:(id)delegate
+                       cancel:(NSString *)cancel
+                       others:(NSArray <NSString *> *)others
+{
+    DLAVAlertView *av = [self initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancel otherButtonTitles:nil];
+    for (NSString *other in others) {
+        [av addButtonWithTitle:other];
+    }
+    return av;
+}
+
 @end

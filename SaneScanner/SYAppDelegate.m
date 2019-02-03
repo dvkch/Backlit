@@ -8,7 +8,6 @@
 
 #import "SYAppDelegate.h"
 #import "SYTools.h"
-#import "SYDevicesVC.h"
 #import "SYDeviceVC.h"
 #import "SYToolbar.h"
 #import "SYGalleryManager.h"
@@ -26,6 +25,7 @@
 #import "MHGalleryItem+SY.h"
 #import "SYPreferences.h"
 #import <SaneSwift/SaneSwift-umbrella.h>
+#import "SaneScanner-Swift.h"
 
 // TODO: send in chronological order, older to newer
 
@@ -52,7 +52,7 @@
     //[SYTools createTestImages:200];
     
     // creating navigation controller
-    SYDevicesVC *vc = [[SYDevicesVC alloc] init];
+    DevicesVC *vc = [[DevicesVC alloc] init];
     self.scanNavigationController = [[SYScanNC alloc] init];
     [self.scanNavigationController setToolbarHidden:YES];
     [self.scanNavigationController.toolbar setHeight:64.];
