@@ -6,7 +6,6 @@
 #import "SYSanePreviewView.h"
 #import "SYTools.h"
 #import "SYDeviceVC.h"
-#import "SYPrefVC.h"
 #import "SYGalleryThumbsView.h"
 #import "SYAppDelegate.h"
 #import "SYGalleryManager.h"

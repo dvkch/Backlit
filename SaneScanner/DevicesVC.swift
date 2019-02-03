@@ -26,7 +26,7 @@ import SYKit
             self?.refreshDevices()
         }
         
-        navigationItem.rightBarButtonItem = SYPrefVC.barButtonItem(withTarget: self, action: #selector(self.settingsButtonTap))
+        navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         
         Sane.shared.delegate = self
         
@@ -54,7 +54,7 @@ import SYKit
     
     // MARK: Actions
     @objc private func settingsButtonTap() {
-        let nc = UINavigationController(rootViewController: SYPrefVC())
+        let nc = UINavigationController(rootViewController: PreferencesVC())
         nc.modalPresentationStyle = .formSheet
         present(nc, animated: true, completion: nil)
 

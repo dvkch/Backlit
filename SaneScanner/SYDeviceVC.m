@@ -19,7 +19,6 @@
 #import "SYSaneOptionUI.h"
 #import "SYTools.h"
 #import <Masonry.h>
-#import "SYPrefVC.h"
 #import "SYPreferences.h"
 #import "SYGalleryManager.h"
 #import "SYGalleryThumbsView.h"
@@ -70,8 +69,7 @@
     
     self.thumbsView = [SYGalleryThumbsView showInToolbarOfController:self tintColor:[UIColor vividBlueColor]];
     
-    [self.navigationItem setRightBarButtonItem:
-     [SYPrefVC barButtonItemWithTarget:self action:@selector(buttonSettingsTap:)]];
+    self.navigationItem.rightBarButtonItem = [PreferencesVC settingsBarButtonItemWithTarget:self action:@selector(buttonSettingsTap:)];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
@@ -340,7 +338,8 @@
 
 - (void)buttonSettingsTap:(id)sender
 {
-    SYPrefVC *prefVC = [[SYPrefVC alloc] init];
+    // TODO: add in static method PreferencesVC barbuttonitem
+    PreferencesVC *prefVC = [[PreferencesVC alloc] init];
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:prefVC];
     [nc setModalPresentationStyle:UIModalPresentationFormSheet];
     [self presentViewController:nc animated:YES completion:nil];

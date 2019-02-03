@@ -10,6 +10,7 @@ import UIKit
 import SaneSwift
 import SYKit
 
+// TODO: fix sizing issues in PreferencesVC
 class OptionCell: UITableViewCell {
 
     override func awakeFromNib() {
