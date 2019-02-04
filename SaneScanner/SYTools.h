@@ -37,8 +37,8 @@ void logMemUsage(void);
 
 @interface SYTools : NSObject
 
-+ (NSString *)documentsPath;
-+ (NSString *)cachePath;
+@property (class, readonly, nonnull) NSString *documentsPath;
+@property (class, readonly, nonnull) NSString *cachePath;
 
 + (NSString *)appSupportPath:(BOOL)create;
 + (NSString *)pathForFile:(NSString *)filename;

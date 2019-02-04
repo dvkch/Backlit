@@ -26,7 +26,7 @@
 
 @interface SYGalleryManager : NSObject
 
-+ (SYGalleryManager *)shared;
+@property (nonatomic, class, readonly, nonnull) SYGalleryManager *shared;
 
 - (void)addDelegate:(id<SYGalleryManagerDelegate>)delegate;
 - (void)removeDelegate:(id<SYGalleryManagerDelegate>)delegate; // don't use in the delegate's -dealloc method

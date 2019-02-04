@@ -13,7 +13,7 @@ import UIKit
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         coordinator.animate(alongsideTransition: { (_) in
-            SYAppDelegate.obtain.splitVCtraitCollectionWillChange(to: newCollection)
+            AppDelegate.obtain.splitVCtraitCollectionWillChange(to: newCollection)
         }, completion: nil)
     }
 }

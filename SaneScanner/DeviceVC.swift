@@ -85,7 +85,7 @@ class DeviceVC: UIViewController {
                 SVProgressHUD.showError(withStatus: (error as NSError).sy_alertMessage())
             }
             if let image = image, let parameters = parameters, let metadata = self.imageMetadata(scanParameters: parameters) {
-                SYGalleryManager.shared()?.add(image, metadata: metadata)
+                SYGalleryManager.shared.add(image, metadata: metadata)
                 SVProgressHUD.showSuccess(withStatus: nil, duration: 1)
             }
         }
@@ -173,12 +173,15 @@ class DeviceVC: UIViewController {
 // MARK: Snapshots
 extension DeviceVC {
     private func prepareForSnapshotting() {
-        let snapshotType = SYAppDelegate.obtain.snapshotType
+        let snapshotType = AppDelegate.obtain.snapshotType
         guard snapshotType != .none else { return }
     
         if snapshotType == .devicePreview || snapshotType == .deviceOptions || snapshotType == .deviceOptionPopup {
             let rect = CGRect(x: 0.1, y: 0.2, width: 0.8, height: 0.6)
-            device.lastPreviewImage = UIImage(named: SYAppDelegate.obtain.snapshotTestScanImagePath)
+            // TODO: path? named?
+            if let path = AppDelegate.obtain.snapshotTestScanImagePath {
+                device.lastPreviewImage = UIImage(named: path)
+            }
             updatePreviewCell(cropAreaPercent: rect)
         }
 

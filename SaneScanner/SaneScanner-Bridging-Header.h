@@ -5,7 +5,6 @@
 #import "SYSanePreviewView.h"
 #import "SYTools.h"
 #import "SYGalleryThumbsView.h"
-#import "SYAppDelegate.h"
 #import "SYGalleryManager.h"
 #import "SYGalleryController.h"
 #import "UIScrollView+SY.h"
@@ -17,3 +16,5 @@
 #import "UIColor+SY.h"
 #import "SVProgressHUD+SY.h"
 #import "UIActivityViewController+SY.h"
+#import "MHUICustomization+SY.h"
+#import "NSArray+SY.h"
