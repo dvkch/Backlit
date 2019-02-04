@@ -9,16 +9,13 @@
 #import "SYAppDelegate.h"
 #import "SYTools.h"
 #import "SYDeviceVC.h"
-#import "SYToolbar.h"
 #import "SYGalleryManager.h"
 #import "SVProgressHUD.h"
 #import <UIImage+SYKit.h>
 #import "SYEmptyGalleryVC.h"
-#import "SYSplitVC.h"
 #import "NSArray+SY.h"
 #import "SYGalleryController.h"
 #import "SYGalleryThumbsView.h"
-#import "SYScanNC.h"
 #import "MHUICustomization+SY.h"
 #import <SDImageCache.h>
 #import <SYWindow.h>
@@ -29,8 +26,8 @@
 // TODO: send in chronological order, older to newer
 
 @interface SYAppDelegate () <SYGalleryManagerDelegate, UISplitViewControllerDelegate>
-@property (nonatomic, strong) SYSplitVC *splitViewController;
-@property (nonatomic, strong) SYScanNC *scanNavigationController;
+@property (nonatomic, strong) SplitVC *splitViewController;
+@property (nonatomic, strong) ScanNC *scanNavigationController;
 @property (nonatomic, strong) SYGalleryController *galleryViewController;
 @property (nonatomic, strong) SYEmptyGalleryVC *emptyVC;
 @end
@@ -52,11 +49,11 @@
     
     // creating navigation controller
     DevicesVC *vc = [[DevicesVC alloc] init];
-    self.scanNavigationController = [[SYScanNC alloc] init];
+    self.scanNavigationController = [[ScanNC alloc] init];
     [self.scanNavigationController setToolbarHidden:YES];
-    [self.scanNavigationController.toolbar setHeight:64.];
-    [self.scanNavigationController.toolbar setPadding:0.];
-    [self.scanNavigationController.toolbar setTranslucent:NO];
+    // TODO: [self.scanNavigationController.customToolbar setHeight:64.];
+    [self.scanNavigationController.customToolbar setPadding:0.];
+    [self.scanNavigationController.customToolbar setTranslucent:NO];
     [self.scanNavigationController setViewControllers:@[vc]];
     
     // gallery view controller
@@ -72,7 +69,7 @@
     self.emptyVC = [[SYEmptyGalleryVC alloc] init];
     
     // creating split controller
-    self.splitViewController = [[SYSplitVC alloc] init];
+    self.splitViewController = [[SplitVC alloc] init];
     [self.splitViewController setViewControllers:@[self.scanNavigationController, self.emptyVC]];
     [self.splitViewController setDelegate:self];
     [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
@@ -126,8 +123,8 @@
     [Sane.shared cancelCurrentScan];
     
     for (UIViewController *vc in self.splitViewController.viewControllers)
-        if ([vc isKindOfClass:[SYScanNC class]])
-            [(SYScanNC *)vc popToRootViewControllerAnimated:NO];
+        if ([vc isKindOfClass:[ScanNC class]])
+            [(ScanNC *)vc popToRootViewControllerAnimated:NO];
     
     // give time to the system to really close the deviceVC if
     // it's opened, close eventual scan alertView, and dealloc
@@ -149,7 +146,7 @@
     BOOL constrainedW = (traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
     BOOL constrainedH = (traitCollection.verticalSizeClass   == UIUserInterfaceSizeClassCompact);
     
-    [self.scanNavigationController.toolbar setHeight:(constrainedH ? 34 : 64)];
+    // TODO: [self.scanNavigationController.customToolbar setHeight:(constrainedH ? 34 : 64)];
     
     if (!constrainedW)
     {
