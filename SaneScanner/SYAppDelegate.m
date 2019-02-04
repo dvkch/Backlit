@@ -11,7 +11,6 @@
 #import "SYGalleryManager.h"
 #import "SVProgressHUD.h"
 #import <UIImage+SYKit.h>
-#import "SYEmptyGalleryVC.h"
 #import "NSArray+SY.h"
 #import "SYGalleryController.h"
 #import "SYGalleryThumbsView.h"
@@ -28,7 +27,7 @@
 @property (nonatomic, strong) SplitVC *splitViewController;
 @property (nonatomic, strong) ScanNC *scanNavigationController;
 @property (nonatomic, strong) SYGalleryController *galleryViewController;
-@property (nonatomic, strong) SYEmptyGalleryVC *emptyVC;
+@property (nonatomic, strong) EmptyGalleryVC *emptyVC;
 @end
 
 @implementation SYAppDelegate
@@ -65,7 +64,7 @@
      forViewMode:MHGalleryViewModeImageViewerNavigationBarHidden];
     
     // empty gallery view controller
-    self.emptyVC = [[SYEmptyGalleryVC alloc] init];
+    self.emptyVC = [[EmptyGalleryVC alloc] init];
     
     // creating split controller
     self.splitViewController = [[SplitVC alloc] init];

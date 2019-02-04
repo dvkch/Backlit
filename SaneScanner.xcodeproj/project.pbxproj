@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		97044903220875D300E13C6A /* DeviceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97044901220875D300E13C6A /* DeviceVC.swift */; };
 		97044904220875D300E13C6A /* DeviceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97044902220875D300E13C6A /* DeviceVC.xib */; };
+		9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704490722088DC500E13C6A /* EmptyGalleryVC.swift */; };
 		9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */; };
 		9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559D1C972FF600BE9275 /* SYGalleryManager.m */; };
 		970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 970DE9DD1C9B6344001CD025 /* SYGalleryController.m */; };
-		9710B41E1C9B10DC00A55529 /* SYEmptyGalleryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */; };
 		9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */; };
 		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
 		971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */; };
@@ -81,6 +81,7 @@
 		767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.debug.xcconfig"; sourceTree = "<group>"; };
 		97044901220875D300E13C6A /* DeviceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVC.swift; sourceTree = "<group>"; };
 		97044902220875D300E13C6A /* DeviceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceVC.xib; sourceTree = "<group>"; };
+		9704490722088DC500E13C6A /* EmptyGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGalleryVC.swift; sourceTree = "<group>"; };
 		970755991C972FE600BE9275 /* SYGalleryThumbsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsView.h; sourceTree = "<group>"; };
 		9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryThumbsView.m; sourceTree = "<group>"; };
 		9707559C1C972FF600BE9275 /* SYGalleryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryManager.h; sourceTree = "<group>"; };
@@ -88,8 +89,6 @@
 		970A587F1E41665C0033A116 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		970DE9DC1C9B6344001CD025 /* SYGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryController.h; sourceTree = "<group>"; };
 		970DE9DD1C9B6344001CD025 /* SYGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryController.m; sourceTree = "<group>"; };
-		9710B41C1C9B10DB00A55529 /* SYEmptyGalleryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYEmptyGalleryVC.h; sourceTree = "<group>"; };
-		9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYEmptyGalleryVC.m; sourceTree = "<group>"; };
 		9715FC8B1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYMediaPreviewCollectionViewCell.h; sourceTree = "<group>"; };
 		9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYMediaPreviewCollectionViewCell.m; sourceTree = "<group>"; };
 		971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SYLaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -246,16 +245,15 @@
 		9734E3641C9031F300B66797 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
-				97499E5A220862FE006DED20 /* ScanNC.swift */,
-				97499E5E220874B3006DED20 /* SplitVC.swift */,
-				9710B41C1C9B10DB00A55529 /* SYEmptyGalleryVC.h */,
-				9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */,
 				9757FCEF2207112D00AB59F1 /* DevicesVC.swift */,
 				9757FCF02207112D00AB59F1 /* DevicesVC.xib */,
 				97044901220875D300E13C6A /* DeviceVC.swift */,
 				97044902220875D300E13C6A /* DeviceVC.xib */,
 				97EB32B022071F880027CCAE /* PreferencesVC.swift */,
 				97EB32B122071F880027CCAE /* PreferencesVC.xib */,
+				97499E5A220862FE006DED20 /* ScanNC.swift */,
+				97499E5E220874B3006DED20 /* SplitVC.swift */,
+				9704490722088DC500E13C6A /* EmptyGalleryVC.swift */,
 			);
 			name = VCs;
 			sourceTree = "<group>";
@@ -651,9 +649,9 @@
 				97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */,
 				971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */,
 				97DA07121C98927E007F522E /* UIColor+SY.m in Sources */,
-				9710B41E1C9B10DC00A55529 /* SYEmptyGalleryVC.m in Sources */,
 				975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */,
 				97CE773D1EA7666D00A2646E /* SYPDFActivity.m in Sources */,
+				9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */,
 				97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */,
 				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
