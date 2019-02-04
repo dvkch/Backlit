@@ -18,7 +18,7 @@
 #import <NSData+SYKit.h>
 #import <WeakUniqueCollection.h>
 #import <SYMetadata.h>
-#import "SYPreferences.h"
+#import "SaneScanner-Swift.h"
 
 static NSString * const kImageExtensionPNG  = $$("png");
 static NSString * const kImageExtensionJPG  = $$("jpg");
@@ -413,7 +413,7 @@ static NSString * const kImageExtensionPDF  = $$("pdf");
     MHGalleryItem *item = [self galleryItemForImageWithName:imageName];
     
     NSData *imageData;
-    if ([[SYPreferences shared] saveAsPNG])
+    if (Preferences.shared.saveAsPNG)
         imageData = UIImagePNGRepresentation(image);
     else
         imageData = UIImageJPEGRepresentation(image, 0.9);

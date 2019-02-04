@@ -19,7 +19,6 @@
 #import "SYSaneOptionUI.h"
 #import "SYTools.h"
 #import <Masonry.h>
-#import "SYPreferences.h"
 #import "SYGalleryManager.h"
 #import "SYGalleryThumbsView.h"
 #import "UIColor+SY.h"
@@ -94,7 +93,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(prefsChangedNotification:)
-                                                 name:SYPreferencesChangedNotification
+                                                 name:Preferences.preferencesChanged
                                                object:nil];
 
     // prevent tableView width to be 0 and have a constraint issue when computing cell size
@@ -107,7 +106,7 @@
 - (void)dealloc
 {
     [Sane.shared closeDevice:self.device];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SYPreferencesChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Preferences.preferencesChanged object:nil];
 }
 
 #pragma mark - Snapshots
@@ -174,7 +173,7 @@
 
 - (NSArray <SYSaneOptionGroup *> *)optionGroups
 {
-    return [self.device filteredGroupedOptionsWithoutAdvanced:![[SYPreferences shared] showAdvancedOptions]];
+    return [self.device filteredGroupedOptionsWithoutAdvanced:!Preferences.shared.showAdvancedOptions];
 }
 
 - (SYSaneOptionGroup *)optionGroupForTableViewSection:(NSUInteger)section
@@ -385,7 +384,7 @@
         return;
     
     // update only if we don't require color mode to be set at auto, or when auto is not available
-    if ([[SYPreferences shared] previewWithAutoColorMode] && [self.device standardOption:SYSaneStandardOptionColorMode].capSetAuto)
+    if (Preferences.shared.previewWithAutoColorMode && [self.device standardOption:SYSaneStandardOptionColorMode].capSetAuto)
         return;
     
     PreviewCell *previewCell;

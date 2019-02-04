@@ -9,7 +9,6 @@
 import UIKit
 import SYKit
 import SYEmailHelper
-import SYPair
 
 @objc class PreferencesVC: UIViewController {
 
@@ -22,8 +21,6 @@ import SYPair
         tableView.registerCell(OptionCell.self, xib: true)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
-        
-        keysGroups = SYPreferences.shared.allKeysGrouped()
     }
 
     @objc static func settingsBarButtonItem(target: Any, action: Selector) -> UIBarButtonItem {
@@ -32,7 +29,6 @@ import SYPair
 
     // MARK: Properties
     private static let contactEmailAddress = "contact@syan.me"
-    private var keysGroups = [SYPair<NSString, NSArray>]()
 
     // MARK: Views:
     @IBOutlet private var tableView: UITableView!
@@ -41,34 +37,24 @@ import SYPair
     @objc private func closeButtonTap() {
         dismiss(animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension PreferencesVC : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return keysGroups.count + 1
+        return Preferences.shared.groupedKeys.count + 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < keysGroups.count {
-            return keysGroups[section].object2.count
+        if section < Preferences.shared.groupedKeys.count {
+            return Preferences.shared.groupedKeys[section].1.count
         }
         return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(OptionCell.self, for: indexPath)
-        if indexPath.section < keysGroups.count {
-            let prefKey = keysGroups[indexPath.section].object2[indexPath.row] as! String
+        if indexPath.section < Preferences.shared.groupedKeys.count {
+            let prefKey = Preferences.shared.groupedKeys[indexPath.section].1[indexPath.row]
             cell.updateWith(prefKey: prefKey)
             cell.showDescription = true
         }
@@ -84,19 +70,17 @@ extension PreferencesVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section < keysGroups.count {
-            return keysGroups[section].object1 as String?
+        if section < Preferences.shared.groupedKeys.count {
+            return Preferences.shared.groupedKeys[section].0
         }
         return "PREFERENCES SECTION ABOUT APP"
     }
-    
-    
 }
 
 extension PreferencesVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section < keysGroups.count {
-            let prefKey = keysGroups[indexPath.section].object2[indexPath.row] as! String
+        if indexPath.section < Preferences.shared.groupedKeys.count {
+            let prefKey = Preferences.shared.groupedKeys[indexPath.section].1[indexPath.row]
             return OptionCell.cellHeight(prefKey: prefKey, showDescription: true, width: tableView.bounds.width)
         }
         if indexPath.row == 0 {
@@ -111,7 +95,7 @@ extension PreferencesVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         // ABOUT APP section
-        if indexPath.section >= keysGroups.count {
+        if indexPath.section >= Preferences.shared.groupedKeys.count {
             guard indexPath.row == 0 else { return }
             
             // TODO: cleanup
@@ -130,11 +114,9 @@ extension PreferencesVC : UITableViewDelegate {
             return
         }
         
-        let prefKey = keysGroups[indexPath.section].object2[indexPath.row] as! String
-        if SYPreferences.shared.type(forKey: prefKey) == .bool {
-            let previousValue = (SYPreferences.shared.object(forKey: prefKey) as! NSNumber).boolValue
-            SYPreferences.shared.setObject(!previousValue, forKey: prefKey)
-        }
+        let prefKey = Preferences.shared.groupedKeys[indexPath.section].1[indexPath.row]
+        let previousValue = Preferences.shared.value(for: prefKey)
+        Preferences.shared.setValue(!previousValue, for: prefKey)
         
         tableView.beginUpdates()
         tableView.reloadRows(at: [indexPath], with: .automatic)

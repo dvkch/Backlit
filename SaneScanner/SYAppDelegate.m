@@ -23,7 +23,6 @@
 #import <SDImageCache.h>
 #import <SYWindow.h>
 #import "MHGalleryItem+SY.h"
-#import "SYPreferences.h"
 #import <SaneSwift/SaneSwift-umbrella.h>
 #import "SaneScanner-Swift.h"
 

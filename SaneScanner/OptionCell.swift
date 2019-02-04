@@ -32,7 +32,7 @@ class OptionCell: UITableViewCell {
 
     // MARK: Properties
     private var option: SYSaneOption?
-    private var prefKey: String?
+    private var prefKey: Preferences.Key?
     @objc var showDescription: Bool = false {
         didSet {
             setNeedsUpdateConstraints()
@@ -46,7 +46,7 @@ class OptionCell: UITableViewCell {
         updateTexts()
     }
     
-    @objc func updateWith(prefKey: String) {
+    func updateWith(prefKey: Preferences.Key) {
         self.option = nil
         self.prefKey = prefKey
         updateTexts()
@@ -85,19 +85,11 @@ class OptionCell: UITableViewCell {
             labelDescr.text = option.localizedDesc
         }
         else if let prefKey = self.prefKey {
-            labelTitle.text = SYPreferences.shared.title(forKey: prefKey)
-            labelDescr.text = SYPreferences.shared.description(forKey: prefKey)
+            labelTitle.text = prefKey.localizedTitle
+            labelDescr.text = prefKey.localizedDescription
             
-            switch SYPreferences.shared.type(forKey: prefKey) {
-            case .bool:
-                let value = SYPreferences.shared.object(forKey: prefKey) as! NSNumber
-                labelValue.text = value.boolValue ? "OPTION BOOL ON".localized : "OPTION BOOL OFF".localized
-            case .int:
-                let value = SYPreferences.shared.object(forKey: prefKey) as! NSNumber
-                labelValue.text = value.stringValue
-            case .string, .unknown:
-                labelValue.text = SYPreferences.shared.object(forKey: prefKey) as? String
-            }
+            let value = Preferences.shared.value(for: prefKey)
+            labelValue.text = value ? "OPTION BOOL ON".localized : "OPTION BOOL OFF".localized
         }
     }
     
@@ -110,7 +102,7 @@ class OptionCell: UITableViewCell {
         return sizingCell.sy_cellHeight(forWidth: width)
     }
     
-    @objc static func cellHeight(prefKey: String, showDescription: Bool, width: CGFloat) -> CGFloat {
+    static func cellHeight(prefKey: Preferences.Key, showDescription: Bool, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(prefKey: prefKey)
         sizingCell.showDescription = showDescription
         return sizingCell.sy_cellHeight(forWidth: width)
