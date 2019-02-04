@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		97044903220875D300E13C6A /* DeviceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97044901220875D300E13C6A /* DeviceVC.swift */; };
+		97044904220875D300E13C6A /* DeviceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97044902220875D300E13C6A /* DeviceVC.xib */; };
 		9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */; };
 		9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559D1C972FF600BE9275 /* SYGalleryManager.m */; };
 		970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 970DE9DD1C9B6344001CD025 /* SYGalleryController.m */; };
@@ -58,7 +60,6 @@
 		97F0A2651E52687F008C4690 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CBD21D1AF9A58C00B4C221 /* Images.xcassets */; };
 		97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */; };
 		E380CA5C5F90A86D8A42FE99 /* Pods_SaneScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */; };
-		F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F804E0781AFA569B00CBE307 /* SYDeviceVC.m */; };
 		F86584861AF9A8290028E039 /* SYTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F86584851AF9A8290028E039 /* SYTools.m */; };
 		F8CBD2131AF9A58C00B4C221 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2121AF9A58C00B4C221 /* main.m */; };
 		F8CBD2161AF9A58C00B4C221 /* SYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CBD2151AF9A58C00B4C221 /* SYAppDelegate.m */; };
@@ -78,6 +79,8 @@
 		23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaneScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.release.xcconfig"; sourceTree = "<group>"; };
 		767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.debug.xcconfig"; sourceTree = "<group>"; };
+		97044901220875D300E13C6A /* DeviceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVC.swift; sourceTree = "<group>"; };
+		97044902220875D300E13C6A /* DeviceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceVC.xib; sourceTree = "<group>"; };
 		970755991C972FE600BE9275 /* SYGalleryThumbsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsView.h; sourceTree = "<group>"; };
 		9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryThumbsView.m; sourceTree = "<group>"; };
 		9707559C1C972FF600BE9275 /* SYGalleryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryManager.h; sourceTree = "<group>"; };
@@ -158,8 +161,6 @@
 		97EF42252205FF7900D45FC8 /* HostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HostCell.xib; sourceTree = "<group>"; };
 		97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SYKit.h"; sourceTree = "<group>"; };
 		97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SYKit.m"; sourceTree = "<group>"; };
-		F804E0771AFA569B00CBE307 /* SYDeviceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDeviceVC.h; sourceTree = "<group>"; };
-		F804E0781AFA569B00CBE307 /* SYDeviceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDeviceVC.m; sourceTree = "<group>"; };
 		F86584841AF9A8290028E039 /* SYTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTools.h; sourceTree = "<group>"; };
 		F86584851AF9A8290028E039 /* SYTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTools.m; sourceTree = "<group>"; };
 		F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaneScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -247,12 +248,12 @@
 			children = (
 				97499E5A220862FE006DED20 /* ScanNC.swift */,
 				97499E5E220874B3006DED20 /* SplitVC.swift */,
-				F804E0771AFA569B00CBE307 /* SYDeviceVC.h */,
-				F804E0781AFA569B00CBE307 /* SYDeviceVC.m */,
 				9710B41C1C9B10DB00A55529 /* SYEmptyGalleryVC.h */,
 				9710B41D1C9B10DC00A55529 /* SYEmptyGalleryVC.m */,
 				9757FCEF2207112D00AB59F1 /* DevicesVC.swift */,
 				9757FCF02207112D00AB59F1 /* DevicesVC.xib */,
+				97044901220875D300E13C6A /* DeviceVC.swift */,
+				97044902220875D300E13C6A /* DeviceVC.xib */,
 				97EB32B022071F880027CCAE /* PreferencesVC.swift */,
 				97EB32B122071F880027CCAE /* PreferencesVC.xib */,
 			);
@@ -501,6 +502,7 @@
 				9757FCF22207112D00AB59F1 /* DevicesVC.xib in Resources */,
 				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
 				97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */,
+				97044904220875D300E13C6A /* DeviceVC.xib in Resources */,
 				971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,6 +635,7 @@
 				97CC34E72205F9D200304345 /* String+SY.swift in Sources */,
 				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
+				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
 				97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */,
@@ -646,7 +649,6 @@
 				97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */,
 				9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */,
 				97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */,
-				F804E0791AFA569B00CBE307 /* SYDeviceVC.m in Sources */,
 				971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */,
 				97DA07121C98927E007F522E /* UIColor+SY.m in Sources */,
 				9710B41E1C9B10DC00A55529 /* SYEmptyGalleryVC.m in Sources */,

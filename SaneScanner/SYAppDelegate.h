@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum : NSUInteger {
-    SYSnapshotType_None,
-    SYSnapshotType_DevicePreview,
-    SYSnapshotType_DeviceOptions,
-    SYSnapshotType_DeviceOptionPopup,
-    SYSnapshotType_Other,
-} SYSnapshotType;
+typedef NS_ENUM(NSUInteger, SYSnapshotType) {
+    SYSnapshotTypeNone,
+    SYSnapshotTypeDevicePreview,
+    SYSnapshotTypeDeviceOptions,
+    SYSnapshotTypeDeviceOptionPopup,
+    SYSnapshotTypeOther,
+} ;
 
 @interface SYAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -22,7 +22,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign, readonly) SYSnapshotType snapshotType;
 @property (nonatomic, strong, readonly) NSString *snapshotTestScanImagePath;
 
-+ (instancetype)obtain;
+@property (nonatomic, readonly, nonnull, class) SYAppDelegate *obtain;
 
 - (void)splitVCtraitCollectionWillChangeTo:(UITraitCollection *)traitCollection;
 

@@ -206,7 +206,7 @@ extension DevicesVC : UITableViewDelegate {
         SVProgressHUD.show(withStatus: "LOADING".localized)
         
         Sane.shared.openDevice(device) { (error) in
-            if SYAppDelegate.obtain()?.snapshotType == SYSnapshotType_None {
+            if SYAppDelegate.obtain.snapshotType == .none {
                 SVProgressHUD.dismiss()
             }
             
@@ -220,8 +220,7 @@ extension DevicesVC : UITableViewDelegate {
                 self.present(alert, animated: true, completion: nil)
                 return
             }
-            let vc = SYDeviceVC()
-            vc.device = device
+            let vc = DeviceVC(device: device)
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

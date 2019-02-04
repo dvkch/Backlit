@@ -8,7 +8,6 @@
 
 #import "SYAppDelegate.h"
 #import "SYTools.h"
-#import "SYDeviceVC.h"
 #import "SYGalleryManager.h"
 #import "SVProgressHUD.h"
 #import <UIImage+SYKit.h>
@@ -87,20 +86,20 @@
     {
         if ([[NSProcessInfo processInfo].arguments containsObject:$$("DOING_SNAPSHOT")])
         {
-            self->_snapshotType = SYSnapshotType_Other;
+            self->_snapshotType = SYSnapshotTypeOther;
             [Sane.shared.configuration clearHosts];
             [Sane.shared.configuration addHost:$$("192.168.69.42")];
             [SVProgressHUD show];
         }
         
         if ([[NSProcessInfo processInfo].arguments containsObject:$$("SNAPSHOT_PREVIEW")])
-            self->_snapshotType = SYSnapshotType_DevicePreview;
+            self->_snapshotType = SYSnapshotTypeDevicePreview;
         
         if ([[NSProcessInfo processInfo].arguments containsObject:$$("SNAPSHOT_OPTIONS")])
-            self->_snapshotType = SYSnapshotType_DeviceOptions;
+            self->_snapshotType = SYSnapshotTypeDeviceOptions;
         
         if ([[NSProcessInfo processInfo].arguments containsObject:$$("SNAPSHOT_OPTION_POPUP")])
-            self->_snapshotType = SYSnapshotType_DeviceOptionPopup;
+            self->_snapshotType = SYSnapshotTypeDeviceOptionPopup;
         
         NSString *pathPrefix = $$("SNAPSHOT_TEST_IMAGE_PATH=");
         for (NSString *argument in [NSProcessInfo processInfo].arguments)
