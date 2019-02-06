@@ -2,7 +2,6 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#import "SYSanePreviewView.h"
 #import "SYTools.h"
 #import "SYGalleryThumbsView.h"
 #import "SYGalleryManager.h"
@@ -17,3 +16,4 @@
 #import "UIActivityViewController+SY.h"
 #import "MHUICustomization+SY.h"
 #import "NSArray+SY.h"
+#import "SYCropMaskView.h"

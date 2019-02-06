@@ -18,7 +18,7 @@ class PreviewCell: UITableViewCell {
     }
 
     // MARK: Views
-    @IBOutlet private var previewView: SYSanePreviewView!
+    @IBOutlet private var previewView: SanePreviewView!
     
     // MARK: Properties
     @objc var device: SYSaneDevice? {
