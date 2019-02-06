@@ -12,7 +12,6 @@
 #import "UIViewController+SYKit.h"
 #import "NSError+SY.h"
 #import "DLAVAlertView+SY.h"
-#import "SYSaneOptionUI.h"
 #import "UIColor+SY.h"
 #import "SVProgressHUD+SY.h"
 #import "UIActivityViewController+SY.h"

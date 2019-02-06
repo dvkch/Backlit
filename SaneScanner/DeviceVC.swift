@@ -305,7 +305,7 @@ extension DeviceVC : UITableViewDelegate {
             }
         }
         
-        SYSaneOptionUI.showDetailsAndInput(for: option) { (reloadAll, error) in
+        SaneOptionUI.showDetailsAndInput(for: option) { (reloadAll, error) in
             if reloadAll {
                 Sane.shared.listOptions(for: self.device, completion: {
                     completion(error)

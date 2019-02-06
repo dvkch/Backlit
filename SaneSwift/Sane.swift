@@ -391,6 +391,7 @@ extension Sane {
             var byteValue: UnsafeMutableRawPointer? = nil
             
             if !auto {
+                // TODO: an option should be able to convert its value from/to raw bytes
                 byteValue = malloc(Int(option.size))
                 if option.type == SANE_TYPE_BOOL {
                     byteValue?.bindMemory(to: SANE_Bool.self, capacity: 1).pointee = ((value as? Bool) ?? false) ? 1 : 0
@@ -403,58 +404,60 @@ extension Sane {
                 }
                 else if option.type == SANE_TYPE_STRING {
                     let cString = ((value as? String) ?? "").cString(using: String.Encoding.utf8) ?? []
-                    byteValue?.bindMemory(to: SANE_Char.self, capacity: Int(option.size)).assign(from: cString, count: min(cString.count, Int(option.size)))
+                    let size = min(cString.count, Int(option.size))
+                    byteValue?.bindMemory(to: SANE_Char.self, capacity: Int(option.size)).assign(from: cString, count: size)
+                    // TODO: fix some strings that are not working (e.g.: scan mode = Grey or Colour)
                 }
-                
-                var info: SANE_Int = 0
-                let status: SANE_Status
-                
-                if auto {
-                    status = Sane.logTime { sane_control_option(handle, option.index, SANE_ACTION_SET_AUTO, nil, &info) }
-                } else {
-                    status = Sane.logTime { sane_control_option(handle, option.index, SANE_ACTION_SET_VALUE, byteValue, &info) }
-                }
-                
-                let reloadAllOptions = ((info & SANE_INFO_RELOAD_OPTIONS) > 0) || ((info & SANE_INFO_RELOAD_PARAMS) > 0)
-                var updatedValue = false
-                
-                if status == SANE_STATUS_GOOD && !auto {
-                    // TODO: was using byteValue before, needed?
-                    if option.type == SANE_TYPE_BOOL {
-                        let castedOption = option as! SYSaneOptionBool
-                        castedOption.value = (value as? Bool) ?? false
-                        updatedValue = true
-                    }
-                    else if option.type == SANE_TYPE_INT {
-                        let castedOption = option as! SYSaneOptionNumber
-                        castedOption.value = NSNumber(value: (value as? Int) ?? 0)
-                        updatedValue = true
-                    }
-                    else if option.type == SANE_TYPE_FIXED {
-                        let castedOption = option as! SYSaneOptionNumber
-                        // [castedOption setValue:@(SANE_UNFIX(((SANE_Fixed *)byteValue)[0]))];
-                        castedOption.value = NSNumber(value: (value as? Double) ?? 0)
-                        updatedValue = true
-                    }
-                    else if option.type == SANE_TYPE_STRING {
-                        let castedOption = option as! SYSaneOptionString
-                        castedOption.value = (value as? String)
-                        updatedValue = true
-                    }
-                }
-                
-                if !auto && (option.type == SANE_TYPE_BOOL || option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED) {
-                    free(byteValue)
-                }
-                
-                if status == SANE_STATUS_GOOD && !reloadAllOptions && !updatedValue {
-                    option.refreshValue(nil)
-                }
-                
-                let error: Error? = status == SANE_STATUS_GOOD ? nil : NSError.ss_error(withSaneStatus: status)
-                if mainThread { DispatchQueue.main.async { completion?(reloadAllOptions, error) } }
-                else { completion?(reloadAllOptions, error) }
             }
+                
+            var info: SANE_Int = 0
+            let status: SANE_Status
+            
+            if auto {
+                status = Sane.logTime { sane_control_option(handle, option.index, SANE_ACTION_SET_AUTO, nil, &info) }
+            } else {
+                status = Sane.logTime { sane_control_option(handle, option.index, SANE_ACTION_SET_VALUE, byteValue, &info) }
+            }
+            
+            let reloadAllOptions = ((info & SANE_INFO_RELOAD_OPTIONS) > 0) || ((info & SANE_INFO_RELOAD_PARAMS) > 0)
+            var updatedValue = false
+            
+            if status == SANE_STATUS_GOOD && !auto {
+                // TODO: was using byteValue before, needed?
+                if option.type == SANE_TYPE_BOOL {
+                    let castedOption = option as! SYSaneOptionBool
+                    castedOption.value = (value as? Bool) ?? false
+                    updatedValue = true
+                }
+                else if option.type == SANE_TYPE_INT {
+                    let castedOption = option as! SYSaneOptionNumber
+                    castedOption.value = NSNumber(value: (value as? Int) ?? 0)
+                    updatedValue = true
+                }
+                else if option.type == SANE_TYPE_FIXED {
+                    let castedOption = option as! SYSaneOptionNumber
+                    // [castedOption setValue:@(SANE_UNFIX(((SANE_Fixed *)byteValue)[0]))];
+                    castedOption.value = NSNumber(value: (value as? Double) ?? 0)
+                    updatedValue = true
+                }
+                else if option.type == SANE_TYPE_STRING {
+                    let castedOption = option as! SYSaneOptionString
+                    castedOption.value = (value as? String)
+                    updatedValue = true
+                }
+            }
+            
+            if !auto && (option.type == SANE_TYPE_BOOL || option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED) {
+                free(byteValue)
+            }
+            
+            if status == SANE_STATUS_GOOD && !reloadAllOptions && !updatedValue {
+                option.refreshValue(nil)
+            }
+            
+            let error: Error? = status == SANE_STATUS_GOOD ? nil : NSError.ss_error(withSaneStatus: status)
+            if mainThread { DispatchQueue.main.async { completion?(reloadAllOptions, error) } }
+            else { completion?(reloadAllOptions, error) }
         }
     }
 }

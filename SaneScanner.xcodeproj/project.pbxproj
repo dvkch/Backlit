@@ -21,7 +21,6 @@
 		971BE2481C8EEF4700B8F29C /* SYSanePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE2471C8EEF4700B8F29C /* SYSanePreviewView.m */; };
 		9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */; };
 		97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */; };
-		9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */; };
 		9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */; };
 		9747AF101E5257080090E6B2 /* test_scan_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9747AF0F1E5257080090E6B2 /* test_scan_image.png */; };
 		97499E5B220862FE006DED20 /* ScanNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5A220862FE006DED20 /* ScanNC.swift */; };
@@ -52,6 +51,7 @@
 		97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */; };
 		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
 		97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E2EE601CCD451700FA95AF /* SYGridLayout.m */; };
+		97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF235220B470C00435DE6 /* SaneOptionUI.swift */; };
 		97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B022071F880027CCAE /* PreferencesVC.swift */; };
 		97EB32B322071F880027CCAE /* PreferencesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EB32B122071F880027CCAE /* PreferencesVC.xib */; };
 		97EB32B52207BB740027CCAE /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B42207BB740027CCAE /* Preferences.swift */; };
@@ -102,8 +102,6 @@
 		9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHUICustomization+SY.m"; sourceTree = "<group>"; };
 		97221E071C9B7DDC0062268F /* SYGalleryThumbsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsCell.h; sourceTree = "<group>"; };
 		97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryThumbsCell.m; sourceTree = "<group>"; };
-		9724E7A21C8C60000046AE97 /* SYSaneOptionUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYSaneOptionUI.h; sourceTree = "<group>"; };
-		9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYSaneOptionUI.m; sourceTree = "<group>"; };
 		9735E84D1C8CE66B0049CD13 /* DLAVAlertView+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DLAVAlertView+SY.h"; sourceTree = "<group>"; };
 		9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DLAVAlertView+SY.m"; sourceTree = "<group>"; };
 		9747AF0F1E5257080090E6B2 /* test_scan_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_scan_image.png; sourceTree = "<group>"; };
@@ -150,6 +148,7 @@
 		97DA07111C98927E007F522E /* UIColor+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SY.m"; sourceTree = "<group>"; };
 		97E2EE5F1CCD451700FA95AF /* SYGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGridLayout.h; sourceTree = "<group>"; };
 		97E2EE601CCD451700FA95AF /* SYGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGridLayout.m; sourceTree = "<group>"; };
+		97EAF235220B470C00435DE6 /* SaneOptionUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaneOptionUI.swift; sourceTree = "<group>"; };
 		97EB32B022071F880027CCAE /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		97EB32B122071F880027CCAE /* PreferencesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesVC.xib; sourceTree = "<group>"; };
 		97EB32B42207BB740027CCAE /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -304,8 +303,6 @@
 		F804E07A1AFA56A500CBE307 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9724E7A21C8C60000046AE97 /* SYSaneOptionUI.h */,
-				9724E7A31C8C60000046AE97 /* SYSaneOptionUI.m */,
 				971BE2461C8EEF4700B8F29C /* SYSanePreviewView.h */,
 				971BE2471C8EEF4700B8F29C /* SYSanePreviewView.m */,
 				975F9C981C8F15B7005A96AB /* SYCropMaskView.h */,
@@ -314,6 +311,7 @@
 				9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */,
 				97221E071C9B7DDC0062268F /* SYGalleryThumbsCell.h */,
 				97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */,
+				97EAF235220B470C00435DE6 /* SaneOptionUI.swift */,
 				97499E5C220872F5006DED20 /* Toolbar.swift */,
 			);
 			name = Views;
@@ -652,9 +650,9 @@
 				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
 				9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */,
+				97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */,
 				9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */,
 				9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */,
-				9724E7A41C8C60000046AE97 /* SYSaneOptionUI.m in Sources */,
 				9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */,
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,

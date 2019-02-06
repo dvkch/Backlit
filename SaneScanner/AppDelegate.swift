@@ -41,6 +41,7 @@ extension AppDelegate : UIApplicationDelegate {
         // log
         print("Document path:", SYTools.documentsPath)
         
+        // TODO: add button in DEBUG in EmptyVC?
         // create test images if needed
         // SYTools.createTestImages(200)
         
