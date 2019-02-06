@@ -11,8 +11,8 @@
 #import "SYGalleryManager.h"
 #import "DLAVAlertView+SY.h"
 #import "SYTools.h"
-#import "SYPDFMaker.h"
 #import "UIActivityViewController+SY.h"
+#import "SaneScanner-Swift.h"
 
 @interface SYOverviewController ()
 
@@ -103,15 +103,17 @@
     
     NSString *tempPath = [[SYGalleryManager shared] tempPDFPath];
     
-    BOOL result = [SYPDFMaker createPDFAtURL:[NSURL fileURLWithPath:tempPath]
-                            fromImagesAtURLs:selectedItemsURLs
+    NSError *error = nil;
+    [PDFGenerator generatePDFWithDestination:[NSURL fileURLWithPath:tempPath]
+                                      images:selectedItemsURLs
                                  aspectRatio:210./297.
                                  jpegQuality:JPEG_COMP
-                               fixedPageSize:YES];
+                               fixedPageSize:YES
+                                       error:&error];
     
-    if (!result || ![[NSFileManager defaultManager] fileExistsAtPath:tempPath])
+    if (error != nil || ![[NSFileManager defaultManager] fileExistsAtPath:tempPath])
     {
-        [SVProgressHUD showErrorWithStatus:$("ERROR MESSAGE PDF NOT CREATED")];
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription ?: $("ERROR MESSAGE PDF NOT CREATED")];
         return;
     }
     

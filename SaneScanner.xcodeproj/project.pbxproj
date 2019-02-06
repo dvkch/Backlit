@@ -31,10 +31,10 @@
 		9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */; };
 		975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
-		977D041A1E6DBC4400E636F1 /* SYPDFMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 977D04191E6DBC4400E636F1 /* SYPDFMaker.m */; };
 		9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */; };
 		9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */; };
+		9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507C220B5E6400F52DE6 /* PDFGenerator.swift */; };
 		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
@@ -117,13 +117,12 @@
 		975F9C981C8F15B7005A96AB /* SYCropMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYCropMaskView.h; sourceTree = "<group>"; };
 		975F9C991C8F15B7005A96AB /* SYCropMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYCropMaskView.m; sourceTree = "<group>"; };
 		976E5BAD1E3BA5350057B599 /* PrecompiledHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrecompiledHeader.pch; sourceTree = "<group>"; };
-		977D04181E6DBC4400E636F1 /* SYPDFMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPDFMaker.h; sourceTree = "<group>"; };
-		977D04191E6DBC4400E636F1 /* SYPDFMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPDFMaker.m; sourceTree = "<group>"; };
 		9785C5611E3D1CEA006CD4F1 /* NSError+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+SY.h"; sourceTree = "<group>"; };
 		9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+SY.m"; sourceTree = "<group>"; };
 		9785C5671E3D247A006CD4F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9785C5691E3E1754006CD4F1 /* UIApplication+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+SY.h"; sourceTree = "<group>"; };
 		9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+SY.m"; sourceTree = "<group>"; };
+		9786507C220B5E6400F52DE6 /* PDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFGenerator.swift; sourceTree = "<group>"; };
 		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		97C3D85621FE72D10015BA72 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
@@ -320,11 +319,10 @@
 			children = (
 				9707559C1C972FF600BE9275 /* SYGalleryManager.h */,
 				9707559D1C972FF600BE9275 /* SYGalleryManager.m */,
-				977D04181E6DBC4400E636F1 /* SYPDFMaker.h */,
-				977D04191E6DBC4400E636F1 /* SYPDFMaker.m */,
 				97CE773B1EA7666D00A2646E /* SYPDFActivity.h */,
 				97CE773C1EA7666D00A2646E /* SYPDFActivity.m */,
 				97EB32B42207BB740027CCAE /* Preferences.swift */,
+				9786507C220B5E6400F52DE6 /* PDFGenerator.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -629,6 +627,7 @@
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
 				971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */,
+				9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
 				97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */,
 				970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */,
@@ -661,7 +660,6 @@
 				97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */,
 				97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */,
 				97499E5D220872F5006DED20 /* Toolbar.swift in Sources */,
-				977D041A1E6DBC4400E636F1 /* SYPDFMaker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
