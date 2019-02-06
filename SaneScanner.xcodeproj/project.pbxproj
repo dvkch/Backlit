@@ -35,13 +35,13 @@
 		9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */; };
 		9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507C220B5E6400F52DE6 /* PDFGenerator.swift */; };
+		9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507E220B645500F52DE6 /* PDFActivity.swift */; };
 		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
 		97CC34E32205F48B00304345 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E12205F48B00304345 /* OptionCell.swift */; };
 		97CC34E42205F48B00304345 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97CC34E22205F48B00304345 /* OptionCell.xib */; };
 		97CC34E72205F9D200304345 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E62205F9D200304345 /* String+SY.swift */; };
-		97CE773D1EA7666D00A2646E /* SYPDFActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE773C1EA7666D00A2646E /* SYPDFActivity.m */; };
 		97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */; };
 		97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E03F220607E500AC74D0 /* DeviceCell.swift */; };
 		97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E040220607E500AC74D0 /* DeviceCell.xib */; };
@@ -123,6 +123,7 @@
 		9785C5691E3E1754006CD4F1 /* UIApplication+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+SY.h"; sourceTree = "<group>"; };
 		9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+SY.m"; sourceTree = "<group>"; };
 		9786507C220B5E6400F52DE6 /* PDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFGenerator.swift; sourceTree = "<group>"; };
+		9786507E220B645500F52DE6 /* PDFActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFActivity.swift; sourceTree = "<group>"; };
 		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		97C3D85621FE72D10015BA72 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
@@ -131,8 +132,6 @@
 		97CC34E12205F48B00304345 /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
 		97CC34E22205F48B00304345 /* OptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionCell.xib; sourceTree = "<group>"; };
 		97CC34E62205F9D200304345 /* String+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+SY.swift"; sourceTree = "<group>"; };
-		97CE773B1EA7666D00A2646E /* SYPDFActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPDFActivity.h; sourceTree = "<group>"; };
-		97CE773C1EA7666D00A2646E /* SYPDFActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPDFActivity.m; sourceTree = "<group>"; };
 		97CE773E1EA788A400A2646E /* UIActivityViewController+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+SY.h"; sourceTree = "<group>"; };
 		97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+SY.m"; sourceTree = "<group>"; };
 		97D0E03F220607E500AC74D0 /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
@@ -319,9 +318,8 @@
 			children = (
 				9707559C1C972FF600BE9275 /* SYGalleryManager.h */,
 				9707559D1C972FF600BE9275 /* SYGalleryManager.m */,
-				97CE773B1EA7666D00A2646E /* SYPDFActivity.h */,
-				97CE773C1EA7666D00A2646E /* SYPDFActivity.m */,
 				97EB32B42207BB740027CCAE /* Preferences.swift */,
+				9786507E220B645500F52DE6 /* PDFActivity.swift */,
 				9786507C220B5E6400F52DE6 /* PDFGenerator.swift */,
 			);
 			name = Controllers;
@@ -632,6 +630,7 @@
 				97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */,
 				970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */,
 				97EB32B52207BB740027CCAE /* Preferences.swift in Sources */,
+				9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */,
 				975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */,
 				971BE23F1C8E288300B8F29C /* NSMutableData+SY.m in Sources */,
 				97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */,
@@ -642,7 +641,6 @@
 				97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */,
 				97DA07121C98927E007F522E /* UIColor+SY.m in Sources */,
 				975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */,
-				97CE773D1EA7666D00A2646E /* SYPDFActivity.m in Sources */,
 				9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */,
 				97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */,
 				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,

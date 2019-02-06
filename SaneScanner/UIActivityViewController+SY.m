@@ -7,7 +7,7 @@
 //
 
 #import "UIActivityViewController+SY.h"
-#import "SYPDFActivity.h"
+#import "SaneScanner-Swift.h"
 #import "SVProgressHUD+SY.h"
 
 @implementation UIActivityViewController (SY)
@@ -17,7 +17,7 @@
           presentingVC:(UIViewController *)presentingVC
             completion:(void(^)(void))completion
 {
-    SYPDFActivity *pdfActivity = [SYPDFActivity new];
+    PDFActivity *pdfActivity = [PDFActivity new];
     
     UIActivityViewController *activityViewController =
     [[UIActivityViewController alloc] initWithActivityItems:urls
@@ -35,7 +35,7 @@
     [popover setBarButtonItem:barButtonItem];
     
     pdfActivity.presentingViewController = presentingVC;
-    [pdfActivity configureWithOriginalActivityViewController:activityViewController];
+    [pdfActivity configureUsing:activityViewController];
 
     [presentingVC presentViewController:activityViewController animated:YES completion:nil];
 }
@@ -44,7 +44,7 @@
   bottomInPresentingVC:(UIViewController *)presentingVC
             completion:(void(^)(void))completion
 {
-    SYPDFActivity *pdfActivity = [SYPDFActivity new];
+    PDFActivity *pdfActivity = [PDFActivity new];
     
     UIActivityViewController *activityViewController =
     [[UIActivityViewController alloc] initWithActivityItems:urls
@@ -66,7 +66,7 @@
                                       1, 1)];
     
     pdfActivity.presentingViewController = presentingVC;
-    [pdfActivity configureWithOriginalActivityViewController:activityViewController];
+    [pdfActivity configureUsing:activityViewController];
     
     [presentingVC presentViewController:activityViewController animated:YES completion:nil];
 }

@@ -8,13 +8,24 @@
 
 import UIKit
 
-// TODO: localize
 enum PDFGeneratorError: Error {
     case noImages
     case cannotOpenImages
     case cannotOpenImage(url: URL)
     case invalidImageData(url: URL)
     case invalidJPEGQuality(value: CGFloat)
+    case pdfCouldntBeGenerated
+}
+
+extension PDFGeneratorError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .pdfCouldntBeGenerated: return "ERROR MESSAGE PDF NOT CREATED".localized
+        default:
+            // TODO: localize other codes
+            return "ERROR MESSAGE PDF NOT CREATED".localized
+        }
+    }
 }
 
 @objc class PDFGenerator: NSObject {
@@ -113,5 +124,9 @@ enum PDFGeneratorError: Error {
         }
         
         UIGraphicsEndPDFContext()
+        
+        guard FileManager.default.fileExists(atPath: pdfURL.path) else {
+            throw PDFGeneratorError.pdfCouldntBeGenerated
+        }
     }
 }
