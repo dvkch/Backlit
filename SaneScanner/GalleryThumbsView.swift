@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import SYKit
+import MHVideoPhotoGallery
 
 class GalleryThumbsView: UIView {
 

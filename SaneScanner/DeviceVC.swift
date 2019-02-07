@@ -11,6 +11,7 @@ import SVProgressHUD
 import SaneSwift
 import SYKit
 import SYPictureMetadata
+import MHVideoPhotoGallery
 
 class DeviceVC: UIViewController {
 
@@ -317,6 +318,8 @@ extension DeviceVC : UITableViewDelegate {
         }
     }
 }
+
+// TODO: cleanup
 
 /*
 

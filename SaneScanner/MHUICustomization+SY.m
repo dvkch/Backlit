@@ -8,8 +8,8 @@
 
 #import "MHUICustomization+SY.h"
 #import "SYGridLayout.h"
-#import "SYMediaPreviewCollectionViewCell.h"
 #import <MHGallery.h>
+#import "SaneScanner-Swift.h"
 
 @implementation MHUICustomization (SY)
 
@@ -23,7 +23,7 @@
     [theme setUseCustomBackButtonImageOnImageViewer:YES];
     [theme setBackButtonState:MHBackButtonStateWithBackArrow];
     [theme setOverviewTitle:$("GALLERY OVERVIEW TITLE")];
-    [theme setOverviewCollectionViewCellClass:SYMediaPreviewCollectionViewCell.class];
+    [theme setOverviewCollectionViewCellClass:MediaPreviewCollectionViewCell.class];
     
     SYGridLayout *layout = [[SYGridLayout alloc] init];
     [layout setMaxSize:320/3];

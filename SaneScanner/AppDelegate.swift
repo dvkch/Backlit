@@ -10,6 +10,7 @@ import UIKit
 import SYKit
 import SaneSwift
 import SVProgressHUD
+import MHVideoPhotoGallery
 
 enum SnapshotType {
     case none, devicePreview, deviceOptions, deviceOptionPopup, other
@@ -33,7 +34,7 @@ class AppDelegate: UIResponder {
     @objc var window: UIWindow?
     private var splitViewController: SplitVC!
     private var scanNavigationController: ScanNC!
-    private var galleryViewController: SYGalleryController!
+    private var galleryViewController: GalleryViewController!
     private let emptyVC = EmptyGalleryVC()
     
     // MARK: Snapshot properties
@@ -59,7 +60,7 @@ extension AppDelegate : UIApplicationDelegate {
         scanNavigationController.viewControllers = [DevicesVC()]
         
         // gallery view controller
-        galleryViewController = SYGalleryController.gallery(withPresentationStyle: .overView, uiCustomization: .sy_defaultTheme())
+        galleryViewController = GalleryViewController.gallery(withPresentationStyle: .overView, uiCustomization: .sy_defaultTheme())
         galleryViewController.uiCustomization.hideDoneButton = true
         galleryViewController.uiCustomization.setMHGalleryBackgroundColor(.groupTableViewBackground, for: .imageViewerNavigationBarHidden)
         
@@ -131,7 +132,7 @@ extension AppDelegate : UISplitViewControllerDelegate {
         scanNavigationController.customToolbar?.height = constrainedH ? 34 : 64
         
         if !constrainedW {
-            if let currentGallery = scanNavigationController.presentedViewController as? SYGalleryController {
+            if let currentGallery = scanNavigationController.presentedViewController as? GalleryViewController {
                 if currentGallery.isShowingOverview() {
                     currentGallery.openOverview()
                 }

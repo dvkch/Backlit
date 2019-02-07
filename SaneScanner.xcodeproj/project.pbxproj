@@ -11,14 +11,14 @@
 		97044904220875D300E13C6A /* DeviceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97044902220875D300E13C6A /* DeviceVC.xib */; };
 		9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704490722088DC500E13C6A /* EmptyGalleryVC.swift */; };
 		9704490C2208900700E13C6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704490B2208900700E13C6A /* AppDelegate.swift */; };
-		970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 970DE9DD1C9B6344001CD025 /* SYGalleryController.m */; };
-		9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */; };
 		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
-		971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */; };
 		9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */; };
 		973066B3220C55000068E8C7 /* GalleryThumbsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066B2220C55000068E8C7 /* GalleryThumbsView.swift */; };
 		973066B5220C5CD90068E8C7 /* CropMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066B4220C5CD90068E8C7 /* CropMaskView.swift */; };
 		973066B7220C73D40068E8C7 /* CoreGraphics+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066B6220C73D40068E8C7 /* CoreGraphics+SY.swift */; };
+		973066B9220C7B470068E8C7 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066B8220C7B470068E8C7 /* GalleryViewController.swift */; };
+		973066BB220C82110068E8C7 /* MediaPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066BA220C82110068E8C7 /* MediaPreviewCollectionViewCell.swift */; };
+		973066BD220C83F60068E8C7 /* OverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066BC220C83F60068E8C7 /* OverviewController.swift */; };
 		9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */; };
 		9747AF101E5257080090E6B2 /* test_scan_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9747AF0F1E5257080090E6B2 /* test_scan_image.png */; };
 		97499E5B220862FE006DED20 /* ScanNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5A220862FE006DED20 /* ScanNC.swift */; };
@@ -50,7 +50,6 @@
 		97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E040220607E500AC74D0 /* DeviceCell.xib */; };
 		97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E04322060C5700AC74D0 /* PreviewCell.swift */; };
 		97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E04422060C5700AC74D0 /* PreviewCell.xib */; };
-		97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */; };
 		97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E2EE601CCD451700FA95AF /* SYGridLayout.m */; };
 		97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF235220B470C00435DE6 /* SaneOptionUI.swift */; };
 		97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* SanePreviewView.swift */; };
@@ -84,18 +83,15 @@
 		9704490722088DC500E13C6A /* EmptyGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGalleryVC.swift; sourceTree = "<group>"; };
 		9704490B2208900700E13C6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		970A587F1E41665C0033A116 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		970DE9DC1C9B6344001CD025 /* SYGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryController.h; sourceTree = "<group>"; };
-		970DE9DD1C9B6344001CD025 /* SYGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryController.m; sourceTree = "<group>"; };
-		9715FC8B1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYMediaPreviewCollectionViewCell.h; sourceTree = "<group>"; };
-		9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYMediaPreviewCollectionViewCell.m; sourceTree = "<group>"; };
 		971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SYLaunchScreen.storyboard; sourceTree = "<group>"; };
-		971ABFE01CD0E1AF0086F600 /* MHGalleryItem+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHGalleryItem+SY.h"; sourceTree = "<group>"; };
-		971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHGalleryItem+SY.m"; sourceTree = "<group>"; };
 		9721226A1CCA56C1006610E6 /* MHUICustomization+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHUICustomization+SY.h"; sourceTree = "<group>"; };
 		9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHUICustomization+SY.m"; sourceTree = "<group>"; };
 		973066B2220C55000068E8C7 /* GalleryThumbsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryThumbsView.swift; sourceTree = "<group>"; };
 		973066B4220C5CD90068E8C7 /* CropMaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropMaskView.swift; sourceTree = "<group>"; };
 		973066B6220C73D40068E8C7 /* CoreGraphics+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+SY.swift"; sourceTree = "<group>"; };
+		973066B8220C7B470068E8C7 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		973066BA220C82110068E8C7 /* MediaPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		973066BC220C83F60068E8C7 /* OverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewController.swift; sourceTree = "<group>"; };
 		9735E84D1C8CE66B0049CD13 /* DLAVAlertView+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DLAVAlertView+SY.h"; sourceTree = "<group>"; };
 		9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DLAVAlertView+SY.m"; sourceTree = "<group>"; };
 		9747AF0F1E5257080090E6B2 /* test_scan_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_scan_image.png; sourceTree = "<group>"; };
@@ -133,8 +129,6 @@
 		97D0E040220607E500AC74D0 /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 		97D0E04322060C5700AC74D0 /* PreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
 		97D0E04422060C5700AC74D0 /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
-		97D430FB1E3B9CF100B8E9C0 /* SYOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYOverviewController.h; sourceTree = "<group>"; };
-		97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYOverviewController.m; sourceTree = "<group>"; };
 		97E2EE5F1CCD451700FA95AF /* SYGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGridLayout.h; sourceTree = "<group>"; };
 		97E2EE601CCD451700FA95AF /* SYGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGridLayout.m; sourceTree = "<group>"; };
 		97EAF235220B470C00435DE6 /* SaneOptionUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaneOptionUI.swift; sourceTree = "<group>"; };
@@ -195,18 +189,13 @@
 		972122691CCA561A006610E6 /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				970DE9DC1C9B6344001CD025 /* SYGalleryController.h */,
-				970DE9DD1C9B6344001CD025 /* SYGalleryController.m */,
-				9715FC8B1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.h */,
-				9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */,
+				973066B8220C7B470068E8C7 /* GalleryViewController.swift */,
+				973066BA220C82110068E8C7 /* MediaPreviewCollectionViewCell.swift */,
 				9721226A1CCA56C1006610E6 /* MHUICustomization+SY.h */,
 				9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */,
 				97E2EE5F1CCD451700FA95AF /* SYGridLayout.h */,
 				97E2EE601CCD451700FA95AF /* SYGridLayout.m */,
-				971ABFE01CD0E1AF0086F600 /* MHGalleryItem+SY.h */,
-				971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */,
-				97D430FB1E3B9CF100B8E9C0 /* SYOverviewController.h */,
-				97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */,
+				973066BC220C83F60068E8C7 /* OverviewController.swift */,
 			);
 			name = Gallery;
 			sourceTree = "<group>";
@@ -616,27 +605,26 @@
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
-				971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */,
 				97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */,
 				9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
 				97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */,
-				970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */,
 				97EB32B52207BB740027CCAE /* Preferences.swift in Sources */,
+				973066BD220C83F60068E8C7 /* OverviewController.swift in Sources */,
 				9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */,
-				97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */,
 				97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */,
 				97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */,
 				9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */,
 				973066B5220C5CD90068E8C7 /* CropMaskView.swift in Sources */,
 				97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */,
+				973066B9220C7B470068E8C7 /* GalleryViewController.swift in Sources */,
 				9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */,
 				97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */,
 				97865084220B6C7100F52DE6 /* WeakValue.swift in Sources */,
+				973066BB220C82110068E8C7 /* MediaPreviewCollectionViewCell.swift in Sources */,
 				97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */,
 				97BE129F220BC25E006A2AE8 /* Bundle+SY.swift in Sources */,
 				97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */,
-				9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */,
 				9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */,
 				973066B7220C73D40068E8C7 /* CoreGraphics+SY.swift in Sources */,
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
