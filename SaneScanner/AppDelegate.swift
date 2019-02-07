@@ -169,7 +169,7 @@ extension AppDelegate : GalleryManagerDelegate {
         
         scanNavigationController.setToolbarHidden(!constrainedW || items.isEmpty, animated: true)
         
-        let detailsVC = (splitViewController.viewControllers as NSArray).nullableObject(at: 1) as? UIViewController
+        let detailsVC = splitViewController.viewControllers.object(at: 1, or: nil)
         
         if items.isEmpty, detailsVC != emptyVC {
             splitViewController.viewControllers = [scanNavigationController, emptyVC]

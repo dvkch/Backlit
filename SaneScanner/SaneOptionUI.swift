@@ -119,7 +119,7 @@ class SaneOptionUI: NSObject {
                 alertView.addSlider(withMin: option.minValue.floatValue, max: option.maxValue.floatValue, current: option.value.floatValue) { (alert, value) in
                     let valueString = option.string(forValue: value, withUnit: true)!
                     let buttonTitle = String(format: "ACTION SET VALUE TO %@".localized, valueString)
-                    alert?.setText(buttonTitle, forButtonAt: UInt(updateButtonIndex))
+                    alert.setText(buttonTitle, forButtonAt: UInt(updateButtonIndex))
                 }
             }
         }

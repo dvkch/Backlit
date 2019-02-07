@@ -12,21 +12,22 @@
 
 @property (nonatomic, assign) BOOL buttonsEnabled;
 
-- (void)setText:(NSString *)text forButtonAtIndex:(NSUInteger)index;
+- (void)setText:(NSString * _Nullable)text forButtonAtIndex:(NSUInteger)index;
 
 - (NSUInteger)lastOtherButtonIndex;
-- (UISlider *)addSliderWithMin:(float)min
-                           max:(float)max
-                       current:(float)current
-                   updateBlock:(void(^)(DLAVAlertView *alertView, float value))block;
+- (UISlider * _Nonnull )addSliderWithMin:(float)min
+                                     max:(float)max
+                                 current:(float)current
+                             updateBlock:(void(^_Nullable)(DLAVAlertView * _Nonnull alertView, float value))block;
 
-- (UIImageView *)addImageViewForImage:(UIImage *)image;
+- (UIImageView * _Nonnull )addImageViewForImage:(UIImage * _Nullable)image;
 
-- (nonnull instancetype)initWithTitle:(NSString *)title
-                              message:(NSString *)message
-                             delegate:(id)delegate
-                               cancel:(NSString *)cancel
-                               others:(NSArray <NSString *> *)others;
+- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title
+                              message:(NSString * _Nullable)message
+                             delegate:(id _Nullable)delegate
+                               cancel:(NSString * _Nullable)cancel
+                               others:(NSArray <NSString *> * _Nonnull)others;
 
 
 @end
+

@@ -16,7 +16,6 @@
 		9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */; };
 		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
 		971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */; };
-		971BE23F1C8E288300B8F29C /* NSMutableData+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */; };
 		9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */; };
 		97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97221E081C9B7DDC0062268F /* SYGalleryThumbsCell.m */; };
 		9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */; };
@@ -24,10 +23,8 @@
 		97499E5B220862FE006DED20 /* ScanNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5A220862FE006DED20 /* ScanNC.swift */; };
 		97499E5D220872F5006DED20 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5C220872F5006DED20 /* Toolbar.swift */; };
 		97499E5F220874B3006DED20 /* SplitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5E220874B3006DED20 /* SplitVC.swift */; };
-		97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97521E721C8912CA00C77209 /* NSArray+SY.m */; };
 		9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9757FCEF2207112D00AB59F1 /* DevicesVC.swift */; };
 		9757FCF22207112D00AB59F1 /* DevicesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9757FCF02207112D00AB59F1 /* DevicesVC.xib */; };
-		9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
 		9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */; };
 		9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
@@ -41,6 +38,8 @@
 		97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */; };
 		97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */; };
 		97BE129F220BC25E006A2AE8 /* Bundle+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129E220BC25E006A2AE8 /* Bundle+SY.swift */; };
+		97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */; };
+		97BE12A3220BC8C9006A2AE8 /* Array+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A2220BC8C9006A2AE8 /* Array+SY.swift */; };
 		97CC34E32205F48B00304345 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E12205F48B00304345 /* OptionCell.swift */; };
 		97CC34E42205F48B00304345 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97CC34E22205F48B00304345 /* OptionCell.xib */; };
 		97CC34E72205F9D200304345 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E62205F9D200304345 /* String+SY.swift */; };
@@ -93,8 +92,6 @@
 		971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SYLaunchScreen.storyboard; sourceTree = "<group>"; };
 		971ABFE01CD0E1AF0086F600 /* MHGalleryItem+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHGalleryItem+SY.h"; sourceTree = "<group>"; };
 		971ABFE11CD0E1AF0086F600 /* MHGalleryItem+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHGalleryItem+SY.m"; sourceTree = "<group>"; };
-		971BE23D1C8E288300B8F29C /* NSMutableData+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableData+SY.h"; sourceTree = "<group>"; };
-		971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableData+SY.m"; sourceTree = "<group>"; };
 		9721226A1CCA56C1006610E6 /* MHUICustomization+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MHUICustomization+SY.h"; sourceTree = "<group>"; };
 		9721226B1CCA56C1006610E6 /* MHUICustomization+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MHUICustomization+SY.m"; sourceTree = "<group>"; };
 		97221E071C9B7DDC0062268F /* SYGalleryThumbsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsCell.h; sourceTree = "<group>"; };
@@ -105,12 +102,8 @@
 		97499E5A220862FE006DED20 /* ScanNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanNC.swift; sourceTree = "<group>"; };
 		97499E5C220872F5006DED20 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		97499E5E220874B3006DED20 /* SplitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVC.swift; sourceTree = "<group>"; };
-		97521E711C8912CA00C77209 /* NSArray+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+SY.h"; sourceTree = "<group>"; };
-		97521E721C8912CA00C77209 /* NSArray+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+SY.m"; sourceTree = "<group>"; };
 		9757FCEF2207112D00AB59F1 /* DevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesVC.swift; sourceTree = "<group>"; };
 		9757FCF02207112D00AB59F1 /* DevicesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesVC.xib; sourceTree = "<group>"; };
-		9759B5E82205DE7F000B53AA /* UIScrollView+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SY.h"; sourceTree = "<group>"; };
-		9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SY.m"; sourceTree = "<group>"; };
 		975F9C981C8F15B7005A96AB /* SYCropMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYCropMaskView.h; sourceTree = "<group>"; };
 		975F9C991C8F15B7005A96AB /* SYCropMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYCropMaskView.m; sourceTree = "<group>"; };
 		976E5BAD1E3BA5350057B599 /* PrecompiledHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrecompiledHeader.pch; sourceTree = "<group>"; };
@@ -126,6 +119,8 @@
 		97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
 		97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+SY.swift"; sourceTree = "<group>"; };
 		97BE129E220BC25E006A2AE8 /* Bundle+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+SY.swift"; sourceTree = "<group>"; };
+		97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SY.swift"; sourceTree = "<group>"; };
+		97BE12A2220BC8C9006A2AE8 /* Array+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SY.swift"; sourceTree = "<group>"; };
 		97C3D85621FE72D10015BA72 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
 		97C3D85821FE72DD0015BA72 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/sane/libsane-dll.a"; sourceTree = "<group>"; };
 		97CC34E02205F48B00304345 /* SaneScanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SaneScanner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -254,16 +249,10 @@
 			children = (
 				9735E84D1C8CE66B0049CD13 /* DLAVAlertView+SY.h */,
 				9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */,
-				97521E711C8912CA00C77209 /* NSArray+SY.h */,
-				97521E721C8912CA00C77209 /* NSArray+SY.m */,
 				9785C5611E3D1CEA006CD4F1 /* NSError+SY.h */,
 				9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */,
-				971BE23D1C8E288300B8F29C /* NSMutableData+SY.h */,
-				971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */,
 				97CE773E1EA788A400A2646E /* UIActivityViewController+SY.h */,
 				97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */,
-				9759B5E82205DE7F000B53AA /* UIScrollView+SY.h */,
-				9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */,
 				97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */,
 				97F5C7BF1CCF60A60046627A /* UIViewController+SYKit.m */,
 			);
@@ -281,10 +270,12 @@
 		97CC34E52205F9C700304345 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				97CC34E62205F9D200304345 /* String+SY.swift */,
-				97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */,
-				97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */,
+				97BE12A2220BC8C9006A2AE8 /* Array+SY.swift */,
 				97BE129E220BC25E006A2AE8 /* Bundle+SY.swift */,
+				97CC34E62205F9D200304345 /* String+SY.swift */,
+				97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */,
+				97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */,
+				97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -630,6 +621,7 @@
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
 				971ABFE21CD0E1AF0086F600 /* MHGalleryItem+SY.m in Sources */,
+				97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */,
 				9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */,
 				9735E84F1C8CE66B0049CD13 /* DLAVAlertView+SY.m in Sources */,
 				97CE77401EA788A400A2646E /* UIActivityViewController+SY.m in Sources */,
@@ -637,9 +629,7 @@
 				97EB32B52207BB740027CCAE /* Preferences.swift in Sources */,
 				9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */,
 				975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */,
-				971BE23F1C8E288300B8F29C /* NSMutableData+SY.m in Sources */,
 				97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */,
-				97521E731C8912CA00C77209 /* NSArray+SY.m in Sources */,
 				97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */,
 				97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */,
 				9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */,
@@ -648,7 +638,6 @@
 				97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */,
 				97865084220B6C7100F52DE6 /* WeakValue.swift in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
-				9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */,
 				97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */,
 				97BE129F220BC25E006A2AE8 /* Bundle+SY.swift in Sources */,
 				97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */,
@@ -659,6 +648,7 @@
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,
 				9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */,
 				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,
+				97BE12A3220BC8C9006A2AE8 /* Array+SY.swift in Sources */,
 				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,
 				97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */,

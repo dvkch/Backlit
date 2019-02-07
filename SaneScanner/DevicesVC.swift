@@ -78,7 +78,7 @@ import SYKit
 
 extension DevicesVC: SaneDelegate {
     func saneDidStartUpdatingDevices(_ sane: Sane) {
-        tableView.sy_showPull(toRefreshAndRunBlock: false)
+        tableView.sy_showPullToRefresh(runBlock: false)
     }
     
     func saneDidEndUpdatingDevices(_ sane: Sane) {
@@ -172,7 +172,7 @@ extension DevicesVC : UITableViewDelegate {
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .bottom)
             tableView.endUpdates()
-            tableView.sy_showPull(toRefreshAndRunBlock: true)
+            tableView.sy_showPullToRefresh(runBlock: true)
         }
         return [deleteAction]
     }

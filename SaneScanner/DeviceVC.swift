@@ -52,7 +52,7 @@ class DeviceVC: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: Preferences.preferencesChanged, object: nil)
         
-        tableView.sy_showPull(toRefreshAndRunBlock: true)
+        tableView.sy_showPullToRefresh(runBlock: true)
     }
 
     deinit {
