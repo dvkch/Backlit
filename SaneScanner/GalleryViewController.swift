@@ -63,7 +63,7 @@ class GalleryViewController: MHGalleryController {
         let index = imageViewerViewController.pageIndex
         let item = dataSource.item(for: index)!
         
-        UIActivityViewController.sy_show(for: [item.url], from: sender, presentingVC: self, completion: nil)
+        UIActivityViewController.showForURLs([item.url], from: sender, presentingVC: self, completion: nil)
     }
 }
 

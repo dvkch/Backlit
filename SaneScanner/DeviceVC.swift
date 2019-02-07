@@ -101,7 +101,7 @@ class DeviceVC: UIViewController {
     
     private func shareItem(_ item: MHGalleryItem?) {
         guard let url = item?.url else { return }
-        UIActivityViewController.sy_show(for: [url], bottomInPresentingVC: self, completion: nil)
+        UIActivityViewController.showForURLs([url], fromBottomIn: self, completion: nil)
     }
     
     @objc private func prefsChangedNotification() {

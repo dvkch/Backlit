@@ -46,7 +46,6 @@ extension AppDelegate : UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // log
         print("Document path:", FileManager.documentsDirectoryURL)
-        UIDevice.current.logMemoryUsage()
         
         // TODO: add button in DEBUG in EmptyVC?
         // create test images if needed

@@ -65,7 +65,7 @@ class OverviewController: MHOverviewController {
         let urls = self.selectedURLs()
         guard !urls.isEmpty else { return }
         
-        UIActivityViewController.sy_show(for: urls, from: sender, presentingVC: self, completion: nil)
+        UIActivityViewController.showForURLs(urls, from: sender, presentingVC: self, completion: nil)
     }
     
     // MARK: Sharing
@@ -90,7 +90,7 @@ class OverviewController: MHOverviewController {
             return
         }
 
-        UIActivityViewController.sy_show(for: [tempURL], from: sender, presentingVC: self) {
+        UIActivityViewController.showForURLs([tempURL], from: sender, presentingVC: self) {
             // is called when the interaction with the PDF is done. It's either been copied, imported,
             // displayed, shared or printed, but we can dispose of it
             GalleryManager.shared.deleteTempPDF()
