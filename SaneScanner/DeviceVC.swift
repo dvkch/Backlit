@@ -73,8 +73,71 @@ class DeviceVC: UIViewController {
     
     // MARK: Actions
     @IBAction private func scanButtonTap() {
+        
+        var alertView: DLAVAlertView?
+        var alertViewImageView: UIImageView?
+        var item: MHGalleryItem?
+        
+        let block = { [weak self] (progress: Float, finished: Bool, image: UIImage?, parameters: SYSaneScanParameters?, error: Error?) in
+            guard let self = self else { return }
+            
+            // Finished with error
+            if let error = error {
+                if let alertView = alertView {
+                    alertView.dismiss(withClickedButtonIndex: alertView.cancelButtonIndex, animated: false)
+                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                return
+            }
+            
+            // Finished without error
+            if finished {
+                guard let image = image, let parameters = parameters else { return }
+                
+                let metadata = self.imageMetadata(scanParameters: parameters)
+                item = GalleryManager.shared.addImage(image, metadata: metadata)
+                SVProgressHUD.dismiss()
+                self.updatePreviewImageCell(image: image)
+            }
+            
+            // need to show image (finished or partial with preview)
+            if alertView == nil, let image = image {
+                alertView = DLAVAlertView(
+                    title: "DIALOG TITLE SCANNED IMAGE".localized,
+                    message: nil,
+                    delegate: nil,
+                    cancel: "ACTION CANCEL".localized,
+                    others: ["ACTION SHARE".localized])
+                
+                alertViewImageView = alertView?.addImageView(for: image)
+                alertView?.show(completion: { (av, index) in
+                    guard index != av?.cancelButtonIndex else { return }
+                    self.shareItem(item)
+                })
+                SVProgressHUD.dismiss()
+            }
+            
+            // update alertview
+            alertView?.buttonsEnabled = finished
+            
+            // update image for partial preview
+            if image != nil {
+                alertViewImageView?.image = image
+            }
+            
+            // update progress when no partial preview
+            if !finished && image == nil {
+                SVProgressHUD.showProgress(progress)
+            }
+        }
+        
+        SVProgressHUD.show(withStatus: "SCANNING".localized)
+        Sane.shared.scan(device: device, progress: { (progress, image) in
+            block(progress, false, image, nil, nil)
+        }, completion: { (image, parameters, error) in
+            block(1, true, image, parameters, error)
+        })
     }
-    
     
     // TODO: cleanup
     private func scanButtonTapBis() {
@@ -318,86 +381,3 @@ extension DeviceVC : UITableViewDelegate {
         }
     }
 }
-
-// TODO: cleanup
-
-/*
-
-#pragma mark - Notifications
-
-#pragma mark - IBActions
-
-    - (void)buttonScanTap:(id)sender
-{
-    __block DLAVAlertView *alertView;
-    __block UIImageView *alertViewImageView;
-    __block MHGalleryItem *item;
-    
-    @weakify(self);
-    void(^block)(float progress, BOOL finished, UIImage *image, SYSaneScanParameters *parameters, NSError *error) =
-    ^(float progress, BOOL finished, UIImage *image, SYSaneScanParameters *parameters, NSError *error)
-    {
-        @strongify(self)
-        // Finished with error
-        if (error)
-        {
-            [alertView dismissWithClickedButtonIndex:alertView.cancelButtonIndex animated:NO];
-            [SVProgressHUD showErrorWithStatus:error.sy_alertMessage];
-            return;
-        }
-        
-        // Finished without error
-        if (finished)
-        {
-            SYMetadata *metadata = [self metadataForSaneParameters:parameters];
-            item = [[SYGalleryManager shared] addImage:image metadata:metadata];
-            [SVProgressHUD dismiss];
-            [self updatePreviewImageCellWithImage:image];
-        }
-        
-        // need to show image (finished or partial with preview)
-        if (!alertView && image)
-        {
-            alertView = [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE SCANNED IMAGE")
-                message:nil
-                delegate:nil
-                cancelButtonTitle:$("ACTION CLOSE")
-                otherButtonTitles:$("ACTION SHARE"), nil];
-            
-            alertViewImageView = [alertView addImageViewForImage:image];
-            [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex)
-                {
-                if (buttonIndex == alertView.cancelButtonIndex)
-                return;
-                
-                [self shareItem:item];
-                }];
-            [SVProgressHUD dismiss];
-        }
-        
-        // update alertview
-        [alertView setButtonsEnabled:finished];
-        
-        // update image for partial preview
-        if (image)
-        {
-            [alertViewImageView setImage:image];
-        }
-        
-        // update progress when no partial preview
-        if (!finished && !image)
-        {
-            [SVProgressHUD showProgress:progress];
-        }
-    };
-    
-    [SVProgressHUD showWithStatus:$("SCANNING")];
-    [Sane.shared scanWithDevice:self.device progress:^(float progress, UIImage * _Nullable incompleteImage) {
-        block(progress, NO, incompleteImage, nil, nil);
-        } completion:^(UIImage *image,SYSaneScanParameters *parameters, NSError *error) {
-        block(1., YES, image, parameters, error);
-        }];
-    }
-    
-@end
-*/
