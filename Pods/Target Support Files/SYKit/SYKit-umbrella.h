@@ -28,6 +28,7 @@
 #import "UISearchBar+SYKit.h"
 #import "UITableViewCell+SYKit.h"
 #import "UIView+SYKit.h"
+#import "UIViewController+SYKit.h"
 
 FOUNDATION_EXPORT double SYKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char SYKitVersionString[];

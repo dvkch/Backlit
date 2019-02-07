@@ -11,7 +11,7 @@
 #import <NSObject+SYKit.h>
 #import <SYKit-Swift.h>
 #import "DLAVAlertView+SY.h"
-#import "UIViewController+SYKit.h"
+#import <UIViewController+SYKit.h>
 #import "SYOverviewController.h"
 #import "UIActivityViewController+SY.h"
 #import "SaneScanner-Swift.h"

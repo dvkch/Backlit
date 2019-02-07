@@ -10,7 +10,10 @@
 
 @interface UIViewController (SYKit)
 
-- (BOOL)sy_isModal;
-- (void)sy_setBackButtonWithText:(NSString *)text font:(UIFont *)font;
+@property (readonly) BOOL sy_isModal;
+
+#if !TARGET_OS_TV
+- (void)sy_setBackButtonWithText:(NSString * _Nullable)text font:(UIFont * _Nullable)font;
+#endif
 
 @end
