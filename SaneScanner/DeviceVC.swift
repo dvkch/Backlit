@@ -85,7 +85,7 @@ class DeviceVC: UIViewController {
                 SVProgressHUD.showError(withStatus: (error as NSError).sy_alertMessage())
             }
             if let image = image, let parameters = parameters, let metadata = self.imageMetadata(scanParameters: parameters) {
-                SYGalleryManager.shared.add(image, metadata: metadata)
+                GalleryManager.shared.addImage(image, metadata: metadata)
                 SVProgressHUD.showSuccess(withStatus: nil, duration: 1)
             }
         }

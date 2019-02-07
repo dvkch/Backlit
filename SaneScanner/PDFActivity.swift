@@ -71,10 +71,10 @@ import SYKit
     override func perform() {
         super.perform()
         
-        let tempPath = SYGalleryManager.shared.tempPDFPath()!
+        let tempURL = GalleryManager.shared.tempPdfFileUrl()
         
         do {
-            try PDFGenerator.generatePDF(destination: URL(fileURLWithPath: tempPath), images: self.items, aspectRatio: 210 / 297, jpegQuality: 0.9, fixedPageSize: true)
+            try PDFGenerator.generatePDF(destination: tempURL, images: self.items, aspectRatio: 210 / 297, jpegQuality: 0.9, fixedPageSize: true)
         }
         catch {
             SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -84,7 +84,7 @@ import SYKit
         
         SVProgressHUD.dismiss()
         
-        let vc = UIActivityViewController(activityItems: [URL(fileURLWithPath: tempPath)], applicationActivities: nil)
+        let vc = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
         vc.popoverPresentationController?.barButtonItem = barButtonItem
         vc.popoverPresentationController?.sourceView = sourceView
         vc.popoverPresentationController?.sourceRect = sourceRect
@@ -93,7 +93,7 @@ import SYKit
         vc.completionWithItemsHandler = { activityType, completed, returnedItems, error in
             // is called when the interaction with the PDF is done. It's either been copied, imported,
             // displayed, shared or printed, but we can dispose of it
-            SYGalleryManager.shared.deleteTempPDFs()
+            GalleryManager.shared.deleteTempPDF()
             self.activityDidFinish(completed)
         }
         

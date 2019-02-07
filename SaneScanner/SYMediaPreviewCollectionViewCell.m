@@ -7,10 +7,10 @@
 //
 
 #import "SYMediaPreviewCollectionViewCell.h"
-#import "SYGalleryManager.h"
+#import "SaneScanner-Swift.h"
 #import "MHGalleryItem+SY.h"
 
-@interface SYMediaPreviewCollectionViewCell () <SYGalleryManagerDelegate>
+@interface SYMediaPreviewCollectionViewCell () <GalleryManagerDelegate>
 @property (nonatomic, strong) MHGalleryItem *item;
 @end
 
@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        [[SYGalleryManager shared] addDelegate:self];
+        [GalleryManager.shared addDelegate:self];
     }
     return self;
 }
@@ -35,7 +35,7 @@
     
     self.item = galleryItem;
     
-    UIImage *thumb = [[SYGalleryManager shared] thumbnailForItem:self.galleryItem];
+    UIImage *thumb = [GalleryManager.shared thumbnailFor:self.galleryItem];
     [self.thumbnail setImage:thumb];
     [self.thumbnail setNeedsLayout];
     
@@ -51,13 +51,13 @@
     }
 }
 
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager
-       didCreatedThumb:(UIImage *)thumb
-               forItem:(MHGalleryItem *)item
+- (void)galleryManager:(GalleryManager *)manager
+             didCreate:(UIImage *)thumbnail
+                   for:(MHGalleryItem *)item
 {
     if ([self.item isEqual:item])
     {
-        [self.thumbnail setImage:thumb];
+        [self.thumbnail setImage:thumbnail];
         [self.thumbnail setNeedsLayout];
         [self.activityIndicator stopAnimating];
         [self.thumbnail setBackgroundColor:[UIColor whiteColor]];

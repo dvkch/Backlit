@@ -7,7 +7,7 @@
 //
 
 #import "SYGalleryThumbsView.h"
-#import "SYGalleryManager.h"
+#import "SaneScanner-Swift.h"
 #import <Masonry.h>
 #import "UIColor+SY.h"
 #import <SYKit-Swift.h>
@@ -18,7 +18,7 @@
 
 static CGFloat const kGradientWidth = 30;
 
-@interface SYGalleryThumbsView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SYGalleryManagerDelegate>
+@interface SYGalleryThumbsView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, GalleryManagerDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray <MHGalleryItem *> *galleryItems;
 @property (nonatomic, strong) SYGradientView *leftGradientView;
@@ -62,7 +62,7 @@ static CGFloat const kGradientWidth = 30;
         return;
     
     [self setClipsToBounds:YES];
-    [[SYGalleryManager shared] addDelegate:self];
+    [GalleryManager.shared addDelegate:self];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
@@ -159,12 +159,12 @@ static CGFloat const kGradientWidth = 30;
     [self.collectionView setContentInset:UIEdgeInsetsMake(0, horizontalInset, 0, horizontalInset)];
 }
 
-#pragma mark - SYGalleryManager
+#pragma mark - GalleryManager
 
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager
- didUpdateGalleryItems:(NSArray<MHGalleryItem *> *)items
-               newItem:(MHGalleryItem *)newItem
-           removedItem:(MHGalleryItem *)removedItem
+- (void)galleryManager:(GalleryManager *)manager
+             didUpdate:(NSArray<MHGalleryItem *> *)items
+              newItems:(NSArray<MHGalleryItem *> *)newItems
+          removedItems:(NSArray<MHGalleryItem *> *)removedItems
 {
     [UIView animateWithDuration:0.3 animations:^{
         self.galleryItems = items;
@@ -228,7 +228,7 @@ static CGFloat const kGradientWidth = 30;
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize imageSize = [[SYGalleryManager shared] sizeOfItem:self.galleryItems[indexPath.item]];
+    CGSize imageSize = [GalleryManager.shared imageSizeFor:self.galleryItems[indexPath.item]];
     if (CGSizeEqualToSize(imageSize, CGSizeZero))
         imageSize = CGSizeMake(100, 100);
     

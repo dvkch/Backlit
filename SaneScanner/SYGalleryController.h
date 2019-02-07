@@ -7,8 +7,7 @@
 //
 
 #import <MHGalleryController.h>
-#import "SYGalleryManager.h"
 
-@interface SYGalleryController : MHGalleryController <MHGalleryDelegate, SYGalleryManagerDelegate>
+@interface SYGalleryController : MHGalleryController <MHGalleryDelegate>
 
 @end

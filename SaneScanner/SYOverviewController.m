@@ -8,7 +8,6 @@
 
 #import "SYOverviewController.h"
 #import <SVProgressHUD.h>
-#import "SYGalleryManager.h"
 #import "DLAVAlertView+SY.h"
 #import "SYTools.h"
 #import "UIActivityViewController+SY.h"
@@ -61,7 +60,7 @@
         [SVProgressHUD show];
         
         for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems)
-            [[SYGalleryManager shared] deleteItem:[self itemForIndex:indexPath.row]];
+            [GalleryManager.shared deleteItem:[self itemForIndex:indexPath.row]];
         
         [SVProgressHUD dismiss];
         
@@ -101,32 +100,32 @@
     if (!selectedItemsURLs.count)
         return;
     
-    NSString *tempPath = [[SYGalleryManager shared] tempPDFPath];
+    NSURL *tempURL = [GalleryManager.shared tempPdfFileUrl];
     
     NSError *error = nil;
-    [PDFGenerator generatePDFWithDestination:[NSURL fileURLWithPath:tempPath]
+    [PDFGenerator generatePDFWithDestination:tempURL
                                       images:selectedItemsURLs
                                  aspectRatio:210./297.
                                  jpegQuality:JPEG_COMP
                                fixedPageSize:YES
                                        error:&error];
     
-    if (error != nil || ![[NSFileManager defaultManager] fileExistsAtPath:tempPath])
+    if (error != nil)
     {
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription ?: $("ERROR MESSAGE PDF NOT CREATED")];
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         return;
     }
     
     [SVProgressHUD dismiss];
     
-    [UIActivityViewController sy_showForUrls:@[[NSURL fileURLWithPath:tempPath]]
+    [UIActivityViewController sy_showForUrls:@[tempURL]
                         fromBarButtonItem:barButtonItem
                                 presentingVC:self
                                   completion:^
     {
         // is called when the interaction with the PDF is done. It's either been copied, imported,
         // displayed, shared or printed, but we can dispose of it
-        [[SYGalleryManager shared] deleteTempPDFs];
+        [GalleryManager.shared deleteTempPDF];
     }];
 }
 

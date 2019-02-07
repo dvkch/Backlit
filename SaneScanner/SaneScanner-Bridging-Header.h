@@ -4,7 +4,6 @@
 
 #import "SYTools.h"
 #import "SYGalleryThumbsView.h"
-#import "SYGalleryManager.h"
 #import "SYGalleryController.h"
 #import "UIScrollView+SY.h"
 #import "UIApplication+SY.h"

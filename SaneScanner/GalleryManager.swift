@@ -147,7 +147,7 @@ private let kImageExtensionPDF  = "pdf"
         )
         
         let imageURLs = (items ?? [])
-            .filter { $0.isSupportedImageURL && $0.isDirectory == true && $0.creationDate != nil }
+            .filter { $0.isSupportedImageURL && $0.isDirectory == false && $0.creationDate != nil }
             .sorted { $0.creationDate! > $1.creationDate! }
 
         return imageURLs
@@ -198,12 +198,13 @@ private let kImageExtensionPDF  = "pdf"
         return formatter.string(from: date)
     }
     
-    func imageSize(for item: MHGalleryItem) -> CGSize? {
+    @objc func imageSize(for item: MHGalleryItem) -> CGSize {
         if let size = self.imageSizeCache.object(forKey: item.url as NSURL)?.cgSizeValue {
             return size
         }
         
-        guard let imageSize = UIImage.sizeOfImage(at: item.url) else { return nil }
+        // TODO: use nil when Swift
+        guard let imageSize = UIImage.sizeOfImage(at: item.url) else { return .zero }
 
         imageSizeCache.setObject(NSValue(cgSize: imageSize), forKey: item.url as NSURL)
         return imageSize
@@ -252,7 +253,7 @@ private let kImageExtensionPDF  = "pdf"
     
     
     // MARK: PDF
-    @objc func tempPDFUrl() -> URL {
+    @objc func tempPdfFileUrl() -> URL {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")

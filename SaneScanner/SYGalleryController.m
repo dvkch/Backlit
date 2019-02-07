@@ -11,11 +11,14 @@
 #import <NSObject+SYKit.h>
 #import <SYKit-Swift.h>
 #import "DLAVAlertView+SY.h"
-#import "SYGalleryManager.h"
 #import "UIColor+SY.h"
 #import "UIViewController+SYKit.h"
 #import "SYOverviewController.h"
 #import "UIActivityViewController+SY.h"
+#import "SaneScanner-Swift.h"
+
+@interface SYGalleryController () <GalleryManagerDelegate>
+@end
 
 @implementation SYGalleryController
 
@@ -35,7 +38,7 @@
         [self.transitionCustomization setDismissWithScrollGestureOnFirstAndLastImage:NO];
         [self setGalleryDelegate:self];
         
-        [[SYGalleryManager shared] addDelegate:self];
+        [GalleryManager.shared addDelegate:self];
     }
     return self;
 }
@@ -65,7 +68,7 @@
                                      completion:nil];
         }
         
-        [[SYGalleryManager shared] deleteItem:item];
+        [GalleryManager.shared deleteItem:item];
     }];
 }
 
@@ -95,7 +98,7 @@
     [deleteButton setType:MHBarButtonItemTypeCustom];
     
     MHBarButtonItem *dateButton =
-    [[MHBarButtonItem alloc] initWithTitle:[[SYGalleryManager shared] dateStringForItem:galleryItem]
+    [[MHBarButtonItem alloc] initWithTitle:[GalleryManager.shared dateStringFor:galleryItem]
                                      style:UIBarButtonItemStylePlain target:nil action:nil];
     [dateButton setType:MHBarButtonItemTypeCustom];
     
@@ -114,10 +117,10 @@
 
 #pragma mark - SYGalleryManager
 
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager
- didUpdateGalleryItems:(NSArray<MHGalleryItem *> *)items
-               newItem:(MHGalleryItem *)newItem
-           removedItem:(MHGalleryItem *)removedItem
+- (void)galleryManager:(GalleryManager *)manager
+             didUpdate:(NSArray<MHGalleryItem *> *)items
+              newItems:(NSArray<MHGalleryItem *> *)newItems
+          removedItems:(NSArray<MHGalleryItem *> *)removedItems
 {
     if (items.count == 0 && [self sy_isModal])
     {
@@ -131,12 +134,12 @@
         NSUInteger index = NSNotFound;
         BOOL adding = YES;
         
-        if (newItem)
-            index = [items indexOfObject:newItem];
+        if (newItems.firstObject)
+            index = [items indexOfObject:newItems.firstObject];
         
-        if (removedItem)
+        if (removedItems.firstObject)
         {
-            index = [self.galleryItems indexOfObject:removedItem];
+            index = [self.galleryItems indexOfObject:removedItems.firstObject];
             adding = NO;
         }
         

@@ -7,7 +7,7 @@
 //
 
 #import "SYGalleryThumbsCell.h"
-#import "SYGalleryManager.h"
+#import "SaneScanner-Swift.h"
 #import <MHPresenterImageView.h>
 #import <Masonry.h>
 #import "MHUICustomization+SY.h"
@@ -15,7 +15,7 @@
 
 static CGFloat const kShadowRadius = 2;
 
-@interface SYGalleryThumbsCell () <SYGalleryManagerDelegate>
+@interface SYGalleryThumbsCell () <GalleryManagerDelegate>
 @property (nonatomic, strong) MHGalleryItem *item;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @end
@@ -49,16 +49,16 @@ static CGFloat const kShadowRadius = 2;
             make.center.equalTo(@0);
         }];
         
-        [[SYGalleryManager shared] addDelegate:self];
+        [GalleryManager.shared addDelegate:self];
     }
     return self;
 }
 
-- (void)gallerymanager:(SYGalleryManager *)gallerymanager didCreatedThumb:(UIImage *)thumb forItem:(MHGalleryItem *)item
+- (void)galleryManager:(GalleryManager *)manager didCreate:(UIImage *)thumbnail for:(MHGalleryItem *)item
 {
     if (![item isEqual:self.item])
         return;
-    [self setImage:thumb];
+    [self setImage:thumbnail];
 }
 
 - (void)setImage:(UIImage *)image
@@ -92,7 +92,7 @@ static CGFloat const kShadowRadius = 2;
     [self.spinner setColor:spinnerColor];
     
     self.item = items[index];
-    [self setImage:[[SYGalleryManager shared] thumbnailForItem:self.item]];
+    [self setImage:[GalleryManager.shared thumbnailFor:self.item]];
     [self.imageView setUICustomization:[MHUICustomization sy_defaultTheme]];
     [self.imageView setGalleryClass:SYGalleryController.class];
     [self.imageView setInseractiveGalleryPresentionWithItems:items

@@ -75,7 +75,7 @@ extension AppDelegate : UIApplicationDelegate {
         SVProgressHUD.setDefaultMaskType(.black)
         
         // auto manage toolbar visibility
-        SYGalleryManager.shared.add(self)
+        GalleryManager.shared.addDelegate(self)
         
         // Snapshots
         if ProcessInfo.processInfo.arguments.contains("DOING_SNAPSHOT") {
@@ -142,7 +142,7 @@ extension AppDelegate : UISplitViewControllerDelegate {
             scanNavigationController.dismiss(animated: false, completion: nil)
         }
         
-        let toolbarHidden = !constrainedW || SYGalleryManager.shared.galleryItems().isEmpty
+        let toolbarHidden = !constrainedW || GalleryManager.shared.items.isEmpty
         scanNavigationController.setToolbarHidden(toolbarHidden, animated: true)
     }
     
@@ -151,7 +151,7 @@ extension AppDelegate : UISplitViewControllerDelegate {
     }
     
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
-        if SYGalleryManager.shared.galleryItems().isEmpty {
+        if GalleryManager.shared.items.isEmpty {
             return emptyVC
         }
         return galleryViewController
@@ -162,8 +162,8 @@ extension AppDelegate : UISplitViewControllerDelegate {
     }
 }
 
-extension AppDelegate : SYGalleryManagerDelegate {
-    func gallerymanager(_ gallerymanager: SYGalleryManager!, didUpdate items: [MHGalleryItem]!, newItem: MHGalleryItem!, removedItem: MHGalleryItem!) {
+extension AppDelegate : GalleryManagerDelegate {
+    func galleryManager(_ manager: GalleryManager, didUpdate items: [MHGalleryItem], newItems: [MHGalleryItem], removedItems: [MHGalleryItem]) {
         let constrainedW = splitViewController.traitCollection.horizontalSizeClass == .compact
         
         scanNavigationController.setToolbarHidden(!constrainedW || items.isEmpty, animated: true)

@@ -12,7 +12,6 @@
 		9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704490722088DC500E13C6A /* EmptyGalleryVC.swift */; };
 		9704490C2208900700E13C6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704490B2208900700E13C6A /* AppDelegate.swift */; };
 		9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */; };
-		9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9707559D1C972FF600BE9275 /* SYGalleryManager.m */; };
 		970DE9DE1C9B6344001CD025 /* SYGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 970DE9DD1C9B6344001CD025 /* SYGalleryController.m */; };
 		9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715FC8C1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m */; };
 		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
@@ -86,8 +85,6 @@
 		9704490B2208900700E13C6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		970755991C972FE600BE9275 /* SYGalleryThumbsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryThumbsView.h; sourceTree = "<group>"; };
 		9707559A1C972FE600BE9275 /* SYGalleryThumbsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryThumbsView.m; sourceTree = "<group>"; };
-		9707559C1C972FF600BE9275 /* SYGalleryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryManager.h; sourceTree = "<group>"; };
-		9707559D1C972FF600BE9275 /* SYGalleryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryManager.m; sourceTree = "<group>"; };
 		970A587F1E41665C0033A116 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		970DE9DC1C9B6344001CD025 /* SYGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGalleryController.h; sourceTree = "<group>"; };
 		970DE9DD1C9B6344001CD025 /* SYGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGalleryController.m; sourceTree = "<group>"; };
@@ -332,8 +329,6 @@
 				9786507E220B645500F52DE6 /* PDFActivity.swift */,
 				9786507C220B5E6400F52DE6 /* PDFGenerator.swift */,
 				97EB32B42207BB740027CCAE /* Preferences.swift */,
-				9707559C1C972FF600BE9275 /* SYGalleryManager.h */,
-				9707559D1C972FF600BE9275 /* SYGalleryManager.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -660,7 +655,6 @@
 				9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */,
 				97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */,
 				97865084220B6C7100F52DE6 /* WeakValue.swift in Sources */,
-				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
 				9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */,
 				97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */,
