@@ -42,7 +42,7 @@ class DeviceVC: UIViewController {
             scanButton.titleLabel?.adjustsFontForContentSizeCategory = true
         }
         
-        thumbsView = SYGalleryThumbsView.show(inToolbarOf: self, tintColor: .vividBlue)
+        thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .vividBlue)
         
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         
@@ -66,7 +66,7 @@ class DeviceVC: UIViewController {
     private var isRefreshing: Bool = false
     
     // MARK: Views
-    private var thumbsView: SYGalleryThumbsView!
+    private var thumbsView: GalleryThumbsView!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var scanButton: UIButton!
     

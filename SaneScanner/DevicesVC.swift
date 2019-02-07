@@ -18,7 +18,7 @@ import SYKit
         super.viewDidLoad()
         view.backgroundColor = .groupTableViewBackground
         
-        thumbsView = SYGalleryThumbsView.show(inToolbarOf: self, tintColor: nil)
+        thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: nil)
         
         tableView.registerCell(HostCell.self, xib: true)
         tableView.registerCell(DeviceCell.self, xib: true)
@@ -47,7 +47,7 @@ import SYKit
     
     // MARK: Views
     @IBOutlet private var tableView: UITableView!
-    private var thumbsView: SYGalleryThumbsView!
+    private var thumbsView: GalleryThumbsView!
     
     // MARK: Properties
     private var devices = [SYSaneDevice]()

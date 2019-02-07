@@ -198,13 +198,12 @@ private let kImageExtensionPDF  = "pdf"
         return formatter.string(from: date)
     }
     
-    @objc func imageSize(for item: MHGalleryItem) -> CGSize {
+    func imageSize(for item: MHGalleryItem) -> CGSize? {
         if let size = self.imageSizeCache.object(forKey: item.url as NSURL)?.cgSizeValue {
             return size
         }
         
-        // TODO: use nil when Swift
-        guard let imageSize = UIImage.sizeOfImage(at: item.url) else { return .zero }
+        guard let imageSize = UIImage.sizeOfImage(at: item.url) else { return nil }
 
         imageSizeCache.setObject(NSValue(cgSize: imageSize), forKey: item.url as NSURL)
         return imageSize

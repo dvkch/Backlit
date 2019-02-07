@@ -33,10 +33,8 @@ class GalleryThumbsCell: UICollectionViewCell {
     @IBOutlet private var spinner: UIActivityIndicatorView!
 
     // MARK: Content
-    @objc func update(items: [MHGalleryItem], index: Int, parentController: UIViewController, spinnerColor: UIColor, dismiss: ((_ index: Int) -> UIImageView?)?) {
+    @objc func update(items: [MHGalleryItem], index: Int, parentController: UIViewController?, spinnerColor: UIColor, dismiss: ((_ index: Int) -> UIImageView?)?) {
         weak var weakParentVC = parentController
-        
-        //UIImageView *(^dismissBlockCopy)(NSUInteger) = [dismissBlock copy];
         
         spinner?.color = spinnerColor
         

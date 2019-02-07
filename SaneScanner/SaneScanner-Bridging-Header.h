@@ -3,7 +3,6 @@
 //
 
 #import "SYTools.h"
-#import "SYGalleryThumbsView.h"
 #import "SYGalleryController.h"
 #import "UIViewController+SYKit.h"
 #import "NSError+SY.h"
