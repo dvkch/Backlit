@@ -9,7 +9,7 @@
 #import "UIScrollView+SY.h"
 #import <Masonry.h>
 #import <objc/runtime.h>
-#import "UIColor+SY.h"
+#import "SaneScanner-Swift.h"
 
 @implementation UIScrollView (SY)
 
@@ -58,7 +58,7 @@
      */
     
     UIRefreshControl *control = [[UIRefreshControl alloc] init];
-    control.tintColor = [[UIColor groupTableViewHeaderTitleColor] colorWithAlphaComponent:0.8];
+    control.tintColor = [[UIColor groupTableViewHeaderTitle] colorWithAlphaComponent:0.8];
     control.attributedTitle = nil;
     control.backgroundColor = UIColor.clearColor;
     [control addTarget:self action:@selector(sy_refreshControlValueChanged) forControlEvents:UIControlEventValueChanged];

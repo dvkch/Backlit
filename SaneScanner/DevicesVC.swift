@@ -36,7 +36,7 @@ import SYKit
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        title = UIApplication.shared.sy_localizedName()
+        title = Bundle.main.localizedName
         tableView.reloadData()
         
         // TODO: remove ability to call block, should run Sane refresh instead that itself triggers this

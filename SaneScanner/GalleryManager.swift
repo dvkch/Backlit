@@ -103,7 +103,7 @@ private let kImageExtensionPDF  = "pdf"
         return imageURLs.map { galleryItemForImage(at: $0) }
     }
     
-    @objc func addImage(_ image: UIImage, metadata: SYMetadata?) -> MHGalleryItem? {
+    @objc @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) -> MHGalleryItem? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")

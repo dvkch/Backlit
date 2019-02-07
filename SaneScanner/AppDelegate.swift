@@ -9,6 +9,7 @@
 import UIKit
 import SYKit
 import SaneSwift
+import SVProgressHUD
 
 enum SnapshotType {
     case none, devicePreview, deviceOptions, deviceOptionPopup, other

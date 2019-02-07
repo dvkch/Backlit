@@ -63,7 +63,7 @@ extension PreferencesVC : UITableViewDataSource {
                 cell.updateWith(leftText: "PREFERENCES TITLE CONTACT".localized, rightText: PreferencesVC.contactEmailAddress)
             }
             else {
-                cell.updateWith(leftText: "PREFERENCES TITLE VERSION".localized, rightText: UIApplication.sy_appVersionAndBuild())
+                cell.updateWith(leftText: "PREFERENCES TITLE VERSION".localized, rightText: Bundle.main.fullVersion)
             }
         }
         return cell
@@ -87,7 +87,7 @@ extension PreferencesVC : UITableViewDelegate {
             return OptionCell.cellHeight(leftText: "PREFERENCES TITLE CONTACT".localized, rightText: PreferencesVC.contactEmailAddress, width: tableView.bounds.width)
         }
         else {
-            return OptionCell.cellHeight(leftText: "PREFERENCES TITLE VERSION".localized, rightText: UIApplication.sy_appVersionAndBuild(), width: tableView.bounds.width)
+            return OptionCell.cellHeight(leftText: "PREFERENCES TITLE VERSION".localized, rightText: Bundle.main.fullVersion, width: tableView.bounds.width)
         }
     }
     
@@ -99,8 +99,8 @@ extension PreferencesVC : UITableViewDelegate {
             guard indexPath.row == 0 else { return }
             
             // TODO: cleanup
-            var subject = String(format: "CONTACT SUBJECT ABOUT APP %@".localized, UIApplication.shared.sy_localizedName())
-            subject += " " + UIApplication.sy_appVersionAndBuild()
+            var subject = String(format: "CONTACT SUBJECT ABOUT APP %@".localized, Bundle.main.localizedName ?? "")
+            subject += " " + Bundle.main.fullVersion
             
             SYEmailServicePasteboard.name = "MAIL COPY PASTEBOARD NAME".localized
             SYEmailHelper.shared()?.composeEmail(

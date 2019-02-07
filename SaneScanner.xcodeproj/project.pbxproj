@@ -28,11 +28,9 @@
 		9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9757FCEF2207112D00AB59F1 /* DevicesVC.swift */; };
 		9757FCF22207112D00AB59F1 /* DevicesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9757FCF02207112D00AB59F1 /* DevicesVC.xib */; };
 		9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */; };
-		975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */; };
 		975F9C9A1C8F15B7005A96AB /* SYCropMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975F9C991C8F15B7005A96AB /* SYCropMaskView.m */; };
 		9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */; };
 		9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
-		9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */; };
 		9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507C220B5E6400F52DE6 /* PDFGenerator.swift */; };
 		9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507E220B645500F52DE6 /* PDFActivity.swift */; };
 		97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97865080220B69AC00F52DE6 /* GalleryManager.swift */; };
@@ -40,6 +38,9 @@
 		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
+		97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */; };
+		97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */; };
+		97BE129F220BC25E006A2AE8 /* Bundle+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129E220BC25E006A2AE8 /* Bundle+SY.swift */; };
 		97CC34E32205F48B00304345 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E12205F48B00304345 /* OptionCell.swift */; };
 		97CC34E42205F48B00304345 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97CC34E22205F48B00304345 /* OptionCell.xib */; };
 		97CC34E72205F9D200304345 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E62205F9D200304345 /* String+SY.swift */; };
@@ -49,7 +50,6 @@
 		97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E04322060C5700AC74D0 /* PreviewCell.swift */; };
 		97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E04422060C5700AC74D0 /* PreviewCell.xib */; };
 		97D430FD1E3B9CF100B8E9C0 /* SYOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */; };
-		97DA07121C98927E007F522E /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DA07111C98927E007F522E /* UIColor+SY.m */; };
 		97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E2EE601CCD451700FA95AF /* SYGridLayout.m */; };
 		97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF235220B470C00435DE6 /* SaneOptionUI.swift */; };
 		97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* SanePreviewView.swift */; };
@@ -111,22 +111,21 @@
 		9757FCF02207112D00AB59F1 /* DevicesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesVC.xib; sourceTree = "<group>"; };
 		9759B5E82205DE7F000B53AA /* UIScrollView+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SY.h"; sourceTree = "<group>"; };
 		9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SY.m"; sourceTree = "<group>"; };
-		975EC2911E40E5F500A8AFFD /* SVProgressHUD+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+SY.h"; sourceTree = "<group>"; };
-		975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD+SY.m"; sourceTree = "<group>"; };
 		975F9C981C8F15B7005A96AB /* SYCropMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYCropMaskView.h; sourceTree = "<group>"; };
 		975F9C991C8F15B7005A96AB /* SYCropMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYCropMaskView.m; sourceTree = "<group>"; };
 		976E5BAD1E3BA5350057B599 /* PrecompiledHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrecompiledHeader.pch; sourceTree = "<group>"; };
 		9785C5611E3D1CEA006CD4F1 /* NSError+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+SY.h"; sourceTree = "<group>"; };
 		9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+SY.m"; sourceTree = "<group>"; };
 		9785C5671E3D247A006CD4F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9785C5691E3E1754006CD4F1 /* UIApplication+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+SY.h"; sourceTree = "<group>"; };
-		9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+SY.m"; sourceTree = "<group>"; };
 		9786507C220B5E6400F52DE6 /* PDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFGenerator.swift; sourceTree = "<group>"; };
 		9786507E220B645500F52DE6 /* PDFActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFActivity.swift; sourceTree = "<group>"; };
 		97865080220B69AC00F52DE6 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
 		97865083220B6C7100F52DE6 /* WeakValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakValue.swift; sourceTree = "<group>"; };
 		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
+		97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+SY.swift"; sourceTree = "<group>"; };
+		97BE129E220BC25E006A2AE8 /* Bundle+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+SY.swift"; sourceTree = "<group>"; };
 		97C3D85621FE72D10015BA72 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
 		97C3D85821FE72DD0015BA72 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/sane/libsane-dll.a"; sourceTree = "<group>"; };
 		97CC34E02205F48B00304345 /* SaneScanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SaneScanner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -141,8 +140,6 @@
 		97D0E04422060C5700AC74D0 /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
 		97D430FB1E3B9CF100B8E9C0 /* SYOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYOverviewController.h; sourceTree = "<group>"; };
 		97D430FC1E3B9CF100B8E9C0 /* SYOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYOverviewController.m; sourceTree = "<group>"; };
-		97DA07101C98927E007F522E /* UIColor+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SY.h"; sourceTree = "<group>"; };
-		97DA07111C98927E007F522E /* UIColor+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SY.m"; sourceTree = "<group>"; };
 		97E2EE5F1CCD451700FA95AF /* SYGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYGridLayout.h; sourceTree = "<group>"; };
 		97E2EE601CCD451700FA95AF /* SYGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYGridLayout.m; sourceTree = "<group>"; };
 		97EAF235220B470C00435DE6 /* SaneOptionUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaneOptionUI.swift; sourceTree = "<group>"; };
@@ -263,14 +260,8 @@
 				9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */,
 				971BE23D1C8E288300B8F29C /* NSMutableData+SY.h */,
 				971BE23E1C8E288300B8F29C /* NSMutableData+SY.m */,
-				975EC2911E40E5F500A8AFFD /* SVProgressHUD+SY.h */,
-				975EC2921E40E5F500A8AFFD /* SVProgressHUD+SY.m */,
 				97CE773E1EA788A400A2646E /* UIActivityViewController+SY.h */,
 				97CE773F1EA788A400A2646E /* UIActivityViewController+SY.m */,
-				9785C5691E3E1754006CD4F1 /* UIApplication+SY.h */,
-				9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */,
-				97DA07101C98927E007F522E /* UIColor+SY.h */,
-				97DA07111C98927E007F522E /* UIColor+SY.m */,
 				9759B5E82205DE7F000B53AA /* UIScrollView+SY.h */,
 				9759B5E92205DE7F000B53AA /* UIScrollView+SY.m */,
 				97F5C7BE1CCF60A60046627A /* UIViewController+SYKit.h */,
@@ -291,6 +282,9 @@
 			isa = PBXGroup;
 			children = (
 				97CC34E62205F9D200304345 /* String+SY.swift */,
+				97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */,
+				97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */,
+				97BE129E220BC25E006A2AE8 /* Bundle+SY.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -650,23 +644,23 @@
 				97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */,
 				9721226C1CCA56C1006610E6 /* MHUICustomization+SY.m in Sources */,
 				97E2EE611CCD451700FA95AF /* SYGridLayout.m in Sources */,
-				97DA07121C98927E007F522E /* UIColor+SY.m in Sources */,
-				975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */,
 				9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */,
 				97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */,
 				97865084220B6C7100F52DE6 /* WeakValue.swift in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
 				9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */,
 				97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */,
+				97BE129F220BC25E006A2AE8 /* Bundle+SY.swift in Sources */,
+				97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */,
 				9707559B1C972FE600BE9275 /* SYGalleryThumbsView.m in Sources */,
 				9715FC8D1CD8BFB600F26302 /* SYMediaPreviewCollectionViewCell.m in Sources */,
 				9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */,
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,
 				9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */,
+				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,
 				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,
-				9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */,
 				97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */,
 				97221E091C9B7DDC0062268F /* SYGalleryThumbsCell.m in Sources */,
 				97499E5D220872F5006DED20 /* Toolbar.swift in Sources */,

@@ -9,7 +9,6 @@
 #import "SYGalleryThumbsView.h"
 #import "SaneScanner-Swift.h"
 #import <Masonry.h>
-#import "UIColor+SY.h"
 #import <SYKit-Swift.h>
 #import "SYGalleryThumbsCell.h"
 #import <SYGradientView.h>

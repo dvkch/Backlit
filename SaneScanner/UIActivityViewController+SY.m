@@ -8,7 +8,6 @@
 
 #import "UIActivityViewController+SY.h"
 #import "SaneScanner-Swift.h"
-#import "SVProgressHUD+SY.h"
 
 @implementation UIActivityViewController (SY)
 

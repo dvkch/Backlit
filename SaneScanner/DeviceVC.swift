@@ -35,14 +35,14 @@ class DeviceVC: UIViewController {
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
 
-        scanButton.backgroundColor = .vividBlue()
+        scanButton.backgroundColor = .vividBlue
         scanButton.setTitle("ACTION SCAN".localized, for: .normal)
         scanButton.titleLabel?.font = .systemFont(ofSize: 17)
         if #available(iOS 10.0, *) {
             scanButton.titleLabel?.adjustsFontForContentSizeCategory = true
         }
         
-        thumbsView = SYGalleryThumbsView.show(inToolbarOf: self, tintColor: .vividBlue())
+        thumbsView = SYGalleryThumbsView.show(inToolbarOf: self, tintColor: .vividBlue)
         
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         
@@ -86,7 +86,7 @@ class DeviceVC: UIViewController {
             }
             if let image = image, let parameters = parameters, let metadata = self.imageMetadata(scanParameters: parameters) {
                 GalleryManager.shared.addImage(image, metadata: metadata)
-                SVProgressHUD.showSuccess(withStatus: nil, duration: 1)
+                SVProgressHUD.showSuccess(status: nil, duration: 1)
             }
         }
     }
@@ -219,7 +219,7 @@ extension DeviceVC {
         metadata.metadataTIFF.orientation = SYPictureTiffOrientation_TopLeft.rawValue as NSNumber
         metadata.metadataTIFF.make = device.vendor
         metadata.metadataTIFF.model = device.model
-        metadata.metadataTIFF.software = UIApplication.shared.sy_localizedName()
+        metadata.metadataTIFF.software = (Bundle.main.localizedName ?? "") + " " + Bundle.main.fullVersion
         metadata.metadataTIFF.xResolution = resXInches
         metadata.metadataTIFF.yResolution = resYInches
         metadata.metadataTIFF.resolutionUnit = 2 // 2 = inches, let's hope it'll make sense for every device
