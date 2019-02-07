@@ -7,11 +7,10 @@
 //
 
 #import "UIButton+SYKit.h"
-#import "UIImage+SYKit.h"
 
 @implementation UIButton (SYKit)
 
--(void)sy_setButtonBackgroundColor:(UIColor *)buttonColor forState:(UIControlState)state {
+- (void)sy_setButtonBackgroundColor:(UIColor *)buttonColor forState:(UIControlState)state {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(1., 1.), YES, 0.0f);
     [buttonColor setFill];
     [[UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 1., 1.)] fill];

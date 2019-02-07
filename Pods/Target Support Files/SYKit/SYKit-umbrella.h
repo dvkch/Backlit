@@ -24,7 +24,6 @@
 #import "SYWindow.h"
 #import "UIButton+SYKit.h"
 #import "UIDevice+SYKit.h"
-#import "UIImage+SYKit.h"
 #import "UIScreen+SYKit.h"
 #import "UISearchBar+SYKit.h"
 #import "UITableViewCell+SYKit.h"

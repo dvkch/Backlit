@@ -7,8 +7,9 @@
 //
 
 #import "SYTools.h"
-#import <UIImage+SYKit.h>
 #import "mach/mach.h"
+#import "SaneScanner-Swift.h"
+#import <SYKit-Swift.h>
 
 // https://gist.github.com/steipete/6ee378bd7d87f276f6e0
 BOOL NSObjectIsBlock(id object)

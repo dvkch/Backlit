@@ -10,7 +10,7 @@
 #import "SYGalleryManager.h"
 #import <Masonry.h>
 #import "UIColor+SY.h"
-#import <UIImage+SYKit.h>
+#import <SYKit-Swift.h>
 #import "SYGalleryThumbsCell.h"
 #import <SYGradientView.h>
 #import <MHGallery.h>

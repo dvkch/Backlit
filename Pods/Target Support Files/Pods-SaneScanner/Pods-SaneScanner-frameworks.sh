@@ -154,6 +154,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DLAlertView/DLAlertView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/MHVideoPhotoGallery/MHVideoPhotoGallery.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/MHWDirectoryWatcher/MHWDirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
@@ -177,6 +178,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DLAlertView/DLAlertView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/MHVideoPhotoGallery/MHVideoPhotoGallery.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/MHWDirectoryWatcher/MHWDirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"

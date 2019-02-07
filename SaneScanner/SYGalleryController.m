@@ -9,7 +9,7 @@
 #import "SYGalleryController.h"
 #import <MHVideoPhotoGallery/MHVideoPhotoGallery-umbrella.h>
 #import <NSObject+SYKit.h>
-#import <UIImage+SYKit.h>
+#import <SYKit-Swift.h>
 #import "DLAVAlertView+SY.h"
 #import "SYGalleryManager.h"
 #import "UIColor+SY.h"

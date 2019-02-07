@@ -9,7 +9,7 @@
 #import "SYGalleryManager.h"
 #import "SYTools.h"
 #import <MHGalleryItem.h>
-#import <UIImage+SYKit.h>
+#import <SYKit-Swift.h>
 #import "UIColor+SY.h"
 #import "MHWDirectoryWatcher.h"
 #import "MHGalleryItem+SY.h"
@@ -269,7 +269,7 @@ static NSString * const kImageExtensionPDF  = $$("pdf");
     [self.thumbsQueue addOperationWithBlock:^{
         
         // this first method is a bit longer to generate images, but uses far less memory on the device
-        UIImage *thumb = [UIImage sy_imageThumbnailForFileAtPath:item.URL.path maxEdgeSize:200];
+        UIImage *thumb = [UIImage sy_thumbnailForImageAtURL:item.URL maxEdgeSize:200];
         
         // in case the first method fails we do it the old way
         if (!thumb)
@@ -288,10 +288,7 @@ static NSString * const kImageExtensionPDF  = $$("pdf");
                     image = [UIImage imageWithData:data];
                 }
                 
-                if (image.size.width > image.size.height)
-                    thumb = [image sy_imageResizedHeightTo:200];
-                else
-                    thumb = [image sy_imageResizedWidthTo:200];
+                thumb = [image sy_resizingLongestEdgeTo:200];
             }
         }
         

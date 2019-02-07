@@ -1,4 +1,5 @@
 PODS:
+  - DirectoryWatcher (1.1.0)
   - DLAlertView (1.2.5)
   - libextobjc/EXTScope (0.6):
     - libextobjc/RuntimeExtensions
@@ -22,7 +23,7 @@ PODS:
   - SpinKit (1.2.0)
   - SVProgressHUD (2.2.5)
   - SYEmailHelper (1.1)
-  - SYKit (0.0.47)
+  - SYKit (0.0.49)
   - SYLogRedirect (1.2.7)
   - SYOperationQueue (1.0.1)
   - SYPair (1.2)
@@ -32,6 +33,7 @@ PODS:
   - WeakUniqueCollection (0.2.1)
 
 DEPENDENCIES:
+  - DirectoryWatcher
   - DLAlertView
   - libextobjc/EXTScope
   - Masonry
@@ -53,6 +55,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - DirectoryWatcher
     - DLAlertView
     - libextobjc
     - Mantle
@@ -81,6 +84,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
+  DirectoryWatcher: bfc4904d3953e8f49bf440d1c22cd0556b05c10d
   DLAlertView: 774c1242cc854177fdc07634ed3f8c250a38864d
   libextobjc: aed8b7d2b07f511c1a7ecaacb33ea03e327c69b7
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
@@ -95,7 +99,7 @@ SPEC CHECKSUMS:
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SYEmailHelper: 5d8e2ff55226f50a07ca2729763f11d01153acec
-  SYKit: bc66cc8fe44db130f9c6e479016cb36e8e9c4368
+  SYKit: 1e47306e224969a5fb2ced18d2a4f9948e21e0df
   SYLogRedirect: 0ff25841b9080eb5881bc17a3ce1467b2746f842
   SYOperationQueue: d8287745159c3776294bbb09eefd0c579153c7d7
   SYPair: 66926046f01e8e4c195b2694a5c63203c1130208
@@ -103,6 +107,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
   WeakUniqueCollection: 58fa257bfdca7d2c0fc06060c28f5892bd66e80f
 
-PODFILE CHECKSUM: 6216ce6649aec830e8278db6b5a98bb4b4be3125
+PODFILE CHECKSUM: 66d5ab8dc564089f251b0f51312a286c10f0cb60
 
 COCOAPODS: 1.6.0.beta.2

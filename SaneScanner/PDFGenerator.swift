@@ -44,8 +44,9 @@ extension PDFGeneratorError: LocalizedError {
         var maxRatio = CGFloat(1)
         
         for imageURL in imagesURLs {
-            let size = UIImage.sy_sizeOfImage(at: imageURL)
-            guard size != .zero else { continue }
+            guard let size = UIImage.sizeOfImage(at: imageURL) else {
+                throw PDFGeneratorError.cannotOpenImage(url: imageURL)
+            }
             
             greatestSize.width  = max(greatestSize.width,  size.width )
             greatestSize.height = max(greatestSize.height, size.height)
@@ -94,7 +95,7 @@ extension PDFGeneratorError: LocalizedError {
             
             // determines size that fits inside the PDF bounds, using as much space as possible, while
             // keeping the original image ratio
-            let imageSize = UIImage.sy_sizeOfImage(at: imageURL)
+            let imageSize = UIImage.sizeOfImage(at: imageURL)!
             let sizeThatFits: CGSize
             if imageSize.width / imageSize.height > pdfSize.width / pdfSize.height {
                 sizeThatFits = CGSize(width: pdfSize.width, height: imageSize.height * pdfSize.width / imageSize.width)
