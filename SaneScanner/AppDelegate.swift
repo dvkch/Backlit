@@ -45,11 +45,12 @@ class AppDelegate: UIResponder {
 extension AppDelegate : UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // log
-        print("Document path:", SYTools.documentsPath)
+        print("Document path:", FileManager.documentsDirectoryURL)
+        UIDevice.current.logMemoryUsage()
         
         // TODO: add button in DEBUG in EmptyVC?
         // create test images if needed
-        // SYTools.createTestImages(200)
+        // GalleryManager.shared.createRandomTestImages(count: 200)
         
         // navigation controller
         scanNavigationController = ScanNC()
@@ -60,7 +61,7 @@ extension AppDelegate : UIApplicationDelegate {
         scanNavigationController.viewControllers = [DevicesVC()]
         
         // gallery view controller
-        galleryViewController = GalleryViewController.gallery(withPresentationStyle: .overView, uiCustomization: .sy_defaultTheme())
+        galleryViewController = GalleryViewController.gallery(withPresentationStyle: .overView, uiCustomization: .sy_defaultTheme)
         galleryViewController.uiCustomization.hideDoneButton = true
         galleryViewController.uiCustomization.setMHGalleryBackgroundColor(.groupTableViewBackground, for: .imageViewerNavigationBarHidden)
         

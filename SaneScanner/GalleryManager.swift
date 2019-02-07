@@ -48,7 +48,7 @@ private let kImageExtensionPDF  = "pdf"
         thumbsQueue.maxSurvivingOperations = 0
         thumbsQueue.mode = SYOperationQueueModeLIFO // TODO: cleanup
         
-        watcher = DirectoryWatcher.watch(URL(fileURLWithPath: SYTools.documentsPath)) { [weak self] in
+        watcher = DirectoryWatcher.watch(FileManager.documentsDirectoryURL) { [weak self] in
             self?.refreshImageList()
         }
         
@@ -103,12 +103,20 @@ private let kImageExtensionPDF  = "pdf"
         return imageURLs.map { galleryItemForImage(at: $0) }
     }
     
+    func createRandomTestImages(count: Int) {
+        (0..<count).forEach { (_) in
+            let url = FileManager.documentsDirectoryURL.appendingPathComponent("testimage-\(UUID().uuidString).jpg", isDirectory: false)
+            let image = UIImage.imageWithColor(.random, size: CGSize(width: 10, height: 10), cornerRadius: 0)
+            try? image?.jpegData(compressionQuality: 0.9)?.write(to: url, options: .atomicWrite)
+        }
+    }
+    
     @objc @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) -> MHGalleryItem? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
-        var fileURL = URL(fileURLWithPath: SYTools.documentsPath).appendingPathComponent(formatter.string(from: Date()), isDirectory: false)
+        var fileURL = FileManager.documentsDirectoryURL.appendingPathComponent(formatter.string(from: Date()), isDirectory: false)
         
         let imageData: Data?
         if Preferences.shared.saveAsPNG {
@@ -141,7 +149,7 @@ private let kImageExtensionPDF  = "pdf"
 
     private func listImages() -> [URL] {
         let items = try? FileManager.default.contentsOfDirectory(
-            at: URL(fileURLWithPath: SYTools.documentsPath),
+            at: FileManager.documentsDirectoryURL,
             includingPropertiesForKeys: [.isDirectoryKey, .creationDateKey],
             options: .skipsSubdirectoryDescendants
         )
@@ -272,11 +280,11 @@ private let kImageExtensionPDF  = "pdf"
 
     // MARK: Paths
     private var thumbnailsFolderURL: URL {
-        return URL(fileURLWithPath: SYTools.cachePath, isDirectory: true).appendingPathComponent(kImageThumbsFolder, isDirectory: true)
+        return FileManager.cacheDirectoryURL.appendingPathComponent(kImageThumbsFolder, isDirectory: true)
     }
     
     private var pdfFolderURL: URL {
-        return URL(fileURLWithPath: SYTools.cachePath, isDirectory: true).appendingPathComponent(kImagePDFFolder, isDirectory: true)
+        return FileManager.cacheDirectoryURL.appendingPathComponent(kImagePDFFolder, isDirectory: true)
     }
     
     private func thumbURL(for imageURL: URL) -> URL {

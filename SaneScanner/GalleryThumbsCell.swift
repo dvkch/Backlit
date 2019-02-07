@@ -41,7 +41,7 @@ class GalleryThumbsCell: UICollectionViewCell {
         let item = items[index]
         self.item = item
         updateImage(GalleryManager.shared.thumbnail(for: item))
-        imageView.uiCustomization = MHUICustomization.sy_defaultTheme()
+        imageView.uiCustomization = MHUICustomization.sy_defaultTheme
         imageView.galleryClass = GalleryViewController.self
         
         imageView.setInseractiveGalleryPresentionWithItems(items, currentImageIndex: index, currentViewController: parentController)
