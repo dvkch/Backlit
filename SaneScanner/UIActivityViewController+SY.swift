@@ -18,7 +18,7 @@ extension UIActivityViewController {
         
         vc.completionWithItemsHandler = { activityType, completed, returnedItems, error in
             if let error = error {
-                SVProgressHUD.showError(withStatus: (error as NSError).sy_alertMessage())
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
             else if completed {
                 completion?()
@@ -40,7 +40,7 @@ extension UIActivityViewController {
         
         vc.completionWithItemsHandler = { activityType, completed, returnedItems, error in
             if let error = error {
-                SVProgressHUD.showError(withStatus: (error as NSError).sy_alertMessage())
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
             else if completed {
                 completion?()

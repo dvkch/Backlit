@@ -70,7 +70,7 @@ import SYKit
             SVProgressHUD.dismiss()
 
             if let error = error {
-                SVProgressHUD.showError(withStatus: (error as NSError).sy_alertMessage())
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -213,7 +213,7 @@ extension DevicesVC : UITableViewDelegate {
             if let error = error {
                 let alert = UIAlertController(
                     title: "DIALOG TITLE COULDNT OPEN DEVICE".localized,
-                    message: (error as NSError).sy_alertMessage(),
+                    message: error.localizedDescription,
                     preferredStyle: .alert
                 )
                 alert.addAction(UIAlertAction(title: "ACTION CLOSE".localized, style: .default, handler: nil))

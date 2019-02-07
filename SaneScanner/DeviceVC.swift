@@ -83,7 +83,7 @@ class DeviceVC: UIViewController {
             SVProgressHUD.showProgress(progress)
         }) { (image, parameters, error) in
             if let error = error {
-                SVProgressHUD.showError(withStatus: (error as NSError).sy_alertMessage())
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
             if let image = image, let parameters = parameters, let metadata = self.imageMetadata(scanParameters: parameters) {
                 GalleryManager.shared.addImage(image, metadata: metadata)
@@ -299,7 +299,7 @@ extension DeviceVC : UITableViewDelegate {
         let completion = { (error: Error?) -> Void in
             self.tableView.reloadData()
             if let error = error {
-                SVProgressHUD.showError(withStatus: (error as NSError).sy_alertMessage())
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
             else {
                 SVProgressHUD.dismiss()

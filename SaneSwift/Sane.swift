@@ -169,7 +169,7 @@ extension Sane {
             guard s == SANE_STATUS_GOOD else {
                 self.isUpdatingDevices = false
                 DispatchQueue.main.async {
-                    completion(nil, NSError.ss_error(withSaneStatus: s))
+                    completion(nil, SaneError.fromStatus(s))
                 }
                 return
             }
@@ -212,11 +212,11 @@ extension Sane {
             guard s == SANE_STATUS_GOOD else {
                 if mainThread {
                     DispatchQueue.main.async {
-                        completion(NSError.ss_error(withSaneStatus: s))
+                        completion(SaneError.fromStatus(s))
                     }
                 }
                 else {
-                    completion(NSError.ss_error(withSaneStatus: s))
+                    completion(SaneError.fromStatus(s))
                 }
                 return
             }
@@ -295,22 +295,22 @@ extension Sane {
     
     private func valueForOption(_ option: SYSaneOption, mainThread: Bool, completion: @escaping (_ value: Any?, _ error: Error?) -> ()) {
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
-            completion(nil, NSError.ss_error(with: SSErrorCode_DeviceNotOpened))
+            completion(nil, SaneError.deviceNotOpened)
             return
         }
         
         guard option.type != SANE_TYPE_GROUP else {
-            completion(nil, NSError.ss_error(with: SSErrorCode_GetValueForTypeGroup))
+            completion(nil, SaneError.getValueForGroupType)
             return
         }
         
         guard option.type != SANE_TYPE_BUTTON else {
-            completion(nil, NSError.ss_error(with: SSErrorCode_GetValueForTypeButton))
+            completion(nil, SaneError.getValueForButtonType)
             return
         }
         
         guard !option.capInactive else {
-            completion(nil, NSError.ss_error(with: SSErrorCode_GetValueForInactiveOption))
+            completion(nil, SaneError.getValueForInactiveOption)
             return
         }
         
@@ -321,8 +321,8 @@ extension Sane {
             let s = Sane.logTime { sane_control_option(handle, option.index, SANE_ACTION_GET_VALUE, value, nil) }
             
             guard s == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion(nil, NSError.ss_error(withSaneStatus: s)) } }
-                else { completion(nil, NSError.ss_error(withSaneStatus: s)) }
+                if mainThread { DispatchQueue.main.async { completion(nil, SaneError.fromStatus(s)) } }
+                else { completion(nil, SaneError.fromStatus(s)) }
                 return
             }
             
@@ -346,7 +346,7 @@ extension Sane {
 
     private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: SYSaneDevice, mainThread: Bool, completion: ((_ reloadAllOptions: Bool, _ error: Error?) -> ())?) {
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
-            completion?(false, NSError.ss_error(with: SSErrorCode_DeviceNotOpened))
+            completion?(false, SaneError.deviceNotOpened)
             return
         }
 
@@ -378,12 +378,12 @@ extension Sane {
 
     private func setValueForOption(value: Any?, auto: Bool, option: SYSaneOption, mainThread: Bool, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
-            completion?(false, NSError.ss_error(with: SSErrorCode_DeviceNotOpened))
+            completion?(false, SaneError.deviceNotOpened)
             return
         }
         
         guard option.type != SANE_TYPE_GROUP else {
-            completion?(false, NSError.ss_error(with: SSErrorCode_GetValueForTypeGroup))
+            completion?(false, SaneError.setValueForGroupType)
             return
         }
         
@@ -455,7 +455,7 @@ extension Sane {
                 option.refreshValue(nil)
             }
             
-            let error: Error? = status == SANE_STATUS_GOOD ? nil : NSError.ss_error(withSaneStatus: status)
+            let error: Error? = status == SANE_STATUS_GOOD ? nil : SaneError.fromStatus(status)
             if mainThread { DispatchQueue.main.async { completion?(reloadAllOptions, error) } }
             else { completion?(reloadAllOptions, error) }
         }
@@ -471,7 +471,7 @@ extension Sane {
     private func preview(device: SYSaneDevice, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
         
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
-            completion(nil, NSError.ss_error(with: SSErrorCode_DeviceNotOpened))
+            completion(nil, SaneError.deviceNotOpened)
             return
         }
         
@@ -563,7 +563,7 @@ extension Sane {
     private func scan(device: SYSaneDevice, useScanCropArea: Bool, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: SYSaneScanParameters?, _ error: Error?) -> ())?) {
         
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
-            completion?(nil, nil, NSError.ss_error(with: SSErrorCode_DeviceNotOpened))
+            completion?(nil, nil, SaneError.deviceNotOpened)
             return
         }
 
@@ -577,16 +577,16 @@ extension Sane {
             var status = Sane.logTime { sane_start(handle) }
             
             guard status == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) } }
-                else { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) }
+                if mainThread { DispatchQueue.main.async { completion?(nil, nil, SaneError.fromStatus(status)) } }
+                else { completion?(nil, nil, SaneError.fromStatus(status)) }
                 return
             }
             
             status = sane_set_io_mode(handle, SANE_FALSE)
             
             guard status == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) } }
-                else { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) }
+                if mainThread { DispatchQueue.main.async { completion?(nil, nil, SaneError.fromStatus(status)) } }
+                else { completion?(nil, nil, SaneError.fromStatus(status)) }
                 return
             }
             
@@ -594,8 +594,8 @@ extension Sane {
             status = sane_get_parameters(handle, &estimatedParams)
             
             guard status == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) } }
-                else { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) }
+                if mainThread { DispatchQueue.main.async { completion?(nil, nil, SaneError.fromStatus(status)) } }
+                else { completion?(nil, nil, SaneError.fromStatus(status)) }
                 return
             }
 
@@ -667,8 +667,8 @@ extension Sane {
             SaneSetLogLevel(prevLogLevel)
             
             guard status == SANE_STATUS_EOF, parameters != nil else {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) } }
-                else { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) }
+                if mainThread { DispatchQueue.main.async { completion?(nil, nil, SaneError.fromStatus(status)) } }
+                else { completion?(nil, nil, SaneError.fromStatus(status)) }
                 return
             }
 
@@ -680,7 +680,7 @@ extension Sane {
             }
             catch {
                 if mainThread { DispatchQueue.main.async { completion?(nil, nil, error) } }
-                else { completion?(nil, nil, NSError.ss_error(withSaneStatus: status)) }
+                else { completion?(nil, nil, error) }
             }
         }
     }

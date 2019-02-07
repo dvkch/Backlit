@@ -119,7 +119,7 @@ class SanePreviewView: UIView {
             SVProgressHUD.showProgress(progress)
         }, completion: { [weak self] (image, error) in
             if let error = error {
-                SVProgressHUD.showError(withStatus: (error as NSError).sy_alertMessage())
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
             else {
                 SVProgressHUD.dismiss()

@@ -1,5 +1,5 @@
 //
-//  Sane.swift
+//  SaneConfig.swift
 //  SaneScanner
 //
 //  Created by Stanislas Chevallier on 30/01/19.

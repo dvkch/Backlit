@@ -30,7 +30,6 @@
 		97499E5F220874B3006DED20 /* SplitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5E220874B3006DED20 /* SplitVC.swift */; };
 		9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9757FCEF2207112D00AB59F1 /* DevicesVC.swift */; };
 		9757FCF22207112D00AB59F1 /* DevicesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9757FCF02207112D00AB59F1 /* DevicesVC.xib */; };
-		9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */; };
 		9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507C220B5E6400F52DE6 /* PDFGenerator.swift */; };
 		9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507E220B645500F52DE6 /* PDFActivity.swift */; };
@@ -105,8 +104,6 @@
 		9757FCEF2207112D00AB59F1 /* DevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesVC.swift; sourceTree = "<group>"; };
 		9757FCF02207112D00AB59F1 /* DevicesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesVC.xib; sourceTree = "<group>"; };
 		976E5BAD1E3BA5350057B599 /* PrecompiledHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrecompiledHeader.pch; sourceTree = "<group>"; };
-		9785C5611E3D1CEA006CD4F1 /* NSError+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+SY.h"; sourceTree = "<group>"; };
-		9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+SY.m"; sourceTree = "<group>"; };
 		9785C5671E3D247A006CD4F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9786507C220B5E6400F52DE6 /* PDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFGenerator.swift; sourceTree = "<group>"; };
 		9786507E220B645500F52DE6 /* PDFActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFActivity.swift; sourceTree = "<group>"; };
@@ -232,8 +229,6 @@
 			children = (
 				9735E84D1C8CE66B0049CD13 /* DLAVAlertView+SY.h */,
 				9735E84E1C8CE66B0049CD13 /* DLAVAlertView+SY.m */,
-				9785C5611E3D1CEA006CD4F1 /* NSError+SY.h */,
-				9785C5621E3D1CEA006CD4F1 /* NSError+SY.m */,
 				973066C6220C951B0068E8C7 /* UIActivityViewController+SY.swift */,
 			);
 			name = Categories;
@@ -620,7 +615,6 @@
 				97EAF236220B470C00435DE6 /* SaneOptionUI.swift in Sources */,
 				97BE129F220BC25E006A2AE8 /* Bundle+SY.swift in Sources */,
 				97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */,
-				9785C5631E3D1CEA006CD4F1 /* NSError+SY.m in Sources */,
 				973066B7220C73D40068E8C7 /* CoreGraphics+SY.swift in Sources */,
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,
 				9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */,

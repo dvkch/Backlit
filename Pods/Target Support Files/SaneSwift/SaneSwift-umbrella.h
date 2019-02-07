@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "NSError+SY.h"
 #import "NSObject+SY.h"
 #import "SaneSwiftC.h"
 #import "SYSaneDevice.h"
