@@ -36,6 +36,8 @@
 		9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */; };
 		9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507C220B5E6400F52DE6 /* PDFGenerator.swift */; };
 		9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507E220B645500F52DE6 /* PDFActivity.swift */; };
+		97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97865080220B69AC00F52DE6 /* GalleryManager.swift */; };
+		97865084220B6C7100F52DE6 /* WeakValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97865083220B6C7100F52DE6 /* WeakValue.swift */; };
 		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
@@ -124,6 +126,8 @@
 		9785C56A1E3E1754006CD4F1 /* UIApplication+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+SY.m"; sourceTree = "<group>"; };
 		9786507C220B5E6400F52DE6 /* PDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFGenerator.swift; sourceTree = "<group>"; };
 		9786507E220B645500F52DE6 /* PDFActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFActivity.swift; sourceTree = "<group>"; };
+		97865080220B69AC00F52DE6 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
+		97865083220B6C7100F52DE6 /* WeakValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakValue.swift; sourceTree = "<group>"; };
 		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		97C3D85621FE72D10015BA72 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
@@ -278,6 +282,14 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		97865082220B6C5E00F52DE6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				97865083220B6C7100F52DE6 /* WeakValue.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		97CC34E52205F9C700304345 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,11 +328,12 @@
 		F804E07B1AFA56AC00CBE307 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9707559C1C972FF600BE9275 /* SYGalleryManager.h */,
-				9707559D1C972FF600BE9275 /* SYGalleryManager.m */,
-				97EB32B42207BB740027CCAE /* Preferences.swift */,
+				97865080220B69AC00F52DE6 /* GalleryManager.swift */,
 				9786507E220B645500F52DE6 /* PDFActivity.swift */,
 				9786507C220B5E6400F52DE6 /* PDFGenerator.swift */,
+				97EB32B42207BB740027CCAE /* Preferences.swift */,
+				9707559C1C972FF600BE9275 /* SYGalleryManager.h */,
+				9707559D1C972FF600BE9275 /* SYGalleryManager.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -349,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				97CC34E52205F9C700304345 /* Extensions */,
+				97865082220B6C5E00F52DE6 /* Models */,
 				97521E701C8912BD00C77209 /* Categories */,
 				972122691CCA561A006610E6 /* Gallery */,
 				9734E3641C9031F300B66797 /* VCs */,
@@ -645,6 +659,7 @@
 				975EC2931E40E5F500A8AFFD /* SVProgressHUD+SY.m in Sources */,
 				9704490922088DC500E13C6A /* EmptyGalleryVC.swift in Sources */,
 				97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */,
+				97865084220B6C7100F52DE6 /* WeakValue.swift in Sources */,
 				9707559E1C972FF600BE9275 /* SYGalleryManager.m in Sources */,
 				97F5C7C01CCF60A60046627A /* UIViewController+SYKit.m in Sources */,
 				9759B5EA2205DE7F000B53AA /* UIScrollView+SY.m in Sources */,
@@ -655,6 +670,7 @@
 				F86584861AF9A8290028E039 /* SYTools.m in Sources */,
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,
 				9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */,
+				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,
 				9785C56B1E3E1754006CD4F1 /* UIApplication+SY.m in Sources */,
 				97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */,

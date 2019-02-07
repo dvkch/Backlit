@@ -17,3 +17,4 @@
 #import "MHUICustomization+SY.h"
 #import "NSArray+SY.h"
 #import "SYCropMaskView.h"
+#import "MHGalleryItem+SY.h"

@@ -14,7 +14,11 @@ enum SnapshotType {
     case none, devicePreview, deviceOptions, deviceOptionPopup, other
 }
 
-// TODO: send in chronological order, older to newer
+
+// TODO: cleanup all "as NSString" / "as NSData" references
+// TODO: cleanup @objc
+
+// LATER: send in chronological order, older to newer
 
 
 @UIApplicationMain
@@ -97,7 +101,7 @@ extension AppDelegate : UIApplicationDelegate {
         if let testPathArgument = ProcessInfo.processInfo.arguments.first(where: { $0.hasPrefix(testPathPrefix) }) {
             snapshotTestScanImagePath = testPathArgument.replacingOccurrences(of: testPathPrefix, with: "")
         }
-
+        
         return true
     }
     
