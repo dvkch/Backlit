@@ -12,3 +12,6 @@
 #import "MHUICustomization+SY.h"
 #import "SYCropMaskView.h"
 #import "MHGalleryItem+SY.h"
+#import "MHUICustomization+SY.h"
+#import "SYGalleryController.h"
+

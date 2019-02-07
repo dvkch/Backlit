@@ -10,7 +10,6 @@
 #import "SaneScanner-Swift.h"
 #import <Masonry.h>
 #import <SYKit-Swift.h>
-#import "SYGalleryThumbsCell.h"
 #import <SYGradientView.h>
 #import <MHGallery.h>
 #import <AVFoundation/AVUtilities.h>
@@ -71,7 +70,7 @@ static CGFloat const kGradientWidth = 30;
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
-    [self.collectionView registerClass:[SYGalleryThumbsCell class] forCellWithReuseIdentifier:[SYGalleryThumbsCell sy_className]];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"GalleryThumbsCell" bundle:nil] forCellWithReuseIdentifier:GalleryThumbsCell.sy_className];
     [self.collectionView setContentInset:UIEdgeInsetsMake(0, kGradientWidth, 0, kGradientWidth)];
     [self.collectionView setScrollIndicatorInsets:UIEdgeInsetsMake(0, kGradientWidth, 0, kGradientWidth)];
     [self.collectionView setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh
@@ -193,12 +192,12 @@ static CGFloat const kGradientWidth = 30;
         spinnerColor = [UIColor grayColor];
     
     @weakify(self);
-    SYGalleryThumbsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[SYGalleryThumbsCell sy_className] forIndexPath:indexPath];
+    GalleryThumbsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:GalleryThumbsCell.sy_className forIndexPath:indexPath];
     [cell updateWithItems:self.galleryItems
                     index:indexPath.item
          parentController:self.parentViewController.navigationController
              spinnerColor:spinnerColor
-             dismissBlock:^UIImageView *(NSUInteger index)
+                  dismiss:^UIImageView *(NSInteger index)
     {
         @strongify(self)
         
@@ -214,8 +213,8 @@ static CGFloat const kGradientWidth = 30;
         // needed to be sure the cell is loaded
         [self.collectionView layoutIfNeeded];
         
-        SYGalleryThumbsCell *dismissCell =
-        (SYGalleryThumbsCell *)[self.collectionView cellForItemAtIndexPath:dismissIndexPath];
+        GalleryThumbsCell *dismissCell =
+        (GalleryThumbsCell *)[self.collectionView cellForItemAtIndexPath:dismissIndexPath];
         
         return dismissCell.imageView;
     }];
