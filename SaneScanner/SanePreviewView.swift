@@ -90,12 +90,11 @@ class SanePreviewView: UIView {
             refresh()
         }
     }
-    private let margin = CGFloat(15)
     
     // MARK: Views
     private let imageView = UIImageView()
     private let lineView = UIView()
-    private let cropMask = SYCropMaskView()
+    private let cropMask = CropMaskView()
     private let button = UIButton(type: .custom)
     private var ratioConstraint: NSLayoutConstraint?
     
@@ -108,7 +107,7 @@ class SanePreviewView: UIView {
         }
         
         cropMask.isHidden = !device.canCrop
-        cropMask.setCropArea(device.cropArea, andMaxCropArea: device.maxCropArea)
+        cropMask.setCropArea(device.cropArea, maxCropArea: device.maxCropArea)
         imageView.image = device.lastPreviewImage
     }
     
@@ -130,6 +129,8 @@ class SanePreviewView: UIView {
     }
     
     // MARK: Layout
+    private let margin = CGFloat(15)
+    
     override func updateConstraints() {
         var ratio = device?.previewImageRatio() ?? 0
         

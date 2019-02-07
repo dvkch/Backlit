@@ -85,7 +85,6 @@ class GalleryThumbsView: UIView {
     }
     
     // MARK: Properties
-    private let gradientWidth = CGFloat(30)
     weak var parentViewController: UIViewController?
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
@@ -104,6 +103,8 @@ class GalleryThumbsView: UIView {
     }
     
     // MARK: Layout
+    private let gradientWidth = CGFloat(30)
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         centerContent()
