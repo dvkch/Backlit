@@ -48,9 +48,12 @@ private let kImageExtensionPDF  = "pdf"
         thumbsQueue.maxSurvivingOperations = 0
         thumbsQueue.mode = SYOperationQueueModeLIFO // TODO: cleanup
         
-        watcher = DirectoryWatcher.watch(FileManager.documentsDirectoryURL) { [weak self] in
+        watcher = DirectoryWatcher.watch(FileManager.documentsDirectoryURL)
+        // TODO: don't pull all data again since we know what changed
+        watcher?.onNewFiles = { [weak self] _ in
             self?.refreshImageList()
         }
+        watcher?.onDeletedFiles = watcher?.onNewFiles
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
