@@ -8,8 +8,6 @@
 
 #import "SYSaneOption.h"
 
-@class SYSaneDevice;
-
 NSString *NSStringFromSANE_Value_Type(SANE_Value_Type type);
 NSString *NSStringFromSANE_Unit(SANE_Unit unit);
 

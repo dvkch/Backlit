@@ -50,7 +50,7 @@ import SYKit
     private var thumbsView: GalleryThumbsView!
     
     // MARK: Properties
-    private var devices = [SYSaneDevice]()
+    private var devices = [Device]()
     
     // MARK: Actions
     @objc private func settingsButtonTap() {

@@ -20,7 +20,7 @@
 
 @implementation SYSaneOption
 
-+ (instancetype)bestOptionWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
++ (instancetype)bestOptionWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(Device *)device
 {
     switch (opt->type) {
         case SANE_TYPE_BOOL:    return [[SYSaneOptionBool   alloc] initWithCOpt:opt index:index device:device];
@@ -32,7 +32,7 @@
     }
 }
 
-- (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
+- (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(Device *)device
 {
     if (!opt)
         return nil;

@@ -84,7 +84,7 @@ class SanePreviewView: UIView {
     }
     
     // MARK: Properties
-    var device: SYSaneDevice? {
+    var device: Device? {
         didSet {
             setNeedsUpdateConstraints()
             refresh()
@@ -132,11 +132,7 @@ class SanePreviewView: UIView {
     private let margin = CGFloat(15)
     
     override func updateConstraints() {
-        var ratio = device?.previewImageRatio() ?? 0
-        
-        if ratio == 0 {
-            ratio = CGFloat(3) / 4
-        }
+        let ratio = device?.previewImageRatio ?? (CGFloat(3) / 4)
         
         if let ratioConstraint = ratioConstraint {
             imageView.removeConstraint(ratioConstraint)

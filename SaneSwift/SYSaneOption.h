@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "sane.h"
 
-@class SYSaneDevice;
+@class Device;
 @class SYSaneOptionGroup;
 
 NSString *NSStringFromSANE_Value_Type(SANE_Value_Type type);
@@ -18,7 +18,7 @@ NSString *NSStringFromSANE_Unit(SANE_Unit unit);
 @interface SYSaneOption : NSObject
 
 @property (nonatomic, assign) int index;
-@property (nonatomic, strong) SYSaneDevice *device;
+@property (nonatomic, strong) Device *device;
 @property (nonatomic, strong) NSString *identifier;
 @property (nonatomic, strong) NSString *localizedTitle;
 @property (nonatomic, strong) NSString *localizedDesc;
@@ -34,9 +34,9 @@ NSString *NSStringFromSANE_Unit(SANE_Unit unit);
 @property (nonatomic, assign) BOOL capSettableViaHardware;
 @property (nonatomic, assign) SANE_Constraint_Type constraintType;
 
-+ (instancetype)bestOptionWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device;
++ (instancetype)bestOptionWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(Device *)device;
 
-- (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device;
+- (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(Device *)device;
 
 - (BOOL)disabledOrReadOnly;
 - (BOOL)readOnlyOrSingleOption;

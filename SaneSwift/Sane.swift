@@ -153,7 +153,7 @@ extension Sane {
 
 extension Sane {
     // MARK: Device management
-    @objc public func updateDevices(completion: @escaping (_ devices: [SYSaneDevice]?, _ error: Error?) -> ()) {
+    @objc public func updateDevices(completion: @escaping (_ devices: [Device]?, _ error: Error?) -> ()) {
         runOnSaneThread {
             guard !self.isUpdatingDevices else { return }
             
@@ -174,13 +174,11 @@ extension Sane {
                 return
             }
             
-            var devices = [SYSaneDevice]()
+            var devices = [Device]()
             var i = 0
             
             while let rawDevice = rawDevices?.advanced(by: i).pointee {
-                if let device = SYSaneDevice(cDevice: rawDevice) {
-                    devices.append(device)
-                }
+                devices.append(Device(cDevice: rawDevice.pointee))
                 i += 1
             }
             
@@ -194,11 +192,11 @@ extension Sane {
         }
     }
     
-    @objc public func openDevice(_ device: SYSaneDevice, completion: @escaping (Error?) -> ()) {
+    @objc public func openDevice(_ device: Device, completion: @escaping (Error?) -> ()) {
         self.openDevice(device, mainThread: Thread.isMainThread, completion: completion)
     }
 
-    private func openDevice(_ device: SYSaneDevice, mainThread: Bool, completion: @escaping (Error?) -> ()) {
+    private func openDevice(_ device: Device, mainThread: Bool, completion: @escaping (Error?) -> ()) {
         runOnSaneThread {
             guard self.openedDevices[device.name] == nil else { return }
             self.startSane()
@@ -230,7 +228,7 @@ extension Sane {
         }
     }
     
-    @objc public func closeDevice(_ device: SYSaneDevice) {
+    @objc public func closeDevice(_ device: Device) {
         runOnSaneThread {
             guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else { return }
             Sane.logTime { sane_close(handle) }
@@ -242,18 +240,18 @@ extension Sane {
         }
     }
     
-    @objc public func isDeviceOpened(_ device: SYSaneDevice) -> Bool {
+    @objc public func isDeviceOpened(_ device: Device) -> Bool {
         return self.openedDevices[device.name]?.pointerValue != nil
     }
 }
 
 extension Sane {
     // MARK: Options
-    @objc public func listOptions(for device: SYSaneDevice, completion: (() -> ())?) {
+    @objc public func listOptions(for device: Device, completion: (() -> ())?) {
         self.listOptions(for: device, mainThread: Thread.isMainThread, completion: completion)
     }
     
-    private func listOptions(for device: SYSaneDevice, mainThread: Bool, completion: (() -> ())?) {
+    private func listOptions(for device: Device, mainThread: Bool, completion: (() -> ())?) {
         runOnSaneThread {
             guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else { return }
             
@@ -282,7 +280,7 @@ extension Sane {
                 
             }
             
-            device.setOptions(options)
+            device.options = options
             
             if mainThread { DispatchQueue.main.async { completion?() } }
             else { completion?() }
@@ -344,7 +342,7 @@ extension Sane {
         }
     }
 
-    private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: SYSaneDevice, mainThread: Bool, completion: ((_ reloadAllOptions: Bool, _ error: Error?) -> ())?) {
+    private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: Device, mainThread: Bool, completion: ((_ reloadAllOptions: Bool, _ error: Error?) -> ())?) {
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
             completion?(false, SaneError.deviceNotOpened)
             return
@@ -354,11 +352,11 @@ extension Sane {
             var finalReloadAllOptions = false
             var finalError: Error? = nil
             
-            let stdOptions = [SYSaneStandardOption.areaTopLeftX, .areaTopLeftY, .areaBottomRightX, .areaBottomRightY]
+            let stdOptions = [SaneStandardOption.areaTopLeftX, .areaTopLeftY, .areaBottomRightX, .areaBottomRightY]
             let values = [cropArea.minX, cropArea.minY, cropArea.maxX, cropArea.maxY]
             
             for (option, value) in zip(stdOptions, values) {
-                let option = device.standardOption(option) as! SYSaneOptionNumber
+                let option = device.standardOption(for: option) as! SYSaneOptionNumber
                 self.setValueForOption(value: value, auto: false, option: option, completion: { (reloadAllOptions, error) in
                     finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
                     finalError = error
@@ -464,11 +462,11 @@ extension Sane {
 
 extension Sane {
     // MARK: Scan
-    @objc public func preview(device: SYSaneDevice, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
+    @objc public func preview(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
         self.preview(device: device, mainThread: Thread.isMainThread, progress: progress, completion: completion)
     }
     
-    private func preview(device: SYSaneDevice, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
+    private func preview(device: Device, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
         
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
             completion(nil, SaneError.deviceNotOpened)
@@ -476,13 +474,13 @@ extension Sane {
         }
         
         runOnSaneThread {
-            var oldOptions = [SYSaneStandardOption: Any?]()
+            var oldOptions = [SaneStandardOption: Any?]()
             
-            if let optionPreview = device.standardOption(.preview) {
+            if let optionPreview = device.standardOption(for: .preview) {
                 self.setValueForOption(value: true, auto: false, option: optionPreview, completion: nil)
             }
             else {
-                var stdOptions = [SYSaneStandardOption.resolutionX, .resolutionY,
+                var stdOptions = [SaneStandardOption.resolutionX, .resolutionY,
                                   .areaTopLeftX, .areaTopLeftY,
                                   .areaBottomRightX, .areaBottomRightY]
 
@@ -491,19 +489,19 @@ extension Sane {
                 }
                 
                 stdOptions.forEach { stdOption in
-                    guard let option = device.standardOption(stdOption) else { return }
-                    let bestValue = SYBestValueForPreviewValueForOption(stdOption)
+                    guard let option = device.standardOption(for: stdOption) else { return }
+                    let bestValue = stdOption.bestPreviewValue
                     
                     var newValue: Any?
                     var useAuto = false
                     
                     if let castedOption = option as? SYSaneOptionNumber {
                         newValue = castedOption.bestValueForPreview()
-                        useAuto  = (bestValue == SYOptionValue.auto)
+                        useAuto  = (bestValue == .auto)
                         oldOptions[stdOption] = castedOption.value
                     }
                     else if let castedOption = option as? SYSaneOptionString {
-                        if bestValue != SYOptionValue.auto {
+                        if bestValue != .auto {
                             // TODO: raise error?
                             print("Unsupported configuration : option", option.identifier, "is a string but cannot be set to auto")
                             return
@@ -536,12 +534,12 @@ extension Sane {
                 previewError = error
             })
             
-            if let optionPreview = device.standardOption(.preview) {
+            if let optionPreview = device.standardOption(for: .preview) {
                 self.setValueForOption(value: false, auto: false, option: optionPreview, completion: nil)
             }
             else {
                 oldOptions.forEach { (stdOption, value) in
-                    guard let option = device.standardOption(stdOption) else { return }
+                    guard let option = device.standardOption(for: stdOption) else { return }
                     self.setValueForOption(value: value, auto: false, option: option, mainThread: false, completion: { (reloadAll, error) in
                         if reloadAll {
                             self.listOptions(for: device, mainThread: false, completion: nil)
@@ -556,11 +554,11 @@ extension Sane {
         }
     }
     
-    @objc public func scan(device: SYSaneDevice, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: SYSaneScanParameters?, _ error: Error?) -> ())?) {
+    @objc public func scan(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: SYSaneScanParameters?, _ error: Error?) -> ())?) {
         self.scan(device: device, useScanCropArea: true, mainThread: Thread.isMainThread, progress: progress, completion: completion)
     }
     
-    private func scan(device: SYSaneDevice, useScanCropArea: Bool, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: SYSaneScanParameters?, _ error: Error?) -> ())?) {
+    private func scan(device: Device, useScanCropArea: Bool, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: SYSaneScanParameters?, _ error: Error?) -> ())?) {
         
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
             completion?(nil, nil, SaneError.deviceNotOpened)

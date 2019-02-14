@@ -14,7 +14,7 @@
 
 @implementation SYSaneOptionBool
 
-- (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
+- (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(Device *)device
 {
     if (opt->type != SANE_TYPE_BOOL)
         return nil;

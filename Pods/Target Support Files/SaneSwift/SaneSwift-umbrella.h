@@ -12,7 +12,6 @@
 
 #import "NSObject+SY.h"
 #import "SaneSwiftC.h"
-#import "SYSaneDevice.h"
 #import "SYSaneOption.h"
 #import "SYSaneOptionBool.h"
 #import "SYSaneOptionButton.h"

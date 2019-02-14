@@ -15,7 +15,7 @@ import MHVideoPhotoGallery
 
 class DeviceVC: UIViewController {
 
-    init(device: SYSaneDevice) {
+    init(device: Device) {
         self.device = device
         super.init(nibName: nil, bundle: nil)
     }
@@ -63,7 +63,7 @@ class DeviceVC: UIViewController {
     
     // MARK: Properties
     // TODO: use non nullable
-    private let device: SYSaneDevice
+    private let device: Device
     private var isRefreshing: Bool = false
     
     // MARK: Views
@@ -189,7 +189,7 @@ class DeviceVC: UIViewController {
     }
     
     func optionGroups() -> [SYSaneOptionGroup] {
-        return device.filteredGroupedOptionsWithoutAdvanced(!Preferences.shared.showAdvancedOptions) ?? []
+        return device.groupedOptions(includeAdvanced: Preferences.shared.showAdvancedOptions)
     }
     
     func optionGroup(tableViewSection section: Int) -> SYSaneOptionGroup? {
@@ -222,7 +222,7 @@ class DeviceVC: UIViewController {
         guard device.cropArea == device.maxCropArea else { return }
     
         // update only if we don't require color mode to be set at auto, or when auto is not available
-        guard !Preferences.shared.previewWithAutoColorMode || device.standardOption(.colorMode)?.capSetAuto != true else { return }
+        guard !Preferences.shared.previewWithAutoColorMode || device.standardOption(for: .colorMode)?.capSetAuto != true else { return }
     
         device.lastPreviewImage = image
         
@@ -268,9 +268,9 @@ extension DeviceVC {
 extension DeviceVC {
     func imageMetadata(scanParameters: SYSaneScanParameters) -> SYMetadata? {
 
-        let optionResX = device.standardOption(.resolutionX) as? SYSaneOptionNumber
-        let optionResY = device.standardOption(.resolutionY) as? SYSaneOptionNumber
-        let optionRes = device.standardOption(.resolution) as? SYSaneOptionNumber
+        let optionResX = device.standardOption(for: .resolutionX) as? SYSaneOptionNumber
+        let optionResY = device.standardOption(for: .resolutionY) as? SYSaneOptionNumber
+        let optionRes = device.standardOption(for: .resolution) as? SYSaneOptionNumber
         
         guard let resXInches = optionResX?.value ?? optionRes?.value, let resYInches = optionResY?.value ?? optionRes?.value else { return nil }
 
@@ -302,7 +302,7 @@ extension DeviceVC {
 
 extension DeviceVC : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        if device.allOptions?.count == 0 {
+        if device.options.isEmpty {
             return 0
         }
         return optionGroups().count + 1

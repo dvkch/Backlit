@@ -8,14 +8,13 @@
 
 #import "SYSaneOptionNumber.h"
 #import <SaneSwift/SaneSwift-Swift.h>
-#import "SYSaneDevice.h"
 
 @interface SYSaneOptionNumber ()
 @end
 
 @implementation SYSaneOptionNumber
 
-- (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(SYSaneDevice *)device
+- (instancetype)initWithCOpt:(const SANE_Option_Descriptor*)opt index:(int)index device:(Device *)device
 {
     if (opt->type != SANE_TYPE_INT && opt->type != SANE_TYPE_FIXED)
         return nil;
@@ -172,19 +171,18 @@
 
 - (NSNumber *)bestValueForPreview
 {
-    SYSaneStandardOption std = SYSaneStandardOptionFromNSString(self.identifier);
-    SYOptionValue value = SYBestValueForPreviewValueForOption(std);
+    SaneStandardOptionPreviewValue value = [SaneStandardOptionPreviewHelper forIdentifier:self.identifier];
     
-    if (value == SYOptionValueAuto)
+    if (value == SaneStandardOptionPreviewValueAuto)
         return nil;
     
     if (self.constraintType == SANE_CONSTRAINT_RANGE)
-        return (value == SYOptionValueMax ? self.maxValue : self.minValue);
+        return (value == SaneStandardOptionPreviewValueMax ? self.maxValue : self.minValue);
     
     if (self.constraintType == SANE_CONSTRAINT_WORD_LIST)
     {
         NSArray <NSNumber *> *sortedValues = [self.constraintValues sortedArrayUsingSelector:@selector(compare:)];
-        return (value == SYOptionValueMax ? sortedValues.lastObject : sortedValues.firstObject);
+        return (value == SaneStandardOptionPreviewValueMax ? sortedValues.lastObject : sortedValues.firstObject);
     }
     
     return self.value;

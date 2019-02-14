@@ -7,7 +7,7 @@
 //
 
 // TODO: Move
-enum SaneStandardOption: CaseIterable {
+public enum SaneStandardOption: CaseIterable {
     case preview, resolution, resolutionX, resolutionY, colorMode, areaTopLeftX, areaTopLeftY, areaBottomRightX, areaBottomRightY
     
     var saneIdentifier: String {
@@ -29,17 +29,17 @@ enum SaneStandardOption: CaseIterable {
     }
 }
 
-@objc enum SaneStandardOptionPreviewValue: Int {
+@objc public enum SaneStandardOptionPreviewValue: Int {
     case auto, min, max
 }
 
-@objc class SaneStandardOptionHelper: NSObject {
-    @objc static func fromNSString(_ string: String) -> SaneStandardOptionPreviewValue {
-        return SaneStandardOption.allCases.first(where: { $0.saneIdentifier == string })?.bestPreviewValue ?? .auto
+@objc public class SaneStandardOptionPreviewHelper: NSObject {
+    @objc public class func forIdentifier(_ value: String) -> SaneStandardOptionPreviewValue {
+        return SaneStandardOption.allCases.first(where: { $0.saneIdentifier == value })?.bestPreviewValue ?? .auto
     }
 }
 
-extension SaneStandardOption {
+public extension SaneStandardOption {
     var bestPreviewValue: SaneStandardOptionPreviewValue {
         let meh = SANE_NAME_PREVIEW
         switch self {
@@ -51,13 +51,14 @@ extension SaneStandardOption {
     }
 }
 
-class Device {
+@objc public class Device: NSObject {
     // MARK: Initializers
     init(name: String, type: String, vendor: String, model: String) {
         self.name = name
         self.type = type
         self.vendor = vendor
         self.model = model
+        super.init()
     }
     
     init(cDevice: SANE_Device) {
@@ -65,29 +66,30 @@ class Device {
         self.model  = NSStringFromSaneString(cDevice.model)  ?? ""
         self.vendor = NSStringFromSaneString(cDevice.vendor) ?? ""
         self.type   = Sane.shared.translation(for: NSStringFromSaneString(cDevice.type) ?? "")
+        super.init()
     }
     
     // MARK: Device properties
-    let name: String
-    let type: String
-    let vendor: String
-    let model: String
+    public let name: String
+    public let type: String
+    public let vendor: String
+    public let model: String
     
     // MARK: Options
-    var options = [SYSaneOption]() {
+    public internal(set) var options = [SYSaneOption]() {
         didSet {
             updateCropArea()
         }
     }
     
     // MARK: Cache properties
-    var lastPreviewImage: UIImage?
-    var cropArea: CGRect = .zero
+    public var lastPreviewImage: UIImage?
+    public var cropArea: CGRect = .zero
 }
 
 // MARK: Options
 extension Device {
-    func groupedOptions(includeAdvanced: Bool) -> [SYSaneOptionGroup] {
+    public func groupedOptions(includeAdvanced: Bool) -> [SYSaneOptionGroup] {
         var filteredOptions = options
             .filter { $0.identifier != SaneStandardOption.preview.saneIdentifier }
         
@@ -103,25 +105,25 @@ extension Device {
         return SYSaneOption.groupedElements(filteredOptions, removeEmptyGroups: true) ?? []
     }
     
-    func standardOption(for stdOption: SaneStandardOption) -> SYSaneOption? {
+    public func standardOption(for stdOption: SaneStandardOption) -> SYSaneOption? {
         return option(with: stdOption.saneIdentifier)
     }
     
-    func option(with identifier: String) -> SYSaneOption? {
+    public func option(with identifier: String) -> SYSaneOption? {
         return options.first(where: { $0.identifier == identifier })
     }
 }
 
 // MARK: Derived capacities
 extension Device {
-    var canCrop: Bool {
+    public var canCrop: Bool {
         let existingSettableOptions = SaneStandardOption.cropOptions
             .compactMap { standardOption(for: $0) }
             .filter { $0.capSettableViaSoftware && !$0.capInactive }
         return existingSettableOptions.count == 4
     }
     
-    var maxCropArea: CGRect {
+    public var maxCropArea: CGRect {
         // TODO: clean up
         let options = SaneStandardOption.cropOptions
             .compactMap { standardOption(for: $0) as? SYSaneOptionNumber }
@@ -149,7 +151,7 @@ extension Device {
         return CGRect(x: tlX, y: tlY, width: brX - tlX, height: brY - tlY)
     }
     
-    var previewImageRation: CGFloat? {
+    public var previewImageRatio: CGFloat? {
         // TODO: was cached, still needed?
         guard !options.isEmpty else { return nil }
         if maxCropArea != .zero {
@@ -180,7 +182,7 @@ extension Device {
 
 // MARK: Helpers
 extension Device {
-    var host: String {
+    public var host: String {
         // TODO: ugly, hacky, definitely wrong. fix when we get the chance, remove if unused
         return name.components(separatedBy: ":").first ?? ""
     }
