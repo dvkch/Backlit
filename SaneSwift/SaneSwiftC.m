@@ -51,3 +51,10 @@ void SaneAuthCallBack(SANE_String_Const resource, SANE_Char *username, SANE_Char
 SANE_Word SaneFixedFromDouble(double value) {
     return SANE_FIX(value);
 }
+
+NSString * _Nullable NSStringFromSaneString(SANE_String_Const _Nullable cString) {
+    if (cString == NULL) {
+        return nil;
+    }
+    return [[NSString alloc] initWithCString:cString encoding:NSUTF8StringEncoding];
+}

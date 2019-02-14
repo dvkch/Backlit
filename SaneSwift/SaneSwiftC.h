@@ -20,3 +20,5 @@ FOUNDATION_EXPORT void SaneSetAuthBlock(SaneAuthBlock block);
 FOUNDATION_EXPORT void SaneAuthCallBack(SANE_String_Const resource, SANE_Char *username, SANE_Char *password);
 
 FOUNDATION_EXPORT SANE_Word SaneFixedFromDouble(double value);
+
+FOUNDATION_EXPORT NSString * _Nullable NSStringFromSaneString(SANE_String_Const _Nullable cString);
