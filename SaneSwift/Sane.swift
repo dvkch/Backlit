@@ -554,11 +554,11 @@ extension Sane {
         }
     }
     
-    @objc public func scan(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: SYSaneScanParameters?, _ error: Error?) -> ())?) {
+    public func scan(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: ScanParameters?, _ error: Error?) -> ())?) {
         self.scan(device: device, useScanCropArea: true, mainThread: Thread.isMainThread, progress: progress, completion: completion)
     }
     
-    private func scan(device: Device, useScanCropArea: Bool, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: SYSaneScanParameters?, _ error: Error?) -> ())?) {
+    private func scan(device: Device, useScanCropArea: Bool, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: ScanParameters?, _ error: Error?) -> ())?) {
         
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
             completion?(nil, nil, SaneError.deviceNotOpened)
@@ -597,14 +597,14 @@ extension Sane {
                 return
             }
 
-            let estimatedParameters = SYSaneScanParameters(cParams: estimatedParams)!
+            let estimatedParameters = ScanParameters(cParams: estimatedParams)
             
-            var data = Data(capacity: Int(estimatedParameters.fileSize() + 1))
-            let bufferMaxSize = max(100 * 1000, Int(estimatedParameters.fileSize()) / 100)
+            var data = Data(capacity: estimatedParameters.fileSize + 1)
+            let bufferMaxSize = max(100 * 1000, estimatedParameters.fileSize / 100)
 
             let buffer = malloc(Int(bufferMaxSize))!.bindMemory(to: UInt8.self, capacity: bufferMaxSize)
             var bufferActualSize: SANE_Int = 0
-            var parameters: SYSaneScanParameters?
+            var parameters: ScanParameters?
             
             let prevLogLevel = SaneGetLogLevel()
             SaneSetLogLevel(0)
@@ -615,8 +615,8 @@ extension Sane {
             
             while status == SANE_STATUS_GOOD {
                 
-                if let parameters = parameters, let progress = progress, parameters.fileSize() > 0 {
-                    let percent = Float(data.count) / Float(parameters.fileSize())
+                if let parameters = parameters, let progress = progress, parameters.fileSize > 0 {
+                    let percent = Float(data.count) / Float(parameters.fileSize)
                     
                     if self.configuration.showIncompleteScanImages {
                         if percent > progressForLastIncompletePreview + incompletePreviewStep {
@@ -649,7 +649,7 @@ extension Sane {
                 if parameters == nil {
                     var params = SANE_Parameters()
                     sane_get_parameters(handle, &params)
-                    parameters = SYSaneScanParameters(cParams: params)!
+                    parameters = ScanParameters(cParams: params)
                 }
                 
                 // lineart requires inverting pixel values

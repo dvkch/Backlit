@@ -78,7 +78,7 @@ class DeviceVC: UIViewController {
         var alertViewImageView: UIImageView?
         var item: MHGalleryItem?
         
-        let block = { [weak self] (progress: Float, finished: Bool, image: UIImage?, parameters: SYSaneScanParameters?, error: Error?) in
+        let block = { [weak self] (progress: Float, finished: Bool, image: UIImage?, parameters: ScanParameters?, error: Error?) in
             guard let self = self else { return }
             
             // Finished with error
@@ -266,7 +266,7 @@ extension DeviceVC {
 }
 
 extension DeviceVC {
-    func imageMetadata(scanParameters: SYSaneScanParameters) -> SYMetadata? {
+    func imageMetadata(scanParameters: ScanParameters) -> SYMetadata? {
 
         let optionResX = device.standardOption(for: .resolutionX) as? SYSaneOptionNumber
         let optionResY = device.standardOption(for: .resolutionY) as? SYSaneOptionNumber

@@ -188,3 +188,12 @@ extension Device {
     }
 }
 
+// MARK: CustomStringConvertible
+extension Device {
+    public override var description: String {
+        return "Device: \(name), \(type), \(vendor), \(model), \(options.count) options"
+    }
+}
+
+
+

@@ -18,7 +18,6 @@
 #import "SYSaneOptionGroup.h"
 #import "SYSaneOptionNumber.h"
 #import "SYSaneOptionString.h"
-#import "SYSaneScanParameters.h"
 #import "sane.h"
 #import "saneopts.h"
 

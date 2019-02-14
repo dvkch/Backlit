@@ -24,17 +24,7 @@ public extension UIImage {
         }
     }
     
-    @objc static func sy_imageFromSane(data: Data?, url: URL?, parameters: SYSaneScanParameters) throws -> UIImage {
-        if let data = data {
-            return try self.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: parameters)
-        }
-        if let url = url {
-            return try self.sy_imageFromSane(source: UIImage.SaneSource.file(url), parameters: parameters)
-        }
-        throw SaneError.noImageData
-    }
-    
-    static func sy_imageFromSane(source: SaneSource, parameters: SYSaneScanParameters) throws -> UIImage {
+    static func sy_imageFromSane(source: SaneSource, parameters: ScanParameters) throws -> UIImage {
         guard let provider = source.provider else {
             throw SaneError.noImageData
         }
@@ -58,11 +48,11 @@ public extension UIImage {
         
         // TODO: cleanup UInt -> Int
         guard let sourceImage = CGImage(
-            width: Int(parameters.width),
-            height: Int(parameters.height),
-            bitsPerComponent: Int(parameters.depth),
-            bitsPerPixel: Int(parameters.depth * parameters.numberOfChannels()),
-            bytesPerRow: Int(parameters.bytesPerLine),
+            width: parameters.width,
+            height: parameters.height,
+            bitsPerComponent: parameters.depth,
+            bitsPerPixel: parameters.depth * parameters.numberOfChannels,
+            bytesPerRow: parameters.bytesPerLine,
             space: colorSpace,
             bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue),
             provider: provider,
@@ -93,7 +83,7 @@ public extension UIImage {
             throw SaneError.cannotGenerateImage
         }
         
-        context.draw(sourceImage, in: CGRect(origin: .zero, size: parameters.size()))
+        context.draw(sourceImage, in: CGRect(origin: .zero, size: parameters.size))
         
         guard let destCGImage = context.makeImage() else {
             throw SaneError.cannotGenerateImage
@@ -102,19 +92,19 @@ public extension UIImage {
     }
     
     
-    @objc static func sy_imageFromIncompleteSane(data: Data, parameters: SYSaneScanParameters) throws -> UIImage {
-        let incompleteParams = SYSaneScanParameters(forIncompleteDataOfLength: UInt(data.count), complete: parameters)!
-        guard incompleteParams.fileSize() > 0 else {
+    static func sy_imageFromIncompleteSane(data: Data, parameters: ScanParameters) throws -> UIImage {
+        let incompleteParams = parameters.incompleteParameters(dataLength: data.count)
+        guard incompleteParams.fileSize > 0 else {
             throw SaneError.noImageData
         }
         
         let image = try self.sy_imageFromSane(source: .data(data), parameters: incompleteParams)
         
-        UIGraphicsBeginImageContextWithOptions(parameters.size(), true, 1.0)
+        UIGraphicsBeginImageContextWithOptions(parameters.size, true, 1.0)
         defer { UIGraphicsEndImageContext() }
         
         UIColor.white.setFill()
-        UIBezierPath(rect: CGRect(origin: .zero, size: parameters.size())).fill()
+        UIBezierPath(rect: CGRect(origin: .zero, size: parameters.size)).fill()
         image.draw(in: CGRect(origin: .zero, size: image.size))
         
         guard let paddedImage = UIGraphicsGetImageFromCurrentImageContext() else {
