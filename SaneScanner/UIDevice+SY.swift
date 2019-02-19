@@ -25,7 +25,7 @@ extension UIDevice {
             print("Error while obtaining used memory:", error)
         }
         
-        return (kerr == KERN_SUCCESS) ? info.resident_size : 0; // size in bytes
+        return (kerr == KERN_SUCCESS) ? UInt(info.resident_size) : 0; // size in bytes
     }
     
     var freeMemory: UInt {
@@ -43,7 +43,7 @@ extension UIDevice {
             })
         }
         
-        return UInt(vm_stat.free_count) * pageSize
+        return UInt(vm_stat.free_count) * UInt(pageSize)
     }
     
     func logMemoryUsage() {

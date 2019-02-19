@@ -1,5 +1,5 @@
 //
-//  SYSaneOption.h
+//  SaneSwiftC.m
 //  SaneScanner
 //
 //  Created by rominet on 06/05/15.
@@ -50,6 +50,10 @@ void SaneAuthCallBack(SANE_String_Const resource, SANE_Char *username, SANE_Char
 
 SANE_Word SaneFixedFromDouble(double value) {
     return SANE_FIX(value);
+}
+
+double SaneDoubleFromFixed(SANE_Word value) {
+    return SANE_UNFIX(value);
 }
 
 NSString * _Nullable NSStringFromSaneString(SANE_String_Const _Nullable cString) {

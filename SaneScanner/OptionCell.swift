@@ -31,7 +31,7 @@ class OptionCell: UITableViewCell {
     private var constraingLabelDescrHeight: NSLayoutConstraint?
 
     // MARK: Properties
-    private var option: SYSaneOption?
+    private var option: DeviceOption?
     private var prefKey: Preferences.Key?
     @objc var showDescription: Bool = false {
         didSet {
@@ -40,7 +40,7 @@ class OptionCell: UITableViewCell {
     }
 
     // MARK: Content
-    @objc func updateWith(option: SYSaneOption) {
+    func updateWith(option: DeviceOption) {
         self.option = option
         self.prefKey = nil
         updateTexts()
@@ -68,7 +68,7 @@ class OptionCell: UITableViewCell {
         var normalTextColor = UIColor.darkText
         var descTextColor   = UIColor.gray
         
-        if let option = self.option, option.disabledOrReadOnly() {
+        if let option = self.option, option.disabledOrReadOnly {
             backgroundColor = UIColor(white: 0.98, alpha: 1)
             normalTextColor = UIColor.lightGray
             descTextColor   = UIColor.lightGray
@@ -82,7 +82,7 @@ class OptionCell: UITableViewCell {
         if let option = self.option {
             labelTitle.text = option.localizedTitle
             labelValue.text = option.valueString(withUnit: true)
-            labelDescr.text = option.localizedDesc
+            labelDescr.text = option.localizedDescr
         }
         else if let prefKey = self.prefKey {
             labelTitle.text = prefKey.localizedTitle
@@ -96,7 +96,7 @@ class OptionCell: UITableViewCell {
     // MARK: Layout
     private static let sizingCell = UINib(nibName: "OptionCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! OptionCell
     
-    @objc static func cellHeight(option: SYSaneOption, showDescription: Bool, width: CGFloat) -> CGFloat {
+    static func cellHeight(option: DeviceOption, showDescription: Bool, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(option: option)
         sizingCell.showDescription = showDescription
         return sizingCell.sy_cellHeight(forWidth: width)

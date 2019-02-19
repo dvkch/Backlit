@@ -24,24 +24,20 @@ public enum SaneStandardOption: CaseIterable {
         }
     }
 
+    init?(saneIdentifier: String?) {
+        guard let option = SaneStandardOption.allCases.first(where: { $0.saneIdentifier == saneIdentifier }) else { return nil }
+        self = option
+    }
+    
     static var cropOptions: [SaneStandardOption] {
         return [.areaTopLeftX, .areaTopLeftY, .areaBottomRightX, .areaBottomRightY]
     }
-}
 
-@objc public enum SaneStandardOptionPreviewValue: Int {
-    case auto, min, max
-}
-
-@objc public class SaneStandardOptionPreviewHelper: NSObject {
-    @objc public class func forIdentifier(_ value: String) -> SaneStandardOptionPreviewValue {
-        return SaneStandardOption.allCases.first(where: { $0.saneIdentifier == value })?.bestPreviewValue ?? .auto
+    public enum PreviewValue {
+        case auto, min, max
     }
-}
 
-public extension SaneStandardOption {
-    var bestPreviewValue: SaneStandardOptionPreviewValue {
-        let meh = SANE_NAME_PREVIEW
+    var bestPreviewValue: PreviewValue {
         switch self {
         case .preview, .colorMode:                      return .auto
         case .resolution, .resolutionX, .resolutionY:   return .min
@@ -76,7 +72,7 @@ public extension SaneStandardOption {
     public let model: String
     
     // MARK: Options
-    public internal(set) var options = [SYSaneOption]() {
+    public internal(set) var options = [DeviceOption]() {
         didSet {
             updateCropArea()
         }
@@ -89,27 +85,27 @@ public extension SaneStandardOption {
 
 // MARK: Options
 extension Device {
-    public func groupedOptions(includeAdvanced: Bool) -> [SYSaneOptionGroup] {
+    public func groupedOptions(includeAdvanced: Bool) -> [DeviceOptionGroup] {
         var filteredOptions = options
             .filter { $0.identifier != SaneStandardOption.preview.saneIdentifier }
         
         if canCrop {
             let cropOptionsIDs = SaneStandardOption.cropOptions.map { $0.saneIdentifier }
-            filteredOptions.removeAll(where: { cropOptionsIDs.contains($0.identifier) })
+            filteredOptions.removeAll(where: { $0.identifier != nil && cropOptionsIDs.contains($0.identifier!) })
         }
         
         if !includeAdvanced {
             filteredOptions.removeAll(where: { $0.capAdvanced })
         }
         
-        return SYSaneOption.groupedElements(filteredOptions, removeEmptyGroups: true) ?? []
+        return DeviceOption.groupedOptions(filteredOptions, removeEmpty: true)
     }
     
-    public func standardOption(for stdOption: SaneStandardOption) -> SYSaneOption? {
+    public func standardOption(for stdOption: SaneStandardOption) -> DeviceOption? {
         return option(with: stdOption.saneIdentifier)
     }
     
-    public func option(with identifier: String) -> SYSaneOption? {
+    public func option(with identifier: String) -> DeviceOption? {
         return options.first(where: { $0.identifier == identifier })
     }
 }
@@ -126,7 +122,7 @@ extension Device {
     public var maxCropArea: CGRect {
         // TODO: clean up
         let options = SaneStandardOption.cropOptions
-            .compactMap { standardOption(for: $0) as? SYSaneOptionNumber }
+            .compactMap { standardOption(for: $0) as? DeviceOptionNumber }
             .filter { $0.capSettableViaSoftware && !$0.capInactive }
         
         guard options.count == 4 else { return .zero }
@@ -135,16 +131,16 @@ extension Device {
         
         options.forEach { (option) in
             if option.identifier == SaneStandardOption.areaTopLeftX.saneIdentifier {
-                tlX = option.bestValueForPreview()?.doubleValue ?? 0
+                tlX = option.bestValueForPreview?.doubleValue ?? 0
             }
             if option.identifier == SaneStandardOption.areaTopLeftY.saneIdentifier {
-                tlY = option.bestValueForPreview()?.doubleValue ?? 0
+                tlY = option.bestValueForPreview?.doubleValue ?? 0
             }
             if option.identifier == SaneStandardOption.areaBottomRightX.saneIdentifier {
-                brX = option.bestValueForPreview()?.doubleValue ?? 0
+                brX = option.bestValueForPreview?.doubleValue ?? 0
             }
             if option.identifier == SaneStandardOption.areaBottomRightY.saneIdentifier {
-                brY = option.bestValueForPreview()?.doubleValue ?? 0
+                brY = option.bestValueForPreview?.doubleValue ?? 0
             }
         }
         

@@ -188,16 +188,16 @@ class DeviceVC: UIViewController {
         }
     }
     
-    func optionGroups() -> [SYSaneOptionGroup] {
+    func optionGroups() -> [DeviceOptionGroup] {
         return device.groupedOptions(includeAdvanced: Preferences.shared.showAdvancedOptions)
     }
     
-    func optionGroup(tableViewSection section: Int) -> SYSaneOptionGroup? {
+    func optionGroup(tableViewSection section: Int) -> DeviceOptionGroup? {
         guard section - 1 < optionGroups().count else { return nil }
         return optionGroups()[section - 1]
     }
     
-    func option(tableViewIndexPath: IndexPath) -> SYSaneOption? {
+    func option(tableViewIndexPath: IndexPath) -> DeviceOption? {
         return optionGroup(tableViewSection: tableViewIndexPath.section)?.items[tableViewIndexPath.row]
     }
 
@@ -268,9 +268,9 @@ extension DeviceVC {
 extension DeviceVC {
     func imageMetadata(scanParameters: ScanParameters) -> SYMetadata? {
 
-        let optionResX = device.standardOption(for: .resolutionX) as? SYSaneOptionNumber
-        let optionResY = device.standardOption(for: .resolutionY) as? SYSaneOptionNumber
-        let optionRes = device.standardOption(for: .resolution) as? SYSaneOptionNumber
+        let optionResX = device.standardOption(for: .resolutionX) as? DeviceOptionNumber
+        let optionResY = device.standardOption(for: .resolutionY) as? DeviceOptionNumber
+        let optionRes = device.standardOption(for: .resolution) as? DeviceOptionNumber
         
         guard let resXInches = optionResX?.value ?? optionRes?.value, let resYInches = optionResY?.value ?? optionRes?.value else { return nil }
 

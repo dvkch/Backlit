@@ -255,7 +255,7 @@ extension Sane {
         runOnSaneThread {
             guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else { return }
             
-            var options = [SYSaneOption]()
+            var options = [DeviceOption]()
             
             Sane.logTime {
                 
@@ -273,7 +273,7 @@ extension Sane {
                 
                 for i in 1..<count {
                     descriptor = sane_get_option_descriptor(handle, i)
-                    options.append(SYSaneOption.bestOption(withCOpt: descriptor, index: i, device: device)!)
+                    options.append(DeviceOption.bestOption(cOpt: descriptor!.pointee, index: Int(i), device: device))
                 }
                 
                 options.forEach { $0.refreshValue(nil) }
@@ -287,11 +287,11 @@ extension Sane {
         }
     }
     
-    @objc public func valueForOption(_ option: SYSaneOption, completion: @escaping (_ value: Any?, _ error: Error?) -> ()) {
+    public func valueForOption(_ option: DeviceOption, completion: @escaping (_ value: Any?, _ error: Error?) -> ()) {
         self.valueForOption(option, mainThread: Thread.isMainThread, completion: completion)
     }
     
-    private func valueForOption(_ option: SYSaneOption, mainThread: Bool, completion: @escaping (_ value: Any?, _ error: Error?) -> ()) {
+    private func valueForOption(_ option: DeviceOption, mainThread: Bool, completion: @escaping (_ value: Any?, _ error: Error?) -> ()) {
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
             completion(nil, SaneError.deviceNotOpened)
             return
@@ -316,7 +316,7 @@ extension Sane {
             // TODO: use something else than malloc
             let value = malloc(Int(option.size))!
             
-            let s = Sane.logTime { sane_control_option(handle, option.index, SANE_ACTION_GET_VALUE, value, nil) }
+            let s = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_GET_VALUE, value, nil) }
             
             guard s == SANE_STATUS_GOOD else {
                 if mainThread { DispatchQueue.main.async { completion(nil, SaneError.fromStatus(s)) } }
@@ -356,7 +356,7 @@ extension Sane {
             let values = [cropArea.minX, cropArea.minY, cropArea.maxX, cropArea.maxY]
             
             for (option, value) in zip(stdOptions, values) {
-                let option = device.standardOption(for: option) as! SYSaneOptionNumber
+                let option = device.standardOption(for: option) as! DeviceOptionNumber
                 self.setValueForOption(value: value, auto: false, option: option, completion: { (reloadAllOptions, error) in
                     finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
                     finalError = error
@@ -370,11 +370,11 @@ extension Sane {
         }
     }
 
-    @objc public func setValueForOption(value: Any?, auto: Bool, option: SYSaneOption, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
+    public func setValueForOption(value: Any?, auto: Bool, option: DeviceOption, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
         self.setValueForOption(value: value, auto: auto, option: option, mainThread: Thread.isMainThread, completion: completion)
     }
 
-    private func setValueForOption(value: Any?, auto: Bool, option: SYSaneOption, mainThread: Bool, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
+    private func setValueForOption(value: Any?, auto: Bool, option: DeviceOption, mainThread: Bool, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
             completion?(false, SaneError.deviceNotOpened)
             return
@@ -412,9 +412,9 @@ extension Sane {
             let status: SANE_Status
             
             if auto {
-                status = Sane.logTime { sane_control_option(handle, option.index, SANE_ACTION_SET_AUTO, nil, &info) }
+                status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_AUTO, nil, &info) }
             } else {
-                status = Sane.logTime { sane_control_option(handle, option.index, SANE_ACTION_SET_VALUE, byteValue, &info) }
+                status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_VALUE, byteValue, &info) }
             }
             
             let reloadAllOptions = ((info & SANE_INFO_RELOAD_OPTIONS) > 0) || ((info & SANE_INFO_RELOAD_PARAMS) > 0)
@@ -423,23 +423,23 @@ extension Sane {
             if status == SANE_STATUS_GOOD && !auto {
                 // TODO: was using byteValue before, needed?
                 if option.type == SANE_TYPE_BOOL {
-                    let castedOption = option as! SYSaneOptionBool
+                    let castedOption = option as! DeviceOptionBool
                     castedOption.value = (value as? Bool) ?? false
                     updatedValue = true
                 }
                 else if option.type == SANE_TYPE_INT {
-                    let castedOption = option as! SYSaneOptionNumber
+                    let castedOption = option as! DeviceOptionNumber
                     castedOption.value = NSNumber(value: (value as? Int) ?? 0)
                     updatedValue = true
                 }
                 else if option.type == SANE_TYPE_FIXED {
-                    let castedOption = option as! SYSaneOptionNumber
+                    let castedOption = option as! DeviceOptionNumber
                     // [castedOption setValue:@(SANE_UNFIX(((SANE_Fixed *)byteValue)[0]))];
                     castedOption.value = NSNumber(value: (value as? Double) ?? 0)
                     updatedValue = true
                 }
                 else if option.type == SANE_TYPE_STRING {
-                    let castedOption = option as! SYSaneOptionString
+                    let castedOption = option as! DeviceOptionString
                     castedOption.value = (value as? String)
                     updatedValue = true
                 }
@@ -495,12 +495,12 @@ extension Sane {
                     var newValue: Any?
                     var useAuto = false
                     
-                    if let castedOption = option as? SYSaneOptionNumber {
-                        newValue = castedOption.bestValueForPreview()
+                    if let castedOption = option as? DeviceOptionNumber {
+                        newValue = castedOption.bestValueForPreview
                         useAuto  = (bestValue == .auto)
                         oldOptions[stdOption] = castedOption.value
                     }
-                    else if let castedOption = option as? SYSaneOptionString {
+                    else if let castedOption = option as? DeviceOptionString {
                         if bestValue != .auto {
                             // TODO: raise error?
                             print("Unsupported configuration : option", option.identifier, "is a string but cannot be set to auto")

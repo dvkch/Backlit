@@ -15,12 +15,12 @@ import PKYStepper
 // TODO: replace by multiple views conforming to simple protocol, option returns the type of view it needs?
 class SaneOptionUI: NSObject {
 
-    static func showDetails(for option: SYSaneOption) {
-        DLAVAlertView(title: option.localizedDesc, message: option.localizedDesc, delegate: nil, cancel: "ACTION CLOSE".localized, others: []).show()
+    static func showDetails(for option: DeviceOption) {
+        DLAVAlertView(title: option.localizedTitle, message: option.localizedDescr, delegate: nil, cancel: "ACTION CLOSE".localized, others: []).show()
     }
     
-    static func showDetailsAndInput(for option: SYSaneOption, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
-        guard !option.readOnlyOrSingleOption() else {
+    static func showDetailsAndInput(for option: DeviceOption, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+        guard !option.readOnlyOrSingleOption else {
             showDetails(for: option)
             return
         }
@@ -30,23 +30,23 @@ class SaneOptionUI: NSObject {
             showOptionsInput(for: option, titles: ["OPTION BOOL ON".localized, "OPTION BOOL OFF".localized], values: [true, false], completion)
             
         case SANE_TYPE_INT, SANE_TYPE_FIXED:
-            let castOption = option as! SYSaneOptionNumber
+            let castOption = option as! DeviceOptionNumber
             if option.constraintType == SANE_CONSTRAINT_RANGE {
                 showSliderInput(for: castOption, completion)
             }
             else {
-                showOptionsInput(for: castOption, titles: castOption.constraintValues(withUnit: true), values: castOption.constraintValues, completion)
+                showOptionsInput(for: castOption, titles: castOption.constraintValues(withUnit: true) ?? [], values: castOption.constraintValues ?? [], completion)
             }
         case SANE_TYPE_STRING:
-            let castOption = option as! SYSaneOptionString
+            let castOption = option as! DeviceOptionString
             if castOption.constraintType == SANE_CONSTRAINT_NONE {
                 showTextInput(for: castOption, completion)
             }
             else {
-                showOptionsInput(for: option, titles: castOption.constraintValues, values: castOption.constraintValues, completion)
+                showOptionsInput(for: option, titles: castOption.constraintValues(withUnit: true) ?? [], values: castOption.constraintValues ?? [], completion)
             }
         case SANE_TYPE_BUTTON:
-            self.showButtonInput(for: option as! SYSaneOptionButton, completion)
+            self.showButtonInput(for: option as! DeviceOptionButton, completion)
             
         case SANE_TYPE_GROUP:
             self.showDetails(for: option)
@@ -56,10 +56,10 @@ class SaneOptionUI: NSObject {
         }
     }
 
-    private static func showButtonInput(for option: SYSaneOptionButton, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    private static func showButtonInput(for option: DeviceOptionButton, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
         DLAVAlertView(
             title: option.localizedTitle,
-            message: option.localizedDesc,
+            message: option.localizedDescr,
             delegate: nil,
             cancel: "ACTION CLOSE".localized,
             others: ["ACTION PRESS".localized]
@@ -71,8 +71,8 @@ class SaneOptionUI: NSObject {
         }
     }
     
-    private static func showTextInput(for option: SYSaneOptionString, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
-        let alertView = DLAVAlertView(title: option.localizedTitle, message: option.localizedDesc, delegate: nil, cancel: "ACTION CLOSE".localized, others: [])
+    private static func showTextInput(for option: DeviceOptionString, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+        let alertView = DLAVAlertView(title: option.localizedTitle, message: option.localizedDescr, delegate: nil, cancel: "ACTION CLOSE".localized, others: [])
         
         if option.capSetAuto {
             alertView.addButton(withTitle: "OPTION VALUE AUTO".localized)
@@ -91,8 +91,8 @@ class SaneOptionUI: NSObject {
         }
     }
     
-    private static func showSliderInput(for option: SYSaneOptionNumber, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
-        let alertView = DLAVAlertView(title: option.localizedTitle, message: option.localizedDesc, delegate: nil, cancel: nil, others: [])
+    private static func showSliderInput(for option: DeviceOptionNumber, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+        let alertView = DLAVAlertView(title: option.localizedTitle, message: option.localizedDescr, delegate: nil, cancel: nil, others: [])
         
         if option.capSetAuto {
             alertView.addButton(withTitle: "OPTION VALUE AUTO".localized)
@@ -105,19 +105,23 @@ class SaneOptionUI: NSObject {
         if option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED {
             if let stepValue = option.stepValue {
                 let stepper = PKYStepper(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
-                stepper.maximum = option.maxValue.floatValue
-                stepper.minimum = option.minValue.floatValue
-                stepper.value = option.value.floatValue
+                stepper.maximum = option.maxValue?.floatValue ?? 0
+                stepper.minimum = option.minValue?.floatValue ?? 0
+                stepper.value = option.value?.floatValue ?? 0
                 stepper.stepInterval = stepValue.floatValue
                 stepper.valueChangedCallback = { stepper, value in
-                    stepper?.countLabel.text = option.string(forValue: value, withUnit: true)
+                    stepper?.countLabel.text = option.stringForValue(value, withUnit: true)
                 }
                 stepper.setup()
                 alertView.contentView = stepper
             }
             else {
-                alertView.addSlider(withMin: option.minValue.floatValue, max: option.maxValue.floatValue, current: option.value.floatValue) { (alert, value) in
-                    let valueString = option.string(forValue: value, withUnit: true)!
+                alertView.addSlider(
+                    withMin: option.minValue?.floatValue ?? 0,
+                    max: option.maxValue?.floatValue ?? 0,
+                    current: option.value?.floatValue ?? 0)
+                { (alert, value) in
+                    let valueString = option.stringForValue(value, withUnit: true)
                     let buttonTitle = String(format: "ACTION SET VALUE TO %@".localized, valueString)
                     alert.setText(buttonTitle, forButtonAt: UInt(updateButtonIndex))
                 }
@@ -145,7 +149,7 @@ class SaneOptionUI: NSObject {
         }
     }
     
-    private static func showOptionsInput(for option: SYSaneOption, titles: [String], values: [Any], _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    private static func showOptionsInput(for option: DeviceOption, titles: [String], values: [Any], _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
         var optionsTitles = [String]()
         var optionsValues = [Any]()
         
@@ -159,7 +163,7 @@ class SaneOptionUI: NSObject {
         
         let alertView = DLAVAlertView(
             title: option.localizedTitle,
-            message: option.localizedDesc,
+            message: option.localizedDescr,
             delegate: nil,
             cancel: "ACTION CLOSE".localized,
             others: optionsTitles
