@@ -16,8 +16,6 @@ enum SnapshotType {
     case none, devicePreview, deviceOptions, deviceOptionPopup, other
 }
 
-// TODO: SYKit image with color -> opaque : cornerRadius == 0 && color.alpha == 1
-// TODO: cleanup all "as NSString" / "as NSData" references
 // LATER: send in chronological order, older to newer
 
 @UIApplicationMain

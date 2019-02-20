@@ -14,7 +14,6 @@ extension FileManager {
     }
     
     static var cacheDirectoryURL: URL {
-        // TODO: NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         return try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
     

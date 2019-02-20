@@ -126,7 +126,6 @@ extension Sane {
             self.openedDevices = [String: NSValue]()
             self.isUpdatingDevices = false
             
-            // TODO: auth callback!
             let s = sane_init(nil, SaneAuthenticationCallback(deviceName:username:password:))
             
             if s != SANE_STATUS_GOOD {

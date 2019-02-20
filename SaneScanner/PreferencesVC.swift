@@ -9,6 +9,7 @@
 import UIKit
 import SYKit
 import SYEmailHelper
+import SVProgressHUD
 
 class PreferencesVC: UIViewController {
 
@@ -108,7 +109,9 @@ extension PreferencesVC : UITableViewDelegate {
                 subject: subject,
                 body: nil,
                 presentingVC: self) { (launched, service, error) in
-                    // TODO: show HUD for pasteboard
+                    if service is SYEmailServicePasteboard {
+                        SVProgressHUD.showSuccess(withStatus: nil)
+                    }
                     print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
             }
             return

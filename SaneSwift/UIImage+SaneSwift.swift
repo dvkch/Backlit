@@ -46,7 +46,6 @@ public extension UIImage {
             throw SaneError.unsupportedChannels
         }
         
-        // TODO: cleanup UInt -> Int
         guard let sourceImage = CGImage(
             width: parameters.width,
             height: parameters.height,
@@ -62,14 +61,6 @@ public extension UIImage {
         ) else {
             throw SaneError.cannotGenerateImage
         }
-
-        // TODO: cleanup
-        /*
-         UIImage *img = [UIImage imageWithCGImage:sourceImageRef
-         scale:1.
-         orientation:UIImageOrientationUp];
-         return img;
-         */
 
         guard let context = CGContext(
             data: nil, // let iOS deal with allocating the memory
@@ -115,7 +106,7 @@ public extension UIImage {
 }
 
 /*
-// TODO: work on big images
+// LATER: work on big images
 + (void)sy_convertTempImage
 {
     SYSaneScanParameters *params = [[SYSaneScanParameters alloc] init];

@@ -544,7 +544,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"ASK:\" \"WAITING:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/${PROJECT_NAME}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneSwift\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
+			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"LATER:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/${PROJECT_NAME}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneSwift\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
 		};
 		DCF69B669EC8701B2D500461 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

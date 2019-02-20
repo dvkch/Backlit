@@ -37,8 +37,7 @@ class SanePreviewView: UIView {
         imageView.layer.rasterizationScale = UIScreen.main.scale
         addSubview(imageView)
         
-        // TODO: get uitableview default separator color
-        lineView.backgroundColor = UIColor(red: 200/255, green: 199/255, blue: 204/255, alpha: 1)
+        lineView.backgroundColor = UITableView(frame: .zero, style: .grouped).separatorColor
         addSubview(lineView)
         
         cropMask.cropAreaDidChangeBlock = { [weak self] (newCropArea) in

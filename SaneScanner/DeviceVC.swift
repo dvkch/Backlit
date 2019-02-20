@@ -29,10 +29,6 @@ class DeviceVC: UIViewController {
         view.backgroundColor = .groupTableViewBackground
         title = device.model
 
-        // TODO: cleanup
-        // can't reenable swipe back because we wouldn't get the possiblity to close the device once it's not needed
-        //navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
 
@@ -62,7 +58,6 @@ class DeviceVC: UIViewController {
     }
     
     // MARK: Properties
-    // TODO: use non nullable
     private let device: Device
     private var isRefreshing: Bool = false
     
@@ -156,7 +151,6 @@ class DeviceVC: UIViewController {
     }
     
     @objc private func settingsButtonTap() {
-        // TODO: add in static method PreferencesVC barbuttonitem
         let nc = UINavigationController(rootViewController: PreferencesVC())
         nc.modalPresentationStyle = .formSheet
         present(nc, animated: true, completion: nil)
@@ -242,9 +236,8 @@ extension DeviceVC {
     
         if snapshotType == .devicePreview || snapshotType == .deviceOptions || snapshotType == .deviceOptionPopup {
             let rect = CGRect(x: 0.1, y: 0.2, width: 0.8, height: 0.6)
-            // TODO: path? named?
             if let path = AppDelegate.obtain.snapshotTestScanImagePath {
-                device.lastPreviewImage = UIImage(named: path)
+                device.lastPreviewImage = UIImage(contentsOfFile: path)
             }
             updatePreviewCell(cropAreaPercent: rect)
         }
