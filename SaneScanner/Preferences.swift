@@ -89,22 +89,26 @@ extension Preferences {
         ]
     }
     
-    // TODO: use subscript when Swift
-    func value(for key: Key) -> Bool {
-        switch key {
-        case .saveAsPNG:                return self.saveAsPNG
-        case .showAdvancedOptions:      return self.showAdvancedOptions
-        case .showIncompleteScanImages: return self.showIncompleteScanImages
-        case .previewWithAutoColorMode: return self.previewWithAutoColorMode
+    subscript(key: Key) -> Bool {
+        get {
+            switch key {
+            case .saveAsPNG:                return self.saveAsPNG
+            case .showAdvancedOptions:      return self.showAdvancedOptions
+            case .showIncompleteScanImages: return self.showIncompleteScanImages
+            case .previewWithAutoColorMode: return self.previewWithAutoColorMode
+            }
+        }
+        set {
+            switch key {
+            case .saveAsPNG:                self.saveAsPNG = newValue
+            case .showAdvancedOptions:      self.showAdvancedOptions = newValue
+            case .showIncompleteScanImages: self.showIncompleteScanImages = newValue
+            case .previewWithAutoColorMode: self.previewWithAutoColorMode = newValue
+            }
         }
     }
     
-    func setValue(_ value: Bool, for key: Key) {
-        switch key {
-        case .saveAsPNG:                self.saveAsPNG = value
-        case .showAdvancedOptions:      self.showAdvancedOptions = value
-        case .showIncompleteScanImages: self.showIncompleteScanImages = value
-        case .previewWithAutoColorMode: self.previewWithAutoColorMode = value
-        }
+    func toggle(key: Key) {
+        self[key] = !self[key]
     }
 }

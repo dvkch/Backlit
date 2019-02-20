@@ -86,10 +86,8 @@ class OptionCell: UITableViewCell {
         }
         else if let prefKey = self.prefKey {
             labelTitle.text = prefKey.localizedTitle
+            labelValue.text = Preferences.shared[prefKey] ? "OPTION BOOL ON".localized : "OPTION BOOL OFF".localized
             labelDescr.text = prefKey.localizedDescription
-            
-            let value = Preferences.shared.value(for: prefKey)
-            labelValue.text = value ? "OPTION BOOL ON".localized : "OPTION BOOL OFF".localized
         }
     }
     

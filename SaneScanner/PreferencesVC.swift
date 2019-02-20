@@ -115,8 +115,7 @@ extension PreferencesVC : UITableViewDelegate {
         }
         
         let prefKey = Preferences.shared.groupedKeys[indexPath.section].1[indexPath.row]
-        let previousValue = Preferences.shared.value(for: prefKey)
-        Preferences.shared.setValue(!previousValue, for: prefKey)
+        Preferences.shared.toggle(key: prefKey)
         
         tableView.beginUpdates()
         tableView.reloadRows(at: [indexPath], with: .automatic)
