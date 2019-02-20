@@ -156,7 +156,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DLAlertView/DLAlertView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/MHVideoPhotoGallery/MHVideoPhotoGallery.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/MHWDirectoryWatcher/MHWDirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/NSDate+TimeAgo/NSDate_TimeAgo.framework"
@@ -167,20 +166,16 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYLogRedirect/SYLogRedirect.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYOperationQueue/SYOperationQueue.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SYPair/SYPair.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYPictureMetadata/SYPictureMetadata.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SaneSwift/SaneSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SpinKit/SpinKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/WeakUniqueCollection/WeakUniqueCollection.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/libextobjc/libextobjc.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DLAlertView/DLAlertView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/MHVideoPhotoGallery/MHVideoPhotoGallery.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/MHWDirectoryWatcher/MHWDirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/NSDate+TimeAgo/NSDate_TimeAgo.framework"
@@ -191,14 +186,11 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYLogRedirect/SYLogRedirect.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYOperationQueue/SYOperationQueue.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SYPair/SYPair.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYPictureMetadata/SYPictureMetadata.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SaneSwift/SaneSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SpinKit/SpinKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/WeakUniqueCollection/WeakUniqueCollection.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/libextobjc/libextobjc.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
