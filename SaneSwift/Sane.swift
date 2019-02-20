@@ -8,16 +8,16 @@
 
 import Foundation
 
-@objc public protocol SaneDelegate: NSObjectProtocol {
+public protocol SaneDelegate: NSObjectProtocol {
     func saneDidStartUpdatingDevices(_ sane: Sane)
     func saneDidEndUpdatingDevices(_ sane: Sane)
     func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ())
 }
 
-@objc public class Sane: NSObject {
+public class Sane: NSObject {
     
     // MARK: Init
-    @objc public static let shared = Sane()
+    public static let shared = Sane()
     
     private override init() {
         super.init()
@@ -34,9 +34,9 @@ import Foundation
     }
     
     // MARK: Properties
-    @objc public weak var delegate: SaneDelegate?
-    @objc public private(set) var saneInitError: String?
-    @objc public private(set) var isUpdatingDevices: Bool {
+    public weak var delegate: SaneDelegate?
+    public private(set) var saneInitError: String?
+    public private(set) var isUpdatingDevices: Bool {
         get {
             var value = false
             lockIsUpdatingDevices.lock()
@@ -72,12 +72,12 @@ import Foundation
     private var queuedBlocks = [() -> ()]()
 
     // MARK: Translations
-    @objc public func translation(for key: String) -> String {
+    public func translation(for key: String) -> String {
         return translation?.translation(for: key) ?? key
     }
     
     // MARK: Configuration
-    @objc public var configuration: SaneConfig = SaneConfig.restored() ?? SaneConfig()
+    public var configuration: SaneConfig = SaneConfig.restored() ?? SaneConfig()
 }
 
 // MARK: Threading
@@ -97,11 +97,11 @@ extension Sane {
 
 // MARK: Benchmarking
 extension Sane {
-    private static func logTime<T>(function: String = #function, block: () -> T) -> T {
+    private static func logTime<T>(ifOver minReportDuration: TimeInterval = 1, function: String = #function, block: () -> T) -> T {
         let startDate = Date()
         let returnValue = block()
         let interval = Date().timeIntervalSince(startDate)
-        if interval > 1 {
+        if interval > minReportDuration {
             print(function + ": " + String(interval) + "s")
         }
         return returnValue
@@ -169,7 +169,7 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
 
 extension Sane {
     // MARK: Device management
-    @objc public func updateDevices(completion: @escaping (_ devices: [Device]?, _ error: Error?) -> ()) {
+    public func updateDevices(completion: @escaping (_ devices: [Device]?, _ error: Error?) -> ()) {
         runOnSaneThread {
             guard !self.isUpdatingDevices else { return }
             
@@ -208,11 +208,9 @@ extension Sane {
         }
     }
     
-    @objc public func openDevice(_ device: Device, completion: @escaping (Error?) -> ()) {
-        self.openDevice(device, mainThread: Thread.isMainThread, completion: completion)
-    }
-
-    private func openDevice(_ device: Device, mainThread: Bool, completion: @escaping (Error?) -> ()) {
+    public func openDevice(_ device: Device, completion: @escaping (Error?) -> ()) {
+        let mainThread = Thread.isMainThread
+        
         runOnSaneThread {
             guard self.openedDevices[device.name] == nil else { return }
             self.startSane()
@@ -244,7 +242,7 @@ extension Sane {
         }
     }
     
-    @objc public func closeDevice(_ device: Device) {
+    public func closeDevice(_ device: Device) {
         runOnSaneThread {
             guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else { return }
             Sane.logTime { sane_close(handle) }
@@ -256,18 +254,16 @@ extension Sane {
         }
     }
     
-    @objc public func isDeviceOpened(_ device: Device) -> Bool {
+    public func isDeviceOpened(_ device: Device) -> Bool {
         return self.openedDevices[device.name]?.pointerValue != nil
     }
 }
 
 extension Sane {
     // MARK: Options
-    @objc public func listOptions(for device: Device, completion: (() -> ())?) {
-        self.listOptions(for: device, mainThread: Thread.isMainThread, completion: completion)
-    }
-    
-    private func listOptions(for device: Device, mainThread: Bool, completion: (() -> ())?) {
+    public func listOptions(for device: Device, completion: (() -> ())?) {
+        let mainThread = Thread.isMainThread
+        
         runOnSaneThread {
             guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else { return }
             
@@ -304,10 +300,8 @@ extension Sane {
     }
     
     public func valueForOption(_ option: DeviceOption, completion: @escaping (_ value: Any?, _ error: Error?) -> ()) {
-        self.valueForOption(option, mainThread: Thread.isMainThread, completion: completion)
-    }
-    
-    private func valueForOption(_ option: DeviceOption, mainThread: Bool, completion: @escaping (_ value: Any?, _ error: Error?) -> ()) {
+        let mainThread = Thread.isMainThread
+        
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
             completion(nil, SaneError.deviceNotOpened)
             return
@@ -358,7 +352,9 @@ extension Sane {
         }
     }
 
-    private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: Device, mainThread: Bool, completion: ((_ reloadAllOptions: Bool, _ error: Error?) -> ())?) {
+    private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: Device, completion: ((_ reloadAllOptions: Bool, _ error: Error?) -> ())?) {
+        let mainThread = Thread.isMainThread
+        
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
             completion?(false, SaneError.deviceNotOpened)
             return
@@ -387,10 +383,8 @@ extension Sane {
     }
 
     public func setValueForOption(value: Any?, auto: Bool, option: DeviceOption, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
-        self.setValueForOption(value: value, auto: auto, option: option, mainThread: Thread.isMainThread, completion: completion)
-    }
-
-    private func setValueForOption(value: Any?, auto: Bool, option: DeviceOption, mainThread: Bool, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
+        let mainThread = Thread.isMainThread
+        
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
             completion?(false, SaneError.deviceNotOpened)
             return
@@ -478,11 +472,8 @@ extension Sane {
 
 extension Sane {
     // MARK: Scan
-    @objc public func preview(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
-        self.preview(device: device, mainThread: Thread.isMainThread, progress: progress, completion: completion)
-    }
-    
-    private func preview(device: Device, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
+    public func preview(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
+        let mainThread = Thread.isMainThread
         
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
             completion(nil, SaneError.deviceNotOpened)
@@ -545,7 +536,7 @@ extension Sane {
             var previewImage: UIImage?
             var previewError: Error?
 
-            self.scan(device: device, useScanCropArea: false, mainThread: false, progress: progress, completion: { (image, _, error) in
+            self.scan(device: device, useScanCropArea: false, progress: progress, completion: { (image, _, error) in
                 previewImage = image
                 previewError = error
             })
@@ -556,9 +547,9 @@ extension Sane {
             else {
                 oldOptions.forEach { (stdOption, value) in
                     guard let option = device.standardOption(for: stdOption) else { return }
-                    self.setValueForOption(value: value, auto: false, option: option, mainThread: false, completion: { (reloadAll, error) in
+                    self.setValueForOption(value: value, auto: false, option: option, completion: { (reloadAll, error) in
                         if reloadAll {
-                            self.listOptions(for: device, mainThread: false, completion: nil)
+                            self.listOptions(for: device, completion: nil)
                         }
                     })
                 }
@@ -570,12 +561,10 @@ extension Sane {
         }
     }
     
-    public func scan(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: ScanParameters?, _ error: Error?) -> ())?) {
-        self.scan(device: device, useScanCropArea: true, mainThread: Thread.isMainThread, progress: progress, completion: completion)
-    }
-    
-    private func scan(device: Device, useScanCropArea: Bool, mainThread: Bool, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: ScanParameters?, _ error: Error?) -> ())?) {
+    public func scan(device: Device, useScanCropArea: Bool = true, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: ScanParameters?, _ error: Error?) -> ())?) {
         
+        let mainThread = Thread.isMainThread
+
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
             completion?(nil, nil, SaneError.deviceNotOpened)
             return
@@ -585,7 +574,7 @@ extension Sane {
             self.stopScanOperation = false
             
             if device.canCrop && useScanCropArea {
-                self.setCropArea(device.cropArea, useAuto: false, device: device, mainThread: false, completion: nil)
+                self.setCropArea(device.cropArea, useAuto: false, device: device, completion: nil)
             }
             
             var status = Sane.logTime { sane_start(handle) }
@@ -699,7 +688,7 @@ extension Sane {
         }
     }
     
-    @objc public func cancelCurrentScan() {
+    public func cancelCurrentScan() {
         self.stopScanOperation = true
     }
 }

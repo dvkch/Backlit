@@ -33,7 +33,7 @@ class OptionCell: UITableViewCell {
     // MARK: Properties
     private var option: DeviceOption?
     private var prefKey: Preferences.Key?
-    @objc var showDescription: Bool = false {
+    var showDescription: Bool = false {
         didSet {
             setNeedsUpdateConstraints()
         }
@@ -52,7 +52,7 @@ class OptionCell: UITableViewCell {
         updateTexts()
     }
     
-    @objc func updateWith(leftText: String, rightText: String) {
+    func updateWith(leftText: String, rightText: String) {
         self.option = nil
         self.prefKey = nil
         updateTexts()
@@ -108,7 +108,7 @@ class OptionCell: UITableViewCell {
         return sizingCell.sy_cellHeight(forWidth: width)
     }
     
-    @objc static func cellHeight(leftText: String, rightText: String, width: CGFloat) -> CGFloat {
+    static func cellHeight(leftText: String, rightText: String, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(leftText: leftText, rightText: rightText)
         sizingCell.showDescription = false
         return sizingCell.sy_cellHeight(forWidth: width)

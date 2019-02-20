@@ -24,14 +24,14 @@ public class DeviceOption {
     init(cOpt: SANE_Option_Descriptor, index: Int, device: Device) {
         self.index          = index
         self.device         = device
-        self.identifier     = cOpt.name.asString()
+        self.identifier     = cOpt.name?.asString()
         self.localizedTitle = Sane.shared.translation(for: cOpt.title.asString() ?? "")
         self.localizedDescr = Sane.shared.translation(for: cOpt.desc.asString()  ?? "")
-        self.type                   = cOpt.type
-        self.unit                   = cOpt.unit
-        self.size                   = Int(cOpt.size)
-        self.capabilities           = SaneCap(rawValue: cOpt.cap)
-        self.constraintType         = cOpt.constraint_type
+        self.type           = cOpt.type
+        self.unit           = cOpt.unit
+        self.size           = Int(cOpt.size)
+        self.capabilities   = SaneCap(rawValue: cOpt.cap)
+        self.constraintType = cOpt.constraint_type
     }
     
     // MARK: Properties

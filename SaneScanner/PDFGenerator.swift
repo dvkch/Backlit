@@ -28,9 +28,9 @@ extension PDFGeneratorError: LocalizedError {
     }
 }
 
-@objc class PDFGenerator: NSObject {
+class PDFGenerator: NSObject {
 
-    @objc static func generatePDF(destination pdfURL: URL, images imagesURLs: [URL], aspectRatio: CGFloat, jpegQuality: CGFloat, fixedPageSize: Bool) throws {
+    static func generatePDF(destination pdfURL: URL, images imagesURLs: [URL], aspectRatio: CGFloat, jpegQuality: CGFloat, fixedPageSize: Bool) throws {
         guard !imagesURLs.isEmpty else {
             throw PDFGeneratorError.noImages
         }

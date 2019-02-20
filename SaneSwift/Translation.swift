@@ -6,21 +6,20 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
-@objc public class Translation: NSObject {
+public struct Translation {
     
     // MARK: Init
     init(translations: [String: String]) {
         self.translations = translations
-        super.init()
     }
     
-    convenience init?(contentsOfURL url: URL) {
+    init?(contentsOfURL url: URL) {
         guard let translations = Translation.parseFile(at: url) else { return nil }
         self.init(translations: translations)
     }
     
-    @objc public convenience init?(locale: Locale) {
-        let bundle = Bundle(for: Translation.self)
+    public init?(locale: Locale) {
+        let bundle = Bundle(for: Sane.self)
         guard let translationsBundleURL = bundle.url(forResource: "SaneTranslations", withExtension: "bundle") else { return nil }
         guard let translationsBundle = Bundle(url: translationsBundleURL) else { return nil }
         
@@ -35,12 +34,14 @@
     // MARK: Properties
     private let translations: [String: String]
     
-    @objc public func translation(for key: String) -> String? {
+    public func translation(for key: String) -> String? {
         return translations[key]
     }
-    
+}
+
+extension Translation {
     // MARK: Parsing
-    private class func parseFile(at url: URL) -> [String: String]? {
+    private static func parseFile(at url: URL) -> [String: String]? {
         guard let content = try? String(contentsOf: url) else { return nil }
         
         let keyToken = "msgid \""

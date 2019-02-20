@@ -12,7 +12,7 @@ import DLAlertView
 import SVProgressHUD
 import SYKit
 
-@objc class DevicesVC: UIViewController {
+class DevicesVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -27,10 +27,10 @@ private let kImagePDFFolder     = "PDF"
 private let kImagePDFPrefix     = "SaneScanner_"
 private let kImageExtensionPDF  = "pdf"
 
-@objc class GalleryManager: NSObject {
+class GalleryManager: NSObject {
     
     // MARK: Init
-    @objc static let shared = GalleryManager()
+    static let shared = GalleryManager()
     
     private override init() {
         super.init()
@@ -76,12 +76,12 @@ private let kImageExtensionPDF  = "pdf"
     // MARK: Delegates
     private var delegates = [WeakValue<NSObject & GalleryManagerDelegate>]()
 
-    @objc func addDelegate(_ delegate: NSObject & GalleryManagerDelegate) {
+    func addDelegate(_ delegate: NSObject & GalleryManagerDelegate) {
         delegates.append(WeakValue(delegate))
         delegate.galleryManager?(self, didUpdate: items, newItems: [], removedItems: [])
     }
     
-    @objc func removeDelegate(_ delegate: NSObject & GalleryManagerDelegate) {
+    func removeDelegate(_ delegate: NSObject & GalleryManagerDelegate) {
         // don't use in the delegate's -dealloc method
         delegates.removeAll { (weakDelegate: WeakValue<NSObject & GalleryManagerDelegate>) -> Bool in
             if let weakValue = weakDelegate.value {
@@ -102,7 +102,7 @@ private let kImageExtensionPDF  = "pdf"
         return item
     }
     
-    @objc var items: [MHGalleryItem] {
+    var items: [MHGalleryItem] {
         return imageURLs.map { galleryItemForImage(at: $0) }
     }
     
@@ -114,7 +114,7 @@ private let kImageExtensionPDF  = "pdf"
         }
     }
     
-    @objc @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) -> MHGalleryItem? {
+    @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) -> MHGalleryItem? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -145,7 +145,7 @@ private let kImageExtensionPDF  = "pdf"
         return item
     }
     
-    @objc func deleteItem(_ item: MHGalleryItem) {
+    func deleteItem(_ item: MHGalleryItem) {
         try? FileManager.default.removeItem(at: item.url)
         try? FileManager.default.removeItem(at: item.thumbnailURL)
     }
@@ -190,7 +190,7 @@ private let kImageExtensionPDF  = "pdf"
     }
     
     // MARK: Items properties
-    @objc func thumbnail(for item: MHGalleryItem) -> UIImage? {
+    func thumbnail(for item: MHGalleryItem) -> UIImage? {
         let image = thumbnailCache.object(forKey: item.thumbnailURL as NSURL) ?? UIImage(contentsOfFile: item.thumbnailURL!.path)
         if image == nil {
             generateThumbAsync(for: item, fullImage: nil, tellDelegates: true)
@@ -198,7 +198,7 @@ private let kImageExtensionPDF  = "pdf"
         return image
     }
     
-    @objc func dateString(for item: MHGalleryItem) -> String? {
+    func dateString(for item: MHGalleryItem) -> String? {
         // TODO: use url.creationDate?
         guard let attributes = try? FileManager.default.attributesOfItem(atPath: item.url.path) else { return nil }
         guard let date = attributes[.creationDate] as? Date else { return nil }
@@ -263,7 +263,7 @@ private let kImageExtensionPDF  = "pdf"
     
     
     // MARK: PDF
-    @objc func tempPdfFileUrl() -> URL {
+    func tempPdfFileUrl() -> URL {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -272,7 +272,7 @@ private let kImageExtensionPDF  = "pdf"
         return pdfFolderURL.appendingPathComponent(filename, isDirectory: false).appendingPathExtension(kImageExtensionPDF)
     }
     
-    @objc func deleteTempPDF() {
+    func deleteTempPDF() {
         // remove pdf files in cache / PDF
         let tempURLs = try? FileManager.default.contentsOfDirectory(at: pdfFolderURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants)
         

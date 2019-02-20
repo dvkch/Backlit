@@ -9,9 +9,13 @@
 import UIKit
 import SaneSwift
 
-@objc class Preferences: NSObject {
+extension Notification.Name {
+    static let preferencesChanged = Notification.Name("SYPreferencesChangedNotification")
+}
+
+class Preferences: NSObject {
     
-    @objc static let shared = Preferences()
+    static let shared = Preferences()
     
     private override init() {
         super.init()
@@ -21,25 +25,22 @@ import SaneSwift
     }
     
     // MARK: Properties
-    // TODO: move to Notification.Name extension
-    @objc static let preferencesChanged = Notification.Name("SYPreferencesChangedNotification")
-    
-    @objc var saveAsPNG: Bool {
+    var saveAsPNG: Bool {
         get { return UserDefaults.standard.bool(forKey: useDefaultsKeySaveAsPNG) }
         set { UserDefaults.standard.set(newValue, forKey: useDefaultsKeySaveAsPNG); postNotification() }
     }
     
-    @objc var showAdvancedOptions: Bool {
+    var showAdvancedOptions: Bool {
         get { return UserDefaults.standard.bool(forKey: useDefaultsKeyShowAdvancedOptions) }
         set { UserDefaults.standard.set(newValue, forKey: useDefaultsKeyShowAdvancedOptions); postNotification() }
     }
     
-    @objc var showIncompleteScanImages: Bool {
+    var showIncompleteScanImages: Bool {
         get { return Sane.shared.configuration.showIncompleteScanImages }
         set { Sane.shared.configuration.showIncompleteScanImages = newValue; postNotification() }
     }
     
-    @objc var previewWithAutoColorMode: Bool {
+    var previewWithAutoColorMode: Bool {
         get { return Sane.shared.configuration.previewWithAutoColorMode }
         set { Sane.shared.configuration.previewWithAutoColorMode = newValue; postNotification() }
     }
@@ -47,7 +48,7 @@ import SaneSwift
     // MARK: Notification
     private func postNotification() {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Preferences.preferencesChanged, object: self)
+            NotificationCenter.default.post(name: .preferencesChanged, object: self)
         }
     }
     

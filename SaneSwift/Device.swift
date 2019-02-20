@@ -47,14 +47,13 @@ public enum SaneStandardOption: CaseIterable {
     }
 }
 
-@objc public class Device: NSObject {
+public class Device {
     // MARK: Initializers
     init(name: String, type: String, vendor: String, model: String) {
         self.name = name
         self.type = type
         self.vendor = vendor
         self.model = model
-        super.init()
     }
     
     init(cDevice: SANE_Device) {
@@ -62,7 +61,6 @@ public enum SaneStandardOption: CaseIterable {
         self.model  = cDevice.model.asString()  ?? ""
         self.vendor = cDevice.vendor.asString() ?? ""
         self.type   = Sane.shared.translation(for: cDevice.type.asString() ?? "")
-        super.init()
     }
     
     // MARK: Device properties
@@ -185,8 +183,8 @@ extension Device {
 }
 
 // MARK: CustomStringConvertible
-extension Device {
-    public override var description: String {
+extension Device : CustomStringConvertible {
+    public var description: String {
         return "Device: \(name), \(type), \(vendor), \(model), \(options.count) options"
     }
 }

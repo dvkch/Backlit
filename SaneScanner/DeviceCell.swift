@@ -25,7 +25,7 @@ class DeviceCell: UITableViewCell {
     @IBOutlet private var labelDetails: UILabel!
 
     // MARK: Properties
-    @objc var device: Device? {
+    var device: Device? {
         didSet {
             updateTexts()
         }

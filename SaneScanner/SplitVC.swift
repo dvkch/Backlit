@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc class SplitVC: UISplitViewController {
+class SplitVC: UISplitViewController {
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)

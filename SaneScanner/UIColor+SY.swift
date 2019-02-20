@@ -8,12 +8,12 @@
 
 import UIKit
 
-@objc extension UIColor {
-    @objc static var vividBlue: UIColor {
+extension UIColor {
+    static var vividBlue: UIColor {
         return UIColor.init(red: 0, green: 0.48, blue: 1, alpha: 1)
     }
     
-    @objc static var groupTableViewHeaderTitle: UIColor {
+    static var groupTableViewHeaderTitle: UIColor {
         return UIColor.init(red: 0.43, green: 0.43, blue: 0.45, alpha: 1)
     }
     

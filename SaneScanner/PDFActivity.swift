@@ -10,10 +10,10 @@ import UIKit
 import SVProgressHUD
 import SYKit
 
-@objc class PDFActivity: UIActivity {
+class PDFActivity: UIActivity {
     
     // MARK: Properties
-    @objc weak var presentingViewController: UIViewController?
+    weak var presentingViewController: UIViewController?
     
     // MARK: Original activity properties
     private var items: [URL] = []
@@ -23,7 +23,7 @@ import SYKit
     private var permittedArrowDirections = UIPopoverArrowDirection.any
 
     // MARK: Methods
-    @objc func configure(using originalActivityViewController: UIActivityViewController) {
+    func configure(using originalActivityViewController: UIActivityViewController) {
         guard let popoverController = originalActivityViewController.popoverPresentationController else { return }
         barButtonItem   = popoverController.barButtonItem
         sourceView      = popoverController.sourceView

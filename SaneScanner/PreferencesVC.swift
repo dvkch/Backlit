@@ -10,7 +10,7 @@ import UIKit
 import SYKit
 import SYEmailHelper
 
-@objc class PreferencesVC: UIViewController {
+class PreferencesVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ import SYEmailHelper
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
     }
 
-    @objc static func settingsBarButtonItem(target: Any, action: Selector) -> UIBarButtonItem {
+    static func settingsBarButtonItem(target: Any, action: Selector) -> UIBarButtonItem {
         return UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: target, action: action)
     }
 

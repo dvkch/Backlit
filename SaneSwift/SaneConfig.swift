@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public class SaneConfig: NSObject, Codable {
+public struct SaneConfig: Codable {
     
     // MARK: Codable
     private enum CodingKeys: String, CodingKey {
@@ -19,44 +19,44 @@ import Foundation
     }
     
     // MARK: Properties
-    @objc public var previewWithAutoColorMode: Bool = true {
+    public var previewWithAutoColorMode: Bool = true {
         didSet {
             persistConfig()
         }
     }
-    @objc public var showIncompleteScanImages: Bool = true {
+    public var showIncompleteScanImages: Bool = true {
         didSet {
             persistConfig()
         }
     }
-    @objc public private(set) var hosts: [String] = [] {
+    public private(set) var hosts: [String] = [] {
         didSet {
             persistConfig()
         }
     }
-    @objc public var connectTimeout: Int = 30 {
+    public var connectTimeout: Int = 30 {
         didSet {
             persistConfig()
         }
     }
     
-    @objc public func addHost(_ host: String) {
+    public mutating func addHost(_ host: String) {
         hosts.append(host)
     }
     
-    @objc public func removeHost(_ host: String) {
+    public mutating func removeHost(_ host: String) {
         while let index = hosts.index(of: host) {
             hosts.remove(at: index)
         }
     }
     
-    @objc public func clearHosts() {
+    public mutating func clearHosts() {
         hosts = []
     }
 }
 
 // MARK: Persistence
-@objc extension SaneConfig {
+internal extension SaneConfig {
     private func saneNetConfContent() -> String {
         var content = [String]()
         content.append(contentsOf: hosts)
@@ -64,7 +64,7 @@ import Foundation
         return content.joined(separator: "\n")
     }
     
-    @objc class func restored() -> SaneConfig? {
+    static func restored() -> SaneConfig? {
         guard let url = SaneConfig.saneSwiftConfigPlistURL, let data = try? Data(contentsOf: url) else {
             return nil
         }

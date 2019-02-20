@@ -11,7 +11,7 @@ import UIKit
 class Toolbar: UIToolbar {
     
     // MARK: Properties
-    @objc var padding: CGFloat = 0 {
+    var padding: CGFloat = 0 {
         didSet {
             superview?.setNeedsLayout()
             setNeedsLayout()

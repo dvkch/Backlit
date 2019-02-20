@@ -23,12 +23,12 @@ class HostCell: UITableViewCell {
     @IBOutlet private var label: UILabel!
     
     // MARK: Properties
-    @objc var title: String? {
+    var title: String? {
         get { return label.text }
         set { label.text = newValue }
     }
     
-    @objc var showAddIndicator: Bool = false {
+    var showAddIndicator: Bool = false {
         didSet {
             accessoryView = showAddIndicator ? UIImageView(image: UIImage(named: "button-add")) : nil
         }

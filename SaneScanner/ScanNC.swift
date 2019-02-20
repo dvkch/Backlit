@@ -8,17 +8,17 @@
 
 import UIKit
 
-@objc class ScanNC: UINavigationController {
+class ScanNC: UINavigationController {
     
-    @objc var customToolbar: Toolbar? {
+    var customToolbar: Toolbar? {
         return self.toolbar as? Toolbar
     }
     
-    @objc override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
+    override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
         super.init(navigationBarClass: navigationBarClass, toolbarClass: Toolbar.self)
     }
     
-    @objc init() {
+    init() {
         super.init(navigationBarClass: nil, toolbarClass: Toolbar.self)
     }
     

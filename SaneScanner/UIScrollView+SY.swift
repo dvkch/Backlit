@@ -15,17 +15,17 @@ private var UIScrollViewRefreshControlActionKey = UInt8(0)
 extension UIScrollView {
 
     // MARK: Refresh control property
-    @objc private var sy_refreshControl: UIRefreshControl? {
+    private var sy_refreshControl: UIRefreshControl? {
         get { return objc_getAssociatedObject(self, &UIScrollViewRefreshControlKey) as? UIRefreshControl }
         set { objc_setAssociatedObject(self, &UIScrollViewRefreshControlKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
     
-    @objc private var sy_refreshControlAction: ((UIScrollView) -> ())? {
+    private var sy_refreshControlAction: ((UIScrollView) -> ())? {
         get { return objc_getAssociatedObject(self, &UIScrollViewRefreshControlActionKey) as? ((UIScrollView) -> ()) }
         set { objc_setAssociatedObject(self, &UIScrollViewRefreshControlActionKey, newValue, .OBJC_ASSOCIATION_COPY) }
     }
     
-    @objc func sy_addPullToResfresh(_ completion: ((UIScrollView) -> ())?) {
+    func sy_addPullToResfresh(_ completion: ((UIScrollView) -> ())?) {
         self.sy_refreshControlAction = completion
         
         self.sy_refreshControl?.removeFromSuperview()
@@ -55,7 +55,7 @@ extension UIScrollView {
         }
     }
 
-    @objc func sy_showPullToRefresh(runBlock: Bool) {
+    func sy_showPullToRefresh(runBlock: Bool) {
         guard let control = sy_refreshControl, !control.isRefreshing else { return }
         
         control.beginRefreshing()
@@ -69,7 +69,7 @@ extension UIScrollView {
         }
     }
     
-    @objc func sy_endPullToRefresh() {
+    func sy_endPullToRefresh() {
         sy_refreshControl?.endRefreshing()
     }
 }

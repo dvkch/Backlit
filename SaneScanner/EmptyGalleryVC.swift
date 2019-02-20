@@ -10,7 +10,7 @@ import UIKit
 import SYKit
 import Masonry
 
-@objc class EmptyGalleryVC: UIViewController {
+class EmptyGalleryVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -21,19 +21,19 @@ class PreviewCell: UITableViewCell {
     @IBOutlet private var previewView: SanePreviewView!
     
     // MARK: Properties
-    @objc var device: Device? {
+    var device: Device? {
         didSet {
             previewView.device = device
         }
     }
     
     // MARK: Content
-    @objc func refresh() {
+    func refresh() {
         previewView.refresh()
     }
     
     // MARK: Layout
-    @objc static func cellHeight(device: Device, width: CGFloat, maxHeight: CGFloat) -> CGFloat {
+    static func cellHeight(device: Device, width: CGFloat, maxHeight: CGFloat) -> CGFloat {
         let bestHeight = width / (device.previewImageRatio ?? (CGFloat(3) / 4))
         return min(max(bestHeight, width), maxHeight)
     }

@@ -29,11 +29,11 @@ class GalleryThumbsCell: UICollectionViewCell {
     private var item: MHGalleryItem?
     
     // MARK: View
-    @objc @IBOutlet private(set) var imageView: MHPresenterImageView!
+    @IBOutlet private(set) var imageView: MHPresenterImageView!
     @IBOutlet private var spinner: UIActivityIndicatorView!
 
     // MARK: Content
-    @objc func update(items: [MHGalleryItem], index: Int, parentController: UIViewController?, spinnerColor: UIColor, dismiss: ((_ index: Int) -> UIImageView?)?) {
+    func update(items: [MHGalleryItem], index: Int, parentController: UIViewController?, spinnerColor: UIColor, dismiss: ((_ index: Int) -> UIImageView?)?) {
         weak var weakParentVC = parentController
         
         spinner?.color = spinnerColor

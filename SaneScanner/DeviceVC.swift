@@ -51,14 +51,14 @@ class DeviceVC: UIViewController {
             self?.refresh()
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: Preferences.preferencesChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: .preferencesChanged, object: nil)
         
         tableView.sy_showPullToRefresh(runBlock: true)
     }
 
     deinit {
         Sane.shared.closeDevice(device)
-        NotificationCenter.default.removeObserver(self, name: Preferences.preferencesChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .preferencesChanged, object: nil)
     }
     
     // MARK: Properties

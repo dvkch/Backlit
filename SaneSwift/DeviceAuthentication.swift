@@ -6,11 +6,11 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
-@objc public class DeviceAuthentication: NSObject {
+public struct DeviceAuthentication {
     var username: String?
     var password: String?
     
-    @objc public init(username: String?, password: String?) {
+    public init(username: String?, password: String?) {
         self.username = username
         self.password = password
     }
