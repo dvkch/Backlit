@@ -93,6 +93,15 @@ extension Sane {
     @objc private func runOnSaneThread(block: (() -> ())?) {
         self.ss_perform(block, on: thread)
     }
+    
+    private static func runOn(mainThread: Bool, block: @escaping () -> ()) {
+        if mainThread {
+            DispatchQueue.main.async { block() }
+        }
+        else {
+            block()
+        }
+    }
 }
 
 // MARK: Benchmarking
@@ -184,9 +193,9 @@ extension Sane {
             
             guard s == SANE_STATUS_GOOD else {
                 self.isUpdatingDevices = false
-                DispatchQueue.main.async {
+                Sane.runOn(mainThread: true, block: {
                     completion(nil, SaneError.fromStatus(s))
-                }
+                })
                 return
             }
             
@@ -200,9 +209,9 @@ extension Sane {
             
             self.isUpdatingDevices = false
             
-            DispatchQueue.main.async {
+            Sane.runOn(mainThread: true, block: {
                 completion(devices, nil)
-            }
+            })
             
             self.stopSane()
         }
@@ -221,24 +230,13 @@ extension Sane {
                 sane_open(device.name.cString(using: .utf8), &h)
             }
             
-            guard s == SANE_STATUS_GOOD else {
-                if mainThread {
-                    DispatchQueue.main.async {
-                        completion(SaneError.fromStatus(s))
-                    }
-                }
-                else {
-                    completion(SaneError.fromStatus(s))
-                }
-                return
+            if s == SANE_STATUS_GOOD {
+                self.openedDevices[device.name] = NSValue(pointer: h)
             }
-            
-            self.openedDevices[device.name] = NSValue(pointer: h)
-            if mainThread {
-                DispatchQueue.main.async { completion(nil) }
-            } else {
-                completion(nil)
-            }
+
+            Sane.runOn(mainThread: mainThread, block: {
+                completion(SaneError.fromStatus(s))
+            })
         }
     }
     
@@ -278,8 +276,7 @@ extension Sane {
                 
                 let s = sane_control_option(handle, 0, SANE_ACTION_GET_VALUE, &count, nil);
                 guard s == SANE_STATUS_GOOD else {
-                    if mainThread { DispatchQueue.main.async { completion?() } }
-                    else { completion?() }
+                    Sane.runOn(mainThread: mainThread) { completion?() }
                     return
                 }
                 
@@ -294,8 +291,7 @@ extension Sane {
             
             device.options = options
             
-            if mainThread { DispatchQueue.main.async { completion?() } }
-            else { completion?() }
+            Sane.runOn(mainThread: mainThread) { completion?() }
         }
     }
     
@@ -329,8 +325,7 @@ extension Sane {
             let s = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_GET_VALUE, value, nil) }
             
             guard s == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion(nil, SaneError.fromStatus(s)) } }
-                else { completion(nil, SaneError.fromStatus(s)) }
+                Sane.runOn(mainThread: mainThread) { completion(nil, SaneError.fromStatus(s)) }
                 return
             }
             
@@ -346,9 +341,7 @@ extension Sane {
             }
             
             free(value)
-            
-            if mainThread { DispatchQueue.main.async { completion(castedValue, nil) } }
-            else { completion(castedValue, nil) }
+            Sane.runOn(mainThread: mainThread) { completion(castedValue, nil) }
         }
     }
 
@@ -377,8 +370,7 @@ extension Sane {
                 guard finalError == nil else { break }
             }
             
-            if mainThread { DispatchQueue.main.async { completion?(finalReloadAllOptions, finalError) } }
-            else { completion?(finalReloadAllOptions, finalError) }
+            Sane.runOn(mainThread: mainThread) { completion?(finalReloadAllOptions, finalError) }
         }
     }
 
@@ -464,8 +456,7 @@ extension Sane {
             }
             
             let error: Error? = status == SANE_STATUS_GOOD ? nil : SaneError.fromStatus(status)
-            if mainThread { DispatchQueue.main.async { completion?(reloadAllOptions, error) } }
-            else { completion?(reloadAllOptions, error) }
+            Sane.runOn(mainThread: mainThread) { completion?(reloadAllOptions, error) }
         }
     }
 }
@@ -556,8 +547,7 @@ extension Sane {
             }
             
             device.lastPreviewImage = previewImage
-            if mainThread { DispatchQueue.main.sync { completion(previewImage, previewError) } }
-            else { completion(previewImage, previewError) }
+            Sane.runOn(mainThread: mainThread) { completion(previewImage, previewError) }
         }
     }
     
@@ -580,16 +570,14 @@ extension Sane {
             var status = Sane.logTime { sane_start(handle) }
             
             guard status == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, SaneError.fromStatus(status)) } }
-                else { completion?(nil, nil, SaneError.fromStatus(status)) }
+                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, SaneError.fromStatus(status)) }
                 return
             }
             
             status = sane_set_io_mode(handle, SANE_FALSE)
             
             guard status == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, SaneError.fromStatus(status)) } }
-                else { completion?(nil, nil, SaneError.fromStatus(status)) }
+                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, SaneError.fromStatus(status)) }
                 return
             }
             
@@ -597,8 +585,7 @@ extension Sane {
             status = sane_get_parameters(handle, &estimatedParams)
             
             guard status == SANE_STATUS_GOOD else {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, SaneError.fromStatus(status)) } }
-                else { completion?(nil, nil, SaneError.fromStatus(status)) }
+                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, SaneError.fromStatus(status)) }
                 return
             }
 
@@ -627,7 +614,7 @@ extension Sane {
                         if percent > progressForLastIncompletePreview + incompletePreviewStep {
                             progressForLastIncompletePreview = percent
                             
-                            DispatchQueue.main.async {
+                            Sane.runOn(mainThread: true) {
                                 // image creation needs to be done on main thread
                                 let incompleteImage = try? UIImage.sy_imageFromIncompleteSane(data: data, parameters: parameters)
                                 progress(percent, incompleteImage)
@@ -635,7 +622,7 @@ extension Sane {
                         }
                     }
                     else {
-                        DispatchQueue.main.async {
+                        Sane.runOn(mainThread: true) {
                             progress(percent, nil)
                         }
                     }
@@ -670,20 +657,16 @@ extension Sane {
             SaneSetLogLevel(prevLogLevel)
             
             guard status == SANE_STATUS_EOF, parameters != nil else {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, SaneError.fromStatus(status)) } }
-                else { completion?(nil, nil, SaneError.fromStatus(status)) }
+                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, SaneError.fromStatus(status)) }
                 return
             }
 
             do {
                 let image = try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: parameters!)
-
-                if mainThread { DispatchQueue.main.async { completion?(image, parameters, nil) } }
-                else { completion?(image, parameters, nil) }
+                Sane.runOn(mainThread: mainThread) { completion?(image, parameters, nil) }
             }
             catch {
-                if mainThread { DispatchQueue.main.async { completion?(nil, nil, error) } }
-                else { completion?(nil, nil, error) }
+                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, error) }
             }
         }
     }

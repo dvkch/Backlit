@@ -18,12 +18,12 @@ public enum SaneError: Error {
     case cannotGenerateImage
     case unsupportedChannels
     
-    static func fromStatus(_ status: SANE_Status) -> SaneError? {
+    static func fromStatus(_ status: SANE_Status, expected: SANE_Status = SANE_STATUS_GOOD) -> SaneError? {
+        if status == expected {
+            return nil
+        }
         if status == SANE_STATUS_CANCELLED {
             return .cancelled
-        }
-        if status == SANE_STATUS_GOOD {
-            return nil
         }
         return .saneError(status)
     }
