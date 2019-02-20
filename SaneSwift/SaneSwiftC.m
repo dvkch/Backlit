@@ -27,3 +27,25 @@ SANE_Word SaneFixedFromDouble(double value) {
 double SaneDoubleFromFixed(SANE_Word value) {
     return SANE_UNFIX(value);
 }
+
+@implementation NSObject (SaneSwift)
+
+- (void)saneSwift_performBlock:(void(^ _Nullable)(void))block onThread:(NSThread  * _Nonnull)thread
+{
+    if (thread == [NSThread currentThread])
+    {
+        if (block)
+            block();
+        return;
+    }
+    
+    [self performSelector:@selector(saneSwift_runBlock:) onThread:thread withObject:block waitUntilDone:NO];
+}
+
+- (void)saneSwift_runBlock:(void(^ _Nullable)(void))block
+{
+    if (block)
+        block();
+}
+
+@end

@@ -91,7 +91,7 @@ extension Sane {
     }
 
     @objc private func runOnSaneThread(block: (() -> ())?) {
-        self.ss_perform(block, on: thread)
+        self.saneSwift_perform(block, on: thread)
     }
     
     private static func runOn(mainThread: Bool, block: @escaping () -> ()) {
