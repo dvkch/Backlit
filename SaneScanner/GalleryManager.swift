@@ -46,7 +46,7 @@ class GalleryManager: NSObject {
         
         thumbsQueue.maxConcurrentOperationCount = 1
         thumbsQueue.maxSurvivingOperations = 0
-        thumbsQueue.mode = SYOperationQueueModeLIFO // TODO: cleanup
+        thumbsQueue.mode = .LIFO
         
         watcher = DirectoryWatcher.watch(FileManager.documentsDirectoryURL)
         // TODO: don't pull all data again since we know what changed

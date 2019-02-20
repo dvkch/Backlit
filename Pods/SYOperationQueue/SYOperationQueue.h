@@ -8,24 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, SYOperationQueueMode) {
     SYOperationQueueModeFIFO,
     SYOperationQueueModeLIFO,
-} SYOperationQueueMode;
+};
 
 @interface SYOperationQueue : NSObject
 
-@property (readonly, copy) NSArray <__kindof NSOperation *> *operations;
-@property (readonly) NSUInteger operationCount;
+@property (readonly, copy) NSArray <__kindof NSOperation *> * _Nonnull operations;
+@property (readonly) NSInteger operationCount;
 @property (getter=isSuspended) BOOL suspended;
-@property (copy) NSString *name;
+@property (copy) NSString * _Nullable name;
 
 @property (nonatomic) NSInteger maxConcurrentOperationCount;
 @property (nonatomic) NSInteger maxSurvivingOperations;
 @property (nonatomic) SYOperationQueueMode mode;
 
-- (void)addOperation:(__kindof NSOperation *)op;
-- (void)addOperationWithBlock:(void(^)(void))block;
+- (void)addOperation:(__kindof NSOperation * _Nonnull)op;
+- (void)addOperationWithBlock:(void(^ _Nonnull)(void))block;
 - (void)cancelAllOperations;
 
 @end

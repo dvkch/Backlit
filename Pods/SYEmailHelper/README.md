@@ -56,6 +56,7 @@ You'll need to add the list of supported apps inside your `Info.plist`. Here are
 		<string>googlegmail</string>
 		<string>inbox-gmail</string>
 		<string>ms-outlook</string>
+		<string>readdle-spark</string>
 	</array>
 
 Screenshots

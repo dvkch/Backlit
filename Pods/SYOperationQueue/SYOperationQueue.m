@@ -126,7 +126,7 @@
 
 #pragma mark - Public methods
 
-- (NSArray<NSOperation *> *)operations
+- (NSArray<NSOperation *> * _Nonnull)operations
 {
     NSMutableArray *operations = [NSMutableArray array];
     [operations addObjectsFromArray:self.queue.operations];
@@ -136,7 +136,7 @@
     return [operations copy];
 }
 
-- (NSUInteger)operationCount
+- (NSInteger)operationCount
 {
     NSUInteger totalCount = self.queue.operationCount;
     [_lock lock];
@@ -200,7 +200,7 @@
     [self processOperations];
 }
 
-- (void)addOperationWithBlock:(void (^)(void))block
+- (void)addOperationWithBlock:(void(^ _Nonnull)(void))block
 {
     NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:block];
     [self addOperation:op];

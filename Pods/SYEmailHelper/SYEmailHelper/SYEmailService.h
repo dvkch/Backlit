@@ -46,6 +46,7 @@
 + (instancetype)gmailService;
 + (instancetype)googleInboxService;
 + (instancetype)microsoftOutlookService;
++ (instancetype)sparkService;
 
 @end
 

@@ -63,6 +63,7 @@
     [services addObject:[self gmailService]];
     [services addObject:[self googleInboxService]];
     [services addObject:[self microsoftOutlookService]];
+    [services addObject:[self sparkService]];
     
     return [services copy];
 }
@@ -99,6 +100,16 @@
     return [SYEmailServiceApp serviceWithName:@"Microsoft Outlook"
                                       baseURL:@"ms-outlook://compose"
                              parameterAddress:@"to"
+                             parameterSubject:@"subject"
+                                parameterBody:@"body"
+                            parameterCallback:nil];
+}
+
++ (instancetype)sparkService
+{
+    return [SYEmailServiceApp serviceWithName:@"Spark"
+                                      baseURL:@"readdle-spark://compose"
+                             parameterAddress:@"recipient"
                              parameterSubject:@"subject"
                                 parameterBody:@"body"
                             parameterCallback:nil];
