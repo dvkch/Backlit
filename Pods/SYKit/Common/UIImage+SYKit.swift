@@ -1,6 +1,6 @@
 //
 //  UIImage+SYKit.swift
-//  SaneScanner
+//  SYKit
 //
 //  Created by Stanislas Chevallier on 06/02/2019.
 //  Copyright © 2019 Syan. All rights reserved.
@@ -68,7 +68,7 @@ import ImageIO
     public class func imageWithColor(_ color: UIColor, size: CGSize, cornerRadius: CGFloat) -> UIImage? {
         let rect = CGRect(origin: .zero, size: size)
         
-        UIGraphicsBeginImageContextWithOptions(rect.size, cornerRadius == 0, UIScreen.main.scale)
+        UIGraphicsBeginImageContextWithOptions(rect.size, cornerRadius == 0 && color.alpha == 1, UIScreen.main.scale)
         defer { UIGraphicsEndImageContext() }
         
         color.setFill()
