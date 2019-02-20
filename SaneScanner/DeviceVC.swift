@@ -222,7 +222,7 @@ class DeviceVC: UIViewController {
         guard device.cropArea == device.maxCropArea else { return }
     
         // update only if we don't require color mode to be set at auto, or when auto is not available
-        guard !Preferences.shared.previewWithAutoColorMode || device.standardOption(for: .colorMode)?.capSetAuto != true else { return }
+        guard !Preferences.shared.previewWithAutoColorMode || device.standardOption(for: .colorMode)?.capabilities.contains(.automatic) != true else { return }
     
         device.lastPreviewImage = image
         

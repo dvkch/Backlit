@@ -121,7 +121,7 @@ extension Sane {
             let s = sane_init(nil, SaneAuthenticationCallback(deviceName:username:password:))
             
             if s != SANE_STATUS_GOOD {
-                self.saneInitError = NSStringFromSANEStatus(s)
+                self.saneInitError = s.description
             } else {
                 self.saneInitError = nil
             }
@@ -152,7 +152,7 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
     
     // this method will be called from the SANE thread, let's escape it to call the delegate
     DispatchQueue.main.async {
-        Sane.shared.delegate?.saneNeedsAuth(Sane.shared, for: NSStringFromSaneString(deviceName), completion: { (authentication) in
+        Sane.shared.delegate?.saneNeedsAuth(Sane.shared, for: deviceName?.asString(), completion: { (authentication) in
             auth = authentication
             _ = semaphore.signal()
         })
@@ -323,7 +323,7 @@ extension Sane {
             return
         }
         
-        guard !option.capInactive else {
+        guard option.capabilities.isActive else {
             completion(nil, SaneError.getValueForInactiveOption)
             return
         }

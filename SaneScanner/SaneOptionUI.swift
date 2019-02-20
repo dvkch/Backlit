@@ -74,7 +74,7 @@ class SaneOptionUI: NSObject {
     private static func showTextInput(for option: DeviceOptionString, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
         let alertView = DLAVAlertView(title: option.localizedTitle, message: option.localizedDescr, delegate: nil, cancel: "ACTION CLOSE".localized, others: [])
         
-        if option.capSetAuto {
+        if option.capabilities.contains(.automatic) {
             alertView.addButton(withTitle: "OPTION VALUE AUTO".localized)
         }
         
@@ -85,7 +85,7 @@ class SaneOptionUI: NSObject {
         alertView.show { (alert, index) in
             guard index != alert?.cancelButtonIndex else { return }
             
-            let useAuto = index == alert?.firstOtherButtonIndex && option.capSetAuto
+            let useAuto = index == alert?.firstOtherButtonIndex && option.capabilities.contains(.automatic)
             SVProgressHUD.show()
             Sane.shared.setValueForOption(value: alertView.textField(at: 0)?.text, auto: useAuto, option: option, completion: completion)
         }
@@ -94,13 +94,13 @@ class SaneOptionUI: NSObject {
     private static func showSliderInput(for option: DeviceOptionNumber, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
         let alertView = DLAVAlertView(title: option.localizedTitle, message: option.localizedDescr, delegate: nil, cancel: nil, others: [])
         
-        if option.capSetAuto {
+        if option.capabilities.contains(.automatic) {
             alertView.addButton(withTitle: "OPTION VALUE AUTO".localized)
         }
         alertView.addButton(withTitle: "ACTION SET VALUE".localized)
         alertView.addButton(withTitle: "ACTION CLOSE".localized)
 
-        let updateButtonIndex = alertView.firstOtherButtonIndex + (option.capSetAuto ? 1 : 0)
+        let updateButtonIndex = alertView.firstOtherButtonIndex + (option.capabilities.contains(.automatic) ? 1 : 0)
         
         if option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED {
             if let stepValue = option.stepValue {
@@ -130,7 +130,7 @@ class SaneOptionUI: NSObject {
         
         alertView.show { (alert, index) in
             guard index != alert?.cancelButtonIndex else { return }
-            let useAuto = index == alert!.firstOtherButtonIndex && option.capSetAuto
+            let useAuto = index == alert!.firstOtherButtonIndex && option.capabilities.contains(.automatic)
             SVProgressHUD.show()
             
             var value: Any?
@@ -153,7 +153,7 @@ class SaneOptionUI: NSObject {
         var optionsTitles = [String]()
         var optionsValues = [Any]()
         
-        if option.capSetAuto {
+        if option.capabilities.contains(.automatic) {
             optionsTitles.append("OPTION VALUE AUTO".localized)
             optionsValues.append(NSNull())
         }

@@ -58,10 +58,10 @@ public enum SaneStandardOption: CaseIterable {
     }
     
     init(cDevice: SANE_Device) {
-        self.name   = NSStringFromSaneString(cDevice.name)   ?? ""
-        self.model  = NSStringFromSaneString(cDevice.model)  ?? ""
-        self.vendor = NSStringFromSaneString(cDevice.vendor) ?? ""
-        self.type   = Sane.shared.translation(for: NSStringFromSaneString(cDevice.type) ?? "")
+        self.name   = cDevice.name.asString()   ?? ""
+        self.model  = cDevice.model.asString()  ?? ""
+        self.vendor = cDevice.vendor.asString() ?? ""
+        self.type   = Sane.shared.translation(for: cDevice.type.asString() ?? "")
         super.init()
     }
     
@@ -95,7 +95,7 @@ extension Device {
         }
         
         if !includeAdvanced {
-            filteredOptions.removeAll(where: { $0.capAdvanced })
+            filteredOptions.removeAll(where: { $0.capabilities.contains(.advanced) })
         }
         
         return DeviceOption.groupedOptions(filteredOptions, removeEmpty: true)
@@ -115,7 +115,7 @@ extension Device {
     public var canCrop: Bool {
         let existingSettableOptions = SaneStandardOption.cropOptions
             .compactMap { standardOption(for: $0) }
-            .filter { $0.capSettableViaSoftware && !$0.capInactive }
+            .filter { $0.capabilities.isSettable && $0.capabilities.isActive }
         return existingSettableOptions.count == 4
     }
     
@@ -123,8 +123,8 @@ extension Device {
         // TODO: clean up
         let options = SaneStandardOption.cropOptions
             .compactMap { standardOption(for: $0) as? DeviceOptionNumber }
-            .filter { $0.capSettableViaSoftware && !$0.capInactive }
-        
+            .filter { $0.capabilities.isSettable && $0.capabilities.isActive }
+
         guard options.count == 4 else { return .zero }
         
         var tlX = Double(0), tlY = Double(0), brX = Double(0), brY = Double(0)

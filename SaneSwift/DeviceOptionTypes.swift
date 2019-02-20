@@ -24,7 +24,7 @@ public class DeviceOptionBool : DeviceOption {
     
     // MARK: Overrides
     override func refreshValue(_ block: ((Error?) -> ())?) {
-        guard !capInactive else {
+        guard capabilities.isActive else {
             block?(nil)
             return
         }
@@ -43,10 +43,7 @@ public class DeviceOptionBool : DeviceOption {
     }
     
     public override func valueString(withUnit: Bool) -> String {
-        guard !capInactive else {
-            return ""
-        }
-        
+        guard capabilities.isActive else { return "" }
         return stringForValue(value, withUnit: withUnit)
     }
 }
@@ -116,7 +113,7 @@ public class DeviceOptionString : DeviceOption {
         if cOpt.constraint_type == SANE_CONSTRAINT_STRING_LIST {
             var values = [String]()
             while let value = cOpt.constraint.string_list.advanced(by: values.count).pointee {
-                values.append(Sane.shared.translation(for: NSStringFromSaneString(value) ?? ""))
+                values.append(Sane.shared.translation(for: value.asString() ?? ""))
             }
             constraintValues = values
         }
@@ -153,19 +150,19 @@ public class DeviceOptionString : DeviceOption {
         
         var parts = [stringValue]
         if unit != SANE_UNIT_NONE && withUnit {
-            parts.append(NSStringFromSANE_Unit(unit: unit))
+            parts.append(unit.description)
         }
         
         return parts.compactMap({ $0 }).joined(separator: " ")
     }
     
     public override func valueString(withUnit: Bool) -> String {
-        guard !capInactive else { return "" }
+        guard capabilities.isActive else { return "" }
         return stringForValue(value, withUnit: withUnit)
     }
     
     override func refreshValue(_ block: ((Error?) -> ())?) {
-        guard !capInactive else {
+        guard capabilities.isActive else {
             block?(nil)
             return
         }
@@ -282,7 +279,7 @@ public class DeviceOptionNumber : DeviceOption {
     public override func stringForValue(_ value: Any?, withUnit: Bool) -> String {
         var unitString = ""
         if unit != SANE_UNIT_NONE && withUnit {
-            unitString = " " + NSStringFromSANE_Unit(unit: unit)
+            unitString = " " + unit.description
         }
         
         if type == SANE_TYPE_INT {
@@ -295,11 +292,11 @@ public class DeviceOptionNumber : DeviceOption {
     }
     
     public override func valueString(withUnit: Bool) -> String {
-        return capInactive ? "" : stringForValue(value, withUnit: withUnit)
+        return capabilities.isActive ? stringForValue(value, withUnit: withUnit) : ""
     }
     
     override func refreshValue(_ block: ((Error?) -> ())?) {
-        guard !capInactive else {
+        guard capabilities.isActive else {
             block?(nil)
             return
         }

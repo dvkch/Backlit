@@ -49,16 +49,3 @@ extension ScanParameters : CustomStringConvertible {
         return "ScanParameters: \(width)x\(height)x\(depth), channel: \(currentlyAcquiredChannel), isLast: \(acquiringLastChannel), bytesPerLine: \(bytesPerLine)"
     }
 }
-
-extension SANE_Frame : CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case SANE_FRAME_RGB:    return "RGB"
-        case SANE_FRAME_RED:    return "R"
-        case SANE_FRAME_GREEN:  return "G"
-        case SANE_FRAME_BLUE:   return "B"
-        case SANE_FRAME_GRAY:   return "GRAY"
-        default: fatalError("Invalid frame type")
-        }
-    }
-}
