@@ -11,7 +11,7 @@ import Foundation
 @objc public protocol SaneDelegate: NSObjectProtocol {
     func saneDidStartUpdatingDevices(_ sane: Sane)
     func saneDidEndUpdatingDevices(_ sane: Sane)
-    func saneNeedsAuth(_ sane: Sane, for device: String) -> DeviceAuthentication?
+    func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ())
 }
 
 @objc public class Sane: NSObject {
@@ -29,12 +29,6 @@ import Foundation
         #if DEBUG
         SaneSetLogLevel(255)
         #endif
-        
-        SaneSetAuthBlock { (device, username, password) in
-            let auth = self.delegate?.saneNeedsAuth(self, for: device)
-            username?.pointee = auth?.username as NSString?
-            password?.pointee = auth?.password as NSString?
-        }
         
         SaneConfig.makeConfigAvailableToSaneLib()
     }
@@ -124,7 +118,7 @@ extension Sane {
             self.isUpdatingDevices = false
             
             // TODO: auth callback!
-            let s = sane_init(nil, SaneAuthCallBack)
+            let s = sane_init(nil, SaneAuthenticationCallback(deviceName:username:password:))
             
             if s != SANE_STATUS_GOOD {
                 self.saneInitError = NSStringFromSANEStatus(s)
@@ -149,6 +143,28 @@ extension Sane {
             print("SANE stopped")
         }
     }
+}
+
+// MARK: Authentication
+private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username: UnsafeMutablePointer<SANE_Char>?, password: UnsafeMutablePointer<SANE_Char>?) {
+    let semaphore = DispatchSemaphore(value: 0)
+    var auth: DeviceAuthentication? = nil
+    
+    // this method will be called from the SANE thread, let's escape it to call the delegate
+    DispatchQueue.main.async {
+        Sane.shared.delegate?.saneNeedsAuth(Sane.shared, for: NSStringFromSaneString(deviceName), completion: { (authentication) in
+            auth = authentication
+            _ = semaphore.signal()
+        })
+    }
+    
+    // let's wait for the delegate to answer
+    _ = semaphore.wait(timeout: .distantFuture)
+    
+    // TODO: handle SANE_MAX_USERNAME_LEN and SANE_MAX_PASSWORD_LEN
+    // TODO: need to cache?
+    username?.pointee = auth?.username?.cString(using: .utf8)?.first ?? 0
+    password?.pointee = auth?.password?.cString(using: .utf8)?.first ?? 0
 }
 
 extension Sane {

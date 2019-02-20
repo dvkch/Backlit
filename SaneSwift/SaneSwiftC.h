@@ -14,11 +14,6 @@ FOUNDATION_EXPORT int SaneGetLogLevel(void);
 
 FOUNDATION_EXPORT NSString *NSStringFromSANEStatus(SANE_Status status);
 
-typedef void(^SaneAuthBlock)(NSString * _Nonnull deviceName, NSString **username, NSString **password);
-
-FOUNDATION_EXPORT void SaneSetAuthBlock(SaneAuthBlock block);
-FOUNDATION_EXPORT void SaneAuthCallBack(SANE_String_Const resource, SANE_Char *username, SANE_Char *password);
-
 FOUNDATION_EXPORT SANE_Word SaneFixedFromDouble(double value);
 FOUNDATION_EXPORT double SaneDoubleFromFixed(SANE_Word value);
 

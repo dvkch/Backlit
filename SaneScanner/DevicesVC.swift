@@ -85,41 +85,25 @@ extension DevicesVC: SaneDelegate {
         tableView.sy_endPullToRefresh()
     }
     
-    func saneNeedsAuth(_ sane: Sane, for device: String) -> DeviceAuthentication? {
-        return nil
-        // TODO: do auth but with completion block
-        /*
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ()) {
+        let alertView = DLAVAlertView(
+            title: "DIALOG TITLE AUTH".localized,
+            message: String(format: "DIALOG MESSAGE AUTH %@".localized, device ?? "unknown"),
+            delegate: nil,
+            cancel: "ACTION CANCEL".localized,
+            others: ["ACTION CONTINUE".localized]
+        )
         
-        __block NSString *outUsername;
-        __block NSString *outPassword;
-        
-        dispatch_async(dispatch_get_main_queue(), ^
-            {
-                DLAVAlertView *alertView =
-                    [[DLAVAlertView alloc] initWithTitle:$("DIALOG TITLE AUTH")
-                        message:[NSString stringWithFormat:$("DIALOG MESSAGE AUTH %@"), device]
-                        delegate:nil
-                        cancelButtonTitle:$("ACTION CANCEL")
-                        otherButtonTitles:$("ACTION CONTINUE"), nil];
-                
-                [alertView setAlertViewStyle:DLAVAlertViewStyleLoginAndPasswordInput];
-                [[alertView textFieldAtIndex:0] setBorderStyle:UITextBorderStyleNone];
-                [[alertView textFieldAtIndex:1] setBorderStyle:UITextBorderStyleNone];
-                [alertView showWithCompletion:^(DLAVAlertView *alertView, NSInteger buttonIndex) {
-                    if (buttonIndex != alertView.cancelButtonIndex)
-                    {
-                    outUsername = [alertView textFieldAtIndex:0].text;
-                    outPassword = [alertView textFieldAtIndex:1].text;
-                    }
-                    dispatch_semaphore_signal(semaphore);
-                    }];
-            });
-        
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        
-        return [[DeviceAuthentication alloc] initWithUsername:outUsername password:outPassword];
-        */
+        alertView.alertViewStyle = .loginAndPasswordInput
+        alertView.textField(at: 0)?.borderStyle = .none
+        alertView.textField(at: 1)?.borderStyle = .none
+        alertView.show { (alert, index) in
+            guard alert?.cancelButtonIndex != index else {
+                completion(nil)
+                return
+            }
+            completion(DeviceAuthentication(username: alert?.textField(at: 0)?.text, password: alert?.textField(at: 1)?.text))
+        }
     }
 }
 

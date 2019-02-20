@@ -25,29 +25,6 @@ NSString *NSStringFromSANEStatus(SANE_Status status) {
     return [NSString stringWithCString:sane_strstatus(status) encoding:NSUTF8StringEncoding];
 }
 
-static SaneAuthBlock kSaneAuthBlock = NULL;
-void SaneSetAuthBlock(SaneAuthBlock block) {
-    kSaneAuthBlock = [block copy];
-}
-
-void SaneAuthCallBack(SANE_String_Const resource, SANE_Char *username, SANE_Char *password) {
-    // TODO: handle max length
-    if (kSaneAuthBlock != NULL) {
-        NSString *user = nil;
-        NSString *pass = nil;
-        
-        kSaneAuthBlock([NSString stringWithCString:resource encoding:NSUTF8StringEncoding], &user, &pass);
-        
-        if (user != NULL && username != NULL) {
-            *username = [user cStringUsingEncoding:NSUTF8StringEncoding];
-        }
-        
-        if (pass != NULL && password != NULL) {
-            *password = [pass cStringUsingEncoding:NSUTF8StringEncoding];
-        }
-    }
-}
-
 SANE_Word SaneFixedFromDouble(double value) {
     return SANE_FIX(value);
 }
