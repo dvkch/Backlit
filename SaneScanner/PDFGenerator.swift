@@ -20,10 +20,12 @@ enum PDFGeneratorError: Error {
 extension PDFGeneratorError: LocalizedError {
     var errorDescription: String? {
         switch self {
-        case .pdfCouldntBeGenerated: return "ERROR MESSAGE PDF NOT CREATED".localized
-        default:
-            // TODO: localize other codes
-            return "ERROR MESSAGE PDF NOT CREATED".localized
+        case .noImages:                         return "ERROR MESSAGE PDF NO IMAGES".localized
+        case .pdfCouldntBeGenerated:            return "ERROR MESSAGE PDF COULD NOT BE GENERATED".localized
+        case .cannotOpenImages:                 return "ERROR MESSAGE CANNOT OPEN IMAGES".localized
+        case .cannotOpenImage(let url):         return String(format: "ERROR MESSAGE CANNOT OPEN IMAGE %@".localized, url.deletingPathExtension().lastPathComponent)
+        case .invalidImageData(let url):        return String(format: "ERROR MESSAGE INVALID IMAGE DATA %@".localized, url.deletingPathExtension().lastPathComponent)
+        case .invalidJPEGQuality(let value):    return String(format: "ERROR MESSAGE INVALID JPEG QUALITY %.0lf".localized, value)
         }
     }
 }
