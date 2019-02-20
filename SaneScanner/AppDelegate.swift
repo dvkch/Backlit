@@ -18,11 +18,7 @@ enum SnapshotType {
 
 // TODO: SYKit image with color -> opaque : cornerRadius == 0 && color.alpha == 1
 // TODO: cleanup all "as NSString" / "as NSData" references
-// TODO: cleanup all Int(), Double() etc
-// TODO: cleanup @objc
-
 // LATER: send in chronological order, older to newer
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder {

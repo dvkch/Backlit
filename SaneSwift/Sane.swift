@@ -320,7 +320,7 @@ extension Sane {
         
         runOnSaneThread {
             // TODO: use something else than malloc
-            let value = malloc(Int(option.size))!
+            let value = malloc(option.size)!
             
             let s = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_GET_VALUE, value, nil) }
             
@@ -337,7 +337,7 @@ extension Sane {
                 castedValue = value.bindMemory(to: SANE_Int.self, capacity: 1).pointee
             }
             else if option.type == SANE_TYPE_STRING {
-                castedValue = String(cString: value.bindMemory(to: SANE_Char.self, capacity: Int(option.size)))
+                castedValue = String(cString: value.bindMemory(to: SANE_Char.self, capacity: option.size))
             }
             
             free(value)
@@ -392,7 +392,7 @@ extension Sane {
             
             if !auto {
                 // TODO: an option should be able to convert its value from/to raw bytes
-                byteValue = malloc(Int(option.size))
+                byteValue = malloc(option.size)
                 if option.type == SANE_TYPE_BOOL {
                     byteValue?.bindMemory(to: SANE_Bool.self, capacity: 1).pointee = ((value as? Bool) ?? false) ? 1 : 0
                 }
@@ -404,8 +404,8 @@ extension Sane {
                 }
                 else if option.type == SANE_TYPE_STRING {
                     let cString = ((value as? String) ?? "").cString(using: String.Encoding.utf8) ?? []
-                    let size = min(cString.count, Int(option.size))
-                    byteValue?.bindMemory(to: SANE_Char.self, capacity: Int(option.size)).assign(from: cString, count: size)
+                    let size = min(cString.count, option.size)
+                    byteValue?.bindMemory(to: SANE_Char.self, capacity: option.size).assign(from: cString, count: size)
                     // TODO: fix some strings that are not working (e.g.: scan mode = Grey or Colour)
                 }
             }
@@ -594,7 +594,7 @@ extension Sane {
             var data = Data(capacity: estimatedParameters.fileSize + 1)
             let bufferMaxSize = max(100 * 1000, estimatedParameters.fileSize / 100)
 
-            let buffer = malloc(Int(bufferMaxSize))!.bindMemory(to: UInt8.self, capacity: bufferMaxSize)
+            let buffer = malloc(bufferMaxSize)!.bindMemory(to: UInt8.self, capacity: bufferMaxSize)
             var bufferActualSize: SANE_Int = 0
             var parameters: ScanParameters?
             

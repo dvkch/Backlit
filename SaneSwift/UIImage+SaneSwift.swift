@@ -73,10 +73,10 @@ public extension UIImage {
 
         guard let context = CGContext(
             data: nil, // let iOS deal with allocating the memory
-            width: Int(parameters.width),
-            height: Int(parameters.height),
+            width: parameters.width,
+            height: parameters.height,
             bitsPerComponent: 8,
-            bytesPerRow: Int(parameters.width) * destNumberOfComponents,
+            bytesPerRow: parameters.width * destNumberOfComponents,
             space: colorSpace,
             bitmapInfo: destBitmapInfo.rawValue
         ) else {
