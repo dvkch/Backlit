@@ -30,7 +30,7 @@ class AppDelegate: UIResponder {
     private var splitViewController: SplitVC!
     private var scanNavigationController: ScanNC!
     private var galleryViewController: GalleryViewController!
-    private let emptyVC = EmptyGalleryVC()
+    private let emptyVC = UINavigationController(rootViewController: EmptyGalleryVC())
     
     // MARK: Snapshot properties
     private(set) var snapshotType = SnapshotType.none
@@ -41,10 +41,6 @@ extension AppDelegate : UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // log
         print("Document path:", FileManager.documentsDirectoryURL)
-        
-        // TODO: add button in DEBUG in EmptyVC?
-        // create test images if needed
-        // GalleryManager.shared.createRandomTestImages(count: 200)
         
         // navigation controller
         scanNavigationController = ScanNC()

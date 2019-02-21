@@ -22,10 +22,21 @@ class OverviewController: MHOverviewController {
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         toolbarItems = [trashButton, flexibleSpace, pdfButton, flexibleSpace, shareButton]
+        
+        #if DEBUG
+        let testButton = UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap))
+        navigationItem.rightBarButtonItems?.append(testButton)
+        #endif
     }
     
     
     // MARK: Actions
+    #if DEBUG
+    @objc private func addTestImagesButtonTap() {
+        GalleryManager.shared.createRandomTestImages(count: 20)
+    }
+    #endif
+    
     @objc private func deleteButtonTap() {
         guard let selected = collectionView.indexPathsForSelectedItems, !selected.isEmpty else { return }
         

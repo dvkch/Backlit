@@ -31,9 +31,20 @@ class EmptyGalleryVC: UIViewController {
             make?.center.equalTo()(0)
             make?.width.lessThanOrEqualTo()(300)
         }
+        
+        #if DEBUG
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap))
+        #endif
     }
 
     // MARK: Properties
     private let label = UILabel()
     
+    // MARK: Actions
+    
+    #if DEBUG
+    @objc private func addTestImagesButtonTap() {
+        GalleryManager.shared.createRandomTestImages(count: 20)
+    }
+    #endif
 }
