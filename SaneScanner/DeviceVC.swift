@@ -49,7 +49,7 @@ class DeviceVC: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: .preferencesChanged, object: nil)
         
-        tableView.sy_showPullToRefresh(runBlock: true)
+        refresh()
     }
 
     deinit {
@@ -170,6 +170,7 @@ class DeviceVC: UIViewController {
         guard !isRefreshing else { return }
         isRefreshing = true
         
+        tableView.sy_showPullToRefresh()
         Sane.shared.listOptions(for: device) { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()

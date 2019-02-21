@@ -39,7 +39,6 @@ class DevicesVC: UIViewController {
         title = Bundle.main.localizedName
         tableView.reloadData()
         
-        // TODO: remove ability to call block, should run Sane refresh instead that itself triggers this
         if devices.isEmpty {
             refreshDevices()
         }
@@ -78,7 +77,7 @@ class DevicesVC: UIViewController {
 
 extension DevicesVC: SaneDelegate {
     func saneDidStartUpdatingDevices(_ sane: Sane) {
-        tableView.sy_showPullToRefresh(runBlock: false)
+        tableView.sy_showPullToRefresh()
     }
     
     func saneDidEndUpdatingDevices(_ sane: Sane) {
@@ -152,10 +151,14 @@ extension DevicesVC : UITableViewDelegate {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "ACTION REMOVE".localized) { (_, indexPath) in
             Sane.shared.configuration.removeHost(Sane.shared.configuration.hosts[indexPath.row])
             
+            CATransaction.begin()
+            CATransaction.setCompletionBlock {
+                self.refreshDevices()
+            }
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .bottom)
             tableView.endUpdates()
-            tableView.sy_showPullToRefresh(runBlock: true)
+            CATransaction.commit()
         }
         return [deleteAction]
     }

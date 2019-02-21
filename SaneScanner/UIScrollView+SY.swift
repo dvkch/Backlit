@@ -53,7 +53,7 @@ extension UIScrollView {
         }
     }
 
-    func sy_showPullToRefresh(runBlock: Bool) {
+    func sy_showPullToRefresh() {
         guard let control = sy_refreshControl, !control.isRefreshing else { return }
         
         control.beginRefreshing()
@@ -61,10 +61,6 @@ extension UIScrollView {
         // 60 is the average height for the refreshControl. we can't use UIRefreshControl.frame.size.height because
         // when it is closed its height is 0.5px...
         setContentOffset(CGPoint(x: 0, y: -60), animated: true)
-    
-        if runBlock, let block = sy_refreshControlAction {
-            block(self)
-        }
     }
     
     func sy_endPullToRefresh() {
