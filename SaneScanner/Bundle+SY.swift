@@ -23,7 +23,7 @@ extension Bundle {
     }
     
     var fullVersion: String {
-        return commercialVersion + "(" + buildVersion + ")"
+        return commercialVersion + " (" + buildVersion + ")"
     }
 }
 

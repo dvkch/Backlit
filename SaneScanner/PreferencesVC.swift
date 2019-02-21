@@ -103,9 +103,7 @@ extension PreferencesVC : UITableViewDelegate {
         if indexPath.section >= Preferences.shared.groupedKeys.count {
             guard indexPath.row == 0 else { return }
             
-            // TODO: cleanup
-            var subject = String(format: "CONTACT SUBJECT ABOUT APP %@".localized, Bundle.main.localizedName ?? "")
-            subject += " " + Bundle.main.fullVersion
+            let subject = String(format: "CONTACT SUBJECT ABOUT APP %@ %@".localized, Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
             
             SYEmailServicePasteboard.name = "MAIL COPY PASTEBOARD NAME".localized
             SYEmailHelper.shared()?.composeEmail(
