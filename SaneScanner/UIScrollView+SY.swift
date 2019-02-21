@@ -31,9 +31,7 @@ extension UIScrollView {
         self.sy_refreshControl?.removeFromSuperview()
         self.sy_refreshControl = nil
     
-        // TODO: [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleChasingDots color:color spinnerSize:kSpinnerSize]
-
-        let control = UIRefreshControl(frame: .zero)
+        let control = DotsRefreshControl(frame: .zero)
         control.tintColor = UIColor.groupTableViewHeaderTitle.withAlphaComponent(0.8)
         control.attributedTitle = nil
         control.backgroundColor = .clear
