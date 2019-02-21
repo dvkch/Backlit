@@ -47,7 +47,7 @@ extension UIActivityViewController {
             }
         }
         
-        vc.popoverPresentationController?.permittedArrowDirections = .down // TODO: up (in ObjC) ?
+        vc.popoverPresentationController?.permittedArrowDirections = .up
         vc.popoverPresentationController?.sourceView = presentingVC.view
         vc.popoverPresentationController?.sourceRect = CGRect(x: presentingVC.view.bounds.width / 2, y: presentingVC.view.bounds.height, width: 1, height: 1)
         pdfActivity.presentingViewController = presentingVC

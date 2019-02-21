@@ -199,10 +199,8 @@ class GalleryManager: NSObject {
     }
     
     func dateString(for item: MHGalleryItem) -> String? {
-        // TODO: use url.creationDate?
-        guard let attributes = try? FileManager.default.attributesOfItem(atPath: item.url.path) else { return nil }
-        guard let date = attributes[.creationDate] as? Date else { return nil }
-        
+        guard let date = item.url.creationDate else { return nil }
+
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .short

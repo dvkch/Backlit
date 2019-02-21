@@ -134,22 +134,6 @@ class DeviceVC: UIViewController {
         })
     }
     
-    // TODO: cleanup
-    private func scanButtonTapBis() {
-        SVProgressHUD.show(withStatus: "SCANNING".localized)
-        Sane.shared.scan(device: device, progress: { (progress, incompleteImage) in
-            SVProgressHUD.showProgress(progress)
-        }) { (image, parameters, error) in
-            if let error = error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-            }
-            if let image = image, let parameters = parameters, let metadata = self.imageMetadata(scanParameters: parameters) {
-                GalleryManager.shared.addImage(image, metadata: metadata)
-                SVProgressHUD.showSuccess(status: nil, duration: 1)
-            }
-        }
-    }
-    
     @objc private func settingsButtonTap() {
         let nc = UINavigationController(rootViewController: PreferencesVC())
         nc.modalPresentationStyle = .formSheet
