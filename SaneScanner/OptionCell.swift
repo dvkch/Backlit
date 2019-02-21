@@ -10,7 +10,6 @@ import UIKit
 import SaneSwift
 import SYKit
 
-// TODO: fix sizing issues in PreferencesVC
 class OptionCell: UITableViewCell {
 
     override func awakeFromNib() {
@@ -92,6 +91,7 @@ class OptionCell: UITableViewCell {
     }
     
     // MARK: Layout
+    // cell heights are not proper because they depend on layoutMargins, that change according to safeAreaInsets. we only use those for estimated heights
     private static let sizingCell = UINib(nibName: "OptionCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! OptionCell
     
     static func cellHeight(option: DeviceOption, showDescription: Bool, width: CGFloat) -> CGFloat {

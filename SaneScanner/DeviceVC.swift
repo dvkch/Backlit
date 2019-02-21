@@ -328,18 +328,26 @@ extension DeviceVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let width = tableView.bounds.width
-        var maxHeight = tableView.bounds.height * 2 / 3
-        
-        if traitCollection.verticalSizeClass == .compact {
-            maxHeight = 500
-        }
         
         if indexPath.section == 0 {
+            var maxHeight = tableView.bounds.height * 2 / 3
+            
+            if traitCollection.verticalSizeClass == .compact {
+                maxHeight = 500
+            }
             return PreviewCell.cellHeight(device: device, width: width, maxHeight: maxHeight)
         }
         
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return UITableView.automaticDimension
+        }
+        
         if let option = option(tableViewIndexPath: indexPath) {
-            return OptionCell.cellHeight(option: option, showDescription: false, width: width)
+            return OptionCell.cellHeight(option: option, showDescription: false, width: tableView.bounds.width)
         }
         
         return 0

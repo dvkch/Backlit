@@ -142,8 +142,7 @@ extension DevicesVC : UITableViewDataSource {
 
 extension DevicesVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // TODO: use auto
-        return indexPath.section == 0 ? 44 : 52
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

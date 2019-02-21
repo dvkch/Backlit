@@ -20,13 +20,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Canon PIXMA MP270" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJy-sE-ARe">
-                        <rect key="frame" x="16" y="11" width="262" height="18"/>
+                        <rect key="frame" x="16" y="15" width="262" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="192.168.x.x – multi-function peripheral" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuS-XN-Inx">
-                        <rect key="frame" x="16" y="31" width="262" height="14.5"/>
+                        <rect key="frame" x="16" y="35" width="262" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -35,11 +35,11 @@
                 <constraints>
                     <constraint firstItem="NJy-sE-ARe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="73N-gR-SDc"/>
                     <constraint firstAttribute="trailingMargin" secondItem="NJy-sE-ARe" secondAttribute="trailing" id="Eeb-y8-Pnn"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="uuS-XN-Inx" secondAttribute="bottom" priority="750" id="O2z-nq-IUz"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="uuS-XN-Inx" secondAttribute="bottom" priority="750" constant="4" id="O2z-nq-IUz"/>
                     <constraint firstItem="uuS-XN-Inx" firstAttribute="top" secondItem="NJy-sE-ARe" secondAttribute="bottom" constant="2" id="kbQ-7t-NIu"/>
                     <constraint firstAttribute="trailingMargin" secondItem="uuS-XN-Inx" secondAttribute="trailing" id="roW-mo-nF8"/>
                     <constraint firstItem="uuS-XN-Inx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="wTD-EO-fdc"/>
-                    <constraint firstItem="NJy-sE-ARe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="xI6-3a-BXG"/>
+                    <constraint firstItem="NJy-sE-ARe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="xI6-3a-BXG"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

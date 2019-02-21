@@ -79,7 +79,7 @@ extension PreferencesVC : UITableViewDataSource {
 }
 
 extension PreferencesVC : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section < Preferences.shared.groupedKeys.count {
             let prefKey = Preferences.shared.groupedKeys[indexPath.section].1[indexPath.row]
             return OptionCell.cellHeight(prefKey: prefKey, showDescription: true, width: tableView.bounds.width)
@@ -90,6 +90,10 @@ extension PreferencesVC : UITableViewDelegate {
         else {
             return OptionCell.cellHeight(leftText: "PREFERENCES TITLE VERSION".localized, rightText: Bundle.main.fullVersion, width: tableView.bounds.width)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
