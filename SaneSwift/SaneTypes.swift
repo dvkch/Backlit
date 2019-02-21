@@ -63,20 +63,20 @@ extension UnsafePointer where Pointee == SANE_Char {
 }
 
 // MARK: Capabilities
-public struct SaneCap: OptionSet {
+public struct SaneCapabilities: OptionSet {
     public var rawValue: SANE_Int
     
     public init(rawValue: SANE_Int) {
         self.rawValue = rawValue
     }
 
-    public static let softwareSettable = SaneCap(rawValue: SANE_CAP_SOFT_SELECT)
-    public static let hardwareSettable = SaneCap(rawValue: SANE_CAP_HARD_SELECT)
-    public static let readable         = SaneCap(rawValue: SANE_CAP_SOFT_DETECT)
-    public static let emulated         = SaneCap(rawValue: SANE_CAP_EMULATED)
-    public static let automatic        = SaneCap(rawValue: SANE_CAP_AUTOMATIC)
-    public static let inactive         = SaneCap(rawValue: SANE_CAP_INACTIVE)
-    public static let advanced         = SaneCap(rawValue: SANE_CAP_ADVANCED)
+    public static let softwareSettable = SaneCapabilities(rawValue: SANE_CAP_SOFT_SELECT)
+    public static let hardwareSettable = SaneCapabilities(rawValue: SANE_CAP_HARD_SELECT)
+    public static let readable         = SaneCapabilities(rawValue: SANE_CAP_SOFT_DETECT)
+    public static let emulated         = SaneCapabilities(rawValue: SANE_CAP_EMULATED)
+    public static let automatic        = SaneCapabilities(rawValue: SANE_CAP_AUTOMATIC)
+    public static let inactive         = SaneCapabilities(rawValue: SANE_CAP_INACTIVE)
+    public static let advanced         = SaneCapabilities(rawValue: SANE_CAP_ADVANCED)
     
     public var isActive: Bool {
         return !contains(.inactive)
@@ -87,7 +87,7 @@ public struct SaneCap: OptionSet {
     }
 }
 
-extension SaneCap: CustomStringConvertible {
+extension SaneCapabilities: CustomStringConvertible {
     public var description: String {
         var descriptions = [String]()
         
@@ -118,4 +118,45 @@ struct SaneInfo: OptionSet {
     static let inexact          = SaneInfo(rawValue: SANE_INFO_INEXACT)
     static let reloadOptions    = SaneInfo(rawValue: SANE_INFO_RELOAD_OPTIONS)
     static let reloadParams     = SaneInfo(rawValue: SANE_INFO_RELOAD_PARAMS)
+}
+
+// MARK: Standard options
+public enum SaneStandardOption: CaseIterable {
+    case preview, resolution, resolutionX, resolutionY, colorMode, areaTopLeftX, areaTopLeftY, areaBottomRightX, areaBottomRightY
+    
+    var saneIdentifier: String {
+        switch self {
+        case .preview:          return SANE_NAME_PREVIEW
+        case .resolution:       return SANE_NAME_SCAN_RESOLUTION
+        case .resolutionX:      return SANE_NAME_SCAN_X_RESOLUTION
+        case .resolutionY:      return SANE_NAME_SCAN_Y_RESOLUTION
+        case .colorMode:        return SANE_NAME_SCAN_MODE
+        case .areaTopLeftX:     return SANE_NAME_SCAN_TL_X
+        case .areaTopLeftY:     return SANE_NAME_SCAN_TL_Y
+        case .areaBottomRightX: return SANE_NAME_SCAN_BR_X
+        case .areaBottomRightY: return SANE_NAME_SCAN_BR_Y
+        }
+    }
+    
+    init?(saneIdentifier: String?) {
+        guard let option = SaneStandardOption.allCases.first(where: { $0.saneIdentifier == saneIdentifier }) else { return nil }
+        self = option
+    }
+    
+    static var cropOptions: [SaneStandardOption] {
+        return [.areaTopLeftX, .areaTopLeftY, .areaBottomRightX, .areaBottomRightY]
+    }
+    
+    public enum PreviewValue {
+        case auto, min, max
+    }
+    
+    var bestPreviewValue: PreviewValue {
+        switch self {
+        case .preview, .colorMode:                      return .auto
+        case .resolution, .resolutionX, .resolutionY:   return .min
+        case .areaTopLeftX, .areaTopLeftY:              return .min
+        case .areaBottomRightX, .areaBottomRightY:      return .max
+        }
+    }
 }

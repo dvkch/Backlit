@@ -267,7 +267,6 @@ public class DeviceOptionNumber : DeviceOption {
         }
         
         if constraintType == SANE_CONSTRAINT_WORD_LIST {
-            // TODO: verify order
             let sortedValues = constraintValues?.sorted { $0.compare($1) == .orderedAscending }
             return value == .max ? sortedValues?.last : sortedValues?.first
         }

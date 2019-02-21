@@ -6,47 +6,6 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
-// TODO: Move
-public enum SaneStandardOption: CaseIterable {
-    case preview, resolution, resolutionX, resolutionY, colorMode, areaTopLeftX, areaTopLeftY, areaBottomRightX, areaBottomRightY
-    
-    var saneIdentifier: String {
-        switch self {
-        case .preview:          return SANE_NAME_PREVIEW
-        case .resolution:       return SANE_NAME_SCAN_RESOLUTION
-        case .resolutionX:      return SANE_NAME_SCAN_X_RESOLUTION
-        case .resolutionY:      return SANE_NAME_SCAN_Y_RESOLUTION
-        case .colorMode:        return SANE_NAME_SCAN_MODE
-        case .areaTopLeftX:     return SANE_NAME_SCAN_TL_X
-        case .areaTopLeftY:     return SANE_NAME_SCAN_TL_Y
-        case .areaBottomRightX: return SANE_NAME_SCAN_BR_X
-        case .areaBottomRightY: return SANE_NAME_SCAN_BR_Y
-        }
-    }
-
-    init?(saneIdentifier: String?) {
-        guard let option = SaneStandardOption.allCases.first(where: { $0.saneIdentifier == saneIdentifier }) else { return nil }
-        self = option
-    }
-    
-    static var cropOptions: [SaneStandardOption] {
-        return [.areaTopLeftX, .areaTopLeftY, .areaBottomRightX, .areaBottomRightY]
-    }
-
-    public enum PreviewValue {
-        case auto, min, max
-    }
-
-    var bestPreviewValue: PreviewValue {
-        switch self {
-        case .preview, .colorMode:                      return .auto
-        case .resolution, .resolutionX, .resolutionY:   return .min
-        case .areaTopLeftX, .areaTopLeftY:              return .min
-        case .areaBottomRightX, .areaBottomRightY:      return .max
-        }
-    }
-}
-
 public class Device {
     // MARK: Initializers
     init(name: String, type: String, vendor: String, model: String) {
@@ -118,7 +77,6 @@ extension Device {
     }
     
     public var maxCropArea: CGRect {
-        // TODO: clean up
         let options = SaneStandardOption.cropOptions
             .compactMap { standardOption(for: $0) as? DeviceOptionNumber }
             .filter { $0.capabilities.isSettable && $0.capabilities.isActive }
@@ -146,7 +104,6 @@ extension Device {
     }
     
     public var previewImageRatio: CGFloat? {
-        // TODO: was cached, still needed?
         guard !options.isEmpty else { return nil }
         if maxCropArea != .zero {
             return maxCropArea.width / maxCropArea.height

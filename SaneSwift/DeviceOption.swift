@@ -30,7 +30,7 @@ public class DeviceOption {
         self.type           = cOpt.type
         self.unit           = cOpt.unit
         self.size           = Int(cOpt.size)
-        self.capabilities   = SaneCap(rawValue: cOpt.cap)
+        self.capabilities   = SaneCapabilities(rawValue: cOpt.cap)
         self.constraintType = cOpt.constraint_type
     }
     
@@ -43,7 +43,7 @@ public class DeviceOption {
     public let type: SANE_Value_Type
     public let unit: SANE_Unit
     public let size: Int
-    public let capabilities: SaneCap
+    public let capabilities: SaneCapabilities
     public let constraintType: SANE_Constraint_Type
 
     public var disabledOrReadOnly: Bool {
