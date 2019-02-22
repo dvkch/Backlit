@@ -134,7 +134,20 @@ extension Device {
 // MARK: Helpers
 extension Device {
     public var host: String {
-        // TODO: ugly, hacky, definitely wrong. fix when we get the chance, remove if unused
+        // documentation about net backend names is available at https://www.systutorials.com/docs/linux/man/5-sane-net/
+        
+        guard name.contains(":") else {
+            // according to man page, if the device name doesn't contain a ":", this is the default host, the last one in the configuration
+            return Sane.shared.configuration.hosts.last ?? ""
+        }
+        
+        // if the host name contains ":" (IPv6 address for instance), it will be between brackets
+        if let closingBracketIndex = name.firstIndex(of: "]") {
+            let firstPart = name.substring(to: closingBracketIndex)
+            let secondPart = name.substring(from: closingBracketIndex).components(separatedBy: ":").first ?? ""
+            return firstPart + secondPart
+        }
+        
         return name.components(separatedBy: ":").first ?? ""
     }
 }
