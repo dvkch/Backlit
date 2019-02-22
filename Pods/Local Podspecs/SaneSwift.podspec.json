@@ -17,11 +17,13 @@
   "swift_version": "4.2",
   "source_files": [
     "SaneSwift/*.{h,c,m,swift}",
-    "sane-libs/**/*.h"
+    "sane-libs/all/*.h"
   ],
   "vendored_libraries": "sane-libs/all/**/libsane-net.a",
   "resource_bundles": {
-    "SaneTranslations": "sane-libs/all/translations/*.po"
+    "libSANE-Translations": [
+      "sane-libs/all/translations/*.lproj"
+    ]
   },
   "requires_arc": true,
   "xcconfig": {

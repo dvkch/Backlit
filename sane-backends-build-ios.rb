@@ -144,7 +144,10 @@ def buildAndMerge(output, optFlags)
     createEmptyFolder(translationsPath)
     
     Dir.glob("#{SRC_DIR}/po/*.po").each { |file| 
-        FileUtils.cp(file, translationsPath + "/sane_strings_" + File.basename(file))
+        languageCode = File.basename(file, ".*").gsub("_", "-")
+        destinationPath = translationsPath + "/" + languageCode + ".lproj"
+        createEmptyFolder(destinationPath)
+        FileUtils.cp(file, destinationPath + "/sane_strings.po")
     } 
 end
 
