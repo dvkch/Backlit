@@ -12,7 +12,8 @@ Pod::Spec.new do |s|
   s.source_files = 'SaneSwift/*.{h,c,m,swift}', 'sane-libs/all/*.h'
   s.vendored_libraries = 'sane-libs/all/**/libsane-net.a'
   s.resource_bundles = { 
-    'libSANE-Translations' => ['sane-libs/all/translations/*.lproj']
+    'libSANE-Translations' => ['sane-libs/all/translations/*.lproj'],
+    'SaneSwift-Translations' => ['SaneSwift/Localizable/*.lproj']
   }
 
   s.requires_arc = true
