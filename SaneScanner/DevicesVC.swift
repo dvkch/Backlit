@@ -73,6 +73,29 @@ class DevicesVC: UIViewController {
             }
         }
     }
+    
+    private func addHostButtonTap() {
+        let av = DLAVAlertView(
+            title: "DIALOG TITLE ADD HOST".localized,
+            message: "DIALOG MESSAGE ADD HOST".localized,
+            delegate: nil,
+            cancel: "ACTION CANCEL".localized,
+            others: ["ACTION ADD".localized]
+        )
+        
+        av.alertViewStyle = .plainTextInput
+        av.textField(at: 0)?.borderStyle = .none
+        av.textField(at: 0)?.autocorrectionType = .no
+        av.textField(at: 0)?.autocapitalizationType = .none
+        av.textField(at: 0)?.keyboardType = .URL
+        av.show { (alert, index) in
+            guard index != alert?.cancelButtonIndex else { return }
+            let host = av.textField(at: 0)?.text ?? ""
+            Sane.shared.configuration.addHost(host)
+            self.tableView.reloadData()
+            self.refreshDevices()
+        }
+    }
 }
 
 extension DevicesVC: SaneDelegate {
@@ -168,24 +191,8 @@ extension DevicesVC : UITableViewDelegate {
         
         if indexPath.section == 0 {
             guard indexPath.row >= Sane.shared.configuration.hosts.count else { return }
-            let av = DLAVAlertView(
-                title: "DIALOG TITLE ADD HOST".localized,
-                message: "DIALOG MESSAGE ADD HOST".localized,
-                delegate: nil,
-                cancel: "ACTION CANCEL".localized,
-                others: ["ACTION ADD".localized]
-            )
-            
-            av.alertViewStyle = .plainTextInput
-            av.textField(at: 0)?.borderStyle = .none
-            av.show { (alert, index) in
-                guard index != alert?.cancelButtonIndex else { return }
-                let host = av.textField(at: 0)?.text ?? ""
-                Sane.shared.configuration.addHost(host)
-                self.tableView.reloadData()
-                self.refreshDevices()
-            }
-            return;
+            addHostButtonTap()
+            return
         }
         
         let device = devices[indexPath.row]
