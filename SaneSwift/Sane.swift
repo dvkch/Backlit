@@ -62,7 +62,6 @@ public class Sane: NSObject {
     // MARK: Private properties
     private var thread: Thread!
     private var saneStarted = false
-    private let translation = Translation(locale: Locale.current)
     private var openedDevices = [String: NSValue]()
     private var stopScanOperation = false
     private let lockIsUpdatingDevices = NSLock()
@@ -71,11 +70,6 @@ public class Sane: NSObject {
     private var lockQueueBlocks = NSLock()
     private var queuedBlocks = [() -> ()]()
 
-    // MARK: Translations
-    public func translation(for key: String) -> String {
-        return translation?.translation(for: key) ?? key
-    }
-    
     // MARK: Configuration
     public var configuration: SaneConfig = SaneConfig.restored() ?? SaneConfig()
 }

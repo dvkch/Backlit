@@ -19,7 +19,7 @@ public class Device {
         self.name   = cDevice.name.asString()   ?? ""
         self.model  = cDevice.model.asString()  ?? ""
         self.vendor = cDevice.vendor.asString() ?? ""
-        self.type   = Sane.shared.translation(for: cDevice.type.asString() ?? "")
+        self.type   = cDevice.type.asString()?.saneTranslation ?? ""
     }
     
     // MARK: Device properties

@@ -56,18 +56,17 @@ extension SaneError : CustomNSError {
 
 extension SaneError: LocalizedError {
     public var errorDescription: String? {
-        // TODO: translate
         switch self {
-        case .cancelled:                    return "ERROR MESSAGE USER CANCELLED"
-        case .saneError(let status):        return "ERROR MESSAGE SANE ERROR" + "\n" + status.description
-        case .deviceNotOpened:              return "ERROR MESSAGE DEVICE NOT OPENED"
-        case .getValueForButtonType:        return "ERROR MESSAGE GET VALUE TYPE BUTTON"
-        case .getValueForGroupType:         return "ERROR MESSAGE GET VALUE TYPE GROUP"
-        case .getValueForInactiveOption:    return "ERROR MESSAGE GET VALUE INACTIVE OPTION"
-        case .setValueForGroupType:         return "ERROR MESSAGE SET VALUE TYPE GROUP"
-        case .noImageData:                  return "ERROR MESSAGE NO IMAGE DATA"
-        case .cannotGenerateImage:          return "ERROR MESSAGE CANNOT GENERATE IMAGE"
-        case .unsupportedChannels:          return "ERROR MESSAGE UNSUPPORTED CHANNELS"
+        case .cancelled:                    return "ERROR MESSAGE USER CANCELLED".saneTranslation
+        case .saneError(let status):        return "ERROR MESSAGE SANE ERROR".saneTranslation + "\n" + status.description
+        case .deviceNotOpened:              return "ERROR MESSAGE DEVICE NOT OPENED".saneTranslation
+        case .getValueForButtonType:        return "ERROR MESSAGE GET VALUE TYPE BUTTON".saneTranslation
+        case .getValueForGroupType:         return "ERROR MESSAGE GET VALUE TYPE GROUP".saneTranslation
+        case .getValueForInactiveOption:    return "ERROR MESSAGE GET VALUE INACTIVE OPTION".saneTranslation
+        case .setValueForGroupType:         return "ERROR MESSAGE SET VALUE TYPE GROUP".saneTranslation
+        case .noImageData:                  return "ERROR MESSAGE NO IMAGE DATA".saneTranslation
+        case .cannotGenerateImage:          return "ERROR MESSAGE CANNOT GENERATE IMAGE".saneTranslation
+        case .unsupportedChannels:          return "ERROR MESSAGE UNSUPPORTED CHANNELS".saneTranslation
         }
     }
 }

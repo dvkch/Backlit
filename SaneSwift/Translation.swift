@@ -6,40 +6,44 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
-public struct Translation {
-    
-    // MARK: Init
-    init(translations: [String: String]) {
-        self.translations = translations
-    }
-    
-    init?(contentsOfURL url: URL) {
-        guard let translations = Translation.parseFile(at: url) else { return nil }
-        self.init(translations: translations)
-    }
-    
-    public init?(locale: Locale) {
-        let bundle = Bundle(for: Sane.self)
-        guard let translationsBundleURL = bundle.url(forResource: "SaneTranslations", withExtension: "bundle") else { return nil }
-        guard let translationsBundle = Bundle(url: translationsBundleURL) else { return nil }
-        
-        // TODO: cleanup!!
-        let filename = "sane_strings_" + (locale.languageCode ?? locale.identifier)
-        let availableURLs = translationsBundle.urls(forResourcesWithExtension: "po", subdirectory: nil) ?? []
-        guard let translationURL = availableURLs.first(where: { $0.lastPathComponent.hasPrefix(filename) }) else { return nil }
-        
-        self.init(contentsOfURL: translationURL)
-    }
-
-    // MARK: Properties
-    private let translations: [String: String]
-    
-    public func translation(for key: String) -> String? {
-        return translations[key]
+// MARK: Public access
+public extension String {
+    public var saneTranslation: String {
+        return libSANETranslation.translation(for: self) ?? SaneSwiftTranslation.translation(for: self) ?? self
     }
 }
 
-extension Translation {
+// MARK: SaneSwift translations
+private struct SaneSwiftTranslation {
+    static private var cachedBundle: Bundle?
+    
+    fileprivate static func translation(for key: String) -> String? {
+        if cachedBundle == nil {
+            guard let translationsBundleURL = Bundle(for: Sane.self).url(forResource: "SaneSwift-Translations", withExtension: "bundle") else { return nil }
+            cachedBundle = Bundle(url: translationsBundleURL)
+        }
+        
+        return cachedBundle?.localizedString(forKey: key, value: nil, table: nil)
+    }
+}
+
+// MARK: libSANE translations
+private struct libSANETranslation {
+    static private var cachedTranslations: [String: String]?
+
+    fileprivate static func translation(for key: String) -> String? {
+        if cachedTranslations == nil {
+            guard let translationsBundleURL = Bundle(for: Sane.self).url(forResource: "libSANE-Translations", withExtension: "bundle") else { return nil }
+            guard let translationsBundle = Bundle(url: translationsBundleURL) else { return nil }
+            guard let translationURL = translationsBundle.url(forResource: "sane_strings", withExtension: "po") else { return nil }
+            cachedTranslations = libSANETranslation.parseFile(at: translationURL)
+        }
+        
+        return cachedTranslations?[key]
+    }
+}
+
+extension libSANETranslation {
     // MARK: Parsing
     private static func parseFile(at url: URL) -> [String: String]? {
         guard let content = try? String(contentsOf: url) else { return nil }

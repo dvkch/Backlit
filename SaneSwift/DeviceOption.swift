@@ -25,8 +25,8 @@ public class DeviceOption {
         self.index          = index
         self.device         = device
         self.identifier     = cOpt.name?.asString()
-        self.localizedTitle = Sane.shared.translation(for: cOpt.title.asString() ?? "")
-        self.localizedDescr = Sane.shared.translation(for: cOpt.desc.asString()  ?? "")
+        self.localizedTitle = cOpt.title.asString()?.saneTranslation ?? ""
+        self.localizedDescr = cOpt.desc.asString()?.saneTranslation  ?? ""
         self.type           = cOpt.type
         self.unit           = cOpt.unit
         self.size           = Int(cOpt.size)
@@ -54,12 +54,11 @@ public class DeviceOption {
     }
 
     public var descriptionConstraint: String {
-        // TODO: translate
         switch constraintType {
-        case SANE_CONSTRAINT_RANGE:         return "OPTION CONSTRAINED RANGE"
-        case SANE_CONSTRAINT_STRING_LIST:   return "OPTION CONSTRAINED LIST"
-        case SANE_CONSTRAINT_WORD_LIST:     return "OPTION CONSTRAINED LIST"
-        case SANE_CONSTRAINT_NONE:          return "OPTION CONSTRAINED NOT CONSTRAINED"
+        case SANE_CONSTRAINT_RANGE:         return "OPTION CONSTRAINED RANGE".saneTranslation
+        case SANE_CONSTRAINT_STRING_LIST:   return "OPTION CONSTRAINED LIST".saneTranslation
+        case SANE_CONSTRAINT_WORD_LIST:     return "OPTION CONSTRAINED LIST".saneTranslation
+        case SANE_CONSTRAINT_NONE:          return "OPTION CONSTRAINED NOT CONSTRAINED".saneTranslation
         default: fatalError("Unknown constraint type: \(constraintType)")
         }
     }

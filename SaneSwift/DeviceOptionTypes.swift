@@ -39,7 +39,7 @@ public class DeviceOptionBool : DeviceOption {
     
     public override func stringForValue(_ value: Any?, withUnit: Bool) -> String {
         let boolValue = (value as? Bool) ?? false
-        return Sane.shared.translation(for: boolValue ? "On" : "Off")
+        return (boolValue ? "On" : "Off").saneTranslation
     }
     
     public override func valueString(withUnit: Bool) -> String {
@@ -113,7 +113,7 @@ public class DeviceOptionString : DeviceOption {
         if cOpt.constraint_type == SANE_CONSTRAINT_STRING_LIST {
             var values = [String]()
             while let value = cOpt.constraint.string_list.advanced(by: values.count).pointee {
-                values.append(Sane.shared.translation(for: value.asString() ?? ""))
+                values.append(value.asString()?.saneTranslation ?? "")
             }
             constraintValues = values
         }
@@ -143,10 +143,7 @@ public class DeviceOptionString : DeviceOption {
     }
     
     public override func stringForValue(_ value: Any?, withUnit: Bool) -> String {
-        var stringValue = value as? String
-        if let sv = stringValue {
-            stringValue = Sane.shared.translation(for: sv)
-        }
+        let stringValue = (value as? String)?.saneTranslation
         
         var parts = [stringValue]
         if unit != SANE_UNIT_NONE && withUnit {
@@ -176,12 +173,11 @@ public class DeviceOptionString : DeviceOption {
     }
     
     public override var descriptionConstraint: String {
-        // TODO: translate
         if constraintType == SANE_CONSTRAINT_STRING_LIST {
-            return String(format: "OPTION CONSTRAINED LIST %@", (constraintValues ?? []).joined(separator: ", "))
+            return String(format: "OPTION CONSTRAINED LIST %@".saneTranslation, (constraintValues ?? []).joined(separator: ", "))
         }
         
-        return "OPTION CONSTRAINED NOT CONSTRAINED"
+        return "OPTION CONSTRAINED NOT CONSTRAINED".saneTranslation
     }
 }
 
@@ -332,25 +328,24 @@ public class DeviceOptionNumber : DeviceOption {
     }
     
     public override var descriptionConstraint: String {
-        // TODO: translate
         if constraintType == SANE_CONSTRAINT_RANGE {
             if let stepValue = self.stepValue {
-                return String(format: "OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@",
+                return String(format: "OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@".saneTranslation,
                               self.stringForValue(minValue, withUnit: true),
                               self.stringForValue(maxValue, withUnit: true),
                               self.stringForValue(stepValue, withUnit: true))
             }
             else {
-                return String(format: "OPTION CONSTRAINED RANGE FROM TO %@ %@",
+                return String(format: "OPTION CONSTRAINED RANGE FROM TO %@ %@".saneTranslation,
                               self.stringForValue(minValue, withUnit: true),
                               self.stringForValue(maxValue, withUnit: true))
             }
         }
         else if constraintType == SANE_CONSTRAINT_WORD_LIST {
             let values = constraintValues(withUnit: true)?.joined(separator: ", ") ?? ""
-            return String(format: "OPTION CONSTRAINED LIST %@", values)
+            return String(format: "OPTION CONSTRAINED LIST %@".saneTranslation, values)
         }
-        return "OPTION CONSTRAINED NOT CONSTRAINED"
+        return "OPTION CONSTRAINED NOT CONSTRAINED".saneTranslation
     }
 }
 
