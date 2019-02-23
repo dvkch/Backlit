@@ -323,7 +323,7 @@ extension Sane {
             
             var castedValue: Any?
             if option.type == SANE_TYPE_BOOL {
-                castedValue = value.bindMemory(to: SANE_Bool.self, capacity: 1).pointee
+                castedValue = value.bindMemory(to: SANE_Bool.self, capacity: 1).pointee == SANE_TRUE
             }
             else if option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED {
                 castedValue = value.bindMemory(to: SANE_Int.self, capacity: 1).pointee
@@ -410,8 +410,8 @@ extension Sane {
                 status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_VALUE, byteValue, &info) }
             }
             
-            let reloadAllOptions = ((info & SANE_INFO_RELOAD_OPTIONS) > 0) || ((info & SANE_INFO_RELOAD_PARAMS) > 0)
             var updatedValue = false
+            let reloadAllOptions = SaneInfo(rawValue: info).contains(.reloadParams) || SaneInfo(rawValue: info).contains(.reloadOptions)
             
             if status == SANE_STATUS_GOOD && !auto {
                 // TODO: was using byteValue before, needed?
@@ -446,8 +446,7 @@ extension Sane {
                 option.refreshValue(nil)
             }
             
-            let error: Error? = status == SANE_STATUS_GOOD ? nil : SaneError.fromStatus(status)
-            Sane.runOn(mainThread: mainThread) { completion?(reloadAllOptions, error) }
+            Sane.runOn(mainThread: mainThread) { completion?(reloadAllOptions, SaneError.fromStatus(status)) }
         }
     }
 }
