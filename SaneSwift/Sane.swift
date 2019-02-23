@@ -353,7 +353,7 @@ extension Sane {
             
             for (option, value) in zip(stdOptions, values) {
                 let option = device.standardOption(for: option) as! DeviceOptionNumber
-                self.setValueForOption(value: value, auto: false, option: option, completion: { (reloadAllOptions, error) in
+                self.setValueForOption(value: Double(value), auto: false, option: option, completion: { (reloadAllOptions, error) in
                     finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
                     finalError = error
                 })
