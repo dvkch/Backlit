@@ -37,14 +37,17 @@ public class DeviceOptionBool : DeviceOption {
         }
     }
     
-    public override func stringForValue(_ value: Any?, withUnit: Bool) -> String {
+    public override func stringForValue(_ value: Any?, userFacing: Bool) -> String {
         let boolValue = (value as? Bool) ?? false
-        return (boolValue ? "On" : "Off").saneTranslation
+        if userFacing {
+            return boolValue ? "OPTION BOOL ON".saneTranslation : "OPTION BOOL OFF".saneTranslation
+        }
+        return boolValue ? "On" : "Off"
     }
     
-    public override func valueString(withUnit: Bool) -> String {
+    public override func valueString(userFacing: Bool) -> String {
         guard capabilities.isActive else { return "" }
-        return stringForValue(value, withUnit: withUnit)
+        return stringForValue(value, userFacing: userFacing)
     }
 }
 
@@ -64,11 +67,11 @@ public class DeviceOptionButton : DeviceOption {
     }
     
     // MARK: Overrides
-    public override func stringForValue(_ value: Any?, withUnit: Bool) -> String {
+    public override func stringForValue(_ value: Any?, userFacing: Bool) -> String {
         return ""
     }
     
-    public override func valueString(withUnit: Bool) -> String {
+    public override func valueString(userFacing: Bool) -> String {
         return ""
     }
     
@@ -91,11 +94,11 @@ public class DeviceOptionGroup : DeviceOption {
     public internal(set) var items = [DeviceOption]()
     
     // MARK: Overrides
-    public override func stringForValue(_ value: Any?, withUnit: Bool) -> String {
+    public override func stringForValue(_ value: Any?, userFacing: Bool) -> String {
         return ""
     }
     
-    public override func valueString(withUnit: Bool) -> String {
+    public override func valueString(userFacing: Bool) -> String {
         return ""
     }
     
@@ -113,7 +116,7 @@ public class DeviceOptionString : DeviceOption {
         if cOpt.constraint_type == SANE_CONSTRAINT_STRING_LIST {
             var values = [String]()
             while let value = cOpt.constraint.string_list.advanced(by: values.count).pointee {
-                values.append(value.asString()?.saneTranslation ?? "")
+                values.append(value.asString() ?? "")
             }
             constraintValues = values
         }
@@ -127,8 +130,8 @@ public class DeviceOptionString : DeviceOption {
     public let constraintValues: [String]?
     public internal(set) var value: String?
     
-    public func constraintValues(withUnit: Bool) -> [String]? {
-        return constraintValues?.map { stringForValue($0, withUnit: withUnit) }
+    public func constraintValues(userFacing: Bool) -> [String]? {
+        return constraintValues?.map { stringForValue($0, userFacing: userFacing) }
     }
     
     // MARK: Overrides
@@ -142,20 +145,24 @@ public class DeviceOptionString : DeviceOption {
         }
     }
     
-    public override func stringForValue(_ value: Any?, withUnit: Bool) -> String {
-        let stringValue = (value as? String)?.saneTranslation
+    public override func stringForValue(_ value: Any?, userFacing: Bool) -> String {
+        var stringValue = (value as? String)
+        
+        if userFacing {
+            stringValue = stringValue?.saneTranslation
+        }
         
         var parts = [stringValue]
-        if unit != SANE_UNIT_NONE && withUnit {
+        if unit != SANE_UNIT_NONE && userFacing {
             parts.append(unit.description)
         }
         
         return parts.compactMap({ $0 }).joined(separator: " ")
     }
     
-    public override func valueString(withUnit: Bool) -> String {
+    public override func valueString(userFacing: Bool) -> String {
         guard capabilities.isActive else { return "" }
-        return stringForValue(value, withUnit: withUnit)
+        return stringForValue(value, userFacing: userFacing)
     }
     
     override func refreshValue(_ block: ((Error?) -> ())?) {
@@ -234,8 +241,8 @@ public class DeviceOptionNumber : DeviceOption {
     // MARK: Methods
     public let constraintValues: [NSNumber]?
 
-    public func constraintValues(withUnit: Bool) -> [String]? {
-        return constraintValues?.map { stringForValue($0, withUnit: withUnit) }
+    public func constraintValues(userFacing: Bool) -> [String]? {
+        return constraintValues?.map { stringForValue($0, userFacing: userFacing) }
     }
     
     public internal(set) var value: NSNumber?
@@ -271,9 +278,9 @@ public class DeviceOptionNumber : DeviceOption {
     }
 
     // MARK: Overrides
-    public override func stringForValue(_ value: Any?, withUnit: Bool) -> String {
+    public override func stringForValue(_ value: Any?, userFacing: Bool) -> String {
         var unitString = ""
-        if unit != SANE_UNIT_NONE && withUnit {
+        if unit != SANE_UNIT_NONE && userFacing {
             unitString = " " + unit.description
         }
         
@@ -286,8 +293,8 @@ public class DeviceOptionNumber : DeviceOption {
         return String(format: "%.02lf", v) + unitString
     }
     
-    public override func valueString(withUnit: Bool) -> String {
-        return capabilities.isActive ? stringForValue(value, withUnit: withUnit) : ""
+    public override func valueString(userFacing: Bool) -> String {
+        return capabilities.isActive ? stringForValue(value, userFacing: userFacing) : ""
     }
     
     override func refreshValue(_ block: ((Error?) -> ())?) {
@@ -331,18 +338,18 @@ public class DeviceOptionNumber : DeviceOption {
         if constraintType == SANE_CONSTRAINT_RANGE {
             if let stepValue = self.stepValue {
                 return String(format: "OPTION CONSTRAINED RANGE FROM TO STEP %@ %@ %@".saneTranslation,
-                              self.stringForValue(minValue, withUnit: true),
-                              self.stringForValue(maxValue, withUnit: true),
-                              self.stringForValue(stepValue, withUnit: true))
+                              self.stringForValue(minValue, userFacing: true),
+                              self.stringForValue(maxValue, userFacing: true),
+                              self.stringForValue(stepValue, userFacing: true))
             }
             else {
                 return String(format: "OPTION CONSTRAINED RANGE FROM TO %@ %@".saneTranslation,
-                              self.stringForValue(minValue, withUnit: true),
-                              self.stringForValue(maxValue, withUnit: true))
+                              self.stringForValue(minValue, userFacing: true),
+                              self.stringForValue(maxValue, userFacing: true))
             }
         }
         else if constraintType == SANE_CONSTRAINT_WORD_LIST {
-            let values = constraintValues(withUnit: true)?.joined(separator: ", ") ?? ""
+            let values = constraintValues(userFacing: true)?.joined(separator: ", ") ?? ""
             return String(format: "OPTION CONSTRAINED LIST %@".saneTranslation, values)
         }
         return "OPTION CONSTRAINED NOT CONSTRAINED".saneTranslation

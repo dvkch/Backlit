@@ -399,7 +399,6 @@ extension Sane {
                     let cString = ((value as? String) ?? "").cString(using: String.Encoding.utf8) ?? []
                     let size = min(cString.count, option.size)
                     byteValue?.bindMemory(to: SANE_Char.self, capacity: option.size).assign(from: cString, count: size)
-                    // TODO: fix some strings that are not working (e.g.: scan mode = Grey or Colour)
                 }
             }
                 

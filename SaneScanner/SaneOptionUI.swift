@@ -27,7 +27,7 @@ class SaneOptionUI: NSObject {
         
         switch option.type {
         case SANE_TYPE_BOOL:
-            showOptionsInput(for: option, titles: ["OPTION BOOL ON".localized, "OPTION BOOL OFF".localized], values: [true, false], completion)
+            showOptionsInput(for: option, titles: [option.stringForValue(true, userFacing: true), option.stringForValue(false, userFacing: true)], values: [true, false], completion)
             
         case SANE_TYPE_INT, SANE_TYPE_FIXED:
             let castOption = option as! DeviceOptionNumber
@@ -35,7 +35,7 @@ class SaneOptionUI: NSObject {
                 showSliderInput(for: castOption, completion)
             }
             else {
-                showOptionsInput(for: castOption, titles: castOption.constraintValues(withUnit: true) ?? [], values: castOption.constraintValues ?? [], completion)
+                showOptionsInput(for: castOption, titles: castOption.constraintValues(userFacing: true) ?? [], values: castOption.constraintValues ?? [], completion)
             }
         case SANE_TYPE_STRING:
             let castOption = option as! DeviceOptionString
@@ -43,7 +43,7 @@ class SaneOptionUI: NSObject {
                 showTextInput(for: castOption, completion)
             }
             else {
-                showOptionsInput(for: option, titles: castOption.constraintValues(withUnit: true) ?? [], values: castOption.constraintValues ?? [], completion)
+                showOptionsInput(for: option, titles: castOption.constraintValues(userFacing: true) ?? [], values: castOption.constraintValues ?? [], completion)
             }
         case SANE_TYPE_BUTTON:
             self.showButtonInput(for: option as! DeviceOptionButton, completion)
@@ -110,7 +110,7 @@ class SaneOptionUI: NSObject {
                 stepper.value = option.value?.floatValue ?? 0
                 stepper.stepInterval = stepValue.floatValue
                 stepper.valueChangedCallback = { stepper, value in
-                    stepper?.countLabel.text = option.stringForValue(value, withUnit: true)
+                    stepper?.countLabel.text = option.stringForValue(value, userFacing: true)
                 }
                 stepper.setup()
                 alertView.contentView = stepper
@@ -121,7 +121,7 @@ class SaneOptionUI: NSObject {
                     max: option.maxValue?.floatValue ?? 0,
                     current: option.value?.floatValue ?? 0)
                 { (alert, value) in
-                    let valueString = option.stringForValue(value, withUnit: true)
+                    let valueString = option.stringForValue(value, userFacing: true)
                     let buttonTitle = String(format: "ACTION SET VALUE TO %@".localized, valueString)
                     alert.setText(buttonTitle, forButtonAt: UInt(updateButtonIndex))
                 }

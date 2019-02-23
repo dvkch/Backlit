@@ -80,7 +80,7 @@ class OptionCell: UITableViewCell {
         
         if let option = self.option {
             labelTitle.text = option.localizedTitle
-            labelValue.text = option.valueString(withUnit: true)
+            labelValue.text = option.valueString(userFacing: true)
             labelDescr.text = option.localizedDescr
         }
         else if let prefKey = self.prefKey {

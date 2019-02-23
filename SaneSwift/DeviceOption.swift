@@ -73,11 +73,11 @@ public class DeviceOption {
             ].joined(separator: ", ")
     }
 
-    public func valueString(withUnit: Bool) -> String {
+    public func valueString(userFacing: Bool) -> String {
         fatalError("Not implemented")
     }
     
-    public func stringForValue(_ value: Any?, withUnit: Bool) -> String {
+    public func stringForValue(_ value: Any?, userFacing: Bool) -> String {
         fatalError("Not implemented")
     }
     
