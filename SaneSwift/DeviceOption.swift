@@ -36,7 +36,7 @@ public class DeviceOption {
     
     // MARK: Properties
     public let index: Int
-    public let device: Device // TODO: needed?
+    public let device: Device
     public let identifier: String?
     public let localizedTitle: String
     public let localizedDescr: String

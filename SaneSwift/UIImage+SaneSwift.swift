@@ -17,7 +17,6 @@ public extension UIImage {
         
         var provider: CGDataProvider? {
             switch self {
-            // TODO: use releaseData callback variant?
             case .data(let data):   return CGDataProvider(data: data as CFData)
             case .file(let url):    return CGDataProvider(url: url as CFURL)
             }
