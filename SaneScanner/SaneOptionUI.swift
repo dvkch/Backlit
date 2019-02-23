@@ -43,7 +43,7 @@ class SaneOptionUI: NSObject {
                 showTextInput(for: castOption, completion)
             }
             else {
-                showOptionsInput(for: option, titles: castOption.constraintValues(userFacing: true) ?? [], values: castOption.constraintValues ?? [], completion)
+                showOptionsInput(for: option, titles: castOption.constraintValues(userFacing: true) ?? [], values: castOption.constraintValues(userFacing: false) ?? [], completion)
             }
         case SANE_TYPE_BUTTON:
             self.showButtonInput(for: option as! DeviceOptionButton, completion)

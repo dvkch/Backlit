@@ -410,39 +410,13 @@ extension Sane {
                 status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_VALUE, byteValue, &info) }
             }
             
-            var updatedValue = false
             let reloadAllOptions = SaneInfo(rawValue: info).contains(.reloadParams) || SaneInfo(rawValue: info).contains(.reloadOptions)
             
-            if status == SANE_STATUS_GOOD && !auto {
-                // TODO: was using byteValue before, needed?
-                if option.type == SANE_TYPE_BOOL {
-                    let castedOption = option as! DeviceOptionBool
-                    castedOption.value = (value as? Bool) ?? false
-                    updatedValue = true
-                }
-                else if option.type == SANE_TYPE_INT {
-                    let castedOption = option as! DeviceOptionNumber
-                    castedOption.value = NSNumber(value: (value as? Int) ?? 0)
-                    updatedValue = true
-                }
-                else if option.type == SANE_TYPE_FIXED {
-                    let castedOption = option as! DeviceOptionNumber
-                    // [castedOption setValue:@(SANE_UNFIX(((SANE_Fixed *)byteValue)[0]))];
-                    castedOption.value = NSNumber(value: (value as? Double) ?? 0)
-                    updatedValue = true
-                }
-                else if option.type == SANE_TYPE_STRING {
-                    let castedOption = option as! DeviceOptionString
-                    castedOption.value = (value as? String)
-                    updatedValue = true
-                }
-            }
-            
-            if !auto && (option.type == SANE_TYPE_BOOL || option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED) {
+            if byteValue != nil {
                 free(byteValue)
             }
             
-            if status == SANE_STATUS_GOOD && !reloadAllOptions && !updatedValue {
+            if status == SANE_STATUS_GOOD && !reloadAllOptions {
                 option.refreshValue(nil)
             }
             

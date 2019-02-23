@@ -20,7 +20,7 @@ public class DeviceOptionBool : DeviceOption {
     }
     
     // MARK: Properties
-    public internal(set) var value: Bool = false
+    internal private(set) var value: Bool = false
     
     // MARK: Overrides
     override func refreshValue(_ block: ((Error?) -> ())?) {
@@ -127,8 +127,8 @@ public class DeviceOptionString : DeviceOption {
     }
     
     // MARK: Methods
-    public let constraintValues: [String]?
-    public internal(set) var value: String?
+    private let constraintValues: [String]?
+    internal private(set) var value: String?
     
     public func constraintValues(userFacing: Bool) -> [String]? {
         return constraintValues?.map { stringForValue($0, userFacing: userFacing) }
@@ -245,7 +245,7 @@ public class DeviceOptionNumber : DeviceOption {
         return constraintValues?.map { stringForValue($0, userFacing: userFacing) }
     }
     
-    public internal(set) var value: NSNumber?
+    public private(set) var value: NSNumber?
     public let minValue: NSNumber?
     public let maxValue: NSNumber?
     public let stepValue: NSNumber?
