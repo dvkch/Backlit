@@ -6,9 +6,7 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
-
-// TODO: use associated types?
-// TODO: value can be updated from inside the refreshValue method + setValueForOption. this should not happen!
+// TODO: use enum value + constraint instead of subclasses?
 
 // MARK: Bool
 public class DeviceOptionBool : DeviceOption {
@@ -308,8 +306,8 @@ public class DeviceOptionNumber : DeviceOption {
                 if self.type == SANE_TYPE_INT {
                     self.value = value as? NSNumber
                 } else {
-                    // TODO: SANE_UNFIX?
-                    self.value = NSNumber(value: SaneDoubleFromFixed((value as? NSNumber)?.int32Value ?? 0))
+                    let intValue = (value as? NSNumber)?.int32Value ?? 0
+                    self.value = NSNumber(value: SaneDoubleFromFixed(intValue))
                 }
             }
             block?(error)

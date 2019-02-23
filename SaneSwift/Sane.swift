@@ -311,7 +311,6 @@ extension Sane {
         }
         
         runOnSaneThread {
-            // TODO: use something else than malloc
             let value = malloc(option.size)!
             
             let s = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_GET_VALUE, value, nil) }

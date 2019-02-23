@@ -81,8 +81,7 @@ public class DeviceOption {
         fatalError("Not implemented")
     }
     
-    // TODO: public?
-    func refreshValue(_ block: ((Error?) -> ())?) {
+    internal func refreshValue(_ block: ((Error?) -> ())?) {
         fatalError("Not implemented")
     }
 }
