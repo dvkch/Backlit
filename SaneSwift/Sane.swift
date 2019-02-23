@@ -163,10 +163,9 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
     // let's wait for the delegate to answer
     _ = semaphore.wait(timeout: .distantFuture)
     
-    // TODO: handle SANE_MAX_USERNAME_LEN and SANE_MAX_PASSWORD_LEN
     // TODO: need to cache?
-    username?.pointee = auth?.username?.cString(using: .utf8)?.first ?? 0
-    password?.pointee = auth?.password?.cString(using: .utf8)?.first ?? 0
+    username?.pointee = auth?.username(splitToMaxLength: true)?.cString(using: .utf8)?.first ?? 0
+    password?.pointee = auth?.password(splitToMaxLength: true)?.cString(using: .utf8)?.first ?? 0
 }
 
 extension Sane {
