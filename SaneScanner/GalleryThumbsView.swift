@@ -89,7 +89,7 @@ class GalleryThumbsView: UIView {
     weak var parentViewController: UIViewController?
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
-    private var galleryItems = [MHGalleryItem]()
+    private var galleryItems = [GalleryItem]()
     private let leftGradientView = SYGradientView()
     private let rightGradientView = SYGradientView()
 
@@ -138,7 +138,8 @@ class GalleryThumbsView: UIView {
 }
 
 extension GalleryThumbsView: GalleryManagerDelegate {
-    func galleryManager(_ manager: GalleryManager, didUpdate items: [MHGalleryItem], newItems: [MHGalleryItem], removedItems: [MHGalleryItem]) {
+    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
+    func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
         UIView.animate(withDuration: 0.3) {
             self.galleryItems = items
             self.collectionView?.reloadData()

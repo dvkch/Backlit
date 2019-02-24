@@ -28,9 +28,8 @@ class AppDelegate: UIResponder {
     // MARK: Properties
     @objc var window: UIWindow?
     private var splitViewController: SplitVC!
-    private var scanNavigationController: ScanNC!
-    private var galleryViewController: GalleryViewController!
-    private let emptyVC = UINavigationController(rootViewController: EmptyGalleryVC())
+    private var scanNC: ScanNC!
+    private var galleryNC: GalleryNC!
     
     // MARK: Snapshot properties
     private(set) var snapshotType = SnapshotType.none
@@ -43,21 +42,24 @@ extension AppDelegate : UIApplicationDelegate {
         print("Document path:", FileManager.documentsDirectoryURL)
         
         // navigation controller
-        scanNavigationController = ScanNC()
-        scanNavigationController.isToolbarHidden = true
-        scanNavigationController.customToolbar?.height = 64
-        scanNavigationController.customToolbar?.padding = 0
-        scanNavigationController.customToolbar?.isTranslucent = false
-        scanNavigationController.viewControllers = [DevicesVC()]
+        scanNC = ScanNC()
+        scanNC.isToolbarHidden = true
+        scanNC.customToolbar?.height = 64
+        scanNC.customToolbar?.padding = 0
+        scanNC.customToolbar?.isTranslucent = false
+        scanNC.viewControllers = [DevicesVC()]
         
         // gallery view controller
-        galleryViewController = GalleryViewController.gallery(withPresentationStyle: .overView, uiCustomization: .sy_defaultTheme)
+        galleryNC = GalleryNC(openedAt: nil)
+        /*
+        GalleryViewController.gallery(withPresentationStyle: .overView, uiCustomization: .sy_defaultTheme)
         galleryViewController.uiCustomization.hideDoneButton = true
         galleryViewController.uiCustomization.setMHGalleryBackgroundColor(.groupTableViewBackground, for: .imageViewerNavigationBarHidden)
+ */
         
         // split controller
         splitViewController = SplitVC()
-        splitViewController.viewControllers = [scanNavigationController, emptyVC]
+        splitViewController.viewControllers = [scanNC, galleryNC]
         splitViewController.delegate = self
         splitViewController.preferredDisplayMode = .allVisible
         
@@ -103,7 +105,7 @@ extension AppDelegate : UIApplicationDelegate {
         
         Sane.shared.cancelCurrentScan()
         
-        scanNavigationController.popToRootViewController(animated: true)
+        scanNC.popToRootViewController(animated: true)
         
         // give time to the system to really close the deviceVC if
         // it's opened, close eventual scan alertView, and dealloc
@@ -120,9 +122,11 @@ extension AppDelegate : UISplitViewControllerDelegate {
         let constrainedW = traitCollection.horizontalSizeClass == .compact
         let constrainedH = traitCollection.verticalSizeClass   == .compact
         
-        scanNavigationController.customToolbar?.height = constrainedH ? 34 : 64
+        scanNC.customToolbar?.height = constrainedH ? 34 : 64
         
         if !constrainedW {
+            // TODO: cleanup, move to splitVC subclass
+            /*
             if let currentGallery = scanNavigationController.presentedViewController as? GalleryViewController {
                 if currentGallery.isShowingOverview() {
                     currentGallery.openOverview()
@@ -131,12 +135,12 @@ extension AppDelegate : UISplitViewControllerDelegate {
                     galleryViewController.openImageView(forPage: currentGallery.imageViewerViewController.pageIndex)
                 }
             }
-            
-            scanNavigationController.dismiss(animated: false, completion: nil)
+            */
+            scanNC.dismiss(animated: false, completion: nil)
         }
         
         let toolbarHidden = !constrainedW || GalleryManager.shared.items.isEmpty
-        scanNavigationController.setToolbarHidden(toolbarHidden, animated: true)
+        scanNC.setToolbarHidden(toolbarHidden, animated: true)
     }
     
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
@@ -144,32 +148,21 @@ extension AppDelegate : UISplitViewControllerDelegate {
     }
     
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
-        if GalleryManager.shared.items.isEmpty {
-            return emptyVC
-        }
-        return galleryViewController
+        return galleryNC
     }
     
     func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewController.DisplayMode) {
-        galleryViewController.overViewViewController.viewWillAppear(false)
+        // TODO: cleanup
+        // galleryViewController.overViewViewController.viewWillAppear(false)
     }
 }
 
 extension AppDelegate : GalleryManagerDelegate {
-    func galleryManager(_ manager: GalleryManager, didUpdate items: [MHGalleryItem], newItems: [MHGalleryItem], removedItems: [MHGalleryItem]) {
+    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
+    func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
         let constrainedW = splitViewController.traitCollection.horizontalSizeClass == .compact
         
-        scanNavigationController.setToolbarHidden(!constrainedW || items.isEmpty, animated: true)
-        
-        let detailsVC = splitViewController.viewControllers.object(at: 1, or: nil)
-        
-        if items.isEmpty, detailsVC != emptyVC {
-            splitViewController.viewControllers = [scanNavigationController, emptyVC]
-        }
-        
-        if !items.isEmpty, detailsVC != galleryViewController {
-            splitViewController.viewControllers = [scanNavigationController, galleryViewController]
-        }
+        scanNC.setToolbarHidden(!constrainedW || items.isEmpty, animated: true)
     }
 }
 

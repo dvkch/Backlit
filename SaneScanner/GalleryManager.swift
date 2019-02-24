@@ -14,9 +14,9 @@ import SDWebImage
 import SYOperationQueue
 import DirectoryWatcher
 
-@objc protocol GalleryManagerDelegate: AnyObject {
-    @objc optional func galleryManager(_ manager: GalleryManager, didUpdate items: [MHGalleryItem], newItems: [MHGalleryItem], removedItems: [MHGalleryItem])
-    @objc optional func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: MHGalleryItem)
+protocol GalleryManagerDelegate: AnyObject, NSObjectProtocol {
+    func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem])
+    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem)
 }
 
 private let kImageExtensionPNG  = "png"
@@ -74,35 +74,44 @@ class GalleryManager: NSObject {
     }
     
     // MARK: Delegates
-    private var delegates = [WeakValue<NSObject & GalleryManagerDelegate>]()
+    private class WeakDelegate {
+        typealias T = NSObject & GalleryManagerDelegate
+        weak var value: T?
+        init(_ value: T) {
+            self.value = value
+        }
+        func isEqualTo(delegate: T) -> Bool {
+            if let value = value {
+                return value == delegate
+            }
+            return false
+        }
+    }
+    
+    private var delegates = [WeakDelegate]()
 
     func addDelegate(_ delegate: NSObject & GalleryManagerDelegate) {
-        delegates.append(WeakValue(delegate))
-        delegate.galleryManager?(self, didUpdate: items, newItems: [], removedItems: [])
+        delegates.append(WeakDelegate(delegate))
+        delegate.galleryManager(self, didUpdate: items, newItems: [], removedItems: [])
     }
     
     func removeDelegate(_ delegate: NSObject & GalleryManagerDelegate) {
         // don't use in the delegate's -dealloc method
-        delegates.removeAll { (weakDelegate: WeakValue<NSObject & GalleryManagerDelegate>) -> Bool in
-            if let weakValue = weakDelegate.value {
-                return weakValue == delegate
-            }
-            return true
-        }
+        delegates.removeAll { (weakDelegate: WeakDelegate) in weakDelegate.isEqualTo(delegate: delegate) || weakDelegate.value == nil }
     }
     
     // MARK: Items management
     private var imageURLs = [URL]()
     
-    private func galleryItemForImage(at url: URL) -> MHGalleryItem {
-        let item = MHGalleryItem(
-            url: url,
+    private func galleryItemForImage(at url: URL) -> GalleryItem {
+        let item = GalleryItem(
+            URL: url,
             thumbnailURL: thumbURL(for: url)
-        )!
+        )
         return item
     }
     
-    var items: [MHGalleryItem] {
+    var items: [GalleryItem] {
         return imageURLs.map { galleryItemForImage(at: $0) }
     }
     
@@ -114,7 +123,7 @@ class GalleryManager: NSObject {
         }
     }
     
-    @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) -> MHGalleryItem? {
+    @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) -> GalleryItem? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -145,8 +154,8 @@ class GalleryManager: NSObject {
         return item
     }
     
-    func deleteItem(_ item: MHGalleryItem) {
-        try? FileManager.default.removeItem(at: item.url)
+    func deleteItem(_ item: GalleryItem) {
+        try? FileManager.default.removeItem(at: item.URL)
         try? FileManager.default.removeItem(at: item.thumbnailURL)
     }
 
@@ -179,27 +188,27 @@ class GalleryManager: NSObject {
             .map { galleryItemForImage(at: $0) }
 
         removedItems.forEach { (item) in
-            thumbnailCache.removeObject(forKey: item.url as NSURL)
-            imageSizeCache.removeObject(forKey: item.url as NSURL)
+            thumbnailCache.removeObject(forKey: item.URL as NSURL)
+            imageSizeCache.removeObject(forKey: item.URL as NSURL)
         }
         
         let items = self.items
         delegates.forEach { (weakDelegate) in
-            weakDelegate.value?.galleryManager?(self, didUpdate: items, newItems: addedItems, removedItems: removedItems)
+            weakDelegate.value?.galleryManager(self, didUpdate: items, newItems: addedItems, removedItems: removedItems)
         }
     }
     
     // MARK: Items properties
-    func thumbnail(for item: MHGalleryItem) -> UIImage? {
-        let image = thumbnailCache.object(forKey: item.thumbnailURL as NSURL) ?? UIImage(contentsOfFile: item.thumbnailURL!.path)
+    func thumbnail(for item: GalleryItem) -> UIImage? {
+        let image = thumbnailCache.object(forKey: item.thumbnailURL as NSURL) ?? UIImage(contentsOfFile: item.thumbnailURL.path)
         if image == nil {
             generateThumbAsync(for: item, fullImage: nil, tellDelegates: true)
         }
         return image
     }
     
-    func dateString(for item: MHGalleryItem) -> String? {
-        guard let date = item.url.creationDate else { return nil }
+    func dateString(for item: GalleryItem) -> String? {
+        guard let date = item.URL.creationDate else { return nil }
 
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -207,35 +216,35 @@ class GalleryManager: NSObject {
         return formatter.string(from: date)
     }
     
-    func imageSize(for item: MHGalleryItem) -> CGSize? {
-        if let size = self.imageSizeCache.object(forKey: item.url as NSURL)?.cgSizeValue {
+    func imageSize(for item: GalleryItem) -> CGSize? {
+        if let size = self.imageSizeCache.object(forKey: item.URL as NSURL)?.cgSizeValue {
             return size
         }
         
-        guard let imageSize = UIImage.sizeOfImage(at: item.url) else { return nil }
+        guard let imageSize = UIImage.sizeOfImage(at: item.URL) else { return nil }
 
-        imageSizeCache.setObject(NSValue(cgSize: imageSize), forKey: item.url as NSURL)
+        imageSizeCache.setObject(NSValue(cgSize: imageSize), forKey: item.URL as NSURL)
         return imageSize
     }
     
     // MARK: Thumb
-    private func generateThumbAsync(for item: MHGalleryItem, fullImage: UIImage?, tellDelegates: Bool) {
-        guard !thumbsBeingCreated.contains(item.url) else { return }
-        thumbsBeingCreated.append(item.url)
+    private func generateThumbAsync(for item: GalleryItem, fullImage: UIImage?, tellDelegates: Bool) {
+        guard !thumbsBeingCreated.contains(item.URL) else { return }
+        thumbsBeingCreated.append(item.URL)
         
         let dequeue = { [weak self] in
-            if let index = self?.thumbsBeingCreated.index(of: item.url) {
+            if let index = self?.thumbsBeingCreated.index(of: item.URL) {
                 self?.thumbsBeingCreated.remove(at: index)
             }
         }
 
         thumbsQueue.addOperation {
             // this first method is a bit longer to generate images, but uses far less memory on the device
-            var thumb = UIImage.thumbnailForImage(at: item.url, maxEdgeSize: 200)
+            var thumb = UIImage.thumbnailForImage(at: item.URL, maxEdgeSize: 200)
             
             // in case the first method fails we do it the old way
             if thumb == nil {
-                guard let original = fullImage ?? UIImage(contentsOfFile: item.url.path) else { return dequeue() }
+                guard let original = fullImage ?? UIImage(contentsOfFile: item.URL.path) else { return dequeue() }
                 thumb = original.resizingLongestEdge(to: 200)
             }
             
@@ -245,7 +254,7 @@ class GalleryManager: NSObject {
                 .jpegData(compressionQuality: 0.6)?
                 .write(to: item.thumbnailURL, options: .atomicWrite)
             
-            self.thumbnailCache.setObject(thumb!, forKey: item.url as NSURL)
+            self.thumbnailCache.setObject(thumb!, forKey: item.URL as NSURL)
             
             dequeue()
             
@@ -253,7 +262,7 @@ class GalleryManager: NSObject {
             
             DispatchQueue.main.async {
                 self.delegates.forEach { (weakDelegate) in
-                    weakDelegate.value?.galleryManager?(self, didCreate: thumb!, for: item)
+                    weakDelegate.value?.galleryManager(self, didCreate: thumb!, for: item)
                 }
             }
         }

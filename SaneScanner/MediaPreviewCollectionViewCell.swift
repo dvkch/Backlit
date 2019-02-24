@@ -21,15 +21,20 @@ class MediaPreviewCollectionViewCell: MHMediaPreviewCollectionViewCell {
     }
     
     // MARK: Properties
-    override var galleryItem: MHGalleryItem! {
+    var item: GalleryItem? {
         didSet {
+            if let item = item {
+                galleryItem = MHGalleryItem(url: item.URL, thumbnailURL: item.thumbnailURL)
+            } else {
+                galleryItem = nil
+            }
             updateContent()
         }
     }
     
     // MARK: Content
     private func updateContent() {
-        let thumb = galleryItem.map(GalleryManager.shared.thumbnail(for:))
+        let thumb = item.map(GalleryManager.shared.thumbnail(for:))
         thumbnail.image = thumb ?? nil
         thumbnail.setNeedsLayout()
         
@@ -45,8 +50,9 @@ class MediaPreviewCollectionViewCell: MHMediaPreviewCollectionViewCell {
 }
 
 extension MediaPreviewCollectionViewCell : GalleryManagerDelegate {
-    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: MHGalleryItem) {
-        guard item == self.galleryItem else { return }
+    func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) { }
+    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) {
+        guard item == self.item else { return }
         
         self.thumbnail.image = thumbnail
         self.thumbnail.setNeedsLayout()

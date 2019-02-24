@@ -54,7 +54,8 @@ class OverviewController: MHOverviewController {
                 
                 SVProgressHUD.show()
                 selected.forEach { (indexPath) in
-                    GalleryManager.shared.deleteItem(self.item(for: indexPath.item))
+                    // TODO: implement
+                    // GalleryManager.shared.deleteItem(self.item(for: indexPath.item))
                 }
                 SVProgressHUD.dismiss()
                 self.setEditing(false, animated: true)

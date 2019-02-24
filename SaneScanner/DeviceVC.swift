@@ -71,7 +71,7 @@ class DeviceVC: UIViewController {
         
         var alertView: DLAVAlertView?
         var alertViewImageView: UIImageView?
-        var item: MHGalleryItem?
+        var item: GalleryItem?
         
         let block = { [weak self] (progress: Float, finished: Bool, image: UIImage?, parameters: ScanParameters?, error: Error?) in
             guard let self = self else { return }
@@ -140,8 +140,8 @@ class DeviceVC: UIViewController {
         present(nc, animated: true, completion: nil)
     }
     
-    private func shareItem(_ item: MHGalleryItem?) {
-        guard let url = item?.url else { return }
+    private func shareItem(_ item: GalleryItem?) {
+        guard let url = item?.URL else { return }
         UIActivityViewController.showForURLs([url], fromBottomIn: self, completion: nil)
     }
     

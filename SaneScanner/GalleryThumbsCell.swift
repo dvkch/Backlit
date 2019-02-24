@@ -26,14 +26,14 @@ class GalleryThumbsCell: UICollectionViewCell {
     }
 
     // MARK: Properties
-    private var item: MHGalleryItem?
+    private var item: GalleryItem?
     
     // MARK: View
     @IBOutlet private(set) var imageView: MHPresenterImageView!
     @IBOutlet private var spinner: UIActivityIndicatorView!
 
     // MARK: Content
-    func update(items: [MHGalleryItem], index: Int, parentController: UIViewController?, spinnerColor: UIColor, dismiss: ((_ index: Int) -> UIImageView?)?) {
+    func update(items: [GalleryItem], index: Int, parentController: UIViewController?, spinnerColor: UIColor, dismiss: ((_ index: Int) -> UIImageView?)?) {
         weak var weakParentVC = parentController
         
         spinner?.color = spinnerColor
@@ -42,7 +42,7 @@ class GalleryThumbsCell: UICollectionViewCell {
         self.item = item
         updateImage(GalleryManager.shared.thumbnail(for: item))
         imageView.uiCustomization = MHUICustomization.sy_defaultTheme
-        imageView.galleryClass = GalleryViewController.self
+        //imageView.galleryClass = GalleryViewController.self
         
         imageView.setInseractiveGalleryPresentionWithItems(items, currentImageIndex: index, currentViewController: parentController)
         { (index, image, transition, viewMode) in
@@ -73,7 +73,8 @@ class GalleryThumbsCell: UICollectionViewCell {
 }
 
 extension GalleryThumbsCell : GalleryManagerDelegate {
-    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: MHGalleryItem) {
+    func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) { }
+    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) {
         guard item == self.item else { return }
         updateImage(thumbnail)
     }
