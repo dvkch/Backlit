@@ -159,19 +159,18 @@ class GalleryGridVC: UIViewController {
     }
     
     private func updateNavBarButtons(animated: Bool) {
-        if animated {
-            UIView.transition(with: view.window ?? view, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                self.updateNavBarButtons(animated: false)
-            }, completion: nil)
-            return
-        }
-        
         // Left
         if navigationController?.sy_isModal == true && !isEditing {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.closeButtonTap))
-            navigationItem.leftBarButtonItem?.style = .done
+            let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.closeButtonTap))
+            closeButton.style = .done
+            navigationItem.setLeftBarButton(closeButton, animated: animated)
         } else {
-            navigationItem.leftBarButtonItem = nil
+            #if DEBUG
+            let testButton = UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap))
+            navigationItem.setLeftBarButton(testButton, animated: animated)
+            #else
+            navigationItem.setLeftBarButton(nil, animated: animated)
+            #endif
         }
         
         // Right
@@ -181,12 +180,9 @@ class GalleryGridVC: UIViewController {
             buttons.last?.style = .done
         } else {
             buttons.append(UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonTap)))
-            #if DEBUG
-            buttons.append(UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap)))
-            #endif
         }
         
-        navigationItem.rightBarButtonItems = buttons
+        navigationItem.setRightBarButtonItems(buttons, animated: animated)
     }
 }
 

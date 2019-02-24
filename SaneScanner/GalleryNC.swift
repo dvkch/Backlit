@@ -44,8 +44,29 @@ class GalleryNC: UINavigationController {
     
     // MARK: Properties
     let gridVC = GalleryGridVC()
+    
     var isShowingGrid: Bool {
         return topViewController == gridVC
+    }
+    
+    var currentIndex: Int? {
+        return (topViewController as? GalleryImagesVC)?.currentIndex
+    }
+    
+    // MARK: Actions
+    func openGallery(animated: Bool) {
+        popToRootViewController(animated: animated)
+    }
+    
+    func openImage(at index: Int, animated: Bool) {
+        if let imagesVC = topViewController as? GalleryImagesVC {
+            imagesVC.openImage(at: index, animated: animated)
+        }
+        else {
+            let imagesVC = GalleryImagesVC()
+            imagesVC.initialIndex = index
+            pushViewController(imagesVC, animated: animated)
+        }
     }
 }
 
