@@ -39,8 +39,6 @@
 		97BE129F220BC25E006A2AE8 /* Bundle+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129E220BC25E006A2AE8 /* Bundle+SY.swift */; };
 		97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */; };
 		97BE12A3220BC8C9006A2AE8 /* Array+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A2220BC8C9006A2AE8 /* Array+SY.swift */; };
-		97BE12A6220BCB77006A2AE8 /* GalleryThumbsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A4220BCB77006A2AE8 /* GalleryThumbsCell.swift */; };
-		97BE12A7220BCB77006A2AE8 /* GalleryThumbsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97BE12A5220BCB77006A2AE8 /* GalleryThumbsCell.xib */; };
 		97CC34E32205F48B00304345 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E12205F48B00304345 /* OptionCell.swift */; };
 		97CC34E42205F48B00304345 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97CC34E22205F48B00304345 /* OptionCell.xib */; };
 		97CC34E72205F9D200304345 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E62205F9D200304345 /* String+SY.swift */; };
@@ -113,8 +111,6 @@
 		97BE129E220BC25E006A2AE8 /* Bundle+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+SY.swift"; sourceTree = "<group>"; };
 		97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SY.swift"; sourceTree = "<group>"; };
 		97BE12A2220BC8C9006A2AE8 /* Array+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SY.swift"; sourceTree = "<group>"; };
-		97BE12A4220BCB77006A2AE8 /* GalleryThumbsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryThumbsCell.swift; sourceTree = "<group>"; };
-		97BE12A5220BCB77006A2AE8 /* GalleryThumbsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryThumbsCell.xib; sourceTree = "<group>"; };
 		97C3D85621FE72D10015BA72 /* libsane.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsane.a; path = "sane-libs/all/libsane.a"; sourceTree = "<group>"; };
 		97C3D85821FE72DD0015BA72 /* libsane-dll.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsane-dll.a"; path = "sane-libs/all/sane/libsane-dll.a"; sourceTree = "<group>"; };
 		97CC34E02205F48B00304345 /* SaneScanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SaneScanner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -277,8 +273,6 @@
 			isa = PBXGroup;
 			children = (
 				973066B4220C5CD90068E8C7 /* CropMaskView.swift */,
-				97BE12A4220BCB77006A2AE8 /* GalleryThumbsCell.swift */,
-				97BE12A5220BCB77006A2AE8 /* GalleryThumbsCell.xib */,
 				973066B2220C55000068E8C7 /* GalleryThumbsView.swift */,
 				97EAF235220B470C00435DE6 /* SaneOptionUI.swift */,
 				97EAF237220B54A700435DE6 /* SanePreviewView.swift */,
@@ -451,7 +445,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */,
-				97BE12A7220BCB77006A2AE8 /* GalleryThumbsCell.xib in Resources */,
 				97EF42272205FF7900D45FC8 /* HostCell.xib in Resources */,
 				97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */,
 				97F0A2651E52687F008C4690 /* Images.xcassets in Resources */,
@@ -616,7 +609,6 @@
 				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,
 				97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */,
-				97BE12A6220BCB77006A2AE8 /* GalleryThumbsCell.swift in Sources */,
 				97499E5D220872F5006DED20 /* Toolbar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

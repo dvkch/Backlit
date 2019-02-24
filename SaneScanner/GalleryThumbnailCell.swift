@@ -35,10 +35,11 @@ class GalleryThumbnailCell: UICollectionViewCell {
     }
     
     // MARK: Properties
-    var item: GalleryItem? {
-        didSet {
-            updateContent()
-        }
+    private var item: GalleryItem?
+    private var mode: Mode = .gallery
+    
+    enum Mode {
+        case gallery, toolbar
     }
     
     // MARK: Views
@@ -46,18 +47,69 @@ class GalleryThumbnailCell: UICollectionViewCell {
     private let spinner = UIActivityIndicatorView(style: .white)
 
     // MARK: Content
-    private func updateContent() {
-        let thumb = item.map(GalleryManager.shared.thumbnail(for:))
-        imageView.image = thumb ?? nil
-        imageView.setNeedsLayout()
+    func update(item: GalleryItem, mode: Mode, spinnerColor: UIColor) {
+        spinner.color = spinnerColor
+        self.item = item
+        self.mode = mode
         
-        if thumb != nil {
+        updateThumbnail(nil)
+        
+        /*
+        weak var weakParentVC = parentController
+        
+        // TODO: cleanup
+        // imageView.uiCustomization = MHUICustomization.sy_defaultTheme
+        // imageView.galleryClass = GalleryViewController.self
+        imageView.setInseractiveGalleryPresentionWithItems(items, currentImageIndex: index, currentViewController: parentController)
+            { (index, image, transition, viewMode) in
+            if viewMode == .overView {
+            weakParentVC?.dismiss(animated: true, completion: nil)
+            } else {
+            weakParentVC?.presentedViewController?.dismiss(animated: true, dismiss: dismiss?(index), completion: nil)
+            }
+        }
+        */
+    }
+    
+    private func updateThumbnail(_ thumbnail: UIImage?) {
+        imageView.image = thumbnail ?? GalleryManager.shared.thumbnail(for: item)
+        updateStyle()
+    }
+    
+    private func updateStyle() {
+        if imageView.image != nil {
             spinner.stopAnimating()
             imageView.backgroundColor = .white
         }
         else {
             spinner.startAnimating()
             imageView.backgroundColor = .lightGray
+        }
+
+        switch mode {
+        case .gallery:
+            contentView.layer.shadowColor = nil
+            contentView.layer.shouldRasterize = false
+            if imageView.image != nil {
+                imageView.backgroundColor = .white
+            }
+            else {
+                imageView.backgroundColor = .lightGray
+            }
+
+        case .toolbar:
+            contentView.layer.shadowColor = UIColor.black.cgColor
+            contentView.layer.shadowOffset = .zero
+            contentView.layer.shadowRadius = 2
+            contentView.layer.rasterizationScale = UIScreen.main.scale
+            
+            if imageView.image != nil {
+                contentView.layer.shadowOpacity = 0.6
+                contentView.layer.shouldRasterize = true
+            } else {
+                contentView.layer.shadowOpacity = 0
+                contentView.layer.shouldRasterize = false
+            }
         }
     }
 }
@@ -67,11 +119,7 @@ extension GalleryThumbnailCell : GalleryManagerDelegate {
     
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) {
         guard item == self.item else { return }
-        
-        imageView.image = thumbnail
-        imageView.setNeedsLayout()
-        imageView.backgroundColor = .white
-        spinner.stopAnimating()
+        updateThumbnail(thumbnail)
     }
 }
 

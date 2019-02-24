@@ -197,7 +197,9 @@ class GalleryManager: NSObject {
     }
     
     // MARK: Items properties
-    func thumbnail(for item: GalleryItem) -> UIImage? {
+    func thumbnail(for item: GalleryItem?) -> UIImage? {
+        guard let item = item else { return nil }
+        
         let image = thumbnailCache.object(forKey: item.thumbnailURL as NSURL) ?? UIImage(contentsOfFile: item.thumbnailURL.path)
         if image == nil {
             generateThumbAsync(for: item, fullImage: nil, tellDelegates: true)

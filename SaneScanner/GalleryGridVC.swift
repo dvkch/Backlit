@@ -175,7 +175,7 @@ extension GalleryGridVC : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
-        cell.item = items[indexPath.row]
+        cell.update(item: items[indexPath.row], mode: .gallery, spinnerColor: UIColor.gray)
         return cell
     }
 }

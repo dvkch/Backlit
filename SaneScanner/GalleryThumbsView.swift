@@ -46,7 +46,7 @@ class GalleryThumbsView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.registerCell(GalleryThumbsCell.self, xib: true)
+        collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
         collectionView.contentInset = .init(top: 0, left: gradientWidth, bottom: 0, right: gradientWidth)
         collectionView.scrollIndicatorInsets = collectionView.contentInset
         collectionView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
@@ -155,8 +155,12 @@ extension GalleryThumbsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let spinnerColor = tintColor != .white ? UIColor.white : .gray
         
-        let cell = collectionView.dequeueCell(GalleryThumbsCell.self, for: indexPath)
+        let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
         
+        cell.update(item: galleryItems[indexPath.item], mode: .toolbar, spinnerColor: spinnerColor)
+        
+        // TODO: cleanup
+        /*
         cell.update(
             items: galleryItems,
             index: indexPath.item,
@@ -174,7 +178,7 @@ extension GalleryThumbsView: UICollectionViewDataSource {
             let dismissCell = collectionView.cellForItem(at: dismissIndexPath) as? GalleryThumbsCell
             return dismissCell?.imageView
         }
-        
+        */
         return cell
     }
 }
