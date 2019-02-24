@@ -17,7 +17,6 @@ target :'SaneScanner' do
 	pod 'SYOperationQueue'
 	pod 'SYPictureMetadata'
 	pod 'SYEmailHelper'
-	pod 'MHVideoPhotoGallery', :podspec => "https://raw.githubusercontent.com/dvkch/MHVideoPhotoGallery/master/MHVideoPhotoGallery.podspec"
 
     pod 'SnapKit'
     pod 'DirectoryWatcher'
