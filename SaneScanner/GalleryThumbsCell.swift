@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MHVideoPhotoGallery
 import SnapKit
 
 class GalleryThumbsCell: UICollectionViewCell {
@@ -20,7 +19,8 @@ class GalleryThumbsCell: UICollectionViewCell {
         contentView.layer.shadowRadius = 2
         contentView.layer.rasterizationScale = UIScreen.main.scale
         
-        imageView.shoudlUsePanGestureReconizer = false
+        // TODO: cleanup
+        //imageView.shoudlUsePanGestureReconizer = false
         
         GalleryManager.shared.addDelegate(self)
     }
@@ -29,7 +29,7 @@ class GalleryThumbsCell: UICollectionViewCell {
     private var item: GalleryItem?
     
     // MARK: View
-    @IBOutlet private(set) var imageView: MHPresenterImageView!
+    @IBOutlet private(set) var imageView: UIImageView!
     @IBOutlet private var spinner: UIActivityIndicatorView!
 
     // MARK: Content
@@ -41,9 +41,10 @@ class GalleryThumbsCell: UICollectionViewCell {
         let item = items[index]
         self.item = item
         updateImage(GalleryManager.shared.thumbnail(for: item))
-        imageView.uiCustomization = MHUICustomization.sy_defaultTheme
-        //imageView.galleryClass = GalleryViewController.self
-        
+        // TODO: cleanup
+        // imageView.uiCustomization = MHUICustomization.sy_defaultTheme
+        // imageView.galleryClass = GalleryViewController.self
+        /*
         imageView.setInseractiveGalleryPresentionWithItems(items, currentImageIndex: index, currentViewController: parentController)
         { (index, image, transition, viewMode) in
             if viewMode == .overView {
@@ -51,7 +52,7 @@ class GalleryThumbsCell: UICollectionViewCell {
             } else {
                 weakParentVC?.presentedViewController?.dismiss(animated: true, dismiss: dismiss?(index), completion: nil)
             }
-        }
+        }*/
     }
 
     private func updateImage(_ image: UIImage?) {
@@ -60,13 +61,11 @@ class GalleryThumbsCell: UICollectionViewCell {
             spinner?.stopAnimating()
             contentView.layer.shadowOpacity = 0.6
             contentView.layer.shouldRasterize = true
-            // backgroundColor = .red
         }
         else {
             spinner?.startAnimating()
             contentView.layer.shadowOpacity = 0
             contentView.layer.shouldRasterize = false
-            // backgroundColor = .green
         }
     }
 

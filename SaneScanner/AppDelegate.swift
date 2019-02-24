@@ -10,7 +10,6 @@ import UIKit
 import SYKit
 import SaneSwift
 import SVProgressHUD
-import MHVideoPhotoGallery
 
 enum SnapshotType {
     case none, devicePreview, deviceOptions, deviceOptionPopup, other

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MHVideoPhotoGallery
 import SYKit
 
 class GalleryNC: UINavigationController {

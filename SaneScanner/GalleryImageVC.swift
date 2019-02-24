@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MHVideoPhotoGallery
 
 class GalleryImageVC: UIViewController {
 
