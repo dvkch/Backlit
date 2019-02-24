@@ -191,4 +191,10 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: imageSize.width * bounds.height / imageSize.height, height: bounds.height)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: false)
+        let nc = GalleryNC(openedAt: indexPath.row)
+        parentViewController?.present(nc, animated: true, completion: nil)
+    }
 }

@@ -33,9 +33,12 @@ class GalleryGridVC: UIViewController {
             UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareButtonTap(sender:)))
         ]
         
-        updateNavBarButtons()
-        
         GalleryManager.shared.addDelegate(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateNavBarButtons(animated: false)
     }
     
     // MARK: Properties
@@ -48,7 +51,7 @@ class GalleryGridVC: UIViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        updateNavBarButtons()
+        updateNavBarButtons(animated: animated)
     }
 
     // MARK: Views
@@ -136,9 +139,13 @@ class GalleryGridVC: UIViewController {
     }
     
     @objc private func editButtonTap() {
-        self.setEditing(!isEditing, animated: true)
+        setEditing(!isEditing, animated: true)
     }
 
+    @objc private func closeButtonTap() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: Content
     private func updateEmptyState() {
         let text = NSMutableAttributedString()
@@ -151,18 +158,33 @@ class GalleryGridVC: UIViewController {
         collectionView.isHidden = items.isEmpty
     }
     
-    private func updateNavBarButtons() {
-        var buttons = [UIBarButtonItem]()
-        
-        if isEditing {
-            buttons.append(UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.editButtonTap)))
-        } else {
-            buttons.append(UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonTap)))
+    private func updateNavBarButtons(animated: Bool) {
+        if animated {
+            UIView.transition(with: view.window ?? view, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                self.updateNavBarButtons(animated: false)
+            }, completion: nil)
+            return
         }
         
-        #if DEBUG
-        buttons.append(UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap)))
-        #endif
+        // Left
+        if navigationController?.sy_isModal == true && !isEditing {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.closeButtonTap))
+            navigationItem.leftBarButtonItem?.style = .done
+        } else {
+            navigationItem.leftBarButtonItem = nil
+        }
+        
+        // Right
+        var buttons = [UIBarButtonItem]()
+        if isEditing {
+            buttons.append(UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.editButtonTap)))
+            buttons.last?.style = .done
+        } else {
+            buttons.append(UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonTap)))
+            #if DEBUG
+            buttons.append(UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap)))
+            #endif
+        }
         
         navigationItem.rightBarButtonItems = buttons
     }

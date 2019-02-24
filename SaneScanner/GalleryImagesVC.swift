@@ -32,6 +32,8 @@ class GalleryImagesVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateNavBar()
+        updateToolbar()
         navigationController?.isToolbarHidden = false
     }
     
@@ -40,8 +42,8 @@ class GalleryImagesVC: UIViewController {
     private var items = [GalleryItem]()
     private(set) var currentIndex: Int?  {
         didSet {
+            updateNavBar()
             updateToolbar()
-            title = String(format: "GALLERY IMAGE %d OF %d".localized, (currentIndex ?? 0) + 1, items.count)
         }
     }
     private var pendingIndex: Int?
@@ -58,6 +60,10 @@ class GalleryImagesVC: UIViewController {
         currentIndex = index
         
         pagesVC.setViewControllers([vc], direction: isAfterCurrent ? .forward : .reverse, animated: animated, completion: nil)
+    }
+    
+    @objc private func closeButtonTap() {
+        dismiss(animated: true, completion: nil)
     }
     
     @objc private func deleteCurrentImage() {
@@ -98,6 +104,17 @@ class GalleryImagesVC: UIViewController {
     private func imageViewController(at index: Int) -> GalleryImageVC? {
         guard index >= 0, index < items.count else { return nil }
         return GalleryImageVC(item: items[index], index: index)
+    }
+    
+    private func updateNavBar() {
+        title = String(format: "GALLERY IMAGE %d OF %d".localized, (currentIndex ?? 0) + 1, items.count)
+        
+        if navigationController?.sy_isModal == true {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.closeButtonTap))
+            navigationItem.rightBarButtonItem?.style = .done
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
     }
     
     private func updateToolbar() {

@@ -12,15 +12,20 @@ import SYKit
 class GalleryNC: UINavigationController {
 
     // MARK: Init
-    init(openedAt item: GalleryItem?) {
+    init(openedAt index: Int?) {
         super.init(rootViewController: gridVC)
         
-        if item == nil {
-            self.viewControllers = [gridVC]
-        } else {
-            // TODO: implement
-            self.viewControllers = [gridVC/*, imageViewerViewController*/]
+        if let index = index {
+            let imagesVC = GalleryImagesVC()
+            imagesVC.initialIndex = index
+            self.viewControllers = [gridVC, imagesVC]
         }
+        else {
+            self.viewControllers = [gridVC]
+        }
+        
+        // make sure the back button has the right name when opening at specific index
+        gridVC.loadViewIfNeeded()
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
