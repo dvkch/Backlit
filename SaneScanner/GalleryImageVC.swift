@@ -40,6 +40,9 @@ class GalleryImageVC: UIViewController {
         
         singleTap.require(toFail: doubleTap)
 
+        if #available(iOS 11.0, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        }
         scrollView.delegate = self
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
@@ -48,7 +51,6 @@ class GalleryImageVC: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        imageView.backgroundColor = .red
         imageView.contentMode = .scaleAspectFit
         scrollView.addSubview(imageView)
         
@@ -63,6 +65,7 @@ class GalleryImageVC: UIViewController {
             imageView.image = UIImage(contentsOfFile: item.URL.path)
             view.setNeedsUpdateConstraints()
             updateZoomScales(reset: true)
+            updateScrollViewInsets()
         }
     }
     
@@ -86,8 +89,14 @@ class GalleryImageVC: UIViewController {
                 self.scrollView.zoomScale = self.scrollView.minimumZoomScale
             }
             else {
-                // TODO: zoom to specific point
+                let size = CGSize(width: 1, height: 1)
+                
+                var point = sender.location(in: self.imageView)
+                point.x = min(max(0, point.x), self.imageView.bounds.width - size.width)
+                point.y = min(max(0, point.y), self.imageView.bounds.height - size.height)
+
                 self.scrollView.zoomScale = 1
+                self.scrollView.scrollRectToVisible(CGRect(origin: point, size: size), animated: false)
             }
             self.updateScrollViewInsets()
         }
@@ -146,8 +155,8 @@ class GalleryImageVC: UIViewController {
         //    bounds = bounds.inset(by: scrollView.safeAreaInsets)
         //}
         
-        scrollView.contentInset.left = bounds.minX + (bounds.width  - scrollView.contentSize.width)  / 2
-        scrollView.contentInset.top  = bounds.minY + (bounds.height - scrollView.contentSize.height) / 2
+        scrollView.contentInset.left = max(0, bounds.minX + (bounds.width  - scrollView.contentSize.width)  / 2)
+        scrollView.contentInset.top  = max(0, bounds.minY + (bounds.height - scrollView.contentSize.height) / 2)
     }
 }
 
