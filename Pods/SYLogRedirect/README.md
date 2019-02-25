@@ -1,4 +1,0 @@
-SYLogRedirect
-=============
-
-Log redirect tool

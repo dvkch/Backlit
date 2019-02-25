@@ -6,20 +6,16 @@ use_frameworks!
 
 target :'SaneScanner' do
     pod 'SaneSwift', :path => "./"
-
-	pod 'SVProgressHUD'
-	pod 'NSDate+TimeAgo'
-	pod 'SYLogRedirect'
-	pod 'DLAlertView'
-	pod 'PKYStepper'
-	pod 'SYKit'
-	pod 'SpinKit'
-	pod 'SYOperationQueue'
-	pod 'SYPictureMetadata'
-	pod 'SYEmailHelper'
-
-    pod 'SnapKit'
     pod 'DirectoryWatcher'
+    pod 'DLAlertView'
+    pod 'PKYStepper'
+    pod 'SnapKit'
+    pod 'SpinKit'
+    pod 'SVProgressHUD'
+    pod 'SYEmailHelper'
+    pod 'SYKit'
+    pod 'SYOperationQueue'
+    pod 'SYPictureMetadata'
 end
 
 post_install do | installer |
