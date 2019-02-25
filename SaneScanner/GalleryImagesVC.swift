@@ -44,7 +44,6 @@ class GalleryImagesVC: UIViewController {
             updateToolbar()
         }
     }
-    private var pendingIndex: Int?
     
     override var prefersStatusBarHidden: Bool {
         return navigationController?.isNavigationBarHidden ?? super.prefersStatusBarHidden
@@ -181,15 +180,10 @@ extension GalleryImagesVC : UIPageViewControllerDataSource {
 }
 
 extension GalleryImagesVC : UIPageViewControllerDelegate {
-    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        pendingIndex = (pendingViewControllers.first as? GalleryImageVC)?.galleryIndex
-    }
-    
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed {
-            currentIndex = pendingIndex
+            currentIndex = (pageViewController.viewControllers?.first as? GalleryImageVC)?.galleryIndex
         }
-        pendingIndex = nil
     }
 }
 
