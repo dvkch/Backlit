@@ -30,8 +30,8 @@ class GalleryImagesVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateNavBar()
-        updateToolbar()
+        updateNavBarContent()
+        updateToolbarContent()
         updateDisplayMode(showNavBars: true, animated: false)
     }
     
@@ -40,8 +40,8 @@ class GalleryImagesVC: UIViewController {
     private var items = [GalleryItem]()
     private(set) var currentIndex: Int?  {
         didSet {
-            updateNavBar()
-            updateToolbar()
+            updateNavBarContent()
+            updateToolbarContent()
         }
     }
     
@@ -140,7 +140,7 @@ class GalleryImagesVC: UIViewController {
         }
     }
     
-    private func updateNavBar() {
+    private func updateNavBarContent() {
         title = String(format: "GALLERY IMAGE %d OF %d".localized, (currentIndex ?? 0) + 1, items.count)
         
         if navigationController?.sy_isModal == true {
@@ -151,7 +151,7 @@ class GalleryImagesVC: UIViewController {
         }
     }
     
-    private func updateToolbar() {
+    private func updateToolbarContent() {
         guard let currentIndex = currentIndex else {
             toolbarItems = nil
             return

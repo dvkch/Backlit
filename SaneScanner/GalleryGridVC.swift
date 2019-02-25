@@ -39,6 +39,14 @@ class GalleryGridVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavBarButtons(animated: false)
+        updateToolbarVisibility(animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isEditing {
+            setEditing(false, animated: false)
+        }
     }
     
     // MARK: Properties
@@ -52,6 +60,7 @@ class GalleryGridVC: UIViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         updateNavBarButtons(animated: animated)
+        updateToolbarVisibility(animated: animated)
     }
 
     // MARK: Views
@@ -183,6 +192,10 @@ class GalleryGridVC: UIViewController {
         }
         
         navigationItem.setRightBarButtonItems(buttons, animated: animated)
+    }
+    
+    private func updateToolbarVisibility(animated: Bool) {
+        navigationController?.setToolbarHidden(!isEditing, animated: animated)
     }
 }
 
