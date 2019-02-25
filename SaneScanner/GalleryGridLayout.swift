@@ -1,5 +1,5 @@
 //
-//  GridLayout.swift
+//  GalleryGridLayout.swift
 //  SaneScanner
 //
 //  Created by Stanislas Chevallier on 07/02/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GridLayout: UICollectionViewFlowLayout {
+class GalleryGridLayout: UICollectionViewFlowLayout {
 
     var maxSize: CGFloat = 50 {
         didSet {
@@ -52,7 +52,7 @@ class GridLayout: UICollectionViewFlowLayout {
     }
 }
 
-extension GridLayout {
+extension GalleryGridLayout {
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         let prevWidth = collectionView?.bounds.width ?? 0
         return abs(prevWidth - newBounds.width) > 0.5

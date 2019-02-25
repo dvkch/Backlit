@@ -57,7 +57,7 @@ class GalleryGridVC: UIViewController {
     // MARK: Views
     @IBOutlet private var emptyStateView: UIView!
     @IBOutlet private var emptyStateLabel: UILabel!
-    private let collectionViewLayout = GridLayout()
+    private let collectionViewLayout = GalleryGridLayout()
     @IBOutlet private var collectionView: UICollectionView!
     
     // MARK: Actions
