@@ -13,7 +13,6 @@ class GalleryGridVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "GALLERY OVERVIEW TITLE".localized
         
         if #available(iOS 10.0, *) {
             emptyStateLabel.adjustsFontForContentSizeCategory = true
@@ -34,11 +33,13 @@ class GalleryGridVC: UIViewController {
         ]
         
         GalleryManager.shared.addDelegate(self)
+        
+        updateNavBarContent(animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateNavBarButtons(animated: false)
+        updateNavBarContent(animated: false)
         updateToolbarVisibility(animated: false)
     }
     
@@ -59,8 +60,18 @@ class GalleryGridVC: UIViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        updateNavBarButtons(animated: animated)
+        updateNavBarContent(animated: animated)
         updateToolbarVisibility(animated: animated)
+        
+        collectionView.visibleCells.forEach {
+            ($0 as? GalleryThumbnailCell)?.showSelectionIndicator = editing
+        }
+        
+        collectionView.allowsMultipleSelection = editing
+        
+        if !editing {
+            collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: false) }
+        }
     }
 
     // MARK: Views
@@ -167,7 +178,19 @@ class GalleryGridVC: UIViewController {
         collectionView.isHidden = items.isEmpty
     }
     
-    private func updateNavBarButtons(animated: Bool) {
+    private func updateNavBarContent(animated: Bool) {
+        // Title
+        if isEditing {
+            let selectedCount = collectionView.indexPathsForSelectedItems?.count ?? 0
+            switch selectedCount {
+            case 0:     title = "GALLERY OVERVIEW SELECTED NONE".localized
+            case 1:     title = String(format: "GALLERY OVERVIEW SELECTED SINGULAR %d".localized, selectedCount)
+            default:    title = String(format: "GALLERY OVERVIEW SELECTED PLURAL %d".localized, selectedCount)
+            }
+        } else {
+            title = "GALLERY OVERVIEW TITLE".localized
+        }
+        
         // Left
         if navigationController?.sy_isModal == true && !isEditing {
             let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.closeButtonTap))
@@ -207,17 +230,23 @@ extension GalleryGridVC : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
         cell.update(item: items[indexPath.row], mode: .gallery, spinnerColor: UIColor.gray)
+        cell.showSelectionIndicator = isEditing
         return cell
     }
 }
 
 extension GalleryGridVC : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
-        
-        let imagesVC = GalleryImagesVC()
-        imagesVC.initialIndex = indexPath.row
-        navigationController?.pushViewController(imagesVC, animated: true)
+        if isEditing {
+            updateNavBarContent(animated: false)
+        }
+        else {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            
+            let imagesVC = GalleryImagesVC()
+            imagesVC.initialIndex = indexPath.row
+            navigationController?.pushViewController(imagesVC, animated: true)
+        }
     }
 }
 

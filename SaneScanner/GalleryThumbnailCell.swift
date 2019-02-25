@@ -27,6 +27,18 @@ class GalleryThumbnailCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
+        selectionView.layer.borderColor = UIColor.white.cgColor
+        selectionView.layer.borderWidth = 1
+        selectionView.layer.cornerRadius = 22 / 2
+        selectionView.layer.masksToBounds = true
+        contentView.addSubview(selectionView)
+        selectionView.snp.makeConstraints { (make) in
+            make.size.equalTo(22)
+            make.bottom.right.equalTo(-8)
+        }
+        
+        updateSelectionStyle()
+        
         GalleryManager.shared.addDelegate(self)
     }
     
@@ -37,6 +49,16 @@ class GalleryThumbnailCell: UICollectionViewCell {
     // MARK: Properties
     private var item: GalleryItem?
     private var mode: Mode = .gallery
+    var showSelectionIndicator: Bool = false {
+        didSet {
+            updateSelectionStyle()
+        }
+    }
+    override var isSelected: Bool {
+        didSet {
+            updateSelectionStyle()
+        }
+    }
     
     enum Mode {
         case gallery, toolbar
@@ -45,6 +67,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
     // MARK: Views
     private let imageView = UIImageView()
     private let spinner = UIActivityIndicatorView(style: .white)
+    private let selectionView = UIView()
 
     // MARK: Content
     func update(item: GalleryItem, mode: Mode, spinnerColor: UIColor) {
@@ -74,6 +97,11 @@ class GalleryThumbnailCell: UICollectionViewCell {
     private func updateThumbnail(_ thumbnail: UIImage?) {
         imageView.image = thumbnail ?? GalleryManager.shared.thumbnail(for: item)
         updateStyle()
+    }
+    
+    private func updateSelectionStyle() {
+        selectionView.alpha = showSelectionIndicator ? 1 : 0
+        selectionView.backgroundColor = isSelected ? .vividBlue : UIColor(white: 1, alpha: 0.7)
     }
     
     private func updateStyle() {
