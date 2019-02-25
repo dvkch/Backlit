@@ -12,8 +12,6 @@ class GalleryImagesVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .groupTableViewBackground
-        
         pagesVC.dataSource = self
         pagesVC.delegate = self
         
@@ -34,7 +32,7 @@ class GalleryImagesVC: UIViewController {
         super.viewWillAppear(animated)
         updateNavBar()
         updateToolbar()
-        navigationController?.isToolbarHidden = false
+        updateDisplayMode(showNavBars: true, animated: false)
     }
     
     // MARK: Properties
@@ -47,6 +45,15 @@ class GalleryImagesVC: UIViewController {
         }
     }
     private var pendingIndex: Int?
+    
+    override var prefersStatusBarHidden: Bool {
+        return navigationController?.isNavigationBarHidden ?? super.prefersStatusBarHidden
+    }
+    
+    @available(iOS 11.0, *)
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return navigationController?.isNavigationBarHidden ?? super.prefersHomeIndicatorAutoHidden
+    }
     
     // MARK: Views
     private let pagesVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -103,7 +110,35 @@ class GalleryImagesVC: UIViewController {
     // MARK: Content
     private func imageViewController(at index: Int) -> GalleryImageVC? {
         guard index >= 0, index < items.count else { return nil }
-        return GalleryImageVC(item: items[index], index: index)
+        let vc = GalleryImageVC(item: items[index], index: index)
+        vc.delegate = self
+        return vc
+    }
+    
+    private func toggleDisplayMode(animated: Bool) {
+        let navBarsCurrentlyHidden = navigationController?.isNavigationBarHidden ?? false
+        updateDisplayMode(showNavBars: navBarsCurrentlyHidden, animated: animated)
+    }
+    
+    private func updateDisplayMode(showNavBars: Bool, animated: Bool) {
+        if animated {
+            UIView.transition(with: view.window ?? view, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                self.updateDisplayMode(showNavBars: showNavBars, animated: false)
+            }, completion: nil)
+            return
+        }
+        
+        let canHideNavBars = navigationController?.sy_isModal ?? false
+        let hideNavBars = !showNavBars && canHideNavBars
+        
+        navigationController?.isNavigationBarHidden = hideNavBars
+        navigationController?.isToolbarHidden = hideNavBars
+        view.backgroundColor = hideNavBars ? .black : .groupTableViewBackground
+        
+        setNeedsStatusBarAppearanceUpdate()
+        if #available(iOS 11.0, *) {
+            setNeedsUpdateOfHomeIndicatorAutoHidden()
+        }
     }
     
     private func updateNavBar() {
@@ -154,10 +189,13 @@ extension GalleryImagesVC : UIPageViewControllerDelegate {
         if completed {
             currentIndex = pendingIndex
         }
-        else {
-            // TODO: what should we do?
-        }
         pendingIndex = nil
+    }
+}
+
+extension GalleryImagesVC : GalleryImageVCDelegate {
+    func galleryImageVC(singleTapped: GalleryImageVC) {
+        toggleDisplayMode(animated: true)
     }
 }
 
