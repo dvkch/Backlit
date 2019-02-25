@@ -105,9 +105,21 @@ class GalleryThumbsView: UIView {
     // MARK: Layout
     private let gradientWidth = CGFloat(30)
     
+    private var prevSize = CGSize.zero
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        if prevSize != bounds.size {
+            prevSize = bounds.size
+            invalidateIntrinsicContentSize()
+            collectionViewLayout.invalidateLayout()
+        }
+        
         centerContent()
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return superview?.bounds.size ?? super.intrinsicContentSize
     }
     
     private func centerContent() {

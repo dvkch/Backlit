@@ -41,4 +41,10 @@ class Toolbar: UIToolbar {
         }
         return s
     }
+    
+    // MARK: Items
+    override func setItems(_ items: [UIBarButtonItem]?, animated: Bool) {
+        super.setItems(items, animated: animated)
+        barTintColor = items?.first?.customView?.backgroundColor ?? .clear
+    }
 }
