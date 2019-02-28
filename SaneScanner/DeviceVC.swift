@@ -167,7 +167,7 @@ class DeviceVC: UIViewController {
     }
     
     func optionGroups() -> [DeviceOptionGroup] {
-        return device.groupedOptions(includeAdvanced: Preferences.shared.showAdvancedOptions)
+        return device.optionGroups(includeAdvanced: Preferences.shared.showAdvancedOptions)
     }
     
     func optionGroup(tableViewSection section: Int) -> DeviceOptionGroup? {
@@ -175,8 +175,8 @@ class DeviceVC: UIViewController {
         return optionGroups()[section - 1]
     }
     
-    func option(tableViewIndexPath: IndexPath) -> DeviceOption? {
-        return optionGroup(tableViewSection: tableViewIndexPath.section)?.items[tableViewIndexPath.row]
+    func optionsInGroup(tableViewSection section: Int) -> [DeviceOption]? {
+        return optionGroup(tableViewSection: section)?.options(includeAdvanced: Preferences.shared.showAdvancedOptions)
     }
 
     private func updatePreviewCell(cropAreaPercent: CGRect) {
@@ -245,14 +245,31 @@ extension DeviceVC {
 extension DeviceVC {
     func imageMetadata(scanParameters: ScanParameters) -> SYMetadata? {
 
-        let optionResX = device.standardOption(for: .resolutionX) as? DeviceOptionNumber
-        let optionResY = device.standardOption(for: .resolutionY) as? DeviceOptionNumber
-        let optionRes = device.standardOption(for: .resolution) as? DeviceOptionNumber
+        var resX: Int? = nil
+        var resY: Int? = nil
+        var res:  Int? = nil
         
-        guard let resXInches = optionResX?.value ?? optionRes?.value, let resYInches = optionResY?.value ?? optionRes?.value else { return nil }
-
-        let resXMeters = Int(round(resXInches.doubleValue / 2.54 * 100))
-        let resYMeters = Int(round(resYInches.doubleValue / 2.54 * 100))
+        if let optionResX = device.standardOption(for: .resolutionX) as? DeviceOptionInt { resX = optionResX.value }
+        if let optionResY = device.standardOption(for: .resolutionY) as? DeviceOptionInt { resY = optionResY.value }
+        if let optionRes  = device.standardOption(for: .resolution)  as? DeviceOptionInt { res  = optionRes.value  }
+        
+        if let optionResX = device.standardOption(for: .resolutionX) as? DeviceOptionFixed { resX = Int(optionResX.value) }
+        if let optionResY = device.standardOption(for: .resolutionY) as? DeviceOptionFixed { resY = Int(optionResY.value) }
+        if let optionRes  = device.standardOption(for: .resolution)  as? DeviceOptionFixed { res  = Int(optionRes.value)  }
+        
+        let resXInches = resX ?? res
+        let resYInches = resY ?? res
+        
+        var resXMeters: Int? = nil
+        var resYMeters: Int? = nil
+        
+        if let resXInches = resXInches {
+            resXMeters = Int(round(Double(resXInches) / 2.54 * 100))
+        }
+        
+        if let resYInches = resYInches {
+            resYMeters = Int(round(Double(resYInches) / 2.54 * 100))
+        }
         
         let metadata = SYMetadata()!
         
@@ -261,17 +278,17 @@ extension DeviceVC {
         metadata.metadataTIFF.make = device.vendor
         metadata.metadataTIFF.model = device.model
         metadata.metadataTIFF.software = (Bundle.main.localizedName ?? "") + " " + Bundle.main.fullVersion
-        metadata.metadataTIFF.xResolution = resXInches
-        metadata.metadataTIFF.yResolution = resYInches
+        metadata.metadataTIFF.xResolution = resXInches.map(NSNumber.init)
+        metadata.metadataTIFF.yResolution = resYInches.map(NSNumber.init)
         metadata.metadataTIFF.resolutionUnit = 2 // 2 = inches, let's hope it'll make sense for every device
         
         metadata.metadataPNG = SYMetadataPNG()
-        metadata.metadataPNG.xPixelsPerMeter = resXMeters as NSNumber
-        metadata.metadataPNG.yPixelsPerMeter = resYMeters as NSNumber
+        metadata.metadataPNG.xPixelsPerMeter = resXMeters.map(NSNumber.init)
+        metadata.metadataPNG.yPixelsPerMeter = resYMeters.map(NSNumber.init)
         
         metadata.metadataJFIF = SYMetadataJFIF()
-        metadata.metadataJFIF.xDensity = resXInches
-        metadata.metadataJFIF.yDensity = resYInches
+        metadata.metadataJFIF.xDensity = resXInches.map(NSNumber.init)
+        metadata.metadataJFIF.yDensity = resYInches.map(NSNumber.init)
         
         return metadata
     }
@@ -287,7 +304,7 @@ extension DeviceVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 { return 1 }
-        return optionGroup(tableViewSection: section)?.items.count ?? 0
+        return optionsInGroup(tableViewSection: section)?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -298,7 +315,7 @@ extension DeviceVC : UITableViewDataSource {
         }
         
         let cell = tableView.dequeueCell(OptionCell.self, for: indexPath)
-        if let option = option(tableViewIndexPath: indexPath) {
+        if let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] {
             cell.updateWith(option: option)
         }
         cell.showDescription = false
@@ -330,7 +347,7 @@ extension DeviceVC : UITableViewDataSource {
             return UITableView.automaticDimension
         }
         
-        if let option = option(tableViewIndexPath: indexPath) {
+        if let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] {
             return OptionCell.cellHeight(option: option, showDescription: false, width: tableView.bounds.width)
         }
         
@@ -342,7 +359,7 @@ extension DeviceVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard indexPath.section > 0, let option = option(tableViewIndexPath: indexPath) else { return }
+        guard indexPath.section > 0, let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] else { return }
         
         let completion = { (error: Error?) -> Void in
             self.tableView.reloadData()

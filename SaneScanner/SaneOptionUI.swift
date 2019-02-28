@@ -25,33 +25,52 @@ class SaneOptionUI: NSObject {
             return
         }
         
-        switch option.type {
-        case SANE_TYPE_BOOL:
+        if let option = option as? DeviceOptionBool {
             showOptionsInput(for: option, titles: [option.stringForValue(true, userFacing: true), option.stringForValue(false, userFacing: true)], values: [true, false], completion)
-            
-        case SANE_TYPE_INT, SANE_TYPE_FIXED:
-            let castOption = option as! DeviceOptionNumber
-            if option.constraintType == SANE_CONSTRAINT_RANGE {
-                showSliderInput(for: castOption, completion)
+        }
+        else if let option = option as? DeviceOptionInt {
+            if case .range = option.constraint {
+                showSliderInput(for: option, or: nil, completion)
+            }
+            else if case .stepRange = option.constraint {
+                showSliderInput(for: option, or: nil, completion)
+            }
+            else if case let .list(values) = option.constraint {
+                showOptionsInput(for: option, titles: values.map { option.stringForValue($0, userFacing: true) }, values: values, completion)
             }
             else {
-                showOptionsInput(for: castOption, titles: castOption.constraintValues(userFacing: true) ?? [], values: castOption.constraintValues ?? [], completion)
+                fatalError("Int option should have a constraint!")
             }
-        case SANE_TYPE_STRING:
-            let castOption = option as! DeviceOptionString
-            if castOption.constraintType == SANE_CONSTRAINT_NONE {
-                showTextInput(for: castOption, completion)
+        }
+        else if let option = option as? DeviceOptionFixed {
+            if case .range = option.constraint {
+                showSliderInput(for: nil, or: option, completion)
+            }
+            else if case .stepRange = option.constraint {
+                showSliderInput(for: nil, or: option, completion)
+            }
+            else if case let .list(values) = option.constraint {
+                showOptionsInput(for: option, titles: values.map { option.stringForValue($0, userFacing: true) }, values: values, completion)
             }
             else {
-                showOptionsInput(for: option, titles: castOption.constraintValues(userFacing: true) ?? [], values: castOption.constraintValues(userFacing: false) ?? [], completion)
+                fatalError("Int option should have a constraint!")
             }
-        case SANE_TYPE_BUTTON:
-            self.showButtonInput(for: option as! DeviceOptionButton, completion)
-            
-        case SANE_TYPE_GROUP:
-            self.showDetails(for: option)
-            
-        default:
+        }
+        else if let option = option as? DeviceOptionString {
+            if case let .list(values) = option.constraint {
+                showOptionsInput(for: option, titles: values.map { option.stringForValue($0, userFacing: true) }, values: values, completion)
+            }
+            else {
+                showTextInput(for: option, completion)
+            }
+        }
+        else if let option = option as? DeviceOptionButton {
+            showButtonInput(for: option, completion)
+        }
+        else if let option = option as? DeviceOptionGroup {
+            showDetails(for: option)
+        }
+        else {
             fatalError("ALL OPTION TYPES SHOULD ALREADY BE HANDLED")
         }
     }
@@ -91,49 +110,86 @@ class SaneOptionUI: NSObject {
         }
     }
     
-    private static func showSliderInput(for option: DeviceOptionNumber, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
-        let alertView = DLAVAlertView(title: option.localizedTitle, message: option.localizedDescr, delegate: nil, cancel: nil, others: [])
+    private static func showSliderInput(for optionInt: DeviceOptionInt?, or optionFixed: DeviceOptionFixed?, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+        let alertView = DLAVAlertView(
+            title: optionInt?.localizedTitle ?? optionFixed?.localizedTitle,
+            message: optionInt?.localizedDescr ?? optionFixed?.localizedDescr,
+            delegate: nil, cancel: nil, others: []
+        )
         
-        if option.capabilities.contains(.automatic) {
+        let hasAuto = optionInt?.capabilities.contains(.automatic) == true || optionFixed?.capabilities.contains(.automatic) == true
+        
+        if hasAuto {
             alertView.addButton(withTitle: "OPTION VALUE AUTO".localized)
         }
         alertView.addButton(withTitle: "ACTION SET VALUE".localized)
         alertView.addButton(withTitle: "ACTION CLOSE".localized)
 
-        let updateButtonIndex = alertView.firstOtherButtonIndex + (option.capabilities.contains(.automatic) ? 1 : 0)
+        let updateButtonIndex = alertView.firstOtherButtonIndex + (hasAuto ? 1 : 0)
         
-        if option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED {
-            if let stepValue = option.stepValue {
+        if let option = optionInt {
+            switch option.constraint {
+            case .stepRange(let min, let max, let step, _):
                 let stepper = PKYStepper(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
-                stepper.maximum = option.maxValue?.floatValue ?? 0
-                stepper.minimum = option.minValue?.floatValue ?? 0
-                stepper.value = option.value?.floatValue ?? 0
-                stepper.stepInterval = stepValue.floatValue
+                stepper.maximum = Float(min)
+                stepper.minimum = Float(max)
+                stepper.value = Float(option.value)
+                stepper.stepInterval = Float(step)
                 stepper.valueChangedCallback = { stepper, value in
-                    stepper?.countLabel.text = option.stringForValue(value, userFacing: true)
+                    stepper?.countLabel.text = option.stringForValue(Int(value), userFacing: true)
                 }
                 stepper.setup()
                 alertView.contentView = stepper
-            }
-            else {
+            case .range(let min, let max):
                 alertView.addSlider(
-                    withMin: option.minValue?.floatValue ?? 0,
-                    max: option.maxValue?.floatValue ?? 0,
-                    current: option.value?.floatValue ?? 0)
+                    withMin: Float(min),
+                    max: Float(max),
+                    current: Float(option.value))
                 { (alert, value) in
-                    let valueString = option.stringForValue(value, userFacing: true)
+                    let valueString = option.stringForValue(Int(value), userFacing: true)
                     let buttonTitle = String(format: "ACTION SET VALUE TO %@".localized, valueString)
                     alert.setText(buttonTitle, forButtonAt: UInt(updateButtonIndex))
                 }
+            default:
+                fatalError("Unhandled constraint should have been handled earlier")
+            }
+        }
+
+        if let option = optionFixed {
+            switch option.constraint {
+            case .stepRange(let min, let max, let step, _):
+                let stepper = PKYStepper(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
+                stepper.maximum = Float(min)
+                stepper.minimum = Float(max)
+                stepper.value = Float(option.value)
+                stepper.stepInterval = Float(step)
+                stepper.valueChangedCallback = { stepper, value in
+                    stepper?.countLabel.text = option.stringForValue(Double(value), userFacing: true)
+                }
+                stepper.setup()
+                alertView.contentView = stepper
+            case .range(let min, let max):
+                alertView.addSlider(
+                    withMin: Float(min),
+                    max: Float(max),
+                    current: Float(option.value))
+                { (alert, value) in
+                    let valueString = option.stringForValue(Double(value), userFacing: true)
+                    let buttonTitle = String(format: "ACTION SET VALUE TO %@".localized, valueString)
+                    alert.setText(buttonTitle, forButtonAt: UInt(updateButtonIndex))
+                }
+            default:
+                fatalError("Unhandled constraint should have been handled earlier")
             }
         }
         
+        
         alertView.show { (alert, index) in
             guard index != alert?.cancelButtonIndex else { return }
-            let useAuto = index == alert!.firstOtherButtonIndex && option.capabilities.contains(.automatic)
+            let useAuto = index == alert!.firstOtherButtonIndex && hasAuto
             SVProgressHUD.show()
             
-            var value: Any?
+            var value = Float(0)
             if let slider = alert?.contentView as? UISlider {
                 value = slider.value
             }
@@ -141,11 +197,12 @@ class SaneOptionUI: NSObject {
                 value = stepper.value
             }
             
-            if let vFloat = value as? Float, option.type == SANE_TYPE_INT {
-                value = Int(vFloat)
+            if let option = optionInt {
+                Sane.shared.setValueForOption(value: Int(value), auto: useAuto, option: option, completion: completion)
             }
-            
-            Sane.shared.setValueForOption(value: value, auto: useAuto, option: option, completion: completion)
+            if let option = optionFixed {
+                Sane.shared.setValueForOption(value: Double(value), auto: useAuto, option: option, completion: completion)
+            }
         }
     }
     
