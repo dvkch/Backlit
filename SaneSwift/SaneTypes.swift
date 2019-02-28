@@ -23,12 +23,12 @@ extension SANE_Frame : CustomStringConvertible {
 extension SANE_Value_Type: CustomStringConvertible {
     public var description: String {
         switch self {
-        case SANE_TYPE_BOOL:    return "bool"
-        case SANE_TYPE_BUTTON:  return "button"
-        case SANE_TYPE_FIXED:   return "fixed"
-        case SANE_TYPE_GROUP:   return "group"
-        case SANE_TYPE_INT:     return "int"
-        case SANE_TYPE_STRING:  return "string"
+        case SANE_TYPE_BOOL:    return "SANE_TYPE_BOOL"
+        case SANE_TYPE_BUTTON:  return "SANE_TYPE_BUTTON"
+        case SANE_TYPE_FIXED:   return "SANE_TYPE_FIXED"
+        case SANE_TYPE_GROUP:   return "SANE_TYPE_GROUP"
+        case SANE_TYPE_INT:     return "SANE_TYPE_INT"
+        case SANE_TYPE_STRING:  return "SANE_TYPE_STRING"
         default: fatalError("Unknown type: \(self.rawValue)")
         }
     }
@@ -148,12 +148,13 @@ public enum SaneStandardOption: CaseIterable {
     }
     
     public enum PreviewValue {
-        case auto, min, max
+        case auto, on, off, min, max
     }
     
     var bestPreviewValue: PreviewValue {
         switch self {
-        case .preview, .colorMode:                      return .auto
+        case .preview:                                  return .on
+        case .colorMode:                                return .auto
         case .resolution, .resolutionX, .resolutionY:   return .min
         case .areaTopLeftX, .areaTopLeftY:              return .min
         case .areaBottomRightX, .areaBottomRightY:      return .max

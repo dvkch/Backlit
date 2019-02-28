@@ -6,7 +6,6 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
-// TODO: use enum value + constraint instead of subclasses?
 
 // MARK: Bool
 public class DeviceOptionBool : DeviceOption {
