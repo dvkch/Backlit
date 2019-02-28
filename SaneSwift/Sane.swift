@@ -278,7 +278,6 @@ extension Sane {
                 }
                 
                 options.forEach { $0.refreshValue(nil) }
-                
             }
             
             device.options = options
@@ -287,7 +286,7 @@ extension Sane {
         }
     }
     
-    public func valueForOption(_ option: DeviceOption, completion: @escaping (_ value: Any?, _ error: Error?) -> ()) {
+    public func valueForOption<V, T: DeviceOptionTyped<V>>(_ option: T, completion: @escaping (_ value: T.Value?, _ error: Error?) -> ()) {
         let mainThread = Thread.isMainThread
         
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
@@ -311,28 +310,18 @@ extension Sane {
         }
         
         runOnSaneThread {
-            let value = malloc(option.size)!
+            let bytes = malloc(option.size)!
             
-            let s = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_GET_VALUE, value, nil) }
-            
+            let s = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_GET_VALUE, bytes, nil) }
+            let value = option.valueForBytes(bytes)
+            free(bytes)
+
             guard s == SANE_STATUS_GOOD else {
                 Sane.runOn(mainThread: mainThread) { completion(nil, SaneError.fromStatus(s)) }
                 return
             }
             
-            var castedValue: Any?
-            if option.type == SANE_TYPE_BOOL {
-                castedValue = value.bindMemory(to: SANE_Bool.self, capacity: 1).pointee == SANE_TRUE
-            }
-            else if option.type == SANE_TYPE_INT || option.type == SANE_TYPE_FIXED {
-                castedValue = value.bindMemory(to: SANE_Int.self, capacity: 1).pointee
-            }
-            else if option.type == SANE_TYPE_STRING {
-                castedValue = String(cString: value.bindMemory(to: SANE_Char.self, capacity: option.size))
-            }
-            
-            free(value)
-            Sane.runOn(mainThread: mainThread) { completion(castedValue, nil) }
+            Sane.runOn(mainThread: mainThread) { completion(value, nil) }
         }
     }
 
@@ -352,14 +341,14 @@ extension Sane {
             let values = [cropArea.minX, cropArea.minY, cropArea.maxX, cropArea.maxY]
             
             for (option, value) in zip(stdOptions, values) {
-                if let optionInt = device.standardOption(for: option) as? DeviceOptionInt {
-                    self.setValueForOption(value: Int(value), auto: false, option: optionInt, completion: { (reloadAllOptions, error) in
+                if let option = device.standardOption(for: option) as? DeviceOptionInt {
+                    self.updateOption(option, with: .value(Int(value)), completion: { (reloadAllOptions, error) in
                         finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
                         finalError = error
                     })
                 }
-                if let optionFixed = device.standardOption(for: option) as? DeviceOptionFixed {
-                    self.setValueForOption(value: Double(value), auto: false, option: optionFixed, completion: { (reloadAllOptions, error) in
+                if let option = device.standardOption(for: option) as? DeviceOptionFixed {
+                    self.updateOption(option, with: .value(Double(value)), completion: { (reloadAllOptions, error) in
                         finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
                         finalError = error
                     })
@@ -372,7 +361,12 @@ extension Sane {
         }
     }
 
+    // TODO: use generic method
     public func setValueForOption(value: Any?, auto: Bool, option: DeviceOption, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
+        
+    }
+    
+    public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<T.Value>, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
         let mainThread = Thread.isMainThread
         
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
@@ -388,29 +382,16 @@ extension Sane {
         runOnSaneThread {
             var byteValue: UnsafeMutableRawPointer? = nil
             
-            if !auto {
-                // TODO: an option should be able to convert its value from/to raw bytes
+            if case let .value(value) = value {
+                // TODO: make sure data count isn't greater than option.size
                 byteValue = malloc(option.size)
-                if option.type == SANE_TYPE_BOOL {
-                    byteValue?.bindMemory(to: SANE_Bool.self, capacity: 1).pointee = ((value as? Bool) ?? false) ? 1 : 0
-                }
-                else if option.type == SANE_TYPE_INT {
-                    byteValue?.bindMemory(to: SANE_Int.self, capacity: 1).pointee = (value as? SANE_Int) ?? 0
-                }
-                else if option.type == SANE_TYPE_FIXED {
-                    byteValue?.bindMemory(to: SANE_Fixed.self, capacity: 1).pointee = SaneFixedFromDouble((value as? Double) ?? 0)
-                }
-                else if option.type == SANE_TYPE_STRING {
-                    let cString = ((value as? String) ?? "").cString(using: String.Encoding.utf8) ?? []
-                    let size = min(cString.count, option.size)
-                    byteValue?.bindMemory(to: SANE_Char.self, capacity: option.size).assign(from: cString, count: size)
-                }
+                byteValue?.bindMemory(to: UInt8.self, capacity: option.size).initialize(from: option.bytesForValue(value))
             }
                 
             var info: SANE_Int = 0
             let status: SANE_Status
             
-            if auto {
+            if case .auto = value {
                 status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_AUTO, nil, &info) }
             } else {
                 status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_VALUE, byteValue, &info) }
@@ -444,8 +425,8 @@ extension Sane {
         runOnSaneThread {
             var oldOptions = [SaneStandardOption: Any?]()
             
-            if let optionPreview = device.standardOption(for: .preview) {
-                self.setValueForOption(value: true, auto: false, option: optionPreview, completion: nil)
+            if let optionPreview = device.standardOption(for: .preview) as? DeviceOptionBool {
+                self.updateOption(optionPreview, with: .value(true), completion: nil)
             }
             else {
                 var stdOptions = [SaneStandardOption.resolutionX, .resolutionY,

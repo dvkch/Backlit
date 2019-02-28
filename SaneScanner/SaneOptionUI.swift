@@ -106,7 +106,7 @@ class SaneOptionUI: NSObject {
             
             let useAuto = index == alert?.firstOtherButtonIndex && option.capabilities.contains(.automatic)
             SVProgressHUD.show()
-            Sane.shared.setValueForOption(value: alertView.textField(at: 0)?.text, auto: useAuto, option: option, completion: completion)
+            Sane.shared.updateOption(option, with: useAuto ? .auto : .value(alertView.textField(at: 0)?.text ?? ""), completion: completion)
         }
     }
     
@@ -198,21 +198,21 @@ class SaneOptionUI: NSObject {
             }
             
             if let option = optionInt {
-                Sane.shared.setValueForOption(value: Int(value), auto: useAuto, option: option, completion: completion)
+                Sane.shared.updateOption(option, with: useAuto ? .auto : .value(Int(value)), completion: completion)
             }
             if let option = optionFixed {
-                Sane.shared.setValueForOption(value: Double(value), auto: useAuto, option: option, completion: completion)
+                Sane.shared.updateOption(option, with: useAuto ? .auto : .value(Double(value)), completion: completion)
             }
         }
     }
     
-    private static func showOptionsInput(for option: DeviceOption, titles: [String], values: [Any], _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    private static func showOptionsInput<V, T: DeviceOptionTyped<V>>(for option: T, titles: [String], values: [T.Value], _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
         var optionsTitles = [String]()
-        var optionsValues = [Any]()
+        var optionsValues = [T.Value?]()
         
         if option.capabilities.contains(.automatic) {
             optionsTitles.append("OPTION VALUE AUTO".localized)
-            optionsValues.append(NSNull())
+            optionsValues.append(nil)
         }
         
         optionsTitles.append(contentsOf: titles)
@@ -229,11 +229,15 @@ class SaneOptionUI: NSObject {
         alertView.show { (alert, index) in
             guard index != alert?.cancelButtonIndex else { return }
             
-            let value = optionsValues[index - alert!.firstOtherButtonIndex]
-            let useAuto = (value is NSNull)
+            let value: DeviceOptionNewValue<T.Value>
+            if let selectedValue = optionsValues[index - alert!.firstOtherButtonIndex] {
+                value = .value(selectedValue)
+            } else {
+                value = .auto
+            }
 
             SVProgressHUD.show()
-            Sane.shared.setValueForOption(value: value, auto: useAuto, option: option, completion: completion)
+            Sane.shared.updateOption(option, with: value, completion: completion)
         }
     }
 }

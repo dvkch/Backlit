@@ -6,7 +6,6 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
-
 // MARK: Basic option
 public class DeviceOption {
     
@@ -45,13 +44,12 @@ public class DeviceOption {
     }
     
     // MARK: Value
-    internal func refreshValue(_ block: ((Error?) -> ())?) {
-        // TODO: implement
-        //fatalError("Not implemented")
-    }
-    
     public var localizedValue: String {
         return ""
+    }
+    
+    internal func refreshValue(_ block: ((Error?) -> ())?) {
+        block?(nil)
     }
     
     // MARK: Helpers
@@ -64,11 +62,11 @@ public class DeviceOption {
     
     internal static func typedOption(cOption: SANE_Option_Descriptor, index: Int, device: Device) -> DeviceOption {
         switch cOption.type {
-        case SANE_TYPE_BOOL:    return DeviceOptionBool(cOption: cOption, index: index, device: device)
-        case SANE_TYPE_INT:     return DeviceOptionInt(cOption: cOption, index: index, device: device)
-        case SANE_TYPE_FIXED:   return DeviceOptionFixed(cOption: cOption, index: index, device: device)
-        case SANE_TYPE_STRING:  return DeviceOptionString(cOption: cOption, index: index, device: device)
-        case SANE_TYPE_BUTTON:  return DeviceOptionButton(cOption: cOption, index: index, device: device)
+        case SANE_TYPE_BOOL:    return DeviceOptionBool(cOption: cOption, index: index, device: device, initialValue: false)
+        case SANE_TYPE_INT:     return DeviceOptionInt(cOption: cOption, index: index, device: device, initialValue: 0)
+        case SANE_TYPE_FIXED:   return DeviceOptionFixed(cOption: cOption, index: index, device: device, initialValue: 0)
+        case SANE_TYPE_STRING:  return DeviceOptionString(cOption: cOption, index: index, device: device, initialValue: "")
+        case SANE_TYPE_BUTTON:  return DeviceOptionButton(cOption: cOption, index: index, device: device, initialValue: false)
         case SANE_TYPE_GROUP:   return DeviceOptionGroup(cOption: cOption, index: index, device: device)
         default: fatalError("Unsupported type \(cOption.type) for option at index \(index) in device \(device.description)")
         }
@@ -81,6 +79,60 @@ extension DeviceOption: CustomStringConvertible {
     }
 }
 
+// MARK: Typed option
+public class DeviceOptionTyped<T: Equatable & CustomStringConvertible>: DeviceOption {
+    
+    // MARK: Init
+    init(cOption: SANE_Option_Descriptor, index: Int, device: Device, initialValue: T) {
+        self.value = initialValue
+        super.init(cOption: cOption, index: index, device: device)
+    }
+    
+    // MARK: Value
+    public internal(set) var value: T
+    
+    public func stringForValue(_ value: T, userFacing: Bool) -> String {
+        fatalError("Not implemented")
+    }
+    
+    internal func bytesForValue(_ value: T) -> Data {
+        fatalError("Not implemented")
+    }
+    
+    internal func valueForBytes(_ bytes: UnsafeRawPointer) -> T {
+        fatalError("Not implemented")
+    }
+    
+    public var constraint: OptionConstraint<T> {
+        fatalError("Not implemented")
+    }
+    
+    public var bestPreviewValue: DeviceOptionNewValue<T> {
+        fatalError("Not implemented")
+    }
+    
+    internal override func refreshValue(_ block: ((Error?) -> ())?) {
+        Sane.shared.valueForOption(self) { (value, error) in
+            if let value = value, error == nil {
+                self.value = value
+            }
+            block?(error)
+        }
+    }
+}
+
+// MARK: Value option protocol
+public protocol DeviceOptionTypedProtocol: AnyObject {
+    associatedtype Value: Equatable & CustomStringConvertible
+    var value: Value { get }
+}
+
+extension DeviceOptionTyped : DeviceOptionTypedProtocol { }
+
+// MARK: Typed option value
+public enum DeviceOptionNewValue<T> {
+    case none, auto, value(T)
+}
 
 // MARK: Option constraints
 public enum OptionConstraint<T: Equatable & CustomStringConvertible> {
@@ -114,52 +166,25 @@ extension OptionConstraint : CustomStringConvertible {
     }
 }
 
-// MARK: Value option protocol
-public protocol DeviceOptionTyped {
-    associatedtype Value: Equatable & CustomStringConvertible
-    
-    var value: Value { get }
-    
-    func stringForValue(_ value: Value, userFacing: Bool) -> String
-    func bytesForValue(_ value: Value) -> Data
-
-    var constraint: OptionConstraint<Value> { get }
-}
-
-internal protocol DeviceOptionTypedInternal : DeviceOptionTyped {
-    mutating func updateFromBytes(_ bytes: UnsafeRawPointer)
-    
-    var bestPreviewValue: DeviceOptionNewValue<Value> { get }
-}
-
-public enum DeviceOptionNewValue<T> {
-    case none, auto, value(T)
-}
-
 // MARK: Bool
-public class DeviceOptionBool: DeviceOption {
-    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
+public class DeviceOptionBool: DeviceOptionTyped<Bool> {
+    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device, initialValue: Bool) {
         DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_BOOL, class: DeviceOptionBool.self)
-        super.init(cOption: cOption, index: index, device: device)
+        super.init(cOption: cOption, index: index, device: device, initialValue: initialValue)
     }
-    
-    public private(set) var value: Bool = false
     
     public override var localizedValue: String {
         return stringForValue(value, userFacing: true)
     }
-}
-
-extension DeviceOptionBool : DeviceOptionTypedInternal {
     
-    public func stringForValue(_ value: Bool, userFacing: Bool) -> String {
+    public override func stringForValue(_ value: Bool, userFacing: Bool) -> String {
         if userFacing {
             return value ? "OPTION BOOL ON".saneTranslation : "OPTION BOOL OFF".saneTranslation
         }
         return value ? "On" : "Off"
     }
     
-    public func bytesForValue(_ value: Bool) -> Data {
+    internal override func bytesForValue(_ value: Bool) -> Data {
         var data = Data(repeating: 0, count: size)
         data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<SANE_Bool>) -> () in
             bytes.pointee = value ? SANE_TRUE : SANE_FALSE
@@ -167,15 +192,15 @@ extension DeviceOptionBool : DeviceOptionTypedInternal {
         return data
     }
     
-    internal func updateFromBytes(_ bytes: UnsafeRawPointer) {
-        value = bytes.bindMemory(to: SANE_Bool.self, capacity: size).pointee == SANE_TRUE
+    internal override func valueForBytes(_ bytes: UnsafeRawPointer) -> Bool {
+        return bytes.bindMemory(to: SANE_Bool.self, capacity: size).pointee == SANE_TRUE
     }
-    
-    public var constraint: OptionConstraint<Bool> {
+
+    public override var constraint: OptionConstraint<Bool> {
         return .none
     }
     
-    var bestPreviewValue: DeviceOptionNewValue<Bool> {
+    public override var bestPreviewValue: DeviceOptionNewValue<Bool> {
         guard let value = SaneStandardOption(saneIdentifier: identifier)?.bestPreviewValue else { return .none }
         switch value {
         case .auto: return .auto
@@ -187,27 +212,22 @@ extension DeviceOptionBool : DeviceOptionTypedInternal {
 }
 
 // MARK: Int
-public class DeviceOptionInt: DeviceOption {
-    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
+public class DeviceOptionInt: DeviceOptionTyped<Int> {
+    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device, initialValue: Int) {
         DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_INT, class: DeviceOptionInt.self)
-        super.init(cOption: cOption, index: index, device: device)
+        super.init(cOption: cOption, index: index, device: device, initialValue: initialValue)
     }
-    
-    public private(set) var value: Int = 0
     
     public override var localizedValue: String {
         return stringForValue(value, userFacing: true)
     }
-}
-
-extension DeviceOptionInt : DeviceOptionTypedInternal {
     
-    public func stringForValue(_ value: Int, userFacing: Bool) -> String {
+    public override func stringForValue(_ value: Int, userFacing: Bool) -> String {
         let unitString = userFacing && unit != SANE_UNIT_NONE ? " " + unit.description : ""
         return String(value) + unitString
     }
     
-    public func bytesForValue(_ value: Int) -> Data {
+    internal override func bytesForValue(_ value: Int) -> Data {
         var data = Data(repeating: 0, count: size)
         data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<SANE_Int>) -> () in
             bytes.pointee = SANE_Int(value)
@@ -215,12 +235,12 @@ extension DeviceOptionInt : DeviceOptionTypedInternal {
         return data
     }
     
-    internal func updateFromBytes(_ bytes: UnsafeRawPointer) {
+    internal override func valueForBytes(_ bytes: UnsafeRawPointer) -> Int {
         let saneValue = bytes.bindMemory(to: SANE_Int.self, capacity: size).pointee
-        value = Int(saneValue)
+        return Int(saneValue)
     }
-    
-    public var constraint: OptionConstraint<Int> {
+
+    public override var constraint: OptionConstraint<Int> {
         switch cOption.constraint_type {
         case SANE_CONSTRAINT_NONE:
             return .none
@@ -244,7 +264,7 @@ extension DeviceOptionInt : DeviceOptionTypedInternal {
         }
     }
     
-    var bestPreviewValue: DeviceOptionNewValue<Int> {
+    public override var bestPreviewValue: DeviceOptionNewValue<Int> {
         guard let value = SaneStandardOption(saneIdentifier: identifier)?.bestPreviewValue else { return .none }
         switch value {
         case .auto:
@@ -266,27 +286,22 @@ extension DeviceOptionInt : DeviceOptionTypedInternal {
 }
 
 // MARK: Fixed float
-public class DeviceOptionFixed: DeviceOption {
-    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
+public class DeviceOptionFixed: DeviceOptionTyped<Double> {
+    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device, initialValue: Double) {
         DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_FIXED, class: DeviceOptionFixed.self)
-        super.init(cOption: cOption, index: index, device: device)
+        super.init(cOption: cOption, index: index, device: device, initialValue: initialValue)
     }
-    
-    public private(set) var value: Double = 0
     
     public override var localizedValue: String {
         return stringForValue(value, userFacing: true)
     }
-}
-
-extension DeviceOptionFixed : DeviceOptionTypedInternal {
     
-    public func stringForValue(_ value: Double, userFacing: Bool) -> String {
+    public override func stringForValue(_ value: Double, userFacing: Bool) -> String {
         let unitString = userFacing && unit != SANE_UNIT_NONE ? " " + unit.description : ""
-        return String(value) + unitString
+        return String(format: "%0.2lf", value) + unitString
     }
     
-    public func bytesForValue(_ value: Double) -> Data {
+    internal override func bytesForValue(_ value: Double) -> Data {
         var data = Data(repeating: 0, count: size)
         data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<SANE_Fixed>) -> () in
             bytes.pointee = SaneFixedFromDouble(value)
@@ -294,12 +309,12 @@ extension DeviceOptionFixed : DeviceOptionTypedInternal {
         return data
     }
     
-    internal func updateFromBytes(_ bytes: UnsafeRawPointer) {
+    internal override func valueForBytes(_ bytes: UnsafeRawPointer) -> Double {
         let saneValue = bytes.bindMemory(to: SANE_Fixed.self, capacity: size).pointee
-        value = SaneDoubleFromFixed(saneValue)
+        return SaneDoubleFromFixed(saneValue)
     }
-    
-    public var constraint: OptionConstraint<Double> {
+
+    public override var constraint: OptionConstraint<Double> {
         switch cOption.constraint_type {
         case SANE_CONSTRAINT_NONE:
             return .none
@@ -323,7 +338,7 @@ extension DeviceOptionFixed : DeviceOptionTypedInternal {
         }
     }
     
-    var bestPreviewValue: DeviceOptionNewValue<Double> {
+    public override var bestPreviewValue: DeviceOptionNewValue<Double> {
         guard let value = SaneStandardOption(saneIdentifier: identifier)?.bestPreviewValue else { return .none }
         switch value {
         case .auto:
@@ -373,39 +388,34 @@ extension DeviceOptionFixed : DeviceOptionNumeric {
 }
 
 // MARK: String
-public class DeviceOptionString: DeviceOption {
-    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
+public class DeviceOptionString: DeviceOptionTyped<String> {
+    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device, initialValue: String) {
         DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_STRING, class: DeviceOptionString.self)
-        super.init(cOption: cOption, index: index, device: device)
+        super.init(cOption: cOption, index: index, device: device, initialValue: initialValue)
     }
-    
-    public private(set) var value: String = ""
     
     public override var localizedValue: String {
         return stringForValue(value, userFacing: true)
     }
-}
-
-extension DeviceOptionString : DeviceOptionTypedInternal {
     
-    public func stringForValue(_ value: String, userFacing: Bool) -> String {
+    public override func stringForValue(_ value: String, userFacing: Bool) -> String {
         let unitString = userFacing && unit != SANE_UNIT_NONE ? " " + unit.description : ""
         let stringValue = userFacing ? value.saneTranslation : value
         return stringValue + unitString
     }
     
-    public func bytesForValue(_ value: String) -> Data {
+    internal override func bytesForValue(_ value: String) -> Data {
         // TODO: keep max size in mind!
         // let size = min(cString.count, option.size)
         return value.data(using: .utf8) ?? Data()
     }
     
-    internal func updateFromBytes(_ bytes: UnsafeRawPointer) {
+    internal override func valueForBytes(_ bytes: UnsafeRawPointer) -> String {
         let saneValue = bytes.bindMemory(to: SANE_Char.self, capacity: size)
-        value = String(cString: saneValue)
+        return String(cString: saneValue)
     }
-    
-    public var constraint: OptionConstraint<String> {
+
+    public override var constraint: OptionConstraint<String> {
         switch cOption.constraint_type {
         case SANE_CONSTRAINT_NONE:
             return .none
@@ -420,7 +430,7 @@ extension DeviceOptionString : DeviceOptionTypedInternal {
         }
     }
 
-    var bestPreviewValue: DeviceOptionNewValue<String> {
+    public override var bestPreviewValue: DeviceOptionNewValue<String> {
         guard let value = SaneStandardOption(saneIdentifier: identifier)?.bestPreviewValue else { return .none }
         if value == .auto {
             return .auto
@@ -430,18 +440,47 @@ extension DeviceOptionString : DeviceOptionTypedInternal {
 }
 
 // MARK: Button
-public class DeviceOptionButton: DeviceOption {
-    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
+public class DeviceOptionButton: DeviceOptionTyped<Bool> {
+    override init(cOption: SANE_Option_Descriptor, index: Int, device: Device, initialValue: Bool) {
         DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_BUTTON, class: DeviceOptionButton.self)
-        super.init(cOption: cOption, index: index, device: device)
+        super.init(cOption: cOption, index: index, device: device, initialValue: initialValue)
     }
     
     public func press(_ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
-        Sane.shared.setValueForOption(value: true, auto: false, option: self, completion: completion)
+        Sane.shared.updateOption(self, with: .value(true), completion: completion)
+    }
+
+    public override var value: Bool {
+        get { return false }
+        set { super.value = newValue }
+    }
+    
+    public override var localizedValue: String {
+        return stringForValue(value, userFacing: true)
+    }
+    
+    public override func stringForValue(_ value: Bool, userFacing: Bool) -> String {
+        return ""
+    }
+    
+    internal override func bytesForValue(_ value: Bool) -> Data {
+        return Data(repeating: value ? 1 : 0, count: size)
+    }
+    
+    internal override func valueForBytes(_ bytes: UnsafeRawPointer) -> Bool {
+        return false
+    }
+
+    public override var constraint: OptionConstraint<Bool> {
+        return .none
+    }
+    
+    public override var bestPreviewValue: DeviceOptionNewValue<Bool> {
+        return .none
     }
 }
 
-// MARK: Button
+// MARK: Group
 public class DeviceOptionGroup: DeviceOption {
     override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
         DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_GROUP, class: DeviceOptionGroup.self)
