@@ -93,7 +93,7 @@ extension libSANETranslation {
                         .replacingOccurrences(of: "\\\"", with: "\"")
                         .trimmingCharacters(in: .whitespacesAndNewlines)
                     
-                    if !value.isEmpty {
+                    if !key.isEmpty && !value.isEmpty {
                         translations[key] = value
                     }
                     currentKey = nil
