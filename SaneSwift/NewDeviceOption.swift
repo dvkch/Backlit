@@ -8,7 +8,7 @@
 
 
 // MARK: Basic option
-public class SaneOption {
+public class DeviceOption {
     
     // MARK: Init
     init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
@@ -75,7 +75,7 @@ public class SaneOption {
     }
 }
 
-extension SaneOption: CustomStringConvertible {
+extension DeviceOption: CustomStringConvertible {
     public var description: String {
         return "\(Swift.type(of: self)): \(index), \(localizedTitle), \(type.description), \(unit.description)"
     }
@@ -137,9 +137,9 @@ public enum DeviceOptionNewValue<T> {
 }
 
 // MARK: Bool
-public class SaneOptionBool: SaneOption {
+public class DeviceOptionBool: DeviceOption {
     override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
-        SaneOption.assertType(cOption: cOption, type: SANE_TYPE_BOOL, class: SaneOptionBool.self)
+        DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_BOOL, class: DeviceOptionBool.self)
         super.init(cOption: cOption, index: index, device: device)
     }
     
@@ -150,7 +150,7 @@ public class SaneOptionBool: SaneOption {
     }
 }
 
-extension SaneOptionBool : DeviceOptionTypedInternal {
+extension DeviceOptionBool : DeviceOptionTypedInternal {
     
     public func stringForValue(_ value: Bool, userFacing: Bool) -> String {
         if userFacing {
@@ -187,9 +187,9 @@ extension SaneOptionBool : DeviceOptionTypedInternal {
 }
 
 // MARK: Int
-public class SaneOptionInt: SaneOption {
+public class DeviceOptionInt: DeviceOption {
     override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
-        SaneOption.assertType(cOption: cOption, type: SANE_TYPE_INT, class: SaneOptionInt.self)
+        DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_INT, class: DeviceOptionInt.self)
         super.init(cOption: cOption, index: index, device: device)
     }
     
@@ -200,7 +200,7 @@ public class SaneOptionInt: SaneOption {
     }
 }
 
-extension SaneOptionInt : DeviceOptionTypedInternal {
+extension DeviceOptionInt : DeviceOptionTypedInternal {
     
     public func stringForValue(_ value: Int, userFacing: Bool) -> String {
         let unitString = userFacing && unit != SANE_UNIT_NONE ? " " + unit.description : ""
@@ -266,9 +266,9 @@ extension SaneOptionInt : DeviceOptionTypedInternal {
 }
 
 // MARK: Fixed float
-public class SaneOptionFixed: SaneOption {
+public class DeviceOptionFixed: DeviceOption {
     override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
-        SaneOption.assertType(cOption: cOption, type: SANE_TYPE_FIXED, class: SaneOptionFixed.self)
+        DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_FIXED, class: DeviceOptionFixed.self)
         super.init(cOption: cOption, index: index, device: device)
     }
     
@@ -279,7 +279,7 @@ public class SaneOptionFixed: SaneOption {
     }
 }
 
-extension SaneOptionFixed : DeviceOptionTypedInternal {
+extension DeviceOptionFixed : DeviceOptionTypedInternal {
     
     public func stringForValue(_ value: Double, userFacing: Bool) -> String {
         let unitString = userFacing && unit != SANE_UNIT_NONE ? " " + unit.description : ""
@@ -373,9 +373,9 @@ extension DeviceOptionFixed : DeviceOptionNumeric {
 }
 
 // MARK: String
-public class SaneOptionString: SaneOption {
+public class DeviceOptionString: DeviceOption {
     override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
-        SaneOption.assertType(cOption: cOption, type: SANE_TYPE_STRING, class: SaneOptionString.self)
+        DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_STRING, class: DeviceOptionString.self)
         super.init(cOption: cOption, index: index, device: device)
     }
     
@@ -386,7 +386,7 @@ public class SaneOptionString: SaneOption {
     }
 }
 
-extension SaneOptionString : DeviceOptionTypedInternal {
+extension DeviceOptionString : DeviceOptionTypedInternal {
     
     public func stringForValue(_ value: String, userFacing: Bool) -> String {
         let unitString = userFacing && unit != SANE_UNIT_NONE ? " " + unit.description : ""
@@ -430,28 +430,44 @@ extension SaneOptionString : DeviceOptionTypedInternal {
 }
 
 // MARK: Button
-public class SaneOptionButton: SaneOption {
+public class DeviceOptionButton: DeviceOption {
     override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
-        SaneOption.assertType(cOption: cOption, type: SANE_TYPE_BUTTON, class: SaneOptionButton.self)
+        DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_BUTTON, class: DeviceOptionButton.self)
         super.init(cOption: cOption, index: index, device: device)
     }
     
-    public func press() {
-        // TODO: Sane.shared.setValueForOption(value: true, auto: false, option: self, completion: nil)
+    public func press(_ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+        Sane.shared.setValueForOption(value: true, auto: false, option: self, completion: completion)
     }
 }
 
 // MARK: Button
-public class SaneOptionGroup: SaneOption {
+public class DeviceOptionGroup: DeviceOption {
     override init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
-        SaneOption.assertType(cOption: cOption, type: SANE_TYPE_GROUP, class: SaneOptionGroup.self)
+        DeviceOption.assertType(cOption: cOption, type: SANE_TYPE_GROUP, class: DeviceOptionGroup.self)
         super.init(cOption: cOption, index: index, device: device)
     }
     
-    var options: [SaneOption] {
-        // TODO: implement
-        //let nextGroupIndex = device.options.filter {  }
-        //return device.options.}
-        return []
+    public func options(includeAdvanced: Bool) -> [DeviceOption] {
+        let nextGroupIndex = device.options
+            .compactMap { ($0 as? DeviceOptionGroup)?.index }
+            .sorted()
+            .first(where: { $0 > index }) ?? device.options.count
+        
+        let allOptions = device.options.filter { $0.index > index && $0.index < nextGroupIndex }
+        
+        var filteredOptions = allOptions
+            .filter { $0.identifier != SaneStandardOption.preview.saneIdentifier }
+        
+        if device.canCrop {
+            let cropOptionsIDs = SaneStandardOption.cropOptions.map { $0.saneIdentifier }
+            filteredOptions.removeAll(where: { $0.identifier != nil && cropOptionsIDs.contains($0.identifier!) })
+        }
+        
+        if !includeAdvanced {
+            filteredOptions.removeAll(where: { $0.capabilities.contains(.advanced) })
+        }
+        
+        return filteredOptions
     }
 }

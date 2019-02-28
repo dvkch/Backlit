@@ -274,7 +274,7 @@ extension Sane {
                 
                 for i in 1..<count {
                     descriptor = sane_get_option_descriptor(handle, i)
-                    options.append(DeviceOption.bestOption(cOpt: descriptor!.pointee, index: Int(i), device: device))
+                    options.append(DeviceOption.typedOption(cOption: descriptor!.pointee, index: Int(i), device: device))
                 }
                 
                 options.forEach { $0.refreshValue(nil) }
@@ -352,12 +352,19 @@ extension Sane {
             let values = [cropArea.minX, cropArea.minY, cropArea.maxX, cropArea.maxY]
             
             for (option, value) in zip(stdOptions, values) {
-                let option = device.standardOption(for: option) as! DeviceOptionNumber
-                self.setValueForOption(value: Double(value), auto: false, option: option, completion: { (reloadAllOptions, error) in
-                    finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
-                    finalError = error
-                })
-                
+                if let optionInt = device.standardOption(for: option) as? DeviceOptionInt {
+                    self.setValueForOption(value: Int(value), auto: false, option: optionInt, completion: { (reloadAllOptions, error) in
+                        finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
+                        finalError = error
+                    })
+                }
+                if let optionFixed = device.standardOption(for: option) as? DeviceOptionFixed {
+                    self.setValueForOption(value: Double(value), auto: false, option: optionFixed, completion: { (reloadAllOptions, error) in
+                        finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
+                        finalError = error
+                    })
+                }
+
                 guard finalError == nil else { break }
             }
             
@@ -451,25 +458,53 @@ extension Sane {
                 
                 stdOptions.forEach { stdOption in
                     guard let option = device.standardOption(for: stdOption) else { return }
-                    let bestValue = stdOption.bestPreviewValue
                     
                     var newValue: Any?
                     var useAuto = false
                     
-                    if let castedOption = option as? DeviceOptionNumber {
-                        newValue = castedOption.bestValueForPreview
-                        useAuto  = (bestValue == .auto)
-                        oldOptions[stdOption] = castedOption.value
-                    }
-                    else if let castedOption = option as? DeviceOptionString {
-                        if bestValue != .auto {
-                            // TODO: raise error?
-                            print("Unsupported configuration : option", option.identifier, "is a string but cannot be set to auto")
-                            return
+                    if let option = option as? DeviceOptionBool {
+                        switch option.bestPreviewValue {
+                        case .auto:
+                            useAuto = true
+                            oldOptions[stdOption] = option.value
+                        case .value(let value):
+                            newValue = value
+                            oldOptions[stdOption] = option.value
+                        case .none: break
                         }
-                        
-                        useAuto = true
-                        oldOptions[stdOption] = castedOption.value
+                    }
+                    else if let option = option as? DeviceOptionInt {
+                        switch option.bestPreviewValue {
+                        case .auto:
+                            useAuto = true
+                            oldOptions[stdOption] = option.value
+                        case .value(let value):
+                            newValue = value
+                            oldOptions[stdOption] = option.value
+                        case .none: break
+                        }
+                    }
+                    else if let option = option as? DeviceOptionFixed {
+                        switch option.bestPreviewValue {
+                        case .auto:
+                            useAuto = true
+                            oldOptions[stdOption] = option.value
+                        case .value(let value):
+                            newValue = value
+                            oldOptions[stdOption] = option.value
+                        case .none: break
+                        }
+                    }
+                    else if let option = option as? DeviceOptionString {
+                        switch option.bestPreviewValue {
+                        case .auto:
+                            useAuto = true
+                            oldOptions[stdOption] = option.value
+                        case .value(let value):
+                            newValue = value
+                            oldOptions[stdOption] = option.value
+                        case .none: break
+                        }
                     }
                     else {
                         // TODO: raise error?
