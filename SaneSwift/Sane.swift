@@ -361,11 +361,6 @@ extension Sane {
         }
     }
 
-    // TODO: use generic method
-    public func setValueForOption(value: Any?, auto: Bool, option: DeviceOption, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
-        
-    }
-    
     public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<T.Value>, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
         let mainThread = Thread.isMainThread
         
@@ -410,6 +405,30 @@ extension Sane {
             Sane.runOn(mainThread: mainThread) { completion?(reloadAllOptions, SaneError.fromStatus(status)) }
         }
     }
+    
+    typealias RestoreBlock = () -> ()
+    internal func updateOptionForPreview<V, T: DeviceOptionTyped<V>>(_ option: T) -> RestoreBlock {
+        guard Thread.current == self.thread else {
+            fatalError("This method should only be used on the SANE thread")
+        }
+        
+        let prevValue = option.value
+        
+        let restoreBlock = {
+            Sane.shared.updateOption(option, with: .value(prevValue), completion: nil)
+        }
+        
+        switch option.bestPreviewValue {
+        case .auto:
+            Sane.shared.updateOption(option, with: .auto, completion: nil)
+            return restoreBlock
+        case .value(let value):
+            Sane.shared.updateOption(option, with: .value(value), completion: nil)
+            return restoreBlock
+        case .none:
+            return {}
+        }
+    }
 }
 
 extension Sane {
@@ -423,7 +442,7 @@ extension Sane {
         }
         
         runOnSaneThread {
-            var oldOptions = [SaneStandardOption: Any?]()
+            var restoreBlocks = [SaneStandardOption: RestoreBlock]()
             
             if let optionPreview = device.standardOption(for: .preview) as? DeviceOptionBool {
                 self.updateOption(optionPreview, with: .value(true), completion: nil)
@@ -440,66 +459,24 @@ extension Sane {
                 stdOptions.forEach { stdOption in
                     guard let option = device.standardOption(for: stdOption) else { return }
                     
-                    var newValue: Any?
-                    var useAuto = false
-                    
                     if let option = option as? DeviceOptionBool {
-                        switch option.bestPreviewValue {
-                        case .auto:
-                            useAuto = true
-                            oldOptions[stdOption] = option.value
-                        case .value(let value):
-                            newValue = value
-                            oldOptions[stdOption] = option.value
-                        case .none: break
-                        }
+                        restoreBlocks[stdOption] = self.updateOptionForPreview(option)
                     }
                     else if let option = option as? DeviceOptionInt {
-                        switch option.bestPreviewValue {
-                        case .auto:
-                            useAuto = true
-                            oldOptions[stdOption] = option.value
-                        case .value(let value):
-                            newValue = value
-                            oldOptions[stdOption] = option.value
-                        case .none: break
-                        }
+                        restoreBlocks[stdOption] = self.updateOptionForPreview(option)
                     }
                     else if let option = option as? DeviceOptionFixed {
-                        switch option.bestPreviewValue {
-                        case .auto:
-                            useAuto = true
-                            oldOptions[stdOption] = option.value
-                        case .value(let value):
-                            newValue = value
-                            oldOptions[stdOption] = option.value
-                        case .none: break
-                        }
+                        restoreBlocks[stdOption] = self.updateOptionForPreview(option)
                     }
                     else if let option = option as? DeviceOptionString {
-                        switch option.bestPreviewValue {
-                        case .auto:
-                            useAuto = true
-                            oldOptions[stdOption] = option.value
-                        case .value(let value):
-                            newValue = value
-                            oldOptions[stdOption] = option.value
-                        case .none: break
-                        }
+                        restoreBlocks[stdOption] = self.updateOptionForPreview(option)
                     }
                     else {
                         // TODO: raise error?
                         print("Unsupported configuration: option type for", option.identifier, "is not supported");
                         return
                     }
-                    
-                    self.setValueForOption(value: newValue, auto: useAuto, option: option, completion: { (reloadAll, error) in
-                        if reloadAll {
-                            self.listOptions(for: device, completion: nil)
-                        }
-                    });
                 }
-
             }
 
             
@@ -511,18 +488,12 @@ extension Sane {
                 previewError = error
             })
             
-            if let optionPreview = device.standardOption(for: .preview) {
-                self.setValueForOption(value: false, auto: false, option: optionPreview, completion: nil)
+            if let optionPreview = device.standardOption(for: .preview) as? DeviceOptionBool {
+                self.updateOption(optionPreview, with: .value(false), completion: nil)
             }
             else {
-                oldOptions.forEach { (stdOption, value) in
-                    guard let option = device.standardOption(for: stdOption) else { return }
-                    self.setValueForOption(value: value, auto: false, option: option, completion: { (reloadAll, error) in
-                        if reloadAll {
-                            self.listOptions(for: device, completion: nil)
-                        }
-                    })
-                }
+                restoreBlocks.values.forEach { $0() }
+                self.listOptions(for: device, completion: nil)
             }
             
             device.lastPreviewImage = previewImage
