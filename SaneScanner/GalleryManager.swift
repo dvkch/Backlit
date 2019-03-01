@@ -155,6 +155,10 @@ class GalleryManager: NSObject {
     func deleteItem(_ item: GalleryItem) {
         try? FileManager.default.removeItem(at: item.URL)
         try? FileManager.default.removeItem(at: item.thumbnailURL)
+        
+        if let firstIndex = imageURLs.firstIndex(of: item.URL) {
+            imageURLs.remove(at: firstIndex)
+        }
     }
 
     private func listImages() -> [URL] {

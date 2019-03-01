@@ -12,6 +12,8 @@ import SaneSwift
 import SYKit
 import SYPictureMetadata
 
+// TODO: fix scrolling after updating values
+
 class DeviceVC: UIViewController {
 
     init(device: Device) {
@@ -91,7 +93,7 @@ class DeviceVC: UIViewController {
                 let metadata = self.imageMetadata(scanParameters: parameters)
                 item = GalleryManager.shared.addImage(image, metadata: metadata)
                 SVProgressHUD.dismiss()
-                self.updatePreviewImageCell(image: image)
+                self.updatePreviewImageCell(image: image, scanParameters: parameters)
             }
             
             // need to show image (finished or partial with preview)
@@ -195,12 +197,22 @@ class DeviceVC: UIViewController {
         }
     }
     
-    private func updatePreviewImageCell(image: UIImage?) {
+    private func updatePreviewImageCell(image: UIImage?, scanParameters: ScanParameters?) {
         // update only if we scanned without cropping
         guard device.cropArea == device.maxCropArea else { return }
+        
+        // prevent keeping a scan image if resolution is very high. A color A4 150dpi (6.7MB) is used as maximum
+        guard scanParameters == nil || (scanParameters?.fileSize ?? 0) < 8_000_000 else { return }
     
-        // update only if we don't require color mode to be set at auto, or when auto is not available
-        guard !Preferences.shared.previewWithAutoColorMode || device.standardOption(for: .colorMode)?.capabilities.contains(.automatic) != true else { return }
+        // if we require color mode to be set to auto, update only if auto is not available or scan mode is color
+        let shouldUpdate: Bool
+        if Preferences.shared.previewWithAutoColorMode, let colorOption = device.standardOption(for: .colorMode) as? DeviceOptionString {
+            shouldUpdate = !colorOption.capabilities.contains(.automatic) || colorOption.value == SaneValueScanMode.color.value
+        } else {
+            shouldUpdate = true
+        }
+        
+        guard shouldUpdate else { return }
     
         device.lastPreviewImage = image
         
@@ -208,8 +220,6 @@ class DeviceVC: UIViewController {
             previewCell.refresh()
         }
     }
-    
-
 }
 
 // MARK: Snapshots

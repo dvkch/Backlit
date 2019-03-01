@@ -161,3 +161,10 @@ public enum SaneStandardOption: CaseIterable {
         }
     }
 }
+
+// MARK: Standard color mode values
+public extension SaneValueScanMode {
+    var value: String? {
+        return NSStringFromSaneValueScanMode(self)
+    }
+}

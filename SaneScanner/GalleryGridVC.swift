@@ -51,9 +51,12 @@ class GalleryGridVC: UIViewController {
     }
     
     // MARK: Properties
-    private var items = [GalleryItem]() {
-        didSet {
-            updateEmptyState()
+    private var items = [GalleryItem]()
+    
+    private func setItems(_ items: [GalleryItem], reloadCollectionView: Bool = true) {
+        self.items = items
+        updateEmptyState()
+        if reloadCollectionView {
             collectionView.reloadData()
         }
     }
@@ -106,6 +109,10 @@ class GalleryGridVC: UIViewController {
                 selected.forEach { (indexPath) in
                     GalleryManager.shared.deleteItem(self.items[indexPath.item])
                 }
+                self.setItems(GalleryManager.shared.items, reloadCollectionView: false)
+                self.collectionView.performBatchUpdates({
+                    self.collectionView.deleteItems(at: selected)
+                }, completion: nil)
                 SVProgressHUD.dismiss()
                 self.setEditing(false, animated: true)
         }
@@ -254,6 +261,6 @@ extension GalleryGridVC : GalleryManagerDelegate {
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
-        self.items = items
+        setItems(items)
     }
 }
