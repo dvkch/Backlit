@@ -117,11 +117,7 @@ struct SaneInfo: OptionSet {
 
     static let inexact          = SaneInfo(rawValue: SANE_INFO_INEXACT)
     static let reloadOptions    = SaneInfo(rawValue: SANE_INFO_RELOAD_OPTIONS)
-    static let reloadParams     = SaneInfo(rawValue: SANE_INFO_RELOAD_PARAMS)
-    
-    var shouldReload: Bool {
-        return contains(.reloadParams) || contains(.reloadOptions)
-    }
+    static let reloadScanParams = SaneInfo(rawValue: SANE_INFO_RELOAD_PARAMS)
 }
 
 // MARK: Standard options

@@ -371,11 +371,11 @@ extension Sane {
             return
         }
         
-        if case let .value(specificValue) = value, specificValue == option.value {
-            // round trips are slow, let's prevent one when possible
-            completion?(nil)
-            return
-        }
+        // Don't try to ignore changes if option.value is already the same as the value we want: we may be using an outdated option, since
+        // options objects are recreated each time we use listOptions(for:completion:), and that old option would not have the proper value.
+        // Finding the updated option's value would use a lot of code for not so much time saved. In a future version we could update a option
+        // object instead so that we are sure the option is always up to date, but that seems a bit too much to be honest. The time savings we
+        // actually need are down there with the SaneInfo bits.
         
         runOnSaneThread {
             var byteValue: UnsafeMutableRawPointer? = nil
@@ -394,19 +394,21 @@ extension Sane {
             } else {
                 status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_VALUE, byteValue, &info) }
             }
-            
+
             if byteValue != nil {
                 free(byteValue)
             }
             
-            if status == SANE_STATUS_GOOD && SaneInfo(rawValue: info).shouldReload {
-                // this is absolutely needed, because if the option declares it needs to reload other options, setting any option before
-                // doing so will result in SANE_STATUS_INVAL. So we make sure each changes that needs to reload options *does* reload them
-                self.listOptions(for: option.device, completion: nil)
-            }
-            else if status == SANE_STATUS_GOOD {
-                // some changes can be accepted but inexact, or we used an auto value and need to figure out the value that is actually used
-                option.refreshValue(nil)
+            if status == SANE_STATUS_GOOD {
+                if SaneInfo(rawValue: info).contains(.reloadOptions) {
+                    // this is absolutely needed, because if the option declares it needs to reload other options, setting any option before
+                    // doing so will result in SANE_STATUS_INVAL. So we make sure each changes that needs to reload options *does* reload them
+                    self.listOptions(for: option.device, completion: nil)
+                }
+                else {
+                    // some changes can be accepted but inexact, or we used an auto value and need to figure out the value that is actually used
+                    option.refreshValue(nil)
+                }
             }
             
             Sane.runOn(mainThread: mainThread) { completion?(SaneError.fromStatus(status)) }
