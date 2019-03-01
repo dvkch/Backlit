@@ -446,7 +446,7 @@ public class DeviceOptionButton: DeviceOptionTyped<Bool> {
         super.init(cOption: cOption, index: index, device: device, initialValue: initialValue)
     }
     
-    public func press(_ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    public func press(_ completion: ((_ error: Error?) -> Void)?) {
         Sane.shared.updateOption(self, with: .value(true), completion: completion)
     }
 

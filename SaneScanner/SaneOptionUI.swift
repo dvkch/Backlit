@@ -19,7 +19,7 @@ class SaneOptionUI: NSObject {
         DLAVAlertView(title: option.localizedTitle, message: option.localizedDescr, delegate: nil, cancel: "ACTION CLOSE".localized, others: []).show()
     }
     
-    static func showDetailsAndInput(for option: DeviceOption, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    static func showDetailsAndInput(for option: DeviceOption, _ completion: ((_ error: Error?) -> Void)?) {
         guard !option.readOnlyOrSingleOption else {
             showDetails(for: option)
             return
@@ -75,7 +75,7 @@ class SaneOptionUI: NSObject {
         }
     }
 
-    private static func showButtonInput(for option: DeviceOptionButton, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    private static func showButtonInput(for option: DeviceOptionButton, _ completion: ((_ error: Error?) -> Void)?) {
         DLAVAlertView(
             title: option.localizedTitle,
             message: option.localizedDescr,
@@ -84,13 +84,13 @@ class SaneOptionUI: NSObject {
             others: ["ACTION PRESS".localized]
         ).show { (alert, index) in
             guard index != alert?.cancelButtonIndex else { return }
-            option.press { (reloadAll, error) in
-                completion?(reloadAll, error)
+            option.press { (error) in
+                completion?(error)
             }
         }
     }
     
-    private static func showTextInput(for option: DeviceOptionString, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    private static func showTextInput(for option: DeviceOptionString, _ completion: ((_ error: Error?) -> Void)?) {
         let alertView = DLAVAlertView(title: option.localizedTitle, message: option.localizedDescr, delegate: nil, cancel: "ACTION CLOSE".localized, others: [])
         
         if option.capabilities.contains(.automatic) {
@@ -110,7 +110,7 @@ class SaneOptionUI: NSObject {
         }
     }
     
-    private static func showSliderInput(for optionInt: DeviceOptionInt?, or optionFixed: DeviceOptionFixed?, _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    private static func showSliderInput(for optionInt: DeviceOptionInt?, or optionFixed: DeviceOptionFixed?, _ completion: ((_ error: Error?) -> Void)?) {
         let alertView = DLAVAlertView(
             title: optionInt?.localizedTitle ?? optionFixed?.localizedTitle,
             message: optionInt?.localizedDescr ?? optionFixed?.localizedDescr,
@@ -206,7 +206,7 @@ class SaneOptionUI: NSObject {
         }
     }
     
-    private static func showOptionsInput<V, T: DeviceOptionTyped<V>>(for option: T, titles: [String], values: [T.Value], _ completion: ((_ reloadAll: Bool, _ error: Error?) -> Void)?) {
+    private static func showOptionsInput<V, T: DeviceOptionTyped<V>>(for option: T, titles: [String], values: [T.Value], _ completion: ((_ error: Error?) -> Void)?) {
         var optionsTitles = [String]()
         var optionsValues = [T.Value?]()
         

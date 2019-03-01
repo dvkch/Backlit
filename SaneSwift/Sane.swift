@@ -325,16 +325,15 @@ extension Sane {
         }
     }
 
-    private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: Device, completion: ((_ reloadAllOptions: Bool, _ error: Error?) -> ())?) {
+    private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: Device, completion: ((_ error: Error?) -> ())?) {
         let mainThread = Thread.isMainThread
         
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
-            completion?(false, SaneError.deviceNotOpened)
+            completion?(SaneError.deviceNotOpened)
             return
         }
 
         runOnSaneThread {
-            var finalReloadAllOptions = false
             var finalError: Error? = nil
             
             let stdOptions = [SaneStandardOption.areaTopLeftX, .areaTopLeftY, .areaBottomRightX, .areaBottomRightY]
@@ -342,14 +341,12 @@ extension Sane {
             
             for (option, value) in zip(stdOptions, values) {
                 if let option = device.standardOption(for: option) as? DeviceOptionInt {
-                    self.updateOption(option, with: .value(Int(value)), completion: { (reloadAllOptions, error) in
-                        finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
+                    self.updateOption(option, with: .value(Int(value)), completion: { (error) in
                         finalError = error
                     })
                 }
                 if let option = device.standardOption(for: option) as? DeviceOptionFixed {
-                    self.updateOption(option, with: .value(Double(value)), completion: { (reloadAllOptions, error) in
-                        finalReloadAllOptions = finalReloadAllOptions || reloadAllOptions
+                    self.updateOption(option, with: .value(Double(value)), completion: { (error) in
                         finalError = error
                     })
                 }
@@ -357,20 +354,26 @@ extension Sane {
                 guard finalError == nil else { break }
             }
             
-            Sane.runOn(mainThread: mainThread) { completion?(finalReloadAllOptions, finalError) }
+            Sane.runOn(mainThread: mainThread) { completion?(finalError) }
         }
     }
 
-    public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<T.Value>, completion: ((_ shouldReloadAllOptions: Bool, _ error: Error?) -> ())?) {
+    public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<T.Value>, completion: ((_ error: Error?) -> ())?) {
         let mainThread = Thread.isMainThread
         
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
-            completion?(false, SaneError.deviceNotOpened)
+            completion?(SaneError.deviceNotOpened)
             return
         }
         
         guard option.type != SANE_TYPE_GROUP else {
-            completion?(false, SaneError.setValueForGroupType)
+            completion?(SaneError.setValueForGroupType)
+            return
+        }
+        
+        if case let .value(specificValue) = value, specificValue == option.value {
+            // round trips are slow, let's prevent one when possible
+            completion?(nil)
             return
         }
         
@@ -392,17 +395,21 @@ extension Sane {
                 status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_VALUE, byteValue, &info) }
             }
             
-            let reloadAllOptions = SaneInfo(rawValue: info).contains(.reloadParams) || SaneInfo(rawValue: info).contains(.reloadOptions)
-            
             if byteValue != nil {
                 free(byteValue)
             }
             
-            if status == SANE_STATUS_GOOD && !reloadAllOptions {
+            if status == SANE_STATUS_GOOD && SaneInfo(rawValue: info).shouldReload {
+                // this is absolutely needed, because if the option declares it needs to reload other options, setting any option before
+                // doing so will result in SANE_STATUS_INVAL. So we make sure each changes that needs to reload options *does* reload them
+                self.listOptions(for: option.device, completion: nil)
+            }
+            else if status == SANE_STATUS_GOOD {
+                // some changes can be accepted but inexact, or we used an auto value and need to figure out the value that is actually used
                 option.refreshValue(nil)
             }
             
-            Sane.runOn(mainThread: mainThread) { completion?(reloadAllOptions, SaneError.fromStatus(status)) }
+            Sane.runOn(mainThread: mainThread) { completion?(SaneError.fromStatus(status)) }
         }
     }
     
@@ -448,10 +455,10 @@ extension Sane {
                 self.updateOption(optionPreview, with: .value(true), completion: nil)
             }
             else {
-                var stdOptions = [SaneStandardOption.resolutionX, .resolutionY,
+                var stdOptions = [SaneStandardOption.resolution, .resolutionX, .resolutionY,
                                   .areaTopLeftX, .areaTopLeftY,
                                   .areaBottomRightX, .areaBottomRightY]
-
+                
                 if self.configuration.previewWithAutoColorMode {
                     stdOptions.append(.colorMode)
                 }
@@ -493,7 +500,6 @@ extension Sane {
             }
             else {
                 restoreBlocks.values.forEach { $0() }
-                self.listOptions(for: device, completion: nil)
             }
             
             device.lastPreviewImage = previewImage

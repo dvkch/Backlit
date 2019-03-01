@@ -361,24 +361,13 @@ extension DeviceVC : UITableViewDelegate {
         
         guard indexPath.section > 0, let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] else { return }
         
-        let completion = { (error: Error?) -> Void in
+        SaneOptionUI.showDetailsAndInput(for: option) { (error) in
             self.tableView.reloadData()
             if let error = error {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
             else {
                 SVProgressHUD.dismiss()
-            }
-        }
-        
-        SaneOptionUI.showDetailsAndInput(for: option) { (reloadAll, error) in
-            if reloadAll {
-                Sane.shared.listOptions(for: self.device, completion: {
-                    completion(error)
-                })
-            }
-            else {
-                completion(error)
             }
         }
     }
