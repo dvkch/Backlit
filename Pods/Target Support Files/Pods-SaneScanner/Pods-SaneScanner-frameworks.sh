@@ -153,10 +153,8 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/DLAlertView/DLAlertView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/PKYStepper/PKYStepper.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYEmailHelper/SYEmailHelper.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
@@ -167,10 +165,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SpinKit/SpinKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/DLAlertView/DLAlertView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/PKYStepper/PKYStepper.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYEmailHelper/SYEmailHelper.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"

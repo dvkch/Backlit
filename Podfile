@@ -7,8 +7,6 @@ use_frameworks!
 target :'SaneScanner' do
     pod 'SaneSwift', :path => "./"
     pod 'DirectoryWatcher'
-    pod 'DLAlertView'
-    pod 'PKYStepper'
     pod 'SnapKit'
     pod 'SpinKit'
     pod 'SVProgressHUD'
