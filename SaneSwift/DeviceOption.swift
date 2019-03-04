@@ -39,8 +39,8 @@ public class DeviceOption {
     public var disabledOrReadOnly: Bool {
         return capabilities.contains(.inactive) || !capabilities.contains(.softwareSettable)
     }
-    public var readOnlyOrSingleOption: Bool {
-        return capabilities.contains(.inactive) || !capabilities.contains(.softwareSettable)
+    public var hasSingleOption: Bool {
+        return true
     }
     
     // MARK: Value
@@ -119,6 +119,10 @@ public class DeviceOptionTyped<T: Equatable & CustomStringConvertible>: DeviceOp
             block?(error)
         }
     }
+    
+    public override var hasSingleOption: Bool {
+        return constraint.hasSingleValue
+    }
 }
 
 // MARK: Value option protocol
@@ -138,7 +142,7 @@ public enum DeviceOptionNewValue<T> {
 public enum OptionConstraint<T: Equatable & CustomStringConvertible> {
     case none, range(min: T, max: T), stepRange(min: T, max: T, step: T, values: [T]), list([T])
     
-    var singleValue: Bool {
+    var hasSingleValue: Bool {
         switch self {
         case .none: return false
         case .range(let min, let max): return min == max
@@ -260,7 +264,7 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
                 .map { Int($0) }
             return OptionConstraint<Int>.list(values)
         default:
-            fatalError("Unsupported constraint type for DeviceOptionNumber")
+            fatalError("Unsupported constraint type for DeviceOptionInt")
         }
     }
     
@@ -334,7 +338,7 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
                 .map { SaneDoubleFromFixed($0)}
             return OptionConstraint<Double>.list(values)
         default:
-            fatalError("Unsupported constraint type for DeviceOptionNumber")
+            fatalError("Unsupported constraint type for DeviceOptionFixed")
         }
     }
     
@@ -426,7 +430,7 @@ public class DeviceOptionString: DeviceOptionTyped<String> {
             }
             return OptionConstraint<String>.list(values)
         default:
-            fatalError("Unsupported constraint type for DeviceOptionNumber")
+            fatalError("Unsupported constraint type for DeviceOptionString")
         }
     }
 
