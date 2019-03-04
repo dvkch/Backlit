@@ -101,21 +101,21 @@ class GalleryGridVC: UIViewController {
             message = String(format: "DIALOG MESSAGE DELETE SCANS %d".localized, selected.count)
         }
         
-        DLAVAlertView(title: title, message: message, delegate: nil, cancel: "ACTION CANCEL".localized, others: ["ACTION DELETE".localized])
-            .show { (alert, index) in
-                guard index != alert?.cancelButtonIndex else { return }
-                
-                SVProgressHUD.show()
-                selected.forEach { (indexPath) in
-                    GalleryManager.shared.deleteItem(self.items[indexPath.item])
-                }
-                self.setItems(GalleryManager.shared.items, reloadCollectionView: false)
-                self.collectionView.performBatchUpdates({
-                    self.collectionView.deleteItems(at: selected)
-                }, completion: nil)
-                SVProgressHUD.dismiss()
-                self.setEditing(false, animated: true)
-        }
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "ACTION DELETE".localized, style: .destructive, handler: { (_) in
+            SVProgressHUD.show()
+            selected.forEach { (indexPath) in
+                GalleryManager.shared.deleteItem(self.items[indexPath.item])
+            }
+            self.setItems(GalleryManager.shared.items, reloadCollectionView: false)
+            self.collectionView.performBatchUpdates({
+                self.collectionView.deleteItems(at: selected)
+            }, completion: nil)
+            SVProgressHUD.dismiss()
+            self.setEditing(false, animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     @objc private func pdfButtonTap(sender: UIBarButtonItem) {

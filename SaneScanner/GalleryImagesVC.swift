@@ -79,21 +79,16 @@ class GalleryImagesVC: UIViewController {
         guard let currentIndex = currentIndex else { return }
         let item = items[currentIndex]
         
-        DLAVAlertView(
-            title: "DIALOG TITLE DELETE SCAN".localized,
-            message: "DIALOG MESSAGE DELETE SCAN".localized,
-            delegate: nil,
-            cancel: "ACTION CANCEL".localized,
-            others: ["ACTION DELETE".localized])
-            .show { (alert, index) in
-                guard index != alert?.cancelButtonIndex else { return }
-                
-                if self.items.count == 1 {
-                    self.dismiss(animated: true, completion: nil)
-                }
-                
-                GalleryManager.shared.deleteItem(item)
-        }
+        let alert = UIAlertController(title: "DIALOG TITLE DELETE SCAN".localized, message: "DIALOG MESSAGE DELETE SCAN".localized, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "ACTION DELETE".localized, style: .destructive, handler: { (_) in
+            if self.items.count == 1 {
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            GalleryManager.shared.deleteItem(item)
+        }))
+        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     @objc private func shareCurrentImage(sender: UIBarButtonItem) {

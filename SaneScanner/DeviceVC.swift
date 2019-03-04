@@ -70,7 +70,7 @@ class DeviceVC: UIViewController {
     // MARK: Actions
     @IBAction private func scanButtonTap() {
         
-        var alertView: DLAVAlertView?
+        var alertView: UIAlertController?
         var alertViewImageView: UIImageView?
         var item: GalleryItem?
         
@@ -79,9 +79,7 @@ class DeviceVC: UIViewController {
             
             // Finished with error
             if let error = error {
-                if let alertView = alertView {
-                    alertView.dismiss(withClickedButtonIndex: alertView.cancelButtonIndex, animated: false)
-                }
+                alertView?.dismiss(animated: false, completion: nil)
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
                 return
             }
@@ -98,23 +96,21 @@ class DeviceVC: UIViewController {
             
             // need to show image (finished or partial with preview)
             if alertView == nil, let image = image {
-                alertView = DLAVAlertView(
-                    title: "DIALOG TITLE SCANNED IMAGE".localized,
-                    message: nil,
-                    delegate: nil,
-                    cancel: "ACTION CANCEL".localized,
-                    others: ["ACTION SHARE".localized])
-                
-                alertViewImageView = alertView?.addImageView(for: image)
-                alertView?.show(completion: { (av, index) in
-                    guard index != av?.cancelButtonIndex else { return }
+                alertView = UIAlertController(title: "DIALOG TITLE SCANNED IMAGE".localized, message: nil, preferredStyle: .alert)
+                alertView?.addAction(UIAlertAction(title: "ACTION SHARE".localized, style: .default, handler: { (_) in
                     self.shareItem(item)
-                })
+                }))
+                alertView?.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
+                    // TODO: add scan cancellation
+                }))
+                // TODO: add UIImageView support
+                // alertViewImageView = alertView?.addImageView(for: image)
+                self.present(alertView!, animated: true, completion: nil)
                 SVProgressHUD.dismiss()
             }
             
             // update alertview
-            alertView?.buttonsEnabled = finished
+            alertView?.actions.forEach { $0.isEnabled = finished }
             
             // update image for partial preview
             if image != nil {
@@ -371,7 +367,10 @@ extension DeviceVC : UITableViewDelegate {
         
         guard indexPath.section > 0, let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] else { return }
         
-        SaneOptionUI.showDetailsAndInput(for: option) { (error) in
+        let vc = DeviceOptionVC()
+        vc.option = option
+        vc.closeBlock = { error in
+            // TODO: move error handling
             self.tableView.reloadData()
             if let error = error {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -380,5 +379,9 @@ extension DeviceVC : UITableViewDelegate {
                 SVProgressHUD.dismiss()
             }
         }
+        vc.popoverPresentationController?.sourceView = view
+        vc.popoverPresentationController?.sourceRect = view.bounds
+        vc.popoverPresentationController?.permittedArrowDirections = []
+        present(vc, animated: true, completion: nil)
     }
 }

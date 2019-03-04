@@ -8,7 +8,6 @@
 
 import UIKit
 import SaneSwift
-import DLAlertView
 import SVProgressHUD
 import SYKit
 
@@ -75,26 +74,21 @@ class DevicesVC: UIViewController {
     }
     
     private func addHostButtonTap() {
-        let av = DLAVAlertView(
-            title: "DIALOG TITLE ADD HOST".localized,
-            message: "DIALOG MESSAGE ADD HOST".localized,
-            delegate: nil,
-            cancel: "ACTION CANCEL".localized,
-            others: ["ACTION ADD".localized]
-        )
-        
-        av.alertViewStyle = .plainTextInput
-        av.textField(at: 0)?.borderStyle = .none
-        av.textField(at: 0)?.autocorrectionType = .no
-        av.textField(at: 0)?.autocapitalizationType = .none
-        av.textField(at: 0)?.keyboardType = .URL
-        av.show { (alert, index) in
-            guard index != alert?.cancelButtonIndex else { return }
-            let host = av.textField(at: 0)?.text ?? ""
+        let alert = UIAlertController(title: "DIALOG TITLE ADD HOST".localized, message: "DIALOG MESSAGE ADD HOST".localized, preferredStyle: .alert)
+        alert.addTextField { (field) in
+            field.borderStyle = .none
+            field.autocorrectionType = .no
+            field.autocapitalizationType = .none
+            field.keyboardType = .URL
+        }
+        alert.addAction(UIAlertAction(title: "ACTION ADD".localized, style: .default, handler: { (_) in
+            let host = alert.textFields?.first?.text ?? ""
             Sane.shared.configuration.addHost(host)
             self.tableView.reloadData()
             self.refreshDevices()
-        }
+        }))
+        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -108,24 +102,28 @@ extension DevicesVC: SaneDelegate {
     }
     
     func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ()) {
-        let alertView = DLAVAlertView(
-            title: "DIALOG TITLE AUTH".localized,
-            message: String(format: "DIALOG MESSAGE AUTH %@".localized, device ?? "unknown"),
-            delegate: nil,
-            cancel: "ACTION CANCEL".localized,
-            others: ["ACTION CONTINUE".localized]
-        )
-        
-        alertView.alertViewStyle = .loginAndPasswordInput
-        alertView.textField(at: 0)?.borderStyle = .none
-        alertView.textField(at: 1)?.borderStyle = .none
-        alertView.show { (alert, index) in
-            guard alert?.cancelButtonIndex != index else {
-                completion(nil)
-                return
-            }
-            completion(DeviceAuthentication(username: alert?.textField(at: 0)?.text, password: alert?.textField(at: 1)?.text))
+        let alert = UIAlertController(title: "DIALOG TITLE AUTH".localized, message: nil, preferredStyle: .alert)
+        alert.message = "DIALOG TITLE AUTH".localized
+        alert.addTextField { (field) in
+            field.borderStyle = .none
+            // TODO: translate
+            field.placeholder = "Username"
         }
+        alert.addTextField { (field) in
+            field.borderStyle = .none
+            // TODO: translate
+            field.placeholder = "Password"
+            field.isSecureTextEntry = true
+        }
+        alert.addAction(UIAlertAction(title: "ACTION CONTINUE".localized, style: .default, handler: { (_) in
+            let username = alert.textFields?.first?.text
+            let password = alert.textFields?.last?.text
+            completion(DeviceAuthentication(username: username, password: password))
+        }))
+        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
+            completion(nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }
 
