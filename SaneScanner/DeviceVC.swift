@@ -87,8 +87,13 @@ class DeviceVC: UIViewController {
                 guard let image = image, let parameters = parameters else { return }
                 
                 let metadata = SYMetadata(device: self.device, scanParameters: parameters)
-                item = GalleryManager.shared.addImage(image, metadata: metadata)
-                SVProgressHUD.dismiss()
+                do {
+                    item = try GalleryManager.shared.addImage(image, metadata: metadata)
+                    SVProgressHUD.dismiss()
+                }
+                catch {
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                }
                 self.updatePreviewImageCell(image: image, scanParameters: parameters)
             }
             

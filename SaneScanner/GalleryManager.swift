@@ -125,7 +125,7 @@ class GalleryManager: NSObject {
         }
     }
     
-    @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) -> GalleryItem? {
+    @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) throws -> GalleryItem? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -150,7 +150,7 @@ class GalleryManager: NSObject {
         
         guard let dataToWrite = imageDataWithMetadata ?? imageData else { return nil }
 
-        try? dataToWrite.write(to: fileURL, options: .atomicWrite)
+        try dataToWrite.write(to: fileURL, options: .atomicWrite)
         let item = galleryItemForImage(at: fileURL)
         generateThumbAsync(for: item, fullImage: image, tellDelegates: true)
         return item
