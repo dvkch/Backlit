@@ -25,7 +25,7 @@ class GalleryGridVC: UIViewController {
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
         
         toolbarItems = [
-            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteButtonTap)),
+            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteButtonTap(sender:))),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(title: "PDF", style: .plain, target: self, action: #selector(self.pdfButtonTap(sender:))),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
@@ -90,7 +90,7 @@ class GalleryGridVC: UIViewController {
     }
     #endif
     
-    @objc private func deleteButtonTap() {
+    @objc private func deleteButtonTap(sender: UIBarButtonItem) {
         guard let selected = collectionView.indexPathsForSelectedItems, !selected.isEmpty else { return }
         
         var title = "DIALOG TITLE DELETE SCAN".localized
@@ -115,6 +115,7 @@ class GalleryGridVC: UIViewController {
             self.setEditing(false, animated: true)
         }))
         alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
+        alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true, completion: nil)
     }
     

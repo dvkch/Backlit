@@ -74,7 +74,7 @@ class GalleryImagesVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc private func deleteCurrentImage() {
+    @objc private func deleteCurrentImage(sender: UIBarButtonItem) {
         // TODO: prevent when scrolling
         // guard !imageViewerViewController.isUserScrolling else { return }
         
@@ -90,6 +90,7 @@ class GalleryImagesVC: UIViewController {
             GalleryManager.shared.deleteItem(item)
         }))
         alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
+        alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true, completion: nil)
     }
     
@@ -155,7 +156,7 @@ class GalleryImagesVC: UIViewController {
         }
         
         toolbarItems = [
-            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteCurrentImage)),
+            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteCurrentImage(sender:))),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(title: GalleryManager.shared.dateString(for: items[currentIndex]), style: .plain, target: nil, action: nil),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
