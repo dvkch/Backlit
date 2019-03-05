@@ -12,8 +12,6 @@ import SaneSwift
 import SYKit
 import SYPictureMetadata
 
-// TODO: fix scrolling after updating values
-
 class DeviceVC: UIViewController {
 
     init(device: Device) {
@@ -333,16 +331,20 @@ extension DeviceVC : UITableViewDataSource {
         return optionGroup(tableViewSection: section)?.localizedTitle
     }
     
+    func previewCellHeight(in tableView: UITableView) -> CGFloat {
+        var maxHeight = tableView.bounds.height * 2 / 3
+        
+        if traitCollection.verticalSizeClass == .compact {
+            maxHeight = 400
+        }
+        
+        return PreviewCell.cellHeight(device: device, width: tableView.bounds.width, maxHeight: maxHeight)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let width = tableView.bounds.width
         
         if indexPath.section == 0 {
-            var maxHeight = tableView.bounds.height * 2 / 3
-            
-            if traitCollection.verticalSizeClass == .compact {
-                maxHeight = 500
-            }
-            return PreviewCell.cellHeight(device: device, width: width, maxHeight: maxHeight)
+            return previewCellHeight(in: tableView)
         }
         
         return UITableView.automaticDimension
@@ -350,7 +352,8 @@ extension DeviceVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return UITableView.automaticDimension
+            // estimation needs to be a realistic value, or else the tableView will jump each time it's reloaded
+            return previewCellHeight(in: tableView)
         }
         
         if let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] {
