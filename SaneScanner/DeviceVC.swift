@@ -103,8 +103,7 @@ class DeviceVC: UIViewController {
                 alertView?.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
                     // TODO: add scan cancellation
                 }))
-                // TODO: add UIImageView support
-                // alertViewImageView = alertView?.addImageView(for: image)
+                alertViewImageView = alertView?.setupImageView(image: image, height: 300, margins: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
                 self.present(alertView!, animated: true, completion: nil)
                 SVProgressHUD.dismiss()
             }
