@@ -77,12 +77,11 @@ class GalleryThumbnailCell: UICollectionViewCell {
         
         updateThumbnail(nil)
         
+        // LATER: interactive dismissal
+        
         /*
         weak var weakParentVC = parentController
-        
-        // TODO: cleanup
-        // imageView.uiCustomization = MHUICustomization.sy_defaultTheme
-        // imageView.galleryClass = GalleryViewController.self
+         
         imageView.setInseractiveGalleryPresentionWithItems(items, currentImageIndex: index, currentViewController: parentController)
             { (index, image, transition, viewMode) in
             if viewMode == .overView {

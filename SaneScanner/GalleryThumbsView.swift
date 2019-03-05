@@ -171,7 +171,8 @@ extension GalleryThumbsView: UICollectionViewDataSource {
         
         cell.update(item: galleryItems[indexPath.item], mode: .toolbar, spinnerColor: spinnerColor)
         
-        // TODO: cleanup
+        // LATER: interactive dismissal
+        
         /*
         cell.update(
             items: galleryItems,
