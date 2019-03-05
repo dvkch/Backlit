@@ -45,6 +45,10 @@ public class Sane: NSObject {
             return value
         }
         set {
+            if internalIsUpdatingDevices == newValue {
+                return
+            }
+            
             lockIsUpdatingDevices.lock()
             internalIsUpdatingDevices = newValue
             lockIsUpdatingDevices.unlock()
