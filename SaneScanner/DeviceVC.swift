@@ -322,12 +322,15 @@ extension DeviceVC : UITableViewDelegate {
         vc.closeBlock = {
             self.tableView.reloadData()
         }
-        // TODO: popover
-        /*
+
         vc.popoverPresentationController?.sourceView = view
-        vc.popoverPresentationController?.sourceRect = view.bounds
-        vc.popoverPresentationController?.permittedArrowDirections = []
- */
+        if let cell = tableView.cellForRow(at: indexPath) {
+            vc.popoverPresentationController?.sourceRect = view.convert(cell.bounds, from: cell)
+        } else {
+            vc.popoverPresentationController?.sourceRect = view.bounds
+        }
+        vc.popoverPresentationController?.permittedArrowDirections = [.left, .unknown]
+
         present(vc, animated: true, completion: nil)
     }
 }
