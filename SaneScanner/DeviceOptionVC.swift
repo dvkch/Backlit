@@ -9,114 +9,54 @@
 import UIKit
 import SaneSwift
 import SVProgressHUD
+import SYKit
 
-class DeviceOptionVC: UIViewController {
+class DeviceOptionVC : UIAlertController {
 
-    convenience init() {
-        self.init(nibName: nil, bundle: nil)
-        self.modalPresentationStyle = .popover
-        self.popoverPresentationController?.delegate = self
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // MARK: Init
+    init(option: DeviceOption) {
+        self.option = option
+        super.init(nibName: nil, bundle: nil)
+        
+        title = option.localizedTitle
+        message = option.localizedDescr
+        
         updateContent()
         
-        setAutoButton.setTitle("OPTION VALUE AUTO".localized, for: .normal)
-        setValueButton.setTitle("ACTION SET VALUE".localized, for: .normal)
-        pressButton.setTitle("ACTION PRESS".localized, for: .normal)
-        closeButton.setTitle("ACTION CLOSE".localized, for: .normal)
-        
-        contentView.addObserver(self, forKeyPath: #keyPath(UIScrollView.contentSize), options: .new, context: nil)
+        let closeAction = addAction(title: "ACTION CLOSE".localized, style: .cancel, handler: nil)
+        self.preferredAction = closeAction
     }
     
-    deinit {
-        contentView.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentSize))
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(UIScrollView.contentSize) {
-            updateContentViewHeight()
-            return
-        }
-        super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: Properties
-    var option: DeviceOption?
-    var closeBlock: ((Error?) -> ())?
+    let option: DeviceOption
+    var closeBlock: (() -> ())?
     
-    // MARK: Blocks
-    private var sliderChangedBlock: ((Float) -> ())?
-    private var stepperChangedBlock: ((Double) -> ())?
-
-    // MARK: Views
-    @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var descriptionLabel: UILabel!
-    @IBOutlet private var contentView: UIScrollView!
-    @IBOutlet private var contentViewHeight: NSLayoutConstraint!
-    @IBOutlet private var stackView: UIStackView!
-    @IBOutlet private var stepView: UIView!
-    @IBOutlet private var stepLabel: UILabel!
-    @IBOutlet private var stepper: UIStepper!
-    @IBOutlet private var sliderView: UIView!
-    @IBOutlet private var slider: UISlider!
-    @IBOutlet private var textField: UITextField!
-    @IBOutlet private var setValueButton: Button!
-    @IBOutlet private var setAutoButton: Button!
-    @IBOutlet private var pressButton: Button!
-    @IBOutlet private var closeButton: UIButton!
-    
-    // MARK: Actions
-    @IBAction private func stepperChanged() {
-        stepperChangedBlock?(stepper.value)
-    }
-    @IBAction private func sliderChanged() {
-        sliderChangedBlock?(slider.value)
-    }
-    @IBAction private func closeButtonTap() {
-        updateCompletion(nil)
+    override var preferredStyle: UIAlertController.Style {
+        return .actionSheet
     }
     
-    private func updateCompletion(_ error: Error?) {
-        SVProgressHUD.dismiss()
+    // MARK: Completion
+    private func optionUpdateCompletion(_ error: Error?) {
+        if let error = error {
+            SVProgressHUD.showError(withStatus: error.localizedDescription)
+        }
+        else {
+            SVProgressHUD.dismiss()
+        }
+        
         dismiss(animated: true, completion: nil)
-        closeBlock?(error)
-    }
-    
-    // MARK: Layout
-    private func updateContentViewHeight() {
-        let minViews: [UIView] = [stepView, sliderView, setValueButton, textField, pressButton, setAutoButton, closeButton]
-        let minHeight = minViews.map { $0.bounds.height }.reduce(0, +)
-        let maxHeight = presentingViewController?.view.bounds.height ?? view.bounds.height
-        contentViewHeight.constant = min(maxHeight, max(minHeight, contentView.contentSize.height))
-    }
-}
-
-extension DeviceOptionVC : UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return false
-    }
-}
-
-extension DeviceOptionVC : UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
+        closeBlock?()
     }
 }
 
 // MARK: Content
 extension DeviceOptionVC {
     private func updateContent() {
-        guard let option = option else { return }
-        
-        titleLabel.text = option.localizedTitle
-        descriptionLabel.text = option.localizedDescr
-
         if option.disabledOrReadOnly || option.hasSingleOption {
-            stackView.arrangedSubviews.forEach { $0.isHidden = true }
-            closeButton.isHidden = false
             return
         }
         
@@ -170,23 +110,14 @@ extension DeviceOptionVC {
     }
     
     private func updateForValueList<V, T: DeviceOptionTyped<V>>(for option: T, values: [T.Value]) {
-        setAutoButton.isHidden = !option.capabilities.contains(.automatic)
-        setAutoButton.tapBlock = {
-            SVProgressHUD.show()
-            Sane.shared.updateOption(option, with: .auto, completion: self.updateCompletion(_:))
+        for value in values {
+            addAction(title: option.stringForValue(value, userFacing: true), style: .default) { (_) in
+                SVProgressHUD.show()
+                Sane.shared.updateOption(option, with: .value(value), completion: self.optionUpdateCompletion(_:))
+            }
         }
         
-        for value in values {
-            let button = Button(type: .system)
-            button.setTitle(option.stringForValue(value, userFacing: true), for: .normal)
-            button.tapBlock = {
-                SVProgressHUD.show()
-                Sane.shared.updateOption(option, with: .value(value), completion: self.updateCompletion(_:))
-            }
-            
-            let closeIndex = stackView.arrangedSubviews.firstIndex(of: closeButton)!
-            stackView.insertArrangedSubview(button, at: closeIndex)
-        }
+        addAutoButton(for: option)
     }
 
     private func updateForRange<V, T: DeviceOptionTyped<V>>(for option: T, current: Double, min: Double, max: Double, step: Double?) {
@@ -197,70 +128,187 @@ extension DeviceOptionVC {
             fatalError("This method should only be used with numeric options")
         }
         
-        setAutoButton.isHidden = !option.capabilities.contains(.automatic)
-        setAutoButton.tapBlock = {
-            SVProgressHUD.show()
-            Sane.shared.updateOption(option, with: .auto, completion: self.updateCompletion(_:))
-        }
+        var stepperVC: SYStepperViewController?
+        var sliderVC: SYSliderViewController?
         
         if let step = step {
-            stepView.isHidden = false
-            stepLabel.text = option.stringForValue(option.value, userFacing: true)
-            stepper.minimumValue = min
-            stepper.maximumValue = max
-            stepper.stepValue = step
-            stepper.value = current
-            stepperChangedBlock = { value in
-                let stringValue = optionInt?.stringForValue(Int(value), userFacing: true) ?? optionFixed?.stringForValue(Double(value), userFacing: true) ?? ""
-                self.stepLabel.text = stringValue
+            let vc = SYStepperViewController(current: current, min: min, max: max, step: step) { (value) -> String? in
+                return optionInt?.stringForValue(Int(value), userFacing: true) ?? optionFixed?.stringForValue(Double(value), userFacing: true)
             }
+            setContentViewController(vc)
+            stepperVC = vc
         }
         else {
-            sliderView.isHidden = false
-            slider.minimumValue = Float(min)
-            slider.maximumValue = Float(max)
-            slider.value = Float(current)
-            sliderChangedBlock = { value in
-                let stringValue = optionInt?.stringForValue(Int(value), userFacing: true) ?? optionFixed?.stringForValue(Double(value), userFacing: true) ?? ""
-                let buttonTitle = String(format: "ACTION SET VALUE TO %@".localized, stringValue)
-                self.setValueButton.setTitle(buttonTitle, for: .normal)
+            let vc = SYSliderViewController(current: current, min: min, max: max) { (value) -> String? in
+                return optionInt?.stringForValue(Int(value), userFacing: true) ?? optionFixed?.stringForValue(Double(value), userFacing: true)
             }
-            sliderChangedBlock?(Float(current))
+            setContentViewController(vc)
+            sliderVC = vc
         }
         
-        setValueButton.tapBlock = {
+        addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
             SVProgressHUD.show()
-            let value = step != nil ? self.stepper.value : Double(self.slider.value)
+            let value = stepperVC?.stepperValue ?? sliderVC?.sliderValue ?? 0
             if let optionInt = optionInt {
-                Sane.shared.updateOption(optionInt, with: .value(Int(value)), completion: self.updateCompletion(_:))
+                Sane.shared.updateOption(optionInt, with: .value(Int(value)), completion: self.optionUpdateCompletion(_:))
             }
             if let optionFixed = optionFixed {
-                Sane.shared.updateOption(optionFixed, with: .value(value), completion: self.updateCompletion(_:))
+                Sane.shared.updateOption(optionFixed, with: .value(value), completion: self.optionUpdateCompletion(_:))
             }
         }
-
+        
+        addAutoButton(for: option)
     }
     
     private func updateForButton(_ option: DeviceOptionButton) {
-        pressButton.isHidden = false
-        pressButton.tapBlock = {
+        addAction(title: "ACTION PRESS".localized, style: .default) { (_) in
             SVProgressHUD.show()
-            option.press(self.updateCompletion(_:))
+            option.press(self.optionUpdateCompletion(_:))
         }
     }
     
     private func updateForTextInput(_ option: DeviceOptionString) {
-        setAutoButton.isHidden = !option.capabilities.contains(.automatic)
-        setAutoButton.tapBlock = {
-            SVProgressHUD.show()
-            Sane.shared.updateOption(option, with: .auto, completion: self.updateCompletion(_:))
+        addTextField { (field) in
+            field.autocorrectionType = .no
+            field.autocapitalizationType = .none
+            field.text = option.value
         }
         
-        textField.isHidden = false
-        textField.text = option.value
-        setValueButton.tapBlock = {
+        addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
             SVProgressHUD.show()
-            Sane.shared.updateOption(option, with: .value(self.textField.text ?? ""), completion: self.updateCompletion(_:))
+            Sane.shared.updateOption(option, with: .value(self.textFields?.first?.text ?? ""), completion: self.optionUpdateCompletion(_:))
         }
+        
+        addAutoButton(for: option)
+    }
+    
+    private func addAutoButton<V, T: DeviceOptionTyped<V>>(for option: T) {
+        if option.capabilities.contains(.automatic) {
+            addAction(title: "OPTION VALUE AUTO".localized, style: .default) { (_) in
+                SVProgressHUD.show()
+                Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
+            }
+        }
+    }
+}
+
+fileprivate class SYSliderViewController: UIViewController {
+    // MARK: Init
+    init(current: Double, min: Double, max: Double, conversion: @escaping (Double) -> String?) {
+        self.conversion = conversion
+        super.init(nibName: nil, bundle: nil)
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        slider.minimumValue = Float(min)
+        slider.maximumValue = Float(max)
+        slider.value        = Float(current)
+        slider.addTarget(self, action: #selector(self.sliderChanged), for: .valueChanged)
+        updateText()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addSubview(label)
+        label.setContentHuggingPriority(UILayoutPriority.defaultLow - 1, for: NSLayoutConstraint.Axis.horizontal)
+        label.snp.makeConstraints { (make) in
+            make.top.greaterThanOrEqualToSuperview()
+            make.left.equalTo(20)
+            make.right.equalTo(-20)
+            make.bottom.equalTo(view.snp.centerY).offset(-10)
+        }
+
+        view.addSubview(slider)
+        slider.snp.makeConstraints { (make) in
+            make.top.equalTo(view.snp.centerY)
+            make.left.equalTo(20)
+            make.right.equalTo(-20)
+            make.bottom.lessThanOrEqualTo(-10)
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Properties
+    private let conversion: (Double) -> String?
+    
+    var sliderValue: Double {
+        return Double(slider.value)
+    }
+    
+    // MARK: Views
+    private let slider = UISlider()
+    private let label = UILabel()
+    
+    // MARK: Actions
+    @objc private func sliderChanged() {
+        updateText()
+    }
+    
+    // MARK: Content
+    private func updateText() {
+        label.text = conversion(sliderValue)
+    }
+}
+
+
+fileprivate class SYStepperViewController: UIViewController {
+    // MARK: Init
+    init(current: Double, min: Double, max: Double, step: Double, conversion: @escaping (Double) -> String?) {
+        self.conversion = conversion
+        super.init(nibName: nil, bundle: nil)
+        label.textColor = .darkGray
+        stepper.minimumValue = min
+        stepper.maximumValue = max
+        stepper.stepValue    = step
+        stepper.value        = current
+        stepper.addTarget(self, action: #selector(self.stepperChanged), for: .valueChanged)
+        updateText()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(stepper)
+        stepper.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.top.greaterThanOrEqualTo(10)
+            make.right.equalTo(-10)
+            make.bottom.equalTo(-10)
+        }
+        
+        label.setContentHuggingPriority(UILayoutPriority.defaultLow - 1, for: NSLayoutConstraint.Axis.horizontal)
+        view.addSubview(label)
+        label.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(20)
+            make.right.equalTo(stepper).offset(-20)
+        }
+    }
+  
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Properties
+    private let conversion: (Double) -> String?
+    
+    var stepperValue: Double {
+        return stepper.value
+    }
+    
+    // MARK: Views
+    private let stepper = UIStepper()
+    private let label = UILabel()
+    
+    // MARK: Actions
+    @objc private func stepperChanged() {
+        updateText()
+    }
+    
+    // MARK: Content
+    private func updateText() {
+        label.text = conversion(stepperValue)
     }
 }

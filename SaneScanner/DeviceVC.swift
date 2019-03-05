@@ -367,21 +367,16 @@ extension DeviceVC : UITableViewDelegate {
         
         guard indexPath.section > 0, let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] else { return }
         
-        let vc = DeviceOptionVC()
-        vc.option = option
-        vc.closeBlock = { error in
-            // TODO: move error handling
+        let vc = DeviceOptionVC(option: option)
+        vc.closeBlock = {
             self.tableView.reloadData()
-            if let error = error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-            }
-            else {
-                SVProgressHUD.dismiss()
-            }
         }
+        // TODO: popover
+        /*
         vc.popoverPresentationController?.sourceView = view
         vc.popoverPresentationController?.sourceRect = view.bounds
         vc.popoverPresentationController?.permittedArrowDirections = []
+ */
         present(vc, animated: true, completion: nil)
     }
 }
