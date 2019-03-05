@@ -59,10 +59,12 @@ class GalleryImagesVC: UIViewController {
     
     // MARK: Actions
     func openImage(at index: Int, animated: Bool) {
-        guard index != currentIndex else { return }
+        // don't ignore if index == currentIndex, because the image list may have changed (for instance when deleting
+        // the first image) and we still need to show the new page
+
         guard let vc = imageViewController(at: index) else { return }
         
-        let isAfterCurrent = index > (currentIndex ?? 0)
+        let isAfterCurrent = index >= (currentIndex ?? 0)
         currentIndex = index
         
         pagesVC.setViewControllers([vc], direction: isAfterCurrent ? .forward : .reverse, animated: animated, completion: nil)
@@ -198,7 +200,10 @@ extension GalleryImagesVC : GalleryManagerDelegate {
         let prevItem = prevItems[prevIndex]
 
         if removedItems.contains(prevItem) {
-            openImage(at: max(0, prevIndex - 1), animated: true)
+            // if deleting last: show the image before the one that we deleted
+            // else: reload the current index (visually this will look like going to the next one)
+            let newIndex = prevIndex >= items.count ? max(0, prevIndex - 1) : prevIndex
+            openImage(at: newIndex, animated: true)
             return
         }
         
