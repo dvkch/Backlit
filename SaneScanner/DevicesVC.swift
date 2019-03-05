@@ -106,14 +106,14 @@ extension DevicesVC: SaneDelegate {
         alert.message = "DIALOG TITLE AUTH".localized
         alert.addTextField { (field) in
             field.borderStyle = .none
-            // TODO: translate
-            field.placeholder = "Username"
+            field.placeholder = "DIALOG AUTH PLACEHOLDER USERNAME".localized
+            field.autocorrectionType = .no
         }
         alert.addTextField { (field) in
             field.borderStyle = .none
-            // TODO: translate
-            field.placeholder = "Password"
+            field.placeholder = "DIALOG AUTH PLACEHOLDER PASSWORD".localized
             field.isSecureTextEntry = true
+            field.autocorrectionType = .no
         }
         alert.addAction(UIAlertAction(title: "ACTION CONTINUE".localized, style: .default, handler: { (_) in
             let username = alert.textFields?.first?.text

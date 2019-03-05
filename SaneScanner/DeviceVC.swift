@@ -101,7 +101,8 @@ class DeviceVC: UIViewController {
                     self.shareItem(item)
                 }))
                 alertView?.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
-                    // TODO: add scan cancellation
+                    // cancels scan if running
+                    Sane.shared.cancelCurrentScan()
                 }))
                 alertViewImageView = alertView?.setupImageView(image: image, height: 300, margins: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
                 self.present(alertView!, animated: true, completion: nil)
@@ -109,7 +110,7 @@ class DeviceVC: UIViewController {
             }
             
             // update alertview
-            alertView?.actions.forEach { $0.isEnabled = finished }
+            alertView?.actions.forEach { $0.isEnabled = finished || $0.style == .cancel }
             
             // update image for partial preview
             if image != nil {
