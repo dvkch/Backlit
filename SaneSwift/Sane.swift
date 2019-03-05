@@ -455,7 +455,7 @@ extension Sane {
         }
         
         runOnSaneThread {
-            var restoreBlocks = [SaneStandardOption: RestoreBlock]()
+            var restoreBlocks = [(RestoreBlock)]()
             
             if let optionPreview = device.standardOption(for: .preview) as? DeviceOptionBool {
                 self.updateOption(optionPreview, with: .value(true), completion: nil)
@@ -467,22 +467,23 @@ extension Sane {
                 
                 if self.configuration.previewWithAutoColorMode {
                     stdOptions.append(.colorMode)
+                    stdOptions.append(.imageIntensity)
                 }
                 
                 stdOptions.forEach { stdOption in
                     guard let option = device.standardOption(for: stdOption) else { return }
                     
                     if let option = option as? DeviceOptionBool {
-                        restoreBlocks[stdOption] = self.updateOptionForPreview(option)
+                        restoreBlocks.append(self.updateOptionForPreview(option))
                     }
                     else if let option = option as? DeviceOptionInt {
-                        restoreBlocks[stdOption] = self.updateOptionForPreview(option)
+                        restoreBlocks.append(self.updateOptionForPreview(option))
                     }
                     else if let option = option as? DeviceOptionFixed {
-                        restoreBlocks[stdOption] = self.updateOptionForPreview(option)
+                        restoreBlocks.append(self.updateOptionForPreview(option))
                     }
                     else if let option = option as? DeviceOptionString {
-                        restoreBlocks[stdOption] = self.updateOptionForPreview(option)
+                        restoreBlocks.append(self.updateOptionForPreview(option))
                     }
                     else {
                         // TODO: raise error?
@@ -505,7 +506,7 @@ extension Sane {
                 self.updateOption(optionPreview, with: .value(false), completion: nil)
             }
             else {
-                restoreBlocks.values.forEach { $0() }
+                restoreBlocks.forEach { $0() }
             }
             
             device.lastPreviewImage = previewImage

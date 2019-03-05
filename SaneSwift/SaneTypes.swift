@@ -122,7 +122,7 @@ struct SaneInfo: OptionSet {
 
 // MARK: Standard options
 public enum SaneStandardOption: CaseIterable {
-    case preview, resolution, resolutionX, resolutionY, colorMode, areaTopLeftX, areaTopLeftY, areaBottomRightX, areaBottomRightY
+    case preview, resolution, resolutionX, resolutionY, colorMode, areaTopLeftX, areaTopLeftY, areaBottomRightX, areaBottomRightY, imageIntensity
     
     var saneIdentifier: String {
         switch self {
@@ -135,6 +135,7 @@ public enum SaneStandardOption: CaseIterable {
         case .areaTopLeftY:     return SANE_NAME_SCAN_TL_Y
         case .areaBottomRightX: return SANE_NAME_SCAN_BR_X
         case .areaBottomRightY: return SANE_NAME_SCAN_BR_Y
+        case .imageIntensity:   return SANE_NAME_GAMMA_VECTOR
         }
     }
     
@@ -154,7 +155,7 @@ public enum SaneStandardOption: CaseIterable {
     var bestPreviewValue: PreviewValue {
         switch self {
         case .preview:                                  return .on
-        case .colorMode:                                return .auto
+        case .colorMode, .imageIntensity:               return .auto
         case .resolution, .resolutionX, .resolutionY:   return .min
         case .areaTopLeftX, .areaTopLeftY:              return .min
         case .areaBottomRightX, .areaBottomRightY:      return .max
