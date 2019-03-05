@@ -86,7 +86,7 @@ class DeviceVC: UIViewController {
             if finished {
                 guard let image = image, let parameters = parameters else { return }
                 
-                let metadata = self.imageMetadata(scanParameters: parameters)
+                let metadata = SYMetadata(device: self.device, scanParameters: parameters)
                 item = GalleryManager.shared.addImage(image, metadata: metadata)
                 SVProgressHUD.dismiss()
                 self.updatePreviewImageCell(image: image, scanParameters: parameters)
@@ -243,58 +243,6 @@ extension DeviceVC {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             SVProgressHUD.dismiss()
         }
-    }
-}
-
-extension DeviceVC {
-    func imageMetadata(scanParameters: ScanParameters) -> SYMetadata? {
-
-        var resX: Int? = nil
-        var resY: Int? = nil
-        var res:  Int? = nil
-        
-        if let optionResX = device.standardOption(for: .resolutionX) as? DeviceOptionInt { resX = optionResX.value }
-        if let optionResY = device.standardOption(for: .resolutionY) as? DeviceOptionInt { resY = optionResY.value }
-        if let optionRes  = device.standardOption(for: .resolution)  as? DeviceOptionInt { res  = optionRes.value  }
-        
-        if let optionResX = device.standardOption(for: .resolutionX) as? DeviceOptionFixed { resX = Int(optionResX.value) }
-        if let optionResY = device.standardOption(for: .resolutionY) as? DeviceOptionFixed { resY = Int(optionResY.value) }
-        if let optionRes  = device.standardOption(for: .resolution)  as? DeviceOptionFixed { res  = Int(optionRes.value)  }
-        
-        let resXInches = resX ?? res
-        let resYInches = resY ?? res
-        
-        var resXMeters: Int? = nil
-        var resYMeters: Int? = nil
-        
-        if let resXInches = resXInches {
-            resXMeters = Int(round(Double(resXInches) / 2.54 * 100))
-        }
-        
-        if let resYInches = resYInches {
-            resYMeters = Int(round(Double(resYInches) / 2.54 * 100))
-        }
-        
-        let metadata = SYMetadata()!
-        
-        metadata.metadataTIFF = SYMetadataTIFF()
-        metadata.metadataTIFF.orientation = SYPictureTiffOrientation_TopLeft.rawValue as NSNumber
-        metadata.metadataTIFF.make = device.vendor
-        metadata.metadataTIFF.model = device.model
-        metadata.metadataTIFF.software = (Bundle.main.localizedName ?? "") + " " + Bundle.main.fullVersion
-        metadata.metadataTIFF.xResolution = resXInches.map(NSNumber.init)
-        metadata.metadataTIFF.yResolution = resYInches.map(NSNumber.init)
-        metadata.metadataTIFF.resolutionUnit = 2 // 2 = inches, let's hope it'll make sense for every device
-        
-        metadata.metadataPNG = SYMetadataPNG()
-        metadata.metadataPNG.xPixelsPerMeter = resXMeters.map(NSNumber.init)
-        metadata.metadataPNG.yPixelsPerMeter = resYMeters.map(NSNumber.init)
-        
-        metadata.metadataJFIF = SYMetadataJFIF()
-        metadata.metadataJFIF.xDensity = resXInches.map(NSNumber.init)
-        metadata.metadataJFIF.yDensity = resYInches.map(NSNumber.init)
-        
-        return metadata
     }
 }
 
