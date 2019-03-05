@@ -107,10 +107,6 @@ class GalleryGridVC: UIViewController {
             selected.forEach { (indexPath) in
                 GalleryManager.shared.deleteItem(self.items[indexPath.item])
             }
-            self.setItems(GalleryManager.shared.items, reloadCollectionView: false)
-            self.collectionView.performBatchUpdates({
-                self.collectionView.deleteItems(at: selected)
-            }, completion: nil)
             SVProgressHUD.dismiss()
             self.setEditing(false, animated: true)
         }))
@@ -262,6 +258,27 @@ extension GalleryGridVC : GalleryManagerDelegate {
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
+        let newIndices = newItems.compactMap { items.firstIndex(of: $0) }
+        let removedIndices = removedItems.compactMap { self.items.firstIndex(of: $0) }
+        
+        // if there are only additions, and we can find all items that have been added, then do an animated update
+        if removedItems.isEmpty, !newItems.isEmpty, newIndices.count == newItems.count {
+            setItems(items, reloadCollectionView: false)
+            collectionView.performBatchUpdates({
+                self.collectionView.insertItems(at: newIndices.map { IndexPath(item: $0, section: 0) })
+            }, completion: nil)
+            return
+        }
+
+        // if there are only deletions, and we can find all items that have been deleted, then do an animated update
+        if newItems.isEmpty, !removedItems.isEmpty, removedIndices.count == removedItems.count {
+            setItems(items, reloadCollectionView: false)
+            collectionView.performBatchUpdates({
+                self.collectionView.deleteItems(at: removedIndices.map { IndexPath(item: $0, section: 0) })
+            }, completion: nil)
+            return
+        }
+        
         setItems(items)
     }
 }
