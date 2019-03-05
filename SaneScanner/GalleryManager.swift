@@ -99,7 +99,11 @@ class GalleryManager: NSObject {
     }
     
     // MARK: Items management
-    private var imageURLs = [URL]()
+    private var imageURLs = [URL]() {
+        didSet {
+            handleImageURLsChanges(from: oldValue, to: imageURLs)
+        }
+    }
     
     private func galleryItemForImage(at url: URL) -> GalleryItem {
         let item = GalleryItem(
@@ -176,17 +180,25 @@ class GalleryManager: NSObject {
     }
     
     private func refreshImageList() {
-        let oldURLs = imageURLs
         imageURLs = listImages()
+    }
+    
+    private func handleImageURLsChanges(from oldURLs: [URL], to newURLs: [URL]) {
+        if oldURLs == newURLs { return }
         
-        if oldURLs == imageURLs { return }
+        guard Thread.isMainThread else {
+            DispatchQueue.main.async {
+                self.handleImageURLsChanges(from: oldURLs, to: newURLs)
+            }
+            return
+        }
         
-        let addedItems = imageURLs
+        let addedItems = newURLs
             .filter { !oldURLs.contains($0) }
             .map { galleryItemForImage(at: $0) }
         
         let removedItems = oldURLs
-            .filter { !imageURLs.contains($0) }
+            .filter { !newURLs.contains($0) }
             .map { galleryItemForImage(at: $0) }
 
         removedItems.forEach { (item) in
@@ -317,7 +329,6 @@ private extension URL {
             return try resourceValues(forKeys: Set([URLResourceKey.creationDateKey])).creationDate
         }
         catch {
-            print("Couldn't get creation date:", error)
             return nil
         }
     }
@@ -327,7 +338,6 @@ private extension URL {
             return try resourceValues(forKeys: Set([URLResourceKey.isDirectoryKey])).isDirectory
         }
         catch {
-            print("Couldn't get isDirectory:", error)
             return nil
         }
     }
