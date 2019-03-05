@@ -47,11 +47,18 @@ class GalleryManager: NSObject {
         thumbsQueue.mode = .LIFO
         
         watcher = DirectoryWatcher.watch(FileManager.documentsDirectoryURL)
-        // TODO: don't pull all data again since we know what changed
-        watcher?.onNewFiles = { [weak self] _ in
-            self?.refreshImageList()
+        watcher?.onNewFiles = { (files) in
+            let unknownChangesCount = files.filter { !self.imageURLs.contains($0.standardizedFileURL) }.count
+            if unknownChangesCount > 0 {
+                self.refreshImageList()
+            }
         }
-        watcher?.onDeletedFiles = watcher?.onNewFiles
+        watcher?.onDeletedFiles = { (files) in
+            let unknownChangesCount = files.filter { self.imageURLs.contains($0.standardizedFileURL) }.count
+            if unknownChangesCount > 0 {
+                self.refreshImageList()
+            }
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
@@ -151,6 +158,8 @@ class GalleryManager: NSObject {
         guard let dataToWrite = imageDataWithMetadata ?? imageData else { return nil }
 
         try dataToWrite.write(to: fileURL, options: .atomicWrite)
+        imageURLs.insert(fileURL.standardizedFileURL, at: 0)
+        
         let item = galleryItemForImage(at: fileURL)
         generateThumbAsync(for: item, fullImage: image, tellDelegates: true)
         return item
@@ -173,7 +182,8 @@ class GalleryManager: NSObject {
         )
         
         let imageURLs = (items ?? [])
-            .filter { $0.isSupportedImageURL && $0.isDirectory == false && $0.creationDate != nil }
+            .map { (url: URL) -> URL in url.standardizedFileURL }
+            .filter { (url: URL) -> Bool in url.isSupportedImageURL && url.isDirectory == false && url.creationDate != nil }
             .sorted { $0.creationDate! > $1.creationDate! }
 
         return imageURLs
