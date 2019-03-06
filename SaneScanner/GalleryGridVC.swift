@@ -86,7 +86,7 @@ class GalleryGridVC: UIViewController {
     // MARK: Actions
     #if DEBUG
     @objc private func addTestImagesButtonTap() {
-        GalleryManager.shared.createRandomTestImages(count: 20)
+        GalleryManager.shared.createRandomTestImages(count: 10)
     }
     #endif
     
