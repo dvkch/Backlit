@@ -9,7 +9,6 @@
 import UIKit
 import SaneSwift
 import SnapKit
-import SVProgressHUD
 
 class SanePreviewView: UIView {
 

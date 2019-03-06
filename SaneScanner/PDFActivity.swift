@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 import SYKit
 
 class PDFActivity: UIActivity {

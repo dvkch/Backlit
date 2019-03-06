@@ -9,7 +9,6 @@
 import UIKit
 import SYKit
 import SYEmailHelper
-import SVProgressHUD
 
 class PreferencesVC: UIViewController {
 

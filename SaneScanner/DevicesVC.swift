@@ -8,7 +8,6 @@
 
 import UIKit
 import SaneSwift
-import SVProgressHUD
 import SYKit
 
 class DevicesVC: UIViewController {

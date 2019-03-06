@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 import SaneSwift
 import SYKit
 import SYPictureMetadata
