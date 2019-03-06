@@ -91,21 +91,24 @@ class GalleryGridVC: UIViewController {
     #endif
     
     @objc private func deleteButtonTap(sender: UIBarButtonItem) {
-        guard let selected = collectionView.indexPathsForSelectedItems, !selected.isEmpty else { return }
+        guard let selectedIndices = collectionView.indexPathsForSelectedItems, !selectedIndices.isEmpty else { return }
+        
+        // keep a ref to the items, since we'll be deleting one by one and thus indices may become invalid, ending up deleting the wrong files
+        let selectedItems = selectedIndices.map { self.items[$0.item] }
         
         var title = "DIALOG TITLE DELETE SCAN".localized
         var message = "DIALOG MESSAGE DELETE SCAN".localized
         
-        if selected.count > 1 {
+        if selectedItems.count > 1 {
             title   = "DIALOG TITLE DELETE SCANS".localized
-            message = String(format: "DIALOG MESSAGE DELETE SCANS %d".localized, selected.count)
+            message = String(format: "DIALOG MESSAGE DELETE SCANS %d".localized, selectedItems.count)
         }
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "ACTION DELETE".localized, style: .destructive, handler: { (_) in
             SVProgressHUD.show()
-            selected.forEach { (indexPath) in
-                GalleryManager.shared.deleteItem(self.items[indexPath.item])
+            selectedItems.forEach { (item) in
+                GalleryManager.shared.deleteItem(item)
             }
             SVProgressHUD.dismiss()
             self.setEditing(false, animated: true)
