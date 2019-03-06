@@ -1,0 +1,14 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+CLANG_MODULES_AUTOLINK = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/DirectoryWatcher" "${PODS_CONFIGURATION_BUILD_DIR}/Mantle" "${PODS_CONFIGURATION_BUILD_DIR}/SYKit" "${PODS_CONFIGURATION_BUILD_DIR}/SYOperationQueue" "${PODS_CONFIGURATION_BUILD_DIR}/SaneSwift" "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit" "${PODS_CONFIGURATION_BUILD_DIR}/SpinKit"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/DirectoryWatcher/DirectoryWatcher.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Mantle/Mantle.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SYKit/SYKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SYOperationQueue/SYOperationQueue.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SaneSwift/SaneSwift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SpinKit/SpinKit.framework/Headers"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/../sane-libs/all/sane"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_CONFIGURATION_BUILD_DIR}/DirectoryWatcher/DirectoryWatcher.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/Mantle/Mantle.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SYKit/SYKit.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SYOperationQueue/SYOperationQueue.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SaneSwift/SaneSwift.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SpinKit/SpinKit.framework/Headers" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/DirectoryWatcher" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/Mantle" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SYKit" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SYOperationQueue" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SaneSwift" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SpinKit"
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "DirectoryWatcher" -framework "Foundation" -framework "Mantle" -framework "SYKit" -framework "SYOperationQueue" -framework "SaneSwift" -framework "SnapKit" -framework "SpinKit"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods
