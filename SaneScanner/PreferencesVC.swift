@@ -8,7 +8,10 @@
 
 import UIKit
 import SYKit
+
+#if !MARZIPAN
 import SYEmailHelper
+#endif
 
 class PreferencesVC: UIViewController {
 
@@ -41,7 +44,12 @@ class PreferencesVC: UIViewController {
 
 extension PreferencesVC : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return Preferences.shared.groupedKeys.count + 1
+        #if MARZIPAN
+        let contactSectionCount = 0
+        #else
+        let contactSectionCount = 1
+        #endif
+        return Preferences.shared.groupedKeys.count + contactSectionCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,6 +110,7 @@ extension PreferencesVC : UITableViewDelegate {
         if indexPath.section >= Preferences.shared.groupedKeys.count {
             guard indexPath.row == 0 else { return }
             
+            #if !MARZIPAN
             let subject = String(format: "CONTACT SUBJECT ABOUT APP %@ %@".localized, Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
             
             SYEmailServicePasteboard.name = "MAIL COPY PASTEBOARD NAME".localized
@@ -115,6 +124,7 @@ extension PreferencesVC : UITableViewDelegate {
                     }
                     print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
             }
+            #endif
             return
         }
         

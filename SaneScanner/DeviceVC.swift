@@ -9,7 +9,6 @@
 import UIKit
 import SaneSwift
 import SYKit
-import SYPictureMetadata
 
 class DeviceVC: UIViewController {
 

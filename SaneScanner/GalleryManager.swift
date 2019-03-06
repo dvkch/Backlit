@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SYPictureMetadata
 import SYKit
 import SYOperationQueue
 import DirectoryWatcher

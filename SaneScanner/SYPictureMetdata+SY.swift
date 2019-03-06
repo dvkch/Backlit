@@ -6,12 +6,20 @@
 //  Copyright © 2019 Syan. All rights reserved.
 //
 
-import SYPictureMetadata
 import SaneSwift
+
+#if MARZIPAN
+class SYMetadata { }
+#else
+import SYPictureMetadata
+#endif
 
 extension SYMetadata {
     
     convenience init(device: Device, scanParameters: ScanParameters) {
+        #if MARZIPAN
+        self.init()
+        #else
         var resX: Int? = nil
         var resY: Int? = nil
         var res:  Int? = nil
@@ -56,5 +64,12 @@ extension SYMetadata {
         metadataJFIF = SYMetadataJFIF()
         metadataJFIF.xDensity = resXInches.map(NSNumber.init)
         metadataJFIF.yDensity = resYInches.map(NSNumber.init)
+        #endif
     }
+    
+    #if MARZIPAN
+    static func data(withImageData: Data?, andMetadata: SYMetadata?) -> Data? {
+        return nil
+    }
+    #endif
 }
