@@ -14,10 +14,8 @@ class DeviceCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        if #available(iOS 10.0, *) {
-            labelName.adjustsFontForContentSizeCategory = true
-            labelDetails.adjustsFontForContentSizeCategory = true
-        }
+        labelName.autoAdjustsFontSize = true
+        labelDetails.autoAdjustsFontSize = true
     }
     
     // MARK: Views

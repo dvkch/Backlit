@@ -13,9 +13,7 @@ class GalleryGridVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 10.0, *) {
-            emptyStateLabel.adjustsFontForContentSizeCategory = true
-        }
+        emptyStateLabel.autoAdjustsFontSize = true
         
         collectionViewLayout.maxSize = 320/3
         collectionViewLayout.margin = 2

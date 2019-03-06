@@ -48,9 +48,7 @@ class SanePreviewView: UIView {
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .white
         button.titleLabel?.font = .systemFont(ofSize: 17)
-        if #available(iOS 10.0, *) {
-            button.titleLabel?.adjustsFontForContentSizeCategory = true
-        }
+        button.titleLabel?.autoAdjustsFontSize = true
         button.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
         addSubview(button)
         

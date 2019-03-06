@@ -32,9 +32,7 @@ class DeviceVC: UIViewController {
         scanButton.backgroundColor = .vividBlue
         scanButton.setTitle("ACTION SCAN".localized, for: .normal)
         scanButton.titleLabel?.font = .systemFont(ofSize: 17)
-        if #available(iOS 10.0, *) {
-            scanButton.titleLabel?.adjustsFontForContentSizeCategory = true
-        }
+        scanButton.titleLabel?.autoAdjustsFontSize = true
         
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .vividBlue)
         

@@ -14,9 +14,7 @@ class HostCell: UITableViewCell {
         super.awakeFromNib()
         
         accessoryType = .none
-        if #available(iOS 10.0, *) {
-            label.adjustsFontForContentSizeCategory = true
-        }
+        label.autoAdjustsFontSize = true
     }
     
     // MARK: Views

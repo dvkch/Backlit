@@ -15,11 +15,9 @@ class OptionCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        if #available(iOS 10.0, *) {
-            labelTitle.adjustsFontForContentSizeCategory = true
-            labelValue.adjustsFontForContentSizeCategory = true
-            labelDescr.adjustsFontForContentSizeCategory = true
-        }
+        labelTitle.autoAdjustsFontSize = true
+        labelValue.autoAdjustsFontSize = true
+        labelDescr.autoAdjustsFontSize = true
     }
     
     // MARK: Views
