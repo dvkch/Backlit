@@ -70,6 +70,7 @@ class DeviceVC: UIViewController {
     @IBAction private func scanButtonTap() {
         
         var alertView: UIAlertController?
+        var alertViewCancelButton: UIAlertAction?
         var alertViewImageView: UIImageView?
         var item: GalleryItem?
         
@@ -85,6 +86,8 @@ class DeviceVC: UIViewController {
             
             // Finished without error
             if finished {
+                alertViewCancelButton?.updateTitle("ACTION CLOSE".localized)
+                
                 guard let image = image, let parameters = parameters else { return }
                 
                 let metadata = SYMetadata(device: self.device, scanParameters: parameters)
@@ -104,10 +107,11 @@ class DeviceVC: UIViewController {
                 alertView?.addAction(UIAlertAction(title: "ACTION SHARE".localized, style: .default, handler: { (_) in
                     self.shareItem(item)
                 }))
-                alertView?.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
+                alertViewCancelButton = UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
                     // cancels scan if running
                     Sane.shared.cancelCurrentScan()
-                }))
+                })
+                alertView?.addAction(alertViewCancelButton!)
                 alertViewImageView = alertView?.setupImageView(image: image, height: 300, margins: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
                 self.present(alertView!, animated: true, completion: nil)
                 SVProgressHUD.dismiss()
