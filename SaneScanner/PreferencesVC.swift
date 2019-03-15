@@ -11,6 +11,7 @@ import SYKit
 
 #if !MARZIPAN
 import SYEmailHelper
+import SVProgressHUD
 #endif
 
 class PreferencesVC: UIViewController {

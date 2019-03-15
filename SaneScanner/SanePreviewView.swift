@@ -10,6 +10,10 @@ import UIKit
 import SaneSwift
 import SnapKit
 
+protocol SanePreviewViewDelegate: NSObjectProtocol {
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Bool) -> ())?)
+}
+
 class SanePreviewView: UIView {
 
     // MARK: Init
@@ -80,6 +84,7 @@ class SanePreviewView: UIView {
     }
     
     // MARK: Properties
+    weak var delegate: SanePreviewViewDelegate?
     var device: Device? {
         didSet {
             setNeedsUpdateConstraints()
@@ -109,18 +114,13 @@ class SanePreviewView: UIView {
     
     @objc private func buttonTap() {
         guard let device = device else { return }
-        SVProgressHUD.show(withStatus: "PREVIEWING".localized)
-        Sane.shared.preview(device: device, progress: { [weak self] (progress, image) in
+        
+        delegate?.sanePreviewView(self, tappedScan: device, updateBlock: { [weak self] image, finished in
+            guard self?.device == device else { return }
             self?.imageView.image = image
-            SVProgressHUD.showProgress(progress)
-        }, completion: { [weak self] (image, error) in
-            if let error = error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            if finished {
+                self?.refresh()
             }
-            else {
-                SVProgressHUD.dismiss()
-            }
-            self?.refresh()
         })
     }
     

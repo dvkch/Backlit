@@ -10,6 +10,10 @@ import UIKit
 import SaneSwift
 import SYKit
 
+#if !MARZIPAN
+import SVProgressHUD
+#endif
+
 class DevicesVC: UIViewController {
 
     override func viewDidLoad() {

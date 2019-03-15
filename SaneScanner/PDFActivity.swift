@@ -9,6 +9,10 @@
 import UIKit
 import SYKit
 
+#if !MARZIPAN
+import SVProgressHUD
+#endif
+
 class PDFActivity: UIActivity {
     
     // MARK: Properties

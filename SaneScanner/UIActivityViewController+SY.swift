@@ -8,6 +8,11 @@
 
 import UIKit
 
+#if !MARZIPAN
+import SVProgressHUD
+#endif
+
+
 extension UIActivityViewController {
 
     static func showForURLs(_ urls: [URL], from barButtonItem: UIBarButtonItem, presentingVC: UIViewController, completion: (() -> ())?) {

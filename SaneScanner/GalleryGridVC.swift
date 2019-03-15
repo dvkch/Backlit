@@ -8,6 +8,10 @@
 
 import UIKit
 
+#if !MARZIPAN
+import SVProgressHUD
+#endif
+
 class GalleryGridVC: UIViewController {
 
     override func viewDidLoad() {

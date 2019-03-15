@@ -15,12 +15,14 @@ class PreviewCell: UITableViewCell {
         super.awakeFromNib()
         backgroundColor = .clear
         selectionStyle = .none
+        previewView.delegate = self
     }
 
     // MARK: Views
     @IBOutlet private var previewView: SanePreviewView!
     
     // MARK: Properties
+    weak var delegate: SanePreviewViewDelegate?
     var device: Device? {
         didSet {
             previewView.device = device
@@ -39,3 +41,8 @@ class PreviewCell: UITableViewCell {
     }
 }
 
+extension PreviewCell : SanePreviewViewDelegate {
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Bool) -> ())?) {
+        delegate?.sanePreviewView(sanePreviewView, tappedScan: device, updateBlock: updateBlock)
+    }
+}

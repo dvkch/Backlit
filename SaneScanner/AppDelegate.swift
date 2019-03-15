@@ -10,6 +10,10 @@ import UIKit
 import SYKit
 import SaneSwift
 
+#if !MARZIPAN
+import SVProgressHUD
+#endif
+
 enum SnapshotType {
     case none, devicePreview, deviceOptions, deviceOptionPopup, other
 }

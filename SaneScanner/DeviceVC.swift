@@ -10,6 +10,11 @@ import UIKit
 import SaneSwift
 import SYKit
 
+#if !MARZIPAN
+import SYPictureMetadata
+import SVProgressHUD
+#endif
+
 class DeviceVC: UIViewController {
 
     init(device: Device) {
@@ -264,6 +269,7 @@ extension DeviceVC : UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueCell(PreviewCell.self, for: indexPath)
             cell.device = device
+            cell.delegate = self
             return cell
         }
         
@@ -333,5 +339,24 @@ extension DeviceVC : UITableViewDelegate {
         vc.popoverPresentationController?.permittedArrowDirections = [.left, .unknown]
 
         present(vc, animated: true, completion: nil)
+    }
+}
+
+extension DeviceVC : SanePreviewViewDelegate {
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Bool) -> ())?) {
+        
+        SVProgressHUD.show(withStatus: "PREVIEWING".localized)
+        Sane.shared.preview(device: device, progress: { (progress, image) in
+            updateBlock?(image, false)
+            SVProgressHUD.showProgress(progress)
+        }, completion: { (image, error) in
+            if let error = error {
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+            else {
+                SVProgressHUD.dismiss()
+            }
+            updateBlock?(image, true)
+        })
     }
 }

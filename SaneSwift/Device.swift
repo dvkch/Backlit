@@ -40,6 +40,13 @@ public class Device {
     public var cropArea: CGRect = .zero
 }
 
+// MARK: Equatable
+extension Device: Equatable {
+    public static func == (lhs: Device, rhs: Device) -> Bool {
+        return lhs.name == rhs.name
+    }
+}
+
 // MARK: Options
 extension Device {
     public func optionGroups(includeAdvanced: Bool) -> [DeviceOptionGroup] {

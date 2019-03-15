@@ -11,6 +11,10 @@ import SYKit
 import SYOperationQueue
 import DirectoryWatcher
 
+#if !MARZIPAN
+import SYPictureMetadata
+#endif
+
 protocol GalleryManagerDelegate: AnyObject, NSObjectProtocol {
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem])
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem)
