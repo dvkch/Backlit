@@ -21,9 +21,10 @@ public struct DeviceAuthentication {
         return String(username.subarray(maxCount: Int(SANE_MAX_USERNAME_LEN)))
     }
     
-    public func password(splitToMaxLength: Bool) -> String? {
+    public func password(splitToMaxLength: Bool, md5DigestUsing md5string: String?) -> String? {
         guard let password = self.password else { return nil }
-        guard splitToMaxLength else { return password }
-        return String(password.subarray(maxCount: Int(SANE_MAX_PASSWORD_LEN)))
+        let splitPassword = String(password.subarray(maxCount: Int(SANE_MAX_PASSWORD_LEN)))
+        guard let md5string = md5string else { return splitPassword }
+        return "$MD5$" + (md5string + splitPassword).md5()
     }
 }

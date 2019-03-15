@@ -58,7 +58,7 @@ extension SaneError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .cancelled:                    return "ERROR MESSAGE USER CANCELLED".saneTranslation
-        case .saneError(let status):        return "ERROR MESSAGE SANE ERROR".saneTranslation + "\n" + status.description
+        case .saneError(let status):        return "ERROR MESSAGE SANE ERROR".saneTranslation + "\n" + status.description.saneTranslation
         case .deviceNotOpened:              return "ERROR MESSAGE DEVICE NOT OPENED".saneTranslation
         case .getValueForButtonType:        return "ERROR MESSAGE GET VALUE TYPE BUTTON".saneTranslation
         case .getValueForGroupType:         return "ERROR MESSAGE GET VALUE TYPE GROUP".saneTranslation

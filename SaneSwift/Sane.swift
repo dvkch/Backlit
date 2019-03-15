@@ -156,9 +156,17 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
     let semaphore = DispatchSemaphore(value: 0)
     var auth: DeviceAuthentication? = nil
     
+    var deviceString: String?
+    var md5string: String?
+    
+    if let components = deviceName?.asString()?.components(separatedBy: "$MD5$") {
+        deviceString = components.first
+        md5string = components.count > 1 ? components.last : nil
+    }
+    
     // this method will be called from the SANE thread, let's escape it to call the delegate
     DispatchQueue.main.async {
-        Sane.shared.delegate?.saneNeedsAuth(Sane.shared, for: deviceName?.asString(), completion: { (authentication) in
+        Sane.shared.delegate?.saneNeedsAuth(Sane.shared, for: deviceString, completion: { (authentication) in
             auth = authentication
             _ = semaphore.signal()
         })
@@ -168,8 +176,12 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
     _ = semaphore.wait(timeout: .distantFuture)
     
     // TODO: need to cache?
-    username?.pointee = auth?.username(splitToMaxLength: true)?.cString(using: .utf8)?.first ?? 0
-    password?.pointee = auth?.password(splitToMaxLength: true)?.cString(using: .utf8)?.first ?? 0
+    if let cUsername = auth?.username(splitToMaxLength: true)?.cString(using: .utf8) {
+        username?.initialize(from: cUsername)
+    }
+    if let cPassword = auth?.password(splitToMaxLength: true, md5DigestUsing: md5string)?.cString(using: .utf8) {
+        password?.initialize(from: cPassword)
+    }
 }
 
 extension Sane {

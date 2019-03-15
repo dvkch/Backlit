@@ -105,8 +105,13 @@ extension DevicesVC: SaneDelegate {
     }
     
     func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ()) {
+        let hudShowing = SVProgressHUD.isVisible()
+        SVProgressHUD.dismiss()
+        
         let alert = UIAlertController(title: "DIALOG TITLE AUTH".localized, message: nil, preferredStyle: .alert)
-        alert.message = "DIALOG TITLE AUTH".localized
+        if let device = device {
+            alert.message = String(format: "DIALOG MESSAGE AUTH %@".localized, device)
+        }
         alert.addTextField { (field) in
             field.borderStyle = .none
             field.placeholder = "DIALOG AUTH PLACEHOLDER USERNAME".localized
@@ -121,9 +126,11 @@ extension DevicesVC: SaneDelegate {
         alert.addAction(UIAlertAction(title: "ACTION CONTINUE".localized, style: .default, handler: { (_) in
             let username = alert.textFields?.first?.text
             let password = alert.textFields?.last?.text
+            if hudShowing { SVProgressHUD.show() }
             completion(DeviceAuthentication(username: username, password: password))
         }))
         alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
+            if hudShowing { SVProgressHUD.show() }
             completion(nil)
         }))
         present(alert, animated: true, completion: nil)
