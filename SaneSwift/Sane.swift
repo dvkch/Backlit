@@ -385,9 +385,10 @@ extension Sane {
             var byteValue: UnsafeMutableRawPointer? = nil
             
             if case let .value(value) = value {
-                // TODO: make sure data count isn't greater than option.size
+                let data = option.bytesForValue(value).subarray(maxCount: option.size)
+                
                 byteValue = malloc(option.size)
-                byteValue?.bindMemory(to: UInt8.self, capacity: option.size).initialize(from: option.bytesForValue(value))
+                byteValue?.bindMemory(to: UInt8.self, capacity: option.size).initialize(from: data)
             }
                 
             var info: SANE_Int = 0
@@ -486,9 +487,7 @@ extension Sane {
                         restoreBlocks.append(self.updateOptionForPreview(option))
                     }
                     else {
-                        // TODO: raise error?
-                        print("Unsupported configuration: option type for", option.identifier, "is not supported");
-                        return
+                        fatalError("Unsupported configuration: option type for \(option.identifier) is not supported")
                     }
                 }
             }

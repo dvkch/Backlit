@@ -409,9 +409,7 @@ public class DeviceOptionString: DeviceOptionTyped<String> {
     }
     
     internal override func bytesForValue(_ value: String) -> Data {
-        // TODO: keep max size in mind!
-        // let size = min(cString.count, option.size)
-        return value.data(using: .utf8) ?? Data()
+        return value.data(using: .utf8)?.subarray(maxCount: size) ?? Data()
     }
     
     internal override func valueForBytes(_ bytes: UnsafeRawPointer) -> String {

@@ -9,6 +9,14 @@
 import UIKit
 import ImageIO
 
+public extension Collection {
+    func subarray(maxCount: Int) -> Self.SubSequence {
+        let max = Swift.min(maxCount, count)
+        let maxIndex = index(startIndex, offsetBy: max)
+        return self[startIndex..<maxIndex]
+    }
+}
+
 public extension UIImage {
     
     enum SaneSource {

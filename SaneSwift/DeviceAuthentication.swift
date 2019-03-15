@@ -18,12 +18,12 @@ public struct DeviceAuthentication {
     public func username(splitToMaxLength: Bool) -> String? {
         guard let username = self.username else { return nil }
         guard splitToMaxLength else { return username }
-        return username.substring(to: username.index(username.startIndex, offsetBy: max(username.count, Int(SANE_MAX_USERNAME_LEN))))
+        return String(username.subarray(maxCount: Int(SANE_MAX_USERNAME_LEN)))
     }
     
     public func password(splitToMaxLength: Bool) -> String? {
         guard let password = self.password else { return nil }
         guard splitToMaxLength else { return password }
-        return password.substring(to: password.index(password.startIndex, offsetBy: max(password.count, Int(SANE_MAX_PASSWORD_LEN))))
+        return String(password.subarray(maxCount: Int(SANE_MAX_PASSWORD_LEN)))
     }
 }
