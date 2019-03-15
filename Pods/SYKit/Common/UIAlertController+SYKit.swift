@@ -40,6 +40,14 @@ extension UIAlertController {
     }
 }
 
+@available(iOS 8.0, tvOS 9.0, *)
+extension UIAlertAction {
+    @objc(sy_updateTitle:)
+    public func updateTitle(_ title: String) {
+        setValue(title, forKey: "title")
+    }
+}
+
 fileprivate class SYImageViewController : UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
