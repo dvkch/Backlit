@@ -267,18 +267,18 @@ extension GalleryGridVC : GalleryManagerDelegate {
         
         // if there are only additions, and we can find all items that have been added, then do an animated update
         if removedItems.isEmpty, !newItems.isEmpty, newIndices.count == newItems.count {
-            setItems(items, reloadCollectionView: false)
             collectionView.performBatchUpdates({
-                self.collectionView.insertItems(at: newIndices.map { IndexPath(item: $0, section: 0) })
+                setItems(items, reloadCollectionView: false)
+                collectionView.insertItems(at: newIndices.map { IndexPath(item: $0, section: 0) })
             }, completion: nil)
             return
         }
 
         // if there are only deletions, and we can find all items that have been deleted, then do an animated update
         if newItems.isEmpty, !removedItems.isEmpty, removedIndices.count == removedItems.count {
-            setItems(items, reloadCollectionView: false)
             collectionView.performBatchUpdates({
-                self.collectionView.deleteItems(at: removedIndices.map { IndexPath(item: $0, section: 0) })
+                setItems(items, reloadCollectionView: false)
+                collectionView.deleteItems(at: removedIndices.map { IndexPath(item: $0, section: 0) })
             }, completion: nil)
             return
         }
