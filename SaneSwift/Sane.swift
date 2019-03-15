@@ -175,7 +175,7 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
     // let's wait for the delegate to answer
     _ = semaphore.wait(timeout: .distantFuture)
     
-    // TODO: need to cache?
+    // update return values
     if let cUsername = auth?.username(splitToMaxLength: true)?.cString(using: .utf8) {
         username?.initialize(from: cUsername)
     }
