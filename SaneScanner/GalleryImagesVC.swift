@@ -75,9 +75,6 @@ class GalleryImagesVC: UIViewController {
     }
     
     @objc private func deleteCurrentImage(sender: UIBarButtonItem) {
-        // TODO: prevent when scrolling
-        // guard !imageViewerViewController.isUserScrolling else { return }
-        
         guard let currentIndex = currentIndex else { return }
         let item = items[currentIndex]
         
@@ -95,9 +92,6 @@ class GalleryImagesVC: UIViewController {
     }
     
     @objc private func shareCurrentImage(sender: UIBarButtonItem) {
-        // TODO: prevent when scrolling
-        // guard !imageViewerViewController.isUserScrolling else { return }
-        
         guard let currentIndex = currentIndex else { return }
         let item = items[currentIndex]
 
