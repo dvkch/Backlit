@@ -42,6 +42,13 @@ class Toolbar: UIToolbar {
         return s
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if let thumbsView = items?.first?.customView as? GalleryThumbsView {
+            thumbsView.preferredSize = bounds.size
+        }
+    }
+    
     // MARK: Items
     override func setItems(_ items: [UIBarButtonItem]?, animated: Bool) {
         super.setItems(items, animated: animated)

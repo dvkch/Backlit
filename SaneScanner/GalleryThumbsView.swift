@@ -18,7 +18,6 @@ class GalleryThumbsView: UIView {
         
         let view = GalleryThumbsView(frame: initialRect)
         view.parentViewController = controller
-        view.tintColor = tintColor ?? .white
         view.backgroundColor = tintColor ?? .white
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         controller.toolbarItems = [UIBarButtonItem(customView: view)]
@@ -93,9 +92,9 @@ class GalleryThumbsView: UIView {
     private let rightGradientView = SYGradientView()
 
     // MARK: Content
-    override var tintColor: UIColor! {
+    override var backgroundColor: UIColor? {
         didSet {
-            let gradientOpaqueColor = tintColor ?? .white
+            let gradientOpaqueColor = backgroundColor ?? .white
             
             leftGradientView.layer.colors  = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
             rightGradientView.layer.colors = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
@@ -103,23 +102,32 @@ class GalleryThumbsView: UIView {
     }
     
     // MARK: Layout
+    var preferredSize: CGSize = .zero {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return preferredSize
+    }
+    
     private let gradientWidth = CGFloat(30)
     
     private var prevSize = CGSize.zero
     override func layoutSubviews() {
-        super.layoutSubviews()
         
         if prevSize != bounds.size {
             prevSize = bounds.size
-            invalidateIntrinsicContentSize()
+            // needs to be called *BEFORE* super.layoutSubviews or the layout won't refresh properly
             collectionViewLayout.invalidateLayout()
+            collectionView.setNeedsLayout()
         }
         
+        super.layoutSubviews()
+        
+        // needs to be called *AFTER* super.layoutSubviews or the layout won't be properly refreshed and it will fail
         centerContent()
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        return superview?.bounds.size ?? super.intrinsicContentSize
     }
     
     private func centerContent() {
@@ -198,10 +206,8 @@ extension GalleryThumbsView: UICollectionViewDataSource {
 
 extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let bounds = collectionView.bounds.inset(by: collectionView.contentInset)
         let imageSize = GalleryManager.shared.imageSize(for: galleryItems[indexPath.item]) ?? CGSize(width: 100, height: 100)
-        
-        let bounds = collectionView.bounds.inset(by: collectionView.contentInset).inset(by: self.collectionViewLayout.sectionInset)
-        
         return CGSize(width: imageSize.width * bounds.height / imageSize.height, height: bounds.height)
     }
     

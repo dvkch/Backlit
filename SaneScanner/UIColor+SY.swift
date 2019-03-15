@@ -18,11 +18,10 @@ extension UIColor {
     }
     
     static var random: UIColor {
-        // https://gist.github.com/kylefox/1689973
-        let hue = CGFloat(arc4random() % 256 / 256)  //  0.0 to 1.0
-        let saturation = CGFloat((Double(arc4random() % 128) / 256.0) + 0.5)  //  0.5 to 1.0, away from white
-        let brightness = CGFloat((Double(arc4random() % 128) / 256.0) + 0.5)  //  0.5 to 1.0, away from black
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
+        // https://stackoverflow.com/a/43365841/1439489
+        return UIColor(red: .random(in: 0...1),
+                       green: .random(in: 0...1),
+                       blue: .random(in: 0...1),
+                       alpha: 1.0)
     }
 }
