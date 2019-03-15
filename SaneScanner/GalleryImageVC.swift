@@ -8,6 +8,8 @@
 
 import UIKit
 
+// TODO: cleanup & move to dedicated class
+
 protocol GalleryImageVCDelegate: NSObjectProtocol {
     func galleryImageVC(singleTapped: GalleryImageVC)
 }
@@ -54,6 +56,7 @@ class GalleryImageVC: UIViewController {
         imageView.contentMode = .scaleAspectFit
         scrollView.addSubview(imageView)
         
+        updateZoomScales()
         view.setNeedsUpdateConstraints()
     }
     
@@ -61,11 +64,9 @@ class GalleryImageVC: UIViewController {
         super.viewWillAppear(animated)
         
         // lazy loading only when view will appear for the first time
-        if imageView.image == nil {
-            imageView.image = UIImage(contentsOfFile: item.URL.path)
-            view.setNeedsUpdateConstraints()
-            updateZoomScales(reset: true)
-            updateScrollViewInsets()
+        if self.imageView.image == nil {
+            self.imageView.image = UIImage(contentsOfFile: self.item.URL.path)
+            self.view.setNeedsUpdateConstraints()
         }
     }
     
@@ -116,24 +117,39 @@ class GalleryImageVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        updateZoomScales(reset: false)
-        updateScrollViewInsets()
+        updateZoomScales()
+    }
+    
+    var zoomingBounds: CGRect {
+        // use frame instead of bounds, the latter changes with the contentInsets and will result in an endless loop
+        var bounds = scrollView.frame
+        bounds.origin = .zero
+        
+        if #available(iOS 11.0, *), !sy_isModal {
+            // when we're not modal we can't dismiss the nav & tool bars, so we take them into account
+            bounds = bounds.inset(by: scrollView.safeAreaInsets)
+        }
+        
+        return bounds
     }
 
-    private func updateZoomScales(reset: Bool) {
+    private func updateZoomScales() {
         view.layoutIfNeeded()
         scrollView.layoutIfNeeded()
         
-        if imageView.bounds.width == 0 || imageView.bounds.height == 0 {
-            scrollView.minimumZoomScale = 1
-            scrollView.maximumZoomScale = 1
-            scrollView.zoomScale = 1
+        let reset = scrollView.minimumZoomScale == 0 && scrollView.maximumZoomScale == 0
+        
+        if imageView.image == nil {
+            scrollView.minimumZoomScale = 0
+            scrollView.maximumZoomScale = 0
+            scrollView.zoomScale = 0
             return
         }
         
+        let zoomBounds = zoomingBounds
         let fitScale = min(
-            scrollView.bounds.width / imageView.bounds.width,
-            scrollView.bounds.height / imageView.bounds.height
+            zoomBounds.width / imageView.bounds.width,
+            zoomBounds.height / imageView.bounds.height
         )
         
         let prevScale = scrollView.zoomScale
@@ -145,18 +161,14 @@ class GalleryImageVC: UIViewController {
         } else {
             scrollView.zoomScale = min(scrollView.maximumZoomScale, max(scrollView.minimumZoomScale, prevScale))
         }
+
+        updateScrollViewInsets()
     }
     
     private func updateScrollViewInsets() {
-        var bounds = scrollView.frame // don't use bounds, it changes with the contentInsets and will result in an endless loop crash
-        bounds.origin = .zero
-        // TODO: cleanup & move to dedicated class
-        //if #available(iOS 11.0, *) {
-        //    bounds = bounds.inset(by: scrollView.safeAreaInsets)
-        //}
-        
-        scrollView.contentInset.left = max(0, bounds.minX + (bounds.width  - scrollView.contentSize.width)  / 2)
-        scrollView.contentInset.top  = max(0, bounds.minY + (bounds.height - scrollView.contentSize.height) / 2)
+        let zoomBounds = zoomingBounds
+        scrollView.contentInset.left = max(0, zoomBounds.minX + (zoomBounds.width  - scrollView.contentSize.width)  / 2)
+        scrollView.contentInset.top  = max(0, zoomBounds.minY + (zoomBounds.height - scrollView.contentSize.height) / 2)
     }
 }
 

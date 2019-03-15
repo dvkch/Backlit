@@ -78,36 +78,6 @@ extension GalleryNC : GalleryManagerDelegate {
             dismiss(animated: true, completion: nil)
             return
         }
-        
-        /*
-        if !isShowingGrid {
-            let currentIndex = imageViewerViewController.pageIndex
-            var index: Int?
-            var adding = false
-            
-            if let newItem = newItems.first {
-                index = items.index(of: newItem)
-            }
-            
-            if let removedItem = removedItems.first {
-                index = items.index(of: removedItem)
-                adding = false
-            }
-            
-            if index == currentIndex {
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-                transition.type = .push
-                transition.subtype = .fromRight
-                
-                if adding || index == self.galleryItems.count - 1 {
-                    transition.subtype = .fromLeft
-                }
-                
-                imageViewerViewController.pageViewController.view.layer.add(transition, forKey: kCATransition)
-            }
-        }*/
     }
 
 }
