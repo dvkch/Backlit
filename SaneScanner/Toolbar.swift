@@ -43,15 +43,16 @@ class Toolbar: UIToolbar {
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()
         if let thumbsView = items?.first?.customView as? GalleryThumbsView {
             thumbsView.preferredSize = bounds.size
         }
+        super.layoutSubviews()
     }
     
-    // MARK: Items
     override func setItems(_ items: [UIBarButtonItem]?, animated: Bool) {
         super.setItems(items, animated: animated)
-        barTintColor = items?.first?.customView?.backgroundColor ?? .clear
+        UIView.transition(with: self, duration: animated ? 0.3 : 0, options: .transitionCrossDissolve, animations: {
+            self.barTintColor = items?.first?.customView?.backgroundColor
+        }, completion: nil)
     }
 }
