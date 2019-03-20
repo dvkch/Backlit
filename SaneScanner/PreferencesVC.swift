@@ -114,13 +114,16 @@ extension PreferencesVC : UITableViewDelegate {
             #if !MARZIPAN
             let subject = String(format: "CONTACT SUBJECT ABOUT APP %@ %@".localized, Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
             
-            SYEmailServicePasteboard.name = "MAIL COPY PASTEBOARD NAME".localized
-            SYEmailHelper.shared()?.composeEmail(
-                withAddress: PreferencesVC.contactEmailAddress,
+            PasteboardEmailService.name = "MAIL COPY PASTEBOARD NAME".localized
+            EmailHelper.shared.presentActionSheet(
+                address: PreferencesVC.contactEmailAddress,
                 subject: subject,
                 body: nil,
-                presentingVC: self) { (launched, service, error) in
-                    if service is SYEmailServicePasteboard {
+                presentingViewController: self,
+                sender:
+                tableView.cellForRow(at: indexPath))
+            { (launched, service, error) in
+                    if service is PasteboardEmailService {
                         SVProgressHUD.showSuccess(withStatus: nil)
                     }
                     print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
