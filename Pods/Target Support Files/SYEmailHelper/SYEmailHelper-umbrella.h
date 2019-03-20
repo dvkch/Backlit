@@ -10,8 +10,6 @@
 #endif
 #endif
 
-#import "SYEmailHelper.h"
-#import "SYEmailService.h"
 
 FOUNDATION_EXPORT double SYEmailHelperVersionNumber;
 FOUNDATION_EXPORT const unsigned char SYEmailHelperVersionString[];
