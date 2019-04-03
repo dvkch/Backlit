@@ -336,22 +336,4 @@ private extension URL {
     var isSupportedImageURL: Bool {
         return [kImageExtensionPNG.lowercased(), kImageExtensionJPG.lowercased()].contains(pathExtension.lowercased())
     }
-    
-    var creationDate: Date? {
-        do {
-            return try resourceValues(forKeys: Set([URLResourceKey.creationDateKey])).creationDate
-        }
-        catch {
-            return nil
-        }
-    }
-    
-    var isDirectory: Bool? {
-        do {
-            return try resourceValues(forKeys: Set([URLResourceKey.isDirectoryKey])).isDirectory
-        }
-        catch {
-            return nil
-        }
-    }
 }
