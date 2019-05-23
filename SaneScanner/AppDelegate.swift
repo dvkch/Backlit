@@ -18,6 +18,7 @@ enum SnapshotType {
     case none, devicePreview, deviceOptions, deviceOptionPopup, other
 }
 
+// TODO: add auth to Keychain?
 // LATER: send in chronological order, older to newer
 
 @UIApplicationMain
