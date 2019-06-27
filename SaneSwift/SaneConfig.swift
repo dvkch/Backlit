@@ -45,7 +45,7 @@ public struct SaneConfig: Codable {
     }
     
     public mutating func removeHost(_ host: String) {
-        while let index = hosts.index(of: host) {
+        while let index = hosts.firstIndex(of: host) {
             hosts.remove(at: index)
         }
     }

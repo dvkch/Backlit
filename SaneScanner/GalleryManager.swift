@@ -262,7 +262,7 @@ class GalleryManager: NSObject {
         thumbsBeingCreated.append(item.URL)
         
         let dequeue = { [weak self] in
-            if let index = self?.thumbsBeingCreated.index(of: item.URL) {
+            if let index = self?.thumbsBeingCreated.firstIndex(of: item.URL) {
                 self?.thumbsBeingCreated.remove(at: index)
             }
         }

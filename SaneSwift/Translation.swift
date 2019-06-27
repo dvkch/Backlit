@@ -8,7 +8,7 @@
 
 // MARK: Public access
 public extension String {
-    public var saneTranslation: String {
+    var saneTranslation: String {
         return libSANETranslation.translation(for: self) ?? SaneSwiftTranslation.translation(for: self) ?? self
     }
 }

@@ -147,8 +147,8 @@ extension Device {
         
         // if the host name contains ":" (IPv6 address for instance), it will be between brackets
         if let closingBracketIndex = name.firstIndex(of: "]") {
-            let firstPart = name.substring(to: closingBracketIndex)
-            let secondPart = name.substring(from: closingBracketIndex).components(separatedBy: ":").first ?? ""
+            let firstPart = name[name.startIndex...closingBracketIndex]
+            let secondPart = name[closingBracketIndex..<name.endIndex].components(separatedBy: ":").first ?? ""
             return firstPart + secondPart
         }
         

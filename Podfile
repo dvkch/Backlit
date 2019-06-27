@@ -5,7 +5,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target :'SaneScanner' do
-    pod 'SaneSwift', :path => "./"
+    pod 'SaneSwift', :path => "./", :inhibit_warnings => false
     pod 'DirectoryWatcher'
     pod 'SnapKit'
     pod 'SpinKit'
@@ -13,7 +13,7 @@ target :'SaneScanner' do
     pod 'SYEmailHelper', :configurations => ['Debug', 'Release']
     pod 'SYKit'
     pod 'SYOperationQueue'
-    pod 'SYPictureMetadata', :configurations => ['Debug', 'Release']
+    pod 'SYPictureMetadata', :configurations => ['Debug', 'Release'], :inhibit_warnings => false
 end
 
 post_install do | installer |

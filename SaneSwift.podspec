@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/dvkch/SaneScanner'
   s.author   = { 'Stan Chevallier' => 'contact@stanislaschevallier.fr' }
   s.source   = { :git => 'https://github.com/dvkch/SaneScanner.git', :tag => s.version.to_s }
-  s.swift_version = "4.2"
+  s.swift_version = '5.0'
   
   s.source_files = 'SaneSwift/*.{h,c,m,swift}', 'sane-libs/all/*.h'
   s.vendored_libraries = 'sane-libs/all/**/libsane-net.a'

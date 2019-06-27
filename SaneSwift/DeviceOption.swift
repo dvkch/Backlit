@@ -190,8 +190,8 @@ public class DeviceOptionBool: DeviceOptionTyped<Bool> {
     
     internal override func bytesForValue(_ value: Bool) -> Data {
         var data = Data(repeating: 0, count: size)
-        data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<SANE_Bool>) -> () in
-            bytes.pointee = value ? SANE_TRUE : SANE_FALSE
+        data.withUnsafeMutableBytes { (bytes: UnsafeMutableRawBufferPointer) -> () in
+            bytes.bindMemory(to: SANE_Bool.self).baseAddress?.pointee = value ? SANE_TRUE : SANE_FALSE
         }
         return data
     }
@@ -233,8 +233,8 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
     
     internal override func bytesForValue(_ value: Int) -> Data {
         var data = Data(repeating: 0, count: size)
-        data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<SANE_Int>) -> () in
-            bytes.pointee = SANE_Int(value)
+        data.withUnsafeMutableBytes { (bytes: UnsafeMutableRawBufferPointer) -> () in
+            bytes.bindMemory(to: SANE_Int.self).baseAddress?.pointee = SANE_Int(value)
         }
         return data
     }
@@ -307,8 +307,8 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
     
     internal override func bytesForValue(_ value: Double) -> Data {
         var data = Data(repeating: 0, count: size)
-        data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<SANE_Fixed>) -> () in
-            bytes.pointee = SaneFixedFromDouble(value)
+        data.withUnsafeMutableBytes { (bytes: UnsafeMutableRawBufferPointer) -> () in
+            bytes.bindMemory(to: SANE_Word.self).baseAddress?.pointee = SaneFixedFromDouble(value)
         }
         return data
     }

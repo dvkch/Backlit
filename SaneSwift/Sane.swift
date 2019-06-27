@@ -177,10 +177,10 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
     
     // update return values
     if let cUsername = auth?.username(splitToMaxLength: true)?.cString(using: .utf8) {
-        username?.initialize(from: cUsername)
+        username?.initialize(from: cUsername, count: cUsername.count)
     }
     if let cPassword = auth?.password(splitToMaxLength: true, md5DigestUsing: md5string)?.cString(using: .utf8) {
-        password?.initialize(from: cPassword)
+        password?.initialize(from: cPassword, count: cPassword.count)
     }
 }
 
@@ -344,7 +344,7 @@ extension Sane {
     private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: Device, completion: ((_ error: Error?) -> ())?) {
         let mainThread = Thread.isMainThread
         
-        guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
+        guard openedDevices[device.name]?.pointerValue != nil else {
             completion?(SaneError.deviceNotOpened)
             return
         }
@@ -394,13 +394,13 @@ extension Sane {
         // actually need are down there with the SaneInfo bits.
         
         runOnSaneThread {
-            var byteValue: UnsafeMutableRawPointer? = nil
+            var byteValue: UnsafeMutableBufferPointer<UInt8>? = nil
             
             if case let .value(value) = value {
                 let data = option.bytesForValue(value).subarray(maxCount: option.size)
                 
-                byteValue = malloc(option.size)
-                byteValue?.bindMemory(to: UInt8.self, capacity: option.size).initialize(from: data)
+                byteValue = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: option.size)
+                _ = data.copyBytes(to: byteValue!)
             }
                 
             var info: SANE_Int = 0
@@ -409,11 +409,11 @@ extension Sane {
             if case .auto = value {
                 status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_AUTO, nil, &info) }
             } else {
-                status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_VALUE, byteValue, &info) }
+                status = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_SET_VALUE, byteValue?.baseAddress, &info) }
             }
 
             if byteValue != nil {
-                free(byteValue)
+                byteValue?.deallocate()
             }
             
             if status == SANE_STATUS_GOOD {
@@ -462,7 +462,7 @@ extension Sane {
     public func preview(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
         let mainThread = Thread.isMainThread
         
-        guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
+        guard openedDevices[device.name]?.pointerValue != nil else {
             completion(nil, SaneError.deviceNotOpened)
             return
         }
@@ -499,7 +499,7 @@ extension Sane {
                         restoreBlocks.append(self.updateOptionForPreview(option))
                     }
                     else {
-                        fatalError("Unsupported configuration: option type for \(option.identifier) is not supported")
+                        fatalError("Unsupported configuration: option type for \(option.identifier ?? "<no id>") is not supported")
                     }
                 }
             }
@@ -577,7 +577,7 @@ extension Sane {
             
             // generate incomplete image preview every 2%
             var progressForLastIncompletePreview: Float = 0
-            var incompletePreviewStep: Float = 0.02
+            let incompletePreviewStep: Float = 0.02
             
             while status == SANE_STATUS_GOOD {
                 
