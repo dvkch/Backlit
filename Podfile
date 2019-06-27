@@ -1,6 +1,6 @@
 inhibit_all_warnings!
 
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 use_frameworks!
 
@@ -25,7 +25,7 @@ post_install do | installer |
             if config.name == "macOS"
                 config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
             else
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
             end
 
             config.build_settings['ENABLE_BITCODE'] = 'NO'
