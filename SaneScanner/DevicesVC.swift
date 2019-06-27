@@ -24,15 +24,14 @@ class DevicesVC: UIViewController {
         
         tableView.registerCell(HostCell.self, xib: true)
         tableView.registerCell(DeviceCell.self, xib: true)
-        tableView.sy_addPullToResfresh { [weak self] (_) in
+        tableView.addPullToResfresh { [weak self] (_) in
             self?.refreshDevices()
         }
         
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         
         Sane.shared.delegate = self
-        
-        sy_setBackButton(withText: nil, font: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -97,11 +96,11 @@ class DevicesVC: UIViewController {
 
 extension DevicesVC: SaneDelegate {
     func saneDidStartUpdatingDevices(_ sane: Sane) {
-        tableView.sy_showPullToRefresh()
+        tableView.showPullToRefresh()
     }
     
     func saneDidEndUpdatingDevices(_ sane: Sane) {
-        tableView.sy_endPullToRefresh()
+        tableView.endPullToRefresh()
     }
     
     func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ()) {

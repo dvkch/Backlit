@@ -7,63 +7,14 @@
 //
 
 import UIKit
-import ObjectiveC
-
-private var UIScrollViewRefreshControlKey = UInt8(0)
-private var UIScrollViewRefreshControlActionKey = UInt8(0)
+import SYKit
 
 extension UIScrollView {
-
-    // MARK: Refresh control property
-    private var sy_refreshControl: UIRefreshControl? {
-        get { return objc_getAssociatedObject(self, &UIScrollViewRefreshControlKey) as? UIRefreshControl }
-        set { objc_setAssociatedObject(self, &UIScrollViewRefreshControlKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
-    }
-    
-    private var sy_refreshControlAction: ((UIScrollView) -> ())? {
-        get { return objc_getAssociatedObject(self, &UIScrollViewRefreshControlActionKey) as? ((UIScrollView) -> ()) }
-        set { objc_setAssociatedObject(self, &UIScrollViewRefreshControlActionKey, newValue, .OBJC_ASSOCIATION_COPY) }
-    }
-    
-    func sy_addPullToResfresh(_ completion: ((UIScrollView) -> ())?) {
-        self.sy_refreshControlAction = completion
-        
-        self.sy_refreshControl?.removeFromSuperview()
-        self.sy_refreshControl = nil
-    
+    func addPullToResfresh(_ completion: @escaping ((UIScrollView) -> ())) {
         let control = DotsRefreshControl(frame: .zero)
         control.tintColor = UIColor.groupTableViewHeaderTitle.withAlphaComponent(0.8)
         control.attributedTitle = nil
         control.backgroundColor = .clear
-        control.addTarget(self, action: #selector(self.sy_refreshControlValueChanged), for: .valueChanged)
-    
-        if #available(iOS 10, *) {
-            self.refreshControl = control
-        }
-        else {
-            addSubview(control)
-        }
-
-        self.sy_refreshControl = control
-    }
-    
-    @objc private func sy_refreshControlValueChanged() {
-        if let block = sy_refreshControlAction {
-            block(self)
-        }
-    }
-
-    func sy_showPullToRefresh() {
-        guard let control = sy_refreshControl, !control.isRefreshing else { return }
-        
-        control.beginRefreshing()
-        
-        // 60 is the average height for the refreshControl. we can't use UIRefreshControl.frame.size.height because
-        // when it is closed its height is 0.5px...
-        setContentOffset(CGPoint(x: 0, y: -60), animated: true)
-    }
-    
-    func sy_endPullToRefresh() {
-        sy_refreshControl?.endRefreshing()
+        addPullToRefresh(control, action: completion)
     }
 }

@@ -177,9 +177,9 @@ class GalleryGridVC: UIViewController {
     // MARK: Content
     private func updateEmptyState() {
         let text = NSMutableAttributedString()
-        text.sy_appendString("GALLERY EMPTY TITLE".localized, font: .systemFont(ofSize: 17), color: .darkGray)
-        text.sy_appendString("\n\n", font: .systemFont(ofSize: 15), color: .gray)
-        text.sy_appendString("GALLERY EMPTY SUBTITLE".localized, font: .systemFont(ofSize: 15), color: .gray)
+        text.append("GALLERY EMPTY TITLE".localized, font: .systemFont(ofSize: 17), color: .darkGray)
+        text.append("\n\n", font: .systemFont(ofSize: 15), color: .gray)
+        text.append("GALLERY EMPTY SUBTITLE".localized, font: .systemFont(ofSize: 15), color: .gray)
         emptyStateLabel.attributedText = text
         
         emptyStateView.isHidden = !items.isEmpty

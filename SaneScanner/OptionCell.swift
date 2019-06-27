@@ -95,19 +95,28 @@ class OptionCell: UITableViewCell {
     static func cellHeight(option: DeviceOption, showDescription: Bool, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(option: option)
         sizingCell.showDescription = showDescription
-        return sizingCell.sy_cellHeight(forWidth: width)
+        return sizingCell.cellHeight(forWidth: width)
     }
     
     static func cellHeight(prefKey: Preferences.Key, showDescription: Bool, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(prefKey: prefKey)
         sizingCell.showDescription = showDescription
-        return sizingCell.sy_cellHeight(forWidth: width)
+        return sizingCell.cellHeight(forWidth: width)
     }
     
     static func cellHeight(leftText: String, rightText: String, width: CGFloat) -> CGFloat {
         sizingCell.updateWith(leftText: leftText, rightText: rightText)
         sizingCell.showDescription = false
-        return sizingCell.sy_cellHeight(forWidth: width)
+        return sizingCell.cellHeight(forWidth: width)
+    }
+    
+    private func cellHeight(forWidth: CGFloat) -> CGFloat {
+        let size =  contentView.systemLayoutSizeFitting(
+            CGSize(width: forWidth, height: 8000),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+        return ceil(size.height)
     }
     
     override func updateConstraints() {

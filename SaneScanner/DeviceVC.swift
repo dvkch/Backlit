@@ -43,7 +43,7 @@ class DeviceVC: UIViewController {
         
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         
-        tableView.sy_addPullToResfresh { [weak self] (_) in
+        tableView.addPullToResfresh { [weak self] (_) in
             self?.refresh()
         }
         
@@ -159,12 +159,12 @@ class DeviceVC: UIViewController {
         guard !isRefreshing else { return }
         isRefreshing = true
         
-        tableView.sy_showPullToRefresh()
+        tableView.showPullToRefresh()
         Sane.shared.listOptions(for: device) { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
             self.isRefreshing = false
-            self.tableView.sy_endPullToRefresh()
+            self.tableView.endPullToRefresh()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.prepareForSnapshotting()

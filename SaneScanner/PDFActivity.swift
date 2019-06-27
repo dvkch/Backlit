@@ -57,7 +57,7 @@ class PDFActivity: UIActivity {
             .compactMap { $0 as? URL }
             .filter { (url) -> Bool in
                 guard let data = try? Data(contentsOf: url, options: .mappedIfSafe) else { return false }
-                return (data as NSData).sy_imageDataIsValidPNG() || (data as NSData).sy_imageDataIsValidJPEG()
+                return data.isValidPNGImageData || data.isValidJPEGImageData
         }.count
         
         return activityItems.count == readableCount

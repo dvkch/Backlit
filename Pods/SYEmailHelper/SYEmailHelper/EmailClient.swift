@@ -132,7 +132,7 @@ extension ThirdPartyAppEmailService : EmailService {
 
 // MARK: Last resort: copy to clipboard
 @objcMembers public class PasteboardEmailService: NSObject {
-    public static var name: String = "Copy address to pasteboard"
+    public static var name: String = "Copy address to clipboard"
 }
 
 extension PasteboardEmailService : EmailService {

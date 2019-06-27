@@ -62,7 +62,7 @@ extension AppDelegate : UIApplicationDelegate {
         splitViewController.preferredDisplayMode = .allVisible
         
         // creating window
-        window = SYWindow.mainWindow(withRootViewController: splitViewController)
+        window = SYWindow.mainWindow(rootViewController: splitViewController)
         
         // customize HUD
         SVProgressHUD.setDefaultMaskType(.black)

@@ -25,26 +25,33 @@ You can:
 
 Example:
 
-    [SYEmailServicePasteboard setName:@"Copy email address to pasteboard"];
-    [[SYEmailHelper shared] setShowCopyToPasteboard:YES];
-    [[SYEmailHelper shared] setActionSheetTitleText:@"Which app you wanna use bro?"];
-    [[SYEmailHelper shared] setActionSheetCancelButtonText:@"fuhgeddaboudit"];
-    [[SYEmailHelper shared] composeEmailWithAddress:self.fieldEmail.text
-                                            subject:self.fieldSubject.text
-                                               body:self.fieldBody.text
-                                       presentingVC:self
-                                         completion:
-     ^(BOOL userCancelled, SYEmailService *service, NSError *error)
-    {
-        if (userCancelled)
-            self.labelCompletion.text = @"User cancelled";
-        else if (service && error)
-            self.labelCompletion.text = [NSString stringWithFormat:@"Service %@ encountered error: %@", service.name, error.localizedDescription];
-        else if (error)
-            self.labelCompletion.text = [NSString stringWithFormat:@"Encountered error: %@", error.localizedDescription];
-        else
-            self.labelCompletion.text = [NSString stringWithFormat:@"No error, used service %@", service.name];
-    }];
+        PasteboardEmailService.name = "Copy email address to pasteboard"
+        
+        EmailHelper.shared.showCopyToPasteBoard = true
+        EmailHelper.shared.actionSheetTitle = "Which app you wanna use?"
+        EmailHelper.shared.actionSheetMessage = "We support some third party apps, native email client and copying to clipboard if your favorite app is not supported"
+        EmailHelper.shared.actionSheetCancelButtonText = "Meh..."
+        
+        EmailHelper.shared.presentActionSheet(
+            address: emailField.text,
+            subject: subjectField.text,
+            body: bodyField.text,
+            presentingViewController: self,
+            sender: sender)
+        { (canceled, service, error) in
+            if (canceled) {
+                self.completionLabel.text = "User cancelled"
+            }
+            else if let service = service, let error = error {
+                self.completionLabel.text = String(format: "Service %@ encountered error: %@", service.name, error.localizedDescription)
+            }
+            else if let error = error {
+                self.completionLabel.text = String(format: "Encountered error: %@", error.localizedDescription)
+            }
+            else if let service = service {
+                self.completionLabel.text = String(format: "No error, used service %@", service.name)
+            }
+        }
 
 Don't forget
 ============

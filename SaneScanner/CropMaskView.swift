@@ -26,8 +26,8 @@ class CropMaskView: UIView {
     private func setup() {
         backgroundColor = .clear
         
-        maskingView.layer.fillColor = UIColor(white: 0, alpha: 0.4).cgColor
-        maskingView.layer.fillRule = .evenOdd
+        maskingView.shapeLayer.fillColor = UIColor(white: 0, alpha: 0.4).cgColor
+        maskingView.shapeLayer.fillRule = .evenOdd
         addSubview(maskingView)
         
         maskingView.snp.makeConstraints { (make) in
@@ -35,15 +35,15 @@ class CropMaskView: UIView {
         }
         
         for side in [CGRectSide.top, .left, .right, .bottom] {
-            let view = UIView()
+            let view = TapInsetsView()
             view.backgroundColor = .vividBlue
             view.layer.isOpaque = true
             addSubview(view)
             
             if side.isVertical {
-                view.sy_tapInsets = UIEdgeInsets(leftAndRight: -15)
+                view.tapInsets = UIEdgeInsets(leftAndRight: -15)
             } else {
-                view.sy_tapInsets = UIEdgeInsets(topAndBottom: -15)
+                view.tapInsets = UIEdgeInsets(topAndBottom: -15)
             }
             
             let panGesture = UIPanGestureRecognizer()
@@ -56,8 +56,8 @@ class CropMaskView: UIView {
         }
         
         for corner in [CGRectCorner.topLeft, .topRight, .bottomLeft, .bottomRight] {
-            let view = UIView()
-            view.sy_tapInsets = .init(value: -5)
+            let view = TapInsetsView()
+            view.tapInsets = .init(value: -5)
             view.backgroundColor = .vividBlue
             view.layer.borderColor = UIColor.white.cgColor
             view.layer.borderWidth = 2
@@ -223,7 +223,7 @@ class CropMaskView: UIView {
         let insetsHalfBorderWidth = UIEdgeInsets(top: -kBorderWidth / 2, left: -kBorderWidth / 2, bottom: -kBorderWidth / 2, right: -kBorderWidth / 2)
         let path = UIBezierPath(rect: bounds)
         path.append(UIBezierPath(rect: cropRect.inset(by: insetsHalfBorderWidth)))
-        maskingView.layer.path = path.cgPath
+        maskingView.shapeLayer.path = path.cgPath
     }
 }
 

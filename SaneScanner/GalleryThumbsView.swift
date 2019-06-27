@@ -51,16 +51,16 @@ class GalleryThumbsView: UIView {
         collectionView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         addSubview(collectionView)
         
-        leftGradientView.layer.colors = [UIColor.white.cgColor, UIColor(white: 1, alpha: 0).cgColor]
-        leftGradientView.layer.locations = [0.2, 1]
-        leftGradientView.layer.startPoint = .zero
-        leftGradientView.layer.endPoint = .init(x: 1, y: 0)
+        leftGradientView.gradientLayer.colors = [UIColor.white.cgColor, UIColor(white: 1, alpha: 0).cgColor]
+        leftGradientView.gradientLayer.locations = [0.2, 1]
+        leftGradientView.gradientLayer.startPoint = .zero
+        leftGradientView.gradientLayer.endPoint = .init(x: 1, y: 0)
         addSubview(leftGradientView)
         
-        rightGradientView.layer.colors = [UIColor.white.cgColor, UIColor(white: 1, alpha: 0).cgColor]
-        rightGradientView.layer.locations = [0.2, 1]
-        rightGradientView.layer.startPoint = .init(x: 1, y: 0)
-        rightGradientView.layer.endPoint = .zero
+        rightGradientView.gradientLayer.colors = [UIColor.white.cgColor, UIColor(white: 1, alpha: 0).cgColor]
+        rightGradientView.gradientLayer.locations = [0.2, 1]
+        rightGradientView.gradientLayer.startPoint = .init(x: 1, y: 0)
+        rightGradientView.gradientLayer.endPoint = .zero
         addSubview(rightGradientView)
         
         leftGradientView.snp.makeConstraints { (make) in
@@ -96,8 +96,8 @@ class GalleryThumbsView: UIView {
         didSet {
             let gradientOpaqueColor = backgroundColor ?? .white
             
-            leftGradientView.layer.colors  = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
-            rightGradientView.layer.colors = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
+            leftGradientView.gradientLayer.colors  = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
+            rightGradientView.gradientLayer.colors = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
         }
     }
     
