@@ -107,7 +107,7 @@ class GalleryImageVC: UIViewController {
     override func updateViewConstraints() {
         let size = imageView.image?.size ?? GalleryManager.shared.imageSize(for: item) ?? CGSize(width: 0, height: 0)
         
-        imageView.snp.makeConstraints { (make) in
+        imageView.snp.remakeConstraints { (make) in
             make.edges.equalToSuperview()
             make.size.equalTo(size)
         }
