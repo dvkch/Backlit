@@ -63,7 +63,10 @@ extension AppDelegate : UIApplicationDelegate {
         
         // creating window
         window = SYWindow.mainWindow(rootViewController: splitViewController)
-        
+        if #available(iOS 13.0, *) {
+            window?.overrideUserInterfaceStyle = .light
+        }
+
         // customize HUD
         SVProgressHUD.setDefaultMaskType(.black)
         
