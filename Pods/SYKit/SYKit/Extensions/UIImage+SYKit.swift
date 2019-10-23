@@ -197,7 +197,7 @@ import ImageIO
     var roundedClip: UIImage? {
         let size = min(self.size.width, self.size.height)
         
-        UIGraphicsBeginImageContext(CGSize(width: size, height: size))
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: size, height: size), false, scale)
         defer { UIGraphicsEndImageContext() }
         
         UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: size, height: size)).addClip()

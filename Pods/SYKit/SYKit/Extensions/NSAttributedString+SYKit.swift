@@ -143,7 +143,7 @@ public extension NSMutableAttributedString {
     }
 }
 
-extension Collection where Element : NSAttributedString {
+public extension Collection where Element : NSAttributedString {
     func concat(separator: String? = nil) -> NSMutableAttributedString {
         let result = NSMutableAttributedString()
         
@@ -158,7 +158,7 @@ extension Collection where Element : NSAttributedString {
     }
 }
 
-extension Sequence where Element : OptionalType, Element.Wrapped : NSAttributedString {
+public extension Sequence where Element : OptionalType, Element.Wrapped : NSAttributedString {
     func concat(separator: String? = nil) -> NSMutableAttributedString {
         let nonNils: [NSAttributedString] = compactMap { $0.value }
         return nonNils.concat(separator: separator)

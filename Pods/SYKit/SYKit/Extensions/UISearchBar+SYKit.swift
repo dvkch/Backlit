@@ -12,19 +12,15 @@ public extension UISearchBar {
     
     @objc(sy_textField)
     var textField: UITextField? {
-        
-        for subview in subviews {
-            if subview.isKind(of: UITextField.self) {
-                return subview as? UITextField
-            }
-            
-            for subsubview in subview.subviews {
-                if subsubview.isKind(of: UITextField.self) {
-                    return subsubview as? UITextField
-                }
-            }
+        if #available(iOS 13, *) {
+            return findTextView(in: self, depth: 3)
         }
-        
-        return nil
+        return findTextView(in: self, depth: 2)
+    }
+    
+    private func findTextView(in view: UIView, depth: Int) -> UITextField? {
+        if let field = view as? UITextField { return field }
+        guard depth > 0 else { return nil }
+        return view.subviews.compactMap { findTextView(in: $0, depth: depth - 1) }.first
     }
 }

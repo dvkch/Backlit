@@ -38,7 +38,7 @@ public extension Collection {
     }
 }
 
-public extension Array where Element : OptionalType {
+public extension Sequence where Element : OptionalType {
     func removingNils() -> [Element.Wrapped] {
         return compactMap { $0.value }
     }

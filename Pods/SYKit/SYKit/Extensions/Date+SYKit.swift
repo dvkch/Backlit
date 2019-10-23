@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Date {
+public extension Date {
     static func -(lhs: Date, rhs: Date) -> TimeInterval {
         return lhs.timeIntervalSince(rhs)
     }

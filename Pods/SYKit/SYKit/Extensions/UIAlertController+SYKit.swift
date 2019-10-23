@@ -12,13 +12,16 @@ import UIKit
 extension UIAlertController {
     
     @discardableResult
-    @objc(sy_addActionWithTitle:style:handler:)
-    public func addAction(title: String?, style: UIAlertAction.Style, handler: ((UIAlertAction) -> ())?) -> UIAlertAction {
+    @objc(sy_addActionWithTitle:image:style:handler:)
+    public func addAction(title: String?, image: UIImage? = nil, style: UIAlertAction.Style, handler: ((UIAlertAction) -> ())?) -> UIAlertAction {
         let action = UIAlertAction(title: title, style: style, handler: handler)
+        if let image = image {
+            action.updateImaeg(image)
+        }
         self.addAction(action)
         return action
     }
-
+    
     @objc(sy_setContentViewController:height:)
     public func setContentViewController(_ contentVC: UIViewController?, height: CGFloat = -1) {
         setValue(contentVC, forKey: "contentViewController")
@@ -28,7 +31,7 @@ extension UIAlertController {
             preferredContentSize.height = height
         }
     }
-
+    
     @discardableResult
     @objc(sy_setupImageViewWithImage:height:margins:)
     public func setupImageView(image: UIImage?, height: CGFloat, margins: UIEdgeInsets = .zero) -> UIImageView {
@@ -45,6 +48,9 @@ extension UIAlertAction {
     @objc(sy_updateTitle:)
     public func updateTitle(_ title: String) {
         setValue(title, forKey: "title")
+    }
+    public func updateImaeg(_ image: UIImage?) {
+        setValue(image, forKey: "image")
     }
 }
 
