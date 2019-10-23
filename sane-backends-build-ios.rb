@@ -7,7 +7,7 @@ SRC_DIR = Dir.pwd + "/sane-backends"
 LOG_PATH = Dir.pwd + "/sane-log.txt"
 
 # Release tag
-GIT_TAG = "RELEASE_1_0_27"
+GIT_TAG = "1.0.28"
 
 # Build flags
 MAKE_JOBS = 4
