@@ -12,7 +12,7 @@ extension UILabel {
 
     var autoAdjustsFontSize: Bool {
         get {
-            #if !MARZIPAN
+            #if !targetEnvironment(macCatalyst)
             if #available(iOS 10.0, *) {
                 return self.adjustsFontForContentSizeCategory
             } else {
@@ -23,7 +23,7 @@ extension UILabel {
             #endif
         }
         set {
-            #if !MARZIPAN
+            #if !targetEnvironment(macCatalyst)
             if #available(iOS 10.0, *) {
                 self.adjustsFontForContentSizeCategory = newValue
             }

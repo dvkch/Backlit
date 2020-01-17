@@ -9,7 +9,7 @@
 import UIKit
 import SYKit
 
-#if !MARZIPAN
+#if !targetEnvironment(macCatalyst)
 import SYEmailHelper
 import SVProgressHUD
 #endif
@@ -45,7 +45,7 @@ class PreferencesVC: UIViewController {
 
 extension PreferencesVC : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        #if MARZIPAN
+        #if targetEnvironment(macCatalyst)
         let contactSectionCount = 0
         #else
         let contactSectionCount = 1
@@ -111,7 +111,7 @@ extension PreferencesVC : UITableViewDelegate {
         if indexPath.section >= Preferences.shared.groupedKeys.count {
             guard indexPath.row == 0 else { return }
             
-            #if !MARZIPAN
+            #if !targetEnvironment(macCatalyst)
             let subject = String(format: "CONTACT SUBJECT ABOUT APP %@ %@".localized, Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
             
             PasteboardEmailService.name = "MAIL COPY PASTEBOARD NAME".localized

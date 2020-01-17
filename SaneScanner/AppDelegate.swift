@@ -10,7 +10,7 @@ import UIKit
 import SYKit
 import SaneSwift
 
-#if !MARZIPAN
+#if !targetEnvironment(macCatalyst)
 import SVProgressHUD
 #endif
 

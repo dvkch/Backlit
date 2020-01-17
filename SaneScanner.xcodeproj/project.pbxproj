@@ -6,21 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		97D45047223018E80075CED4 /* Marzipan */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 97D45048223018E90075CED4 /* Build configuration list for PBXAggregateTarget "Marzipan" */;
-			buildPhases = (
-				97D4504E223018F20075CED4 /* Marzipanify */,
-			);
-			dependencies = (
-				97D4504D223018EE0075CED4 /* PBXTargetDependency */,
-			);
-			name = Marzipan;
-			productName = Marzipan;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		97044903220875D300E13C6A /* DeviceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97044901220875D300E13C6A /* DeviceVC.swift */; };
 		97044904220875D300E13C6A /* DeviceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97044902220875D300E13C6A /* DeviceVC.xib */; };
@@ -79,13 +64,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		97D4504C223018EE0075CED4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8CBD20C1AF9A58C00B4C221;
-			remoteInfo = SaneScanner;
-		};
 		97EDB91B1E4924D40012CB7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
@@ -380,7 +358,6 @@
 			buildConfigurationList = F8CBD2301AF9A58C00B4C221 /* Build configuration list for PBXNativeTarget "SaneScanner" */;
 			buildPhases = (
 				DCF69B669EC8701B2D500461 /* [CP] Check Pods Manifest.lock */,
-				97D589B1222FF585007BA30C /* Marzipan Checks */,
 				97DF1B511E3BA42A00AD8A92 /* TODOs etc */,
 				976E5BAC1E3BA4630057B599 /* TRANSLATE */,
 				F8CBD2091AF9A58C00B4C221 /* Sources */,
@@ -408,11 +385,6 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
-					97D45047223018E80075CED4 = {
-						CreatedOnToolsVersion = 10.1;
-						DevelopmentTeam = 79RY8264V4;
-						ProvisioningStyle = Automatic;
-					};
 					97EDB9151E4924D40012CB7E = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 79RY8264V4;
@@ -444,7 +416,6 @@
 			targets = (
 				F8CBD20C1AF9A58C00B4C221 /* SaneScanner */,
 				97EDB9151E4924D40012CB7E /* SaneScannerUITests */,
-				97D45047223018E80075CED4 /* Marzipan */,
 			);
 		};
 /* End PBXProject section */
@@ -530,42 +501,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /usr/bin/ruby;
 			shellScript = "# characters in the list will prevent the @ sign from being considered as a string literal start\ncharacters_to_ignore_before_at = \"%\"\n\n# list all .m and .h files in directory\nDir.glob(\"#{ENV['SRCROOT']}/#{ENV['PROJECT_NAME']}/**/{*.h,*.m}\") do |file|\n\n# iterate through all lines of the given file\nFile.foreach(file).with_index do |line, line_num|\n\n# iterate through all occurences of @\", and check if it represents the beginning of a string literal\nindex = -1\nwhile index = line.index('@\"', index+1)\n\n# if we haven't found the beginning of a literal we go to the next occurence\nnext if index > 0 && characters_to_ignore_before_at.index(line[index-1])\n\n# we find the end of the literal\nindex_end = index + 1\nwhile index_end = line.index('\"', index_end+1)\n# the double-quote character doesn't denote an end if it's escaped\nbreak if line[index_end-1] != '\\\\'\nend\n\n# in case the literal is sprend into multiple lines and we don't find its end on this line\nif index_end == nil\nindex_end = -1\nend\n\n# string literal content\nstring_to_translate = line[index..index_end]\n\n# xcode warning\nputs \"#{file}:#{line_num+1}:#{index+1}: warning: TRANSLATE: #{string_to_translate}\"\nend\nend\nend\n\n";
-		};
-		97D4504E223018F20075CED4 /* Marzipanify */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = Marzipanify;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [[ \"$CONFIGURATION\" != \"macOS\" ]]; then\n    echo \"Needs to select macOS configuration\"\n    exit 1\nfi\n\nMARZ=\"/Applications/_/marzipanify\"\nif [ ! -f \"${MARZ}\" ]; then\necho \"error: Couldn't find marzipanify executable\"  \nexit 1\nfi\n\nDEST=\"${TARGET_BUILD_DIR}/../MARZIPAN\"\nif [ -d \"${DEST}\" ]; then\n    rm -rf \"${DEST}\"\nfi\n\ncp -r \"${TARGET_BUILD_DIR}\" \"${DEST}\"\ncd \"${DEST}\"\n\n\"${MARZ}\" \"${PROJECT_NAME}.app\"\n\n# rm \"Entitlements*\"\n\nAPP_PATH=\"${DEST}/${PROJECT_NAME}.app\"\n\nOPEN_MSG=`open \"${APP_PATH}\" 2>&1`\n\nif [ $? -ne 0 ]; then\n    echo \"error: Couldn't launch app\"\n    echo \"error: ${OPEN_MSG}\"\n    exit 1\nfi\n\n";
-		};
-		97D589B1222FF585007BA30C /* Marzipan Checks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Marzipan Checks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n# Type a script or drag a script file from your workspace to insert its path.\nif [[ \"$CONFIGURATION\" == \"macOS\" ]] && [[ \"$PLATFORM_NAME\" != \"iphonesimulator\" ]]; then\n    echo \"error: Needs to be built for iOS Simulator, not $PLATFORM_NAME\"\n    exit 1\nfi\n";
 		};
 		97DF1B511E3BA42A00AD8A92 /* TODOs etc */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -658,11 +593,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		97D4504D223018EE0075CED4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8CBD20C1AF9A58C00B4C221 /* SaneScanner */;
-			targetProxy = 97D4504C223018EE0075CED4 /* PBXContainerItemProxy */;
-		};
 		97EDB91C1E4924D40012CB7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8CBD20C1AF9A58C00B4C221 /* SaneScanner */;
@@ -683,144 +613,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		973E6E12222FF3C900899D27 /* macOS */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 19;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = NO;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = macOS;
-		};
-		973E6E13222FF3C900899D27 /* macOS */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E4150E772CE5FCDA9956F3BE /* Pods-SaneScanner.macos.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"MARZIPAN=1",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(PROJECT_DIR)/sane-libs/all",
-				);
-				INFOPLIST_FILE = SaneScanner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/sane-libs/all/**",
-					"$(PROJECT_DIR)/sane-libs/all/sane",
-					"$(PROJECT_DIR)/sane-libs/all",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScanner;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner AppStore";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = MARZIPAN;
-				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
-			};
-			name = macOS;
-		};
-		973E6E14222FF3C900899D27 /* macOS */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				INFOPLIST_FILE = SaneScannerUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScannerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				TEST_TARGET_NAME = SaneScanner;
-			};
-			name = macOS;
-		};
-		97D45049223018E90075CED4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		97D4504A223018E90075CED4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		97D4504B223018E90075CED4 /* macOS */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = macOS;
-		};
 		97EDB91D1E4924D40012CB7E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1044,22 +836,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		97D45048223018E90075CED4 /* Build configuration list for PBXAggregateTarget "Marzipan" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				97D45049223018E90075CED4 /* Debug */,
-				97D4504A223018E90075CED4 /* Release */,
-				97D4504B223018E90075CED4 /* macOS */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		97EDB91F1E4924D40012CB7E /* Build configuration list for PBXNativeTarget "SaneScannerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				97EDB91D1E4924D40012CB7E /* Debug */,
 				97EDB91E1E4924D40012CB7E /* Release */,
-				973E6E14222FF3C900899D27 /* macOS */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1069,7 +850,6 @@
 			buildConfigurations = (
 				F8CBD22E1AF9A58C00B4C221 /* Debug */,
 				F8CBD22F1AF9A58C00B4C221 /* Release */,
-				973E6E12222FF3C900899D27 /* macOS */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1079,7 +859,6 @@
 			buildConfigurations = (
 				F8CBD2311AF9A58C00B4C221 /* Debug */,
 				F8CBD2321AF9A58C00B4C221 /* Release */,
-				973E6E13222FF3C900899D27 /* macOS */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

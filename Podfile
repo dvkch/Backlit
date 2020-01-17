@@ -9,11 +9,11 @@ target :'SaneScanner' do
     pod 'DirectoryWatcher'
     pod 'SnapKit'
     pod 'SpinKit'
-    pod 'SVProgressHUD', :configurations => ['Debug', 'Release']
-    pod 'SYEmailHelper', :configurations => ['Debug', 'Release']
+    pod 'SVProgressHUD'
+    pod 'SYEmailHelper'
     pod 'SYKit'
     pod 'SYOperationQueue'
-    pod 'SYPictureMetadata', :configurations => ['Debug', 'Release'], :inhibit_warnings => false
+    pod 'SYPictureMetadata'
 end
 
 post_install do | installer |
@@ -22,12 +22,7 @@ post_install do | installer |
 
     installer.pods_project.targets.each do |t|
         t.build_configurations.each do |config|
-            if config.name == "macOS"
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-            else
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
-            end
-
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
             config.build_settings['ENABLE_BITCODE'] = 'NO'
         end
     end

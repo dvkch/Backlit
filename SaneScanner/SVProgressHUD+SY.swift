@@ -8,7 +8,7 @@
 
 import UIKit
 
-#if !MARZIPAN
+#if !targetEnvironment(macCatalyst)
 import SVProgressHUD
 #else
 class SVProgressHUD {

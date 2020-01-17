@@ -11,7 +11,7 @@ import SYKit
 import SYOperationQueue
 import DirectoryWatcher
 
-#if !MARZIPAN
+#if !targetEnvironment(macCatalyst)
 import SYPictureMetadata
 #endif
 

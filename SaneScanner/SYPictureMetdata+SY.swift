@@ -8,7 +8,7 @@
 
 import SaneSwift
 
-#if MARZIPAN
+#if targetEnvironment(macCatalyst)
 class SYMetadata { }
 #else
 import SYPictureMetadata
@@ -17,7 +17,7 @@ import SYPictureMetadata
 extension SYMetadata {
     
     convenience init(device: Device, scanParameters: ScanParameters) {
-        #if MARZIPAN
+        #if targetEnvironment(macCatalyst)
         self.init()
         #else
         var resX: Int? = nil
@@ -67,7 +67,7 @@ extension SYMetadata {
         #endif
     }
     
-    #if MARZIPAN
+    #if targetEnvironment(macCatalyst)
     static func data(withImageData: Data?, andMetadata: SYMetadata?) -> Data? {
         return nil
     }
