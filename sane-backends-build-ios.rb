@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
+require 'shellwords'
 
 # Paths
 SRC_DIR = Dir.pwd + "/sane-backends"
@@ -36,6 +37,13 @@ end
 
 # Run system call and log to log file
 def systemWithLog(env = {}, command)
+    File.open(LOG_PATH,"a+") do |f| 
+        f.puts("")
+        f.puts("###################################")
+        f.puts("## #{command}")
+        f.puts("")
+    end
+
     status = system(env, command + " >> \"#{LOG_PATH}\" 2>&1")
     if status != true
         puts "An error has been encountered, please take a look at the log file "
@@ -56,7 +64,11 @@ def downloadAndCheckout
     systemWithLog("git clone https://gitlab.com/sane-project/backends.git \"#{SRC_DIR}\"")
 
     puts "Checking out tag: #{GIT_TAG}"
-    systemWithLog("cd #{SRC_DIR}; git checkout \"tags/#{GIT_TAG}\"")
+    systemWithLog("cd \"#{SRC_DIR}\"; git checkout \"tags/#{GIT_TAG}\"")
+
+    puts "Directory: #{Dir.pwd}"
+    puts "Running autogen.sh"
+    systemWithLog("cd \"#{SRC_DIR}\"; ./autogen.sh")
 
     puts ""
 end
@@ -88,7 +100,7 @@ def buildLib(arch, isSim, host, minSDK, output, optFlags)
     }
 
     dateStart = Time.now
-    systemWithLog(flags, "./configure --host=#{host} --prefix=\"#{output}\" #{configureOptions}")
+    systemWithLog(flags, "./configure --host=#{host} --prefix=#{output} #{configureOptions}")
 
     # remove references of byte_order.h
     removeLineInFile("include/byteorder.h", "byte_order.h")
@@ -123,7 +135,7 @@ def buildAndMerge(output, optFlags)
     }
 
     archs.each { |arch, opts| 
-        buildLib(arch, opts[:isSim], opts[:host], 8.0, "#{output}/#{arch}", optFlags)
+        buildLib(arch, opts[:isSim], opts[:host], 9.0, "#{output}/#{arch}", optFlags)
     }
 
     ## Merge libs
@@ -156,6 +168,11 @@ def main
     puts "Welcome to sane-backends build script to generate iOS libs, hope all goes well for you!"
     puts "This tools needs the developer command line tools to be installed."
     puts ""
+    puts "You may also need autoconf, autoconf-archive, libtool and gettext, available in Homebrew:"
+    puts "    brew install autoconf autoconf-archive libtool gettext"
+    puts ""
+    puts "Then add gettext to your $PATH, using /usr/local/opt/gettext/bin"
+    puts ""
 
     deleteFile(LOG_PATH)
 
@@ -163,7 +180,7 @@ def main
     downloadAndCheckout
 
     # Build
-    buildAndMerge(Dir.pwd + "/sane-libs", "-O0 -g3 -U NDEBUG -D DEBUG=1")
+    buildAndMerge(Dir.pwd.shellescape + "/sane-libs", "-O0 -g3 -U NDEBUG -D DEBUG=1")
 
     # Done!
     puts "All done!"
