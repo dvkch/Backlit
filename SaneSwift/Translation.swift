@@ -6,6 +6,8 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
+import Foundation
+
 // MARK: Public access
 public extension String {
     var saneTranslation: String {

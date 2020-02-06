@@ -6,6 +6,8 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
+import Foundation
+
 public enum SaneError: Error {
     case cancelled
     case saneError(_ status: SANE_Status)

@@ -6,6 +6,8 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
+import UIKit
+
 public class Device {
     // MARK: Initializers
     init(name: String, type: String, vendor: String, model: String) {

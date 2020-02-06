@@ -6,6 +6,8 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
+import Foundation
+
 // MARK: CustomStringConvertibale
 extension SANE_Frame : CustomStringConvertible {
     public var description: String {

@@ -6,6 +6,9 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
+import Foundation
+import CoreGraphics
+
 public struct ScanParameters {
     public let currentlyAcquiredChannel: SANE_Frame
     public let acquiringLastChannel: Bool

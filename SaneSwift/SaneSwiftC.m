@@ -7,8 +7,6 @@
 //
 
 #import "SaneSwiftC.h"
-#import "sane.h"
-#import "saneopts.h"
 
 // reimport symbol from sane-net.a
 extern int sanei_debug_net;

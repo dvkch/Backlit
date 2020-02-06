@@ -6,6 +6,8 @@
 //  Copyright (c) 2019 Syan. All rights reserved.
 //
 
+import Foundation
+
 public struct DeviceAuthentication {
     private let username: String?
     private let password: String?

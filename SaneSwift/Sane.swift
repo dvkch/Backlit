@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol SaneDelegate: NSObjectProtocol {
     func saneDidStartUpdatingDevices(_ sane: Sane)
@@ -302,7 +303,7 @@ extension Sane {
         }
     }
     
-    public func valueForOption<V, T: DeviceOptionTyped<V>>(_ option: T, completion: @escaping (_ value: T.Value?, _ error: Error?) -> ()) {
+    public func valueForOption<V, T: DeviceOptionTyped<V>>(_ option: T, completion: @escaping (_ value: V?, _ error: Error?) -> ()) {
         let mainThread = Thread.isMainThread
         
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
@@ -374,7 +375,7 @@ extension Sane {
         }
     }
 
-    public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<T.Value>, completion: ((_ error: Error?) -> ())?) {
+    public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<V>, completion: ((_ error: Error?) -> ())?) {
         let mainThread = Thread.isMainThread
         
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
