@@ -7,14 +7,20 @@ platform :ios do
 
     desc "Create signing certs and provisioning profiles if needed"
     lane :signing do
-        cert(development: true)
-        sigh(development: true)
+        cert(team_id: "79RY8264V4", development: true)
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "ios",   development: true)
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "macos", development: true)
 
-        cert
-        sigh
-        sigh(adhoc: true)
+        cert(team_id: "79RY8264V4")
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "ios")
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "ios",   adhoc: true)
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "macos")
+
+        cert(team_id: "79RY8264V4", type: 'developer_id_application')
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "macos", developer_id: true)
     
         system "rm ../*.mobileprovision"
+        system "rm ../*.provisionprofile"
         system "rm ../*.cer"
         system "rm ../*.p12"
         system "rm ../*.certSigningRequest"
