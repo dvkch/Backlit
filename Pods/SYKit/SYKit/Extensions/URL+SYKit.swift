@@ -41,8 +41,7 @@ public extension URL {
 }
 
 public extension String {
-    func asURL() -> URL? {
-        return URL(string: self)
+    func asURL(relativeTo baseURL: URL? = nil) -> URL? {
+        return URL(string: self, relativeTo: baseURL)?.absoluteURL
     }
 }
-

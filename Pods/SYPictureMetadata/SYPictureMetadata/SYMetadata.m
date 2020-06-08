@@ -10,7 +10,7 @@
 #import "SYMetadata.h"
 #import "NSDictionary+SY.h"
 
-#if !TARGET_OS_TV
+#if !TARGET_OS_TV && !TARGET_OS_MACCATALYST
 #import <AssetsLibrary/AssetsLibrary.h>
 #endif
 
@@ -48,7 +48,7 @@
 
 + (instancetype)metadataWithAsset:(ALAsset *)asset
 {
-#if !TARGET_OS_TV
+#if !TARGET_OS_TV && !TARGET_OS_MACCATALYST
     ALAssetRepresentation *representation = [asset defaultRepresentation];
     return [self metadataWithDictionary:[representation metadata]];
 #else
@@ -146,7 +146,7 @@
 
 + (NSDictionary *)dictionaryWithAssetURL:(NSURL *)assetURL
 {
-#if !TARGET_OS_TV
+#if !TARGET_OS_TV && !TARGET_OS_MACCATALYST
     __block ALAsset *assetAtUrl = nil;
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
     
