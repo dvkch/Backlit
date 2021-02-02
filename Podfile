@@ -11,12 +11,12 @@ target :'SaneScanner' do
     pod 'SpinKit'
     pod 'SVProgressHUD'
     pod 'SYEmailHelper'
-    pod 'SYKit'
+    pod 'SYKit', '~> 0.1.16'
     pod 'SYOperationQueue'
-    pod 'SYPictureMetadata'
+    pod 'SYPictureMetadata', '~> 2.0'
 end
 
-post_install do | installer |
+post_install do |installer|
     require 'fileutils'
     FileUtils.cp_r('Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-acknowledgements.plist', 'SaneScanner/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
 

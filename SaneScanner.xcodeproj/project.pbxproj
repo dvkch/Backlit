@@ -98,6 +98,7 @@
 		97499E5E220874B3006DED20 /* SplitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVC.swift; sourceTree = "<group>"; };
 		9757FCEF2207112D00AB59F1 /* DevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesVC.swift; sourceTree = "<group>"; };
 		9757FCF02207112D00AB59F1 /* DevicesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesVC.xib; sourceTree = "<group>"; };
+		976E423D23D2158100FFEFD0 /* SaneScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaneScanner.entitlements; sourceTree = "<group>"; };
 		978263CA221E253D0095E6ED /* DotsRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsRefreshControl.swift; sourceTree = "<group>"; };
 		9785C5671E3D247A006CD4F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9786507C220B5E6400F52DE6 /* PDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFGenerator.swift; sourceTree = "<group>"; };
@@ -306,6 +307,7 @@
 		F8CBD20F1AF9A58C00B4C221 /* SaneScanner */ = {
 			isa = PBXGroup;
 			children = (
+				976E423D23D2158100FFEFD0 /* SaneScanner.entitlements */,
 				97CC34E52205F9C700304345 /* Extensions */,
 				97865082220B6C5E00F52DE6 /* Models */,
 				F804E07B1AFA56AC00CBE307 /* Controllers */,
@@ -382,7 +384,7 @@
 			attributes = {
 				CLASSPREFIX = SY;
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					97EDB9151E4924D40012CB7E = {
@@ -460,7 +462,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework",
-				"${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SYEmailHelper/SYEmailHelper.framework",
 				"${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework",
@@ -473,7 +474,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DirectoryWatcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mantle.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYEmailHelper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYKit.framework",
@@ -672,6 +672,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -734,6 +735,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -773,9 +775,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SaneScanner/SaneScanner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -795,6 +800,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner Development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner macOS development";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -807,9 +814,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SaneScanner/SaneScanner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -828,6 +838,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner AppStore";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner macOS AppStore";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
 			};
