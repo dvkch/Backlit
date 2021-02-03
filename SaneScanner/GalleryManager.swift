@@ -142,24 +142,26 @@ class GalleryManager: NSObject {
         
         var fileURL = FileManager.documentsDirectoryURL.appendingPathComponent(formatter.string(from: Date()), isDirectory: false)
         
-        let imageData: Data?
+        let imageData: Data
         if Preferences.shared.saveAsPNG {
             fileURL.appendPathExtension(kImageExtensionPNG)
-            imageData = image.pngData()
+            if let data = image.pngData() {
+                imageData = data
+            } else {
+                return nil
+            }
         } else {
             fileURL.appendPathExtension(kImageExtensionJPG)
-            imageData = image.jpegData(compressionQuality: 0.9)
+            if let data = image.jpegData(compressionQuality: 0.9) {
+                imageData = data
+            } else {
+                return nil
+            }
         }
         
-        guard imageData != nil else { return nil }
-        
-        var imageDataWithMetadata = imageData
-        if let metadata = metadata {
-            imageDataWithMetadata = SYMetadata.data(withImageData: imageData, andMetadata: metadata)
-        }
-        
-        guard let dataToWrite = imageDataWithMetadata ?? imageData else { return nil }
+        let imageDataWithMetadata = try metadata?.apply(to: imageData)
 
+        let dataToWrite = imageDataWithMetadata ?? imageData
         try dataToWrite.write(to: fileURL, options: .atomicWrite)
         imageURLs.insert(fileURL.standardizedFileURL, at: 0)
         

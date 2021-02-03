@@ -7,6 +7,7 @@
 //
 
 import SaneSwift
+import SYPictureMetadata
 
 #if targetEnvironment(macCatalyst)
 class SYMetadata { }
@@ -49,21 +50,21 @@ extension SYMetadata {
         self.init()
         
         metadataTIFF = SYMetadataTIFF()
-        metadataTIFF.orientation = SYPictureTiffOrientation_TopLeft.rawValue as NSNumber
-        metadataTIFF.make = device.vendor
-        metadataTIFF.model = device.model
-        metadataTIFF.software = (Bundle.main.localizedName ?? "") + " " + Bundle.main.fullVersion
-        metadataTIFF.xResolution = resXInches.map(NSNumber.init)
-        metadataTIFF.yResolution = resYInches.map(NSNumber.init)
-        metadataTIFF.resolutionUnit = 2 // 2 = inches, let's hope it'll make sense for every device
+        metadataTIFF?.orientation = .up
+        metadataTIFF?.make = device.vendor
+        metadataTIFF?.model = device.model
+        metadataTIFF?.software = (Bundle.main.localizedName ?? "") + " " + Bundle.main.fullVersion
+        metadataTIFF?.xResolution = resXInches
+        metadataTIFF?.yResolution = resYInches
+        metadataTIFF?.resolutionUnit = 2 // 2 = inches, let's hope it'll make sense for every device
         
         metadataPNG = SYMetadataPNG()
-        metadataPNG.xPixelsPerMeter = resXMeters.map(NSNumber.init)
-        metadataPNG.yPixelsPerMeter = resYMeters.map(NSNumber.init)
+        metadataPNG?.xPixelsPerMeter = resXMeters
+        metadataPNG?.yPixelsPerMeter = resYMeters
         
         metadataJFIF = SYMetadataJFIF()
-        metadataJFIF.xDensity = resXInches.map(NSNumber.init)
-        metadataJFIF.yDensity = resYInches.map(NSNumber.init)
+        metadataJFIF?.xDensity = resXInches
+        metadataJFIF?.yDensity = resYInches
         #endif
     }
     

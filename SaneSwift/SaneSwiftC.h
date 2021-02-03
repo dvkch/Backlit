@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "sane.h"
-#import "saneopts.h"
+@import Sane;
 
 FOUNDATION_EXPORT void SaneSetLogLevel(int logLevel);
 FOUNDATION_EXPORT int SaneGetLogLevel(void);

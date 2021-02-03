@@ -9,6 +9,7 @@
 import UIKit
 import SYKit
 import SaneSwift
+import SYPictureMetadata
 
 #if !targetEnvironment(macCatalyst)
 import SVProgressHUD
@@ -19,7 +20,11 @@ enum SnapshotType {
 }
 
 // TODO: add auth to Keychain?
-// LATER: send in chronological order, older to newer
+// TODO: add Sane license in acknowledgements
+// TODO: add podspec for sane-backend only, including license
+// TODO: black mode
+// TODO: SceneDelegate
+// TODO: send in chronological order, older to newer
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
