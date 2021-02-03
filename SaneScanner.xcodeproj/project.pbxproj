@@ -366,6 +366,7 @@
 				F8CBD20A1AF9A58C00B4C221 /* Frameworks */,
 				F8CBD20B1AF9A58C00B4C221 /* Resources */,
 				93CC2C1AFE9AE5B01609E587 /* [CP] Embed Pods Frameworks */,
+				5AB3DD18DF864460158D9CE9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -454,6 +455,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5AB3DD18DF864460158D9CE9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Sane/Sane-Translations.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sane-Translations.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		93CC2C1AFE9AE5B01609E587 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -780,7 +799,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -800,7 +818,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner Development";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner macOS development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner macOS Development";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
@@ -819,7 +837,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

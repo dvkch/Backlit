@@ -59,7 +59,7 @@ public class SYMetadata: SYMetadataBase {
         guard fileURL.isFileURL else { throw Error.notAFileURL }
         guard let source = CGImageSourceCreateWithURL(fileURL as CFURL, nil) else { throw Error.cannotCreateSource }
 
-        let options = [kCGImageSourceShouldCache as NSString: false]
+        let options = [kCGImageSourceShouldCache.string: false]
         guard let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options as CFDictionary) as? [String: Any] else { throw Error.cannotCopyPropertiesAtIndexZero }
         
         self.init(dictionary: properties)
@@ -69,7 +69,7 @@ public class SYMetadata: SYMetadataBase {
         guard imageData.count > 0 else { throw Error.emptyData }
         guard let source = CGImageSourceCreateWithData(imageData as CFData, nil) else { throw Error.cannotCreateSource }
 
-        let options = [kCGImageSourceShouldCache as NSString: false]
+        let options = [kCGImageSourceShouldCache.string: false]
         guard let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options as CFDictionary) as? [String: Any] else { throw Error.cannotCopyPropertiesAtIndexZero }
         
         self.init(dictionary: properties)
@@ -124,7 +124,7 @@ public class SYMetadata: SYMetadataBase {
     // MARK: Children
     internal override class var childrenMappings: [String: SYMetadataBase.Type] {
         return [
-            kCGImagePropertyTIFFDictionary.string: SYMetadataTifff.self,
+            kCGImagePropertyTIFFDictionary.string: SYMetadataTIFF.self,
             kCGImagePropertyExifDictionary.string: SYMetadataExif.self,
             kCGImagePropertyExifAuxDictionary.string: SYMetadataExifAux.self,
             kCGImagePropertyGIFDictionary.string: SYMetadataGIF.self,
@@ -146,7 +146,7 @@ public class SYMetadata: SYMetadataBase {
         ]
     }
     
-    public var metadataTIFF: SYMetadataTifff? {
+    public var metadataTIFF: SYMetadataTIFF? {
         get { getChildren(key: kCGImagePropertyTIFFDictionary.string) }
         set { setChildren(key: kCGImagePropertyTIFFDictionary.string, value: newValue) }
     }
@@ -250,27 +250,27 @@ public class SYMetadata: SYMetadataBase {
     }
 
     // MARK: Values
-    public var fileSize: NSNumber? {
+    public var fileSize: Int? {
         return getValue(key: kCGImagePropertyFileSize.string)
     }
     
-    public var pixelHeight: NSNumber? {
+    public var pixelHeight: Int? {
         return getValue(key: kCGImagePropertyPixelHeight.string)
     }
     
-    public var pixelWidth: NSNumber? {
+    public var pixelWidth: Int? {
         return getValue(key: kCGImagePropertyPixelWidth.string)
     }
     
-    public var dpiHeight: NSNumber? {
+    public var dpiHeight: Int? {
         return getValue(key: kCGImagePropertyDPIHeight.string)
     }
     
-    public var dpiWidth: NSNumber? {
+    public var dpiWidth: Int? {
         return getValue(key: kCGImagePropertyDPIWidth.string)
     }
     
-    public var depth: NSNumber? {
+    public var depth: Int? {
         return getValue(key: kCGImagePropertyDepth.string)
     }
     

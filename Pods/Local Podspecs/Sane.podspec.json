@@ -1,0 +1,30 @@
+{
+  "name": "Sane",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "version": "1.0.31",
+  "license": {
+    "type": "GPL with exception clause",
+    "file": "Sane/all/Sane.xcframework/LICENSE.txt"
+  },
+  "summary": "SANE backends, net only",
+  "homepage": "https://github.com/dvkch/SaneScanner",
+  "authors": {
+    "Stan Chevallier": "contact@stanislaschevallier.fr"
+  },
+  "source": {
+    "git": "https://github.com/dvkch/SaneScanner.git",
+    "tag": "Sane-1.0.31"
+  },
+  "vendored_frameworks": "Sane/all/Sane.xcframework",
+  "resource_bundles": {
+    "Sane-Translations": [
+      "Sane/all/translations/*.lproj"
+    ]
+  },
+  "requires_arc": true,
+  "xcconfig": {
+    "CLANG_MODULES_AUTOLINK": "YES"
+  }
+}

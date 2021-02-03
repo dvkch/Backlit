@@ -11,8 +11,6 @@
 #endif
 
 #import "SaneSwiftC.h"
-#import "sane.h"
-#import "saneopts.h"
 
 FOUNDATION_EXPORT double SaneSwiftVersionNumber;
 FOUNDATION_EXPORT const unsigned char SaneSwiftVersionString[];

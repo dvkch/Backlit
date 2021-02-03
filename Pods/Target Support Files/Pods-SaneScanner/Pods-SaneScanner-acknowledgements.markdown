@@ -79,6 +79,1335 @@ Use it as you like in every project you want, redistribute with mentions of my n
 
 -- dvkch
 
+## Sane
+
+Sat Apr 23 2005
+
+This files attempts to clarify the licensing situation for the SANE
+distribution.  In case of doubt, the copyright information contained
+in each file overrides what is said here.
+
+SANE consists of three parts each of which has its own licensing
+terms:
+
+  * The frontend programs.
+
+    These programs are generally protected by the GNU General Public
+    License.  (See file COPYING.)
+
+  * The backend libraries.
+
+    Most backend libraries are protected by the GNU General Public License
+    (see file COPYING), but as an exception, it is permissible to link against
+    such a library without affecting the licensing status of the program
+    that uses the libraries.  For details, see the copyright notice at the
+    head of the backend files (e.g., backend/dll.c).
+
+    Note that not all of the backends apply the exception and that some have
+    additional licensing constraints.  E.g., the DC210 backend uses JPG code
+    that is licensed as described in README.djpeg.
+
+  * The SANE API and network protocol as put forth in the standard document.
+
+    The standard is considered to be in the public domain.  Anyone is free
+    to implement SANE interface conforming applications or libraries in
+    any way he or she sees fit.
+
+    The standard is maintained at https://gitlab.com/sane-project/standard
+    and published at https://sane-project.gitlab.io/standard/.
+
+Frequently Asked Questions about the SANE licensing:
+
+  * Why don't you use the GNU LPGL ?
+
+    The reason SANE isn't licensed under the GNU LGPL is very simple: the
+    GNU LGPL didn't exist at the time SANE was first released. So, the SANE
+    Exception was added to the GNU GPL.
+
+  * Why don't you relicense SANE, now that the GNU LGPL is available ?
+
+    To relicense the various pieces of code composing SANE, each and every
+    copyright holder needs to agree with the relicensing. Unfortunately, some
+    of the (original) backend authors cannot be contacted any longer, for
+    various reasons; not to mention each and every contributor who sent in a
+    patch. This effectively makes it impossible for the SANE Project to
+    relicense SANE.
+
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
+/***** backend/net.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1997 David Mosberger-Tang
+   Copyright (C) 2003, 2008 Julien BLACHE <jb@jblache.org>
+      AF-independent code + IPv6, Avahi support
+
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a SANE network-based meta backend.  */
+
+/***** backend/dll.c *****/
+/* sane - Scanner Access Now Easy.
+   Copyright (C) 1996, 1997 David Mosberger-Tang
+   This file is part of the SANE package.
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+   MA 02111-1307, USA.
+
+   As a special exception, the authors of SANE give permission for
+   additional uses of the libraries contained in this release of SANE.
+
+   The exception is that, if you link a SANE library with other files
+   to produce an executable, this does not by itself cause the
+   resulting executable to be covered by the GNU General Public
+   License.  Your use of that executable is in no way restricted on
+   account of linking the SANE library code into it.
+
+   This exception does not, however, invalidate any other reasons why
+   the executable file might be covered by the GNU General Public
+   License.
+
+   If you submit changes to SANE to the maintainers to be included in
+   a subsequent release, you agree by submitting the changes that
+   those changes may be distributed with this exception intact.
+
+   If you write modifications of your own for SANE, it is your choice
+   whether to permit this exception to apply to your modifications.
+   If you do not wish that, delete this exception notice.
+
+   This file implements a dynamic linking based SANE meta backend.  It
+   allows managing an arbitrary number of SANE backends by using
+   dynamic linking to load backends on demand.  */
+
 ## SnapKit
 
 Copyright (c) 2011-Present SnapKit Team - https://github.com/SnapKit
