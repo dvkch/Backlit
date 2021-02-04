@@ -9,9 +9,9 @@
 import UIKit
 import SaneSwift
 import SYKit
+import SYPictureMetadata
 
 #if !targetEnvironment(macCatalyst)
-import SYPictureMetadata
 import SVProgressHUD
 #endif
 

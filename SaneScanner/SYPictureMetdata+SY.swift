@@ -9,18 +9,8 @@
 import SaneSwift
 import SYPictureMetadata
 
-#if targetEnvironment(macCatalyst)
-class SYMetadata { }
-#else
-import SYPictureMetadata
-#endif
-
 extension SYMetadata {
-    
     convenience init(device: Device, scanParameters: ScanParameters) {
-        #if targetEnvironment(macCatalyst)
-        self.init()
-        #else
         var resX: Int? = nil
         var resY: Int? = nil
         var res:  Int? = nil
@@ -65,12 +55,5 @@ extension SYMetadata {
         metadataJFIF = SYMetadataJFIF()
         metadataJFIF?.xDensity = resXInches
         metadataJFIF?.yDensity = resYInches
-        #endif
     }
-    
-    #if targetEnvironment(macCatalyst)
-    static func data(withImageData: Data?, andMetadata: SYMetadata?) -> Data? {
-        return nil
-    }
-    #endif
 }

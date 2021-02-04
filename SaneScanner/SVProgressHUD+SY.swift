@@ -23,6 +23,8 @@ class SVProgressHUD {
 
     static func dismiss() { }
     static func dismiss(withDelay: TimeInterval) { }
+    
+    static func isVisible() -> Bool { false }
 }
 #endif
 

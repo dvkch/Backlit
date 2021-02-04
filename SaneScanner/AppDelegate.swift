@@ -25,6 +25,7 @@ enum SnapshotType {
 // TODO: black mode
 // TODO: SceneDelegate
 // TODO: send in chronological order, older to newer
+// TODO: add avahi support ?
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
@@ -49,6 +50,9 @@ extension AppDelegate : UIApplicationDelegate {
         // log
         print("Document path:", FileManager.documentsDirectoryURL)
         
+        // catalyst
+        NSObject.fixCatalystScaling()
+
         // navigation controller
         scanNC = ScanNC()
         scanNC.viewControllers = [DevicesVC()]
