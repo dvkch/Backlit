@@ -181,7 +181,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYOperationQueue/SYOperationQueue.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYPictureMetadata/SYPictureMetadata.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SaneSwift/SaneSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SpinKit/SpinKit.framework"
 fi
@@ -192,7 +191,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYOperationQueue/SYOperationQueue.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYPictureMetadata/SYPictureMetadata.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SaneSwift/SaneSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SpinKit/SpinKit.framework"
 fi

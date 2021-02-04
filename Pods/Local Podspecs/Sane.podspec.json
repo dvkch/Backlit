@@ -23,8 +23,10 @@
       "Sane/all/translations/*.lproj"
     ]
   },
+  "libraries": "xml2",
   "requires_arc": true,
   "xcconfig": {
     "CLANG_MODULES_AUTOLINK": "YES"
-  }
+  },
+  "static_framework": true
 }
