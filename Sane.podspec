@@ -13,6 +13,9 @@ Pod::Spec.new do |s|
     'Sane-Translations' => ['Sane/all/translations/*.lproj']
   }
 
+  s.library = 'xml2'
   s.requires_arc = true
   s.xcconfig = { 'CLANG_MODULES_AUTOLINK' => 'YES' }
+
+  s.static_framework = true
 end
