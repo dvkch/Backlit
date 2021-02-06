@@ -24,7 +24,6 @@ enum SnapshotType {
 
 // TODO: fix Sane not stopped (in catalyst?) when leaving the ScanVC
 
-// TODO: send in chronological order, older to newer
 // TODO: dynamic text size
 // TODO: fix image preview not always working when scanning
 // TODO: fix image color modes not working

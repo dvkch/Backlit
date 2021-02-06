@@ -57,7 +57,6 @@ class DevicesVC: UIViewController {
         let nc = UINavigationController(rootViewController: PreferencesVC())
         nc.modalPresentationStyle = .formSheet
         present(nc, animated: true, completion: nil)
-
     }
     
     private func refreshDevices() {

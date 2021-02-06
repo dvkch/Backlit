@@ -145,6 +145,7 @@ class GalleryGridVC: UIViewController {
     private func selectedURLs() -> [URL] {
         return (collectionView.indexPathsForSelectedItems ?? [])
             .sorted()
+            .reversed()
             .compactMap { self.items[$0.row].URL }
     }
     
