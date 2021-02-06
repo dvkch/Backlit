@@ -39,6 +39,11 @@ class ScanNC: UINavigationController {
         customToolbar?.height = traitCollection.verticalSizeClass == .compact ? 34 : 64
         customToolbar?.padding = 0
         
+        // fix for iOS 14+ (maybe 13 too?) not showing the toolbar. for realsies, the simple fact of accessing
+        // the `toolbar` property makes it disappear completely from the view stack. tested on iOS 14.4
+        toolbar.isHidden = true
+        toolbar.isHidden = false
+
         let toolbarHidden = splitViewController?.traitCollection.horizontalSizeClass != .compact || GalleryManager.shared.items.isEmpty
         setToolbarHidden(toolbarHidden, animated: animated)
     }

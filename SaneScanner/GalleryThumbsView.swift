@@ -18,7 +18,7 @@ class GalleryThumbsView: UIView {
         
         let view = GalleryThumbsView(frame: initialRect)
         view.parentViewController = controller
-        view.backgroundColor = tintColor ?? .white
+        view.backgroundColor = tintColor ?? .cellBackground
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         controller.toolbarItems = [UIBarButtonItem(customView: view)]
         
