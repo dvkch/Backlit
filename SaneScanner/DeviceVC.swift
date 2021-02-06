@@ -53,6 +53,7 @@ class DeviceVC: UIViewController {
     }
 
     deinit {
+        Sane.shared.cancelCurrentScan()
         Sane.shared.closeDevice(device)
         NotificationCenter.default.removeObserver(self, name: .preferencesChanged, object: nil)
     }
@@ -347,20 +348,20 @@ extension DeviceVC : UITableViewDelegate {
 }
 
 extension DeviceVC : SanePreviewViewDelegate {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Bool) -> ())?) {
-        
-        SVProgressHUD.show(withStatus: "PREVIEWING".localized)
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Float, Bool) -> ())?) {
+        updateBlock?(nil, 0, false)
+
         Sane.shared.preview(device: device, progress: { (progress, image) in
-            updateBlock?(image, false)
-            SVProgressHUD.showProgress(progress)
+            updateBlock?(image, progress, false)
         }, completion: { (image, error) in
+            updateBlock?(image, 1, true)
             if let error = error {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
-            else {
-                SVProgressHUD.dismiss()
-            }
-            updateBlock?(image, true)
         })
+    }
+    
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device) {
+        Sane.shared.cancelCurrentScan()
     }
 }

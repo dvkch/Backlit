@@ -11,7 +11,8 @@ import SaneSwift
 import SnapKit
 
 protocol SanePreviewViewDelegate: NSObjectProtocol {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Bool) -> ())?)
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Float, Bool) -> ())?)
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device)
 }
 
 class SanePreviewView: UIView {
@@ -48,13 +49,14 @@ class SanePreviewView: UIView {
         }
         addSubview(cropMask)
         
-        button.setTitle("DEVICE BUTTON UPDATE PREVIEW".localized, for: .normal)
         button.setTitleColor(.normalText, for: .normal)
         button.backgroundColor = .cellBackground
         button.titleLabel?.font = .systemFont(ofSize: 17)
         button.titleLabel?.autoAdjustsFontSize = true
+        button.titleLabel?.numberOfLines = 2
         button.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
         addSubview(button)
+        updateButton()
         
         cropMask.snp.makeConstraints { (make) in
             make.edges.equalTo(imageView)
@@ -67,7 +69,7 @@ class SanePreviewView: UIView {
         }
         
         button.snp.makeConstraints { (make) in
-            make.height.equalTo(40)
+            make.height.equalTo(50)
             make.left.right.bottom.equalToSuperview()
         }
         
@@ -89,6 +91,17 @@ class SanePreviewView: UIView {
         didSet {
             setNeedsUpdateConstraints()
             refresh()
+        }
+    }
+    
+    enum Status {
+        case inactive
+        case previewing(Float)
+        case canceling
+    }
+    private var status: Status = .inactive {
+        didSet {
+            updateButton()
         }
     }
     
@@ -115,13 +128,44 @@ class SanePreviewView: UIView {
     @objc private func buttonTap() {
         guard let device = device else { return }
         
-        delegate?.sanePreviewView(self, tappedScan: device, updateBlock: { [weak self] image, finished in
-            guard self?.device == device else { return }
-            self?.imageView.image = image
-            if finished {
-                self?.refresh()
-            }
-        })
+        switch status {
+        case .inactive:
+            delegate?.sanePreviewView(self, tappedScan: device, updateBlock: { [weak self] image, progress, finished in
+                guard self?.device == device else { return }
+                self?.imageView.image = image
+                if finished {
+                    self?.status = .inactive
+                    self?.refresh()
+                } else {
+                    self?.status = .previewing(progress)
+                }
+            })
+            
+        case .previewing:
+            delegate?.sanePreviewView(self, canceledScan: device)
+            self.status = .canceling
+        
+        case .canceling: break
+        }
+    }
+    
+    // MARK: Content
+    private func updateButton() {
+        switch status {
+        case .inactive:
+            button.setAttributedTitle(nil, for: .normal)
+            button.setTitle("DEVICE BUTTON UPDATE PREVIEW".localized, for: .normal)
+
+        case .previewing(let float):
+            let title = NSAttributedString(string: String(format: "PREVIEWING %f".localized, float * 100), font: button.titleLabel?.font, color: .normalText)
+            let subtitle = NSAttributedString(string: "ACTION HINT TAP TO CANCEL".localized, font: button.titleLabel?.font, color: .altText)
+            let fullTitle: NSAttributedString = [title, subtitle].concat(separator: "\n").setParagraphStyle(alignment: .center, lineSpacing: 0, paragraphSpacing: 0)
+            button.setAttributedTitle(fullTitle, for: .normal)
+
+        case .canceling:
+            button.setAttributedTitle(nil, for: .normal)
+            button.setTitle("CANCELLING".localized, for: .normal)
+        }
     }
     
     // MARK: Layout

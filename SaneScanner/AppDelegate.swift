@@ -19,9 +19,20 @@ enum SnapshotType {
     case none, devicePreview, deviceOptions, deviceOptionPopup, other
 }
 
-// TODO: add auth to Keychain?
+// TODO: fix background color different on SettingsVC vs other VCs
+// TODO: change layout
+
+// TODO: fix Sane not stopped (in catalyst?) when leaving the ScanVC
+
 // TODO: send in chronological order, older to newer
-// TODO: add avahi support ?
+// TODO: dynamic text size
+// TODO: fix image preview not always working when scanning
+// TODO: fix image color modes not working
+// TODO: add auth to Keychain?
+// TODO: show button in catalyst to open gallery folder, maybe even save pictures in Images ?
+
+// LATER: add avahi support ?
+// LATER: usb support for Catalyst ?
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
