@@ -212,12 +212,12 @@ def add_license_to_framework(framework_path)
         GIT_DIR + 'backend' + 'dll.c'
     ]
 
-    puts "Adding #{full_license_path.basename} to XCFramework"
+    puts "Adding #{output_file.basename} to XCFramework"
     FileUtils.cp_r(full_license_path, output_file, remove_destination: true)
 
     headers_licenses.each do |header|
         content = header.open.read.split('*/').first + '*/'
-        full_license_path.open('a') do |f|
+        output_file.open('a') do |f|
             f << "\n\n"
             f << "/***** #{header.relative_path_from(GIT_DIR)} *****/"
             f << "\n"
@@ -225,7 +225,7 @@ def add_license_to_framework(framework_path)
         end
     end
 
-    full_license_path
+    output_file
 end
 
 def copy_translations
@@ -247,7 +247,7 @@ def main
     puts 'Welcome to sane-backends build script to generate iOS libs, hope all goes well for you!'
     puts 'This tools needs the developer command line tools to be installed.'
     puts ''
-    puts 'You may also need autoconf, autoconf-archive, libtool and gettext, available in Homebrew:'
+    puts 'You may also need the following tools:'
     puts '    brew install autoconf autoconf-archive libtool gettext'
     puts ''
     puts 'Then add gettext to your $PATH, using /usr/local/opt/gettext/bin'
