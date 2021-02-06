@@ -35,7 +35,7 @@ private struct libSANETranslation {
 
     fileprivate static func translation(for key: String) -> String? {
         if cachedTranslations == nil {
-            guard let translationsBundleURL = Bundle(for: Sane.self).url(forResource: "libSANE-Translations", withExtension: "bundle") else { return nil }
+            guard let translationsBundleURL = Bundle(for: Sane.self).url(forResource: "Sane-Translations", withExtension: "bundle") else { return nil }
             guard let translationsBundle = Bundle(url: translationsBundleURL) else { return nil }
             guard let translationURL = translationsBundle.url(forResource: "sane_strings", withExtension: "po") else { return nil }
             cachedTranslations = libSANETranslation.parseFile(at: translationURL)
