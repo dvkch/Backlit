@@ -200,7 +200,7 @@ fileprivate class SYSliderViewController: UIViewController {
     init(current: Double, min: Double, max: Double, conversion: @escaping (Double) -> String?) {
         self.conversion = conversion
         super.init(nibName: nil, bundle: nil)
-        label.textColor = .darkGray
+        label.textColor = .normalText
         label.textAlignment = .center
         slider.minimumValue = Float(min)
         slider.maximumValue = Float(max)
@@ -262,7 +262,7 @@ fileprivate class SYStepperViewController: UIViewController {
     init(current: Double, min: Double, max: Double, step: Double, conversion: @escaping (Double) -> String?) {
         self.conversion = conversion
         super.init(nibName: nil, bundle: nil)
-        label.textColor = .darkGray
+        label.textColor = .normalText
         stepper.minimumValue = min
         stepper.maximumValue = max
         stepper.stepValue    = step

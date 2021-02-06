@@ -20,10 +20,6 @@ enum SnapshotType {
 }
 
 // TODO: add auth to Keychain?
-// TODO: add Sane license in acknowledgements
-// TODO: add podspec for sane-backend only, including license
-// TODO: black mode
-// TODO: SceneDelegate
 // TODO: send in chronological order, older to newer
 // TODO: add avahi support ?
 

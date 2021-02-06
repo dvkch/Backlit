@@ -50,7 +50,7 @@ class SanePreviewView: UIView {
         
         button.setTitle("DEVICE BUTTON UPDATE PREVIEW".localized, for: .normal)
         button.setTitleColor(.normalText, for: .normal)
-        button.backgroundColor = .contrastedBackground
+        button.backgroundColor = .cellBackground
         button.titleLabel?.font = .systemFont(ofSize: 17)
         button.titleLabel?.autoAdjustsFontSize = true
         button.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
