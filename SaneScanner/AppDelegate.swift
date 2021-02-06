@@ -36,9 +36,7 @@ class AppDelegate: UIResponder {
     
     // MARK: Properties
     @objc var window: UIWindow?
-    private var splitViewController: SplitVC!
-    private var scanNC: ScanNC!
-    private var galleryNC: GalleryNC!
+    private var context: Context?
     
     // MARK: Snapshot properties
     private(set) var snapshotType = SnapshotType.none
@@ -53,34 +51,14 @@ extension AppDelegate : UIApplicationDelegate {
         // catalyst
         NSObject.fixCatalystScaling()
 
-        // navigation controller
-        scanNC = ScanNC()
-        scanNC.viewControllers = [DevicesVC()]
-        
-        // gallery view controller
-        galleryNC = GalleryNC(openedAt: nil)
-        /*
-        GalleryViewController.gallery(withPresentationStyle: .overView, uiCustomization: .sy_defaultTheme)
-        galleryViewController.uiCustomization.hideDoneButton = true
-        galleryViewController.uiCustomization.setMHGalleryBackgroundColor(.groupTableViewBackground, for: .imageViewerNavigationBarHidden)
- */
-        
-        // split controller
-        splitViewController = SplitVC()
-        splitViewController.viewControllers = [scanNC, galleryNC]
-        splitViewController.preferredDisplayMode = .allVisible
-        
-        // creating window
-        window = SYWindow.mainWindow(rootViewController: splitViewController)
-        if #available(iOS 13.0, *) {
-            window?.overrideUserInterfaceStyle = .light
+        // create UI on iOS < 13
+        if #available(iOS 13.0, *) {} else {
+            context = Context()
+            window = context?.window
         }
 
         // customize HUD
-        SVProgressHUD.setDefaultMaskType(.black)
-        
-        // auto manage toolbar visibility
-        GalleryManager.shared.addDelegate(self)
+        SVProgressHUD.applyStyle()
         
         // Snapshots
         if ProcessInfo.processInfo.arguments.contains("DOING_SNAPSHOT") {
@@ -115,8 +93,6 @@ extension AppDelegate : UIApplicationDelegate {
         
         Sane.shared.cancelCurrentScan()
         
-        scanNC.popToRootViewController(animated: true)
-        
         // give time to the system to really close the deviceVC if
         // it's opened, close eventual scan alertView, and dealloc
         // the VC, which will in turn closing the device and make
@@ -126,13 +102,3 @@ extension AppDelegate : UIApplicationDelegate {
         }
     }
 }
-
-extension AppDelegate : GalleryManagerDelegate {
-    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
-    func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
-        let constrainedW = splitViewController.traitCollection.horizontalSizeClass == .compact
-        
-        scanNC.setToolbarHidden(!constrainedW || items.isEmpty, animated: true)
-    }
-}
-
