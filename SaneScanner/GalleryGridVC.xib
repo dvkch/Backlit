@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +23,7 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="cEi-Ho-zIt">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OKg-uO-Ddg">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -40,7 +39,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No content" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2x-d3-oB3">
-                            <rect key="frame" x="145" y="323.5" width="85" height="20.5"/>
+                            <rect key="frame" x="145.5" y="323.5" width="84.5" height="20.5"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="X7z-i5-gxY"/>
                             </constraints>
@@ -49,14 +48,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="K2x-d3-oB3" firstAttribute="centerY" secondItem="Wg3-JL-Rpe" secondAttribute="centerY" id="LMf-2u-iwe"/>
                         <constraint firstItem="K2x-d3-oB3" firstAttribute="centerX" secondItem="Wg3-JL-Rpe" secondAttribute="centerX" id="mso-H0-lJS"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="cEi-Ho-zIt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KfQ-5x-7lj"/>
                 <constraint firstAttribute="bottom" secondItem="Wg3-JL-Rpe" secondAttribute="bottom" id="M3o-Nl-gQJ"/>
@@ -67,6 +66,12 @@
                 <constraint firstAttribute="trailing" secondItem="cEi-Ho-zIt" secondAttribute="trailing" id="vaB-Y7-d2C"/>
                 <constraint firstItem="Wg3-JL-Rpe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="yyL-sy-TDk"/>
             </constraints>
+            <point key="canvasLocation" x="138" y="144"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -28,7 +28,7 @@ class DeviceVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .groupTableViewBackground
+        view.backgroundColor = .background
         title = device.model
 
         tableView.registerCell(PreviewCell.self, xib: true)

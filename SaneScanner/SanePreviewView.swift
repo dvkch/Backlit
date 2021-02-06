@@ -49,8 +49,8 @@ class SanePreviewView: UIView {
         addSubview(cropMask)
         
         button.setTitle("DEVICE BUTTON UPDATE PREVIEW".localized, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(.normalText, for: .normal)
+        button.backgroundColor = .contrastedBackground
         button.titleLabel?.font = .systemFont(ofSize: 17)
         button.titleLabel?.autoAdjustsFontSize = true
         button.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)

@@ -20,7 +20,7 @@ class PreferencesVC: UIViewController {
         super.viewDidLoad()
         
         title = "PREFERENCES TITLE".localized
-        view.backgroundColor = .groupTableViewBackground
+        view.backgroundColor = .background
         
         tableView.registerCell(OptionCell.self, xib: true)
         

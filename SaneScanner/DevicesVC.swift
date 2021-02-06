@@ -18,7 +18,7 @@ class DevicesVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .groupTableViewBackground
+        view.backgroundColor = .background
         
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: nil)
         
@@ -174,6 +174,30 @@ extension DevicesVC : UITableViewDelegate {
         return UITableView.automaticDimension
     }
     
+    @available(iOS 13.0, *)
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard indexPath.section == 0 else { return nil }
+        guard indexPath.row < Sane.shared.configuration.hosts.count else { return nil }
+        
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
+            let deleteAction = UIAction(title: "ACTION REMOVE".localized, image: UIImage(systemName: "trash.fill"), attributes: .destructive) { [weak self] (_) in
+                Sane.shared.configuration.removeHost(Sane.shared.configuration.hosts[indexPath.row])
+                
+                CATransaction.begin()
+                CATransaction.setCompletionBlock {
+                    self?.refreshDevices()
+                }
+                tableView.beginUpdates()
+                tableView.deleteRows(at: [indexPath], with: .bottom)
+                tableView.endUpdates()
+                CATransaction.commit()
+            }
+
+            return UIMenu(title: "", children: [deleteAction])
+        }
+    }
+
+    #if !targetEnvironment(macCatalyst)
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         guard indexPath.section == 0 else { return nil }
         guard indexPath.row < Sane.shared.configuration.hosts.count else { return nil }
@@ -192,6 +216,7 @@ extension DevicesVC : UITableViewDelegate {
         }
         return [deleteAction]
     }
+    #endif
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

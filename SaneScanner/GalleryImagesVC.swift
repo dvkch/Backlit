@@ -124,7 +124,7 @@ class GalleryImagesVC: UIViewController {
         
         navigationController?.isNavigationBarHidden = hideNavBars
         navigationController?.isToolbarHidden = hideNavBars
-        view.backgroundColor = hideNavBars ? .black : .groupTableViewBackground
+        view.backgroundColor = hideNavBars ? .black : .background
         
         setNeedsStatusBarAppearanceUpdate()
         if #available(iOS 11.0, *) {

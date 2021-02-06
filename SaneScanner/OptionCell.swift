@@ -61,15 +61,10 @@ class OptionCell: UITableViewCell {
     }
     
     private func updateTexts() {
-        var backgroundColor = UIColor.white
-        var normalTextColor = UIColor.darkText
-        var descTextColor   = UIColor.gray
-        
-        if let option = self.option, option.disabledOrReadOnly {
-            backgroundColor = UIColor(white: 0.98, alpha: 1)
-            normalTextColor = UIColor.lightGray
-            descTextColor   = UIColor.lightGray
-        }
+        let disabled = option?.disabledOrReadOnly ?? false
+        let backgroundColor = disabled ? UIColor.cellBackgroundAlt : UIColor.cellBackground
+        let normalTextColor = disabled ? UIColor.disabledText : UIColor.normalText
+        let descTextColor   = disabled ? UIColor.disabledText : UIColor.altText
         
         self.backgroundColor = backgroundColor
         labelTitle.textColor = normalTextColor

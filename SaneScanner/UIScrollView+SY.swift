@@ -12,7 +12,7 @@ import SYKit
 extension UIScrollView {
     func addPullToResfresh(_ completion: @escaping ((UIScrollView) -> ())) {
         let control = DotsRefreshControl(frame: .zero)
-        control.tintColor = UIColor.groupTableViewHeaderTitle.withAlphaComponent(0.8)
+        control.tintColor = UIColor.pullToRefresh.withAlphaComponent(0.8)
         control.attributedTitle = nil
         control.backgroundColor = .clear
         addPullToRefresh(control, action: completion)

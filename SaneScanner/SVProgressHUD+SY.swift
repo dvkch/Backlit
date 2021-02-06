@@ -30,11 +30,18 @@ class SVProgressHUD {
 
 extension SVProgressHUD {
     
+    static func applyStyle() {
+        #if !targetEnvironment(macCatalyst)
+        setDefaultMaskType(.black)
+        setForegroundColor(.normalText)
+        setBackgroundColor(.backgroundAlt)
+        #endif
+    }
+    
     static func showSuccess(status: String?, duration: TimeInterval) {
         showSuccess(withStatus: status)
         dismiss(withDelay: duration)
     }
-    
 }
 
 

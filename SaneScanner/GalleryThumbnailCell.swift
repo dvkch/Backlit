@@ -66,7 +66,13 @@ class GalleryThumbnailCell: UICollectionViewCell {
     
     // MARK: Views
     private let imageView = UIImageView()
-    private let spinner = UIActivityIndicatorView(style: .white)
+    private let spinner: UIActivityIndicatorView = {
+        if #available(iOS 13.0, *) {
+            return UIActivityIndicatorView(style: .medium)
+        } else {
+            return UIActivityIndicatorView(style: .white)
+        }
+    }()
     private let selectionView = UIView()
 
     // MARK: Content

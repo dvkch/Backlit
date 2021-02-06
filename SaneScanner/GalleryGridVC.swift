@@ -16,12 +16,16 @@ class GalleryGridVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .background
+
+        emptyStateView.backgroundColor = .background
         emptyStateLabel.autoAdjustsFontSize = true
         
         collectionViewLayout.maxSize = 320/3
         collectionViewLayout.margin = 2
 
+        collectionView.backgroundColor = .background
+        collectionView.allowsMultipleSelection = true // requires holding option on macOS
         collectionView.collectionViewLayout = collectionViewLayout
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
         
@@ -177,9 +181,9 @@ class GalleryGridVC: UIViewController {
     // MARK: Content
     private func updateEmptyState() {
         let text = NSMutableAttributedString()
-        text.append("GALLERY EMPTY TITLE".localized, font: .systemFont(ofSize: 17), color: .darkGray)
-        text.append("\n\n", font: .systemFont(ofSize: 15), color: .gray)
-        text.append("GALLERY EMPTY SUBTITLE".localized, font: .systemFont(ofSize: 15), color: .gray)
+        text.append("GALLERY EMPTY TITLE".localized, font: .systemFont(ofSize: 17), color: .normalText)
+        text.append("\n\n", font: .systemFont(ofSize: 15), color: .normalText)
+        text.append("GALLERY EMPTY SUBTITLE".localized, font: .systemFont(ofSize: 15), color: .altText)
         emptyStateLabel.attributedText = text
         
         emptyStateView.isHidden = !items.isEmpty
