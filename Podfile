@@ -8,6 +8,7 @@ target :'SaneScanner' do
     pod 'Sane', :path => "./", :inhibit_warnings => false
     pod 'SaneSwift', :path => "./", :inhibit_warnings => false
     pod 'DirectoryWatcher'
+    pod 'KeychainAccess'
     pod 'SnapKit'
     pod 'SpinKit'
     pod 'SVProgressHUD'

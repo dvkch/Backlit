@@ -1,5 +1,6 @@
 PODS:
   - DirectoryWatcher (2.7.1)
+  - KeychainAccess (4.2.1)
   - Sane (1.0.31)
   - SaneSwift (1.0.0):
     - Sane
@@ -14,6 +15,7 @@ PODS:
 
 DEPENDENCIES:
   - DirectoryWatcher
+  - KeychainAccess
   - Sane (from `./`)
   - SaneSwift (from `./`)
   - SnapKit
@@ -27,6 +29,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - DirectoryWatcher
+    - KeychainAccess
     - SnapKit
     - SpinKit
     - SVProgressHUD
@@ -43,6 +46,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   DirectoryWatcher: 493f7a86318070e46bb7b8d6a296b2bf139e3880
+  KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   Sane: 0dc71695bb58f345823a451d01870fed83ee74ab
   SaneSwift: 1b7015242e6f04e8121679106ba0137cc0b4a2fc
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
@@ -53,6 +57,6 @@ SPEC CHECKSUMS:
   SYOperationQueue: d4ddc74419eb67a2d3b68d3933ab818a13867e16
   SYPictureMetadata: 39a394fb484a7a7f037e07205672487913626963
 
-PODFILE CHECKSUM: ab0c8872b8f6c39649553eee100e5b5177ed0351
+PODFILE CHECKSUM: 6c3c1564dbc15b63b9439ec8b4042cf7739a942f
 
 COCOAPODS: 1.10.1
