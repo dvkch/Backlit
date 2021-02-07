@@ -23,7 +23,6 @@ enum SnapshotType {
 
 // TODO: fix Sane not stopped (in catalyst?) when leaving the ScanVC
 
-// TODO: dynamic text size
 // TODO: fix image preview not always working when scanning
 // TODO: fix image color modes not working
 // TODO: show button in catalyst to open gallery folder, maybe even save pictures in Images ?

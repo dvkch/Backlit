@@ -292,13 +292,13 @@ extension DeviceVC : UITableViewDataSource {
     }
     
     func previewCellHeight(in tableView: UITableView) -> CGFloat {
-        var maxHeight = tableView.bounds.height * 2 / 3
+        var maxImageHeight = tableView.bounds.height * 2 / 3
         
         if traitCollection.verticalSizeClass == .compact {
-            maxHeight = 400
+            maxImageHeight = 400
         }
         
-        return PreviewCell.cellHeight(device: device, width: tableView.bounds.width, maxHeight: maxHeight)
+        return PreviewCell.cellHeight(device: device, width: tableView.bounds.width, maxImageHeight: maxImageHeight)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -30,17 +30,23 @@ class SVProgressHUD {
 
 extension SVProgressHUD {
     
-    static func applyStyle() {
+    static func applyStyle(initial: Bool = true) {
         #if !targetEnvironment(macCatalyst)
         setDefaultMaskType(.black)
         setForegroundColor(.normalText)
         setBackgroundColor(.backgroundAlt)
+        setFont(UIFont.preferredFont(forTextStyle: .body))
+        NotificationCenter.default.addObserver(self, selector: #selector(traitsChangedNotification), name: UIContentSizeCategory.didChangeNotification, object: nil)
         #endif
     }
     
     static func showSuccess(status: String?, duration: TimeInterval) {
         showSuccess(withStatus: status)
         dismiss(withDelay: duration)
+    }
+    
+    @objc static func traitsChangedNotification() {
+        applyStyle(initial: false)
     }
 }
 

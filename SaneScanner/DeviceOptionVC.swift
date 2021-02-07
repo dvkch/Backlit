@@ -202,6 +202,8 @@ fileprivate class SYSliderViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         label.textColor = .normalText
         label.textAlignment = .center
+        label.font = .preferredFont(forTextStyle: .body)
+        label.autoAdjustsFontSize = true
         slider.minimumValue = Float(min)
         slider.maximumValue = Float(max)
         slider.value        = Float(current)
@@ -263,6 +265,8 @@ fileprivate class SYStepperViewController: UIViewController {
         self.conversion = conversion
         super.init(nibName: nil, bundle: nil)
         label.textColor = .normalText
+        label.font = .preferredFont(forTextStyle: .body)
+        label.autoAdjustsFontSize = true
         stepper.minimumValue = min
         stepper.maximumValue = max
         stepper.stepValue    = step

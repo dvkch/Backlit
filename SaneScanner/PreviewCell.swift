@@ -35,9 +35,11 @@ class PreviewCell: UITableViewCell {
     }
     
     // MARK: Layout
-    static func cellHeight(device: Device, width: CGFloat, maxHeight: CGFloat) -> CGFloat {
-        let bestHeight = width / (device.previewImageRatio ?? (CGFloat(3) / 4))
-        return min(max(bestHeight, width), maxHeight)
+    static func cellHeight(device: Device, width: CGFloat, maxImageHeight: CGFloat) -> CGFloat {
+        let imageRatio = device.previewImageRatio ?? (CGFloat(3) / 4)
+        let bestImageHeight = width / imageRatio
+        let buttonHeight = NSAttributedString(string: "X", font: .preferredFont(forTextStyle: .body)).size().height * 2.5
+        return min(max(bestImageHeight, width), maxImageHeight) + buttonHeight
     }
 }
 

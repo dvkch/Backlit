@@ -82,7 +82,7 @@ extension PreferencesVC : UITableViewDataSource {
         if section < Preferences.shared.groupedKeys.count {
             return Preferences.shared.groupedKeys[section].0
         }
-        return "PREFERENCES SECTION ABOUT APP"
+        return "PREFERENCES SECTION ABOUT APP".localized
     }
 }
 

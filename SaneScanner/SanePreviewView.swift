@@ -51,7 +51,7 @@ class SanePreviewView: UIView {
         
         button.setTitleColor(.normalText, for: .normal)
         button.backgroundColor = .cellBackground
-        button.titleLabel?.font = .systemFont(ofSize: 17)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.titleLabel?.autoAdjustsFontSize = true
         button.titleLabel?.numberOfLines = 2
         button.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
@@ -111,7 +111,7 @@ class SanePreviewView: UIView {
     private let cropMask = CropMaskView()
     private let button = UIButton(type: .custom)
     private var ratioConstraint: NSLayoutConstraint?
-    
+
     // MARK: Actions
     func refresh() {
         guard let device = device else {
@@ -180,7 +180,17 @@ class SanePreviewView: UIView {
         
         ratioConstraint = imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: ratio)
         ratioConstraint?.isActive = true
-        
+
+        button.snp.remakeConstraints { (make) in
+            make.height.equalTo(NSAttributedString(string: "X", font: button.titleLabel?.font).size().height * 2.5)
+            make.left.right.bottom.equalToSuperview()
+        }
+
         super.updateConstraints()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setNeedsUpdateConstraints()
     }
 }
