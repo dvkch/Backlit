@@ -44,8 +44,8 @@ class PreviewCell: UITableViewCell {
 }
 
 extension PreviewCell : SanePreviewViewDelegate {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Float, Bool) -> ())?) {
-        delegate?.sanePreviewView(sanePreviewView, tappedScan: device, updateBlock: updateBlock)
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+        delegate?.sanePreviewView(sanePreviewView, tappedScan: device, progress: progress, completion: completion)
     }
     
     func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device) {

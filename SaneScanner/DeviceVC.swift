@@ -34,6 +34,7 @@ class DeviceVC: UIViewController {
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
 
+        scanButton.titleLabel?.numberOfLines = 2
         scanButton.backgroundColor = .tint
         scanButton.setTitle("ACTION SCAN".localized, for: .normal)
         scanButton.titleLabel?.font = .preferredFont(forTextStyle: .body)
@@ -53,7 +54,10 @@ class DeviceVC: UIViewController {
     }
 
     deinit {
-        Sane.shared.cancelCurrentScan()
+        if isScanning {
+            Sane.shared.cancelCurrentScan()
+        }
+
         Sane.shared.closeDevice(device)
         NotificationCenter.default.removeObserver(self, name: .preferencesChanged, object: nil)
     }
@@ -61,7 +65,14 @@ class DeviceVC: UIViewController {
     // MARK: Properties
     private let device: Device
     private var isRefreshing: Bool = false
-    
+    private var scanProgress: ScanProgress? = nil
+    private var isScanning: Bool {
+        switch scanProgress {
+        case .warmingUp, .scanning: return true
+        case .none, .cancelling: return false
+        }
+    }
+
     // MARK: Views
     private var thumbsView: GalleryThumbsView!
     @IBOutlet private var tableView: UITableView!
@@ -69,74 +80,71 @@ class DeviceVC: UIViewController {
     
     // MARK: Actions
     @IBAction private func scanButtonTap() {
+        if isScanning {
+            Sane.shared.cancelCurrentScan()
+            return
+        }
         
-        var alertView: UIAlertController?
-        var alertViewCancelButton: UIAlertAction?
-        var alertViewImageView: UIImageView?
+        var progressVC: DeviceScanPreviewVC?
         var item: GalleryItem?
         
-        let block = { [weak self] (progress: Float, finished: Bool, image: UIImage?, parameters: ScanParameters?, error: Error?) in
+        // block that will be called to show progress
+        let progressBlock = { [weak self] (progress: ScanProgress) in
             guard let self = self else { return }
-            
-            // Finished with error
-            if let error = error {
-                alertView?.dismiss(animated: false, completion: nil)
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-                return
+            self.scanProgress = progress
+            self.scanButton.updateTitle(progress: progress, isPreview: false)
+
+            switch progress {
+            case .warmingUp, .cancelling:
+                break;
+
+            case .scanning(_, let incompletePreview):
+                progressVC?.isScanning = true
+                progressVC?.image = incompletePreview ?? progressVC?.image
             }
-            
-            // Finished without error
-            if finished {
-                alertViewCancelButton?.updateTitle("ACTION CLOSE".localized)
-                
-                guard let image = image, let parameters = parameters else { return }
-                
+        }
+        
+        // block that will be called to handle completion
+        let completionBlock = { [weak self] (result: ScanResult) in
+            guard let self = self else { return }
+            self.scanProgress = nil
+            self.scanButton.updateTitle(progress: nil, isPreview: false)
+
+            switch result {
+            case .success((let image, let parameters)):
+                progressVC?.isScanning = false
+                progressVC?.image = image
+
                 let metadata = SYMetadata(device: self.device, scanParameters: parameters)
                 do {
                     item = try GalleryManager.shared.addImage(image, metadata: metadata)
-                    SVProgressHUD.dismiss()
                 }
                 catch {
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
                 }
                 self.updatePreviewImageCell(image: image, scanParameters: parameters)
-            }
-            
-            // need to show image (finished or partial with preview)
-            if alertView == nil, let image = image {
-                alertView = UIAlertController(title: "DIALOG TITLE SCANNED IMAGE".localized, message: nil, preferredStyle: .alert)
-                alertView?.addAction(UIAlertAction(title: "ACTION SHARE".localized, style: .default, handler: { (_) in
-                    self.shareItem(item)
-                }))
-                alertViewCancelButton = UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
-                    // cancels scan if running
-                    Sane.shared.cancelCurrentScan()
-                })
-                alertView?.addAction(alertViewCancelButton!)
-                alertViewImageView = alertView?.setupImageView(image: image, height: 300, margins: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
-                self.present(alertView!, animated: true, completion: nil)
-                SVProgressHUD.dismiss()
-            }
-            
-            // update alertview
-            if alertView != nil {
-                alertView?.actions.forEach { $0.isEnabled = finished || $0.style == .cancel }
 
-                // update image for partial preview
-                alertViewImageView?.image = image ?? alertViewImageView?.image
-            }
-            else if !finished {
-                // update progress when no partial preview
-                SVProgressHUD.showProgress(progress)
+            case .failure(let error):
+                progressVC?.dismiss(animated: false, completion: nil)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
         
-        SVProgressHUD.show(withStatus: "SCANNING".localized)
-        Sane.shared.scan(device: device, progress: { (progress, image) in
-            block(progress, false, image, nil, nil)
-        }, completion: { (image, parameters, error) in
-            block(1, true, image, parameters, error)
-        })
+        // need to show image (finished or partial with preview)
+        if Sane.shared.configuration.showIncompleteScanImages {
+            progressVC = DeviceScanPreviewVC(shareTap: {
+                self.shareItem(item)
+            }, cancelTap: {
+                // cancels scan if running
+                if self.isScanning {
+                    Sane.shared.cancelCurrentScan()
+                }
+            })
+            self.present(progressVC!, animated: true, completion: nil)
+        }
+
+        // start scan
+        Sane.shared.scan(device: device, progress: progressBlock, completion: completionBlock)
     }
     
     @objc private func settingsButtonTap() {
@@ -347,14 +355,16 @@ extension DeviceVC : UITableViewDelegate {
 }
 
 extension DeviceVC : SanePreviewViewDelegate {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, updateBlock: ((UIImage?, Float, Bool) -> ())?) {
-        updateBlock?(nil, 0, false)
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+        guard !isScanning else { return }
 
-        Sane.shared.preview(device: device, progress: { (progress, image) in
-            updateBlock?(image, progress, false)
-        }, completion: { (image, error) in
-            updateBlock?(image, 1, true)
-            if let error = error {
+        Sane.shared.preview(device: device, progress: { [weak self] (p) in
+            self?.scanProgress = p
+            progress?(p)
+        }, completion: { [weak self] (result) in
+            self?.scanProgress = nil
+            completion?(result)
+            if case let .failure(error) = result {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         })

@@ -171,3 +171,28 @@ public extension SaneValueScanMode {
         return NSStringFromSaneValueScanMode(self)
     }
 }
+
+// MARK: Scan status
+public enum ScanProgress {
+    case warmingUp
+    case scanning(progress: Float, incompletePreview: UIImage?)
+    case cancelling
+
+    var image: UIImage? {
+        if case .scanning(_, let image) = self {
+            return image
+        }
+        return nil
+    }
+}
+
+public typealias ScanResult = Result<(UIImage, ScanParameters), Error>
+
+public extension ScanResult {
+    var image: UIImage? {
+        if case .success(let data) = self {
+            return data.0
+        }
+        return nil
+    }
+}

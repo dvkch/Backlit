@@ -203,7 +203,7 @@ extension Sane {
             guard s == SANE_STATUS_GOOD else {
                 self.isUpdatingDevices = false
                 Sane.runOn(mainThread: true, block: {
-                    completion(nil, SaneError.fromStatus(s))
+                    completion(nil, SaneError(saneStatus: s))
                 })
                 return
             }
@@ -244,7 +244,7 @@ extension Sane {
             }
 
             Sane.runOn(mainThread: mainThread, block: {
-                completion(SaneError.fromStatus(s))
+                completion(SaneError(saneStatus: s))
             })
         }
     }
@@ -334,7 +334,7 @@ extension Sane {
             free(bytes)
 
             guard s == SANE_STATUS_GOOD else {
-                Sane.runOn(mainThread: mainThread) { completion(nil, SaneError.fromStatus(s)) }
+                Sane.runOn(mainThread: mainThread) { completion(nil, SaneError(saneStatus: s)) }
                 return
             }
             
@@ -429,7 +429,7 @@ extension Sane {
                 }
             }
             
-            Sane.runOn(mainThread: mainThread) { completion?(SaneError.fromStatus(status)) }
+            Sane.runOn(mainThread: mainThread) { completion?(SaneError(saneStatus: status)) }
         }
     }
     
@@ -460,14 +460,16 @@ extension Sane {
 
 extension Sane {
     // MARK: Scan
-    public func preview(device: Device, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
+    public func preview(device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
         let mainThread = Thread.isMainThread
         
         guard openedDevices[device.name]?.pointerValue != nil else {
-            completion(nil, SaneError.deviceNotOpened)
+            completion?(.failure(SaneError.deviceNotOpened))
             return
         }
         
+        Sane.runOn(mainThread: true) { progress?(.warmingUp) }
+
         runOnSaneThread {
             var restoreBlocks = [(RestoreBlock)]()
             
@@ -506,12 +508,10 @@ extension Sane {
             }
 
             
-            var previewImage: UIImage?
-            var previewError: Error?
+            var finalResult: ScanResult?
 
-            self.scan(device: device, useScanCropArea: false, progress: progress, completion: { (image, _, error) in
-                previewImage = image
-                previewError = error
+            self.scan(device: device, useScanCropArea: false, progress: progress, completion: { (result) in
+                finalResult = result
             })
             
             if let optionPreview = device.standardOption(for: .preview) as? DeviceOptionBool {
@@ -521,19 +521,21 @@ extension Sane {
                 restoreBlocks.forEach { $0() }
             }
             
-            device.lastPreviewImage = previewImage
-            Sane.runOn(mainThread: mainThread) { completion(previewImage, previewError) }
+            device.lastPreviewImage = finalResult?.image
+            Sane.runOn(mainThread: mainThread) { completion?(finalResult!) }
         }
     }
     
-    public func scan(device: Device, useScanCropArea: Bool = true, progress: ((_ progress: Float, _ incompleteImage: UIImage?) -> ())?, completion: ((_ image: UIImage?, _ parameters: ScanParameters?, _ error: Error?) -> ())?) {
+    public func scan(device: Device, useScanCropArea: Bool = true, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
         
         let mainThread = Thread.isMainThread
 
         guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
-            completion?(nil, nil, SaneError.deviceNotOpened)
+            Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError.deviceNotOpened)) }
             return
         }
+        
+        Sane.runOn(mainThread: true) { progress?(.warmingUp) }
 
         runOnSaneThread {
             self.stopScanOperation = false
@@ -545,14 +547,14 @@ extension Sane {
             var status = Sane.logTime { sane_start(handle) }
             
             guard status == SANE_STATUS_GOOD else {
-                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, SaneError.fromStatus(status)) }
+                Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
             
             status = sane_set_io_mode(handle, SANE_FALSE)
             
             guard status == SANE_STATUS_GOOD else {
-                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, SaneError.fromStatus(status)) }
+                Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
             
@@ -560,7 +562,7 @@ extension Sane {
             status = sane_get_parameters(handle, &estimatedParams)
             
             guard status == SANE_STATUS_GOOD else {
-                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, SaneError.fromStatus(status)) }
+                Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
 
@@ -596,13 +598,13 @@ extension Sane {
                             // image creation needs to be done on main thread
                             Sane.runOn(mainThread: true) {
                                 let incompleteImage = try? UIImage.sy_imageFromIncompleteSane(data: dataCopy, parameters: parameters)
-                                progress(percent, incompleteImage)
+                                progress(.scanning(progress: percent, incompletePreview: incompleteImage))
                             }
                         }
                     }
                     else {
                         Sane.runOn(mainThread: true) {
-                            progress(percent, nil)
+                            progress(.scanning(progress: percent, incompletePreview: nil))
                         }
                     }
                 }
@@ -612,6 +614,7 @@ extension Sane {
                 
                 if self.stopScanOperation {
                     self.stopScanOperation = false
+                    Sane.runOn(mainThread: true) { progress?(.cancelling) }
                     sane_cancel(handle)
                 }
                 
@@ -636,16 +639,16 @@ extension Sane {
             SaneSetLogLevel(prevLogLevel)
             
             guard status == SANE_STATUS_EOF, parameters != nil else {
-                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, SaneError.fromStatus(status)) }
+                Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
 
             do {
                 let image = try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: parameters!)
-                Sane.runOn(mainThread: mainThread) { completion?(image, parameters, nil) }
+                Sane.runOn(mainThread: mainThread) { completion?(.success((image, parameters!))) }
             }
             catch {
-                Sane.runOn(mainThread: mainThread) { completion?(nil, nil, error) }
+                Sane.runOn(mainThread: mainThread) { completion?(.failure(error)) }
             }
         }
     }
