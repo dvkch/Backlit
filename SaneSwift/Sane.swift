@@ -589,9 +589,13 @@ extension Sane {
                         if percent > progressForLastIncompletePreview + incompletePreviewStep {
                             progressForLastIncompletePreview = percent
                             
+                            // copy the data before passing it to the main thread, or it might return size == 0 if it
+                            // is being written to in the sane thread at the same time
+                            let dataCopy = Data(data)
+
+                            // image creation needs to be done on main thread
                             Sane.runOn(mainThread: true) {
-                                // image creation needs to be done on main thread
-                                let incompleteImage = try? UIImage.sy_imageFromIncompleteSane(data: data, parameters: parameters)
+                                let incompleteImage = try? UIImage.sy_imageFromIncompleteSane(data: dataCopy, parameters: parameters)
                                 progress(percent, incompleteImage)
                             }
                         }

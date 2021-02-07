@@ -15,7 +15,9 @@ class DeviceCell: UITableViewCell {
         super.awakeFromNib()
         
         labelName.autoAdjustsFontSize = true
+        labelName.textColor = .normalText
         labelDetails.autoAdjustsFontSize = true
+        labelDetails.textColor = .altText
     }
     
     // MARK: Views

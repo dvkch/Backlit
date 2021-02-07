@@ -119,15 +119,14 @@ class DeviceVC: UIViewController {
             }
             
             // update alertview
-            alertView?.actions.forEach { $0.isEnabled = finished || $0.style == .cancel }
-            
-            // update image for partial preview
-            if image != nil {
-                alertViewImageView?.image = image
+            if alertView != nil {
+                alertView?.actions.forEach { $0.isEnabled = finished || $0.style == .cancel }
+
+                // update image for partial preview
+                alertViewImageView?.image = image ?? alertViewImageView?.image
             }
-            
-            // update progress when no partial preview
-            if !finished && image == nil {
+            else if !finished {
+                // update progress when no partial preview
                 SVProgressHUD.showProgress(progress)
             }
         }

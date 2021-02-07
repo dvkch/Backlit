@@ -23,8 +23,6 @@ enum SnapshotType {
 
 // TODO: fix Sane not stopped (in catalyst?) when leaving the ScanVC
 
-// TODO: fix image preview not always working when scanning
-// TODO: fix image color modes : cant preview/scan in grey
 // TODO: show button in catalyst to open gallery folder, maybe even save pictures in Images ?
 
 // LATER: add avahi support ?
