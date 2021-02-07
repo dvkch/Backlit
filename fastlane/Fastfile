@@ -2,7 +2,7 @@ default_platform(:ios)
 
 platform :ios do
     before_all do |lane, options|
-      xcversion(version: "~> 11.1")
+      xcversion(version: "~> 12.4")
     end
 
     desc "Create signing certs and provisioning profiles if needed"

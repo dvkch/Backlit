@@ -21,9 +21,8 @@ enum SnapshotType {
 
 // TODO: change layout for iPad and catalyst
 
-// TODO: fix scan showing black image after cancelled preview (iOS)
+// TODO: fix scan showing black image after cancelled preview
 // TODO: fix accessibility font size in option cell, put option under the title instead of on the right
-// TODO: fix Sane not stopped (in catalyst?) when leaving the ScanVC
 // TODO: show button in catalyst to open gallery folder, maybe even save pictures in Images ?
 // TODO: test keyboard shortcuts on catalyst (& ipad ?)
 
