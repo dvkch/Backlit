@@ -399,8 +399,8 @@ extension Sane {
             
             if case let .value(value) = value {
                 let data = option.bytesForValue(value).subarray(maxCount: option.size)
-                
                 byteValue = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: option.size)
+                byteValue?.assign(repeating: 0)
                 _ = data.copyBytes(to: byteValue!)
             }
                 
