@@ -106,7 +106,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
     
     private func updateSelectionStyle() {
         selectionView.alpha = showSelectionIndicator ? 1 : 0
-        selectionView.backgroundColor = isSelected ? .vividBlue : UIColor(white: 1, alpha: 0.7)
+        selectionView.backgroundColor = isSelected ? .tint : UIColor(white: 1, alpha: 0.7)
     }
     
     private func updateStyle() {

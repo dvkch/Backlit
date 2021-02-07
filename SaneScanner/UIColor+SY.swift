@@ -9,8 +9,18 @@
 import UIKit
 
 extension UIColor {
-    static var vividBlue: UIColor {
-        return .systemBlue
+    
+    static var accentColor: UIColor? {
+        #if targetEnvironment(macCatalyst)
+        return UIColor.value(forKey: "controlAccentColor") as? UIColor ?? .systemPurple
+        #else
+        return nil
+        #endif
+    }
+
+    static var tint: UIColor {
+        let tintColor = UIColor(red: 112, green: 65, blue: 192)
+        return .accentColor ?? tintColor
     }
     
     static var background: UIColor {
@@ -76,10 +86,13 @@ extension UIColor {
     }
 
     static var pullToRefresh: UIColor {
+        let lightColor = UIColor.gray
         if #available(iOS 13.0, *) {
-            return .tertiarySystemGroupedBackground
+            return UIColor { (traits) -> UIColor in
+                return traits.userInterfaceStyle == .light ? lightColor : .tertiarySystemGroupedBackground
+            }
         } else {
-            return UIColor(red: 0.43, green: 0.43, blue: 0.45, alpha: 1)
+            return lightColor
         }
     }
 }

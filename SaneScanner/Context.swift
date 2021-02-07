@@ -38,6 +38,7 @@ class Context: NSObject {
         #if DEBUG
         window.enableSlowAnimationsOnShake = true
         #endif
+        window.tintColor = .tint
 
         // navigation controller
         scanNC = ScanNC()

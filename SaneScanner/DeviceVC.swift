@@ -34,12 +34,12 @@ class DeviceVC: UIViewController {
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
 
-        scanButton.backgroundColor = .vividBlue
+        scanButton.backgroundColor = .tint
         scanButton.setTitle("ACTION SCAN".localized, for: .normal)
         scanButton.titleLabel?.font = .systemFont(ofSize: 17)
         scanButton.titleLabel?.autoAdjustsFontSize = true
         
-        thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .vividBlue)
+        thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)
         
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         

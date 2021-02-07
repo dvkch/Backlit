@@ -36,7 +36,7 @@ class CropMaskView: UIView {
         
         for side in [CGRectSide.top, .left, .right, .bottom] {
             let view = TapInsetsView()
-            view.backgroundColor = .vividBlue
+            view.backgroundColor = .tint
             view.layer.isOpaque = true
             addSubview(view)
             
@@ -58,7 +58,7 @@ class CropMaskView: UIView {
         for corner in [CGRectCorner.topLeft, .topRight, .bottomLeft, .bottomRight] {
             let view = TapInsetsView()
             view.tapInsets = .init(value: -5)
-            view.backgroundColor = .vividBlue
+            view.backgroundColor = .tint
             view.layer.borderColor = UIColor.white.cgColor
             view.layer.borderWidth = 2
             view.layer.cornerRadius = cornerViewSize / 2
