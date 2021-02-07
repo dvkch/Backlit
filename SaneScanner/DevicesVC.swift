@@ -103,13 +103,18 @@ extension DevicesVC: SaneDelegate {
     }
     
     func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ()) {
+        guard let device = device else { return }
+        
+        if let saved = DeviceAuthentication.saved(for: device) {
+            completion(saved)
+            return
+        }
+
         let hudShowing = SVProgressHUD.isVisible()
         SVProgressHUD.dismiss()
         
         let alert = UIAlertController(title: "DIALOG TITLE AUTH".localized, message: nil, preferredStyle: .alert)
-        if let device = device {
-            alert.message = String(format: "DIALOG MESSAGE AUTH %@".localized, device)
-        }
+        alert.message = String(format: "DIALOG MESSAGE AUTH %@".localized, device)
         alert.addTextField { (field) in
             field.borderStyle = .none
             field.placeholder = "DIALOG AUTH PLACEHOLDER USERNAME".localized
@@ -126,6 +131,14 @@ extension DevicesVC: SaneDelegate {
             let password = alert.textFields?.last?.text
             if hudShowing { SVProgressHUD.show() }
             completion(DeviceAuthentication(username: username, password: password))
+        }))
+        alert.addAction(UIAlertAction(title: "ACTION CONTINUE REMEMBER".localized, style: .default, handler: { (_) in
+            let username = alert.textFields?.first?.text
+            let password = alert.textFields?.last?.text
+            if hudShowing { SVProgressHUD.show() }
+            let auth = DeviceAuthentication(username: username, password: password)
+            auth.save(for: device)
+            completion(auth)
         }))
         alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
             if hudShowing { SVProgressHUD.show() }
@@ -235,6 +248,13 @@ extension DevicesVC : UITableViewDelegate {
             }
             
             if let error = error {
+                if let error = (error as? SaneError), case let .saneError(status) = error, status.rawValue == 11, DeviceAuthentication.saved(for: device.name) != nil {
+                    // this is an auth error, let's forget current auth and restart connexion
+                    DeviceAuthentication.forget(for: device.name)
+                    self.tableView(tableView, didSelectRowAt: indexPath)
+                    return
+                }
+
                 let alert = UIAlertController(
                     title: "DIALOG TITLE COULDNT OPEN DEVICE".localized,
                     message: error.localizedDescription,

@@ -8,8 +8,6 @@
 
 import UIKit
 
-// TODO: cleanup & move to dedicated class
-
 protocol GalleryImageVCDelegate: NSObjectProtocol {
     func galleryImageVC(singleTapped: GalleryImageVC)
 }
