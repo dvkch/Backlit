@@ -36,7 +36,7 @@ class DeviceVC: UIViewController {
 
         scanButton.backgroundColor = .tint
         scanButton.setTitle("ACTION SCAN".localized, for: .normal)
-        scanButton.titleLabel?.font = .systemFont(ofSize: 17)
+        scanButton.titleLabel?.font = .preferredFont(forTextStyle: .body)
         scanButton.titleLabel?.autoAdjustsFontSize = true
         
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)

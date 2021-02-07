@@ -127,7 +127,7 @@ class GalleryManager: NSObject {
     func createRandomTestImages(count: Int) {
         (0..<count).forEach { (_) in
             let url = FileManager.documentsDirectoryURL.appendingPathComponent("testimage-\(UUID().uuidString).jpg", isDirectory: false)
-            let image = UIImage.testImage(size: 200)
+            let image = UIImage.testImage(size: 500)
             try? image?.jpegData(compressionQuality: 0.9)?.write(to: url, options: .atomicWrite)
         }
     }
