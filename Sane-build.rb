@@ -235,6 +235,8 @@ def copy_translations
     create_empty_folder(output_dir)
 
     Dir.glob("#{GIT_DIR}/po/*.po").each do |file|
+        next if file.include?('@')
+
         locale = File.basename(file, '.*').gsub('_', '-')
         locale_output_dir = output_dir + "#{locale}.lproj"
         create_empty_folder(locale_output_dir)
