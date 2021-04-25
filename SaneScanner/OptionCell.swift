@@ -9,23 +9,24 @@
 import UIKit
 import SaneSwift
 import SYKit
+import SnapKit
 
 class OptionCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        labelTitle.autoAdjustsFontSize = true
-        labelValue.autoAdjustsFontSize = true
-        labelDescr.autoAdjustsFontSize = true
+        titleLabel.autoAdjustsFontSize = true
+        valueLabel.autoAdjustsFontSize = true
+        descrLabel.autoAdjustsFontSize = true
+        
+        setNeedsUpdateConstraints()
     }
     
     // MARK: Views
-    @IBOutlet private var labelTitle: UILabel!
-    @IBOutlet private var labelValue: UILabel!
-    @IBOutlet private var labelDescr: UILabel!
-    @IBOutlet private var constraingLabelDescrTop: NSLayoutConstraint!
-    private var constraingLabelDescrHeight: NSLayoutConstraint?
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var valueLabel: UILabel!
+    @IBOutlet private var descrLabel: UILabel!
 
     // MARK: Properties
     private var option: DeviceOption?
@@ -54,9 +55,9 @@ class OptionCell: UITableViewCell {
         self.prefKey = nil
         updateTexts()
         
-        labelTitle.text = leftText
-        labelValue.text = rightText
-        labelDescr.text = nil
+        titleLabel.text = leftText
+        valueLabel.text = rightText
+        descrLabel.text = nil
         showDescription = false
     }
     
@@ -67,19 +68,19 @@ class OptionCell: UITableViewCell {
         let descTextColor   = disabled ? UIColor.disabledText : UIColor.altText
         
         self.backgroundColor = backgroundColor
-        labelTitle.textColor = normalTextColor
-        labelValue.textColor = normalTextColor
-        labelDescr.textColor = descTextColor
+        titleLabel.textColor = normalTextColor
+        valueLabel.textColor = normalTextColor
+        descrLabel.textColor = descTextColor
         
         if let option = self.option {
-            labelTitle.text = option.localizedTitle
-            labelDescr.text = option.localizedDescr
-            labelValue.text = option.localizedValue
+            titleLabel.text = option.localizedTitle
+            valueLabel.text = option.localizedValue
+            descrLabel.text = option.localizedDescr
         }
         else if let prefKey = self.prefKey {
-            labelTitle.text = prefKey.localizedTitle
-            labelValue.text = Preferences.shared[prefKey] ? "OPTION BOOL ON".localized : "OPTION BOOL OFF".localized
-            labelDescr.text = prefKey.localizedDescription
+            titleLabel.text = prefKey.localizedTitle
+            valueLabel.text = Preferences.shared[prefKey] ? "OPTION BOOL ON".localized : "OPTION BOOL OFF".localized
+            descrLabel.text = prefKey.localizedDescription
         }
     }
     
@@ -106,7 +107,9 @@ class OptionCell: UITableViewCell {
     }
     
     private func cellHeight(forWidth: CGFloat) -> CGFloat {
-        let size =  contentView.systemLayoutSizeFitting(
+        updateConstraintsIfNeeded()
+        layoutIfNeeded()
+        let size = contentView.systemLayoutSizeFitting(
             CGSize(width: forWidth, height: 8000),
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
@@ -114,19 +117,49 @@ class OptionCell: UITableViewCell {
         return ceil(size.height)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setNeedsUpdateConstraints()
+    }
+    
     override func updateConstraints() {
-        if showDescription, let c = constraingLabelDescrHeight {
-            c.isActive = false
-            constraingLabelDescrHeight = nil
+        descrLabel.isHidden = !showDescription
+
+        if traitCollection.preferredContentSizeCategory.isAccessibilitySize {
+            titleLabel.snp.remakeConstraints { (make) in
+                make.top.left.right.equalTo(contentView.layoutMarginsGuide)
+            }
+            valueLabel.snp.remakeConstraints { (make) in
+                make.top.equalTo(titleLabel.snp.bottom).offset(10)
+                make.left.right.equalTo(contentView.layoutMarginsGuide)
+            }
+            descrLabel.snp.remakeConstraints { (make) in
+                make.top.equalTo(valueLabel.snp.bottom).offset(showDescription ? 20 : 0)
+                make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
+                if !showDescription {
+                    make.height.equalTo(0)
+                }
+            }
+        } else {
+            titleLabel.snp.remakeConstraints { (make) in
+                make.top.left.equalTo(contentView.layoutMarginsGuide)
+            }
+            valueLabel.snp.remakeConstraints { (make) in
+                make.left.equalTo(titleLabel.snp.right).offset(20)
+                make.top.right.equalTo(contentView.layoutMarginsGuide)
+            }
+            descrLabel.snp.remakeConstraints { (make) in
+                make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
+                make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
+                make.top.greaterThanOrEqualTo(valueLabel.snp.bottom).offset(showDescription ? 20 : 0)
+                make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
+                if !showDescription {
+                    make.height.equalTo(0)
+                }
+            }
         }
-        
-        if !showDescription, constraingLabelDescrHeight == nil {
-            constraingLabelDescrHeight = labelDescr.heightAnchor.constraint(equalToConstant: 0)
-            constraingLabelDescrHeight?.isActive = true
-        }
-        
-        constraingLabelDescrTop.constant = showDescription ? 10 : 0
         
         super.updateConstraints()
+        invalidateIntrinsicContentSize()
     }
 }

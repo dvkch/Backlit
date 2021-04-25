@@ -25,6 +25,7 @@ enum SnapshotType {
 // TODO: fix accessibility font size in option cell, put option under the title instead of on the right
 // TODO: show button in catalyst to open gallery folder, maybe even save pictures in Images ?
 // TODO: test keyboard shortcuts on catalyst (& ipad ?)
+// TODO: test perfs with instruments when scanning and reading options
 
 // LATER: add avahi support ?
 // LATER: usb support for Catalyst ?

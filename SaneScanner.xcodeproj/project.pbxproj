@@ -42,6 +42,7 @@
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		979576AB223022C400680A80 /* UILabel+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979576AA223022C400680A80 /* UILabel+SY.swift */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
+		979FCEF925D811FB00DD9E0E /* UIContentSizeCategory+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */; };
 		97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */; };
 		97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */; };
 		97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */; };
@@ -119,6 +120,7 @@
 		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		979576AA223022C400680A80 /* UILabel+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+SY.swift"; sourceTree = "<group>"; };
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContentSizeCategory+SY.swift"; sourceTree = "<group>"; };
 		97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
 		97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+SY.swift"; sourceTree = "<group>"; };
 		97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SY.swift"; sourceTree = "<group>"; };
@@ -237,12 +239,13 @@
 				97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */,
 				971584CD222F36C100DC46CA /* SYPictureMetdata+SY.swift */,
 				973066C6220C951B0068E8C7 /* UIActivityViewController+SY.swift */,
+				9730FDBD25D08516009ABCBC /* UIButton+SY.swift */,
 				97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */,
+				979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */,
 				971584CF222F445200DC46CA /* UIImage+SY.swift */,
 				979576AA223022C400680A80 /* UILabel+SY.swift */,
 				9755651525CB712800FDAD07 /* UISceneView+SY.swift */,
 				97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */,
-				9730FDBD25D08516009ABCBC /* UIButton+SY.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				9730FD9225CF6365009ABCBC /* DeviceAuthentication+SY.swift in Sources */,
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */,
+				979FCEF925D811FB00DD9E0E /* UIContentSizeCategory+SY.swift in Sources */,
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
 				973066C1220C898E0068E8C7 /* GalleryGridLayout.swift in Sources */,
 				97F2FB5122230A6B006BD617 /* GalleryImagesVC.swift in Sources */,
