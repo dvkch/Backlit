@@ -20,6 +20,7 @@ enum SnapshotType {
 }
 
 // TODO: change layout for iPad and catalyst
+// TODO: adapt SYEmailHelper for catalyst?
 
 // TODO: fix scan showing black image after cancelled preview
 // TODO: fix accessibility font size in option cell, put option under the title instead of on the right
