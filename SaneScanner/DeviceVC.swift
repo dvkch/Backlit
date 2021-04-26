@@ -237,12 +237,12 @@ class DeviceVC: UIViewController {
 // MARK: Snapshots
 extension DeviceVC {
     private func prepareForSnapshotting() {
-        let snapshotType = AppDelegate.obtain.snapshotType
+        let snapshotType = SnapshotKind.fromLaunchOptions
         guard snapshotType != .none else { return }
     
         if snapshotType == .devicePreview || snapshotType == .deviceOptions || snapshotType == .deviceOptionPopup {
             let rect = CGRect(x: 0.1, y: 0.2, width: 0.8, height: 0.6)
-            if let path = AppDelegate.obtain.snapshotTestScanImagePath {
+            if let path = SnapshotKind.snapshotTestScanImagePath {
                 device.lastPreviewImage = UIImage(contentsOfFile: path)
             }
             updatePreviewCell(cropAreaPercent: rect)

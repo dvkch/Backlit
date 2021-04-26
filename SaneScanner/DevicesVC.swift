@@ -243,7 +243,7 @@ extension DevicesVC : UITableViewDelegate {
         SVProgressHUD.show(withStatus: "LOADING".localized)
         
         Sane.shared.openDevice(device) { (error) in
-            if AppDelegate.obtain.snapshotType == .none {
+            if SnapshotKind.fromLaunchOptions == .none {
                 SVProgressHUD.dismiss()
             }
             

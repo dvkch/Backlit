@@ -15,10 +15,6 @@ import SYPictureMetadata
 import SVProgressHUD
 #endif
 
-enum SnapshotType {
-    case none, devicePreview, deviceOptions, deviceOptionPopup, other
-}
-
 // TODO: change layout for iPad and catalyst
 // TODO: adapt SYEmailHelper for catalyst?
 
@@ -41,10 +37,6 @@ class AppDelegate: UIResponder {
     // MARK: Properties
     @objc var window: UIWindow?
     private var context: Context?
-    
-    // MARK: Snapshot properties
-    private(set) var snapshotType = SnapshotType.none
-    private(set) var snapshotTestScanImagePath: String? = nil
 }
 
 extension AppDelegate : UIApplicationDelegate {
@@ -65,28 +57,10 @@ extension AppDelegate : UIApplicationDelegate {
         SVProgressHUD.applyStyle()
         
         // Snapshots
-        if ProcessInfo.processInfo.arguments.contains("DOING_SNAPSHOT") {
-            snapshotType = .other
+        if SnapshotKind.fromLaunchOptions == .other {
             Sane.shared.configuration.clearHosts()
             Sane.shared.configuration.addHost("192.168.69.42")
             SVProgressHUD.show()
-        }
-
-        if ProcessInfo.processInfo.arguments.contains("SNAPSHOT_PREVIEW") {
-            snapshotType = .devicePreview
-        }
-        
-        if ProcessInfo.processInfo.arguments.contains("SNAPSHOT_OPTIONS") {
-            snapshotType = .deviceOptions
-        }
-        
-        if ProcessInfo.processInfo.arguments.contains("SNAPSHOT_OPTION_POPUP") {
-            snapshotType = .deviceOptionPopup
-        }
-        
-        let testPathPrefix = "SNAPSHOT_TEST_IMAGE_PATH="
-        if let testPathArgument = ProcessInfo.processInfo.arguments.first(where: { $0.hasPrefix(testPathPrefix) }) {
-            snapshotTestScanImagePath = testPathArgument.replacingOccurrences(of: testPathPrefix, with: "")
         }
         
         return true
