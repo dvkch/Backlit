@@ -8,6 +8,7 @@
 
 import UIKit
 
+#if !targetEnvironment(macCatalyst)
 protocol GalleryImageVCDelegate: NSObjectProtocol {
     func galleryImageVC(singleTapped: GalleryImageVC)
 }
@@ -179,3 +180,5 @@ extension GalleryImageVC : UIScrollViewDelegate {
         updateScrollViewInsets()
     }
 }
+
+#endif

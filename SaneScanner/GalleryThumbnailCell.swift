@@ -41,8 +41,10 @@ class GalleryThumbnailCell: UICollectionViewCell {
         
         GalleryManager.shared.addDelegate(self)
         
-        tooltipGesture = UIHoverGestureRecognizer(target: self, action: #selector(hoverGestureRecognized(_:)))
-        addGestureRecognizer(tooltipGesture)
+        if #available(iOS 13.0, *) {
+            tooltipGesture = UIHoverGestureRecognizer(target: self, action: #selector(hoverGestureRecognized(_:)))
+            addGestureRecognizer(tooltipGesture)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,11 +85,11 @@ class GalleryThumbnailCell: UICollectionViewCell {
         }
     }()
     private let selectionView = UIView()
-    private var tooltipGesture: UIHoverGestureRecognizer!
+    private var tooltipGesture: UIGestureRecognizer!
     private let tooltipView = TooltipView()
     
     // MARK: Actions
-    @objc private func hoverGestureRecognized(_ gesture: UIHoverGestureRecognizer) {
+    @objc private func hoverGestureRecognized(_ gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             hoverTimer = Timer(timeInterval: 0.7, target: self, selector: #selector(showTooltip), userInfo: nil, repeats: false)
             RunLoop.main.add(hoverTimer!, forMode: .common)

@@ -42,19 +42,6 @@ class SplitVC: UISplitViewController {
         viewControllers.forEach {
             ($0 as? ScanNC)?.updateToolbar(animated: false)
         }
-        
-        // TODO: cleanup?
-        if traitCollection.horizontalSizeClass != .compact {
-            if let presentedGallery = presentedViewController as? GalleryNC {
-                if let currentIndex = presentedGallery.currentIndex {
-                    presentedGallery.openImage(at: currentIndex, animated: false)
-                }
-                else if presentedGallery.isShowingGrid {
-                    presentedGallery.openGallery(animated: false)
-                }
-            }
-            dismiss(animated: false, completion: nil)
-        }
     }
 }
 

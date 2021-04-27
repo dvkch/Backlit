@@ -9,6 +9,7 @@
 import UIKit
 import SYKit
 
+#if !targetEnvironment(macCatalyst)
 class GalleryNC: UINavigationController {
 
     // MARK: Init
@@ -81,3 +82,5 @@ extension GalleryNC : GalleryManagerDelegate {
     }
 
 }
+
+#endif

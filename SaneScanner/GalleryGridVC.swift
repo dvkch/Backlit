@@ -10,7 +10,6 @@ import UIKit
 
 #if !targetEnvironment(macCatalyst)
 import SVProgressHUD
-#endif
 
 class GalleryGridVC: UIViewController {
 
@@ -294,3 +293,4 @@ extension GalleryGridVC : GalleryManagerDelegate {
         setItems(items)
     }
 }
+#endif

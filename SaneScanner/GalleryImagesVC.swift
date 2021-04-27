@@ -8,6 +8,7 @@
 
 import UIKit
 
+#if !targetEnvironment(macCatalyst)
 class GalleryImagesVC: UIViewController {
 
     override func viewDidLoad() {
@@ -206,3 +207,5 @@ extension GalleryImagesVC : GalleryManagerDelegate {
         openImage(at: newIndex, animated: false)
     }
 }
+
+#endif
