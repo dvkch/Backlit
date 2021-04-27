@@ -46,45 +46,32 @@ class GalleryThumbsView: UIView {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
-        collectionView.contentInset = .init(top: 0, left: gradientWidth, bottom: 0, right: gradientWidth)
-        collectionView.scrollIndicatorInsets = collectionView.contentInset
         collectionView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         addSubview(collectionView)
         
+        collectionViewLayout.scrollDirection = scrollDirection
+        
         leftGradientView.gradientLayer.colors = [UIColor.white.cgColor, UIColor(white: 1, alpha: 0).cgColor]
         leftGradientView.gradientLayer.locations = [0.2, 1]
-        leftGradientView.gradientLayer.startPoint = .zero
-        leftGradientView.gradientLayer.endPoint = .init(x: 1, y: 0)
         addSubview(leftGradientView)
         
         rightGradientView.gradientLayer.colors = [UIColor.white.cgColor, UIColor(white: 1, alpha: 0).cgColor]
         rightGradientView.gradientLayer.locations = [0.2, 1]
-        rightGradientView.gradientLayer.startPoint = .init(x: 1, y: 0)
-        rightGradientView.gradientLayer.endPoint = .zero
         addSubview(rightGradientView)
         
-        leftGradientView.snp.makeConstraints { (make) in
-            make.top.left.bottom.equalToSuperview()
-            make.width.equalTo(gradientWidth)
-        }
-        
-        rightGradientView.snp.makeConstraints { (make) in
-            make.top.right.bottom.equalToSuperview()
-            make.width.equalTo(gradientWidth)
-        }
-        
-        collectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(10).priority(.low)
-            make.left.right.equalTo(0)
-            make.centerY.equalToSuperview()
-            make.height.greaterThanOrEqualTo(30)
-        }
+        setNeedsUpdateConstraints()
         
         GalleryManager.shared.addDelegate(self)
     }
     
     // MARK: Properties
     weak var parentViewController: UIViewController?
+    var scrollDirection: UICollectionView.ScrollDirection = .horizontal {
+        didSet {
+            collectionViewLayout.scrollDirection = scrollDirection
+            setNeedsUpdateConstraints()
+        }
+    }
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
     private var galleryItems = [GalleryItem]()
@@ -112,7 +99,7 @@ class GalleryThumbsView: UIView {
         return preferredSize
     }
     
-    private let gradientWidth = CGFloat(30)
+    private let gradientSize = CGFloat(30)
     
     private var prevSize = CGSize.zero
     override func layoutSubviews() {
@@ -131,6 +118,8 @@ class GalleryThumbsView: UIView {
     }
     
     private func centerContent() {
+        guard scrollDirection == .horizontal else { return }
+
         let visibleIndexPaths = collectionView.indexPathsForVisibleItems.sorted()
         
         var leftIndexPath = visibleIndexPaths.first
@@ -141,18 +130,75 @@ class GalleryThumbsView: UIView {
         collectionViewLayout.minimumInteritemSpacing = 10
         
         if let leftIndexPath = leftIndexPath {
-            collectionView.scrollToItem(at: leftIndexPath, at: .left, animated: false)
+            collectionView.scrollToItem(at: leftIndexPath, at: scrollDirection == .horizontal ? .left : .top, animated: false)
         }
         
         // makes sure contentSize is correct
         collectionView.layoutIfNeeded()
         
         var availableWidth = collectionView.bounds.width - collectionView.contentSize.width
-        availableWidth = max(0, availableWidth - 2 * gradientWidth)
+        availableWidth = max(0, availableWidth - 2 * gradientSize)
         
         // center the content
-        let horizontalInset = gradientWidth + availableWidth / 2
+        let horizontalInset = gradientSize + availableWidth / 2
         collectionView.contentInset = .init(top: 0, left: horizontalInset, bottom: 0, right: horizontalInset)
+    }
+    
+    override func updateConstraints() {
+        if scrollDirection == .horizontal {
+            collectionView.contentInset = .init(top: 0, left: gradientSize, bottom: 0, right: gradientSize)
+            collectionView.scrollIndicatorInsets = .init(top: 0, left: gradientSize, bottom: 0, right: gradientSize)
+        } else {
+            collectionView.contentInset = .init(top: gradientSize, left: 20, bottom: gradientSize, right: 20)
+            collectionView.scrollIndicatorInsets = .init(top: gradientSize, left: 0, bottom: gradientSize, right: 0)
+        }
+
+        leftGradientView.snp.makeConstraints { (make) in
+            if scrollDirection == .horizontal {
+                make.top.left.bottom.equalToSuperview()
+                make.width.equalTo(gradientSize)
+            } else {
+                make.top.left.right.equalToSuperview()
+                make.height.equalTo(gradientSize)
+            }
+        }
+        
+        rightGradientView.snp.makeConstraints { (make) in
+            if scrollDirection == .horizontal {
+                make.top.right.bottom.equalToSuperview()
+                make.width.equalTo(gradientSize)
+            } else {
+                make.left.right.bottom.equalToSuperview()
+                make.height.equalTo(gradientSize)
+            }
+        }
+        
+        collectionView.snp.makeConstraints { (make) in
+            if scrollDirection == .horizontal {
+                make.top.equalTo(10).priority(.low)
+                make.left.right.equalTo(0)
+                make.centerY.equalToSuperview()
+                make.height.greaterThanOrEqualTo(30)
+            } else {
+                make.top.left.right.bottom.equalTo(0)
+                make.centerX.equalToSuperview()
+            }
+        }
+        
+        if scrollDirection == .horizontal {
+            leftGradientView.gradientLayer.startPoint = .zero
+            leftGradientView.gradientLayer.endPoint = .init(x: 1, y: 0)
+            rightGradientView.gradientLayer.startPoint = .init(x: 1, y: 0)
+            rightGradientView.gradientLayer.endPoint = .zero
+        } else {
+            leftGradientView.gradientLayer.startPoint = .zero
+            leftGradientView.gradientLayer.endPoint = .init(x: 0, y: 1)
+            rightGradientView.gradientLayer.startPoint = .init(x: 0, y: 1)
+            rightGradientView.gradientLayer.endPoint = .zero
+        }
+        
+        collectionViewLayout.invalidateLayout()
+        super.updateConstraints()
     }
 }
 
@@ -208,12 +254,23 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let bounds = collectionView.bounds.inset(by: collectionView.contentInset)
         let imageSize = GalleryManager.shared.imageSize(for: galleryItems[indexPath.item]) ?? CGSize(width: 100, height: 100)
-        return CGSize(width: imageSize.width * bounds.height / imageSize.height, height: bounds.height)
+
+        if scrollDirection == .horizontal {
+            return CGSize(width: imageSize.width * bounds.height / imageSize.height, height: bounds.height)
+        } else {
+            return CGSize(width: bounds.width, height: imageSize.height * bounds.width / imageSize.width)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
+        
+        #if targetEnvironment(macCatalyst)
+        // TODO: fix crash
+        UIApplication.shared.open(galleryItems[indexPath.item].URL, options: [:], completionHandler: nil)
+        #else
         let nc = GalleryNC(openedAt: indexPath.row)
         parentViewController?.present(nc, animated: true, completion: nil)
+        #endif
     }
 }
