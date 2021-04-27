@@ -53,6 +53,7 @@
 		97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E04322060C5700AC74D0 /* PreviewCell.swift */; };
 		97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E04422060C5700AC74D0 /* PreviewCell.xib */; };
 		97D4CE8A2636EB7800F84150 /* SnapshotKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D4CE892636EB7800F84150 /* SnapshotKind.swift */; };
+		97D590212637608000E84198 /* UIViewController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590202637608000E84198 /* UIViewController+SY.swift */; };
 		97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* SanePreviewView.swift */; };
 		97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B022071F880027CCAE /* PreferencesVC.swift */; };
 		97EB32B322071F880027CCAE /* PreferencesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EB32B122071F880027CCAE /* PreferencesVC.xib */; };
@@ -133,6 +134,7 @@
 		97D0E04322060C5700AC74D0 /* PreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
 		97D0E04422060C5700AC74D0 /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
 		97D4CE892636EB7800F84150 /* SnapshotKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotKind.swift; sourceTree = "<group>"; };
+		97D590202637608000E84198 /* UIViewController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SY.swift"; sourceTree = "<group>"; };
 		97EAF237220B54A700435DE6 /* SanePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanePreviewView.swift; sourceTree = "<group>"; };
 		97EB32B022071F880027CCAE /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		97EB32B122071F880027CCAE /* PreferencesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesVC.xib; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				979576AA223022C400680A80 /* UILabel+SY.swift */,
 				9755651525CB712800FDAD07 /* UISceneView+SY.swift */,
 				97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */,
+				97D590202637608000E84198 /* UIViewController+SY.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,
 				973066C3220C8C740068E8C7 /* FileManager+SY.swift in Sources */,
 				97FDF403222C55EE00B71E4C /* DeviceOptionVC.swift in Sources */,
+				97D590212637608000E84198 /* UIViewController+SY.swift in Sources */,
 				9730FDA825D07D57009ABCBC /* DeviceScanPreviewVC.swift in Sources */,
 				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,

@@ -17,7 +17,6 @@ class ScanNC: UINavigationController {
     
     override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
         super.init(navigationBarClass: navigationBarClass, toolbarClass: Toolbar.self)
-        updateToolbar(animated: false)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -27,6 +26,11 @@ class ScanNC: UINavigationController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateToolbar(animated: false)
+   }
     
     // MARK: Properties
     private var customToolbar: Toolbar? {

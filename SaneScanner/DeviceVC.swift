@@ -232,6 +232,25 @@ class DeviceVC: UIViewController {
             previewCell.refresh()
         }
     }
+
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        scanButton.isHidden = useLargeLayout
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        // TODO: necessary ?
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass || traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
+            /*
+            tableView.beginUpdates()
+            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            tableView.endUpdates()
+ */
+        }
+    }
 }
 
 // MARK: Snapshots
@@ -273,7 +292,9 @@ extension DeviceVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return 1 }
+        if section == 0 {
+            return useLargeLayout ? 0 : 1
+        }
         return optionsInGroup(tableViewSection: section)?.count ?? 0
     }
     
@@ -294,7 +315,9 @@ extension DeviceVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 { return "DEVICE SECTION PREVIEW".localized }
+        if section == 0 {
+            return useLargeLayout ? nil : "DEVICE SECTION PREVIEW".localized
+        }
         return optionGroup(tableViewSection: section)?.localizedTitle
     }
     
@@ -309,7 +332,6 @@ extension DeviceVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         if indexPath.section == 0 {
             return previewCellHeight(in: tableView)
         }
@@ -328,6 +350,13 @@ extension DeviceVC : UITableViewDataSource {
         }
         
         return 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 && useLargeLayout {
+            return 1 // returning 0 doesn't work for a grouped table view
+        }
+        return UITableView.automaticDimension
     }
 }
 
