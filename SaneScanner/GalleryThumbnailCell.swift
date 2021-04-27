@@ -40,6 +40,9 @@ class GalleryThumbnailCell: UICollectionViewCell {
         updateSelectionStyle()
         
         GalleryManager.shared.addDelegate(self)
+        
+        tooltipGesture = UIHoverGestureRecognizer(target: self, action: #selector(hoverGestureRecognized(_:)))
+        addGestureRecognizer(tooltipGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,6 +66,12 @@ class GalleryThumbnailCell: UICollectionViewCell {
     enum Mode {
         case gallery, toolbar
     }
+
+    private var hoverTimer: Timer? {
+        didSet {
+            oldValue?.invalidate()
+        }
+    }
     
     // MARK: Views
     private let imageView = UIImageView()
@@ -74,6 +83,33 @@ class GalleryThumbnailCell: UICollectionViewCell {
         }
     }()
     private let selectionView = UIView()
+    private var tooltipGesture: UIHoverGestureRecognizer!
+    private let tooltipView = TooltipView()
+    
+    // MARK: Actions
+    @objc private func hoverGestureRecognized(_ gesture: UIHoverGestureRecognizer) {
+        if gesture.state == .began {
+            hoverTimer = Timer(timeInterval: 0.7, target: self, selector: #selector(showTooltip), userInfo: nil, repeats: false)
+            RunLoop.main.add(hoverTimer!, forMode: .common)
+        }
+        if gesture.state == .ended || gesture.state == .cancelled {
+            hoverTimer?.invalidate()
+            hideTooltip()
+        }
+    }
+    
+    @objc private func showTooltip() {
+        guard let date = item?.URL.creationDate else { return }
+
+        let text = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        var location = tooltipGesture.location(in: self)
+        location.y += 15 // approximate cursor height
+        tooltipView.show(text: text, from: self, location: location)
+    }
+    
+    func hideTooltip() {
+        tooltipView.dismiss()
+    }
 
     // MARK: Content
     func update(item: GalleryItem, mode: Mode, spinnerColor: UIColor) {

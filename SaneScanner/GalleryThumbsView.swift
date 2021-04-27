@@ -251,6 +251,12 @@ extension GalleryThumbsView: UICollectionViewDataSource {
 }
 
 extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        collectionView.visibleCells.forEach { (cell) in
+            (cell as? GalleryThumbnailCell)?.hideTooltip()
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let bounds = collectionView.bounds.inset(by: collectionView.contentInset)
         let imageSize = GalleryManager.shared.imageSize(for: galleryItems[indexPath.item]) ?? CGSize(width: 100, height: 100)

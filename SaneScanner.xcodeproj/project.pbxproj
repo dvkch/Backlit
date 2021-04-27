@@ -54,6 +54,7 @@
 		97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E04422060C5700AC74D0 /* PreviewCell.xib */; };
 		97D4CE8A2636EB7800F84150 /* SnapshotKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D4CE892636EB7800F84150 /* SnapshotKind.swift */; };
 		97D590212637608000E84198 /* UIViewController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590202637608000E84198 /* UIViewController+SY.swift */; };
+		97D5902526377CBE00E84198 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5902426377CBE00E84198 /* TooltipView.swift */; };
 		97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* SanePreviewView.swift */; };
 		97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B022071F880027CCAE /* PreferencesVC.swift */; };
 		97EB32B322071F880027CCAE /* PreferencesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EB32B122071F880027CCAE /* PreferencesVC.xib */; };
@@ -135,6 +136,7 @@
 		97D0E04422060C5700AC74D0 /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
 		97D4CE892636EB7800F84150 /* SnapshotKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotKind.swift; sourceTree = "<group>"; };
 		97D590202637608000E84198 /* UIViewController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SY.swift"; sourceTree = "<group>"; };
+		97D5902426377CBE00E84198 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
 		97EAF237220B54A700435DE6 /* SanePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanePreviewView.swift; sourceTree = "<group>"; };
 		97EB32B022071F880027CCAE /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		97EB32B122071F880027CCAE /* PreferencesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesVC.xib; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				97EAF237220B54A700435DE6 /* SanePreviewView.swift */,
 				9731D89022C548CE008D7525 /* TapInsetsView.swift */,
 				97499E5C220872F5006DED20 /* Toolbar.swift */,
+				97D5902426377CBE00E84198 /* TooltipView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97D5902526377CBE00E84198 /* TooltipView.swift in Sources */,
 				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
 				9755651625CB712800FDAD07 /* UISceneView+SY.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
