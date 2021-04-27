@@ -11,7 +11,7 @@ import SaneSwift
 import SnapKit
 
 protocol SanePreviewViewDelegate: NSObjectProtocol {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?)
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, device: Device, tapped action: SanePreviewView.Action, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?)
     func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device)
 }
 
@@ -42,6 +42,9 @@ class SanePreviewView: UIView {
         addSubview(imageView)
         
         lineView.backgroundColor = UITableView(frame: .zero, style: .grouped).separatorColor
+        #if targetEnvironment(macCatalyst)
+        lineView.isHidden = true
+        #endif
         addSubview(lineView)
         
         cropMask.cropAreaDidChangeBlock = { [weak self] (newCropArea) in
@@ -49,14 +52,43 @@ class SanePreviewView: UIView {
         }
         addSubview(cropMask)
         
-        button.setTitleColor(.normalText, for: .normal)
-        button.backgroundColor = .cellBackground
-        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
-        button.titleLabel?.autoAdjustsFontSize = true
-        button.titleLabel?.numberOfLines = 2
-        button.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
-        addSubview(button)
+        buttonsStackView.axis = .horizontal
+        buttonsStackView.distribution = .fillEqually
+        buttonsStackView.spacing = 0
+        #if targetEnvironment(macCatalyst)
+        buttonsStackView.spacing = 20
+        #endif
+        buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(buttonsStackView)
         
+        [previewButton: UIColor.cellBackground,
+         scanButton: UIColor.tint
+        ].forEach { (button, background) in
+            button.setBackgrounColor(background, for: .normal)
+            button.setBackgrounColor(background.withAlphaComponent(0.7), for: .disabled)
+            button.setTitleColor(.normalText, for: .normal)
+            button.setTitleColor(.altText, for: .disabled)
+            button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+            button.titleLabel?.autoAdjustsFontSize = true
+            button.titleLabel?.numberOfLines = 2
+            button.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
+            #if targetEnvironment(macCatalyst)
+            button.layer.cornerRadius = 10
+            button.layer.masksToBounds = true
+            #endif
+        }
+        buttonsStackView.addArrangedSubview(previewButton)
+        buttonsStackView.addArrangedSubview(scanButton)
+        
+        imageView.snp.makeConstraints { (make) in
+            make.top.equalTo(margin)
+            make.centerX.equalToSuperview()
+            make.left.greaterThanOrEqualTo(margin)
+            make.right.lessThanOrEqualTo(-margin)
+            make.bottom.lessThanOrEqualTo(buttonsStackView.snp.top).offset(-margin)
+            make.bottom.equalTo(buttonsStackView.snp.top).offset(-margin).priority(.high)
+        }
+
         cropMask.snp.makeConstraints { (make) in
             make.edges.equalTo(imageView)
         }
@@ -64,21 +96,7 @@ class SanePreviewView: UIView {
         lineView.snp.makeConstraints { (make) in
             make.height.equalTo(1 / UIScreen.main.scale)
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(button.snp.top)
-        }
-        
-        button.snp.makeConstraints { (make) in
-            make.height.equalTo(50)
-            make.left.right.bottom.equalToSuperview()
-        }
-        
-        imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(margin)
-            make.centerX.equalToSuperview()
-            make.left.greaterThanOrEqualTo(margin)
-            make.right.lessThanOrEqualTo(-margin)
-            make.bottom.lessThanOrEqualTo(button.snp.top).offset(-margin)
-            make.bottom.equalTo(button.snp.top).offset(-margin).priority(.high)
+            make.bottom.equalTo(buttonsStackView.snp.top)
         }
         
         setNeedsUpdateConstraints()
@@ -86,6 +104,10 @@ class SanePreviewView: UIView {
     }
     
     // MARK: Properties
+    enum Action {
+        case scan, preview
+    }
+
     weak var delegate: SanePreviewViewDelegate?
     var device: Device? {
         didSet {
@@ -93,8 +115,18 @@ class SanePreviewView: UIView {
             refresh()
         }
     }
+    var showScanButton: Bool = false {
+        didSet {
+            updateContent()
+        }
+    }
     
-    private var previewProgress: ScanProgress? {
+    private var currentAction: Action? {
+        didSet {
+            updateContent()
+        }
+    }
+    private var progress: ScanProgress? {
         didSet {
             updateContent()
         }
@@ -104,7 +136,9 @@ class SanePreviewView: UIView {
     private let imageView = UIImageView()
     private let lineView = UIView()
     private let cropMask = CropMaskView()
-    private let button = UIButton(type: .custom)
+    private let buttonsStackView = UIStackView()
+    private let previewButton = UIButton(type: .custom)
+    private let scanButton = UIButton(type: .custom)
     private var ratioConstraint: NSLayoutConstraint?
 
     // MARK: Actions
@@ -120,26 +154,29 @@ class SanePreviewView: UIView {
         imageView.image = device.lastPreviewImage
     }
     
-    @objc private func buttonTap() {
+    @objc private func buttonTap(_ sender: UIButton) {
         guard let device = device else { return }
         
-        if case .cancelling = previewProgress {
+        if case .cancelling = progress {
             // do nothing
             return
         }
 
-        if previewProgress != nil {
+        if progress != nil {
             delegate?.sanePreviewView(self, canceledScan: device)
             return
         }
 
+        let action: Action = sender == previewButton ? .preview : .scan
+        self.currentAction = action
         
-        delegate?.sanePreviewView(self, tappedScan: device, progress: { [weak self] (progress) in
+        delegate?.sanePreviewView(self, device: device, tapped: action, progress: { [weak self] (progress) in
             guard self?.device == device else { return }
-            self?.previewProgress = progress
+            self?.progress = progress
         }, completion: { [weak self] (result) in
             guard self?.device == device else { return }
-            self?.previewProgress = nil
+            self?.progress = nil
+            self?.currentAction = nil
             if case .success((let image, _)) = result {
                 self?.imageView.image = image
             }
@@ -148,14 +185,26 @@ class SanePreviewView: UIView {
     
     // MARK: Content
     private func updateContent() {
-        button.updateTitle(progress: previewProgress, isPreview: true)
-        if case let .scanning(_, image) = previewProgress {
+        scanButton.updateTitle(progress: currentAction == .scan ? progress : nil, isPreview: false)
+        scanButton.isEnabled = currentAction != .preview
+        scanButton.sy_isHidden = !showScanButton
+
+        previewButton.updateTitle(progress: currentAction == .preview ? progress : nil, isPreview: true)
+        previewButton.isEnabled = currentAction != .scan
+
+        if case let .scanning(_, image) = progress {
             imageView.image = image
         }
     }
     
     // MARK: Layout
-    private let margin = CGFloat(15)
+    private var margin: CGFloat {
+        #if targetEnvironment(macCatalyst)
+        return 30
+        #else
+        return 15
+        #endif
+    }
     
     override func updateConstraints() {
         let ratio = device?.previewImageRatio ?? (CGFloat(3) / 4)
@@ -167,9 +216,10 @@ class SanePreviewView: UIView {
         ratioConstraint = imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: ratio)
         ratioConstraint?.isActive = true
 
-        button.snp.remakeConstraints { (make) in
-            make.height.equalTo(NSAttributedString(string: "X", font: button.titleLabel?.font).size().height * 2.5)
-            make.left.right.bottom.equalToSuperview()
+        buttonsStackView.snp.remakeConstraints { (make) in
+            make.height.equalTo(NSAttributedString(string: "X", font: previewButton.titleLabel?.font).size().height * 2.5)
+            make.left.equalToSuperview().offset(buttonsStackView.spacing)
+            make.right.bottom.equalToSuperview().offset(-buttonsStackView.spacing)
         }
 
         super.updateConstraints()

@@ -80,6 +80,10 @@ class DeviceVC: UIViewController {
     
     // MARK: Actions
     @IBAction private func scanButtonTap() {
+        scan(device: device, progress: nil, completion: nil)
+    }
+    
+    private func scan(device: Device, progress progressCallback: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
         if isScanning {
             Sane.shared.cancelCurrentScan()
             return
@@ -102,6 +106,8 @@ class DeviceVC: UIViewController {
                 progressVC?.isScanning = true
                 progressVC?.image = incompletePreview ?? progressVC?.image
             }
+            
+            progressCallback?(progress)
         }
         
         // block that will be called to handle completion
@@ -128,6 +134,8 @@ class DeviceVC: UIViewController {
                 progressVC?.dismiss(animated: false, completion: nil)
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
+            
+            completion?(result)
         }
         
         // need to show image (finished or partial with preview)
@@ -146,7 +154,20 @@ class DeviceVC: UIViewController {
         // start scan
         Sane.shared.scan(device: device, progress: progressBlock, completion: completionBlock)
     }
-    
+
+    private func preview(device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+        Sane.shared.preview(device: device, progress: { [weak self] (p) in
+            self?.scanProgress = p
+            progress?(p)
+        }, completion: { [weak self] (result) in
+            self?.scanProgress = nil
+            completion?(result)
+            if case let .failure(error) = result {
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        })
+    }
+
     @objc private func settingsButtonTap() {
         let nc = UINavigationController(rootViewController: PreferencesVC())
         nc.modalPresentationStyle = .formSheet
@@ -384,19 +405,15 @@ extension DeviceVC : UITableViewDelegate {
 }
 
 extension DeviceVC : SanePreviewViewDelegate {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, tappedScan device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, device: Device, tapped action: SanePreviewView.Action, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
         guard !isScanning else { return }
-
-        Sane.shared.preview(device: device, progress: { [weak self] (p) in
-            self?.scanProgress = p
-            progress?(p)
-        }, completion: { [weak self] (result) in
-            self?.scanProgress = nil
-            completion?(result)
-            if case let .failure(error) = result {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-            }
-        })
+        
+        if action == .preview {
+            preview(device: device, progress: progress, completion: completion)
+        }
+        if action == .scan {
+            scan(device: device, progress: progress, completion: completion)
+        }
     }
     
     func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device) {
