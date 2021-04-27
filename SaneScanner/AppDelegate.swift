@@ -42,7 +42,7 @@ class AppDelegate: UIResponder {
 extension AppDelegate : UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // log
-        print("Document path:", FileManager.documentsDirectoryURL)
+        print("Gallery path:", GalleryManager.shared.galleryFolder)
         
         // catalyst
         NSObject.fixCatalystScaling()

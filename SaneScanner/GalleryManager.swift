@@ -46,7 +46,7 @@ class GalleryManager: NSObject {
         thumbsQueue.maxSurvivingOperations = 0
         thumbsQueue.mode = .LIFO
         
-        watcher = DirectoryWatcher.watch(FileManager.documentsDirectoryURL)
+        watcher = DirectoryWatcher.watch(galleryFolder)
         watcher?.onNewFiles = { (files) in
             let unknownChangesCount = files.filter { !self.imageURLs.contains($0.standardizedFileURL) }.count
             if unknownChangesCount > 0 {
@@ -64,6 +64,15 @@ class GalleryManager: NSObject {
     }
     
     // MARK: Private vars
+    let galleryFolder: URL = {
+        #if targetEnvironment(macCatalyst)
+        let url = FileManager.imageDirectoryURL.appendingPathComponent("SaneScanner", isDirectory: true)
+        try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: [:])
+        return url
+        #else
+        return FileManager.documentsDirectoryURL
+        #endif
+    }()
     private var watcher: DirectoryWatcher?
     private var thumbsBeingCreated = [URL]()
     private var thumbsQueue = SYOperationQueue()
@@ -126,7 +135,7 @@ class GalleryManager: NSObject {
     
     func createRandomTestImages(count: Int) {
         (0..<count).forEach { (_) in
-            let url = FileManager.documentsDirectoryURL.appendingPathComponent("testimage-\(UUID().uuidString).jpg", isDirectory: false)
+            let url = galleryFolder.appendingPathComponent("testimage-\(UUID().uuidString).jpg", isDirectory: false)
             let image = UIImage.testImage(size: 500)
             try? image?.jpegData(compressionQuality: 0.9)?.write(to: url, options: .atomicWrite)
         }
@@ -137,7 +146,7 @@ class GalleryManager: NSObject {
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
-        var fileURL = FileManager.documentsDirectoryURL.appendingPathComponent(formatter.string(from: Date()), isDirectory: false)
+        var fileURL = galleryFolder.appendingPathComponent(formatter.string(from: Date()), isDirectory: false)
         
         let imageData: Data
         if Preferences.shared.saveAsPNG {
@@ -178,7 +187,7 @@ class GalleryManager: NSObject {
 
     private func listImages() -> [URL] {
         let items = try? FileManager.default.contentsOfDirectory(
-            at: FileManager.documentsDirectoryURL,
+            at: galleryFolder,
             includingPropertiesForKeys: [.isDirectoryKey, .creationDateKey],
             options: .skipsSubdirectoryDescendants
         )
