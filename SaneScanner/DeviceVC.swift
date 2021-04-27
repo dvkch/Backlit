@@ -139,6 +139,7 @@ class DeviceVC: UIViewController {
         }
         
         // need to show image (finished or partial with preview)
+        #if !targetEnvironment(macCatalyst)
         if Sane.shared.configuration.showIncompleteScanImages {
             progressVC = DeviceScanPreviewVC(shareTap: {
                 self.shareItem(item)
@@ -150,6 +151,7 @@ class DeviceVC: UIViewController {
             })
             self.present(progressVC!, animated: true, completion: nil)
         }
+        #endif
 
         // start scan
         Sane.shared.scan(device: device, progress: progressBlock, completion: completionBlock)
