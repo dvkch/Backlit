@@ -53,6 +53,9 @@
 		97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E04322060C5700AC74D0 /* PreviewCell.swift */; };
 		97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E04422060C5700AC74D0 /* PreviewCell.xib */; };
 		97D4CE8A2636EB7800F84150 /* SnapshotKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D4CE892636EB7800F84150 /* SnapshotKind.swift */; };
+		97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590122637565800E84198 /* DevicePreviewVC.swift */; };
+		97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D590132637565800E84198 /* DevicePreviewVC.xib */; };
+		97D5901B26375F3D00E84198 /* PreviewNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5901A26375F3D00E84198 /* PreviewNC.swift */; };
 		97D590212637608000E84198 /* UIViewController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590202637608000E84198 /* UIViewController+SY.swift */; };
 		97D5902526377CBE00E84198 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5902426377CBE00E84198 /* TooltipView.swift */; };
 		97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* SanePreviewView.swift */; };
@@ -135,6 +138,9 @@
 		97D0E04322060C5700AC74D0 /* PreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
 		97D0E04422060C5700AC74D0 /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
 		97D4CE892636EB7800F84150 /* SnapshotKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotKind.swift; sourceTree = "<group>"; };
+		97D590122637565800E84198 /* DevicePreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePreviewVC.swift; sourceTree = "<group>"; };
+		97D590132637565800E84198 /* DevicePreviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicePreviewVC.xib; sourceTree = "<group>"; };
+		97D5901A26375F3D00E84198 /* PreviewNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewNC.swift; sourceTree = "<group>"; };
 		97D590202637608000E84198 /* UIViewController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SY.swift"; sourceTree = "<group>"; };
 		97D5902426377CBE00E84198 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
 		97EAF237220B54A700435DE6 /* SanePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanePreviewView.swift; sourceTree = "<group>"; };
@@ -216,10 +222,13 @@
 			children = (
 				97499E5E220874B3006DED20 /* SplitVC.swift */,
 				97499E5A220862FE006DED20 /* ScanNC.swift */,
+				97D5901A26375F3D00E84198 /* PreviewNC.swift */,
 				9757FCEF2207112D00AB59F1 /* DevicesVC.swift */,
 				9757FCF02207112D00AB59F1 /* DevicesVC.xib */,
 				97044901220875D300E13C6A /* DeviceVC.swift */,
 				97044902220875D300E13C6A /* DeviceVC.xib */,
+				97D590122637565800E84198 /* DevicePreviewVC.swift */,
+				97D590132637565800E84198 /* DevicePreviewVC.xib */,
 				97FDF401222C55EE00B71E4C /* DeviceOptionVC.swift */,
 				9730FDA725D07D57009ABCBC /* DeviceScanPreviewVC.swift */,
 				97EB32B022071F880027CCAE /* PreferencesVC.swift */,
@@ -463,6 +472,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */,
 				9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */,
 				97EF42272205FF7900D45FC8 /* HostCell.xib in Resources */,
 				97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */,
@@ -631,6 +641,7 @@
 				97F2FB4F2223084B006BD617 /* GalleryNC.swift in Sources */,
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,
 				9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */,
+				97D5901B26375F3D00E84198 /* PreviewNC.swift in Sources */,
 				973066B3220C55000068E8C7 /* GalleryThumbsView.swift in Sources */,
 				977712D625CCB376009EC50D /* Context.swift in Sources */,
 				979576AB223022C400680A80 /* UILabel+SY.swift in Sources */,
@@ -642,6 +653,7 @@
 				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,
 				97D4CE8A2636EB7800F84150 /* SnapshotKind.swift in Sources */,
+				97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */,
 				97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */,
 				97499E5D220872F5006DED20 /* Toolbar.swift in Sources */,
 			);

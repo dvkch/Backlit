@@ -15,12 +15,11 @@ import SYPictureMetadata
 import SVProgressHUD
 #endif
 
-// TODO: change layout for iPad and catalyst
+// TODO: fix cropping not showing on catalyst
+// TODO: cleanup NCs & SplitVC classes names, responsabilities, etc
 // TODO: adapt SYEmailHelper for catalyst?
 
 // TODO: fix scan showing black image after cancelled preview
-// TODO: fix accessibility font size in option cell, put option under the title instead of on the right
-// TODO: show button in catalyst to open gallery folder, maybe even save pictures in Images ?
 // TODO: test keyboard shortcuts on catalyst (& ipad ?)
 // TODO: test perfs with instruments when scanning and reading options
 

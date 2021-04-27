@@ -25,8 +25,8 @@ class SplitVC: UISplitViewController {
         return viewControllers.compactMap({ $0 as? ScanNC }).first
     }
     
-    private var galleryNC: GalleryNC? {
-        return viewControllers.compactMap({ $0 as? GalleryNC }).first
+    private var previewNC: PreviewNC? {
+        return viewControllers.compactMap({ $0 as? PreviewNC }).first
     }
     
     // MARK: Layout
@@ -43,13 +43,14 @@ class SplitVC: UISplitViewController {
             ($0 as? ScanNC)?.updateToolbar(animated: false)
         }
         
+        // TODO: cleanup?
         if traitCollection.horizontalSizeClass != .compact {
             if let presentedGallery = presentedViewController as? GalleryNC {
                 if let currentIndex = presentedGallery.currentIndex {
-                    galleryNC?.openImage(at: currentIndex, animated: false)
+                    presentedGallery.openImage(at: currentIndex, animated: false)
                 }
                 else if presentedGallery.isShowingGrid {
-                    galleryNC?.openGallery(animated: false)
+                    presentedGallery.openGallery(animated: false)
                 }
             }
             dismiss(animated: false, completion: nil)
@@ -63,6 +64,23 @@ extension SplitVC : UISplitViewControllerDelegate {
     }
     
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
-        return galleryNC
+        return previewNC
+    }
+}
+
+extension SplitVC : UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if navigationController == scanNC {
+            let previewVC = previewNC?.viewControllers.first as? DevicePreviewVC
+
+            if let deviceVC = viewController as? DeviceVC {
+                previewVC?.device = deviceVC.device
+                previewVC?.delegate = deviceVC
+            }
+            else {
+                previewVC?.device = nil
+                previewVC?.delegate = nil
+            }
+        }
     }
 }

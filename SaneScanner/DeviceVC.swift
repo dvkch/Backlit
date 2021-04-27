@@ -63,7 +63,7 @@ class DeviceVC: UIViewController {
     }
     
     // MARK: Properties
-    private let device: Device
+    let device: Device
     private var isRefreshing: Bool = false
     private var scanProgress: ScanProgress? = nil
     private var isScanning: Bool {

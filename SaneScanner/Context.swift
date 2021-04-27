@@ -27,7 +27,7 @@ class Context: NSObject {
     let window: SYWindow
     private var splitViewController: SplitVC!
     private var scanNC: ScanNC!
-    private var galleryNC: GalleryNC!
+    private var previewNC: PreviewNC!
     
     // MARK: Methods
     private func setup() {
@@ -45,12 +45,14 @@ class Context: NSObject {
         scanNC.viewControllers = [DevicesVC()]
         
         // gallery view controller
-        galleryNC = GalleryNC(openedAt: nil)
+        previewNC = PreviewNC()
+        previewNC.viewControllers = [DevicePreviewVC()]
 
         // split controller
         splitViewController = SplitVC()
-        splitViewController.viewControllers = [scanNC, galleryNC]
+        splitViewController.viewControllers = [scanNC, previewNC]
         splitViewController.preferredDisplayMode = .allVisible
+        scanNC.delegate = splitViewController
 
         // auto manage toolbar visibility
         GalleryManager.shared.addDelegate(self)
