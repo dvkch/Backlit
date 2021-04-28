@@ -12,7 +12,7 @@ import SYOperationQueue
 import DirectoryWatcher
 import SYPictureMetadata
 
-protocol GalleryManagerDelegate: AnyObject, NSObjectProtocol {
+protocol GalleryManagerDelegate: NSObjectProtocol {
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem])
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem)
 }

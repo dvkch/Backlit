@@ -150,10 +150,13 @@ class GalleryImagesVC: UIViewController {
             return
         }
         
+        let titleButton = UIBarButtonItem(title: GalleryManager.shared.dateString(for: items[currentIndex]), style: .plain, target: nil, action: nil)
+        titleButton.tintColor = .normalText
+        
         toolbarItems = [
             UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteCurrentImage(sender:))),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(title: GalleryManager.shared.dateString(for: items[currentIndex]), style: .plain, target: nil, action: nil),
+            titleButton,
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareCurrentImage(sender:))),
         ]
