@@ -22,6 +22,7 @@ extension SceneDelegate : UISceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             context = Context(windowScene: windowScene)
             window = context?.window
+            windowScene.sizeRestrictions?.minimumSize = .init(width: 800, height: 550)
 
             // temporary fix for SVProgressHUD
             (UIApplication.shared.delegate as? AppDelegate)?.window = window
