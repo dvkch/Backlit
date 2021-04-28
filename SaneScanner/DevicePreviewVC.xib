@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,6 +16,7 @@
                 <outlet property="galleryThumbsView" destination="cxy-1j-dm5" id="BQH-xC-nmT"/>
                 <outlet property="previewView" destination="2oD-2M-AeB" id="U2B-lq-VsM"/>
                 <outlet property="separatorView" destination="haa-0L-0vE" id="6LQ-lh-Cb7"/>
+                <outlet property="separatorViewWidth" destination="3Le-2h-Nax" id="Rlk-kK-tzY"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,10 +32,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7y-45-Wyd" userLabel="Empty view">
                     <rect key="frame" x="0.0" y="0.0" width="282" height="896"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No content" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8HK-vz-OqS">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="No content" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8HK-vz-OqS">
                             <rect key="frame" x="99" y="438" width="84.5" height="20.5"/>
                             <constraints>
-                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="p8g-Ye-JcF"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" priority="751" constant="300" id="p8g-Ye-JcF"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
@@ -45,6 +46,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="8HK-vz-OqS" firstAttribute="centerY" secondItem="N7y-45-Wyd" secondAttribute="centerY" id="0If-5R-zoK"/>
+                        <constraint firstItem="8HK-vz-OqS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mkp-DP-ie7" secondAttribute="leading" constant="20" id="oa6-nF-feE"/>
                         <constraint firstItem="8HK-vz-OqS" firstAttribute="centerX" secondItem="N7y-45-Wyd" secondAttribute="centerX" id="y0t-OX-ubb"/>
                     </constraints>
                 </view>

@@ -18,7 +18,6 @@ class DevicePreviewVC: UIViewController {
         
         #if targetEnvironment(macCatalyst)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(openFolderInFinderTap))
-        navigationItem.rightBarButtonItem?.title = "YOYO"
         #endif
 
         emptyStateView.backgroundColor = .background
@@ -26,7 +25,7 @@ class DevicePreviewVC: UIViewController {
 
         previewView.showScanButton = true
         
-        separatorView.backgroundColor = .contrastedBackground
+        separatorView.backgroundColor = .splitSeparator
         
         galleryThumbsView.backgroundColor = .background
         galleryThumbsView.scrollDirection = .vertical
@@ -53,6 +52,7 @@ class DevicePreviewVC: UIViewController {
     @IBOutlet private var emptyStateLabel: UILabel!
     @IBOutlet private var previewView: SanePreviewView!
     @IBOutlet private var separatorView: UIView!
+    @IBOutlet private var separatorViewWidth: NSLayoutConstraint!
     @IBOutlet private var galleryThumbsView: GalleryThumbsView!
 
     // MARK: Actions
@@ -81,5 +81,15 @@ class DevicePreviewVC: UIViewController {
         
         emptyStateView.isHidden = device != nil
         previewView.isHidden = device == nil
+    }
+    
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        #if targetEnvironment(macCatalyst)
+        separatorViewWidth.constant = 1.5
+        #else
+        separatorViewWidth.constant = 1 / (view.window?.screen.scale ?? 1)
+        #endif
     }
 }

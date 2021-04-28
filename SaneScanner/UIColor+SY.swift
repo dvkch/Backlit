@@ -51,14 +51,16 @@ extension UIColor {
         return cellBackground.withAlphaComponent(0.90)
     }
 
-    static var contrastedBackground: UIColor {
+    static var splitSeparator: UIColor {
+        #if targetEnvironment(macCatalyst)
+        return UIColor.black
+        #else
         if #available(iOS 13.0, *) {
-            return UIColor.init { (traits) -> UIColor in
-                return traits.userInterfaceStyle == .dark ? .black : .white
-            }
+            return UIColor.opaqueSeparator
         } else {
-            return .white
+            return UIColor.darkGray
         }
+        #endif
     }
 
     static var normalText: UIColor {
