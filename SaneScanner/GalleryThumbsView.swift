@@ -51,14 +51,13 @@ class GalleryThumbsView: UIView {
         
         collectionViewLayout.scrollDirection = scrollDirection
         
-        leftGradientView.gradientLayer.colors = [UIColor.white.cgColor, UIColor(white: 1, alpha: 0).cgColor]
         leftGradientView.gradientLayer.locations = [0.2, 1]
         addSubview(leftGradientView)
         
-        rightGradientView.gradientLayer.colors = [UIColor.white.cgColor, UIColor(white: 1, alpha: 0).cgColor]
         rightGradientView.gradientLayer.locations = [0.2, 1]
         addSubview(rightGradientView)
         
+        updateGradientColors()
         setNeedsUpdateConstraints()
         
         GalleryManager.shared.addDelegate(self)
@@ -81,11 +80,25 @@ class GalleryThumbsView: UIView {
     // MARK: Content
     override var backgroundColor: UIColor? {
         didSet {
-            let gradientOpaqueColor = backgroundColor ?? .white
-            
-            leftGradientView.gradientLayer.colors  = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
-            rightGradientView.gradientLayer.colors = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
+            updateGradientColors()
         }
+    }
+    
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        // need this callback too, because if we start on an iPhone layout (hidden DevicePreviewVC => window = nil => traitCollection = nil), then move
+        // to large layout the gradients will be messed up
+        updateGradientColors()
+    }
+    
+    private func updateGradientColors() {
+        var gradientOpaqueColor = backgroundColor ?? .white
+        if #available(iOS 13.0, *) {
+            gradientOpaqueColor = gradientOpaqueColor.resolvedColor(with: traitCollection)
+        }
+
+        leftGradientView.gradientLayer.colors  = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
+        rightGradientView.gradientLayer.colors = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
     }
     
     // MARK: Layout
@@ -145,6 +158,9 @@ class GalleryThumbsView: UIView {
     }
     
     override func updateConstraints() {
+        collectionView.alwaysBounceHorizontal = scrollDirection == .horizontal
+        collectionView.alwaysBounceVertical = scrollDirection == .vertical
+
         if scrollDirection == .horizontal {
             collectionView.contentInset = .init(top: 0, left: gradientSize, bottom: 0, right: gradientSize)
             collectionView.scrollIndicatorInsets = .init(top: 0, left: gradientSize, bottom: 0, right: gradientSize)
@@ -272,7 +288,7 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
         collectionView.deselectItem(at: indexPath, animated: false)
         
         #if targetEnvironment(macCatalyst)
-        // TODO: fix crash
+        // TODO: fix crash on Catalyst
         UIApplication.shared.open(galleryItems[indexPath.item].URL, options: [:], completionHandler: nil)
         #else
         let nc = GalleryNC(openedAt: indexPath.row)

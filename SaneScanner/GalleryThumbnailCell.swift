@@ -101,9 +101,9 @@ class GalleryThumbnailCell: UICollectionViewCell {
     }
     
     @objc private func showTooltip() {
-        guard let date = item?.URL.creationDate else { return }
+        guard let item = item else { return }
 
-        let text = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        let text = GalleryManager.shared.dateString(for: item) ?? ""
         var location = tooltipGesture.location(in: self)
         location.y += 15 // approximate cursor height
         tooltipView.show(text: text, from: self, location: location)
