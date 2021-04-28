@@ -12,6 +12,12 @@ import UIKit
 extension NSObject {
 
     static func fixCatalystScaling() {
+        if #available(macCatalyst 14.0, *) {
+            // 14.0 corresponds to Big Sur 11.0
+            // default scaling works well on BigSur (plus it stopped working on 11.3), let's keep it for Catalina though
+            return
+        }
+
         #if targetEnvironment(macCatalyst)
         let clazz = objc_getClass("UINSSceneView") as! NSObject.Type
         clazz.sy_swizzleSelector(NSSelectorFromString("scaleFactor"), with: #selector(sy_catalystScaleFactor))
@@ -19,7 +25,6 @@ extension NSObject {
     }
     
     @objc private func sy_catalystScaleFactor() -> CGFloat {
-        // TODO: 0.77 doesn't look so bad on catalina... what do we do, uh ?
         return 1.0
     }
 }
