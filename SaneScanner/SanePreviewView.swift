@@ -49,12 +49,9 @@ class SanePreviewView: UIView {
         }
         addSubview(cropMask)
         
+        buttonsStackView.spacing = contentInsets
         buttonsStackView.axis = .horizontal
         buttonsStackView.distribution = .fillEqually
-        buttonsStackView.spacing = 0
-        #if targetEnvironment(macCatalyst)
-        buttonsStackView.spacing = 20
-        #endif
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(buttonsStackView)
         
@@ -67,12 +64,12 @@ class SanePreviewView: UIView {
         buttonsStackView.addArrangedSubview(previewButton)
         
         imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(margin)
+            make.top.equalTo(contentInsets)
             make.centerX.equalToSuperview()
-            make.left.greaterThanOrEqualTo(margin)
-            make.right.lessThanOrEqualTo(-margin)
-            make.bottom.lessThanOrEqualTo(buttonsStackView.snp.top).offset(-margin)
-            make.bottom.equalTo(buttonsStackView.snp.top).offset(-margin).priority(.high)
+            make.left.greaterThanOrEqualTo(contentInsets)
+            make.right.lessThanOrEqualTo(-contentInsets)
+            make.bottom.lessThanOrEqualTo(buttonsStackView.snp.top).offset(-contentInsets)
+            make.bottom.equalTo(buttonsStackView.snp.top).offset(-contentInsets).priority(.high)
         }
 
         cropMask.snp.makeConstraints { (make) in
@@ -84,7 +81,7 @@ class SanePreviewView: UIView {
             make.left.right.equalToSuperview()
             make.bottom.equalTo(buttonsStackView.snp.top)
         }
-        
+
         setNeedsUpdateConstraints()
         updateContent()
     }
@@ -188,13 +185,7 @@ class SanePreviewView: UIView {
     }
     
     // MARK: Layout
-    private var margin: CGFloat {
-        #if targetEnvironment(macCatalyst)
-        return 30
-        #else
-        return 15
-        #endif
-    }
+    private let contentInsets: CGFloat = 15
     
     override func updateConstraints() {
         let ratio = device?.previewImageRatio ?? (CGFloat(3) / 4)
@@ -206,17 +197,17 @@ class SanePreviewView: UIView {
         ratioConstraint = imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: ratio)
         ratioConstraint?.isActive = true
 
+        let stackViewMargins = showScanButton ? contentInsets : 0
         buttonsStackView.snp.remakeConstraints { (make) in
-            make.height.equalTo(NSAttributedString(string: "X", font: previewButton.titleLabel?.font).size().height * 2.5)
-            make.left.equalToSuperview().offset(buttonsStackView.spacing)
-            make.right.bottom.equalToSuperview().offset(-buttonsStackView.spacing)
+            make.left.equalToSuperview().offset(stackViewMargins)
+            make.right.bottom.equalToSuperview().offset(-stackViewMargins)
         }
 
         super.updateConstraints()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        setNeedsUpdateConstraints()
+    override func layoutSubviews() {
+        buttonsStackView.axis = bounds.width > 300 ? .horizontal : .vertical
+        super.layoutSubviews()
     }
 }
