@@ -34,11 +34,8 @@ class DeviceVC: UIViewController {
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
 
-        scanButton.titleLabel?.numberOfLines = 2
-        scanButton.backgroundColor = .tint
-        scanButton.setTitle("ACTION SCAN".localized, for: .normal)
-        scanButton.titleLabel?.font = .preferredFont(forTextStyle: .body)
-        scanButton.titleLabel?.autoAdjustsFontSize = true
+        scanButton.kind = .scan
+        scanButton.style = .cell
         
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)
         
@@ -76,7 +73,7 @@ class DeviceVC: UIViewController {
     // MARK: Views
     private var thumbsView: GalleryThumbsView!
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var scanButton: UIButton!
+    @IBOutlet private var scanButton: ScanButton!
     
     // MARK: Actions
     @IBAction private func scanButtonTap() {
@@ -96,7 +93,7 @@ class DeviceVC: UIViewController {
         let progressBlock = { [weak self] (progress: ScanProgress) in
             guard let self = self else { return }
             self.scanProgress = progress
-            self.scanButton.updateTitle(progress: progress, isPreview: false)
+            self.scanButton.progress = progress
 
             switch progress {
             case .warmingUp, .cancelling:
@@ -114,7 +111,7 @@ class DeviceVC: UIViewController {
         let completionBlock = { [weak self] (result: ScanResult) in
             guard let self = self else { return }
             self.scanProgress = nil
-            self.scanButton.updateTitle(progress: nil, isPreview: false)
+            self.scanButton.progress = nil
 
             switch result {
             case .success((let image, let parameters)):

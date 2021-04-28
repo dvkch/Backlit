@@ -38,7 +38,7 @@ class PreviewCell: UITableViewCell {
     static func cellHeight(device: Device, width: CGFloat, maxImageHeight: CGFloat) -> CGFloat {
         let imageRatio = device.previewImageRatio ?? (CGFloat(3) / 4)
         let bestImageHeight = width / imageRatio
-        let buttonHeight = NSAttributedString(string: "X", font: .preferredFont(forTextStyle: .body)).size().height * 2.5
+        let buttonHeight = ScanButton.preferredHeight
         return min(max(bestImageHeight, width), maxImageHeight) + buttonHeight
     }
 }

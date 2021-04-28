@@ -42,9 +42,6 @@ class SanePreviewView: UIView {
         addSubview(imageView)
         
         lineView.backgroundColor = UITableView(frame: .zero, style: .grouped).separatorColor
-        #if targetEnvironment(macCatalyst)
-        lineView.isHidden = true
-        #endif
         addSubview(lineView)
         
         cropMask.cropAreaDidChangeBlock = { [weak self] (newCropArea) in
@@ -61,24 +58,13 @@ class SanePreviewView: UIView {
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(buttonsStackView)
         
-        [previewButton: UIColor.cellBackground,
-         scanButton: UIColor.tint
-        ].forEach { (button, background) in
-            button.setBackgrounColor(background, for: .normal)
-            button.setBackgrounColor(background.withAlphaComponent(0.7), for: .disabled)
-            button.setTitleColor(.normalText, for: .normal)
-            button.setTitleColor(.altText, for: .disabled)
-            button.titleLabel?.font = .preferredFont(forTextStyle: .body)
-            button.titleLabel?.autoAdjustsFontSize = true
-            button.titleLabel?.numberOfLines = 2
-            button.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
-            #if targetEnvironment(macCatalyst)
-            button.layer.cornerRadius = 10
-            button.layer.masksToBounds = true
-            #endif
-        }
-        buttonsStackView.addArrangedSubview(previewButton)
+        scanButton.kind = .scan
+        scanButton.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
         buttonsStackView.addArrangedSubview(scanButton)
+
+        previewButton.kind = .preview
+        previewButton.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
+        buttonsStackView.addArrangedSubview(previewButton)
         
         imageView.snp.makeConstraints { (make) in
             make.top.equalTo(margin)
@@ -137,8 +123,8 @@ class SanePreviewView: UIView {
     private let lineView = UIView()
     private let cropMask = CropMaskView()
     private let buttonsStackView = UIStackView()
-    private let previewButton = UIButton(type: .custom)
-    private let scanButton = UIButton(type: .custom)
+    private let previewButton = ScanButton(type: .custom)
+    private let scanButton = ScanButton(type: .custom)
     private var ratioConstraint: NSLayoutConstraint?
 
     // MARK: Actions
@@ -185,13 +171,17 @@ class SanePreviewView: UIView {
     
     // MARK: Content
     private func updateContent() {
-        scanButton.updateTitle(progress: currentAction == .scan ? progress : nil, isPreview: false)
+        lineView.isHidden = showScanButton
+
+        scanButton.progress = currentAction == .scan ? progress : nil
         scanButton.isEnabled = currentAction != .preview
+        scanButton.style = showScanButton ? .rounded : .cell
         scanButton.sy_isHidden = !showScanButton
 
-        previewButton.updateTitle(progress: currentAction == .preview ? progress : nil, isPreview: true)
+        previewButton.progress = currentAction == .preview ? progress : nil
         previewButton.isEnabled = currentAction != .scan
-
+        previewButton.style = showScanButton ? .rounded : .cell
+        
         if case let .scanning(_, image) = progress {
             imageView.image = image
         }
