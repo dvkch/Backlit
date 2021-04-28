@@ -130,6 +130,44 @@ extension ThirdPartyAppEmailService : EmailService {
     }
 }
 
+// MARK: Catalyst: mailto
+@objcMembers public class MailtoLinkEmailService: NSObject {
+    public static var name: String = "Use system default"
+}
+
+extension MailtoLinkEmailService : EmailService {
+    public var name: String {
+        return MailtoLinkEmailService.name
+    }
+    
+    public var isAvailable: Bool {
+        return true
+    }
+    
+    public func launch(address: String?, subject: String?, body: String?, presentingViewController: UIViewController, completion: ((Bool, Error?) -> ())?) {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "mailto"
+        urlComponents.path = address ?? ""
+        urlComponents.queryItems = []
+        if let subject = subject {
+            urlComponents.queryItems?.append(URLQueryItem(name: "subject", value: subject))
+        }
+        if let body = body {
+            urlComponents.queryItems?.append(URLQueryItem(name: "body", value: body))
+        }
+
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(urlComponents.url!, options: [:]) { completed in
+                completion?(false, nil)
+            }
+        } else {
+            UIApplication.shared.openURL(urlComponents.url!)
+            completion?(false, nil)
+        }
+    }
+}
+
+
 // MARK: Last resort: copy to clipboard
 @objcMembers public class PasteboardEmailService: NSObject {
     public static var name: String = "Copy address to clipboard"

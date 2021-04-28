@@ -13,7 +13,7 @@ target :'SaneScanner' do
     pod 'SpinKit'
     pod 'SVProgressHUD'
     pod 'SYEmailHelper'
-    pod 'SYKit', '~> 0.1.16'
+    pod 'SYKit', '>= 0.1.16'
     pod 'SYOperationQueue'
     pod 'SYPictureMetadata', '~> 2.0'
 end

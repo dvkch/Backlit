@@ -35,7 +35,11 @@
     }
     
     public static var allServices: [EmailService] {
+        #if targetEnvironment(macCatalyst)
+        return [MailtoLinkEmailService()]
+        #else
         return allThirdPartyServices + [NativeEmailService(), PasteboardEmailService()]
+        #endif
     }
     
     public static var availableServices: [EmailService] {
@@ -58,6 +62,17 @@
         
         guard !services.isEmpty else {
             completion?(false, nil, EmailHelperError.noServiceAvailable)
+            return
+        }
+        
+        guard services.count > 1 else {
+            services.first?.launch(
+                address: address?.trimmingCharacters(in: .whitespacesAndNewlines),
+                subject: subject?.trimmingCharacters(in: .whitespacesAndNewlines),
+                body: body?.trimmingCharacters(in: .whitespacesAndNewlines),
+                presentingViewController: presentingViewController) { (canceled, error) in
+                    completion?(canceled, services.first, error)
+            }
             return
         }
         

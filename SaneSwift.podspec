@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.xcconfig = { 'CLANG_MODULES_AUTOLINK' => 'YES' }
-  s.dependency 'SYPictureMetadata', '~> 2.0.3'
+  s.dependency 'SYPictureMetadata', '~> 2.0'
   s.dependency 'Sane'
 
   s.static_framework = true

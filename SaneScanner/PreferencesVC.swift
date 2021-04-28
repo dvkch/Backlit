@@ -8,9 +8,9 @@
 
 import UIKit
 import SYKit
+import SYEmailHelper
 
 #if !targetEnvironment(macCatalyst)
-import SYEmailHelper
 import SVProgressHUD
 #endif
 
@@ -45,12 +45,7 @@ class PreferencesVC: UIViewController {
 
 extension PreferencesVC : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        #if targetEnvironment(macCatalyst)
-        let contactSectionCount = 0
-        #else
-        let contactSectionCount = 1
-        #endif
-        return Preferences.shared.groupedKeys.count + contactSectionCount
+        return Preferences.shared.groupedKeys.count + 1 // contact section
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -111,10 +106,12 @@ extension PreferencesVC : UITableViewDelegate {
         if indexPath.section >= Preferences.shared.groupedKeys.count {
             guard indexPath.row == 0 else { return }
             
-            #if !targetEnvironment(macCatalyst)
             let subject = String(format: "CONTACT SUBJECT ABOUT APP %@ %@".localized, Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
             
             PasteboardEmailService.name = "MAIL COPY PASTEBOARD NAME".localized
+            EmailHelper.shared.actionSheetTitle = "MAIL ALERT TITLE".localized
+            EmailHelper.shared.actionSheetMessage = "MAIL ALERT MESSAGE".localized
+            EmailHelper.shared.actionSheetCancelButtonText = "MAIL ALERT CANCEL".localized
             EmailHelper.shared.presentActionSheet(
                 address: PreferencesVC.contactEmailAddress,
                 subject: subject,
@@ -128,7 +125,6 @@ extension PreferencesVC : UITableViewDelegate {
                     }
                     print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
             }
-            #endif
             return
         }
         
