@@ -19,6 +19,7 @@ extension NSObject {
     }
     
     @objc private func sy_catalystScaleFactor() -> CGFloat {
+        // TODO: 0.77 doesn't look so bad on catalina... what do we do, uh ?
         return 1.0
     }
 }
