@@ -16,7 +16,6 @@ import SVProgressHUD
 #endif
 
 // TODO: fix cropping not showing on catalyst
-// TODO: cleanup NCs & SplitVC classes names, responsabilities, etc
 // TODO: adapt SYEmailHelper for catalyst?
 
 // TODO: fix scan showing black image after cancelled preview

@@ -55,8 +55,6 @@
 		97D4CE8A2636EB7800F84150 /* SnapshotKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D4CE892636EB7800F84150 /* SnapshotKind.swift */; };
 		97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590122637565800E84198 /* DevicePreviewVC.swift */; };
 		97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D590132637565800E84198 /* DevicePreviewVC.xib */; };
-		97D5901B26375F3D00E84198 /* PreviewNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5901A26375F3D00E84198 /* PreviewNC.swift */; };
-		97D590212637608000E84198 /* UIViewController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590202637608000E84198 /* UIViewController+SY.swift */; };
 		97D5902526377CBE00E84198 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5902426377CBE00E84198 /* TooltipView.swift */; };
 		97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* SanePreviewView.swift */; };
 		97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B022071F880027CCAE /* PreferencesVC.swift */; };
@@ -140,8 +138,6 @@
 		97D4CE892636EB7800F84150 /* SnapshotKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotKind.swift; sourceTree = "<group>"; };
 		97D590122637565800E84198 /* DevicePreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePreviewVC.swift; sourceTree = "<group>"; };
 		97D590132637565800E84198 /* DevicePreviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicePreviewVC.xib; sourceTree = "<group>"; };
-		97D5901A26375F3D00E84198 /* PreviewNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewNC.swift; sourceTree = "<group>"; };
-		97D590202637608000E84198 /* UIViewController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SY.swift"; sourceTree = "<group>"; };
 		97D5902426377CBE00E84198 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
 		97EAF237220B54A700435DE6 /* SanePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanePreviewView.swift; sourceTree = "<group>"; };
 		97EB32B022071F880027CCAE /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
@@ -222,7 +218,6 @@
 			children = (
 				97499E5E220874B3006DED20 /* SplitVC.swift */,
 				97499E5A220862FE006DED20 /* ScanNC.swift */,
-				97D5901A26375F3D00E84198 /* PreviewNC.swift */,
 				9757FCEF2207112D00AB59F1 /* DevicesVC.swift */,
 				9757FCF02207112D00AB59F1 /* DevicesVC.xib */,
 				97044901220875D300E13C6A /* DeviceVC.swift */,
@@ -261,7 +256,6 @@
 				979576AA223022C400680A80 /* UILabel+SY.swift */,
 				9755651525CB712800FDAD07 /* UISceneView+SY.swift */,
 				97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */,
-				97D590202637608000E84198 /* UIViewController+SY.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -641,14 +635,12 @@
 				97F2FB4F2223084B006BD617 /* GalleryNC.swift in Sources */,
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,
 				9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */,
-				97D5901B26375F3D00E84198 /* PreviewNC.swift in Sources */,
 				973066B3220C55000068E8C7 /* GalleryThumbsView.swift in Sources */,
 				977712D625CCB376009EC50D /* Context.swift in Sources */,
 				979576AB223022C400680A80 /* UILabel+SY.swift in Sources */,
 				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,
 				973066C3220C8C740068E8C7 /* FileManager+SY.swift in Sources */,
 				97FDF403222C55EE00B71E4C /* DeviceOptionVC.swift in Sources */,
-				97D590212637608000E84198 /* UIViewController+SY.swift in Sources */,
 				9730FDA825D07D57009ABCBC /* DeviceScanPreviewVC.swift in Sources */,
 				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,

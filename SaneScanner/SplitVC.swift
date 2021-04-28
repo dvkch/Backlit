@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SaneSwift
 
 class SplitVC: UISplitViewController {
 
@@ -19,15 +20,26 @@ class SplitVC: UISplitViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        preferredDisplayMode = .allVisible
+        viewControllers = [scanNC, previewNC]
+        scanNC.delegate = self
+    }
 
     // MARK: Properties
-    private var scanNC: ScanNC? {
-        return viewControllers.compactMap({ $0 as? ScanNC }).first
-    }
+    let scanNC: ScanNC = {
+        let nc = ScanNC()
+        nc.viewControllers = [DevicesVC()]
+        return nc
+    }()
     
-    private var previewNC: PreviewNC? {
-        return viewControllers.compactMap({ $0 as? PreviewNC }).first
-    }
+    let previewNC: UINavigationController = {
+        let nc = UINavigationController()
+        nc.viewControllers = [DevicePreviewVC()]
+        return nc
+    }()
     
     // MARK: Layout
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -39,9 +51,22 @@ class SplitVC: UISplitViewController {
 
     // MARK: Adaptative changes
     private func adaptPresentedVCs() {
-        viewControllers.forEach {
-            ($0 as? ScanNC)?.updateToolbar(animated: false)
+        scanNC.updateToolbar(animated: false)
+        
+        let useLargeLayout = traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular
+        scanNC.viewControllers.forEach {
+            ($0 as? DeviceVC)?.useLargeLayout = useLargeLayout
+            ($0 as? DeviceVC)?.delegate = self
         }
+    }
+    
+    // MARK: Content
+    private func refreshPreviewVC() {
+        let previewVC = previewNC.viewControllers.first as? DevicePreviewVC
+        let deviceVC = scanNC.viewControllers.compactMap { $0 as? DeviceVC }.first
+
+        previewVC?.device = deviceVC?.device
+        previewVC?.delegate = deviceVC
     }
 }
 
@@ -58,16 +83,14 @@ extension SplitVC : UISplitViewControllerDelegate {
 extension SplitVC : UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if navigationController == scanNC {
-            let previewVC = previewNC?.viewControllers.first as? DevicePreviewVC
-
-            if let deviceVC = viewController as? DeviceVC {
-                previewVC?.device = deviceVC.device
-                previewVC?.delegate = deviceVC
-            }
-            else {
-                previewVC?.device = nil
-                previewVC?.delegate = nil
-            }
+            refreshPreviewVC()
+            adaptPresentedVCs()
         }
+    }
+}
+
+extension SplitVC : DeviceVCDelegate {
+    func deviceVC(_ deviceVC: DeviceVC, didRefreshDevice device: Device) {
+        refreshPreviewVC()
     }
 }

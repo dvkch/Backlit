@@ -15,6 +15,10 @@ import SYPictureMetadata
 import SVProgressHUD
 #endif
 
+protocol DeviceVCDelegate: NSObjectProtocol {
+    func deviceVC(_ deviceVC: DeviceVC, didRefreshDevice device: Device)
+}
+
 class DeviceVC: UIViewController {
 
     init(device: Device) {
@@ -47,6 +51,7 @@ class DeviceVC: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: .preferencesChanged, object: nil)
         
+        updateLayoutStyle()
         refresh()
     }
 
@@ -60,7 +65,15 @@ class DeviceVC: UIViewController {
     }
     
     // MARK: Properties
+    weak var delegate: DeviceVCDelegate?
     let device: Device
+    var useLargeLayout: Bool = false {
+        didSet {
+            guard useLargeLayout != oldValue else { return }
+            updateLayoutStyle()
+        }
+    }
+
     private var isRefreshing: Bool = false
     private var scanProgress: ScanProgress? = nil
     private var isScanning: Bool {
@@ -193,6 +206,7 @@ class DeviceVC: UIViewController {
             self.tableView.reloadData()
             self.isRefreshing = false
             self.tableView.endPullToRefresh()
+            self.delegate?.deviceVC(self, didRefreshDevice: self.device)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.prepareForSnapshotting()
@@ -254,22 +268,9 @@ class DeviceVC: UIViewController {
     }
 
     // MARK: Layout
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        scanButton.isHidden = useLargeLayout
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        // TODO: necessary ?
-        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass || traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
-            /*
-            tableView.beginUpdates()
-            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-            tableView.endUpdates()
- */
-        }
+    private func updateLayoutStyle() {
+        scanButton.sy_isHidden = useLargeLayout
+        tableView.reloadData()
     }
 }
 

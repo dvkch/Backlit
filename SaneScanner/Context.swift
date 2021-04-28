@@ -26,8 +26,6 @@ class Context: NSObject {
     // MARK: Properties
     let window: SYWindow
     private var splitViewController: SplitVC!
-    private var scanNC: ScanNC!
-    private var previewNC: PreviewNC!
     
     // MARK: Methods
     private func setup() {
@@ -40,19 +38,8 @@ class Context: NSObject {
         #endif
         window.tintColor = .tint
 
-        // navigation controller
-        scanNC = ScanNC()
-        scanNC.viewControllers = [DevicesVC()]
-        
-        // gallery view controller
-        previewNC = PreviewNC()
-        previewNC.viewControllers = [DevicePreviewVC()]
-
         // split controller
         splitViewController = SplitVC()
-        splitViewController.viewControllers = [scanNC, previewNC]
-        splitViewController.preferredDisplayMode = .allVisible
-        scanNC.delegate = splitViewController
 
         // auto manage toolbar visibility
         GalleryManager.shared.addDelegate(self)
@@ -63,7 +50,7 @@ class Context: NSObject {
     
     // MARK: Notifications
     @objc private func didEnterBackgroundNotification() {
-        scanNC.popToRootViewController(animated: true)
+        splitViewController.scanNC.popToRootViewController(animated: true)
     }
 }
 
@@ -72,7 +59,7 @@ extension Context : GalleryManagerDelegate {
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
         let constrainedW = splitViewController.traitCollection.horizontalSizeClass == .compact
         
-        scanNC.setToolbarHidden(!constrainedW || items.isEmpty, animated: true)
+        splitViewController.scanNC.setToolbarHidden(!constrainedW || items.isEmpty, animated: true)
     }
 }
 
