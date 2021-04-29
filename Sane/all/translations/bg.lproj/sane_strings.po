@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sane-backends 1.0.11\n"
 "Report-Msgid-Bugs-To: sane-devel@alioth-lists.debian.net\n"
-"POT-Creation-Date: 2020-08-02 12:33+0000\n"
+"POT-Creation-Date: 2021-02-14 07:21+0000\n"
 "PO-Revision-Date: 2007-12-17 22:59+0100\n"
 "Last-Translator: Pavel Constantinov <pavelconstantinov@bigfoot.com>\n"
 "Language-Team:  <>\n"
@@ -14,406 +14,416 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: include/sane/saneopts.h:154
+#: include/sane/saneopts.h:156
 #, no-c-format
 msgid "Number of options"
 msgstr "Брой опции"
 
-#: include/sane/saneopts.h:156
+#: include/sane/saneopts.h:158
 #, no-c-format
 msgid "Standard"
 msgstr ""
 
-#: include/sane/saneopts.h:157 backend/artec_eplus48u.c:2884
-#: backend/canon_lide70.c:414 backend/epson.c:3298 backend/epson2.c:1290
-#: backend/epsonds.c:679 backend/genesys/genesys.cpp:4703
-#: backend/gt68xx.c:696 backend/hp-option.c:3300 backend/hp3500.c:1019
+#: include/sane/saneopts.h:159 backend/artec_eplus48u.c:2882
+#: backend/canon_lide70.c:416 backend/epson.c:3296 backend/epson2.c:1287
+#: backend/epsonds.c:684 backend/genesys/genesys.cpp:4701
+#: backend/gt68xx.c:694 backend/hp-option.c:3295 backend/hp3500.c:1017
 #: backend/kvs1025_opt.c:639 backend/kvs20xx_opt.c:285
-#: backend/kvs40xx_opt.c:506 backend/leo.c:823 backend/lexmark.c:199
-#: backend/ma1509.c:551 backend/matsushita.c:1135 backend/microtek2.h:599
-#: backend/mustek.c:4373 backend/mustek_usb.c:301 backend/mustek_usb2.c:465
-#: backend/pixma/pixma_sane_options.c:161 backend/plustek.c:808
-#: backend/plustek_pp.c:747 backend/sceptre.c:702
-#: backend/snapscan-options.c:550 backend/teco1.c:1095 backend/teco2.c:1910
-#: backend/teco3.c:920 backend/test.c:689 backend/u12.c:546
-#: backend/umax.c:5176 backend/umax_pp.c:570
+#: backend/kvs40xx_opt.c:506 backend/leo.c:820 backend/lexmark.c:197
+#: backend/ma1509.c:549 backend/matsushita.c:1132 backend/microtek2.h:597
+#: backend/mustek.c:4371 backend/mustek_usb.c:299 backend/mustek_usb2.c:463
+#: backend/pixma/pixma_sane_options.c:161 backend/plustek.c:806
+#: backend/plustek_pp.c:745 backend/sceptre.c:699
+#: backend/snapscan-options.c:550 backend/teco1.c:1092 backend/teco2.c:1907
+#: backend/teco3.c:917 backend/test.c:718 backend/u12.c:544
+#: backend/umax.c:5174 backend/umax_pp.c:569
 #, no-c-format
 msgid "Geometry"
 msgstr "Геометрия"
 
-#: include/sane/saneopts.h:158 backend/artec_eplus48u.c:2805
-#: backend/canon.c:1493 backend/genesys/genesys.cpp:4746
-#: backend/gt68xx.c:665 backend/hp-option.c:2956 backend/kvs1025_opt.c:703
-#: backend/leo.c:871 backend/ma1509.c:599 backend/matsushita.c:1189
-#: backend/microtek2.h:600 backend/mustek.c:4421 backend/mustek_usb.c:349
-#: backend/mustek_usb2.c:431 backend/niash.c:754 backend/plustek.c:854
-#: backend/plustek_pp.c:793 backend/sceptre.c:750
-#: backend/snapscan-options.c:617 backend/stv680.c:1067
-#: backend/teco1.c:1143 backend/teco2.c:1958 backend/teco3.c:968
-#: backend/u12.c:592 backend/umax.c:5226 backend/umax_pp.c:619
+#: include/sane/saneopts.h:160 backend/artec_eplus48u.c:2803
+#: backend/canon.c:1491 backend/genesys/genesys.cpp:4744
+#: backend/gt68xx.c:663 backend/hp-option.c:2951 backend/kvs1025_opt.c:703
+#: backend/leo.c:868 backend/ma1509.c:597 backend/matsushita.c:1186
+#: backend/microtek2.h:598 backend/mustek.c:4419 backend/mustek_usb.c:347
+#: backend/mustek_usb2.c:429 backend/niash.c:751 backend/plustek.c:852
+#: backend/plustek_pp.c:791 backend/sceptre.c:747
+#: backend/snapscan-options.c:617 backend/stv680.c:1064
+#: backend/teco1.c:1140 backend/teco2.c:1955 backend/teco3.c:965
+#: backend/u12.c:590 backend/umax.c:5224 backend/umax_pp.c:618
 #, no-c-format
 msgid "Enhancement"
 msgstr "Повишение"
 
-#: include/sane/saneopts.h:159 backend/epson.c:3197 backend/epson2.c:1215
+#: include/sane/saneopts.h:161 backend/epson.c:3195 backend/epson2.c:1212
 #: backend/kvs20xx_opt.c:366 backend/kvs40xx_opt.c:597
-#: backend/rts8891.c:2831 backend/snapscan-options.c:923
-#: backend/umax.c:5565
+#: backend/rts8891.c:2830 backend/snapscan-options.c:923
+#: backend/umax.c:5563
 #, no-c-format
 msgid "Advanced"
 msgstr "Разширено"
 
-#: include/sane/saneopts.h:160
+#: include/sane/saneopts.h:162
 #, no-c-format
 msgid "Sensors"
 msgstr ""
 
-#: include/sane/saneopts.h:162
+#: include/sane/saneopts.h:164
 #, no-c-format
 msgid "Preview"
 msgstr "Превю"
 
-#: include/sane/saneopts.h:163
+#: include/sane/saneopts.h:165
 #, no-c-format
 msgid "Force monochrome preview"
 msgstr "Наложи монохромно превю"
 
-#: include/sane/saneopts.h:164
+#: include/sane/saneopts.h:166
 #, no-c-format
 msgid "Bit depth"
 msgstr "Дълбочина на бита"
 
-#: include/sane/saneopts.h:165 backend/canon.c:1140 backend/leo.c:781
+#: include/sane/saneopts.h:167 backend/canon.c:1138 backend/leo.c:778
 #: backend/pixma/pixma_sane_options.c:48
 #, no-c-format
 msgid "Scan mode"
 msgstr "Режим на сканиране"
 
-#: include/sane/saneopts.h:166
+#: include/sane/saneopts.h:168
 #, no-c-format
 msgid "Scan speed"
 msgstr "Скорост на сканиране"
 
-#: include/sane/saneopts.h:167
+#: include/sane/saneopts.h:169
 #, no-c-format
 msgid "Scan source"
 msgstr "Източник на сканиране"
 
-#: include/sane/saneopts.h:168
+#: include/sane/saneopts.h:170
 #, no-c-format
 msgid "Force backtracking"
 msgstr "Наложи връщане на главата"
 
-#: include/sane/saneopts.h:169
+#: include/sane/saneopts.h:171
 #, no-c-format
 msgid "Top-left x"
 msgstr "Горен ляв x"
 
-#: include/sane/saneopts.h:170
+#: include/sane/saneopts.h:172
 #, no-c-format
 msgid "Top-left y"
 msgstr "Горен ляв y"
 
-#: include/sane/saneopts.h:171
+#: include/sane/saneopts.h:173
 #, no-c-format
 msgid "Bottom-right x"
 msgstr "Долен десен x"
 
-#: include/sane/saneopts.h:172
+#: include/sane/saneopts.h:174
 #, no-c-format
 msgid "Bottom-right y"
 msgstr "Долен десен y"
 
-#: include/sane/saneopts.h:173 backend/canon.c:1216
+#: include/sane/saneopts.h:175 backend/canon.c:1214
 #: backend/pixma/pixma_sane_options.c:301
 #, no-c-format
 msgid "Scan resolution"
 msgstr "Резолюция на сканиране"
 
-#: include/sane/saneopts.h:174
+#: include/sane/saneopts.h:176
 #, no-c-format
 msgid "X-resolution"
 msgstr "Резолюция по Х"
 
-#: include/sane/saneopts.h:175
+#: include/sane/saneopts.h:177
 #, no-c-format
 msgid "Y-resolution"
 msgstr "Резолюция по Y"
 
-#: include/sane/saneopts.h:176
+#: include/sane/saneopts.h:178
 #, no-c-format
 msgid "Page width"
 msgstr ""
 
-#: include/sane/saneopts.h:177
+#: include/sane/saneopts.h:179
 #, fuzzy, no-c-format
 msgid "Page height"
 msgstr "Осветление"
 
-#: include/sane/saneopts.h:178
+#: include/sane/saneopts.h:180
 #, no-c-format
 msgid "Use custom gamma table"
 msgstr "Използвай лична гама-таблица"
 
-#: include/sane/saneopts.h:179
+#: include/sane/saneopts.h:181
 #, no-c-format
 msgid "Image intensity"
 msgstr "Интензитет на образа"
 
-#: include/sane/saneopts.h:180
+#: include/sane/saneopts.h:182
 #, no-c-format
 msgid "Red intensity"
 msgstr "Интензитет - червено"
 
-#: include/sane/saneopts.h:181
+#: include/sane/saneopts.h:183
 #, no-c-format
 msgid "Green intensity"
 msgstr "Интензитет - зелено"
 
-#: include/sane/saneopts.h:182
+#: include/sane/saneopts.h:184
 #, no-c-format
 msgid "Blue intensity"
 msgstr "Интензитет - синьо"
 
-#: include/sane/saneopts.h:183
+#: include/sane/saneopts.h:185
 #, no-c-format
 msgid "Brightness"
 msgstr "Яркост"
 
-#: include/sane/saneopts.h:184
+#: include/sane/saneopts.h:186
 #, no-c-format
 msgid "Contrast"
 msgstr "Контраст"
 
-#: include/sane/saneopts.h:185
+#: include/sane/saneopts.h:187
 #, no-c-format
 msgid "Grain size"
 msgstr "Размер на зърното"
 
-#: include/sane/saneopts.h:186
+#: include/sane/saneopts.h:188
 #, no-c-format
 msgid "Halftoning"
 msgstr "Полутон"
 
-#: include/sane/saneopts.h:187
+#: include/sane/saneopts.h:189
 #, no-c-format
 msgid "Black level"
 msgstr "Степен на черното"
 
-#: include/sane/saneopts.h:188
+#: include/sane/saneopts.h:190
 #, no-c-format
 msgid "White level"
 msgstr "Степен на бялото"
 
-#: include/sane/saneopts.h:189
+#: include/sane/saneopts.h:191
 #, no-c-format
 msgid "White level for red"
 msgstr "Степен на бялото - червено"
 
-#: include/sane/saneopts.h:190
+#: include/sane/saneopts.h:192
 #, no-c-format
 msgid "White level for green"
 msgstr "Степен на бялото - зелено"
 
-#: include/sane/saneopts.h:191
+#: include/sane/saneopts.h:193
 #, no-c-format
 msgid "White level for blue"
 msgstr "Степен на бялото - синьо"
 
-#: include/sane/saneopts.h:192
+#: include/sane/saneopts.h:194
 #, no-c-format
 msgid "Shadow"
 msgstr "Сянка"
 
-#: include/sane/saneopts.h:193
+#: include/sane/saneopts.h:195
 #, no-c-format
 msgid "Shadow for red"
 msgstr "Сянка - червено"
 
-#: include/sane/saneopts.h:194
+#: include/sane/saneopts.h:196
 #, no-c-format
 msgid "Shadow for green"
 msgstr "Сянка - зелено"
 
-#: include/sane/saneopts.h:195
+#: include/sane/saneopts.h:197
 #, no-c-format
 msgid "Shadow for blue"
 msgstr "Сянка - синьо"
 
-#: include/sane/saneopts.h:196
+#: include/sane/saneopts.h:198
 #, no-c-format
 msgid "Highlight"
 msgstr "Осветление"
 
-#: include/sane/saneopts.h:197
+#: include/sane/saneopts.h:199
 #, no-c-format
 msgid "Highlight for red"
 msgstr "Осветление - червено"
 
-#: include/sane/saneopts.h:198
+#: include/sane/saneopts.h:200
 #, no-c-format
 msgid "Highlight for green"
 msgstr "Осветление - зелено"
 
-#: include/sane/saneopts.h:199
+#: include/sane/saneopts.h:201
 #, no-c-format
 msgid "Highlight for blue"
 msgstr "Осветление - синьо"
 
-#: include/sane/saneopts.h:200
+#: include/sane/saneopts.h:202
 #, no-c-format
 msgid "Hue"
 msgstr "Нюанс"
 
-#: include/sane/saneopts.h:201
+#: include/sane/saneopts.h:203
 #, no-c-format
 msgid "Saturation"
 msgstr "Наситеност"
 
-#: include/sane/saneopts.h:202
+#: include/sane/saneopts.h:204
 #, no-c-format
 msgid "Filename"
 msgstr "Име на файла"
 
-#: include/sane/saneopts.h:203
+#: include/sane/saneopts.h:205
 #, no-c-format
 msgid "Halftone pattern size"
 msgstr "Размер на полутоновия десен"
 
-#: include/sane/saneopts.h:204 backend/fujitsu.c:3262
+#: include/sane/saneopts.h:206 backend/fujitsu.c:3260
 #, no-c-format
 msgid "Halftone pattern"
 msgstr "Полутонов десен"
 
-#: include/sane/saneopts.h:205
+#: include/sane/saneopts.h:207
 #, no-c-format
 msgid "Bind X and Y resolution"
 msgstr "Вържи резолюцията по X и Y"
 
-#: include/sane/saneopts.h:206 backend/hp-option.c:3238
-#: backend/hp3900_sane.c:428 backend/hp3900_sane.c:1021
-#: backend/hp3900_sane.c:1421 backend/mustek_usb2.c:121
-#: backend/plustek.c:236 backend/plustek_pp.c:205 backend/u12.c:157
+#: include/sane/saneopts.h:208 backend/hp-option.c:3233
+#: backend/hp3900_sane.c:427 backend/hp3900_sane.c:1020
+#: backend/hp3900_sane.c:1420 backend/mustek_usb2.c:119
+#: backend/plustek.c:234 backend/plustek_pp.c:203 backend/u12.c:155
 #, no-c-format
 msgid "Negative"
 msgstr "Негатив"
 
-#: include/sane/saneopts.h:207
+#: include/sane/saneopts.h:209
 #, no-c-format
 msgid "Quality calibration"
 msgstr "Калибрация на качеството"
 
-#: include/sane/saneopts.h:208
+#: include/sane/saneopts.h:210
 #, no-c-format
 msgid "Double Optical Resolution"
 msgstr "Двойна оптическа резолюция"
 
-#: include/sane/saneopts.h:209
+#: include/sane/saneopts.h:211
 #, no-c-format
 msgid "Bind RGB"
 msgstr "Вържи RGB"
 
-#: include/sane/saneopts.h:210 backend/sm3840.c:770
+#: include/sane/saneopts.h:212 backend/sm3840.c:768
 #, no-c-format
 msgid "Threshold"
 msgstr "Праг"
 
-#: include/sane/saneopts.h:211
+#: include/sane/saneopts.h:213
 #, no-c-format
 msgid "Analog gamma correction"
 msgstr "Корекция на аналоговата гама"
 
-#: include/sane/saneopts.h:212
+#: include/sane/saneopts.h:214
 #, no-c-format
 msgid "Analog gamma red"
 msgstr "Аналогова гама - червено"
 
-#: include/sane/saneopts.h:213
+#: include/sane/saneopts.h:215
 #, no-c-format
 msgid "Analog gamma green"
 msgstr "Аналогова гама - зелено"
 
-#: include/sane/saneopts.h:214
+#: include/sane/saneopts.h:216
 #, no-c-format
 msgid "Analog gamma blue"
 msgstr "Аналогова гама - синьо"
 
-#: include/sane/saneopts.h:215
+#: include/sane/saneopts.h:217
 #, no-c-format
 msgid "Bind analog gamma"
 msgstr "Вържи аналоговата гама"
 
-#: include/sane/saneopts.h:216
+#: include/sane/saneopts.h:218
 #, no-c-format
 msgid "Warmup lamp"
 msgstr "Загрей лампата"
 
-#: include/sane/saneopts.h:217
+#: include/sane/saneopts.h:219
 #, no-c-format
 msgid "Cal. exposure-time"
 msgstr "Нагласи време за експониране"
 
-#: include/sane/saneopts.h:218
+#: include/sane/saneopts.h:220
 #, no-c-format
 msgid "Cal. exposure-time for red"
 msgstr "Нагласи време за експониране - червено"
 
-#: include/sane/saneopts.h:219
+#: include/sane/saneopts.h:221
 #, no-c-format
 msgid "Cal. exposure-time for green"
 msgstr "Нагласи време за експониране - зелено"
 
-#: include/sane/saneopts.h:221
+#: include/sane/saneopts.h:223
 #, no-c-format
 msgid "Cal. exposure-time for blue"
 msgstr "Нагласи време за експониране - синьо"
 
-#: include/sane/saneopts.h:222
+#: include/sane/saneopts.h:224
 #, no-c-format
 msgid "Scan exposure-time"
 msgstr "Сканирай време за експониране"
 
-#: include/sane/saneopts.h:223
+#: include/sane/saneopts.h:225
 #, no-c-format
 msgid "Scan exposure-time for red"
 msgstr "Сканирай време за експониране - червено"
 
-#: include/sane/saneopts.h:224
+#: include/sane/saneopts.h:226
 #, no-c-format
 msgid "Scan exposure-time for green"
 msgstr "Сканирай време за експониране - зелено"
 
-#: include/sane/saneopts.h:226
+#: include/sane/saneopts.h:228
 #, no-c-format
 msgid "Scan exposure-time for blue"
 msgstr "Сканирай време за експониране - синьо"
 
-#: include/sane/saneopts.h:227
+#: include/sane/saneopts.h:229
 #, no-c-format
 msgid "Set exposure-time"
 msgstr "Установи време за експониране"
 
-#: include/sane/saneopts.h:228
+#: include/sane/saneopts.h:230
 #, no-c-format
 msgid "Cal. lamp density"
 msgstr "Нагласи плътността на лампата"
 
-#: include/sane/saneopts.h:229
+#: include/sane/saneopts.h:231
 #, no-c-format
 msgid "Scan lamp density"
 msgstr "Сканирай плътността на лампата"
 
-#: include/sane/saneopts.h:230
+#: include/sane/saneopts.h:232
 #, no-c-format
 msgid "Set lamp density"
 msgstr "Установи плътността на лампата"
 
-#: include/sane/saneopts.h:231 backend/umax.c:5829
+#: include/sane/saneopts.h:233 backend/umax.c:5827
 #, no-c-format
 msgid "Lamp off at exit"
 msgstr "Изкл. лампа при изход"
 
-#: include/sane/saneopts.h:245
+#: include/sane/saneopts.h:234
+#, fuzzy, no-c-format
+msgid "Focus position"
+msgstr "Позиция на фокуса"
+
+#: include/sane/saneopts.h:235
+#, fuzzy, no-c-format
+msgid "Autofocus"
+msgstr "Авто изваждане"
+
+#: include/sane/saneopts.h:249
 #, fuzzy, no-c-format
 msgid ""
 "Read-only option that specifies how many options a specific device "
@@ -422,37 +432,37 @@ msgstr ""
 "Опция само за четене, която указва колко опции поддържа дадено "
 "устройство."
 
-#: include/sane/saneopts.h:248
+#: include/sane/saneopts.h:252
 #, fuzzy, no-c-format
 msgid "Source, mode and resolution options"
 msgstr "Кратък списък резолюции"
 
-#: include/sane/saneopts.h:249
+#: include/sane/saneopts.h:253
 #, no-c-format
 msgid "Scan area and media size options"
 msgstr ""
 
-#: include/sane/saneopts.h:250
+#: include/sane/saneopts.h:254
 #, fuzzy, no-c-format
 msgid "Image modification options"
 msgstr "Брой опции"
 
-#: include/sane/saneopts.h:251
+#: include/sane/saneopts.h:255
 #, fuzzy, no-c-format
 msgid "Hardware specific options"
 msgstr "Резолюция на сканиране"
 
-#: include/sane/saneopts.h:252
+#: include/sane/saneopts.h:256
 #, no-c-format
 msgid "Scanner sensors and buttons"
 msgstr ""
 
-#: include/sane/saneopts.h:255
+#: include/sane/saneopts.h:259
 #, no-c-format
 msgid "Request a preview-quality scan."
 msgstr "Поискай сканиране за превю на качеството."
 
-#: include/sane/saneopts.h:258
+#: include/sane/saneopts.h:262
 #, no-c-format
 msgid ""
 "Request that all previews are done in monochrome mode.  On a three-pass "
@@ -464,7 +474,7 @@ msgstr ""
 "минаване намалява изискванията към паметта и времето за сканиране на "
 "превюто."
 
-#: include/sane/saneopts.h:264
+#: include/sane/saneopts.h:268
 #, no-c-format
 msgid ""
 "Number of bits per sample, typical values are 1 for \"line-art\" and 8 "
@@ -473,81 +483,81 @@ msgstr ""
 "Брой битове на семпъл, типичните стойности са 1 за \"line-art\" и 8 за "
 "мултибитово сканиране."
 
-#: include/sane/saneopts.h:268
+#: include/sane/saneopts.h:272
 #, no-c-format
 msgid "Selects the scan mode (e.g., lineart, monochrome, or color)."
 msgstr "Избира режим на сканиране (lineart, монохромно или цветно)."
 
-#: include/sane/saneopts.h:271
+#: include/sane/saneopts.h:275
 #, no-c-format
 msgid "Determines the speed at which the scan proceeds."
 msgstr "Указва скоростта, с която ще се извърши сканирането."
 
-#: include/sane/saneopts.h:274
+#: include/sane/saneopts.h:278
 #, no-c-format
 msgid "Selects the scan source (such as a document-feeder)."
 msgstr "Избира източника за сканирането (напр. фидер за документи)."
 
-#: include/sane/saneopts.h:277
+#: include/sane/saneopts.h:281
 #, no-c-format
 msgid "Controls whether backtracking is forced."
 msgstr "Оттук можете да наложите връщане на главата."
 
-#: include/sane/saneopts.h:280
+#: include/sane/saneopts.h:284
 #, no-c-format
 msgid "Top-left x position of scan area."
 msgstr "Горна лява x позиция на площта за сканиране."
 
-#: include/sane/saneopts.h:283
+#: include/sane/saneopts.h:287
 #, no-c-format
 msgid "Top-left y position of scan area."
 msgstr "Горна лява y позиция на площта за сканиране."
 
-#: include/sane/saneopts.h:286
+#: include/sane/saneopts.h:290
 #, no-c-format
 msgid "Bottom-right x position of scan area."
 msgstr "Долна дясна x позиция на площта за сканиране."
 
-#: include/sane/saneopts.h:289
+#: include/sane/saneopts.h:293
 #, no-c-format
 msgid "Bottom-right y position of scan area."
 msgstr "Долна дясна y позиция на площта за сканиране."
 
-#: include/sane/saneopts.h:292
+#: include/sane/saneopts.h:296
 #, no-c-format
 msgid "Sets the resolution of the scanned image."
 msgstr "Наглася резолюцията на сканираното изображение."
 
-#: include/sane/saneopts.h:295
+#: include/sane/saneopts.h:299
 #, no-c-format
 msgid "Sets the horizontal resolution of the scanned image."
 msgstr "Наглася хоризонталната резолюция на сканираното изображение."
 
-#: include/sane/saneopts.h:298
+#: include/sane/saneopts.h:302
 #, no-c-format
 msgid "Sets the vertical resolution of the scanned image."
 msgstr "Наглася вертикалната резолюция на сканираното изображение."
 
-#: include/sane/saneopts.h:301
+#: include/sane/saneopts.h:305
 #, no-c-format
 msgid ""
 "Specifies the width of the media.  Required for automatic centering of "
 "sheet-fed scans."
 msgstr ""
 
-#: include/sane/saneopts.h:305
+#: include/sane/saneopts.h:309
 #, fuzzy, no-c-format
 msgid "Specifies the height of the media."
 msgstr "Наглася резолюцията на сканираното изображение."
 
-#: include/sane/saneopts.h:308
+#: include/sane/saneopts.h:312
 #, no-c-format
 msgid ""
 "Determines whether a builtin or a custom gamma-table should be used."
 msgstr ""
 "Определя дали да се използва вградена или персонализирана гама-таблица."
 
-#: include/sane/saneopts.h:312
+#: include/sane/saneopts.h:316
 #, no-c-format
 msgid ""
 "Gamma-correction table.  In color mode this option equally affects the "
@@ -558,32 +568,32 @@ msgstr ""
 "червения, зеления и синия канал едновременно (т.е., това е таблица на "
 "гамата за интензитета)."
 
-#: include/sane/saneopts.h:317
+#: include/sane/saneopts.h:321
 #, no-c-format
 msgid "Gamma-correction table for the red band."
 msgstr "Таблица с гама-корекцията за червения сектор."
 
-#: include/sane/saneopts.h:320
+#: include/sane/saneopts.h:324
 #, no-c-format
 msgid "Gamma-correction table for the green band."
 msgstr "Таблица с гама-корекцията за зеления сектор."
 
-#: include/sane/saneopts.h:323
+#: include/sane/saneopts.h:327
 #, no-c-format
 msgid "Gamma-correction table for the blue band."
 msgstr "Таблица с гама-корекцията на синия сектор."
 
-#: include/sane/saneopts.h:326
+#: include/sane/saneopts.h:330
 #, no-c-format
 msgid "Controls the brightness of the acquired image."
 msgstr "Настройва яркостта на полученото изображение."
 
-#: include/sane/saneopts.h:329
+#: include/sane/saneopts.h:333
 #, no-c-format
 msgid "Controls the contrast of the acquired image."
 msgstr "Настройва контраста на полученото изображение."
 
-#: include/sane/saneopts.h:332
+#: include/sane/saneopts.h:336
 #, no-c-format
 msgid ""
 "Selects the \"graininess\" of the acquired image.  Smaller values result "
@@ -592,77 +602,77 @@ msgstr ""
 "Избира \" зърнеността\" на полученото изображение. По-ниските стойности "
 "дават по-изострени изображения."
 
-#: include/sane/saneopts.h:336
+#: include/sane/saneopts.h:340
 #, no-c-format
 msgid "Selects whether the acquired image should be halftoned (dithered)."
 msgstr ""
 "Избира дали полученото изображение да бъде полутонизирано (dithered)."
 
-#: include/sane/saneopts.h:339 include/sane/saneopts.h:354
+#: include/sane/saneopts.h:343 include/sane/saneopts.h:358
 #, no-c-format
 msgid "Selects what radiance level should be considered \"black\"."
 msgstr "Избира кое ниво на осветеност се смята за \"черно\"."
 
-#: include/sane/saneopts.h:342 include/sane/saneopts.h:363
+#: include/sane/saneopts.h:346 include/sane/saneopts.h:367
 #, no-c-format
 msgid "Selects what radiance level should be considered \"white\"."
 msgstr "Избира кое ниво на осветеност се смята за \"бяло\"."
 
-#: include/sane/saneopts.h:345
+#: include/sane/saneopts.h:349
 #, no-c-format
 msgid "Selects what red radiance level should be considered \"white\"."
 msgstr "Избира кое ниво на червена осветеност се смята за \"бяло\"."
 
-#: include/sane/saneopts.h:348
+#: include/sane/saneopts.h:352
 #, no-c-format
 msgid "Selects what green radiance level should be considered \"white\"."
 msgstr "Избира кое ниво на зелена осветеност се смята за \"бяло\"."
 
-#: include/sane/saneopts.h:351
+#: include/sane/saneopts.h:355
 #, no-c-format
 msgid "Selects what blue radiance level should be considered \"white\"."
 msgstr "Избира кое ниво на синя осветеност се смята за \"бяло\"."
 
-#: include/sane/saneopts.h:356
+#: include/sane/saneopts.h:360
 #, no-c-format
 msgid "Selects what red radiance level should be considered \"black\"."
 msgstr "Избира кое ниво на червена осветеност се смята за \"черно\"."
 
-#: include/sane/saneopts.h:358
+#: include/sane/saneopts.h:362
 #, no-c-format
 msgid "Selects what green radiance level should be considered \"black\"."
 msgstr "Избира кое ниво на зелена осветеност се смята за \"черно\"."
 
-#: include/sane/saneopts.h:360
+#: include/sane/saneopts.h:364
 #, no-c-format
 msgid "Selects what blue radiance level should be considered \"black\"."
 msgstr "Избира кое ниво на синя осветеност се смята за \"черно\"."
 
-#: include/sane/saneopts.h:365
+#: include/sane/saneopts.h:369
 #, no-c-format
 msgid "Selects what red radiance level should be considered \"full red\"."
 msgstr ""
 "Избира кое ниво на червена осветеност се смята за \"изцяло червено\"."
 
-#: include/sane/saneopts.h:367
+#: include/sane/saneopts.h:371
 #, no-c-format
 msgid ""
 "Selects what green radiance level should be considered \"full green\"."
 msgstr ""
 "Избира кое ниво на зелена осветеност се смята за \"изцяло зелено\"."
 
-#: include/sane/saneopts.h:370
+#: include/sane/saneopts.h:374
 #, no-c-format
 msgid ""
 "Selects what blue radiance level should be considered \"full blue\"."
 msgstr "Избира кое ниво на синя осветеност се смята за \"изцяло синьо\"."
 
-#: include/sane/saneopts.h:374
+#: include/sane/saneopts.h:378
 #, no-c-format
 msgid "Controls the \"hue\" (blue-level) of the acquired image."
 msgstr "Наглася оттенъка (в синьото ниво) на полученото изображение."
 
-#: include/sane/saneopts.h:377
+#: include/sane/saneopts.h:381
 #, no-c-format
 msgid ""
 "The saturation level controls the amount of \"blooming\" that occurs "
@@ -672,12 +682,12 @@ msgstr ""
 "появява при добиването на изображение с фотоапарат. По-големите "
 "стойности причиняват повече blooming."
 
-#: include/sane/saneopts.h:382
+#: include/sane/saneopts.h:386
 #, no-c-format
 msgid "The filename of the image to be loaded."
 msgstr "Файловото име на изображението, което ще се зареди."
 
-#: include/sane/saneopts.h:385
+#: include/sane/saneopts.h:389
 #, no-c-format
 msgid ""
 "Sets the size of the halftoning (dithering) pattern used when scanning "
@@ -686,7 +696,7 @@ msgstr ""
 "Наглася размера на десена за полутонизиране (dithering), който ще се "
 "използва при сканирането на изображения с полутонове."
 
-#: include/sane/saneopts.h:389
+#: include/sane/saneopts.h:393
 #, no-c-format
 msgid ""
 "Defines the halftoning (dithering) pattern for scanning halftoned images."
@@ -694,287 +704,298 @@ msgstr ""
 "Определя десена за полутонизиране (dithering) при сканирането на "
 "изображения с полутонове."
 
-#: include/sane/saneopts.h:393
+#: include/sane/saneopts.h:397
 #, no-c-format
 msgid "Use same values for X and Y resolution"
 msgstr "Използвай еднакви стойности за X и Y резолюцията."
 
-#: include/sane/saneopts.h:395
+#: include/sane/saneopts.h:399
 #, no-c-format
 msgid "Swap black and white"
 msgstr "Размени черно и бяло"
 
-#: include/sane/saneopts.h:397
+#: include/sane/saneopts.h:401
 #, no-c-format
 msgid "Do a quality white-calibration"
 msgstr "Извърши качествена бяла калибрация"
 
-#: include/sane/saneopts.h:399
+#: include/sane/saneopts.h:403
 #, no-c-format
 msgid "Use lens that doubles optical resolution"
 msgstr "Използвай лещи, които удвояват оптичната резолюция"
 
-#: include/sane/saneopts.h:401 include/sane/saneopts.h:413
+#: include/sane/saneopts.h:405 include/sane/saneopts.h:417
 #, no-c-format
 msgid "In RGB-mode use same values for each color"
 msgstr "В RGB режим, използвай същите стойности за всеки цвят"
 
-#: include/sane/saneopts.h:403
+#: include/sane/saneopts.h:407
 #, no-c-format
 msgid "Select minimum-brightness to get a white point"
 msgstr "Избери минимална яркост за получаване на бяла точка"
 
-#: include/sane/saneopts.h:405
+#: include/sane/saneopts.h:409
 #, no-c-format
 msgid "Analog gamma-correction"
 msgstr "Аналогова гама-корекция"
 
-#: include/sane/saneopts.h:407
+#: include/sane/saneopts.h:411
 #, no-c-format
 msgid "Analog gamma-correction for red"
 msgstr "Аналогова гама-корекция за червено"
 
-#: include/sane/saneopts.h:409
+#: include/sane/saneopts.h:413
 #, no-c-format
 msgid "Analog gamma-correction for green"
 msgstr "Аналогова гама-корекция за зелено"
 
-#: include/sane/saneopts.h:411
+#: include/sane/saneopts.h:415
 #, no-c-format
 msgid "Analog gamma-correction for blue"
 msgstr "Аналогова гама-корекция за синьо"
 
-#: include/sane/saneopts.h:415
+#: include/sane/saneopts.h:419
 #, fuzzy, no-c-format
 msgid "Warm up lamp before scanning"
 msgstr "Загрей лампата преди сканиране"
 
-#: include/sane/saneopts.h:417
+#: include/sane/saneopts.h:421
 #, no-c-format
 msgid "Define exposure-time for calibration"
 msgstr "Дефинирай времето на експонация за калибрация"
 
-#: include/sane/saneopts.h:419
+#: include/sane/saneopts.h:423
 #, no-c-format
 msgid "Define exposure-time for red calibration"
 msgstr "Дефинирай времето на експонация за калибрация на червено"
 
-#: include/sane/saneopts.h:421
+#: include/sane/saneopts.h:425
 #, no-c-format
 msgid "Define exposure-time for green calibration"
 msgstr "Дефинирай времето на експонация за калибрация на зелено"
 
-#: include/sane/saneopts.h:423
+#: include/sane/saneopts.h:427
 #, no-c-format
 msgid "Define exposure-time for blue calibration"
 msgstr "Дефинирай времето на експонация за калибрация на синьо"
 
-#: include/sane/saneopts.h:425
+#: include/sane/saneopts.h:429
 #, no-c-format
 msgid "Define exposure-time for scan"
 msgstr "Дефинирай времето на експонация за сканиране"
 
-#: include/sane/saneopts.h:427
+#: include/sane/saneopts.h:431
 #, no-c-format
 msgid "Define exposure-time for red scan"
 msgstr "Дефинирай времето на експонация за сканиране на червено"
 
-#: include/sane/saneopts.h:429
+#: include/sane/saneopts.h:433
 #, no-c-format
 msgid "Define exposure-time for green scan"
 msgstr "Дефинирай времето на експонация за сканиране на зелено"
 
-#: include/sane/saneopts.h:431
+#: include/sane/saneopts.h:435
 #, no-c-format
 msgid "Define exposure-time for blue scan"
 msgstr "Дефинирай времето на експонация за сканиране на синьо"
 
-#: include/sane/saneopts.h:433
+#: include/sane/saneopts.h:437
 #, no-c-format
 msgid "Enable selection of exposure-time"
 msgstr "Позволи избор на време за експонация"
 
-#: include/sane/saneopts.h:435
+#: include/sane/saneopts.h:439
 #, no-c-format
 msgid "Define lamp density for calibration"
 msgstr "Дефинирай плътността на лампата за калибрация"
 
-#: include/sane/saneopts.h:437
+#: include/sane/saneopts.h:441
 #, no-c-format
 msgid "Define lamp density for scan"
 msgstr "Дефинирай плътността на лампата за сканирането"
 
-#: include/sane/saneopts.h:439
+#: include/sane/saneopts.h:443
 #, no-c-format
 msgid "Enable selection of lamp density"
 msgstr "Позволи избор на плътност на лампата"
 
-#: include/sane/saneopts.h:441 backend/umax.c:5830
+#: include/sane/saneopts.h:445 backend/umax.c:5828
 #, no-c-format
 msgid "Turn off lamp when program exits"
 msgstr "Изключи лампата при излизане от програмата"
 
-#: include/sane/saneopts.h:444
+#: include/sane/saneopts.h:447
+#, fuzzy, no-c-format
+msgid "Focus position for manual focus"
+msgstr "Авто изваждане"
+
+#: include/sane/saneopts.h:449
+#, fuzzy, no-c-format
+msgid "Perform autofocus before scan"
+msgstr "Загрей лампата преди сканиране"
+
+#: include/sane/saneopts.h:452
 #, fuzzy, no-c-format
 msgid "Scan button"
 msgstr "Резолюция на сканиране"
 
-#: include/sane/saneopts.h:445
+#: include/sane/saneopts.h:453
 #, fuzzy, no-c-format
 msgid "Email button"
 msgstr "Изчакай натискане на бутона"
 
-#: include/sane/saneopts.h:446
+#: include/sane/saneopts.h:454
 #, fuzzy, no-c-format
 msgid "Fax button"
 msgstr "Изчакай натискане на бутона"
 
-#: include/sane/saneopts.h:447
+#: include/sane/saneopts.h:455
 #, fuzzy, no-c-format
 msgid "Copy button"
 msgstr "Изчакай натискане на бутона"
 
-#: include/sane/saneopts.h:448
+#: include/sane/saneopts.h:456
 #, no-c-format
 msgid "PDF button"
 msgstr ""
 
-#: include/sane/saneopts.h:449
+#: include/sane/saneopts.h:457
 #, no-c-format
 msgid "Cancel button"
 msgstr ""
 
-#: include/sane/saneopts.h:450
+#: include/sane/saneopts.h:458
 #, no-c-format
 msgid "Page loaded"
 msgstr ""
 
-#: include/sane/saneopts.h:451
+#: include/sane/saneopts.h:459
 #, fuzzy, no-c-format
 msgid "Cover open"
 msgstr "Цветови десен"
 
-#: include/sane/saneopts.h:454
+#: include/sane/saneopts.h:462
 #, no-c-format
 msgid "Color"
 msgstr "Цвят"
 
-#: include/sane/saneopts.h:455
+#: include/sane/saneopts.h:463
 #, no-c-format
 msgid "Color Lineart"
 msgstr "Цветно Lineart"
 
-#: include/sane/saneopts.h:456
+#: include/sane/saneopts.h:464
 #, no-c-format
 msgid "Color Halftone"
 msgstr "Цветно с полутонове"
 
-#: include/sane/saneopts.h:457
+#: include/sane/saneopts.h:465
 #, no-c-format
 msgid "Gray"
 msgstr "Сиво"
 
-#: include/sane/saneopts.h:458
+#: include/sane/saneopts.h:466
 #, no-c-format
 msgid "Halftone"
 msgstr "Полутон"
 
-#: include/sane/saneopts.h:459
+#: include/sane/saneopts.h:467
 #, no-c-format
 msgid "Lineart"
 msgstr "Lineart"
 
-#: backend/sane_strstatus.c:59
+#: backend/sane_strstatus.c:57
 #, no-c-format
 msgid "Success"
 msgstr ""
 
-#: backend/sane_strstatus.c:62
+#: backend/sane_strstatus.c:60
 #, fuzzy, no-c-format
 msgid "Operation not supported"
 msgstr "Няма поддръжка на полутонове"
 
-#: backend/sane_strstatus.c:65
+#: backend/sane_strstatus.c:63
 #, no-c-format
 msgid "Operation was canceled"
 msgstr ""
 
-#: backend/sane_strstatus.c:68
+#: backend/sane_strstatus.c:66
 #, no-c-format
 msgid "Device busy"
 msgstr ""
 
-#: backend/sane_strstatus.c:71
+#: backend/sane_strstatus.c:69
 #, no-c-format
 msgid "Invalid argument"
 msgstr ""
 
-#: backend/sane_strstatus.c:74
+#: backend/sane_strstatus.c:72
 #, no-c-format
 msgid "End of file reached"
 msgstr ""
 
-#: backend/sane_strstatus.c:77
+#: backend/sane_strstatus.c:75
 #, fuzzy, no-c-format
 msgid "Document feeder jammed"
 msgstr "Feeder за документи"
 
-#: backend/sane_strstatus.c:80
+#: backend/sane_strstatus.c:78
 #, fuzzy, no-c-format
 msgid "Document feeder out of documents"
 msgstr "Feeder за документи"
 
-#: backend/sane_strstatus.c:83
+#: backend/sane_strstatus.c:81
 #, no-c-format
 msgid "Scanner cover is open"
 msgstr ""
 
-#: backend/sane_strstatus.c:86
+#: backend/sane_strstatus.c:84
 #, no-c-format
 msgid "Error during device I/O"
 msgstr ""
 
-#: backend/sane_strstatus.c:89
+#: backend/sane_strstatus.c:87
 #, no-c-format
 msgid "Out of memory"
 msgstr ""
 
-#: backend/sane_strstatus.c:92
+#: backend/sane_strstatus.c:90
 #, no-c-format
 msgid "Access to resource has been denied"
 msgstr ""
 
-#: backend/sane_strstatus.c:96
+#: backend/sane_strstatus.c:94
 #, no-c-format
 msgid "Lamp not ready, please retry"
 msgstr ""
 
-#: backend/sane_strstatus.c:101
+#: backend/sane_strstatus.c:99
 #, no-c-format
 msgid "Scanner mechanism locked for transport"
 msgstr ""
 
-#: backend/artec_eplus48u.c:2874 backend/pnm.c:282
+#: backend/artec_eplus48u.c:2872 backend/pnm.c:280
 #, no-c-format
 msgid "Defaults"
 msgstr "Висящи опции"
 
-#: backend/artec_eplus48u.c:2876
+#: backend/artec_eplus48u.c:2874
 #, no-c-format
 msgid "Set default values for enhancement controls."
 msgstr "Нагласи висящи опции за повишителните контроли."
 
-#: backend/artec_eplus48u.c:2932 backend/canon.c:1611
+#: backend/artec_eplus48u.c:2930 backend/canon.c:1609
+#: backend/pixma/pixma_sane_options.c:406
 #, no-c-format
 msgid "Calibration"
 msgstr "Калибрация"
 
-#: backend/artec_eplus48u.c:2941
+#: backend/artec_eplus48u.c:2939
 #, no-c-format
 msgid "Calibrate before next scan"
 msgstr "Калибрирай преди следващото сканиране"
 
-#: backend/artec_eplus48u.c:2943
+#: backend/artec_eplus48u.c:2941
 #, no-c-format
 msgid ""
 "If enabled, the device will be calibrated before the next scan. "
@@ -983,12 +1004,12 @@ msgstr ""
 "Ако това е позволено, устройството ще се калибрира преди следващото "
 "сканиране. Иначе, калибрацията се прави само преди първото пускане."
 
-#: backend/artec_eplus48u.c:2954
+#: backend/artec_eplus48u.c:2952
 #, no-c-format
 msgid "Only perform shading-correction"
 msgstr "Извърши само корекция на отсенките"
 
-#: backend/artec_eplus48u.c:2956
+#: backend/artec_eplus48u.c:2954
 #, fuzzy, no-c-format
 msgid ""
 "If enabled, only the shading correction is performed during calibration. "
@@ -1000,1072 +1021,1072 @@ msgstr ""
 "офсет и време на експонация - все едно вградени или от конфигурационния "
 "файл."
 
-#: backend/artec_eplus48u.c:2967
+#: backend/artec_eplus48u.c:2965
 #, no-c-format
 msgid "Button state"
 msgstr ""
 
-#: backend/avision.h:834
+#: backend/avision.h:832
 #, no-c-format
 msgid "Number of the frame to scan"
 msgstr "Номер на кадъра за сканиране"
 
-#: backend/avision.h:835
+#: backend/avision.h:833
 #, no-c-format
 msgid "Selects the number of the frame to scan"
 msgstr "Избира номера на кадъра за сканиране"
 
-#: backend/avision.h:838
+#: backend/avision.h:836
 #, fuzzy, no-c-format
 msgid "Duplex scan"
 msgstr "Дуплексно"
 
-#: backend/avision.h:839
+#: backend/avision.h:837
 #, no-c-format
 msgid ""
 "Duplex scan provides a scan of the front and back side of the document"
 msgstr ""
 
-#: backend/canon-sane.c:674 backend/canon.c:171
+#: backend/canon-sane.c:674 backend/canon.c:169
 #, no-c-format
 msgid "Correction according to transparency ratio"
 msgstr ""
 
-#: backend/canon-sane.c:680 backend/canon.c:170
+#: backend/canon-sane.c:680 backend/canon.c:168
 #, no-c-format
 msgid "Correction according to film type"
 msgstr ""
 
 #: backend/canon-sane.c:732 backend/canon-sane.c:940
 #: backend/canon-sane.c:1076 backend/canon-sane.c:1314
-#: backend/canon-sane.c:1494 backend/canon-sane.c:1643 backend/canon.c:157
+#: backend/canon-sane.c:1494 backend/canon-sane.c:1643 backend/canon.c:155
 #, no-c-format
 msgid "Fine color"
 msgstr ""
 
-#: backend/canon-sane.c:776 backend/canon.c:176
+#: backend/canon-sane.c:776 backend/canon.c:174
 #, fuzzy, no-c-format
 msgid "Negatives"
 msgstr "Негатив"
 
-#: backend/canon-sane.c:1318 backend/canon.c:149
+#: backend/canon-sane.c:1318 backend/canon.c:147
 #, no-c-format
 msgid "Raw"
 msgstr ""
 
-#: backend/canon.c:169
+#: backend/canon.c:167
 #, fuzzy, no-c-format
 msgid "No transparency correction"
 msgstr "Цветова корекция."
 
-#: backend/canon.c:176
+#: backend/canon.c:174
 #, fuzzy, no-c-format
 msgid "Slides"
 msgstr "Солидно бяло"
 
-#: backend/canon.c:186 backend/kvs1025_opt.c:180 backend/kvs40xx_opt.c:273
-#: backend/matsushita.c:178
+#: backend/canon.c:184 backend/kvs1025_opt.c:180 backend/kvs40xx_opt.c:273
+#: backend/matsushita.c:175
 #, no-c-format
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: backend/canon.c:186
+#: backend/canon.c:184
 #, fuzzy, no-c-format
 msgid "Normal speed"
 msgstr "Нормално"
 
-#: backend/canon.c:187
+#: backend/canon.c:185
 #, fuzzy, no-c-format
 msgid "1/2 normal speed"
 msgstr "2х2 нормално"
 
-#: backend/canon.c:187
+#: backend/canon.c:185
 #, fuzzy, no-c-format
 msgid "1/3 normal speed"
 msgstr "3х3 нормално"
 
-#: backend/canon.c:360
+#: backend/canon.c:358
 #, fuzzy, no-c-format
 msgid "rounded parameter"
 msgstr "Параметри за мъглявост"
 
-#: backend/canon.c:363 backend/canon.c:379 backend/canon.c:414
-#: backend/canon.c:464 backend/canon.c:482 backend/canon.c:525
+#: backend/canon.c:361 backend/canon.c:377 backend/canon.c:412
+#: backend/canon.c:462 backend/canon.c:480 backend/canon.c:523
 #, no-c-format
 msgid "unknown"
 msgstr ""
 
-#: backend/canon.c:373
+#: backend/canon.c:371
 #, fuzzy, no-c-format
 msgid "ADF jam"
 msgstr "ADF"
 
-#: backend/canon.c:376
+#: backend/canon.c:374
 #, no-c-format
 msgid "ADF cover open"
 msgstr ""
 
-#: backend/canon.c:389
+#: backend/canon.c:387
 #, fuzzy, no-c-format
 msgid "lamp failure"
 msgstr "Стойност на гамата"
 
-#: backend/canon.c:392
+#: backend/canon.c:390
 #, no-c-format
 msgid "scan head positioning error"
 msgstr ""
 
-#: backend/canon.c:395
+#: backend/canon.c:393
 #, no-c-format
 msgid "CPU check error"
 msgstr ""
 
-#: backend/canon.c:398
+#: backend/canon.c:396
 #, no-c-format
 msgid "RAM check error"
 msgstr ""
 
-#: backend/canon.c:401
+#: backend/canon.c:399
 #, no-c-format
 msgid "ROM check error"
 msgstr ""
 
-#: backend/canon.c:404
+#: backend/canon.c:402
 #, no-c-format
 msgid "hardware check error"
 msgstr ""
 
-#: backend/canon.c:407
+#: backend/canon.c:405
 #, fuzzy, no-c-format
 msgid "transparency unit lamp failure"
 msgstr "Прозрачност"
 
-#: backend/canon.c:410
+#: backend/canon.c:408
 #, no-c-format
 msgid "transparency unit scan head positioning failure"
 msgstr ""
 
-#: backend/canon.c:424
+#: backend/canon.c:422
 #, no-c-format
 msgid "parameter list length error"
 msgstr ""
 
-#: backend/canon.c:428
+#: backend/canon.c:426
 #, no-c-format
 msgid "invalid command operation code"
 msgstr ""
 
-#: backend/canon.c:432
+#: backend/canon.c:430
 #, no-c-format
 msgid "invalid field in CDB"
 msgstr ""
 
-#: backend/canon.c:436
+#: backend/canon.c:434
 #, no-c-format
 msgid "unsupported LUN"
 msgstr ""
 
-#: backend/canon.c:440
+#: backend/canon.c:438
 #, no-c-format
 msgid "invalid field in parameter list"
 msgstr ""
 
-#: backend/canon.c:444
+#: backend/canon.c:442
 #, no-c-format
 msgid "command sequence error"
 msgstr ""
 
-#: backend/canon.c:448
+#: backend/canon.c:446
 #, no-c-format
 msgid "too many windows specified"
 msgstr ""
 
-#: backend/canon.c:452
+#: backend/canon.c:450
 #, no-c-format
 msgid "medium not present"
 msgstr ""
 
-#: backend/canon.c:456
+#: backend/canon.c:454
 #, no-c-format
 msgid "invalid bit IDENTIFY message"
 msgstr ""
 
-#: backend/canon.c:460
+#: backend/canon.c:458
 #, fuzzy, no-c-format
 msgid "option not correct"
 msgstr "Няма поддръжка на полутонове"
 
-#: backend/canon.c:474
+#: backend/canon.c:472
 #, no-c-format
 msgid "power on reset / bus device reset"
 msgstr ""
 
-#: backend/canon.c:478
+#: backend/canon.c:476
 #, no-c-format
 msgid "parameter changed by another initiator"
 msgstr ""
 
-#: backend/canon.c:492
+#: backend/canon.c:490
 #, no-c-format
 msgid "no additional sense information"
 msgstr ""
 
-#: backend/canon.c:496
+#: backend/canon.c:494
 #, no-c-format
 msgid "reselect failure"
 msgstr ""
 
-#: backend/canon.c:500
+#: backend/canon.c:498
 #, no-c-format
 msgid "SCSI parity error"
 msgstr ""
 
-#: backend/canon.c:504
+#: backend/canon.c:502
 #, no-c-format
 msgid "initiator detected error message received"
 msgstr ""
 
-#: backend/canon.c:509
+#: backend/canon.c:507
 #, no-c-format
 msgid "invalid message error"
 msgstr ""
 
-#: backend/canon.c:513
+#: backend/canon.c:511
 #, no-c-format
 msgid "timeout error"
 msgstr ""
 
-#: backend/canon.c:517
+#: backend/canon.c:515
 #, fuzzy, no-c-format
 msgid "transparency unit shading error"
 msgstr "Прозрачност"
 
-#: backend/canon.c:521
+#: backend/canon.c:519
 #, no-c-format
 msgid "lamp not stabilized"
 msgstr ""
 
-#: backend/canon.c:847 backend/canon.c:862
+#: backend/canon.c:845 backend/canon.c:860
 #, fuzzy, no-c-format
 msgid "film scanner"
 msgstr "flatbed скенер"
 
-#: backend/canon.c:877 backend/canon.c:892 backend/canon.c:907
-#: backend/canon.c:922 backend/hp3900_sane.c:1683 backend/plustek.c:1335
-#: backend/plustek_pp.c:1014 backend/sceptre.c:593 backend/teco2.c:1832
-#: backend/u12.c:851
+#: backend/canon.c:875 backend/canon.c:890 backend/canon.c:905
+#: backend/canon.c:920 backend/hp3900_sane.c:1682 backend/plustek.c:1333
+#: backend/plustek_pp.c:1012 backend/sceptre.c:590 backend/teco2.c:1829
+#: backend/u12.c:849
 #, no-c-format
 msgid "flatbed scanner"
 msgstr "flatbed скенер"
 
-#: backend/canon.c:1178 backend/epson.c:3386 backend/epson2.c:1364
+#: backend/canon.c:1176 backend/epson.c:3384 backend/epson2.c:1394
 #, no-c-format
 msgid "Film type"
 msgstr "Тип екран (film)"
 
-#: backend/canon.c:1179
+#: backend/canon.c:1177
 #, no-c-format
 msgid "Selects the film type, i.e. negatives or slides"
 msgstr ""
 
-#: backend/canon.c:1191
+#: backend/canon.c:1189
 #, fuzzy, no-c-format
 msgid "Negative film type"
 msgstr "Негативен филм"
 
-#: backend/canon.c:1192
+#: backend/canon.c:1190
 #, fuzzy, no-c-format
 msgid "Selects the negative film type"
 msgstr "Избира картинка за тестване"
 
-#: backend/canon.c:1231
+#: backend/canon.c:1229
 #, fuzzy, no-c-format
 msgid "Hardware resolution"
 msgstr "Резолюция на сканиране"
 
-#: backend/canon.c:1232
+#: backend/canon.c:1230
 #, fuzzy, no-c-format
 msgid "Use only hardware resolutions"
 msgstr "Покажи кратък списък с резолюции"
 
-#: backend/canon.c:1313
+#: backend/canon.c:1311 backend/epson2.c:1337
 #, no-c-format
 msgid "Focus"
 msgstr ""
 
-#: backend/canon.c:1323
+#: backend/canon.c:1321
 #, fuzzy, no-c-format
 msgid "Auto focus"
 msgstr "Авто изваждане"
 
-#: backend/canon.c:1324
+#: backend/canon.c:1322
 #, fuzzy, no-c-format
 msgid "Enable/disable auto focus"
 msgstr "Забрани предв. фокус"
 
-#: backend/canon.c:1331
+#: backend/canon.c:1329
 #, no-c-format
 msgid "Auto focus only once"
 msgstr ""
 
-#: backend/canon.c:1332
+#: backend/canon.c:1330
 #, no-c-format
 msgid "Do auto focus only once between ejects"
 msgstr ""
 
-#: backend/canon.c:1340
+#: backend/canon.c:1338
 #, fuzzy, no-c-format
 msgid "Manual focus position"
 msgstr "Фиксирай позиция на фокуса"
 
-#: backend/canon.c:1341
+#: backend/canon.c:1339
 #, no-c-format
 msgid "Set the optical system's focus position by hand (default: 128)."
 msgstr ""
 
-#: backend/canon.c:1351
+#: backend/canon.c:1349
 #, no-c-format
 msgid "Scan margins"
 msgstr ""
 
-#: backend/canon.c:1398
+#: backend/canon.c:1396
 #, no-c-format
 msgid "Extra color adjustments"
 msgstr ""
 
-#: backend/canon.c:1533 backend/epson.c:3205 backend/epson2.c:1254
+#: backend/canon.c:1531 backend/epson.c:3203 backend/epson2.c:1251
 #: backend/kvs1025.h:55 backend/kvs40xx_opt.c:826
 #, no-c-format
 msgid "Mirror image"
 msgstr "Огледален образ"
 
-#: backend/canon.c:1534
+#: backend/canon.c:1532
 #, fuzzy, no-c-format
 msgid "Mirror the image horizontally"
 msgstr "Прави хоризонтален огледален образ."
 
-#: backend/canon.c:1603
+#: backend/canon.c:1601
 #, fuzzy, no-c-format
 msgid "Auto exposure"
 msgstr "Установи време за експониране"
 
-#: backend/canon.c:1604
+#: backend/canon.c:1602
 #, fuzzy, no-c-format
 msgid "Enable/disable the auto exposure feature"
 msgstr "Позволи избор на време за експонация"
 
-#: backend/canon.c:1620
+#: backend/canon.c:1618
 #, fuzzy, no-c-format
 msgid "Calibration now"
 msgstr "Калибрация"
 
-#: backend/canon.c:1621
+#: backend/canon.c:1619
 #, fuzzy, no-c-format
 msgid "Execute calibration *now*"
 msgstr "Дефинирай режима на калибрация"
 
-#: backend/canon.c:1631
+#: backend/canon.c:1629
 #, no-c-format
 msgid "Self diagnosis"
 msgstr ""
 
-#: backend/canon.c:1632
+#: backend/canon.c:1630
 #, no-c-format
 msgid "Perform scanner self diagnosis"
 msgstr ""
 
-#: backend/canon.c:1643
+#: backend/canon.c:1641
 #, fuzzy, no-c-format
 msgid "Reset scanner"
 msgstr "скенер с sheetfeed"
 
-#: backend/canon.c:1644
+#: backend/canon.c:1642
 #, fuzzy, no-c-format
 msgid "Reset the scanner"
 msgstr "скенер с sheetfeed"
 
-#: backend/canon.c:1654
+#: backend/canon.c:1652
 #, no-c-format
 msgid "Medium handling"
 msgstr ""
 
-#: backend/canon.c:1663
+#: backend/canon.c:1661
 #, fuzzy, no-c-format
 msgid "Eject film after each scan"
 msgstr "Извади документа след сканиране"
 
-#: backend/canon.c:1664
+#: backend/canon.c:1662
 #, no-c-format
 msgid "Automatically eject the film from the device after each scan"
 msgstr ""
 
-#: backend/canon.c:1675
+#: backend/canon.c:1673
 #, no-c-format
 msgid "Eject film before exit"
 msgstr ""
 
-#: backend/canon.c:1676
+#: backend/canon.c:1674
 #, no-c-format
 msgid ""
 "Automatically eject the film from the device before exiting the program"
 msgstr ""
 
-#: backend/canon.c:1685
+#: backend/canon.c:1683
 #, no-c-format
 msgid "Eject film now"
 msgstr ""
 
-#: backend/canon.c:1686
+#: backend/canon.c:1684
 #, no-c-format
 msgid "Eject the film *now*"
 msgstr ""
 
-#: backend/canon.c:1695
+#: backend/canon.c:1693
 #, fuzzy, no-c-format
 msgid "Document feeder extras"
 msgstr "Feeder за документи"
 
-#: backend/canon.c:1702
+#: backend/canon.c:1700
 #, fuzzy, no-c-format
 msgid "Flatbed only"
 msgstr "Flatbed"
 
-#: backend/canon.c:1703
+#: backend/canon.c:1701
 #, no-c-format
 msgid "Disable auto document feeder and use flatbed only"
 msgstr ""
 
-#: backend/canon.c:1713 backend/canon.c:1723
+#: backend/canon.c:1711 backend/canon.c:1721
 #, fuzzy, no-c-format
 msgid "Transparency unit"
 msgstr "Прозрачност"
 
-#: backend/canon.c:1724
+#: backend/canon.c:1722
 #, no-c-format
 msgid "Switch on/off the transparency unit (FAU, film adapter unit)"
 msgstr ""
 
-#: backend/canon.c:1734
+#: backend/canon.c:1732
 #, fuzzy, no-c-format
 msgid "Negative film"
 msgstr "Негативен филм"
 
-#: backend/canon.c:1735
+#: backend/canon.c:1733
 #, fuzzy, no-c-format
 msgid "Positive or negative film"
 msgstr "Позитивен екран"
 
-#: backend/canon.c:1744
+#: backend/canon.c:1742
 #, no-c-format
 msgid "Density control"
 msgstr ""
 
-#: backend/canon.c:1745
+#: backend/canon.c:1743
 #, no-c-format
 msgid "Set density control mode"
 msgstr ""
 
-#: backend/canon.c:1756
+#: backend/canon.c:1754
 #, fuzzy, no-c-format
 msgid "Transparency ratio"
 msgstr "Прозрачност"
 
-#: backend/canon.c:1770
+#: backend/canon.c:1768
 #, fuzzy, no-c-format
 msgid "Select film type"
 msgstr "Тип екран (film)"
 
-#: backend/canon.c:1771
+#: backend/canon.c:1769
 #, fuzzy, no-c-format
 msgid "Select the film type"
 msgstr "Избира полутона"
 
-#: backend/canon630u.c:159
+#: backend/canon630u.c:157
 #, no-c-format
 msgid "Calibrate Scanner"
 msgstr "Калибрирай скенера"
 
-#: backend/canon630u.c:160
+#: backend/canon630u.c:158
 #, no-c-format
 msgid "Force scanner calibration before scan"
 msgstr "Задължителна калибрация преди сканиране"
 
-#: backend/canon630u.c:259 backend/umax1220u.c:208
+#: backend/canon630u.c:257 backend/umax1220u.c:206
 #, no-c-format
 msgid "Grayscale scan"
 msgstr "Сканиране в сива скала"
 
-#: backend/canon630u.c:260 backend/umax1220u.c:209
+#: backend/canon630u.c:258 backend/umax1220u.c:207
 #, no-c-format
 msgid "Do a grayscale rather than color scan"
 msgstr "Направи сканиране в сива скала, не цветно"
 
-#: backend/canon630u.c:306
+#: backend/canon630u.c:304
 #, no-c-format
 msgid "Analog Gain"
 msgstr "Аналогово увеличение"
 
-#: backend/canon630u.c:307
+#: backend/canon630u.c:305
 #, no-c-format
 msgid "Increase or decrease the analog gain of the CCD array"
 msgstr "Повиши или намали аналоговото увеличение на CCD матрицата"
 
-#: backend/canon630u.c:347 backend/epson.h:68 backend/epson2.h:67
+#: backend/canon630u.c:345 backend/epson.h:66 backend/epson2.h:70
 #, no-c-format
 msgid "Gamma Correction"
 msgstr "Корекция на гамата"
 
-#: backend/canon630u.c:348
+#: backend/canon630u.c:346
 #, no-c-format
 msgid "Selects the gamma corrected transfer curve"
 msgstr "Избира кривата на коригираната гама"
 
-#: backend/canon_dr.c:413 backend/epjitsu.c:233 backend/epson.c:501
+#: backend/canon_dr.c:419 backend/epjitsu.c:231 backend/epson.c:499
 #: backend/epson2-ops.c:101 backend/epson2.c:115 backend/epsonds-ops.c:32
-#: backend/epsonds.c:97 backend/epsonds.h:62 backend/fujitsu.c:681
-#: backend/genesys/genesys.h:78 backend/gt68xx.c:148
-#: backend/hp3900_sane.c:418 backend/hp3900_sane.c:427
-#: backend/hp3900_sane.c:1017 backend/hp5590.c:92 backend/kodakaio.c:617
-#: backend/ma1509.c:108 backend/magicolor.c:181 backend/mustek.c:156
-#: backend/mustek.c:160 backend/mustek.c:164 backend/pixma/pixma.c:978
+#: backend/epsonds.c:97 backend/epsonds.h:65 backend/fujitsu.c:683
+#: backend/genesys/genesys.h:76 backend/gt68xx.c:146
+#: backend/hp3900_sane.c:417 backend/hp3900_sane.c:426
+#: backend/hp3900_sane.c:1016 backend/hp5590.c:90 backend/kodakaio.c:617
+#: backend/ma1509.c:106 backend/magicolor.c:181 backend/mustek.c:154
+#: backend/mustek.c:158 backend/mustek.c:162 backend/pixma/pixma.c:996
 #: backend/pixma/pixma_sane_options.c:93 backend/snapscan-options.c:86
-#: backend/test.c:234 backend/umax.c:181
+#: backend/test.c:232 backend/umax.c:179
 #, no-c-format
 msgid "Flatbed"
 msgstr "Flatbed"
 
-#: backend/canon_dr.c:414 backend/epjitsu.c:234 backend/fujitsu.c:682
-#: backend/kodak.c:140
+#: backend/canon_dr.c:420 backend/epjitsu.c:232 backend/fujitsu.c:684
+#: backend/kodak.c:138
 #, no-c-format
 msgid "ADF Front"
 msgstr ""
 
-#: backend/canon_dr.c:415 backend/epjitsu.c:235 backend/fujitsu.c:683
-#: backend/kodak.c:141
+#: backend/canon_dr.c:421 backend/epjitsu.c:233 backend/fujitsu.c:685
+#: backend/kodak.c:139
 #, fuzzy, no-c-format
 msgid "ADF Back"
 msgstr "ADF"
 
-#: backend/canon_dr.c:416 backend/epjitsu.c:236 backend/fujitsu.c:684
-#: backend/hp5590.c:94 backend/kodak.c:142 backend/pixma/pixma.c:989
+#: backend/canon_dr.c:422 backend/epjitsu.c:234 backend/fujitsu.c:686
+#: backend/hp5590.c:92 backend/kodak.c:140 backend/pixma/pixma.c:1007
 #, fuzzy, no-c-format
 msgid "ADF Duplex"
 msgstr "Дуплексно"
 
-#: backend/canon_dr.c:417 backend/fujitsu.c:685
+#: backend/canon_dr.c:423 backend/fujitsu.c:687
 #, fuzzy, no-c-format
 msgid "Card Front"
 msgstr "Печат"
 
-#: backend/canon_dr.c:418 backend/fujitsu.c:686
+#: backend/canon_dr.c:424 backend/fujitsu.c:688
 #, no-c-format
 msgid "Card Back"
 msgstr ""
 
-#: backend/canon_dr.c:419 backend/fujitsu.c:687
+#: backend/canon_dr.c:425 backend/fujitsu.c:689
 #, fuzzy, no-c-format
 msgid "Card Duplex"
 msgstr "Дуплексно"
 
-#: backend/canon_dr.c:426 backend/epson.c:599 backend/epson.c:3096
-#: backend/epson2.c:201 backend/fujitsu.c:704
-#: backend/genesys/genesys.cpp:119 backend/genesys/genesys.cpp:126
-#: backend/gt68xx_low.h:136 backend/hp-option.c:3096
+#: backend/canon_dr.c:432 backend/epson.c:597 backend/epson.c:3094
+#: backend/epson2.c:195 backend/fujitsu.c:706
+#: backend/genesys/genesys.cpp:117 backend/genesys/genesys.cpp:124
+#: backend/gt68xx_low.h:134 backend/hp-option.c:3091
 #, no-c-format
 msgid "Red"
 msgstr "Червено"
 
-#: backend/canon_dr.c:427 backend/epson.c:600 backend/epson.c:3092
-#: backend/epson2.c:202 backend/fujitsu.c:705
-#: backend/genesys/genesys.cpp:120 backend/genesys/genesys.cpp:127
-#: backend/gt68xx_low.h:137 backend/hp-option.c:3097
+#: backend/canon_dr.c:433 backend/epson.c:598 backend/epson.c:3090
+#: backend/epson2.c:196 backend/fujitsu.c:707
+#: backend/genesys/genesys.cpp:118 backend/genesys/genesys.cpp:125
+#: backend/gt68xx_low.h:135 backend/hp-option.c:3092
 #, no-c-format
 msgid "Green"
 msgstr "Зелено"
 
-#: backend/canon_dr.c:428 backend/epson.c:601 backend/epson.c:3100
-#: backend/epson2.c:203 backend/fujitsu.c:706
-#: backend/genesys/genesys.cpp:121 backend/genesys/genesys.cpp:128
-#: backend/gt68xx_low.h:138 backend/hp-option.c:3098
+#: backend/canon_dr.c:434 backend/epson.c:599 backend/epson.c:3098
+#: backend/epson2.c:197 backend/fujitsu.c:708
+#: backend/genesys/genesys.cpp:119 backend/genesys/genesys.cpp:126
+#: backend/gt68xx_low.h:136 backend/hp-option.c:3093
 #, no-c-format
 msgid "Blue"
 msgstr "Синьо"
 
-#: backend/canon_dr.c:429
+#: backend/canon_dr.c:435
 #, fuzzy, no-c-format
 msgid "Enhance Red"
 msgstr "Повишение"
 
-#: backend/canon_dr.c:430
+#: backend/canon_dr.c:436
 #, fuzzy, no-c-format
 msgid "Enhance Green"
 msgstr "Повишение"
 
-#: backend/canon_dr.c:431
+#: backend/canon_dr.c:437
 #, fuzzy, no-c-format
 msgid "Enhance Blue"
 msgstr "Повишение"
 
-#: backend/canon_dr.c:433 backend/epson.c:556 backend/epson.c:564
-#: backend/epson.c:576 backend/epson.c:598 backend/epson2.c:165
-#: backend/epson2.c:173 backend/epson2.c:185 backend/epson2.c:200
-#: backend/epson2.c:214 backend/fujitsu.c:710
-#: backend/genesys/genesys.cpp:129 backend/leo.c:109
-#: backend/matsushita.c:138 backend/matsushita.c:159
-#: backend/matsushita.c:191 backend/matsushita.c:213
+#: backend/canon_dr.c:439 backend/epson.c:554 backend/epson.c:562
+#: backend/epson.c:574 backend/epson.c:596 backend/epson2.c:159
+#: backend/epson2.c:167 backend/epson2.c:179 backend/epson2.c:194
+#: backend/epson2.c:208 backend/fujitsu.c:712
+#: backend/genesys/genesys.cpp:127 backend/leo.c:106
+#: backend/matsushita.c:135 backend/matsushita.c:156
+#: backend/matsushita.c:188 backend/matsushita.c:210
 #: backend/snapscan-options.c:91
 #, no-c-format
 msgid "None"
 msgstr "Нищо"
 
-#: backend/canon_dr.c:434 backend/fujitsu.c:711
+#: backend/canon_dr.c:440 backend/fujitsu.c:713
 #, no-c-format
 msgid "JPEG"
 msgstr ""
 
-#: backend/canon_dr.c:2479 backend/fujitsu.c:4142 backend/kvs1025_opt.c:910
+#: backend/canon_dr.c:2526 backend/fujitsu.c:4140 backend/kvs1025_opt.c:910
 #, no-c-format
 msgid "Software blank skip percentage"
 msgstr ""
 
-#: backend/canon_dr.c:2480 backend/fujitsu.c:4143
+#: backend/canon_dr.c:2527 backend/fujitsu.c:4141
 #, no-c-format
 msgid "Request driver to discard pages with low percentage of dark pixels"
 msgstr ""
 
-#: backend/canon_lide70.c:344 backend/epson.c:2813 backend/epson2.c:976
-#: backend/epsonds.c:631 backend/genesys/genesys.cpp:4634
-#: backend/gt68xx.c:451 backend/hp-option.c:2917 backend/kvs1025_opt.c:521
-#: backend/kvs20xx_opt.c:171 backend/kvs40xx_opt.c:320 backend/ma1509.c:501
-#: backend/matsushita.c:1084 backend/microtek2.h:598 backend/mustek.c:4215
-#: backend/mustek_usb.c:256 backend/mustek_usb2.c:344 backend/niash.c:734
-#: backend/plustek.c:721 backend/plustek_pp.c:658 backend/sceptre.c:673
-#: backend/snapscan-options.c:354 backend/stv680.c:1030
-#: backend/teco2.c:1882 backend/test.c:348 backend/u12.c:473
-#: backend/umax.c:5054
+#: backend/canon_lide70.c:342 backend/epson.c:2811 backend/epson2.c:973
+#: backend/epsonds.c:636 backend/genesys/genesys.cpp:4632
+#: backend/gt68xx.c:449 backend/hp-option.c:2912 backend/kvs1025_opt.c:521
+#: backend/kvs20xx_opt.c:171 backend/kvs40xx_opt.c:320 backend/ma1509.c:499
+#: backend/matsushita.c:1081 backend/microtek2.h:596 backend/mustek.c:4213
+#: backend/mustek_usb.c:254 backend/mustek_usb2.c:342 backend/niash.c:731
+#: backend/plustek.c:719 backend/plustek_pp.c:656 backend/sceptre.c:670
+#: backend/snapscan-options.c:354 backend/stv680.c:1027
+#: backend/teco2.c:1879 backend/test.c:377 backend/u12.c:471
+#: backend/umax.c:5052
 #, no-c-format
 msgid "Scan Mode"
 msgstr "Режим на сканиране"
 
-#: backend/canon_lide70.c:400 backend/test.c:633
+#: backend/canon_lide70.c:402 backend/test.c:662
 #, no-c-format
 msgid "Use non-blocking IO"
 msgstr "Използвай неблокиращ IO"
 
-#: backend/canon_lide70.c:401 backend/test.c:634
+#: backend/canon_lide70.c:403 backend/test.c:663
 #, no-c-format
 msgid "Use non-blocking IO for sane_read() if supported by the frontend."
 msgstr ""
 "Използва неблокиращ IO порт за sane_read(), ако фронтенда го поддържа."
 
-#: backend/epson.c:491 backend/epson2.c:108 backend/epsonds.c:90
+#: backend/epson.c:489 backend/epson2.c:108 backend/epsonds.c:90
 #: backend/kodakaio.c:611 backend/magicolor.c:174
 #, no-c-format
 msgid "Simplex"
 msgstr "Симплексно"
 
-#: backend/epson.c:492 backend/epson2.c:109 backend/epsonds.c:91
+#: backend/epson.c:490 backend/epson2.c:109 backend/epsonds.c:91
 #: backend/kodakaio.c:612 backend/kvs1025.h:50 backend/kvs20xx_opt.c:204
 #: backend/kvs40xx_opt.c:353 backend/magicolor.c:175
-#: backend/matsushita.h:218
+#: backend/matsushita.h:212
 #, no-c-format
 msgid "Duplex"
 msgstr "Дуплексно"
 
-#: backend/epson.c:502 backend/epson2-ops.c:102 backend/epson2.c:116
-#: backend/epsonds-ops.c:33 backend/epsonds.h:63 backend/pixma/pixma.c:995
+#: backend/epson.c:500 backend/epson2-ops.c:102 backend/epson2.c:116
+#: backend/epsonds-ops.c:33 backend/epsonds.h:66 backend/pixma/pixma.c:1013
 #, no-c-format
 msgid "Transparency Unit"
 msgstr "Прозрачност"
 
-#: backend/epson.c:503 backend/epson2-ops.c:104 backend/epson2.c:118
-#: backend/epsonds-ops.c:34 backend/epsonds.c:98 backend/epsonds.h:64
-#: backend/kodakaio.c:618 backend/magicolor.c:182 backend/mustek.c:160
-#: backend/pixma/pixma.c:983 backend/test.c:234 backend/umax.c:183
+#: backend/epson.c:501 backend/epson2-ops.c:104 backend/epson2.c:118
+#: backend/epsonds-ops.c:34 backend/epsonds.c:98 backend/epsonds.h:67
+#: backend/kodakaio.c:618 backend/magicolor.c:182 backend/mustek.c:158
+#: backend/pixma/pixma.c:1001 backend/test.c:232 backend/umax.c:181
 #, no-c-format
 msgid "Automatic Document Feeder"
 msgstr "Автоматично подаване на документи"
 
-#: backend/epson.c:523 backend/epson2.c:134
+#: backend/epson.c:521 backend/epson2.c:134
 #, no-c-format
 msgid "Positive Film"
 msgstr "Позитивен екран"
 
-#: backend/epson.c:524 backend/epson2.c:135
+#: backend/epson.c:522 backend/epson2.c:135
 #, no-c-format
 msgid "Negative Film"
 msgstr "Негативен филм"
 
-#: backend/epson.c:529 backend/epson2.c:142
+#: backend/epson.c:527
 #, no-c-format
 msgid "Focus on glass"
 msgstr "Фокус върху стъклото"
 
-#: backend/epson.c:530 backend/epson2.c:143
+#: backend/epson.c:528
 #, no-c-format
 msgid "Focus 2.5mm above glass"
 msgstr "Фокус 2,5 мм над стъклото"
 
-#: backend/epson.c:557 backend/epson.c:565 backend/epson.c:577
-#: backend/epson2.c:166 backend/epson2.c:174 backend/epson2.c:186
+#: backend/epson.c:555 backend/epson.c:563 backend/epson.c:575
+#: backend/epson2.c:160 backend/epson2.c:168 backend/epson2.c:180
 #, no-c-format
 msgid "Halftone A (Hard Tone)"
 msgstr "Полутон A (Твърд тон)"
 
-#: backend/epson.c:558 backend/epson.c:566 backend/epson.c:578
-#: backend/epson2.c:167 backend/epson2.c:175 backend/epson2.c:187
+#: backend/epson.c:556 backend/epson.c:564 backend/epson.c:576
+#: backend/epson2.c:161 backend/epson2.c:169 backend/epson2.c:181
 #, no-c-format
 msgid "Halftone B (Soft Tone)"
 msgstr "Полутон B (Мек тон)"
 
-#: backend/epson.c:559 backend/epson.c:567 backend/epson.c:579
-#: backend/epson2.c:168 backend/epson2.c:176 backend/epson2.c:188
+#: backend/epson.c:557 backend/epson.c:565 backend/epson.c:577
+#: backend/epson2.c:162 backend/epson2.c:170 backend/epson2.c:182
 #, no-c-format
 msgid "Halftone C (Net Screen)"
 msgstr "Полутон C (Net Screen)"
 
-#: backend/epson.c:568 backend/epson.c:580 backend/epson2.c:177
-#: backend/epson2.c:189
+#: backend/epson.c:566 backend/epson.c:578 backend/epson2.c:171
+#: backend/epson2.c:183
 #, no-c-format
 msgid "Dither A (4x4 Bayer)"
 msgstr "Dither A (4x4 Bayer)"
 
-#: backend/epson.c:569 backend/epson.c:581 backend/epson2.c:178
-#: backend/epson2.c:190
+#: backend/epson.c:567 backend/epson.c:579 backend/epson2.c:172
+#: backend/epson2.c:184
 #, no-c-format
 msgid "Dither B (4x4 Spiral)"
 msgstr "Dither B (4x4 Spiral)"
 
-#: backend/epson.c:570 backend/epson.c:582 backend/epson2.c:179
-#: backend/epson2.c:191
+#: backend/epson.c:568 backend/epson.c:580 backend/epson2.c:173
+#: backend/epson2.c:185
 #, no-c-format
 msgid "Dither C (4x4 Net Screen)"
 msgstr "Dither C (4x4 Net Screen)"
 
-#: backend/epson.c:571 backend/epson.c:583 backend/epson2.c:180
-#: backend/epson2.c:192
+#: backend/epson.c:569 backend/epson.c:581 backend/epson2.c:174
+#: backend/epson2.c:186
 #, no-c-format
 msgid "Dither D (8x4 Net Screen)"
 msgstr "Dither D (8x4 Net Screen)"
 
-#: backend/epson.c:584 backend/epson2.c:193
+#: backend/epson.c:582 backend/epson2.c:187
 #, no-c-format
 msgid "Text Enhanced Technology"
 msgstr "Технология за оконтрастиране на текста"
 
-#: backend/epson.c:585 backend/epson2.c:194
+#: backend/epson.c:583 backend/epson2.c:188
 #, no-c-format
 msgid "Download pattern A"
 msgstr "Свали десен B"
 
-#: backend/epson.c:586 backend/epson2.c:195
+#: backend/epson.c:584 backend/epson2.c:189
 #, no-c-format
 msgid "Download pattern B"
 msgstr "Свали десен B"
 
-#: backend/epson.c:631
+#: backend/epson.c:629
 #, no-c-format
 msgid "No Correction"
 msgstr "Без корекция"
 
-#: backend/epson.c:632 backend/epson.c:657 backend/epson2.c:255
+#: backend/epson.c:630 backend/epson.c:655 backend/epson2.c:249
 #, no-c-format
 msgid "User defined"
 msgstr "По потребителска дефиниция"
 
-#: backend/epson.c:633
+#: backend/epson.c:631
 #, no-c-format
 msgid "Impact-dot printers"
 msgstr "Матрични принтери"
 
-#: backend/epson.c:634
+#: backend/epson.c:632
 #, no-c-format
 msgid "Thermal printers"
 msgstr "Лазерни принтери"
 
-#: backend/epson.c:635
+#: backend/epson.c:633
 #, no-c-format
 msgid "Ink-jet printers"
 msgstr "Мастиленоструйни принтери"
 
-#: backend/epson.c:636
+#: backend/epson.c:634
 #, no-c-format
 msgid "CRT monitors"
 msgstr "CRT монитори"
 
-#: backend/epson.c:656 backend/epson2.c:254 backend/fujitsu.c:694
-#: backend/hp-option.c:3229 backend/test.c:149
+#: backend/epson.c:654 backend/epson2.c:248 backend/fujitsu.c:696
+#: backend/hp-option.c:3224 backend/test.c:147
 #, no-c-format
 msgid "Default"
 msgstr "По подразбиране"
 
-#: backend/epson.c:658 backend/epson2.c:256
+#: backend/epson.c:656 backend/epson2.c:250
 #, no-c-format
 msgid "High density printing"
 msgstr "Принтиране с висока гъстота"
 
-#: backend/epson.c:659 backend/epson2.c:257
+#: backend/epson.c:657 backend/epson2.c:251
 #, no-c-format
 msgid "Low density printing"
 msgstr "Принтиране с ниска гъстота"
 
-#: backend/epson.c:660 backend/epson2.c:258
+#: backend/epson.c:658 backend/epson2.c:252
 #, no-c-format
 msgid "High contrast printing"
 msgstr "Принтиране с висок контраст"
 
-#: backend/epson.c:678 backend/epson2.c:276
+#: backend/epson.c:676 backend/epson2.c:270
 #, no-c-format
 msgid "User defined (Gamma=1.0)"
 msgstr "По потребителска дефиниция (Гама=1,0)"
 
-#: backend/epson.c:679 backend/epson2.c:277
+#: backend/epson.c:677 backend/epson2.c:271
 #, no-c-format
 msgid "User defined (Gamma=1.8)"
 msgstr "По потребителска дефиниция (Гама=1,8)"
 
-#: backend/epson.c:757
+#: backend/epson.c:755
 #, no-c-format
 msgid "CD"
 msgstr "CD"
 
-#: backend/epson.c:758
+#: backend/epson.c:756
 #, no-c-format
 msgid "A5 portrait"
 msgstr "A5 портрет"
 
-#: backend/epson.c:759
+#: backend/epson.c:757
 #, no-c-format
 msgid "A5 landscape"
 msgstr "A5 пейзаж"
 
-#: backend/epson.c:760 backend/kvs1025_opt.c:103 backend/kvs20xx_opt.c:77
+#: backend/epson.c:758 backend/kvs1025_opt.c:103 backend/kvs20xx_opt.c:77
 #: backend/kvs40xx_opt.c:131 backend/kvs40xx_opt.c:148
 #, no-c-format
 msgid "Letter"
 msgstr "Letter"
 
-#: backend/epson.c:761 backend/kvs1025_opt.c:100 backend/kvs20xx_opt.c:74
+#: backend/epson.c:759 backend/kvs1025_opt.c:100 backend/kvs20xx_opt.c:74
 #: backend/kvs20xx_opt.c:302 backend/kvs40xx_opt.c:128
 #: backend/kvs40xx_opt.c:145 backend/kvs40xx_opt.c:526
 #, no-c-format
 msgid "A4"
 msgstr "A4"
 
-#: backend/epson.c:762
+#: backend/epson.c:760
 #, no-c-format
 msgid "Max"
 msgstr "Макс."
 
-#: backend/epson.c:2845 backend/epson2.c:1011
+#: backend/epson.c:2843 backend/epson2.c:1008
 #, no-c-format
 msgid "Selects the halftone."
 msgstr "Избира полутона"
 
-#: backend/epson.c:2867 backend/epson2.c:1032
+#: backend/epson.c:2865 backend/epson2.c:1029
 #, no-c-format
 msgid "Dropout"
 msgstr "Dropout"
 
-#: backend/epson.c:2868 backend/epson2.c:1033
+#: backend/epson.c:2866 backend/epson2.c:1030
 #, no-c-format
 msgid "Selects the dropout."
 msgstr "Избира dropout-а."
 
-#: backend/epson.c:2880 backend/epson2.c:1045
+#: backend/epson.c:2878 backend/epson2.c:1042
 #, no-c-format
 msgid "Selects the brightness."
 msgstr "Избира яркостта."
 
-#: backend/epson.c:2895 backend/epson2.c:1058
+#: backend/epson.c:2893 backend/epson2.c:1055
 #, no-c-format
 msgid "Sharpness"
 msgstr "Острота"
 
-#: backend/epson.c:3031 backend/epson2.c:1174 backend/epson2.c:1221
+#: backend/epson.c:3029 backend/epson2.c:1171 backend/epson2.c:1218
 #, no-c-format
 msgid "Color correction"
 msgstr "Цветова корекция."
 
-#: backend/epson.c:3034 backend/epson2.c:1176
+#: backend/epson.c:3032 backend/epson2.c:1173
 #, no-c-format
 msgid "Sets the color correction table for the selected output device."
 msgstr ""
 "Наглася таблицата за цветова корекция на избраното изходно устройство."
 
-#: backend/epson.c:3075
+#: backend/epson.c:3073
 #, no-c-format
 msgid "Color correction coefficients"
 msgstr "Коефициенти на цветова корекция"
 
-#: backend/epson.c:3076
+#: backend/epson.c:3074
 #, no-c-format
 msgid "Matrix multiplication of RGB"
 msgstr "Матрично умножаване на RGB"
 
-#: backend/epson.c:3093
+#: backend/epson.c:3091
 #, no-c-format
 msgid "Shift green to red"
 msgstr "Измести зелено към червено"
 
-#: backend/epson.c:3094
+#: backend/epson.c:3092
 #, no-c-format
 msgid "Shift green to blue"
 msgstr "Измести зелено към синьо"
 
-#: backend/epson.c:3095
+#: backend/epson.c:3093
 #, no-c-format
 msgid "Shift red to green"
 msgstr "Измести червено към зелено"
 
-#: backend/epson.c:3097
+#: backend/epson.c:3095
 #, no-c-format
 msgid "Shift red to blue"
 msgstr "Измести червено към синьо"
 
-#: backend/epson.c:3098
+#: backend/epson.c:3096
 #, no-c-format
 msgid "Shift blue to green"
 msgstr "Измести синьо към зелено"
 
-#: backend/epson.c:3099
+#: backend/epson.c:3097
 #, no-c-format
 msgid "Shift blue to red"
 msgstr "Измести синьо към червено"
 
-#: backend/epson.c:3102
+#: backend/epson.c:3100
 #, no-c-format
 msgid "Controls green level"
 msgstr "Наглася степента на зелено"
 
-#: backend/epson.c:3103
+#: backend/epson.c:3101
 #, no-c-format
 msgid "Adds to red based on green level"
 msgstr "Добавя към червеното според степента на зелено"
 
-#: backend/epson.c:3104
+#: backend/epson.c:3102
 #, no-c-format
 msgid "Adds to blue based on green level"
 msgstr "Добавя към синьото според степента на зелено"
 
-#: backend/epson.c:3105
+#: backend/epson.c:3103
 #, no-c-format
 msgid "Adds to green based on red level"
 msgstr "Добавя към зеленото според степента на червено"
 
-#: backend/epson.c:3106
+#: backend/epson.c:3104
 #, no-c-format
 msgid "Controls red level"
 msgstr "Наглася степента на червено"
 
-#: backend/epson.c:3107
+#: backend/epson.c:3105
 #, no-c-format
 msgid "Adds to blue based on red level"
 msgstr "Добавя към синьото според степента на червено"
 
-#: backend/epson.c:3108
+#: backend/epson.c:3106
 #, no-c-format
 msgid "Adds to green based on blue level"
 msgstr "Добавя към зеленото според степента на синьо"
 
-#: backend/epson.c:3109
+#: backend/epson.c:3107
 #, no-c-format
 msgid "Adds to red based on blue level"
 msgstr "Добавя към червеното според степента на синьо"
 
-#: backend/epson.c:3110
+#: backend/epson.c:3108
 #, no-c-format
 msgid "Controls blue level"
 msgstr "Наглася степента на синьо"
 
-#: backend/epson.c:3206 backend/epson2.c:1255
+#: backend/epson.c:3204 backend/epson2.c:1252
 #, no-c-format
 msgid "Mirror the image."
 msgstr "Направи огледален образ на изображението"
 
-#: backend/epson.c:3232 backend/mustek.c:4344
+#: backend/epson.c:3230 backend/mustek.c:4342
 #, no-c-format
 msgid "Fast preview"
 msgstr "Бързо превю"
 
-#: backend/epson.c:3245 backend/epson2.c:1265
+#: backend/epson.c:3243 backend/epson2.c:1262
 #, no-c-format
 msgid "Auto area segmentation"
 msgstr "Автоматична сегментация на площ"
 
-#: backend/epson.c:3258
+#: backend/epson.c:3256
 #, no-c-format
 msgid "Short resolution list"
 msgstr "Кратък списък резолюции"
 
-#: backend/epson.c:3260
+#: backend/epson.c:3258
 #, no-c-format
 msgid "Display short resolution list"
 msgstr "Покажи кратък списък с резолюции"
 
-#: backend/epson.c:3267
+#: backend/epson.c:3265
 #, no-c-format
 msgid "Zoom"
 msgstr "Увеличение"
 
-#: backend/epson.c:3269
+#: backend/epson.c:3267
 #, no-c-format
 msgid "Defines the zoom factor the scanner will use"
 msgstr "Определя фактора на увеличение за скенера"
 
-#: backend/epson.c:3349
+#: backend/epson.c:3347
 #, no-c-format
 msgid "Quick format"
 msgstr "Бързо форматиране"
 
-#: backend/epson.c:3360 backend/epson2.c:1340 backend/epsonds.c:728
+#: backend/epson.c:3358 backend/epson2.c:1370 backend/epsonds.c:733
 #, no-c-format
 msgid "Optional equipment"
 msgstr "Оборудване по избор"
 
-#: backend/epson.c:3431 backend/epson2.c:1393 backend/epsonds.c:744
+#: backend/epson.c:3429 backend/epson2.c:1407 backend/epsonds.c:749
 #, no-c-format
 msgid "Eject"
 msgstr "Извади"
 
-#: backend/epson.c:3432 backend/epson2.c:1394 backend/epsonds.c:745
+#: backend/epson.c:3430 backend/epson2.c:1408 backend/epsonds.c:750
 #, no-c-format
 msgid "Eject the sheet in the ADF"
 msgstr "Извади листа от ADF"
 
-#: backend/epson.c:3444 backend/epson2.c:1404
+#: backend/epson.c:3442 backend/epson2.c:1418
 #, no-c-format
 msgid "Auto eject"
 msgstr "Авто изваждане"
 
-#: backend/epson.c:3445 backend/epson2.c:1406
+#: backend/epson.c:3443 backend/epson2.c:1420
 #, no-c-format
 msgid "Eject document after scanning"
 msgstr "Извади документа след сканиране"
 
-#: backend/epson.c:3457 backend/epson2.c:1416 backend/epsonds.c:760
-#: backend/kodakaio.c:2855 backend/magicolor.c:2450
+#: backend/epson.c:3455 backend/epson2.c:1430 backend/epsonds.c:765
+#: backend/kodakaio.c:2859 backend/magicolor.c:2454
 #, no-c-format
 msgid "ADF Mode"
 msgstr ""
 
-#: backend/epson.c:3459 backend/epson2.c:1418 backend/epsonds.c:762
-#: backend/kodakaio.c:2857 backend/magicolor.c:2452
+#: backend/epson.c:3457 backend/epson2.c:1432 backend/epsonds.c:767
+#: backend/kodakaio.c:2861 backend/magicolor.c:2456
 #, no-c-format
 msgid "Selects the ADF mode (simplex/duplex)"
 msgstr ""
 
-#: backend/epson.c:3473 backend/epson2.c:1430
+#: backend/epson.c:3471 backend/epson2.c:1444
 #, fuzzy, no-c-format
 msgid "Bay"
 msgstr "Bay"
 
-#: backend/epson.c:3474 backend/epson2.c:1431
+#: backend/epson.c:3472 backend/epson2.c:1445
 #, fuzzy, no-c-format
 msgid "Select bay to scan"
 msgstr "Избор на bay за сканиране"
 
-#: backend/epson.h:69 backend/epson2.h:68
+#: backend/epson.h:67 backend/epson2.h:71
 #, no-c-format
 msgid ""
 "Selects the gamma correction value from a list of pre-defined devices or "
@@ -2075,24 +2096,24 @@ msgstr ""
 "или таблицата, определена от потребителя, която може да се свали на "
 "скенера."
 
-#: backend/epson.h:72 backend/epson2.h:71
+#: backend/epson.h:70 backend/epson2.h:74
 #, no-c-format
 msgid "Focus Position"
 msgstr "Позиция на фокуса"
 
-#: backend/epson.h:73 backend/epson2.h:72
+#: backend/epson.h:71 backend/epson2.h:75
 #, no-c-format
 msgid ""
 "Sets the focus position to either the glass or 2.5mm above the glass"
 msgstr ""
 "Наглася позицията на фокуса или върху стъклото, или 2,5 мм над него"
 
-#: backend/epson.h:75 backend/epson2.h:74
+#: backend/epson.h:73 backend/epson2.h:77
 #, no-c-format
 msgid "Wait for Button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/epson.h:76 backend/epson2.h:75
+#: backend/epson.h:74 backend/epson2.h:78
 #, no-c-format
 msgid ""
 "After sending the scan command, wait until the button on the scanner is "
@@ -2106,7 +2127,7 @@ msgstr ""
 msgid "TPU8x10"
 msgstr ""
 
-#: backend/epson2.c:102 backend/pixma/pixma.c:413
+#: backend/epson2.c:102 backend/pixma/pixma.c:414
 #, no-c-format
 msgid "Infrared"
 msgstr ""
@@ -2121,521 +2142,521 @@ msgstr "Позитивен екран"
 msgid "Negative Slide"
 msgstr "Негативен филм"
 
-#: backend/epson2.c:215
+#: backend/epson2.c:209
 #, no-c-format
 msgid "Built in CCT profile"
 msgstr ""
 
-#: backend/epson2.c:216
+#: backend/epson2.c:210
 #, fuzzy, no-c-format
 msgid "User defined CCT profile"
 msgstr "По потребителска дефиниция"
 
-#: backend/epsonds.c:752
+#: backend/epsonds.c:757
 #, no-c-format
 msgid "Load"
 msgstr ""
 
-#: backend/epsonds.c:753
+#: backend/epsonds.c:758
 #, fuzzy, no-c-format
 msgid "Load a sheet in the ADF"
 msgstr "Извади листа от ADF"
 
-#: backend/epsonds.c:773
+#: backend/epsonds.c:778
 #, fuzzy, no-c-format
 msgid "ADF Skew Correction"
 msgstr "Без корекция"
 
-#: backend/epsonds.c:775
+#: backend/epsonds.c:780
 #, fuzzy, no-c-format
 msgid "Enables ADF skew correction"
 msgstr "Корекция на аналоговата гама"
 
-#: backend/fujitsu.c:695 backend/hp-option.c:3330 backend/hp-option.c:3343
+#: backend/fujitsu.c:697 backend/hp-option.c:3325 backend/hp-option.c:3338
 #, no-c-format
 msgid "On"
 msgstr "Вкл."
 
-#: backend/fujitsu.c:696 backend/hp-option.c:3162 backend/hp-option.c:3329
-#: backend/hp-option.c:3342
+#: backend/fujitsu.c:698 backend/hp-option.c:3157 backend/hp-option.c:3324
+#: backend/hp-option.c:3337
 #, no-c-format
 msgid "Off"
 msgstr "Изкл."
 
-#: backend/fujitsu.c:698
+#: backend/fujitsu.c:700
 #, no-c-format
 msgid "DTC"
 msgstr ""
 
-#: backend/fujitsu.c:699
+#: backend/fujitsu.c:701
 #, no-c-format
 msgid "SDTC"
 msgstr ""
 
-#: backend/fujitsu.c:701 backend/teco1.c:1152 backend/teco1.c:1153
-#: backend/teco2.c:1967 backend/teco2.c:1968 backend/teco3.c:977
-#: backend/teco3.c:978
+#: backend/fujitsu.c:703 backend/teco1.c:1149 backend/teco1.c:1150
+#: backend/teco2.c:1964 backend/teco2.c:1965 backend/teco3.c:974
+#: backend/teco3.c:975
 #, no-c-format
 msgid "Dither"
 msgstr "Dither"
 
-#: backend/fujitsu.c:702
+#: backend/fujitsu.c:704
 #, fuzzy, no-c-format
 msgid "Diffusion"
 msgstr "Разсейка на грешките"
 
-#: backend/fujitsu.c:707
+#: backend/fujitsu.c:709
 #, fuzzy, no-c-format
 msgid "White"
 msgstr "Степен на бялото"
 
-#: backend/fujitsu.c:708
+#: backend/fujitsu.c:710
 #, fuzzy, no-c-format
 msgid "Black"
 msgstr "Степен на черното"
 
-#: backend/fujitsu.c:713
+#: backend/fujitsu.c:715
 #, fuzzy, no-c-format
 msgid "Continue"
 msgstr "Кондиционално"
 
-#: backend/fujitsu.c:714
+#: backend/fujitsu.c:716
 #, no-c-format
 msgid "Stop"
 msgstr ""
 
-#: backend/fujitsu.c:716
+#: backend/fujitsu.c:718
 #, no-c-format
 msgid "10mm"
 msgstr ""
 
-#: backend/fujitsu.c:717
+#: backend/fujitsu.c:719
 #, no-c-format
 msgid "15mm"
 msgstr ""
 
-#: backend/fujitsu.c:718
+#: backend/fujitsu.c:720
 #, no-c-format
 msgid "20mm"
 msgstr ""
 
-#: backend/fujitsu.c:720 backend/hp-option.c:3048
+#: backend/fujitsu.c:722 backend/hp-option.c:3043
 #, no-c-format
 msgid "Horizontal"
 msgstr "Хоризонтално"
 
-#: backend/fujitsu.c:721
+#: backend/fujitsu.c:723
 #, fuzzy, no-c-format
 msgid "Horizontal bold"
 msgstr "Хоризонтално"
 
-#: backend/fujitsu.c:722
+#: backend/fujitsu.c:724
 #, fuzzy, no-c-format
 msgid "Horizontal narrow"
 msgstr "Хоризонтално"
 
-#: backend/fujitsu.c:723 backend/hp-option.c:3047
+#: backend/fujitsu.c:725 backend/hp-option.c:3042
 #, no-c-format
 msgid "Vertical"
 msgstr "8x8 вертикална черта"
 
-#: backend/fujitsu.c:724
+#: backend/fujitsu.c:726
 #, fuzzy, no-c-format
 msgid "Vertical bold"
 msgstr "8x8 вертикална черта"
 
-#: backend/fujitsu.c:726
+#: backend/fujitsu.c:728
 #, no-c-format
 msgid "Top to bottom"
 msgstr ""
 
-#: backend/fujitsu.c:727
+#: backend/fujitsu.c:729
 #, no-c-format
 msgid "Bottom to top"
 msgstr ""
 
-#: backend/fujitsu.c:729
+#: backend/fujitsu.c:731
 #, fuzzy, no-c-format
 msgid "Front"
 msgstr "Печат"
 
-#: backend/fujitsu.c:730
+#: backend/fujitsu.c:732
 #, no-c-format
 msgid "Back"
 msgstr ""
 
-#: backend/fujitsu.c:3173 backend/pixma/pixma_sane_options.c:146
+#: backend/fujitsu.c:3171 backend/pixma/pixma_sane_options.c:146
 #, no-c-format
 msgid "Gamma function exponent"
 msgstr ""
 
-#: backend/fujitsu.c:3174 backend/pixma/pixma_sane_options.c:147
+#: backend/fujitsu.c:3172 backend/pixma/pixma_sane_options.c:147
 #, no-c-format
 msgid "Changes intensity of midtones"
 msgstr ""
 
-#: backend/fujitsu.c:3223
+#: backend/fujitsu.c:3221
 #, no-c-format
 msgid "RIF"
 msgstr ""
 
-#: backend/fujitsu.c:3224
+#: backend/fujitsu.c:3222
 #, no-c-format
 msgid "Reverse image format"
 msgstr ""
 
-#: backend/fujitsu.c:3241
+#: backend/fujitsu.c:3239
 #, fuzzy, no-c-format
 msgid "Halftone type"
 msgstr "Полутон"
 
-#: backend/fujitsu.c:3242
+#: backend/fujitsu.c:3240
 #, no-c-format
 msgid "Control type of halftone filter"
 msgstr ""
 
-#: backend/fujitsu.c:3263
+#: backend/fujitsu.c:3261
 #, no-c-format
 msgid "Control pattern of halftone filter"
 msgstr ""
 
-#: backend/fujitsu.c:3285
+#: backend/fujitsu.c:3283
 #, no-c-format
 msgid "Outline"
 msgstr ""
 
-#: backend/fujitsu.c:3286
+#: backend/fujitsu.c:3284
 #, fuzzy, no-c-format
 msgid "Perform outline extraction"
 msgstr "Груба калибрация"
 
-#: backend/fujitsu.c:3297
+#: backend/fujitsu.c:3295
 #, fuzzy, no-c-format
 msgid "Emphasis"
 msgstr "Подчертаване на образа"
 
-#: backend/fujitsu.c:3298
+#: backend/fujitsu.c:3296
 #, no-c-format
 msgid "Negative to smooth or positive to sharpen image"
 msgstr ""
 
-#: backend/fujitsu.c:3316
+#: backend/fujitsu.c:3314
 #, fuzzy, no-c-format
 msgid "Separation"
 msgstr "Наситеност"
 
-#: backend/fujitsu.c:3317
+#: backend/fujitsu.c:3315
 #, fuzzy, no-c-format
 msgid "Enable automatic separation of image and text"
 msgstr "Позволява автоматично определяне на прага за lineart сканиране."
 
-#: backend/fujitsu.c:3328
+#: backend/fujitsu.c:3326
 #, fuzzy, no-c-format
 msgid "Mirroring"
 msgstr "Огледален образ"
 
-#: backend/fujitsu.c:3329
+#: backend/fujitsu.c:3327
 #, fuzzy, no-c-format
 msgid "Reflect output image horizontally"
 msgstr "Прави хоризонтален огледален образ."
 
-#: backend/fujitsu.c:3346
+#: backend/fujitsu.c:3344
 #, fuzzy, no-c-format
 msgid "White level follower"
 msgstr "Степен на бялото - синьо"
 
-#: backend/fujitsu.c:3347
+#: backend/fujitsu.c:3345
 #, fuzzy, no-c-format
 msgid "Control white level follower"
 msgstr "Наглася степента на червено"
 
-#: backend/fujitsu.c:3365
+#: backend/fujitsu.c:3363
 #, fuzzy, no-c-format
 msgid "BP filter"
 msgstr "Цветно Lineart"
 
-#: backend/fujitsu.c:3366
+#: backend/fujitsu.c:3364
 #, no-c-format
 msgid "Improves quality of high resolution ball-point pen text"
 msgstr ""
 
-#: backend/fujitsu.c:3382 backend/hp-option.h:73
+#: backend/fujitsu.c:3380 backend/hp-option.h:68
 #, no-c-format
 msgid "Smoothing"
 msgstr "Изглаждане"
 
-#: backend/fujitsu.c:3383
+#: backend/fujitsu.c:3381
 #, no-c-format
 msgid "Enable smoothing for improved OCR"
 msgstr ""
 
-#: backend/fujitsu.c:3399
+#: backend/fujitsu.c:3397
 #, fuzzy, no-c-format
 msgid "Gamma curve"
 msgstr "Стойност на гамата"
 
-#: backend/fujitsu.c:3400
+#: backend/fujitsu.c:3398
 #, no-c-format
 msgid "Gamma curve, from light to dark, but upper two may not work"
 msgstr ""
 
-#: backend/fujitsu.c:3422 backend/pixma/pixma_sane_options.c:378
+#: backend/fujitsu.c:3420 backend/pixma/pixma_sane_options.c:378
 #, fuzzy, no-c-format
 msgid "Threshold curve"
 msgstr "Праг"
 
-#: backend/fujitsu.c:3423
+#: backend/fujitsu.c:3421
 #, no-c-format
 msgid ""
 "Threshold curve, from light to dark, but upper two may not be linear"
 msgstr ""
 
-#: backend/fujitsu.c:3445
+#: backend/fujitsu.c:3443
 #, fuzzy, no-c-format
 msgid "Threshold white"
 msgstr "Праг"
 
-#: backend/fujitsu.c:3446
+#: backend/fujitsu.c:3444
 #, no-c-format
 msgid "Set pixels equal to threshold to white instead of black"
 msgstr ""
 
-#: backend/fujitsu.c:3462 backend/fujitsu.c:3463
+#: backend/fujitsu.c:3460 backend/fujitsu.c:3461
 #, fuzzy, no-c-format
 msgid "Noise removal"
 msgstr "Редуциране на шума"
 
-#: backend/fujitsu.c:3479
+#: backend/fujitsu.c:3477
 #, no-c-format
 msgid "Matrix 5x5"
 msgstr ""
 
-#: backend/fujitsu.c:3480
+#: backend/fujitsu.c:3478
 #, no-c-format
 msgid "Remove 5 pixel square noise"
 msgstr ""
 
-#: backend/fujitsu.c:3496
+#: backend/fujitsu.c:3494
 #, no-c-format
 msgid "Matrix 4x4"
 msgstr ""
 
-#: backend/fujitsu.c:3497
+#: backend/fujitsu.c:3495
 #, no-c-format
 msgid "Remove 4 pixel square noise"
 msgstr ""
 
-#: backend/fujitsu.c:3513
+#: backend/fujitsu.c:3511
 #, no-c-format
 msgid "Matrix 3x3"
 msgstr ""
 
-#: backend/fujitsu.c:3514
+#: backend/fujitsu.c:3512
 #, no-c-format
 msgid "Remove 3 pixel square noise"
 msgstr ""
 
-#: backend/fujitsu.c:3530
+#: backend/fujitsu.c:3528
 #, no-c-format
 msgid "Matrix 2x2"
 msgstr ""
 
-#: backend/fujitsu.c:3531
+#: backend/fujitsu.c:3529
 #, no-c-format
 msgid "Remove 2 pixel square noise"
 msgstr ""
 
-#: backend/fujitsu.c:3550
+#: backend/fujitsu.c:3548
 #, no-c-format
 msgid "Variance"
 msgstr ""
 
-#: backend/fujitsu.c:3551
+#: backend/fujitsu.c:3549
 #, no-c-format
 msgid "Set SDTC variance rate (sensitivity), 0 equals 127"
 msgstr ""
 
-#: backend/fujitsu.c:3584
+#: backend/fujitsu.c:3582
 #, fuzzy, no-c-format
 msgid "Auto width detection"
 msgstr "Без корекция"
 
-#: backend/fujitsu.c:3585
+#: backend/fujitsu.c:3583
 #, no-c-format
 msgid "Scanner detects paper sides. May reduce scanning speed."
 msgstr ""
 
-#: backend/fujitsu.c:3602
+#: backend/fujitsu.c:3600
 #, fuzzy, no-c-format
 msgid "Auto length detection"
 msgstr "Без корекция"
 
-#: backend/fujitsu.c:3603
+#: backend/fujitsu.c:3601
 #, no-c-format
 msgid "Scanner detects paper lower edge. May confuse some frontends."
 msgstr ""
 
-#: backend/fujitsu.c:3629
+#: backend/fujitsu.c:3627
 #, no-c-format
 msgid "Compression"
 msgstr ""
 
-#: backend/fujitsu.c:3630
+#: backend/fujitsu.c:3628
 #, no-c-format
 msgid "Enable compressed data. May crash your front-end program"
 msgstr ""
 
-#: backend/fujitsu.c:3650
+#: backend/fujitsu.c:3648
 #, no-c-format
 msgid "Compression argument"
 msgstr ""
 
-#: backend/fujitsu.c:3651
+#: backend/fujitsu.c:3649
 #, no-c-format
 msgid ""
 "Level of JPEG compression. 1 is small file, 7 is large file. 0 (default) "
 "is same as 4"
 msgstr ""
 
-#: backend/fujitsu.c:3681
+#: backend/fujitsu.c:3679
 #, no-c-format
 msgid "DF action"
 msgstr ""
 
-#: backend/fujitsu.c:3682
+#: backend/fujitsu.c:3680
 #, no-c-format
 msgid "Action following double feed error"
 msgstr ""
 
-#: backend/fujitsu.c:3698
+#: backend/fujitsu.c:3696
 #, no-c-format
 msgid "DF skew"
 msgstr ""
 
-#: backend/fujitsu.c:3699
+#: backend/fujitsu.c:3697
 #, no-c-format
 msgid "Enable double feed error due to skew"
 msgstr ""
 
-#: backend/fujitsu.c:3717
+#: backend/fujitsu.c:3715
 #, no-c-format
 msgid "DF thickness"
 msgstr ""
 
-#: backend/fujitsu.c:3718
+#: backend/fujitsu.c:3716
 #, no-c-format
 msgid "Enable double feed error due to paper thickness"
 msgstr ""
 
-#: backend/fujitsu.c:3736
+#: backend/fujitsu.c:3734
 #, no-c-format
 msgid "DF length"
 msgstr ""
 
-#: backend/fujitsu.c:3737
+#: backend/fujitsu.c:3735
 #, no-c-format
 msgid "Enable double feed error due to paper length"
 msgstr ""
 
-#: backend/fujitsu.c:3760
+#: backend/fujitsu.c:3758
 #, no-c-format
 msgid "DF length difference"
 msgstr ""
 
-#: backend/fujitsu.c:3761
+#: backend/fujitsu.c:3759
 #, no-c-format
 msgid "Difference in page length to trigger double feed error"
 msgstr ""
 
-#: backend/fujitsu.c:3784
+#: backend/fujitsu.c:3782
 #, fuzzy, no-c-format
 msgid "DF recovery mode"
 msgstr "Режим на захранване"
 
-#: backend/fujitsu.c:3785
+#: backend/fujitsu.c:3783
 #, no-c-format
 msgid "Request scanner to reverse feed on paper jam"
 msgstr ""
 
-#: backend/fujitsu.c:3804
+#: backend/fujitsu.c:3802
 #, no-c-format
 msgid "Paper protection"
 msgstr ""
 
-#: backend/fujitsu.c:3805
+#: backend/fujitsu.c:3803
 #, no-c-format
 msgid "Request scanner to predict jams in the ADF"
 msgstr ""
 
-#: backend/fujitsu.c:3824
+#: backend/fujitsu.c:3822
 #, fuzzy, no-c-format
 msgid "Advanced paper protection"
 msgstr "Обнови опциите"
 
-#: backend/fujitsu.c:3825
+#: backend/fujitsu.c:3823
 #, no-c-format
 msgid "Request scanner to predict jams in the ADF using improved sensors"
 msgstr ""
 
-#: backend/fujitsu.c:3844
+#: backend/fujitsu.c:3842
 #, fuzzy, no-c-format
 msgid "Staple detection"
 msgstr "Без корекция"
 
-#: backend/fujitsu.c:3845
+#: backend/fujitsu.c:3843
 #, no-c-format
 msgid "Request scanner to detect jams in the ADF caused by staples"
 msgstr ""
 
-#: backend/fujitsu.c:3864
+#: backend/fujitsu.c:3862
 #, no-c-format
 msgid "Background color"
 msgstr ""
 
-#: backend/fujitsu.c:3865
+#: backend/fujitsu.c:3863
 #, no-c-format
 msgid ""
 "Set color of background for scans. May conflict with overscan option"
 msgstr ""
 
-#: backend/fujitsu.c:3885
+#: backend/fujitsu.c:3883
 #, fuzzy, no-c-format
 msgid "Dropout color"
 msgstr "Dropout"
 
-#: backend/fujitsu.c:3886
+#: backend/fujitsu.c:3884
 #, no-c-format
 msgid ""
 "One-pass scanners use only one color during gray or binary scanning, "
 "useful for colored paper or ink"
 msgstr ""
 
-#: backend/fujitsu.c:3909
+#: backend/fujitsu.c:3907
 #, fuzzy, no-c-format
 msgid "Buffer mode"
 msgstr "Режим на захранване"
 
-#: backend/fujitsu.c:3910
+#: backend/fujitsu.c:3908
 #, no-c-format
 msgid "Request scanner to read pages quickly from ADF into internal memory"
 msgstr ""
 
-#: backend/fujitsu.c:3929
+#: backend/fujitsu.c:3927
 #, no-c-format
 msgid "Prepick"
 msgstr ""
 
-#: backend/fujitsu.c:3930
+#: backend/fujitsu.c:3928
 #, no-c-format
 msgid "Request scanner to grab next page from ADF"
 msgstr ""
 
-#: backend/fujitsu.c:3949
+#: backend/fujitsu.c:3947
 #, no-c-format
 msgid "Overscan"
 msgstr ""
 
-#: backend/fujitsu.c:3950
+#: backend/fujitsu.c:3948
 #, no-c-format
 msgid ""
 "Collect a few mm of background on top side of scan, before paper enters "
@@ -2643,65 +2664,65 @@ msgid ""
 "collection on remaining sides. May conflict with bgcolor option"
 msgstr ""
 
-#: backend/fujitsu.c:3968
+#: backend/fujitsu.c:3966
 #, no-c-format
 msgid "Sleep timer"
 msgstr ""
 
-#: backend/fujitsu.c:3969
+#: backend/fujitsu.c:3967
 #, no-c-format
 msgid ""
 "Time in minutes until the internal power supply switches to sleep mode"
 msgstr ""
 
-#: backend/fujitsu.c:3987
+#: backend/fujitsu.c:3985
 #, fuzzy, no-c-format
 msgid "Off timer"
 msgstr "Изкл. лампа"
 
-#: backend/fujitsu.c:3988
+#: backend/fujitsu.c:3986
 #, no-c-format
 msgid ""
 "Time in minutes until the internal power supply switches the scanner "
 "off. Will be rounded to nearest 15 minutes. Zero means never power off."
 msgstr ""
 
-#: backend/fujitsu.c:4006
+#: backend/fujitsu.c:4004
 #, fuzzy, no-c-format
 msgid "Duplex offset"
 msgstr "Офсет - синьо"
 
-#: backend/fujitsu.c:4007
+#: backend/fujitsu.c:4005
 #, no-c-format
 msgid "Adjust front/back offset"
 msgstr ""
 
-#: backend/fujitsu.c:4024 backend/plustek.c:1025 backend/umax_pp.c:794
+#: backend/fujitsu.c:4022 backend/plustek.c:1023 backend/umax_pp.c:793
 #, no-c-format
 msgid "Green offset"
 msgstr "Офсет - зелено"
 
-#: backend/fujitsu.c:4025
+#: backend/fujitsu.c:4023
 #, fuzzy, no-c-format
 msgid "Adjust green/red offset"
 msgstr "Офсет - зелено"
 
-#: backend/fujitsu.c:4042 backend/plustek.c:1041 backend/umax_pp.c:806
+#: backend/fujitsu.c:4040 backend/plustek.c:1039 backend/umax_pp.c:805
 #, no-c-format
 msgid "Blue offset"
 msgstr "Офсет - синьо"
 
-#: backend/fujitsu.c:4043
+#: backend/fujitsu.c:4041
 #, fuzzy, no-c-format
 msgid "Adjust blue/red offset"
 msgstr "Наглася офсета на синия канал"
 
-#: backend/fujitsu.c:4056
+#: backend/fujitsu.c:4054
 #, no-c-format
 msgid "Low Memory"
 msgstr ""
 
-#: backend/fujitsu.c:4057
+#: backend/fujitsu.c:4055
 #, no-c-format
 msgid ""
 "Limit driver memory usage for use in embedded systems. Causes some "
@@ -2710,509 +2731,509 @@ msgid ""
 "only be used with custom front-end software."
 msgstr ""
 
-#: backend/fujitsu.c:4072
+#: backend/fujitsu.c:4070
 #, fuzzy, no-c-format
 msgid "Duplex side"
 msgstr "Дуплексно"
 
-#: backend/fujitsu.c:4073
+#: backend/fujitsu.c:4071
 #, no-c-format
 msgid ""
 "Tells which side (0=front, 1=back) of a duplex scan the next call to "
 "sane_read will return."
 msgstr ""
 
-#: backend/fujitsu.c:4084
+#: backend/fujitsu.c:4082
 #, no-c-format
 msgid "Hardware deskew and crop"
 msgstr ""
 
-#: backend/fujitsu.c:4085
+#: backend/fujitsu.c:4083
 #, no-c-format
 msgid "Request scanner to rotate and crop pages digitally."
 msgstr ""
 
-#: backend/fujitsu.c:4096 backend/kvs1025_opt.c:871
+#: backend/fujitsu.c:4094 backend/kvs1025_opt.c:871
 #, no-c-format
 msgid "Software deskew"
 msgstr ""
 
-#: backend/fujitsu.c:4097
+#: backend/fujitsu.c:4095
 #, no-c-format
 msgid "Request driver to rotate skewed pages digitally."
 msgstr ""
 
-#: backend/fujitsu.c:4109 backend/kvs1025_opt.c:880
+#: backend/fujitsu.c:4107 backend/kvs1025_opt.c:880
 #, no-c-format
 msgid "Software despeckle diameter"
 msgstr ""
 
-#: backend/fujitsu.c:4110
+#: backend/fujitsu.c:4108
 #, no-c-format
 msgid "Maximum diameter of lone dots to remove from scan."
 msgstr ""
 
-#: backend/fujitsu.c:4129
+#: backend/fujitsu.c:4127
 #, no-c-format
 msgid "Software crop"
 msgstr ""
 
-#: backend/fujitsu.c:4130
+#: backend/fujitsu.c:4128
 #, no-c-format
 msgid "Request driver to remove border from pages digitally."
 msgstr ""
 
-#: backend/fujitsu.c:4159
+#: backend/fujitsu.c:4157
 #, no-c-format
 msgid "Halt on Cancel"
 msgstr ""
 
-#: backend/fujitsu.c:4160
+#: backend/fujitsu.c:4158
 #, no-c-format
 msgid ""
 "Request driver to halt the paper feed instead of eject during a cancel."
 msgstr ""
 
-#: backend/fujitsu.c:4171
+#: backend/fujitsu.c:4169
 #, fuzzy, no-c-format
 msgid "Endorser Options"
 msgstr "Обнови опциите"
 
-#: backend/fujitsu.c:4172
+#: backend/fujitsu.c:4170
 #, no-c-format
 msgid "Controls for endorser unit"
 msgstr ""
 
-#: backend/fujitsu.c:4183
+#: backend/fujitsu.c:4181
 #, no-c-format
 msgid "Endorser"
 msgstr ""
 
-#: backend/fujitsu.c:4184
+#: backend/fujitsu.c:4182
 #, no-c-format
 msgid "Enable endorser unit"
 msgstr ""
 
-#: backend/fujitsu.c:4199
+#: backend/fujitsu.c:4197
 #, no-c-format
 msgid "Endorser bits"
 msgstr ""
 
-#: backend/fujitsu.c:4200
+#: backend/fujitsu.c:4198
 #, no-c-format
 msgid "Determines maximum endorser counter value."
 msgstr ""
 
-#: backend/fujitsu.c:4225
+#: backend/fujitsu.c:4223
 #, no-c-format
 msgid "Endorser value"
 msgstr ""
 
-#: backend/fujitsu.c:4226
+#: backend/fujitsu.c:4224
 #, no-c-format
 msgid "Initial endorser counter value."
 msgstr ""
 
-#: backend/fujitsu.c:4249
+#: backend/fujitsu.c:4247
 #, no-c-format
 msgid "Endorser step"
 msgstr ""
 
-#: backend/fujitsu.c:4250
+#: backend/fujitsu.c:4248
 #, no-c-format
 msgid "Change endorser counter value by this much for each page."
 msgstr ""
 
-#: backend/fujitsu.c:4273
+#: backend/fujitsu.c:4271
 #, no-c-format
 msgid "Endorser Y"
 msgstr ""
 
-#: backend/fujitsu.c:4274
+#: backend/fujitsu.c:4272
 #, no-c-format
 msgid "Endorser print offset from top of paper."
 msgstr ""
 
-#: backend/fujitsu.c:4299
+#: backend/fujitsu.c:4297
 #, no-c-format
 msgid "Endorser font"
 msgstr ""
 
-#: backend/fujitsu.c:4300
+#: backend/fujitsu.c:4298
 #, no-c-format
 msgid "Endorser printing font."
 msgstr ""
 
-#: backend/fujitsu.c:4329
+#: backend/fujitsu.c:4327
 #, fuzzy, no-c-format
 msgid "Endorser direction"
 msgstr "Редуциране на шума"
 
-#: backend/fujitsu.c:4330
+#: backend/fujitsu.c:4328
 #, no-c-format
 msgid "Endorser printing direction."
 msgstr ""
 
-#: backend/fujitsu.c:4354
+#: backend/fujitsu.c:4352
 #, no-c-format
 msgid "Endorser side"
 msgstr ""
 
-#: backend/fujitsu.c:4355
+#: backend/fujitsu.c:4353
 #, no-c-format
 msgid "Endorser printing side, requires hardware support to change"
 msgstr ""
 
-#: backend/fujitsu.c:4380
+#: backend/fujitsu.c:4378
 #, no-c-format
 msgid "Endorser string"
 msgstr ""
 
-#: backend/fujitsu.c:4381
+#: backend/fujitsu.c:4379
 #, no-c-format
 msgid ""
 "Endorser alphanumeric print format. %05ud or %08ud at the end will be "
 "replaced by counter value."
 msgstr ""
 
-#: backend/fujitsu.c:4408
+#: backend/fujitsu.c:4406
 #, no-c-format
 msgid "Top edge"
 msgstr ""
 
-#: backend/fujitsu.c:4409
+#: backend/fujitsu.c:4407
 #, no-c-format
 msgid "Paper is pulled partly into ADF"
 msgstr ""
 
-#: backend/fujitsu.c:4420
+#: backend/fujitsu.c:4418
 #, fuzzy, no-c-format
 msgid "A3 paper"
 msgstr "От хартия"
 
-#: backend/fujitsu.c:4421
+#: backend/fujitsu.c:4419
 #, no-c-format
 msgid "A3 paper detected"
 msgstr ""
 
-#: backend/fujitsu.c:4432
+#: backend/fujitsu.c:4430
 #, fuzzy, no-c-format
 msgid "B4 paper"
 msgstr "От хартия"
 
-#: backend/fujitsu.c:4433
+#: backend/fujitsu.c:4431
 #, no-c-format
 msgid "B4 paper detected"
 msgstr ""
 
-#: backend/fujitsu.c:4444
+#: backend/fujitsu.c:4442
 #, fuzzy, no-c-format
 msgid "A4 paper"
 msgstr "От хартия"
 
-#: backend/fujitsu.c:4445
+#: backend/fujitsu.c:4443
 #, no-c-format
 msgid "A4 paper detected"
 msgstr ""
 
-#: backend/fujitsu.c:4456
+#: backend/fujitsu.c:4454
 #, fuzzy, no-c-format
 msgid "B5 paper"
 msgstr "От хартия"
 
-#: backend/fujitsu.c:4457
+#: backend/fujitsu.c:4455
 #, no-c-format
 msgid "B5 paper detected"
 msgstr ""
 
-#: backend/fujitsu.c:4480
+#: backend/fujitsu.c:4478
 #, no-c-format
 msgid "OMR or DF"
 msgstr ""
 
-#: backend/fujitsu.c:4481
+#: backend/fujitsu.c:4479
 #, no-c-format
 msgid "OMR or double feed detected"
 msgstr ""
 
-#: backend/fujitsu.c:4504
+#: backend/fujitsu.c:4502
 #, fuzzy, no-c-format
 msgid "Card loaded"
 msgstr "Дуплексно"
 
-#: backend/fujitsu.c:4505
+#: backend/fujitsu.c:4503
 #, no-c-format
 msgid "Card slot contains paper"
 msgstr ""
 
-#: backend/fujitsu.c:4516
+#: backend/fujitsu.c:4514
 #, no-c-format
 msgid "Power saving"
 msgstr ""
 
-#: backend/fujitsu.c:4517
+#: backend/fujitsu.c:4515
 #, no-c-format
 msgid "Scanner in power saving mode"
 msgstr ""
 
-#: backend/fujitsu.c:4540
+#: backend/fujitsu.c:4538
 #, fuzzy, no-c-format
 msgid "Manual feed"
 msgstr "Ръчен предв. фокус"
 
-#: backend/fujitsu.c:4541
+#: backend/fujitsu.c:4539
 #, fuzzy, no-c-format
 msgid "Manual feed selected"
 msgstr "Ръчен предв. фокус"
 
-#: backend/fujitsu.c:4564
+#: backend/fujitsu.c:4562
 #, no-c-format
 msgid "Function"
 msgstr ""
 
-#: backend/fujitsu.c:4565
+#: backend/fujitsu.c:4563
 #, no-c-format
 msgid "Function character on screen"
 msgstr ""
 
-#: backend/fujitsu.c:4576
+#: backend/fujitsu.c:4574
 #, no-c-format
 msgid "Ink low"
 msgstr ""
 
-#: backend/fujitsu.c:4577
+#: backend/fujitsu.c:4575
 #, no-c-format
 msgid "Imprinter ink running low"
 msgstr ""
 
-#: backend/fujitsu.c:4588
+#: backend/fujitsu.c:4586
 #, no-c-format
 msgid "Double feed"
 msgstr ""
 
-#: backend/fujitsu.c:4589
+#: backend/fujitsu.c:4587
 #, no-c-format
 msgid "Double feed detected"
 msgstr ""
 
-#: backend/fujitsu.c:4600
+#: backend/fujitsu.c:4598
 #, no-c-format
 msgid "Error code"
 msgstr ""
 
-#: backend/fujitsu.c:4601
+#: backend/fujitsu.c:4599
 #, fuzzy, no-c-format
 msgid "Hardware error code"
 msgstr "Резолюция на сканиране"
 
-#: backend/fujitsu.c:4612
+#: backend/fujitsu.c:4610
 #, no-c-format
 msgid "Skew angle"
 msgstr ""
 
-#: backend/fujitsu.c:4613
+#: backend/fujitsu.c:4611
 #, no-c-format
 msgid "Requires black background for scanning"
 msgstr ""
 
-#: backend/fujitsu.c:4624
+#: backend/fujitsu.c:4622
 #, no-c-format
 msgid "Ink remaining"
 msgstr ""
 
-#: backend/fujitsu.c:4625
+#: backend/fujitsu.c:4623
 #, fuzzy, no-c-format
 msgid "Imprinter ink level"
 msgstr "Степен на бялото"
 
-#: backend/fujitsu.c:4636
+#: backend/fujitsu.c:4634
 #, fuzzy, no-c-format
 msgid "Density"
 msgstr "Интензитет - червено"
 
-#: backend/fujitsu.c:4637
+#: backend/fujitsu.c:4635
 #, no-c-format
 msgid "Density dial"
 msgstr ""
 
-#: backend/fujitsu.c:4648 backend/fujitsu.c:4649
+#: backend/fujitsu.c:4646 backend/fujitsu.c:4647
 #, fuzzy, no-c-format
 msgid "Duplex switch"
 msgstr "Дуплексно"
 
-#: backend/genesys/genesys.cpp:4823 backend/pixma/pixma_sane_options.c:357
+#: backend/genesys/genesys.cpp:4821 backend/pixma/pixma_sane_options.c:357
 #, fuzzy, no-c-format
 msgid "Extras"
 msgstr "Екстра бързо"
 
-#: backend/genesys/genesys.cpp:4832
+#: backend/genesys/genesys.cpp:4830
 #, fuzzy, no-c-format
 msgid "Color filter"
 msgstr "Цветно Lineart"
 
-#: backend/genesys/genesys.cpp:4835
+#: backend/genesys/genesys.cpp:4833
 #, no-c-format
 msgid "When using gray or lineart this option selects the used color."
 msgstr ""
 
-#: backend/genesys/genesys.cpp:4859
+#: backend/genesys/genesys.cpp:4857
 #, fuzzy, no-c-format
 msgid "Calibration file"
 msgstr "Калибрация"
 
-#: backend/genesys/genesys.cpp:4860
+#: backend/genesys/genesys.cpp:4858
 #, fuzzy, no-c-format
 msgid "Specify the calibration file to use"
 msgstr "Дефинирай режима на калибрация"
 
-#: backend/genesys/genesys.cpp:4877
+#: backend/genesys/genesys.cpp:4875
 #, fuzzy, no-c-format
 msgid "Calibration cache expiration time"
 msgstr "Режим калибрация"
 
-#: backend/genesys/genesys.cpp:4878
+#: backend/genesys/genesys.cpp:4876
 #, no-c-format
 msgid ""
 "Time (in minutes) before a cached calibration expires. A value of 0 "
 "means cache is not used. A negative value means cache never expires."
 msgstr ""
 
-#: backend/genesys/genesys.cpp:4888
+#: backend/genesys/genesys.cpp:4886
 #, fuzzy, no-c-format
 msgid "Lamp off time"
 msgstr "Изкл. лампа"
 
-#: backend/genesys/genesys.cpp:4891
+#: backend/genesys/genesys.cpp:4889
 #, no-c-format
 msgid ""
 "The lamp will be turned off after the given time (in minutes). A value "
 "of 0 means, that the lamp won't be turned off."
 msgstr ""
 
-#: backend/genesys/genesys.cpp:4901
+#: backend/genesys/genesys.cpp:4899
 #, fuzzy, no-c-format
 msgid "Lamp off during scan"
 msgstr "Груба калибрация"
 
-#: backend/genesys/genesys.cpp:4902
+#: backend/genesys/genesys.cpp:4900
 #, no-c-format
 msgid "The lamp will be turned off during scan. "
 msgstr ""
 
-#: backend/genesys/genesys.cpp:4929 backend/genesys/genesys.cpp:4930
+#: backend/genesys/genesys.cpp:4927 backend/genesys/genesys.cpp:4928
 #, fuzzy, no-c-format
 msgid "File button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/genesys/genesys.cpp:4974 backend/genesys/genesys.cpp:4975
+#: backend/genesys/genesys.cpp:4972 backend/genesys/genesys.cpp:4973
 #, no-c-format
 msgid "OCR button"
 msgstr ""
 
-#: backend/genesys/genesys.cpp:4986 backend/genesys/genesys.cpp:4987
+#: backend/genesys/genesys.cpp:4984 backend/genesys/genesys.cpp:4985
 #, fuzzy, no-c-format
 msgid "Power button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/genesys/genesys.cpp:4998 backend/genesys/genesys.cpp:4999
+#: backend/genesys/genesys.cpp:4996 backend/genesys/genesys.cpp:4997
 #, fuzzy, no-c-format
 msgid "Extra button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/genesys/genesys.cpp:5010 backend/gt68xx.c:755
+#: backend/genesys/genesys.cpp:5008 backend/gt68xx.c:753
 #, fuzzy, no-c-format
 msgid "Needs calibration"
 msgstr "Груба калибрация"
 
-#: backend/genesys/genesys.cpp:5011 backend/gt68xx.c:756 backend/p5.c:1928
+#: backend/genesys/genesys.cpp:5009 backend/gt68xx.c:754 backend/p5.c:1928
 #, fuzzy, no-c-format
 msgid "The scanner needs calibration for the current settings"
 msgstr "Задължителна калибрация преди сканиране"
 
-#: backend/genesys/genesys.cpp:5022 backend/gt68xx.c:780
-#: backend/gt68xx.c:781 backend/p5.c:1937 backend/p5.c:1938
-#: backend/pixma/pixma_sane_options.c:227 backend/plustek.c:1080
+#: backend/genesys/genesys.cpp:5020 backend/gt68xx.c:778
+#: backend/gt68xx.c:779 backend/p5.c:1937 backend/p5.c:1938
+#: backend/pixma/pixma_sane_options.c:227 backend/plustek.c:1078
 #, no-c-format
 msgid "Buttons"
 msgstr ""
 
-#: backend/genesys/genesys.cpp:5031 backend/gt68xx.c:787
-#: backend/hp-option.h:97 backend/hp5400_sane.c:536 backend/niash.c:726
-#: backend/p5.c:1945 backend/plustek.c:941
+#: backend/genesys/genesys.cpp:5029 backend/gt68xx.c:785
+#: backend/hp-option.h:92 backend/hp5400_sane.c:535 backend/niash.c:723
+#: backend/p5.c:1945 backend/plustek.c:939
 #, no-c-format
 msgid "Calibrate"
 msgstr "Калибриране"
 
-#: backend/genesys/genesys.cpp:5033 backend/gt68xx.c:789 backend/p5.c:1947
+#: backend/genesys/genesys.cpp:5031 backend/gt68xx.c:787 backend/p5.c:1947
 #, fuzzy, no-c-format
 msgid "Start calibration using special sheet"
 msgstr "Започване на калибрацията."
 
-#: backend/genesys/genesys.cpp:5045 backend/gt68xx.c:802 backend/p5.c:1958
+#: backend/genesys/genesys.cpp:5043 backend/gt68xx.c:800 backend/p5.c:1958
 #, fuzzy, no-c-format
 msgid "Clear calibration"
 msgstr "Груба калибрация"
 
-#: backend/genesys/genesys.cpp:5046 backend/gt68xx.c:803 backend/p5.c:1960
+#: backend/genesys/genesys.cpp:5044 backend/gt68xx.c:801 backend/p5.c:1960
 #, fuzzy, no-c-format
 msgid "Clear calibration cache"
 msgstr "Режим калибрация"
 
-#: backend/genesys/genesys.cpp:5056
+#: backend/genesys/genesys.cpp:5054
 #, fuzzy, no-c-format
 msgid "Force calibration"
 msgstr "Груба калибрация"
 
-#: backend/genesys/genesys.cpp:5057
+#: backend/genesys/genesys.cpp:5055
 #, no-c-format
 msgid "Force calibration ignoring all and any calibration caches"
 msgstr ""
 
-#: backend/genesys/genesys.cpp:5067
+#: backend/genesys/genesys.cpp:5065
 #, fuzzy, no-c-format
 msgid "Ignore internal offsets"
 msgstr "Офсет - зелено"
 
-#: backend/genesys/genesys.cpp:5069
+#: backend/genesys/genesys.cpp:5067
 #, no-c-format
 msgid ""
 "Acquires the image including the internal calibration areas of the "
 "scanner"
 msgstr ""
 
-#: backend/genesys/genesys.h:79 backend/gt68xx.c:149 backend/ma1509.c:108
-#: backend/mustek.c:164 backend/snapscan-options.c:87 backend/umax.c:182
+#: backend/genesys/genesys.h:77 backend/gt68xx.c:147 backend/ma1509.c:106
+#: backend/mustek.c:162 backend/snapscan-options.c:87 backend/umax.c:180
 #, no-c-format
 msgid "Transparency Adapter"
 msgstr "Адаптиране на прозрачността"
 
-#: backend/genesys/genesys.h:80
+#: backend/genesys/genesys.h:78
 #, fuzzy, no-c-format
 msgid "Transparency Adapter Infrared"
 msgstr "Адаптиране на прозрачността"
 
-#: backend/gt68xx.c:470
+#: backend/gt68xx.c:468
 #, no-c-format
 msgid "Gray mode color"
 msgstr ""
 
-#: backend/gt68xx.c:472
+#: backend/gt68xx.c:470
 #, no-c-format
 msgid "Selects which scan color is used gray mode (default: green)."
 msgstr ""
 
-#: backend/gt68xx.c:553 backend/hp3900_sane.c:1392
-#: backend/mustek_usb2.c:410
+#: backend/gt68xx.c:551 backend/hp3900_sane.c:1391
+#: backend/mustek_usb2.c:408
 #, no-c-format
 msgid "Debugging Options"
 msgstr "Опции за дебъг"
 
-#: backend/gt68xx.c:564 backend/mustek_usb2.c:419
+#: backend/gt68xx.c:562 backend/mustek_usb2.c:417
 #, no-c-format
 msgid "Automatic warmup"
 msgstr "Автоматично загряване"
 
-#: backend/gt68xx.c:566
+#: backend/gt68xx.c:564
 #, no-c-format
 msgid ""
 "Warm-up until the lamp's brightness is constant instead of insisting on "
@@ -3221,12 +3242,12 @@ msgstr ""
 "Загрявай, докато яркостта на лампата е постоянна, вместо да настояваш за "
 "60 секундно загряване."
 
-#: backend/gt68xx.c:578
+#: backend/gt68xx.c:576
 #, no-c-format
 msgid "Full scan"
 msgstr "Цялостно сканиране"
 
-#: backend/gt68xx.c:580
+#: backend/gt68xx.c:578
 #, no-c-format
 msgid ""
 "Scan the complete scanning area including calibration strip. Be careful. "
@@ -3235,12 +3256,12 @@ msgstr ""
 "Сканирай цялата площ за сканиране, вкл. парчето за калибрация. "
 "Внимавайте. Не избирайте цялата височина. Тази опция е само за тестване."
 
-#: backend/gt68xx.c:591
+#: backend/gt68xx.c:589
 #, no-c-format
 msgid "Coarse calibration"
 msgstr "Груба калибрация"
 
-#: backend/gt68xx.c:593
+#: backend/gt68xx.c:591
 #, no-c-format
 msgid ""
 "Setup gain and offset for scanning automatically. If this option is "
@@ -3251,12 +3272,12 @@ msgstr ""
 "опция е забранена, има опции за ръчната нагласа на аналоговите параметри "
 "на фронтенда. Тази опция е разрешена по подразбиране. Само за тестване."
 
-#: backend/gt68xx.c:612
+#: backend/gt68xx.c:610
 #, no-c-format
 msgid "Coarse calibration for first scan only"
 msgstr "Груба калибрация само за първото сканиране"
 
-#: backend/gt68xx.c:614
+#: backend/gt68xx.c:612
 #, no-c-format
 msgid ""
 "Coarse calibration is only done for the first scan. Works with most "
@@ -3267,12 +3288,12 @@ msgstr ""
 "скенери и пести време. Ако яркостта на изображението е различна при "
 "всяко сканиране, забранете тази опция. Само за тестване"
 
-#: backend/gt68xx.c:647
+#: backend/gt68xx.c:645
 #, fuzzy, no-c-format
 msgid "Backtrack lines"
 msgstr "Наложи връщане на главата"
 
-#: backend/gt68xx.c:649
+#: backend/gt68xx.c:647
 #, no-c-format
 msgid ""
 "Number of lines the scan slider moves back when backtracking occurs. "
@@ -3281,221 +3302,221 @@ msgid ""
 "omitting lines."
 msgstr ""
 
-#: backend/gt68xx.c:674 backend/mustek_usb2.c:452
+#: backend/gt68xx.c:672 backend/mustek_usb2.c:450
 #, no-c-format
 msgid "Gamma value"
 msgstr "Стойност на гамата"
 
-#: backend/gt68xx.c:676 backend/mustek_usb2.c:454
+#: backend/gt68xx.c:674 backend/mustek_usb2.c:452
 #, no-c-format
 msgid "Sets the gamma value of all channels."
 msgstr "Наглася стойността на гамата за всички канали."
 
-#: backend/hp-option.c:2987
+#: backend/hp-option.c:2982
 #, fuzzy, no-c-format
 msgid "Advanced Options"
 msgstr "Обнови опциите"
 
-#: backend/hp-option.c:3044
+#: backend/hp-option.c:3039
 #, no-c-format
 msgid "Coarse"
 msgstr "8х8 грубо"
 
-#: backend/hp-option.c:3045
+#: backend/hp-option.c:3040
 #, no-c-format
 msgid "Fine"
 msgstr "Име на файла"
 
-#: backend/hp-option.c:3046
+#: backend/hp-option.c:3041
 #, no-c-format
 msgid "Bayer"
 msgstr "Bayer"
 
-#: backend/hp-option.c:3049 backend/hp-option.c:3100
+#: backend/hp-option.c:3044 backend/hp-option.c:3095
 #, no-c-format
 msgid "Custom"
 msgstr "8х8 по избор"
 
-#: backend/hp-option.c:3090 backend/hp-option.c:3146
-#: backend/hp-option.c:3161
+#: backend/hp-option.c:3085 backend/hp-option.c:3141
+#: backend/hp-option.c:3156
 #, no-c-format
 msgid "Auto"
 msgstr "Авто"
 
-#: backend/hp-option.c:3091
+#: backend/hp-option.c:3086
 #, no-c-format
 msgid "NTSC RGB"
 msgstr "NTSC RGB"
 
-#: backend/hp-option.c:3092
+#: backend/hp-option.c:3087
 #, no-c-format
 msgid "XPA RGB"
 msgstr "XPA RGB"
 
-#: backend/hp-option.c:3093
+#: backend/hp-option.c:3088
 #, fuzzy, no-c-format
 msgid "Pass-through"
 msgstr "Pass-through"
 
-#: backend/hp-option.c:3094
+#: backend/hp-option.c:3089
 #, no-c-format
 msgid "NTSC Gray"
 msgstr "NTSC сиво"
 
-#: backend/hp-option.c:3095
+#: backend/hp-option.c:3090
 #, no-c-format
 msgid "XPA Gray"
 msgstr "XPA сиво"
 
-#: backend/hp-option.c:3147
+#: backend/hp-option.c:3142
 #, no-c-format
 msgid "Slow"
 msgstr "По-бавно"
 
-#: backend/hp-option.c:3148 backend/hp-option.c:3255
-#: backend/kvs40xx_opt.c:230 backend/matsushita.c:244 backend/mustek.c:149
-#: backend/plustek.c:234 backend/plustek_pp.c:203 backend/u12.c:155
+#: backend/hp-option.c:3143 backend/hp-option.c:3250
+#: backend/kvs40xx_opt.c:230 backend/matsushita.c:241 backend/mustek.c:147
+#: backend/plustek.c:232 backend/plustek_pp.c:201 backend/u12.c:153
 #, no-c-format
 msgid "Normal"
 msgstr "Нормално"
 
-#: backend/hp-option.c:3149
+#: backend/hp-option.c:3144
 #, no-c-format
 msgid "Fast"
 msgstr "По-бързо"
 
-#: backend/hp-option.c:3150
+#: backend/hp-option.c:3145
 #, no-c-format
 msgid "Extra Fast"
 msgstr "Екстра бързо"
 
-#: backend/hp-option.c:3163
+#: backend/hp-option.c:3158
 #, no-c-format
 msgid "2-pixel"
 msgstr "2-пикселно"
 
-#: backend/hp-option.c:3164
+#: backend/hp-option.c:3159
 #, no-c-format
 msgid "4-pixel"
 msgstr "4-пикселно"
 
-#: backend/hp-option.c:3165
+#: backend/hp-option.c:3160
 #, no-c-format
 msgid "8-pixel"
 msgstr "8-пикселно"
 
-#: backend/hp-option.c:3176
+#: backend/hp-option.c:3171
 #, no-c-format
 msgid "Print"
 msgstr "Печат"
 
-#: backend/hp-option.c:3177 backend/hp3900_sane.c:427
-#: backend/hp3900_sane.c:1019
+#: backend/hp-option.c:3172 backend/hp3900_sane.c:426
+#: backend/hp3900_sane.c:1018
 #, no-c-format
 msgid "Slide"
 msgstr "Солидно бяло"
 
-#: backend/hp-option.c:3178
+#: backend/hp-option.c:3173
 #, no-c-format
 msgid "Film-strip"
 msgstr "Тип филм"
 
-#: backend/hp-option.c:3256 backend/hp5590.c:93
+#: backend/hp-option.c:3251 backend/hp5590.c:91
 #, no-c-format
 msgid "ADF"
 msgstr "ADF"
 
-#: backend/hp-option.c:3257
+#: backend/hp-option.c:3252
 #, no-c-format
 msgid "XPA"
 msgstr "XPA"
 
-#: backend/hp-option.c:3331 backend/hp-option.c:3344
+#: backend/hp-option.c:3326 backend/hp-option.c:3339
 #, no-c-format
 msgid "Conditional"
 msgstr "Кондиционално"
 
-#: backend/hp-option.c:3417
+#: backend/hp-option.c:3412
 #, fuzzy, no-c-format
 msgid "Experiment"
 msgstr "Време за експонация"
 
-#: backend/hp-option.h:60
+#: backend/hp-option.h:55
 #, no-c-format
 msgid "Sharpening"
 msgstr "Изостряне"
 
-#: backend/hp-option.h:61
+#: backend/hp-option.h:56
 #, no-c-format
 msgid "Set sharpening value."
 msgstr "Нагласи стойността за изостряне."
 
-#: backend/hp-option.h:66
+#: backend/hp-option.h:61
 #, no-c-format
 msgid "Auto Threshold"
 msgstr "Автоматичен праг"
 
-#: backend/hp-option.h:68
+#: backend/hp-option.h:63
 #, no-c-format
 msgid "Enable automatic determination of threshold for line-art scans."
 msgstr "Позволява автоматично определяне на прага за lineart сканиране."
 
-#: backend/hp-option.h:74
+#: backend/hp-option.h:69
 #, no-c-format
 msgid "Select smoothing filter."
 msgstr "Избира полутона"
 
-#: backend/hp-option.h:79
+#: backend/hp-option.h:74
 #, no-c-format
 msgid "Unload media after scan"
 msgstr "Отзареждане на медията след сканиране."
 
-#: backend/hp-option.h:80
+#: backend/hp-option.h:75
 #, no-c-format
 msgid "Unloads the media after a scan."
 msgstr "Отзарежда медията след сканиране."
 
-#: backend/hp-option.h:85
+#: backend/hp-option.h:80
 #, no-c-format
 msgid "Change document"
 msgstr "Смени документа"
 
-#: backend/hp-option.h:86
+#: backend/hp-option.h:81
 #, no-c-format
 msgid "Change Document."
 msgstr "Смени документа."
 
-#: backend/hp-option.h:91
+#: backend/hp-option.h:86
 #, no-c-format
 msgid "Unload"
 msgstr "Отзареди"
 
-#: backend/hp-option.h:92
+#: backend/hp-option.h:87
 #, no-c-format
 msgid "Unload Document."
 msgstr "Отзареди документа."
 
-#: backend/hp-option.h:98
+#: backend/hp-option.h:93
 #, no-c-format
 msgid "Start calibration process."
 msgstr "Започване на калибрацията."
 
-#: backend/hp-option.h:103
+#: backend/hp-option.h:98
 #, no-c-format
 msgid "Media"
 msgstr "Медия"
 
-#: backend/hp-option.h:104
+#: backend/hp-option.h:99
 #, no-c-format
 msgid "Set type of media."
 msgstr "Нагласи типа медия."
 
-#: backend/hp-option.h:109
+#: backend/hp-option.h:104
 #, no-c-format
 msgid "Exposure time"
 msgstr "Време за експонация"
 
-#: backend/hp-option.h:111
+#: backend/hp-option.h:106
 #, no-c-format
 msgid ""
 "A longer exposure time lets the scanner collect more light. Suggested "
@@ -3508,154 +3529,154 @@ msgstr ""
 "слайдове и \"Негатив\" за негативен филм. За тъмни (подекспонирани) "
 "изображения можете да завишите тази стойност."
 
-#: backend/hp-option.h:119 backend/hp-option.h:126
+#: backend/hp-option.h:114 backend/hp-option.h:121
 #, no-c-format
 msgid "Color Matrix"
 msgstr "Цветна матрица"
 
-#: backend/hp-option.h:121
+#: backend/hp-option.h:116
 #, fuzzy, no-c-format
 msgid "Set the scanner's color matrix."
 msgstr "Наглася цветната матрица на скенера."
 
-#: backend/hp-option.h:127
+#: backend/hp-option.h:122
 #, no-c-format
 msgid "Custom color matrix."
 msgstr "Цветна матрица по избор."
 
-#: backend/hp-option.h:132
+#: backend/hp-option.h:127
 #, no-c-format
 msgid "Mono Color Matrix"
 msgstr "Едноцветна матрица"
 
-#: backend/hp-option.h:133
+#: backend/hp-option.h:128
 #, no-c-format
 msgid "Custom color matrix for grayscale scans."
 msgstr "Цветна матрица по избор за сканиране в сива скала."
 
-#: backend/hp-option.h:138
+#: backend/hp-option.h:133
 #, no-c-format
 msgid "Mirror horizontal"
 msgstr "Огледало хоризонтално"
 
-#: backend/hp-option.h:139
+#: backend/hp-option.h:134
 #, no-c-format
 msgid "Mirror image horizontally."
 msgstr "Прави хоризонтален огледален образ."
 
-#: backend/hp-option.h:144
+#: backend/hp-option.h:139
 #, no-c-format
 msgid "Mirror vertical"
 msgstr "Огледало вертикално"
 
-#: backend/hp-option.h:145
+#: backend/hp-option.h:140
 #, no-c-format
 msgid "Mirror image vertically."
 msgstr "Прави вертикален огледален образ"
 
-#: backend/hp-option.h:150
+#: backend/hp-option.h:145
 #, no-c-format
 msgid "Update options"
 msgstr "Обнови опциите"
 
-#: backend/hp-option.h:151
+#: backend/hp-option.h:146
 #, no-c-format
 msgid "Update options."
 msgstr "Обнови опциите."
 
-#: backend/hp-option.h:156
+#: backend/hp-option.h:151
 #, no-c-format
 msgid "8 bit output"
 msgstr "8-битово извеждане."
 
-#: backend/hp-option.h:158
+#: backend/hp-option.h:153
 #, no-c-format
 msgid "Use bit depth greater eight internally, but output only eight bits."
 msgstr ""
 "Вътрешно използвай по-голяма дълбочина от осем бита, но извеждай само "
 "осем бита."
 
-#: backend/hp-option.h:164
+#: backend/hp-option.h:159
 #, no-c-format
 msgid "Front button wait"
 msgstr "Изчакай бутона"
 
-#: backend/hp-option.h:165
+#: backend/hp-option.h:160
 #, no-c-format
 msgid "Wait to scan for front-panel button push."
 msgstr "Изчакай за натискане на бутона преди сканиране."
 
-#: backend/hp-option.h:172
+#: backend/hp-option.h:167
 #, no-c-format
 msgid "Shut off lamp"
 msgstr "Изключи лампата"
 
-#: backend/hp-option.h:173
+#: backend/hp-option.h:168
 #, no-c-format
 msgid "Shut off scanner lamp."
 msgstr "Изключва лампата на скенера"
 
-#: backend/hp3500.c:1020
+#: backend/hp3500.c:1018
 #, fuzzy, no-c-format
 msgid "Geometry Group"
 msgstr "Геометрия"
 
-#: backend/hp3500.c:1073 backend/hp3500.c:1074
+#: backend/hp3500.c:1071 backend/hp3500.c:1072
 #, fuzzy, no-c-format
 msgid "Scan Mode Group"
 msgstr "Режим на сканиране"
 
-#: backend/hp3900_sane.c:1405
+#: backend/hp3900_sane.c:1404
 #, fuzzy, no-c-format
 msgid "Scanner model"
 msgstr "Режим на сканиране"
 
-#: backend/hp3900_sane.c:1408
+#: backend/hp3900_sane.c:1407
 #, no-c-format
 msgid "Allows one to test device behavior with other supported models"
 msgstr ""
 
-#: backend/hp3900_sane.c:1422
+#: backend/hp3900_sane.c:1421
 #, no-c-format
 msgid "Image colors will be inverted"
 msgstr ""
 
-#: backend/hp3900_sane.c:1436
+#: backend/hp3900_sane.c:1435
 #, fuzzy, no-c-format
 msgid "Disable gamma correction"
 msgstr "Корекция на аналоговата гама"
 
-#: backend/hp3900_sane.c:1437
+#: backend/hp3900_sane.c:1436
 #, fuzzy, no-c-format
 msgid "Gamma correction will be disabled"
 msgstr "Корекция на гамата"
 
-#: backend/hp3900_sane.c:1451
+#: backend/hp3900_sane.c:1450
 #, fuzzy, no-c-format
 msgid "Disable white shading correction"
 msgstr "Извърши само корекция на отсенките"
 
-#: backend/hp3900_sane.c:1453
+#: backend/hp3900_sane.c:1452
 #, no-c-format
 msgid "White shading correction will be disabled"
 msgstr ""
 
-#: backend/hp3900_sane.c:1467
+#: backend/hp3900_sane.c:1466
 #, no-c-format
 msgid "Skip warmup process"
 msgstr ""
 
-#: backend/hp3900_sane.c:1468
+#: backend/hp3900_sane.c:1467
 #, no-c-format
 msgid "Warmup process will be disabled"
 msgstr ""
 
-#: backend/hp3900_sane.c:1482
+#: backend/hp3900_sane.c:1481
 #, no-c-format
 msgid "Force real depth"
 msgstr ""
 
-#: backend/hp3900_sane.c:1485
+#: backend/hp3900_sane.c:1484
 #, no-c-format
 msgid ""
 "If gamma is enabled, scans are always made in 16 bits depth to improve "
@@ -3663,12 +3684,12 @@ msgid ""
 "avoids depth emulation."
 msgstr ""
 
-#: backend/hp3900_sane.c:1499
+#: backend/hp3900_sane.c:1498
 #, fuzzy, no-c-format
 msgid "Emulate Grayscale"
 msgstr "В сива скала"
 
-#: backend/hp3900_sane.c:1502
+#: backend/hp3900_sane.c:1501
 #, no-c-format
 msgid ""
 "If enabled, image will be scanned in color mode and then converted to "
@@ -3676,342 +3697,342 @@ msgid ""
 "circumstances."
 msgstr ""
 
-#: backend/hp3900_sane.c:1516
+#: backend/hp3900_sane.c:1515
 #, no-c-format
 msgid "Save debugging images"
 msgstr ""
 
-#: backend/hp3900_sane.c:1519
+#: backend/hp3900_sane.c:1518
 #, no-c-format
 msgid ""
 "If enabled, some images involved in scanner processing are saved to "
 "analyze them."
 msgstr ""
 
-#: backend/hp3900_sane.c:1533
+#: backend/hp3900_sane.c:1532
 #, fuzzy, no-c-format
 msgid "Reset chipset"
 msgstr "скенер с sheetfeed"
 
-#: backend/hp3900_sane.c:1534
+#: backend/hp3900_sane.c:1533
 #, no-c-format
 msgid "Resets chipset data"
 msgstr ""
 
-#: backend/hp3900_sane.c:1547
+#: backend/hp3900_sane.c:1546
 #, fuzzy, no-c-format
 msgid "Information"
 msgstr "Игнорирай калибрацията"
 
-#: backend/hp3900_sane.c:1560
+#: backend/hp3900_sane.c:1559
 #, fuzzy, no-c-format
 msgid "Chipset name"
 msgstr "Име на файла"
 
-#: backend/hp3900_sane.c:1561
+#: backend/hp3900_sane.c:1560
 #, no-c-format
 msgid "Shows chipset name used in device."
 msgstr ""
 
-#: backend/hp3900_sane.c:1565
+#: backend/hp3900_sane.c:1564
 #, no-c-format
 msgid "Unknown"
 msgstr ""
 
-#: backend/hp3900_sane.c:1571
+#: backend/hp3900_sane.c:1570
 #, no-c-format
 msgid "Chipset ID"
 msgstr ""
 
-#: backend/hp3900_sane.c:1572
+#: backend/hp3900_sane.c:1571
 #, fuzzy, no-c-format
 msgid "Shows the chipset ID"
 msgstr "скенер с sheetfeed"
 
-#: backend/hp3900_sane.c:1582
+#: backend/hp3900_sane.c:1581
 #, fuzzy, no-c-format
 msgid "Scan counter"
 msgstr "Източник на сканиране"
 
-#: backend/hp3900_sane.c:1584
+#: backend/hp3900_sane.c:1583
 #, fuzzy, no-c-format
 msgid "Shows the number of scans made by scanner"
 msgstr "Избира номера на кадъра за сканиране"
 
-#: backend/hp3900_sane.c:1594
+#: backend/hp3900_sane.c:1593
 #, fuzzy, no-c-format
 msgid "Update information"
 msgstr "Обнови опциите"
 
-#: backend/hp3900_sane.c:1595
+#: backend/hp3900_sane.c:1594
 #, no-c-format
 msgid "Updates information about device"
 msgstr ""
 
-#: backend/hp3900_sane.c:1635
+#: backend/hp3900_sane.c:1634
 #, no-c-format
 msgid "This option reflects a front panel scanner button"
 msgstr ""
 
-#: backend/hp5400_sane.c:418
+#: backend/hp5400_sane.c:417
 #, no-c-format
 msgid "web"
 msgstr ""
 
-#: backend/hp5400_sane.c:419
+#: backend/hp5400_sane.c:418
 #, fuzzy, no-c-format
 msgid "Share-To-Web button"
 msgstr "Резолюция на сканиране"
 
-#: backend/hp5400_sane.c:420
+#: backend/hp5400_sane.c:419
 #, no-c-format
 msgid "Scan an image and send it on the web"
 msgstr ""
 
-#: backend/hp5400_sane.c:426
+#: backend/hp5400_sane.c:425
 #, fuzzy, no-c-format
 msgid "reprint"
 msgstr "Печат"
 
-#: backend/hp5400_sane.c:427
+#: backend/hp5400_sane.c:426
 #, fuzzy, no-c-format
 msgid "Reprint Photos button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/hp5400_sane.c:428
+#: backend/hp5400_sane.c:427
 #, no-c-format
 msgid "Button for reprinting photos"
 msgstr ""
 
-#: backend/hp5400_sane.c:450
+#: backend/hp5400_sane.c:449
 #, fuzzy, no-c-format
 msgid "more-options"
 msgstr "Обнови опциите"
 
-#: backend/hp5400_sane.c:451
+#: backend/hp5400_sane.c:450
 #, fuzzy, no-c-format
 msgid "More Options button"
 msgstr "Обнови опциите"
 
-#: backend/hp5400_sane.c:452
+#: backend/hp5400_sane.c:451
 #, no-c-format
 msgid "Button for additional options/configuration"
 msgstr ""
 
-#: backend/hp5400_sane.c:466
+#: backend/hp5400_sane.c:465
 #, no-c-format
 msgid "power-save"
 msgstr ""
 
-#: backend/hp5400_sane.c:467
+#: backend/hp5400_sane.c:466
 #, fuzzy, no-c-format
 msgid "Power Save button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/hp5400_sane.c:468
+#: backend/hp5400_sane.c:467
 #, no-c-format
 msgid "Puts the scanner in an energy-conservation mode"
 msgstr ""
 
-#: backend/hp5400_sane.c:474
+#: backend/hp5400_sane.c:473
 #, no-c-format
 msgid "copies-up"
 msgstr ""
 
-#: backend/hp5400_sane.c:475
+#: backend/hp5400_sane.c:474
 #, fuzzy, no-c-format
 msgid "Increase Copies button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/hp5400_sane.c:476
+#: backend/hp5400_sane.c:475
 #, no-c-format
 msgid "Increase the number of copies"
 msgstr ""
 
-#: backend/hp5400_sane.c:482
+#: backend/hp5400_sane.c:481
 #, no-c-format
 msgid "copies-down"
 msgstr ""
 
-#: backend/hp5400_sane.c:483
+#: backend/hp5400_sane.c:482
 #, fuzzy, no-c-format
 msgid "Decrease Copies button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/hp5400_sane.c:484
+#: backend/hp5400_sane.c:483
 #, no-c-format
 msgid "Decrease the number of copies"
 msgstr ""
 
-#: backend/hp5400_sane.c:490
+#: backend/hp5400_sane.c:489
 #, fuzzy, no-c-format
 msgid "color-bw"
 msgstr "Цвят"
 
-#: backend/hp5400_sane.c:491
+#: backend/hp5400_sane.c:490
 #, no-c-format
 msgid "Select color/BW button"
 msgstr ""
 
-#: backend/hp5400_sane.c:492
+#: backend/hp5400_sane.c:491
 #, no-c-format
 msgid "Alternates between color and black/white scanning"
 msgstr ""
 
-#: backend/hp5400_sane.c:498
+#: backend/hp5400_sane.c:497
 #, no-c-format
 msgid "color-bw-state"
 msgstr ""
 
-#: backend/hp5400_sane.c:499
+#: backend/hp5400_sane.c:498
 #, no-c-format
 msgid "Read color/BW button state"
 msgstr ""
 
-#: backend/hp5400_sane.c:500
+#: backend/hp5400_sane.c:499
 #, no-c-format
 msgid "Reads state of BW/colour panel setting"
 msgstr ""
 
-#: backend/hp5400_sane.c:508
+#: backend/hp5400_sane.c:507
 #, no-c-format
 msgid "copies-count"
 msgstr ""
 
-#: backend/hp5400_sane.c:509
+#: backend/hp5400_sane.c:508
 #, no-c-format
 msgid "Read copy count value"
 msgstr ""
 
-#: backend/hp5400_sane.c:510
+#: backend/hp5400_sane.c:509
 #, no-c-format
 msgid "Reads state of copy count panel setting"
 msgstr ""
 
-#: backend/hp5400_sane.c:519 backend/niash.c:709
+#: backend/hp5400_sane.c:518 backend/niash.c:706
 #, no-c-format
 msgid "Miscellaneous"
 msgstr ""
 
-#: backend/hp5400_sane.c:526 backend/niash.c:716
+#: backend/hp5400_sane.c:525 backend/niash.c:713
 #, no-c-format
 msgid "Lamp status"
 msgstr ""
 
-#: backend/hp5400_sane.c:527 backend/niash.c:717
+#: backend/hp5400_sane.c:526 backend/niash.c:714
 #, no-c-format
 msgid "Switches the lamp on or off."
 msgstr "Включва/изключва лампата."
 
-#: backend/hp5400_sane.c:537 backend/niash.c:727
+#: backend/hp5400_sane.c:536 backend/niash.c:724
 #, no-c-format
 msgid "Calibrates for black and white level."
 msgstr ""
 
-#: backend/hp5590.c:95
+#: backend/hp5590.c:93
 #, fuzzy, no-c-format
 msgid "TMA Slides"
 msgstr "Солидно бяло"
 
-#: backend/hp5590.c:96
+#: backend/hp5590.c:94
 #, fuzzy, no-c-format
 msgid "TMA Negatives"
 msgstr "Негатив"
 
-#: backend/hp5590.c:108
+#: backend/hp5590.c:106
 #, fuzzy, no-c-format
 msgid "Color (48 bits)"
 msgstr "Цвят 48"
 
-#: backend/hp5590.c:112
+#: backend/hp5590.c:110
 #, fuzzy, no-c-format
 msgid "Extend lamp timeout"
 msgstr "Изкл. лампа"
 
-#: backend/hp5590.c:113
+#: backend/hp5590.c:111
 #, no-c-format
 msgid "Extends lamp timeout (from 15 minutes to 1 hour)"
 msgstr ""
 
-#: backend/hp5590.c:115
+#: backend/hp5590.c:113
 #, no-c-format
 msgid "Wait for button"
 msgstr "Изчакай натискане на бутона"
 
-#: backend/hp5590.c:116
+#: backend/hp5590.c:114
 #, fuzzy, no-c-format
 msgid "Waits for button before scanning"
 msgstr "Загрей лампата преди сканиране"
 
-#: backend/hp5590.c:118
+#: backend/hp5590.c:116
 #, no-c-format
 msgid "Last button pressed"
 msgstr ""
 
-#: backend/hp5590.c:119
+#: backend/hp5590.c:117
 #, no-c-format
 msgid "Get ID of last button pressed (read only)"
 msgstr ""
 
-#: backend/hp5590.c:121
+#: backend/hp5590.c:119
 #, fuzzy, no-c-format
 msgid "LCD counter"
 msgstr "Източник на сканиране"
 
-#: backend/hp5590.c:122
+#: backend/hp5590.c:120
 #, no-c-format
 msgid "Get value of LCD counter (read only)"
 msgstr ""
 
-#: backend/hp5590.c:124
+#: backend/hp5590.c:122
 #, fuzzy, no-c-format
 msgid "Color LED indicator"
 msgstr "Цветно Lineart"
 
-#: backend/hp5590.c:125
+#: backend/hp5590.c:123
 #, no-c-format
 msgid "Get value of LED indicator (read only)"
 msgstr ""
 
-#: backend/hp5590.c:127
+#: backend/hp5590.c:125
 #, no-c-format
 msgid "Document available in ADF"
 msgstr ""
 
-#: backend/hp5590.c:128
+#: backend/hp5590.c:126
 #, no-c-format
 msgid "Get state of document-available indicator in ADF (read only)"
 msgstr ""
 
-#: backend/hp5590.c:130
+#: backend/hp5590.c:128
 #, no-c-format
 msgid "Hide end-of-page pixel"
 msgstr ""
 
-#: backend/hp5590.c:131
+#: backend/hp5590.c:129
 #, no-c-format
 msgid ""
 "Hide end-of-page indicator pixels and overwrite with neighbor pixels"
 msgstr ""
 
-#: backend/hp5590.c:133
+#: backend/hp5590.c:131
 #, no-c-format
 msgid "Filling mode of trailing lines after scan data (ADF)"
 msgstr ""
 
-#: backend/hp5590.c:134
+#: backend/hp5590.c:132
 #, no-c-format
 msgid ""
 "raw = raw scan data, last = repeat last scan line, raster = b/w raster, "
 "white = white color, black = black color, color = RGB or gray color value"
 msgstr ""
 
-#: backend/hp5590.c:137
+#: backend/hp5590.c:135
 #, no-c-format
 msgid "RGB or gray color value for filling mode 'color'"
 msgstr ""
 
-#: backend/hp5590.c:138
+#: backend/hp5590.c:136
 #, no-c-format
 msgid ""
 "Color value for trailing lines filling mode 'color'. RGB color as "
@@ -4019,13 +4040,13 @@ msgid ""
 msgstr ""
 
 #: backend/kvs1025.h:51 backend/kvs20xx_opt.c:295 backend/kvs40xx_opt.c:516
-#: backend/matsushita.h:219
+#: backend/matsushita.h:213
 #, no-c-format
 msgid "Paper size"
 msgstr "Размер на хартията"
 
-#: backend/kvs1025.h:52 backend/kvs1025.h:67 backend/matsushita.h:220
-#: backend/matsushita.h:227
+#: backend/kvs1025.h:52 backend/kvs1025.h:67 backend/matsushita.h:214
+#: backend/matsushita.h:221
 #, no-c-format
 msgid "Automatic separation"
 msgstr "Автоматично разделение"
@@ -4066,13 +4087,13 @@ msgid "Double feed detection"
 msgstr ""
 
 #: backend/kvs1025.h:63 backend/kvs20xx_opt.c:205 backend/kvs40xx_opt.c:354
-#: backend/matsushita.h:223
+#: backend/matsushita.h:217
 #, no-c-format
 msgid "Enable Duplex (Dual-Sided) Scanning"
 msgstr "Позволи дупрексно (двустранно) сканиране"
 
 #: backend/kvs1025.h:65 backend/kvs20xx_opt.c:296 backend/kvs40xx_opt.c:517
-#: backend/matsushita.h:225
+#: backend/matsushita.h:219
 #, no-c-format
 msgid "Physical size of the paper in the ADF"
 msgstr "Физически размер на хартията в ADF"
@@ -4237,7 +4258,7 @@ msgid "From scanner"
 msgstr "flatbed скенер"
 
 #: backend/kvs1025_opt.c:179 backend/kvs40xx_opt.c:272
-#: backend/matsushita.c:177
+#: backend/matsushita.c:174
 #, no-c-format
 msgid "From paper"
 msgstr "От хартия"
@@ -4312,13 +4333,13 @@ msgid "Sets the scan source"
 msgstr "Източник на сканиране"
 
 #: backend/kvs1025_opt.c:572 backend/kvs20xx_opt.c:218
-#: backend/kvs40xx_opt.c:367 backend/matsushita.c:1126
+#: backend/kvs40xx_opt.c:367 backend/matsushita.c:1123
 #, no-c-format
 msgid "Feeder mode"
 msgstr "Режим на захранване"
 
 #: backend/kvs1025_opt.c:573 backend/kvs20xx_opt.c:219
-#: backend/kvs40xx_opt.c:368 backend/matsushita.c:1127
+#: backend/kvs40xx_opt.c:368 backend/matsushita.c:1124
 #, no-c-format
 msgid "Sets the feeding mode"
 msgstr "Наглася режима на захранване"
@@ -4375,12 +4396,12 @@ msgstr ""
 msgid "Set paper position : true for landscape, false for portrait"
 msgstr ""
 
-#: backend/kvs1025_opt.c:734 backend/matsushita.c:1224
+#: backend/kvs1025_opt.c:734 backend/matsushita.c:1221
 #, no-c-format
 msgid "Automatic threshold"
 msgstr "Автоматичен праг"
 
-#: backend/kvs1025_opt.c:737 backend/matsushita.c:1227
+#: backend/kvs1025_opt.c:737 backend/matsushita.c:1224
 #, no-c-format
 msgid ""
 "Automatically sets brightness, contrast, white level, gamma, noise "
@@ -4390,31 +4411,31 @@ msgstr ""
 "редукцията на шума и подчертаването на образа"
 
 #: backend/kvs1025_opt.c:782 backend/kvs40xx_opt.c:764
-#: backend/matsushita.c:1275
+#: backend/matsushita.c:1272
 #, no-c-format
 msgid "Noise reduction"
 msgstr "Редуциране на шума"
 
 #: backend/kvs1025_opt.c:784 backend/kvs40xx_opt.c:765
-#: backend/matsushita.c:1277
+#: backend/matsushita.c:1274
 #, no-c-format
 msgid "Reduce the isolated dot noise"
 msgstr "Намали изолирания точков шум"
 
 #: backend/kvs1025_opt.c:795 backend/kvs20xx_opt.c:412
-#: backend/kvs40xx_opt.c:655 backend/matsushita.c:1288
+#: backend/kvs40xx_opt.c:655 backend/matsushita.c:1285
 #, no-c-format
 msgid "Image emphasis"
 msgstr "Подчертаване на образа"
 
 #: backend/kvs1025_opt.c:796 backend/kvs20xx_opt.c:413
-#: backend/kvs40xx_opt.c:656 backend/matsushita.c:1289
+#: backend/kvs40xx_opt.c:656 backend/matsushita.c:1286
 #, no-c-format
 msgid "Sets the image emphasis"
 msgstr "Наглася подчертаването на образа"
 
 #: backend/kvs1025_opt.c:807 backend/kvs1025_opt.c:808
-#: backend/matsushita.c:1300 backend/matsushita.c:1301
+#: backend/matsushita.c:1297 backend/matsushita.c:1298
 #: backend/pixma/pixma_sane_options.c:113
 #, no-c-format
 msgid "Gamma"
@@ -4506,7 +4527,7 @@ msgstr ""
 
 #: backend/kvs20xx_opt.c:424 backend/kvs20xx_opt.c:425
 #: backend/kvs40xx_opt.c:668 backend/kvs40xx_opt.c:669
-#: backend/microtek2.h:640
+#: backend/microtek2.h:638
 #, no-c-format
 msgid "Gamma correction"
 msgstr "Корекция на гамата"
@@ -4695,218 +4716,218 @@ msgstr ""
 msgid "Addition of space in bottom position"
 msgstr ""
 
-#: backend/leo.c:110
+#: backend/leo.c:107
 #, no-c-format
 msgid "Diamond"
 msgstr "Diamond"
 
-#: backend/leo.c:111
+#: backend/leo.c:108
 #, no-c-format
 msgid "8x8 Coarse Fatting"
 msgstr "8x8 груб Fatting"
 
-#: backend/leo.c:112
+#: backend/leo.c:109
 #, no-c-format
 msgid "8x8 Fine Fatting"
 msgstr "8x8 фин Fatting"
 
-#: backend/leo.c:113
+#: backend/leo.c:110
 #, no-c-format
 msgid "8x8 Bayer"
 msgstr "8x8 Bayer"
 
-#: backend/leo.c:114
+#: backend/leo.c:111
 #, no-c-format
 msgid "8x8 Vertical Line"
 msgstr "8x8 вертикална черта"
 
-#: backend/lexmark.c:273 backend/umax_pp.c:705
+#: backend/lexmark.c:271 backend/umax_pp.c:704
 #, no-c-format
 msgid "Gain"
 msgstr "Увеличение"
 
-#: backend/lexmark.c:274 backend/umax_pp.c:706
+#: backend/lexmark.c:272 backend/umax_pp.c:705
 #, no-c-format
 msgid "Color channels gain settings"
 msgstr "Настройки по увеличение на цветните канали"
 
-#: backend/lexmark.c:283 backend/umax_pp.c:713
+#: backend/lexmark.c:281 backend/umax_pp.c:712
 #, no-c-format
 msgid "Gray gain"
 msgstr "Увеличение - сиво"
 
-#: backend/lexmark.c:284 backend/umax_pp.c:714
+#: backend/lexmark.c:282 backend/umax_pp.c:713
 #, no-c-format
 msgid "Sets gray channel gain"
 msgstr "Наглася увеличение на сивия канал"
 
-#: backend/lexmark.c:297 backend/plustek.c:1001 backend/umax_pp.c:725
+#: backend/lexmark.c:295 backend/plustek.c:999 backend/umax_pp.c:724
 #, no-c-format
 msgid "Red gain"
 msgstr "Увеличение - червено"
 
-#: backend/lexmark.c:298 backend/umax_pp.c:726
+#: backend/lexmark.c:296 backend/umax_pp.c:725
 #, no-c-format
 msgid "Sets red channel gain"
 msgstr "Наглася увеличение на червения канал"
 
-#: backend/lexmark.c:311 backend/plustek.c:1017 backend/umax_pp.c:737
+#: backend/lexmark.c:309 backend/plustek.c:1015 backend/umax_pp.c:736
 #, no-c-format
 msgid "Green gain"
 msgstr "Увеличение - зелено"
 
-#: backend/lexmark.c:312 backend/umax_pp.c:738
+#: backend/lexmark.c:310 backend/umax_pp.c:737
 #, no-c-format
 msgid "Sets green channel gain"
 msgstr "Наглася увеличение на зеления канал"
 
-#: backend/lexmark.c:325 backend/plustek.c:1033 backend/umax_pp.c:749
+#: backend/lexmark.c:323 backend/plustek.c:1031 backend/umax_pp.c:748
 #, no-c-format
 msgid "Blue gain"
 msgstr "Увеличение - синьо"
 
-#: backend/lexmark.c:326 backend/umax_pp.c:750
+#: backend/lexmark.c:324 backend/umax_pp.c:749
 #, no-c-format
 msgid "Sets blue channel gain"
 msgstr "Наглася увеличение на синия канал"
 
-#: backend/matsushita.c:139
+#: backend/matsushita.c:136
 #, no-c-format
 msgid "Bayer Dither 16"
 msgstr "Bayer Dither 16"
 
-#: backend/matsushita.c:140
+#: backend/matsushita.c:137
 #, no-c-format
 msgid "Bayer Dither 64"
 msgstr "Bayer Dither 64"
 
-#: backend/matsushita.c:141
+#: backend/matsushita.c:138
 #, no-c-format
 msgid "Halftone Dot 32"
 msgstr "Полутон Dot 32"
 
-#: backend/matsushita.c:142
+#: backend/matsushita.c:139
 #, no-c-format
 msgid "Halftone Dot 64"
 msgstr "Полутон Dot 64"
 
-#: backend/matsushita.c:143
+#: backend/matsushita.c:140
 #, no-c-format
 msgid "Error Diffusion"
 msgstr "Разсейка на грешките"
 
-#: backend/matsushita.c:160
+#: backend/matsushita.c:157
 #, no-c-format
 msgid "Mode 1"
 msgstr "Режим 1"
 
-#: backend/matsushita.c:161
+#: backend/matsushita.c:158
 #, no-c-format
 msgid "Mode 2"
 msgstr "Режим 2"
 
-#: backend/matsushita.c:162
+#: backend/matsushita.c:159
 #, no-c-format
 msgid "Mode 3"
 msgstr "Режим 3"
 
-#: backend/matsushita.c:176
+#: backend/matsushita.c:173
 #, no-c-format
 msgid "From white stick"
 msgstr "От бял"
 
-#: backend/matsushita.c:212
+#: backend/matsushita.c:209
 #, no-c-format
 msgid "Smooth"
 msgstr "Изглаждане"
 
-#: backend/matsushita.c:214 backend/matsushita.c:229
+#: backend/matsushita.c:211 backend/matsushita.c:226
 #, no-c-format
 msgid "Low"
 msgstr "Ниско"
 
-#: backend/matsushita.c:215 backend/matsushita.c:230
-#: backend/matsushita.c:1296
+#: backend/matsushita.c:212 backend/matsushita.c:227
+#: backend/matsushita.c:1293
 #, no-c-format
 msgid "Medium"
 msgstr "Средно"
 
-#: backend/matsushita.c:216 backend/matsushita.c:231
+#: backend/matsushita.c:213 backend/matsushita.c:228
 #, no-c-format
 msgid "High"
 msgstr "Високо"
 
-#: backend/matsushita.c:245
+#: backend/matsushita.c:242
 #, no-c-format
 msgid "CRT"
 msgstr "CRT"
 
-#: backend/matsushita.c:257
+#: backend/matsushita.c:254
 #, no-c-format
 msgid "One page"
 msgstr "Една страница"
 
-#: backend/matsushita.c:258
+#: backend/matsushita.c:255
 #, no-c-format
 msgid "All pages"
 msgstr "Всички страници"
 
-#: backend/matsushita.c:1034 backend/p5_device.c:8 backend/plustek.c:1333
+#: backend/matsushita.c:1031 backend/p5_device.c:8 backend/plustek.c:1331
 #, fuzzy, no-c-format
 msgid "sheetfed scanner"
 msgstr "скенер с sheetfeed"
 
-#: backend/matsushita.h:209
+#: backend/matsushita.h:203
 #, no-c-format
 msgid "Grayscale 4 bits"
 msgstr "Сива скала 4 бита"
 
-#: backend/matsushita.h:210
+#: backend/matsushita.h:204
 #, no-c-format
 msgid "Grayscale 8 bits"
 msgstr "Сива скала 8 бита"
 
-#: backend/microtek2.h:601
+#: backend/microtek2.h:599
 #, no-c-format
 msgid "Shadow, midtone, highlight, exposure time"
 msgstr "Сенки, полутонове, светли тонове, време за експониране"
 
-#: backend/microtek2.h:603
+#: backend/microtek2.h:601
 #, no-c-format
 msgid "Special options"
 msgstr "Специални опции"
 
-#: backend/microtek2.h:604
+#: backend/microtek2.h:602
 #, no-c-format
 msgid "Color balance"
 msgstr "Цветови баланс"
 
-#: backend/microtek2.h:607
+#: backend/microtek2.h:605
 #, no-c-format
 msgid "Disable backtracking"
 msgstr "Забрани връщане на главата"
 
-#: backend/microtek2.h:608
+#: backend/microtek2.h:606
 #, no-c-format
 msgid "If checked the scanner does not perform backtracking"
 msgstr "При отмятане, скенерът не връща главата обратно"
 
-#: backend/microtek2.h:612
+#: backend/microtek2.h:610
 #, no-c-format
 msgid "Toggle lamp of flatbed"
 msgstr "Превключи лампата на flatbed-а"
 
-#: backend/microtek2.h:613
+#: backend/microtek2.h:611
 #, no-c-format
 msgid "Toggles the lamp of the flatbed"
 msgstr "Превключва лампата на flatbed-а"
 
-#: backend/microtek2.h:616
+#: backend/microtek2.h:614
 #, no-c-format
 msgid "Calibration by backend"
 msgstr "Калибрация от бекенда"
 
-#: backend/microtek2.h:617
+#: backend/microtek2.h:615
 #, no-c-format
 msgid ""
 "If checked the color calibration before a scan is done by the backend"
@@ -4914,42 +4935,42 @@ msgstr ""
 "Ако отметнете тук, цветовата калибрация преди сканирането се прави от "
 "бекенда"
 
-#: backend/microtek2.h:621
+#: backend/microtek2.h:619
 #, no-c-format
 msgid "Use the lightlid-35mm adapter"
 msgstr "Използвай адаптера за 35мм светлинна капачка"
 
-#: backend/microtek2.h:622
+#: backend/microtek2.h:620
 #, no-c-format
 msgid "This option turns off the lamp of the flatbed during a scan"
 msgstr "Тази опция изключва лампата на flatbed-а по време на сканиране"
 
-#: backend/microtek2.h:626 backend/snapscan-options.c:421
+#: backend/microtek2.h:624 backend/snapscan-options.c:421
 #, no-c-format
 msgid "Quality scan"
 msgstr "Качествено сканиране"
 
-#: backend/microtek2.h:627 backend/snapscan-options.c:422
+#: backend/microtek2.h:625 backend/snapscan-options.c:422
 #, no-c-format
 msgid "Highest quality but lower speed"
 msgstr "Най-високо качество, по-ниска скорост"
 
-#: backend/microtek2.h:630
+#: backend/microtek2.h:628
 #, no-c-format
 msgid "Fast scan"
 msgstr "Бързо сканиране"
 
-#: backend/microtek2.h:631
+#: backend/microtek2.h:629
 #, no-c-format
 msgid "Highest speed but lower quality"
 msgstr "Най-висока скорост, по-ниско качество"
 
-#: backend/microtek2.h:634
+#: backend/microtek2.h:632
 #, no-c-format
 msgid "Automatic adjustment of threshold"
 msgstr "Автоматично пригаждане на прага"
 
-#: backend/microtek2.h:635
+#: backend/microtek2.h:633
 #, no-c-format
 msgid ""
 "If checked the backend automatically tries to determine an optimal value "
@@ -4958,67 +4979,67 @@ msgstr ""
 "Ако отметнете тук, бекендът автоматично ще потърси оптимална стойноста "
 "за прага."
 
-#: backend/microtek2.h:641
+#: backend/microtek2.h:639
 #, no-c-format
 msgid "Selects the gamma correction mode."
 msgstr "Избира режима за корекция на гамата."
 
-#: backend/microtek2.h:644
+#: backend/microtek2.h:642
 #, no-c-format
 msgid "Bind gamma"
 msgstr "Вържи гамата"
 
-#: backend/microtek2.h:645
+#: backend/microtek2.h:643
 #, no-c-format
 msgid "Use same gamma values for all colour channels."
 msgstr "Използва същите стойности за всички цветови канали."
 
-#: backend/microtek2.h:649
+#: backend/microtek2.h:647
 #, no-c-format
 msgid "Scalar gamma"
 msgstr "Скаларна гама"
 
-#: backend/microtek2.h:650
+#: backend/microtek2.h:648
 #, no-c-format
 msgid "Selects a value for scalar gamma correction."
 msgstr "Избира стойност за скаларната гама-корекция."
 
-#: backend/microtek2.h:654
+#: backend/microtek2.h:652
 #, no-c-format
 msgid "Scalar gamma red"
 msgstr "Скаларна гама - червено"
 
-#: backend/microtek2.h:655
+#: backend/microtek2.h:653
 #, no-c-format
 msgid "Selects a value for scalar gamma correction (red channel)"
 msgstr "Избира стойност за скаларната гама-корекция (червен канал)"
 
-#: backend/microtek2.h:659
+#: backend/microtek2.h:657
 #, no-c-format
 msgid "Scalar gamma green"
 msgstr "Скаларна гама - зелено"
 
-#: backend/microtek2.h:660
+#: backend/microtek2.h:658
 #, no-c-format
 msgid "Selects a value for scalar gamma correction (green channel)"
 msgstr "Избира стойност за скаларната гама-корекция (зелен канал)."
 
-#: backend/microtek2.h:664
+#: backend/microtek2.h:662
 #, no-c-format
 msgid "Scalar gamma blue"
 msgstr "Скаларна гама - синьо"
 
-#: backend/microtek2.h:665
+#: backend/microtek2.h:663
 #, no-c-format
 msgid "Selects a value for scalar gamma correction (blue channel)"
 msgstr "Избира стойност за скаларната гама-корекция (син канал)."
 
-#: backend/microtek2.h:669
+#: backend/microtek2.h:667
 #, no-c-format
 msgid "Channel"
 msgstr "Канал"
 
-#: backend/microtek2.h:670
+#: backend/microtek2.h:668
 #, no-c-format
 msgid ""
 "Selects the colour band, \"Master\" means that all colours are affected."
@@ -5026,207 +5047,207 @@ msgstr ""
 "Избира цветовата лента. \"Master\" означава, че всички цветова са "
 "засегнати."
 
-#: backend/microtek2.h:674
+#: backend/microtek2.h:672
 #, no-c-format
 msgid "Midtone"
 msgstr "Полутон"
 
-#: backend/microtek2.h:675
+#: backend/microtek2.h:673
 #, no-c-format
 msgid "Selects which radiance level should be considered \"50 % gray\"."
 msgstr "Избира кое ниво на осветеност ще се смята за \"50 % сиво\"."
 
-#: backend/microtek2.h:679
+#: backend/microtek2.h:677
 #, no-c-format
 msgid "Midtone for red"
 msgstr "Полутон - червено"
 
-#: backend/microtek2.h:680
+#: backend/microtek2.h:678
 #, no-c-format
 msgid "Selects which radiance level should be considered \"50 % red\"."
 msgstr "Избира кое ниво на осветеност ще се смята за \"50 % червено\"."
 
-#: backend/microtek2.h:684
+#: backend/microtek2.h:682
 #, no-c-format
 msgid "Midtone for green"
 msgstr "Полутон - зелено"
 
-#: backend/microtek2.h:685
+#: backend/microtek2.h:683
 #, no-c-format
 msgid "Selects which radiance level should be considered \"50 % green\"."
 msgstr "Избира кое ниво на осветеност ще се смята за \"50% зелено\"."
 
-#: backend/microtek2.h:689
+#: backend/microtek2.h:687
 #, no-c-format
 msgid "Midtone for blue"
 msgstr "Полутон - синьо"
 
-#: backend/microtek2.h:690
+#: backend/microtek2.h:688
 #, no-c-format
 msgid "Selects which radiance level should be considered \"50 % blue\"."
 msgstr "Избира кое ниво на осветеност ще се счита за \"50 % синьо\"."
 
-#: backend/microtek2.h:694
+#: backend/microtek2.h:692
 #, no-c-format
 msgid "Red balance"
 msgstr "Баланс - червено"
 
-#: backend/microtek2.h:695
+#: backend/microtek2.h:693
 #, no-c-format
 msgid "Balance factor for red. A value of 100% means no correction."
 msgstr "Фактор за балансиране на червеното. 100% означава без корекция."
 
-#: backend/microtek2.h:699
+#: backend/microtek2.h:697
 #, no-c-format
 msgid "Green balance"
 msgstr "Баланс - зелено"
 
-#: backend/microtek2.h:700
+#: backend/microtek2.h:698
 #, no-c-format
 msgid "Balance factor for green. A value of 100% means no correction."
 msgstr "Фактор за балансиране на зеленото. 100% означава без корекция."
 
-#: backend/microtek2.h:704
+#: backend/microtek2.h:702
 #, no-c-format
 msgid "Blue balance"
 msgstr "Баланс - синьо"
 
-#: backend/microtek2.h:705
+#: backend/microtek2.h:703
 #, no-c-format
 msgid "Balance factor for blue. A value of 100% means no correction."
 msgstr "Фактор за балансиране на синьото. 100% означава без корекция."
 
-#: backend/microtek2.h:709
+#: backend/microtek2.h:707
 #, no-c-format
 msgid "Firmware balance"
 msgstr "Баланс от фърмуера"
 
-#: backend/microtek2.h:710
+#: backend/microtek2.h:708
 #, no-c-format
 msgid "Sets the color balance values to the firmware provided values."
 msgstr "Наглася за стойности на цветови баланс предвидените от firmware-а."
 
-#: backend/mustek.c:149
+#: backend/mustek.c:147
 #, no-c-format
 msgid "Slowest"
 msgstr "Най-бавно"
 
-#: backend/mustek.c:149
+#: backend/mustek.c:147
 #, no-c-format
 msgid "Slower"
 msgstr "По-бавно"
 
-#: backend/mustek.c:150
+#: backend/mustek.c:148
 #, no-c-format
 msgid "Faster"
 msgstr "По-бързо"
 
-#: backend/mustek.c:150
+#: backend/mustek.c:148
 #, no-c-format
 msgid "Fastest"
 msgstr "Най-бързо"
 
-#: backend/mustek.c:177
+#: backend/mustek.c:175
 #, no-c-format
 msgid "8x8 coarse"
 msgstr "8х8 грубо"
 
-#: backend/mustek.c:177
+#: backend/mustek.c:175
 #, no-c-format
 msgid "8x8 normal"
 msgstr "8х8 нормално"
 
-#: backend/mustek.c:177
+#: backend/mustek.c:175
 #, no-c-format
 msgid "8x8 fine"
 msgstr "8х8 фино"
 
-#: backend/mustek.c:178
+#: backend/mustek.c:176
 #, no-c-format
 msgid "8x8 very fine"
 msgstr "8х8 много фино"
 
-#: backend/mustek.c:178
+#: backend/mustek.c:176
 #, no-c-format
 msgid "6x6 normal"
 msgstr "6х6 нормално"
 
-#: backend/mustek.c:179
+#: backend/mustek.c:177
 #, no-c-format
 msgid "5x5 coarse"
 msgstr "5х5 грубо"
 
-#: backend/mustek.c:179
+#: backend/mustek.c:177
 #, no-c-format
 msgid "5x5 fine"
 msgstr "5х5 фино"
 
-#: backend/mustek.c:179
+#: backend/mustek.c:177
 #, no-c-format
 msgid "4x4 coarse"
 msgstr "4х4 грубо"
 
-#: backend/mustek.c:180
+#: backend/mustek.c:178
 #, no-c-format
 msgid "4x4 normal"
 msgstr "4х4 нормално"
 
-#: backend/mustek.c:180
+#: backend/mustek.c:178
 #, no-c-format
 msgid "4x4 fine"
 msgstr "4х4 фино"
 
-#: backend/mustek.c:180
+#: backend/mustek.c:178
 #, no-c-format
 msgid "3x3 normal"
 msgstr "3х3 нормално"
 
-#: backend/mustek.c:181
+#: backend/mustek.c:179
 #, no-c-format
 msgid "2x2 normal"
 msgstr "2х2 нормално"
 
-#: backend/mustek.c:181
+#: backend/mustek.c:179
 #, no-c-format
 msgid "8x8 custom"
 msgstr "8х8 по избор"
 
-#: backend/mustek.c:182
+#: backend/mustek.c:180
 #, no-c-format
 msgid "6x6 custom"
 msgstr "6х6 по избор"
 
-#: backend/mustek.c:183
+#: backend/mustek.c:181
 #, no-c-format
 msgid "5x5 custom"
 msgstr "5х5 по избор"
 
-#: backend/mustek.c:183
+#: backend/mustek.c:181
 #, no-c-format
 msgid "4x4 custom"
 msgstr "4х4 по избор"
 
-#: backend/mustek.c:184
+#: backend/mustek.c:182
 #, no-c-format
 msgid "3x3 custom"
 msgstr "3х3 по избор"
 
-#: backend/mustek.c:185
+#: backend/mustek.c:183
 #, no-c-format
 msgid "2x2 custom"
 msgstr "2х2 по избор"
 
-#: backend/mustek.c:4247
+#: backend/mustek.c:4245
 #, no-c-format
 msgid "Fast gray mode"
 msgstr "Бърз сив режим"
 
-#: backend/mustek.c:4248
+#: backend/mustek.c:4246
 #, no-c-format
 msgid "Scan in fast gray mode (lower quality)."
 msgstr "Сканирай в бърз сив режим (по-ниско качество)."
 
-#: backend/mustek.c:4345
+#: backend/mustek.c:4343
 #, no-c-format
 msgid ""
 "Request that all previews are done in the fastest (low-quality) mode. "
@@ -5235,117 +5256,117 @@ msgstr ""
 "Поискай всички превюта да се правят в най-бърз (нискокачествен) режим. "
 "Това може да е безцветен режим или режим с ниска резолюция."
 
-#: backend/mustek.c:4353
+#: backend/mustek.c:4351
 #, fuzzy, no-c-format
 msgid "Lamp off time (minutes)"
 msgstr "Загрей лампата"
 
-#: backend/mustek.c:4354
+#: backend/mustek.c:4352
 #, no-c-format
 msgid "Set the time (in minutes) after which the lamp is shut off."
 msgstr ""
 
-#: backend/mustek.c:4365
+#: backend/mustek.c:4363
 #, fuzzy, no-c-format
 msgid "Turn lamp off"
 msgstr "Включва/изключва лампата"
 
-#: backend/mustek.c:4366
+#: backend/mustek.c:4364
 #, fuzzy, no-c-format
 msgid "Turns the lamp off immediately."
 msgstr "Превключва лампата на flatbed-а"
 
-#: backend/mustek.c:4443
+#: backend/mustek.c:4441
 #, no-c-format
 msgid "Red brightness"
 msgstr "Яркост - червено"
 
-#: backend/mustek.c:4444
+#: backend/mustek.c:4442
 #, no-c-format
 msgid "Controls the brightness of the red channel of the acquired image."
 msgstr "Наглася яркостта на червения канал на полученото изображение."
 
-#: backend/mustek.c:4456
+#: backend/mustek.c:4454
 #, no-c-format
 msgid "Green brightness"
 msgstr "Яркост - зелено"
 
-#: backend/mustek.c:4457
+#: backend/mustek.c:4455
 #, no-c-format
 msgid "Controls the brightness of the green channel of the acquired image."
 msgstr "Наглася яркостта на зеления канал на полученото изображение."
 
-#: backend/mustek.c:4469
+#: backend/mustek.c:4467
 #, no-c-format
 msgid "Blue brightness"
 msgstr "Яркост - синьо"
 
-#: backend/mustek.c:4470
+#: backend/mustek.c:4468
 #, no-c-format
 msgid "Controls the brightness of the blue channel of the acquired image."
 msgstr "Наглася яркостта на синия канал на полученото изображение."
 
-#: backend/mustek.c:4495
+#: backend/mustek.c:4493
 #, no-c-format
 msgid "Contrast red channel"
 msgstr "Контраст - червен канал"
 
-#: backend/mustek.c:4496
+#: backend/mustek.c:4494
 #, no-c-format
 msgid "Controls the contrast of the red channel of the acquired image."
 msgstr "Наглася контраста на червения канал на полученото изображение."
 
-#: backend/mustek.c:4508
+#: backend/mustek.c:4506
 #, no-c-format
 msgid "Contrast green channel"
 msgstr "Контраст - зелен канал"
 
-#: backend/mustek.c:4509
+#: backend/mustek.c:4507
 #, no-c-format
 msgid "Controls the contrast of the green channel of the acquired image."
 msgstr "Наглася контраста на зеления канал на полученото изображение."
 
-#: backend/mustek.c:4521
+#: backend/mustek.c:4519
 #, no-c-format
 msgid "Contrast blue channel"
 msgstr "Контраст - син канал"
 
-#: backend/mustek.c:4522
+#: backend/mustek.c:4520
 #, no-c-format
 msgid "Controls the contrast of the blue channel of the acquired image."
 msgstr "Наглася контраста на синия канал на полученото изображение."
 
-#: backend/mustek_usb2.c:105
+#: backend/mustek_usb2.c:103
 #, no-c-format
 msgid "Color48"
 msgstr "Цвят 48"
 
-#: backend/mustek_usb2.c:106 backend/mustek_usb2.c:114
+#: backend/mustek_usb2.c:104 backend/mustek_usb2.c:112
 #, no-c-format
 msgid "Color24"
 msgstr "Цвят 24"
 
-#: backend/mustek_usb2.c:107
+#: backend/mustek_usb2.c:105
 #, no-c-format
 msgid "Gray16"
 msgstr "Сиво 16"
 
-#: backend/mustek_usb2.c:108
+#: backend/mustek_usb2.c:106
 #, no-c-format
 msgid "Gray8"
 msgstr "Сиво 8"
 
-#: backend/mustek_usb2.c:119
+#: backend/mustek_usb2.c:117
 #, no-c-format
 msgid "Reflective"
 msgstr ""
 
-#: backend/mustek_usb2.c:120
+#: backend/mustek_usb2.c:118
 #, fuzzy, no-c-format
 msgid "Positive"
 msgstr "Позитивен екран"
 
-#: backend/mustek_usb2.c:421
+#: backend/mustek_usb2.c:419
 #, no-c-format
 msgid ""
 "Warm-up until the lamp's brightness is constant instead of insisting on "
@@ -5354,7 +5375,7 @@ msgstr ""
 "Загрявай, докато яркостта на лампата е постоянна, вместо да настояваш за "
 "40 секундно загряване."
 
-#: backend/niash.c:678
+#: backend/niash.c:675
 #, no-c-format
 msgid "Image"
 msgstr "Изображение"
@@ -5364,27 +5385,42 @@ msgstr "Изображение"
 msgid "Need calibration"
 msgstr "Груба калибрация"
 
-#: backend/pixma/pixma.c:401
+#: backend/pixma/pixma.c:402
 #, fuzzy, no-c-format
 msgid "Negative color"
 msgstr "Негативен филм"
 
-#: backend/pixma/pixma.c:406
+#: backend/pixma/pixma.c:407
 #, fuzzy, no-c-format
 msgid "Negative gray"
 msgstr "Негатив"
 
-#: backend/pixma/pixma.c:419
+#: backend/pixma/pixma.c:420
 #, no-c-format
 msgid "48 bits color"
 msgstr ""
 
-#: backend/pixma/pixma.c:424
+#: backend/pixma/pixma.c:425
 #, no-c-format
 msgid "16 bits gray"
 msgstr ""
 
-#: backend/pixma/pixma.c:1011
+#: backend/pixma/pixma.c:513 backend/pixma/pixma_sane_options.c:415
+#, no-c-format
+msgid "Once"
+msgstr ""
+
+#: backend/pixma/pixma.c:516
+#, no-c-format
+msgid "Always"
+msgstr ""
+
+#: backend/pixma/pixma.c:519
+#, no-c-format
+msgid "Never"
+msgstr ""
+
+#: backend/pixma/pixma.c:1031
 #, fuzzy, no-c-format
 msgid ""
 "Gamma-correction table with 4096 entries. In color mode this option "
@@ -5479,206 +5515,214 @@ msgstr ""
 #: backend/pixma/pixma_sane_options.c:392
 #, no-c-format
 msgid ""
-"When set, the scanner waits upto the specified time in seconds for a new "
-"document inserted into the automatic document feeder."
+"When set, the scanner waits up to the specified time in seconds for a "
+"new document inserted into the automatic document feeder."
 msgstr ""
 
-#: backend/plustek.c:235 backend/plustek_pp.c:204 backend/u12.c:156
+#: backend/pixma/pixma_sane_options.c:407
+#, no-c-format
+msgid ""
+"When to perform scanner calibration. If you choose \"Once\" it will be "
+"performed a single time per driver init for single page scans, and for "
+"the first page for each ADF scan."
+msgstr ""
+
+#: backend/plustek.c:233 backend/plustek_pp.c:202 backend/u12.c:154
 #, no-c-format
 msgid "Transparency"
 msgstr "Прозрачност"
 
-#: backend/plustek.c:913
+#: backend/plustek.c:911
 #, no-c-format
 msgid "Device-Settings"
 msgstr ""
 
-#: backend/plustek.c:920
+#: backend/plustek.c:918
 #, no-c-format
 msgid "Lampswitch"
 msgstr ""
 
-#: backend/plustek.c:921
+#: backend/plustek.c:919
 #, no-c-format
 msgid "Manually switching the lamp(s)."
 msgstr ""
 
-#: backend/plustek.c:926
+#: backend/plustek.c:924
 #, fuzzy, no-c-format
 msgid "Lamp off during dark calibration"
 msgstr "Груба калибрация"
 
-#: backend/plustek.c:927
+#: backend/plustek.c:925
 #, no-c-format
 msgid "Always switches lamp off when doing dark calibration."
 msgstr ""
 
-#: backend/plustek.c:935
+#: backend/plustek.c:933
 #, fuzzy, no-c-format
 msgid "Calibration data cache"
 msgstr "Режим калибрация"
 
-#: backend/plustek.c:936
+#: backend/plustek.c:934
 #, no-c-format
 msgid "Enables or disables calibration data cache."
 msgstr ""
 
-#: backend/plustek.c:942
+#: backend/plustek.c:940
 #, fuzzy, no-c-format
 msgid "Performs calibration"
 msgstr "Груба калибрация"
 
-#: backend/plustek.c:959
+#: backend/plustek.c:957
 #, no-c-format
 msgid "Speedup sensor"
 msgstr ""
 
-#: backend/plustek.c:960
+#: backend/plustek.c:958
 #, no-c-format
 msgid "Enables or disables speeding up sensor movement."
 msgstr ""
 
-#: backend/plustek.c:974
+#: backend/plustek.c:972
 #, fuzzy, no-c-format
 msgid "Warmup-time"
 msgstr "Загрей лампата"
 
-#: backend/plustek.c:975
+#: backend/plustek.c:973
 #, fuzzy, no-c-format
 msgid "Warmup-time in seconds."
 msgstr "Загрей лампата"
 
-#: backend/plustek.c:987
+#: backend/plustek.c:985
 #, fuzzy, no-c-format
 msgid "Lampoff-time"
 msgstr "Изкл. лампа"
 
-#: backend/plustek.c:988
+#: backend/plustek.c:986
 #, fuzzy, no-c-format
 msgid "Lampoff-time in seconds."
 msgstr "Загрей лампата"
 
-#: backend/plustek.c:995
+#: backend/plustek.c:993
 #, fuzzy, no-c-format
 msgid "Analog frontend"
 msgstr "Аналогова гама - червено"
 
-#: backend/plustek.c:1002
+#: backend/plustek.c:1000
 #, no-c-format
 msgid "Red gain value of the AFE"
 msgstr ""
 
-#: backend/plustek.c:1009 backend/umax_pp.c:782
+#: backend/plustek.c:1007 backend/umax_pp.c:781
 #, no-c-format
 msgid "Red offset"
 msgstr "Офсет - червено"
 
-#: backend/plustek.c:1010
+#: backend/plustek.c:1008
 #, no-c-format
 msgid "Red offset value of the AFE"
 msgstr ""
 
-#: backend/plustek.c:1018
+#: backend/plustek.c:1016
 #, no-c-format
 msgid "Green gain value of the AFE"
 msgstr ""
 
-#: backend/plustek.c:1026
+#: backend/plustek.c:1024
 #, no-c-format
 msgid "Green offset value of the AFE"
 msgstr ""
 
-#: backend/plustek.c:1034
+#: backend/plustek.c:1032
 #, no-c-format
 msgid "Blue gain value of the AFE"
 msgstr ""
 
-#: backend/plustek.c:1042
+#: backend/plustek.c:1040
 #, no-c-format
 msgid "Blue offset value of the AFE"
 msgstr ""
 
-#: backend/plustek.c:1049
+#: backend/plustek.c:1047
 #, fuzzy, no-c-format
 msgid "Red lamp off"
 msgstr "Включва/изключва лампата"
 
-#: backend/plustek.c:1050
+#: backend/plustek.c:1048
 #, no-c-format
 msgid "Defines red lamp off parameter"
 msgstr ""
 
-#: backend/plustek.c:1057
+#: backend/plustek.c:1055
 #, fuzzy, no-c-format
 msgid "Green lamp off"
 msgstr "Включва/изключва лампата"
 
-#: backend/plustek.c:1058
+#: backend/plustek.c:1056
 #, no-c-format
 msgid "Defines green lamp off parameter"
 msgstr ""
 
-#: backend/plustek.c:1065
+#: backend/plustek.c:1063
 #, fuzzy, no-c-format
 msgid "Blue lamp off"
 msgstr "Включва/изключва лампата"
 
-#: backend/plustek.c:1066
+#: backend/plustek.c:1064
 #, no-c-format
 msgid "Defines blue lamp off parameter"
 msgstr ""
 
-#: backend/plustek.c:1096
+#: backend/plustek.c:1094
 #, no-c-format
 msgid "This option reflects the status of the scanner buttons."
 msgstr ""
 
-#: backend/plustek_pp.c:197
+#: backend/plustek_pp.c:195
 #, no-c-format
 msgid "Color36"
 msgstr "Цвят 36"
 
-#: backend/plustek_pp.c:211
+#: backend/plustek_pp.c:209
 #, no-c-format
 msgid "Dithermap 1"
 msgstr ""
 
-#: backend/plustek_pp.c:212
+#: backend/plustek_pp.c:210
 #, no-c-format
 msgid "Dithermap 2"
 msgstr ""
 
-#: backend/plustek_pp.c:213
+#: backend/plustek_pp.c:211
 #, no-c-format
 msgid "Randomize"
 msgstr "Направи произволно"
 
-#: backend/pnm.c:168
+#: backend/pnm.c:166
 #, no-c-format
 msgid "Source Selection"
 msgstr "Избор на източник"
 
-#: backend/pnm.c:205
+#: backend/pnm.c:203
 #, no-c-format
 msgid "Image Enhancement"
 msgstr "Подобрение на образа"
 
-#: backend/pnm.c:241
+#: backend/pnm.c:239
 #, no-c-format
 msgid "Grayify"
 msgstr "Посиви"
 
-#: backend/pnm.c:242
+#: backend/pnm.c:240
 #, no-c-format
 msgid "Load the image as grayscale."
 msgstr "Зареди образа като сива скала."
 
-#: backend/pnm.c:253
+#: backend/pnm.c:251
 #, no-c-format
 msgid "Three-Pass Simulation"
 msgstr "Симулация на тройно минаване"
 
-#: backend/pnm.c:255
+#: backend/pnm.c:253
 #, no-c-format
 msgid ""
 "Simulate a three-pass scanner by returning 3 separate frames.  For "
@@ -5687,12 +5731,12 @@ msgstr ""
 "Симулира скенер с тройно минаване, като връща 3 отделни пъти. Първо "
 "връща зелено, после синьо, а накрая - червено."
 
-#: backend/pnm.c:267
+#: backend/pnm.c:265
 #, no-c-format
 msgid "Hand-Scanner Simulation"
 msgstr "Симулация на ръчен скенер"
 
-#: backend/pnm.c:268
+#: backend/pnm.c:266
 #, no-c-format
 msgid ""
 "Simulate a hand-scanner.  Hand-scanners often do not know the image "
@@ -5704,48 +5748,48 @@ msgstr ""
 "тази опция позволява да тествате дали фронтендът може да се справи "
 "правилно с това."
 
-#: backend/pnm.c:283
+#: backend/pnm.c:281
 #, no-c-format
 msgid ""
 "Set default values for enhancement controls (brightness & contrast)."
 msgstr "Нагласи висящите опции за подобрение (за яркостта и контраста)."
 
-#: backend/pnm.c:295
+#: backend/pnm.c:293
 #, no-c-format
 msgid "Read only test-option"
 msgstr "Тест само за четене"
 
-#: backend/pnm.c:296
+#: backend/pnm.c:294
 #, no-c-format
 msgid "Let's see whether frontends can treat this right"
 msgstr "Да видим дали фронтендовете ще се справят с това"
 
-#: backend/pnm.c:307
+#: backend/pnm.c:305
 #, no-c-format
 msgid "Gamma Tables"
 msgstr "Таблици за гамата"
 
-#: backend/pnm.c:379
+#: backend/pnm.c:377
 #, no-c-format
 msgid "Status Code Simulation"
 msgstr "Симулация на статус-код"
 
-#: backend/pnm.c:391
+#: backend/pnm.c:389
 #, no-c-format
 msgid "Do not force status code"
 msgstr "Не насилвай статус-код"
 
-#: backend/pnm.c:392
+#: backend/pnm.c:390
 #, no-c-format
 msgid "Do not force the backend to return a status code."
 msgstr "Не насилвай бекенда да връща статус-код"
 
-#: backend/pnm.c:403
+#: backend/pnm.c:401
 #, no-c-format
 msgid "Return SANE_STATUS_EOF"
 msgstr "Върни SANE_STATUS_EOF"
 
-#: backend/pnm.c:404
+#: backend/pnm.c:402
 #, no-c-format
 msgid ""
 "Force the backend to return the status code SANE_STATUS_EOF after "
@@ -5754,12 +5798,12 @@ msgstr ""
 "Накарай бекенда да върне статус-кода SANE_STATUS_EOF след повикването на "
 "sane_read()."
 
-#: backend/pnm.c:416
+#: backend/pnm.c:414
 #, no-c-format
 msgid "Return SANE_STATUS_JAMMED"
 msgstr "Върни SANE_STATUS_JAMMED"
 
-#: backend/pnm.c:418
+#: backend/pnm.c:416
 #, no-c-format
 msgid ""
 "Force the backend to return the status code SANE_STATUS_JAMMED after "
@@ -5768,12 +5812,12 @@ msgstr ""
 "Накарай бекенда да върне статус-кода SANE_STATUS_JAMMED, след "
 "повикването на sane_read()."
 
-#: backend/pnm.c:430
+#: backend/pnm.c:428
 #, no-c-format
 msgid "Return SANE_STATUS_NO_DOCS"
 msgstr "Върни SANE_STATUS_NO_DOCS"
 
-#: backend/pnm.c:431
+#: backend/pnm.c:429
 #, no-c-format
 msgid ""
 "Force the backend to return the status code SANE_STATUS_NO_DOCS after "
@@ -5782,12 +5826,12 @@ msgstr ""
 "Накарай бекенда да върне статус-кода SANE_STATUS_NO_DOCS след "
 "повикването на sane_read()."
 
-#: backend/pnm.c:443
+#: backend/pnm.c:441
 #, no-c-format
 msgid "Return SANE_STATUS_COVER_OPEN"
 msgstr "Върни SANE_STATUS_COVER_OPEN"
 
-#: backend/pnm.c:444
+#: backend/pnm.c:442
 #, no-c-format
 msgid ""
 "Force the backend to return the status code SANE_STATUS_COVER_OPEN after "
@@ -5796,12 +5840,12 @@ msgstr ""
 "Накарай бекенда да върне статус-кода SANE_STATUS_COVER_OPEN след "
 "повикване на sane_read()."
 
-#: backend/pnm.c:456
+#: backend/pnm.c:454
 #, no-c-format
 msgid "Return SANE_STATUS_IO_ERROR"
 msgstr "Върни SANE_STATUS_IO_ERROR"
 
-#: backend/pnm.c:457
+#: backend/pnm.c:455
 #, no-c-format
 msgid ""
 "Force the backend to return the status code SANE_STATUS_IO_ERROR after "
@@ -5810,12 +5854,12 @@ msgstr ""
 "Накарай бекенда да върне статус-кода SANE_STATUS_IO_ERROR след повикване "
 "на sane_read()."
 
-#: backend/pnm.c:469
+#: backend/pnm.c:467
 #, no-c-format
 msgid "Return SANE_STATUS_NO_MEM"
 msgstr "Върни SANE_STATUS_NO_MEM"
 
-#: backend/pnm.c:471
+#: backend/pnm.c:469
 #, no-c-format
 msgid ""
 "Force the backend to return the status code SANE_STATUS_NO_MEM after "
@@ -5824,12 +5868,12 @@ msgstr ""
 "Накарай бекенда да върне статус-кода SANE_STATUS_NO_MEM след повикване "
 "на sane_read()."
 
-#: backend/pnm.c:483
+#: backend/pnm.c:481
 #, no-c-format
 msgid "Return SANE_STATUS_ACCESS_DENIED"
 msgstr "Върни SANE_STATUS_ACCESS_DENIED"
 
-#: backend/pnm.c:484
+#: backend/pnm.c:482
 #, no-c-format
 msgid ""
 "Force the backend to return the status code SANE_STATUS_ACCESS_DENIED "
@@ -5838,42 +5882,42 @@ msgstr ""
 "Накарай бекенда да върне статус-кода SANE_STATUS_ACCESS_DENIED след "
 "повикване на sane_read()."
 
-#: backend/rts8891.c:2809
+#: backend/rts8891.c:2808
 #, no-c-format
 msgid "This option reflects the status of a scanner button."
 msgstr ""
 
-#: backend/rts8891.c:2840 backend/umax.c:5795 backend/umax_pp.c:629
+#: backend/rts8891.c:2839 backend/umax.c:5793 backend/umax_pp.c:628
 #, no-c-format
 msgid "Lamp on"
 msgstr "Вкл. лампа"
 
-#: backend/rts8891.c:2841 backend/umax.c:5796
+#: backend/rts8891.c:2840 backend/umax.c:5794
 #, no-c-format
 msgid "Turn on scanner lamp"
 msgstr "Включи лампата на скенера"
 
-#: backend/rts8891.c:2851 backend/umax.c:5812 backend/umax1220u.c:248
+#: backend/rts8891.c:2850 backend/umax.c:5810 backend/umax1220u.c:246
 #, no-c-format
 msgid "Lamp off"
 msgstr "Изкл. лампа"
 
-#: backend/rts8891.c:2852 backend/umax.c:5813 backend/umax1220u.c:249
+#: backend/rts8891.c:2851 backend/umax.c:5811 backend/umax1220u.c:247
 #, no-c-format
 msgid "Turn off scanner lamp"
 msgstr "Изключва лампата на скенера"
 
-#: backend/sm3840.c:760
+#: backend/sm3840.c:758
 #, fuzzy, no-c-format
 msgid "Lamp timeout"
 msgstr "Изкл. лампа"
 
-#: backend/sm3840.c:762
+#: backend/sm3840.c:760
 #, no-c-format
 msgid "Minutes until lamp is turned off after scan"
 msgstr ""
 
-#: backend/sm3840.c:772
+#: backend/sm3840.c:770
 #, no-c-format
 msgid "Threshold value for lineart mode"
 msgstr ""
@@ -6012,57 +6056,57 @@ msgstr "Цветни линии на четене"
 msgid "Grayscale lines per read"
 msgstr "Линии на четене по сива скала"
 
-#: backend/stv680.c:974
+#: backend/stv680.c:971
 #, no-c-format
 msgid "webcam"
 msgstr ""
 
-#: backend/stv680.h:115
+#: backend/stv680.h:109
 #, no-c-format
 msgid "Color RAW"
 msgstr "Цвят RAW"
 
-#: backend/stv680.h:116
+#: backend/stv680.h:110
 #, no-c-format
 msgid "Color RGB"
 msgstr "Цвят RGB"
 
-#: backend/stv680.h:117
+#: backend/stv680.h:111
 #, no-c-format
 msgid "Color RGB TEXT"
 msgstr "Цвят RGB TEXT"
 
-#: backend/test.c:143
+#: backend/test.c:141
 #, no-c-format
 msgid "Solid black"
 msgstr "Солидно черно"
 
-#: backend/test.c:143
+#: backend/test.c:141
 #, no-c-format
 msgid "Solid white"
 msgstr "Солидно бяло"
 
-#: backend/test.c:144
+#: backend/test.c:142
 #, no-c-format
 msgid "Color pattern"
 msgstr "Цветови десен"
 
-#: backend/test.c:144
+#: backend/test.c:142
 #, no-c-format
 msgid "Grid"
 msgstr "Решетка"
 
-#: backend/test.c:169 backend/test.c:177
+#: backend/test.c:167 backend/test.c:175
 #, no-c-format
 msgid "First entry"
 msgstr "Първо въвеждане"
 
-#: backend/test.c:169 backend/test.c:177
+#: backend/test.c:167 backend/test.c:175
 #, no-c-format
 msgid "Second entry"
 msgstr "Второ въвеждане"
 
-#: backend/test.c:171
+#: backend/test.c:169
 #, no-c-format
 msgid ""
 "This is the very long third entry. Maybe the frontend has an idea how to "
@@ -6071,12 +6115,12 @@ msgstr ""
 "Това е много дългото трето въвеждане. Може би фронтендът ще може да го "
 "покаже."
 
-#: backend/test.c:390
+#: backend/test.c:419
 #, no-c-format
 msgid "Hand-scanner simulation"
 msgstr "Симулация на ръчен скенер"
 
-#: backend/test.c:391
+#: backend/test.c:420
 #, no-c-format
 msgid ""
 "Simulate a hand-scanner.  Hand-scanners do not know the image height a "
@@ -6090,12 +6134,12 @@ msgstr ""
 "правилно да се справи с това. Също така, опцията позволява фиксирана "
 "ширина от 11 см."
 
-#: backend/test.c:408
+#: backend/test.c:437
 #, no-c-format
 msgid "Three-pass simulation"
 msgstr "Симулация на тройно минаване"
 
-#: backend/test.c:409
+#: backend/test.c:438
 #, no-c-format
 msgid ""
 "Simulate a three-pass scanner. In color mode, three frames are "
@@ -6103,35 +6147,35 @@ msgid ""
 msgstr ""
 "Симулира скенер с тройно минаване. В цветен режим се предават три фрейма."
 
-#: backend/test.c:424
+#: backend/test.c:453
 #, no-c-format
 msgid "Set the order of frames"
 msgstr "Наглася поредността на фреймовете."
 
-#: backend/test.c:425
+#: backend/test.c:454
 #, no-c-format
 msgid "Set the order of frames in three-pass color mode."
 msgstr ""
 "Наглася поредността на фреймовете в цветен режим при тройно минаване."
 
-#: backend/test.c:458
+#: backend/test.c:487
 #, no-c-format
 msgid ""
 "If Automatic Document Feeder is selected, the feeder will be 'empty' "
 "after 10 scans."
 msgstr ""
 
-#: backend/test.c:473
+#: backend/test.c:502
 #, no-c-format
 msgid "Special Options"
 msgstr "Специални опции"
 
-#: backend/test.c:486
+#: backend/test.c:515
 #, no-c-format
 msgid "Select the test picture"
 msgstr "Избира картинка за тестване"
 
-#: backend/test.c:488
+#: backend/test.c:517
 #, no-c-format
 msgid ""
 "Select the kind of test picture. Available options:\n"
@@ -6149,12 +6193,12 @@ msgstr ""
 "Решетка: рисува черно-бяла решетка с широчина и височина от 10 мм на "
 "квадрат."
 
-#: backend/test.c:509
+#: backend/test.c:538
 #, no-c-format
 msgid "Invert endianness"
 msgstr "Смени endianness"
 
-#: backend/test.c:510
+#: backend/test.c:539
 #, no-c-format
 msgid ""
 "Exchange upper and lower byte of image data in 16 bit modes. This option "
@@ -6166,24 +6210,24 @@ msgstr ""
 "фронтендовете, напр. дали фронтендът използва правилния endianness "
 "(метод за запазване на данни в паметта на компютъра."
 
-#: backend/test.c:526
+#: backend/test.c:555
 #, no-c-format
 msgid "Read limit"
 msgstr "Лимит на четене"
 
-#: backend/test.c:527
+#: backend/test.c:556
 #, no-c-format
 msgid "Limit the amount of data transferred with each call to sane_read()."
 msgstr ""
 "Ограничава количеството данни, предадени с всяко повикване на "
 "sane_read()."
 
-#: backend/test.c:540
+#: backend/test.c:569
 #, no-c-format
 msgid "Size of read-limit"
 msgstr "Размер на лимита на четене"
 
-#: backend/test.c:541
+#: backend/test.c:570
 #, no-c-format
 msgid ""
 "The (maximum) amount of data transferred with each call to sane_read()."
@@ -6191,33 +6235,33 @@ msgstr ""
 "(Максималното) количество данни, предадени с всяко повикване на "
 "sane_read()."
 
-#: backend/test.c:556
+#: backend/test.c:585
 #, no-c-format
 msgid "Read delay"
 msgstr "Забавяне при четене"
 
-#: backend/test.c:557
+#: backend/test.c:586
 #, no-c-format
 msgid "Delay the transfer of data to the pipe."
 msgstr "Забавяне на трансфера на данни по линията."
 
-#: backend/test.c:569
+#: backend/test.c:598
 #, no-c-format
 msgid "Duration of read-delay"
 msgstr "Продължителност на забавянето при четене"
 
-#: backend/test.c:570
+#: backend/test.c:599
 #, no-c-format
 msgid ""
 "How long to wait after transferring each buffer of data through the pipe."
 msgstr "Колко дълго да се чака след предаването на всеки буфер данни."
 
-#: backend/test.c:585
+#: backend/test.c:614
 #, no-c-format
 msgid "Return-value of sane_read"
 msgstr "Връщана стойност на sane_read"
 
-#: backend/test.c:587
+#: backend/test.c:616
 #, no-c-format
 msgid ""
 "Select the return-value of sane_read(). \"Default\" is the normal "
@@ -6228,22 +6272,22 @@ msgstr ""
 "нормалната стойност за сканиране. Всички други статус-кодове са за "
 "тестване на това как се справя фронтенда с тях."
 
-#: backend/test.c:604
+#: backend/test.c:633
 #, no-c-format
 msgid "Loss of pixels per line"
 msgstr "Загуба на пиксели на линия"
 
-#: backend/test.c:606
+#: backend/test.c:635
 #, no-c-format
 msgid "The number of pixels that are wasted at the end of each line."
 msgstr "Броят пиксели, които се губят в края на всяка линия."
 
-#: backend/test.c:619
+#: backend/test.c:648
 #, no-c-format
 msgid "Fuzzy parameters"
 msgstr "Параметри за мъглявост"
 
-#: backend/test.c:620
+#: backend/test.c:649
 #, no-c-format
 msgid ""
 "Return fuzzy lines and bytes per line when sane_parameters() is called "
@@ -6252,12 +6296,12 @@ msgstr ""
 "Върни мъгляви линии и байтове на линия, когато sane_parameters() е "
 "извикано преди sane_start()."
 
-#: backend/test.c:647
+#: backend/test.c:676
 #, no-c-format
 msgid "Offer select file descriptor"
 msgstr "Предложи select file descriptor"
 
-#: backend/test.c:648
+#: backend/test.c:677
 #, no-c-format
 msgid ""
 "Offer a select filedescriptor for detecting if sane_read() will return "
@@ -6266,12 +6310,12 @@ msgstr ""
 "Предлага специален filedescriptor за детектване дали sane_read() ще "
 "върне данни."
 
-#: backend/test.c:661
+#: backend/test.c:690
 #, no-c-format
 msgid "Enable test options"
 msgstr "Позволи тестови опции"
 
-#: backend/test.c:662
+#: backend/test.c:691
 #, no-c-format
 msgid ""
 "Enable various test options. This is for testing the ability of "
@@ -6281,27 +6325,27 @@ msgstr ""
 "способността на фронтендовете да виждат и модифицират всичките типове "
 "опции на SANE."
 
-#: backend/test.c:676
+#: backend/test.c:705
 #, no-c-format
 msgid "Print options"
 msgstr "Принт на опциите"
 
-#: backend/test.c:677
+#: backend/test.c:706
 #, no-c-format
 msgid "Print a list of all options."
 msgstr "Изважда разпечатка на всички опции."
 
-#: backend/test.c:754
+#: backend/test.c:783
 #, no-c-format
 msgid "Bool test options"
 msgstr "Булеви тестови опции"
 
-#: backend/test.c:767
+#: backend/test.c:796
 #, no-c-format
 msgid "(1/6) Bool soft select soft detect"
 msgstr "(1/6) Булева мек избор мек детект"
 
-#: backend/test.c:769
+#: backend/test.c:798
 #, no-c-format
 msgid ""
 "(1/6) Bool test option that has soft select and soft detect (and "
@@ -6310,12 +6354,12 @@ msgstr ""
 "(1/6) Булева тестова опция с мек избор и мек детект (и разширени) "
 "възможности. Това е просто нормална булева опция."
 
-#: backend/test.c:785
+#: backend/test.c:814
 #, no-c-format
 msgid "(2/6) Bool hard select soft detect"
 msgstr "(2/6) Булева твърд избор и мек детект"
 
-#: backend/test.c:787
+#: backend/test.c:816
 #, no-c-format
 msgid ""
 "(2/6) Bool test option that has hard select and soft detect (and "
@@ -6327,12 +6371,12 @@ msgstr ""
 "фронтенда, а само от потребителя (напр. чрез натискане на бутон върху "
 "устройството)."
 
-#: backend/test.c:804
+#: backend/test.c:833
 #, no-c-format
 msgid "(3/6) Bool hard select"
 msgstr "(3/6) Булева твърд избор"
 
-#: backend/test.c:805
+#: backend/test.c:834
 #, no-c-format
 msgid ""
 "(3/6) Bool test option that has hard select (and advanced) capabilities. "
@@ -6344,12 +6388,12 @@ msgstr ""
 "потребителя (напр. чрез натискане на бутон върху устройството) и "
 "фронтендът не може да я чете."
 
-#: backend/test.c:823
+#: backend/test.c:852
 #, no-c-format
 msgid "(4/6) Bool soft detect"
 msgstr "(4/6) Булева мек детект"
 
-#: backend/test.c:824
+#: backend/test.c:853
 #, no-c-format
 msgid ""
 "(4/6) Bool test option that has soft detect (and advanced) capabilities. "
@@ -6358,12 +6402,12 @@ msgstr ""
 "(4/6) Булева тестова опция с мек детект (и разширени) възможности. Това "
 "означава, че опцията е само за четене (read-only)."
 
-#: backend/test.c:840
+#: backend/test.c:869
 #, no-c-format
 msgid "(5/6) Bool soft select soft detect emulated"
 msgstr "(5/6) Булева мек избор мек детект емулирана"
 
-#: backend/test.c:841
+#: backend/test.c:870
 #, no-c-format
 msgid ""
 "(5/6) Bool test option that has soft select, soft detect, and emulated "
@@ -6372,12 +6416,12 @@ msgstr ""
 "(5/6) Булева тестова опция с мек избор, мек детект и емулирани (и "
 "разширени възможности."
 
-#: backend/test.c:857
+#: backend/test.c:886
 #, no-c-format
 msgid "(6/6) Bool soft select soft detect auto"
 msgstr "(6/6) Булева мек избор мек детект авто"
 
-#: backend/test.c:858
+#: backend/test.c:887
 #, no-c-format
 msgid ""
 "(6/6) Bool test option that has soft select, soft detect, and automatic "
@@ -6388,27 +6432,27 @@ msgstr ""
 "разширени) възможности. Тази опция може автоматично да се нагласи от "
 "бекенда."
 
-#: backend/test.c:875
+#: backend/test.c:904
 #, no-c-format
 msgid "Int test options"
 msgstr "Int тестови опции"
 
-#: backend/test.c:888
+#: backend/test.c:917
 #, no-c-format
 msgid "(1/6) Int"
 msgstr "(1/6) Int"
 
-#: backend/test.c:889
+#: backend/test.c:918
 #, no-c-format
 msgid "(1/6) Int test option with no unit and no constraint set."
 msgstr "(1/6) Интегрална тестова опция без ограничения и единица."
 
-#: backend/test.c:904
+#: backend/test.c:933
 #, no-c-format
 msgid "(2/6) Int constraint range"
 msgstr "(2/6) Int ограничен обхват"
 
-#: backend/test.c:905
+#: backend/test.c:934
 #, no-c-format
 msgid ""
 "(2/6) Int test option with unit pixel and constraint range set. Minimum "
@@ -6417,24 +6461,24 @@ msgstr ""
 "(2/6) Интегрална тестова опция с единица пиксел и нагласен обхват на "
 "ограничение. Минимумът е 4, максимумът е 192, а стъпката е 2."
 
-#: backend/test.c:921
+#: backend/test.c:950
 #, no-c-format
 msgid "(3/6) Int constraint word list"
 msgstr "(3/6) Int ограничен word list"
 
-#: backend/test.c:922
+#: backend/test.c:951
 #, no-c-format
 msgid "(3/6) Int test option with unit bits and constraint word list set."
 msgstr ""
 "(3/6) Интегрална тестова опция с единица бит и нагласен ограничен word "
 "list."
 
-#: backend/test.c:937
+#: backend/test.c:966
 #, no-c-format
 msgid "(4/6) Int array"
 msgstr "(4/6) Int array"
 
-#: backend/test.c:938
+#: backend/test.c:967
 #, no-c-format
 msgid ""
 "(4/6) Int test option with unit mm and using an array without "
@@ -6443,12 +6487,12 @@ msgstr ""
 "(4/6) Интегрална тестова опция с единица мм; използва array без "
 "ограничения."
 
-#: backend/test.c:953
+#: backend/test.c:982
 #, no-c-format
 msgid "(5/6) Int array constraint range"
 msgstr "(5/6) Int array ограничен обхват"
 
-#: backend/test.c:954
+#: backend/test.c:983
 #, no-c-format
 msgid ""
 "(5/6) Int test option with unit dpi and using an array with a range "
@@ -6457,12 +6501,12 @@ msgstr ""
 "(5/6) Интегрална тестова опция с единица dpi; използва array с ограничен "
 "обхват. Минимумът е 4, максимумът е 192, а стъпката е 2."
 
-#: backend/test.c:1028
+#: backend/test.c:1057
 #, no-c-format
 msgid "(6/6) Int array constraint word list"
 msgstr "(6/6) Int array ограничен word list"
 
-#: backend/test.c:1029
+#: backend/test.c:1058
 #, no-c-format
 msgid ""
 "(6/6) Int test option with unit percent and using an array with a word "
@@ -6471,27 +6515,27 @@ msgstr ""
 "(6/6) Интегрална тестова опция с единица процент; използва array с "
 "ограничен word list."
 
-#: backend/test.c:1045
+#: backend/test.c:1074
 #, no-c-format
 msgid "Fixed test options"
 msgstr "Фиксирани тестови опции"
 
-#: backend/test.c:1058
+#: backend/test.c:1087
 #, no-c-format
 msgid "(1/3) Fixed"
 msgstr "(1/3) Фиксирана"
 
-#: backend/test.c:1059
+#: backend/test.c:1088
 #, no-c-format
 msgid "(1/3) Fixed test option with no unit and no constraint set."
 msgstr "(1/3) Фиксирана тестова опция без нагласена единица и ограничения."
 
-#: backend/test.c:1074
+#: backend/test.c:1103
 #, no-c-format
 msgid "(2/3) Fixed constraint range"
 msgstr "(2/3) Фиксирана ограничение обхват"
 
-#: backend/test.c:1075
+#: backend/test.c:1104
 #, no-c-format
 msgid ""
 "(2/3) Fixed test option with unit microsecond and constraint range set. "
@@ -6501,49 +6545,49 @@ msgstr ""
 "ограничен обхват. Минимумът е -42,17, максимумът 32767,9999, а стъпката "
 "е 2,0."
 
-#: backend/test.c:1091
+#: backend/test.c:1120
 #, no-c-format
 msgid "(3/3) Fixed constraint word list"
 msgstr "(3/3) Фиксирана ограничен word list"
 
-#: backend/test.c:1092
+#: backend/test.c:1121
 #, no-c-format
 msgid "(3/3) Fixed test option with no unit and constraint word list set."
 msgstr ""
 "(3/3) Фиксирана тестова опция без нагласена единица и с ограничен word "
 "list."
 
-#: backend/test.c:1107
+#: backend/test.c:1136
 #, no-c-format
 msgid "String test options"
 msgstr "Стрингови тестови опции"
 
-#: backend/test.c:1120
+#: backend/test.c:1149
 #, no-c-format
 msgid "(1/3) String"
 msgstr "(1/3) String"
 
-#: backend/test.c:1121
+#: backend/test.c:1150
 #, no-c-format
 msgid "(1/3) String test option without constraint."
 msgstr "(1/3) Стрингова тестова опция без ограничение."
 
-#: backend/test.c:1138
+#: backend/test.c:1167
 #, no-c-format
 msgid "(2/3) String constraint string list"
 msgstr "(2/3) String ограничен string list"
 
-#: backend/test.c:1139
+#: backend/test.c:1168
 #, no-c-format
 msgid "(2/3) String test option with string list constraint."
 msgstr "(2/3) Стрингова тестова опция с ограничен string list."
 
-#: backend/test.c:1158
+#: backend/test.c:1187
 #, no-c-format
 msgid "(3/3) String constraint long string list"
 msgstr "(3/3) String с ограничен long string list"
 
-#: backend/test.c:1159
+#: backend/test.c:1188
 #, no-c-format
 msgid ""
 "(3/3) String test option with string list constraint. Contains some more "
@@ -6552,152 +6596,152 @@ msgstr ""
 "(3/3) Стрингова тестова опция с ограничителен string list. Съдържа "
 "повече стойности..."
 
-#: backend/test.c:1179
+#: backend/test.c:1208
 #, no-c-format
 msgid "Button test options"
 msgstr "Бутонни тестови опции"
 
-#: backend/test.c:1192
+#: backend/test.c:1221
 #, no-c-format
 msgid "(1/1) Button"
 msgstr "(1/1) Button"
 
-#: backend/test.c:1193
+#: backend/test.c:1222
 #, no-c-format
 msgid "(1/1) Button test option. Prints some text..."
 msgstr "(1/1) Бутонна тестова опция. Извежда някакъв текст..."
 
-#: backend/u12.c:149
+#: backend/u12.c:147
 #, no-c-format
 msgid "Color 36"
 msgstr "Цвят 36"
 
-#: backend/umax.c:235
+#: backend/umax.c:233
 #, no-c-format
 msgid "Use Image Composition"
 msgstr "Използвай композицията на изображението."
 
-#: backend/umax.c:236
+#: backend/umax.c:234
 #, no-c-format
 msgid "Bi-level black and white (lineart mode)"
 msgstr "Черно и бяло в две нива (режим lineart)"
 
-#: backend/umax.c:237
+#: backend/umax.c:235
 #, no-c-format
 msgid "Dithered/halftone black & white (halftone mode)"
 msgstr "Dither/полутон черно и бяло (режим полутон)"
 
-#: backend/umax.c:238
+#: backend/umax.c:236
 #, no-c-format
 msgid "Multi-level black & white (grayscale mode)"
 msgstr "Черно и бяло в много нива (режим сива скала)"
 
-#: backend/umax.c:239
+#: backend/umax.c:237
 #, no-c-format
 msgid "Multi-level RGB color (one pass color)"
 msgstr "RGB цветно в много нива (с едно минаване)"
 
-#: backend/umax.c:240
+#: backend/umax.c:238
 #, no-c-format
 msgid "Ignore calibration"
 msgstr "Игнорирай калибрацията"
 
-#: backend/umax.c:5733
+#: backend/umax.c:5731
 #, no-c-format
 msgid "Disable pre focus"
 msgstr "Забрани предв. фокус"
 
-#: backend/umax.c:5734
+#: backend/umax.c:5732
 #, no-c-format
 msgid "Do not calibrate focus"
 msgstr "Не калибрирай фокуса"
 
-#: backend/umax.c:5745
+#: backend/umax.c:5743
 #, no-c-format
 msgid "Manual pre focus"
 msgstr "Ръчен предв. фокус"
 
-#: backend/umax.c:5757
+#: backend/umax.c:5755
 #, no-c-format
 msgid "Fix focus position"
 msgstr "Фиксирай позиция на фокуса"
 
-#: backend/umax.c:5769
+#: backend/umax.c:5767
 #, no-c-format
 msgid "Lens calibration in doc position"
 msgstr "Калибрация на лещата в позиция документ"
 
-#: backend/umax.c:5770
+#: backend/umax.c:5768
 #, no-c-format
 msgid "Calibrate lens focus in document position"
 msgstr "Калибрирай фокуса на лещата в позиция документ"
 
-#: backend/umax.c:5781
+#: backend/umax.c:5779
 #, no-c-format
 msgid "Holder focus position 0mm"
 msgstr "Позиция на holder фокуса 0мм"
 
-#: backend/umax.c:5782
+#: backend/umax.c:5780
 #, no-c-format
 msgid "Use 0mm holder focus position instead of 0.6mm"
 msgstr "Използвай 0мм позиция на holder фокуса, вместо 0,6мм"
 
-#: backend/umax.c:5885
+#: backend/umax.c:5883
 #, no-c-format
 msgid "Calibration mode"
 msgstr "Режим калибрация"
 
-#: backend/umax.c:5886
+#: backend/umax.c:5884
 #, no-c-format
 msgid "Define calibration mode"
 msgstr "Дефинирай режима на калибрация"
 
-#: backend/umax_pp.c:630
+#: backend/umax_pp.c:629
 #, no-c-format
 msgid "Sets lamp on/off"
 msgstr "Включва/изключва лампата"
 
-#: backend/umax_pp.c:639
+#: backend/umax_pp.c:638
 #, no-c-format
 msgid "UTA on"
 msgstr "UTA вкл."
 
-#: backend/umax_pp.c:640
+#: backend/umax_pp.c:639
 #, no-c-format
 msgid "Sets UTA on/off"
 msgstr "Включва/изключва UTA"
 
-#: backend/umax_pp.c:761
+#: backend/umax_pp.c:760
 #, no-c-format
 msgid "Offset"
 msgstr "Офсет"
 
-#: backend/umax_pp.c:763
+#: backend/umax_pp.c:762
 #, no-c-format
 msgid "Color channels offset settings"
 msgstr "Настройки по офсета на цветните канали"
 
-#: backend/umax_pp.c:770
+#: backend/umax_pp.c:769
 #, no-c-format
 msgid "Gray offset"
 msgstr "Офсет - сиво"
 
-#: backend/umax_pp.c:771
+#: backend/umax_pp.c:770
 #, no-c-format
 msgid "Sets gray channel offset"
 msgstr "Наглася офсета на сивия канал"
 
-#: backend/umax_pp.c:783
+#: backend/umax_pp.c:782
 #, no-c-format
 msgid "Sets red channel offset"
 msgstr "Наглася офсета на червения канал"
 
-#: backend/umax_pp.c:795
+#: backend/umax_pp.c:794
 #, no-c-format
 msgid "Sets green channel offset"
 msgstr "Наглася офсета на зеления канал"
 
-#: backend/umax_pp.c:807
+#: backend/umax_pp.c:806
 #, no-c-format
 msgid "Sets blue channel offset"
 msgstr "Наглася офсета на синия канал"

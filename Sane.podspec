@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.ios.deployment_target  = '9.0'
   s.name     = 'Sane'
-  s.version  = '1.0.31'
+  s.version  = '1.0.32'
   s.license  = { :type => 'GPL with exception clause', :file => 'Sane/all/Sane.xcframework/LICENSE.txt' }
   s.summary  = 'SANE backends, net only'
   s.homepage = 'https://github.com/dvkch/SaneScanner'

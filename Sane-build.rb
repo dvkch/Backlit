@@ -11,7 +11,7 @@ FINAL_DIR = DEST_DIR + 'all'
 LOG_PATH = Pathname.pwd + 'Sane-build-log.txt'
 
 # Release tag
-GIT_TAG = '1.0.31'.freeze
+GIT_TAG = '1.0.32'.freeze
 
 # Build flags
 MAKE_JOBS = 4
@@ -51,8 +51,12 @@ def system_with_log(command, env = {})
 
     status = system(env, command + " >> \"#{LOG_PATH}\" 2>&1")
     if status != true
+        puts ''
         puts 'An error has been encountered, please take a look at the log file '
         puts "=> #{LOG_PATH} "
+        puts ''
+        puts 'Here is an excerpt:'
+        puts IO.readlines(LOG_PATH).last(10)
         exit 0
     end
 end
@@ -108,13 +112,13 @@ def build_lib(name)
         "CC"        => `xcrun -find -sdk #{options[:sdk]} cc`,
         "CPP"       => `xcrun -find -sdk #{options[:sdk]} cpp`,
         "CFLAGS"    => host_flags + " " + FLAGS,
-        "CXXFLAGS"  => host_flags + " " + FLAGS,
+        "CXXFLAGS"  => host_flags + " " + FLAGS + " ",
         "LDFLAGS"   => host_flags,
     }
 
     # compiling with USB support would require compiling libusb which itself needs iOS IOKit headers. Unfortunately
     # those are private and the app would require root privileges to use the USB devices
-    configure_options = '--disable-local-backends --without-usb --enable-static --disable-shared --disable-warnings --enable-pthread --enable-silent-rules'
+    configure_options = '--disable-local-backends --without-libcurl --without-snmp --without-usb --enable-static --disable-shared --disable-warnings --enable-pthread --enable-silent-rules'
 
     Dir.chdir(GIT_DIR)
     puts '   => Configuring'
