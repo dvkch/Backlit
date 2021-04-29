@@ -55,14 +55,14 @@ class SanePreviewView: UIView {
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(buttonsStackView)
         
+        previewButton.kind = .preview
+        previewButton.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
+        buttonsStackView.addArrangedSubview(previewButton)
+
         scanButton.kind = .scan
         scanButton.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
         buttonsStackView.addArrangedSubview(scanButton)
 
-        previewButton.kind = .preview
-        previewButton.addTarget(self, action: #selector(self.buttonTap), for: .touchUpInside)
-        buttonsStackView.addArrangedSubview(previewButton)
-        
         imageView.snp.makeConstraints { (make) in
             make.top.equalTo(contentInsets)
             make.centerX.equalToSuperview()
@@ -161,7 +161,7 @@ class SanePreviewView: UIView {
             self?.progress = nil
             self?.currentAction = nil
             if case .success((let image, _)) = result {
-                self?.imageView.image = image
+                self?.updateImageIfValidPreview(image)
             }
         })
     }
@@ -180,8 +180,13 @@ class SanePreviewView: UIView {
         previewButton.style = showScanButton ? .rounded : .cell
         
         if case let .scanning(_, image) = progress {
-            imageView.image = image
+            updateImageIfValidPreview(image)
         }
+    }
+    
+    private func updateImageIfValidPreview(_ image: UIImage?) {
+        guard device?.cropArea == device?.maxCropArea else { return }
+        imageView.image = image
     }
     
     // MARK: Layout

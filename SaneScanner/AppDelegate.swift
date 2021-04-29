@@ -15,12 +15,11 @@ import SYPictureMetadata
 import SVProgressHUD
 #endif
 
-// TODO: Catalyst: use dropdowns, checkboxes and other idiomatic inputs for options. possibly drop the grouped table style
-
-// TODO: scanning with a cropArea < maxCropArea still updates preview image!...
 // TODO: fix scan showing black image after cancelled preview
-// TODO: test keyboard shortcuts on catalyst (& ipad ?)
 // TODO: test perfs with instruments when scanning and reading options
+
+// TODO: Catalyst: use dropdowns, checkboxes and other idiomatic inputs for options. possibly drop the grouped table style
+// TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
 
 // LATER: add avahi support ?
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)
