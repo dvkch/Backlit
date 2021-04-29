@@ -198,7 +198,22 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		9734E3631C90219800B66797 /* Cells */ = {
+		97CD8488263AC581006DD44B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				973066B4220C5CD90068E8C7 /* CropMaskView.swift */,
+				978263CA221E253D0095E6ED /* DotsRefreshControl.swift */,
+				973066B2220C55000068E8C7 /* GalleryThumbsView.swift */,
+				97EAF237220B54A700435DE6 /* SanePreviewView.swift */,
+				9740C16E2638DC8B00CAC543 /* ScanButton.swift */,
+				9731D89022C548CE008D7525 /* TapInsetsView.swift */,
+				97499E5C220872F5006DED20 /* Toolbar.swift */,
+				97D5902426377CBE00E84198 /* TooltipView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		97CD8489263AC599006DD44B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				97D0E03F220607E500AC74D0 /* DeviceCell.swift */,
@@ -210,38 +225,44 @@
 				97D0E04322060C5700AC74D0 /* PreviewCell.swift */,
 				97D0E04422060C5700AC74D0 /* PreviewCell.xib */,
 			);
-			name = Cells;
+			path = Cells;
 			sourceTree = "<group>";
 		};
-		9734E3641C9031F300B66797 /* VCs */ = {
+		97CD848A263AC5B4006DD44B /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				97499E5E220874B3006DED20 /* SplitVC.swift */,
-				97499E5A220862FE006DED20 /* ScanNC.swift */,
-				9757FCEF2207112D00AB59F1 /* DevicesVC.swift */,
-				9757FCF02207112D00AB59F1 /* DevicesVC.xib */,
-				97044901220875D300E13C6A /* DeviceVC.swift */,
-				97044902220875D300E13C6A /* DeviceVC.xib */,
-				97D590122637565800E84198 /* DevicePreviewVC.swift */,
-				97D590132637565800E84198 /* DevicePreviewVC.xib */,
-				97FDF401222C55EE00B71E4C /* DeviceOptionVC.swift */,
-				9730FDA725D07D57009ABCBC /* DeviceScanPreviewVC.swift */,
-				97EB32B022071F880027CCAE /* PreferencesVC.swift */,
-				97EB32B122071F880027CCAE /* PreferencesVC.xib */,
+				973066C0220C898E0068E8C7 /* GalleryGridLayout.swift */,
+				97F2FB4A222302DE006BD617 /* GalleryGridVC.swift */,
+				97F2FB4C22230325006BD617 /* GalleryGridVC.xib */,
+				97F2FB5022230A6B006BD617 /* GalleryImagesVC.swift */,
+				97F2FB5222230A81006BD617 /* GalleryImageVC.swift */,
+				97F2FB4E2223084B006BD617 /* GalleryNC.swift */,
+				973066BA220C82110068E8C7 /* GalleryThumbnailCell.swift */,
 			);
-			name = VCs;
+			path = Gallery;
 			sourceTree = "<group>";
 		};
-		97865082220B6C5E00F52DE6 /* Models */ = {
+		97CD848B263AC5CA006DD44B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				97865080220B69AC00F52DE6 /* GalleryManager.swift */,
+				9786507E220B645500F52DE6 /* PDFActivity.swift */,
+				9786507C220B5E6400F52DE6 /* PDFGenerator.swift */,
+				97EB32B42207BB740027CCAE /* Preferences.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		97CD848C263AC5DE006DD44B /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				97F2FB54222318D5006BD617 /* GalleryItem.swift */,
 				97D4CE892636EB7800F84150 /* SnapshotKind.swift */,
 			);
-			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		97CC34E52205F9C700304345 /* Extensions */ = {
+		97CD848D263AC5ED006DD44B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				973066B6220C73D40068E8C7 /* CoreGraphics+SY.swift */,
@@ -257,7 +278,26 @@
 				9755651525CB712800FDAD07 /* UISceneView+SY.swift */,
 				97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */,
 			);
-			name = Extensions;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		97CD848E263AC606006DD44B /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				97499E5E220874B3006DED20 /* SplitVC.swift */,
+				97499E5A220862FE006DED20 /* ScanNC.swift */,
+				9757FCEF2207112D00AB59F1 /* DevicesVC.swift */,
+				9757FCF02207112D00AB59F1 /* DevicesVC.xib */,
+				97044901220875D300E13C6A /* DeviceVC.swift */,
+				97044902220875D300E13C6A /* DeviceVC.xib */,
+				97D590122637565800E84198 /* DevicePreviewVC.swift */,
+				97D590132637565800E84198 /* DevicePreviewVC.xib */,
+				97FDF401222C55EE00B71E4C /* DeviceOptionVC.swift */,
+				9730FDA725D07D57009ABCBC /* DeviceScanPreviewVC.swift */,
+				97EB32B022071F880027CCAE /* PreferencesVC.swift */,
+				97EB32B122071F880027CCAE /* PreferencesVC.xib */,
+			);
+			path = VCs;
 			sourceTree = "<group>";
 		};
 		97EDB9171E4924D40012CB7E /* SaneScannerUITests */ = {
@@ -269,46 +309,6 @@
 				97EDB91A1E4924D40012CB7E /* Info.plist */,
 			);
 			path = SaneScannerUITests;
-			sourceTree = "<group>";
-		};
-		97F2FB49222301C9006BD617 /* Gallery */ = {
-			isa = PBXGroup;
-			children = (
-				973066C0220C898E0068E8C7 /* GalleryGridLayout.swift */,
-				97F2FB4A222302DE006BD617 /* GalleryGridVC.swift */,
-				97F2FB4C22230325006BD617 /* GalleryGridVC.xib */,
-				97F2FB5022230A6B006BD617 /* GalleryImagesVC.swift */,
-				97F2FB5222230A81006BD617 /* GalleryImageVC.swift */,
-				97F2FB4E2223084B006BD617 /* GalleryNC.swift */,
-				973066BA220C82110068E8C7 /* GalleryThumbnailCell.swift */,
-			);
-			name = Gallery;
-			sourceTree = "<group>";
-		};
-		F804E07A1AFA56A500CBE307 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				973066B4220C5CD90068E8C7 /* CropMaskView.swift */,
-				978263CA221E253D0095E6ED /* DotsRefreshControl.swift */,
-				973066B2220C55000068E8C7 /* GalleryThumbsView.swift */,
-				97EAF237220B54A700435DE6 /* SanePreviewView.swift */,
-				9740C16E2638DC8B00CAC543 /* ScanButton.swift */,
-				9731D89022C548CE008D7525 /* TapInsetsView.swift */,
-				97499E5C220872F5006DED20 /* Toolbar.swift */,
-				97D5902426377CBE00E84198 /* TooltipView.swift */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		F804E07B1AFA56AC00CBE307 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				97865080220B69AC00F52DE6 /* GalleryManager.swift */,
-				9786507E220B645500F52DE6 /* PDFActivity.swift */,
-				9786507C220B5E6400F52DE6 /* PDFGenerator.swift */,
-				97EB32B42207BB740027CCAE /* Preferences.swift */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 		F8CBD2041AF9A58C00B4C221 = {
@@ -335,13 +335,13 @@
 			isa = PBXGroup;
 			children = (
 				976E423D23D2158100FFEFD0 /* SaneScanner.entitlements */,
-				97CC34E52205F9C700304345 /* Extensions */,
-				97865082220B6C5E00F52DE6 /* Models */,
-				F804E07B1AFA56AC00CBE307 /* Controllers */,
-				97F2FB49222301C9006BD617 /* Gallery */,
-				9734E3631C90219800B66797 /* Cells */,
-				F804E07A1AFA56A500CBE307 /* Views */,
-				9734E3641C9031F300B66797 /* VCs */,
+				97CD848D263AC5ED006DD44B /* Extensions */,
+				97CD848C263AC5DE006DD44B /* Models */,
+				97CD848B263AC5CA006DD44B /* Controllers */,
+				97CD848A263AC5B4006DD44B /* Gallery */,
+				97CD8489263AC599006DD44B /* Cells */,
+				97CD8488263AC581006DD44B /* Views */,
+				97CD848E263AC606006DD44B /* VCs */,
 				9704490B2208900700E13C6A /* AppDelegate.swift */,
 				977712D125CCB2F1009EC50D /* SceneDelegate.swift */,
 				977712D525CCB376009EC50D /* Context.swift */,

@@ -207,7 +207,7 @@ class SanePreviewView: UIView {
     }
     
     override func layoutSubviews() {
-        buttonsStackView.axis = bounds.width > 300 ? .horizontal : .vertical
+        buttonsStackView.axis = bounds.width > 400 ? .horizontal : .vertical
         super.layoutSubviews()
     }
 }
