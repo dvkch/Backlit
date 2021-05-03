@@ -70,6 +70,10 @@ extension UIColor {
             return UIColor.darkText
         }
     }
+    
+    static var normalTextOnTint: UIColor {
+        return .white
+    }
 
     static var altText: UIColor {
         if #available(iOS 13.0, *) {

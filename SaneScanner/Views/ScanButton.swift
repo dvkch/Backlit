@@ -45,7 +45,7 @@ class ScanButton : UIButton {
     private func updateStyle() {
         layer.masksToBounds = true
         layer.cornerRadius = style == .rounded ? 10 : 0
-        setTitleColor(.normalText, for: .normal)
+        setTitleColor(kind == .preview ? .normalText : .normalTextOnTint, for: .normal)
         setTitleColor(.altText, for: .disabled)
         titleLabel?.font = .preferredFont(forTextStyle: .body)
         titleLabel?.autoAdjustsFontSize = true
