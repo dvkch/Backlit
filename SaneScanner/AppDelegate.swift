@@ -15,13 +15,13 @@ import SYPictureMetadata
 import SVProgressHUD
 #endif
 
-// TODO: test perfs with instruments when scanning and reading options
-
+// TODO: Catalyst: use better alerts, especially for text input (adding a host)
 // TODO: Catalyst: use dropdowns, checkboxes and other idiomatic inputs for options. possibly drop the grouped table style
 // TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
 
-// LATER: add avahi support ?
+// LATER: add auto search on local network
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)
+// LATER: see if blocking IO is necessary (seems to be an issue after a scan, where it might prevent updating an option... and can even ask for auth even if none is set)
 
 @UIApplicationMain
 class AppDelegate: UIResponder {

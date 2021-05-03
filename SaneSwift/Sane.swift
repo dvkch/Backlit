@@ -555,7 +555,7 @@ extension Sane {
                 return
             }
             
-            status = sane_set_io_mode(handle, SANE_FALSE)
+            status = sane_set_io_mode(handle, SANE_FALSE) // blocking IO mode
             
             guard status == SANE_STATUS_GOOD else {
                 Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }

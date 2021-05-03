@@ -241,8 +241,9 @@ extension GalleryThumbsView: UICollectionViewDataSource {
         
         cell.update(item: galleryItems[indexPath.item], mode: .toolbar, spinnerColor: spinnerColor)
         
-        // LATER: interactive dismissal
-        
+        // Interactive dismissal: was planning on implementing it but iOS 13 and its new modal presentation mode made it unecessary. This code sample
+        // dates from when I used MHVideoPhotoGallery, it allowed the interactive dismissal to use the thumbnail corresponding to the currently displayed
+        // image in the gallery as a destination rect. Sure, that would be nice to have, but who has the time?
         /*
         cell.update(
             items: galleryItems,

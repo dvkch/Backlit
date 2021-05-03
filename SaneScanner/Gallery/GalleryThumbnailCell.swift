@@ -120,23 +120,8 @@ class GalleryThumbnailCell: UICollectionViewCell {
         self.mode = mode
         
         updateThumbnail(nil)
-        
-        // LATER: interactive dismissal
-        
-        /*
-        weak var weakParentVC = parentController
-         
-        imageView.setInseractiveGalleryPresentionWithItems(items, currentImageIndex: index, currentViewController: parentController)
-            { (index, image, transition, viewMode) in
-            if viewMode == .overView {
-            weakParentVC?.dismiss(animated: true, completion: nil)
-            } else {
-            weakParentVC?.presentedViewController?.dismiss(animated: true, dismiss: dismiss?(index), completion: nil)
-            }
-        }
-        */
     }
-    
+
     private func updateThumbnail(_ thumbnail: UIImage?) {
         imageView.image = thumbnail ?? GalleryManager.shared.thumbnail(for: item)
         updateStyle()

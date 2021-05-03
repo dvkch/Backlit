@@ -15,8 +15,6 @@ protocol GalleryImageVCDelegate: NSObjectProtocol {
 
 class GalleryImageVC: UIViewController {
 
-    // LATER: interactive dismissal
-    
     // MARK: Init
     init(item: GalleryItem, index: Int) {
         self.item = item
