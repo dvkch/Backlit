@@ -37,6 +37,16 @@ public class Device {
         }
     }
     
+    public var optionsDescription: String {
+        return options.map { option in
+            if let group = option as? DeviceOptionGroup {
+                return group.localizedTitle
+            } else {
+                return "- \(option.localizedTitle): \(option.localizedValue)"
+            }
+        }.joined(separator: "\n")
+    }
+    
     // MARK: Cache properties
     public var lastPreviewImage: UIImage?
     public var cropArea: CGRect = .zero

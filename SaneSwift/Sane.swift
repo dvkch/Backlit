@@ -226,7 +226,7 @@ extension Sane {
         }
     }
     
-    public func openDevice(_ device: Device, completion: @escaping (Error?) -> ()) {
+    public func openDevice(_ device: Device, listOptions: Bool = true, completion: @escaping (Error?) -> ()) {
         let mainThread = Thread.isMainThread
         
         runOnSaneThread {
@@ -241,6 +241,10 @@ extension Sane {
             
             if s == SANE_STATUS_GOOD {
                 self.openedDevices[device.name] = NSValue(pointer: h)
+            }
+            
+            if s == SANE_STATUS_GOOD && listOptions {
+                self.listOptions(for: device, completion: nil)
             }
 
             Sane.runOn(mainThread: mainThread, block: {
