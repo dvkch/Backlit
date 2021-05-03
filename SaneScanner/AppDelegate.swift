@@ -15,7 +15,6 @@ import SYPictureMetadata
 import SVProgressHUD
 #endif
 
-// TODO: fix scan showing black image after cancelled preview
 // TODO: test perfs with instruments when scanning and reading options
 
 // TODO: Catalyst: use dropdowns, checkboxes and other idiomatic inputs for options. possibly drop the grouped table style
