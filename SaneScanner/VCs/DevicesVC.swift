@@ -75,6 +75,20 @@ class DevicesVC: UIViewController {
     }
     
     private func addHostButtonTap() {
+        let completion = { (host: String) in
+            Sane.shared.configuration.addHost(host)
+            self.tableView.reloadData()
+            self.refreshDevices()
+        }
+        #if targetEnvironment(macCatalyst)
+        obtainCatalystPlugin().presentHostInputAlert(
+            title: "DIALOG TITLE ADD HOST".localized,
+            message: "DIALOG MESSAGE ADD HOST".localized,
+            add: "ACTION ADD".localized,
+            cancel: "ACTION CANCEL".localized,
+            completion: completion
+        )
+        #else
         let alert = UIAlertController(title: "DIALOG TITLE ADD HOST".localized, message: "DIALOG MESSAGE ADD HOST".localized, preferredStyle: .alert)
         alert.addTextField { (field) in
             field.borderStyle = .none
@@ -84,12 +98,11 @@ class DevicesVC: UIViewController {
         }
         alert.addAction(UIAlertAction(title: "ACTION ADD".localized, style: .default, handler: { (_) in
             let host = alert.textFields?.first?.text ?? ""
-            Sane.shared.configuration.addHost(host)
-            self.tableView.reloadData()
-            self.refreshDevices()
+            completion(host)
         }))
         alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
+        #endif
     }
 }
 

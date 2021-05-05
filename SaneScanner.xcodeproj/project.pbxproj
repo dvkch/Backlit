@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,8 +41,13 @@
 		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		979576AB223022C400680A80 /* UILabel+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979576AA223022C400680A80 /* UILabel+SY.swift */; };
+		979D310826434C8D004F56F6 /* CatalystPlugin+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D310726434C8D004F56F6 /* CatalystPlugin+iOS.swift */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
 		979FCEF925D811FB00DD9E0E /* UIContentSizeCategory+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */; };
+		97A9FCEA2640906F0027F462 /* CatalystPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCE92640906F0027F462 /* CatalystPlugin.swift */; };
+		97A9FCEC264090960027F462 /* CatalystPluginImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */; };
+		97A9FCED264091500027F462 /* CatalystPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCE92640906F0027F462 /* CatalystPlugin.swift */; };
+		97A9FCF0264093920027F462 /* SaneScanner-CatalystPlugin.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */; platformFilter = maccatalyst; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */; };
 		97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */; };
 		97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */; };
@@ -75,6 +80,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		97A9FCF1264093920027F462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97A9FCE2264090500027F462;
+			remoteInfo = "SaneScanner-CatalystPlugin";
+		};
 		97EDB91B1E4924D40012CB7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
@@ -83,6 +95,20 @@
 			remoteInfo = SaneScanner;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		97A9FCF3264093920027F462 /* Embed PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				97A9FCF0264093920027F462 /* SaneScanner-CatalystPlugin.bundle in Embed PlugIns */,
+			);
+			name = "Embed PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaneScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,8 +149,13 @@
 		97865080220B69AC00F52DE6 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
 		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		979576AA223022C400680A80 /* UILabel+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+SY.swift"; sourceTree = "<group>"; };
+		979D310726434C8D004F56F6 /* CatalystPlugin+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CatalystPlugin+iOS.swift"; sourceTree = "<group>"; };
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContentSizeCategory+SY.swift"; sourceTree = "<group>"; };
+		97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SaneScanner-CatalystPlugin.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97A9FCE5264090500027F462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97A9FCE92640906F0027F462 /* CatalystPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystPlugin.swift; sourceTree = "<group>"; };
+		97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystPluginImplementation.swift; sourceTree = "<group>"; };
 		97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
 		97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+SY.swift"; sourceTree = "<group>"; };
 		97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SY.swift"; sourceTree = "<group>"; };
@@ -162,6 +193,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		97A9FCE0264090500027F462 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97EDB9131E4924D40012CB7E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +234,16 @@
 				E4150E772CE5FCDA9956F3BE /* Pods-SaneScanner.macos.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		97A9FCE4264090500027F462 /* SaneScanner-CatalystPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				97A9FCE5264090500027F462 /* Info.plist */,
+				97A9FCE92640906F0027F462 /* CatalystPlugin.swift */,
+				97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */,
+			);
+			path = "SaneScanner-CatalystPlugin";
 			sourceTree = "<group>";
 		};
 		97CD8488263AC581006DD44B /* Views */ = {
@@ -265,6 +313,7 @@
 		97CD848D263AC5ED006DD44B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				979D310726434C8D004F56F6 /* CatalystPlugin+iOS.swift */,
 				973066B6220C73D40068E8C7 /* CoreGraphics+SY.swift */,
 				9730FD9125CF6365009ABCBC /* DeviceAuthentication+SY.swift */,
 				973066C2220C8C740068E8C7 /* FileManager+SY.swift */,
@@ -316,6 +365,7 @@
 			children = (
 				F8CBD20F1AF9A58C00B4C221 /* SaneScanner */,
 				97EDB9171E4924D40012CB7E /* SaneScannerUITests */,
+				97A9FCE4264090500027F462 /* SaneScanner-CatalystPlugin */,
 				F8CBD20E1AF9A58C00B4C221 /* Products */,
 				1D470155F708E88FADB3A792 /* Pods */,
 				06F2387C18FBB76B71AD189B /* Frameworks */,
@@ -327,6 +377,7 @@
 			children = (
 				F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */,
 				97EDB9161E4924D40012CB7E /* SaneScannerUITests.xctest */,
+				97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -366,6 +417,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		97A9FCE2264090500027F462 /* SaneScanner-CatalystPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97A9FCE6264090500027F462 /* Build configuration list for PBXNativeTarget "SaneScanner-CatalystPlugin" */;
+			buildPhases = (
+				97A9FCDF264090500027F462 /* Sources */,
+				97A9FCE0264090500027F462 /* Frameworks */,
+				97A9FCE1264090500027F462 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SaneScanner-CatalystPlugin";
+			productName = "SaneScanner-CatalystPlugin";
+			productReference = 97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 		97EDB9151E4924D40012CB7E /* SaneScannerUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97EDB91F1E4924D40012CB7E /* Build configuration list for PBXNativeTarget "SaneScannerUITests" */;
@@ -396,10 +464,12 @@
 				F8CBD20B1AF9A58C00B4C221 /* Resources */,
 				93CC2C1AFE9AE5B01609E587 /* [CP] Embed Pods Frameworks */,
 				DF8C95BF7C90F9CC0FDAFD6D /* [CP] Copy Pods Resources */,
+				97A9FCF3264093920027F462 /* Embed PlugIns */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				97A9FCF2264093920027F462 /* PBXTargetDependency */,
 			);
 			name = SaneScanner;
 			productName = SaneScanner;
@@ -417,6 +487,10 @@
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
+					97A9FCE2264090500027F462 = {
+						CreatedOnToolsVersion = 12.5;
+						LastSwiftMigration = 1250;
+					};
 					97EDB9151E4924D40012CB7E = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 79RY8264V4;
@@ -448,11 +522,19 @@
 			targets = (
 				F8CBD20C1AF9A58C00B4C221 /* SaneScanner */,
 				97EDB9151E4924D40012CB7E /* SaneScannerUITests */,
+				97A9FCE2264090500027F462 /* SaneScanner-CatalystPlugin */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		97A9FCE1264090500027F462 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97EDB9141E4924D40012CB7E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -588,6 +670,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		97A9FCDF264090500027F462 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97A9FCEA2640906F0027F462 /* CatalystPlugin.swift in Sources */,
+				97A9FCEC264090960027F462 /* CatalystPluginImplementation.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97EDB9121E4924D40012CB7E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -636,6 +727,8 @@
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,
 				9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */,
 				973066B3220C55000068E8C7 /* GalleryThumbsView.swift in Sources */,
+				97A9FCED264091500027F462 /* CatalystPlugin.swift in Sources */,
+				979D310826434C8D004F56F6 /* CatalystPlugin+iOS.swift in Sources */,
 				977712D625CCB376009EC50D /* Context.swift in Sources */,
 				979576AB223022C400680A80 /* UILabel+SY.swift in Sources */,
 				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,
@@ -654,6 +747,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		97A9FCF2264093920027F462 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = maccatalyst;
+			target = 97A9FCE2264090500027F462 /* SaneScanner-CatalystPlugin */;
+			targetProxy = 97A9FCF1264093920027F462 /* PBXContainerItemProxy */;
+		};
 		97EDB91C1E4924D40012CB7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8CBD20C1AF9A58C00B4C221 /* SaneScanner */;
@@ -674,6 +773,71 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		97A9FCE7264090500027F462 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SaneScanner-CatalystPlugin/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.SaneScanner-CatalystPlugin";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		97A9FCE8264090500027F462 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SaneScanner-CatalystPlugin/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.SaneScanner-CatalystPlugin";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		97EDB91D1E4924D40012CB7E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -684,7 +848,11 @@
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				INFOPLIST_FILE = SaneScannerUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScannerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -702,10 +870,15 @@
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				INFOPLIST_FILE = SaneScannerUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScannerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TEST_TARGET_NAME = SaneScanner;
 			};
 			name = Release;
@@ -822,7 +995,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -844,7 +1018,10 @@
 				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				INFOPLIST_FILE = SaneScanner/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 2.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScanner;
@@ -873,7 +1050,10 @@
 				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				INFOPLIST_FILE = SaneScanner/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -889,6 +1069,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		97A9FCE6264090500027F462 /* Build configuration list for PBXNativeTarget "SaneScanner-CatalystPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97A9FCE7264090500027F462 /* Debug */,
+				97A9FCE8264090500027F462 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		97EDB91F1E4924D40012CB7E /* Build configuration list for PBXNativeTarget "SaneScannerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
