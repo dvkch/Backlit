@@ -13,6 +13,8 @@ class GalleryThumbnailCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        tooltipView = TooltipView(for: self, title: { [weak self] in self?.item.flatMap { GalleryManager.shared.dateString(for: $0) } })
+        
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.minificationFilter = .trilinear
@@ -40,11 +42,6 @@ class GalleryThumbnailCell: UICollectionViewCell {
         updateSelectionStyle()
         
         GalleryManager.shared.addDelegate(self)
-        
-        if #available(iOS 13.0, *) {
-            tooltipGesture = UIHoverGestureRecognizer(target: self, action: #selector(hoverGestureRecognized(_:)))
-            addGestureRecognizer(tooltipGesture)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,12 +66,6 @@ class GalleryThumbnailCell: UICollectionViewCell {
         case gallery, toolbar
     }
 
-    private var hoverTimer: Timer? {
-        didSet {
-            oldValue?.invalidate()
-        }
-    }
-    
     // MARK: Views
     private let imageView = UIImageView()
     private let spinner: UIActivityIndicatorView = {
@@ -85,33 +76,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         }
     }()
     private let selectionView = UIView()
-    private var tooltipGesture: UIGestureRecognizer!
-    private let tooltipView = TooltipView()
-    
-    // MARK: Actions
-    @objc private func hoverGestureRecognized(_ gesture: UIGestureRecognizer) {
-        if gesture.state == .began {
-            hoverTimer = Timer(timeInterval: 0.7, target: self, selector: #selector(showTooltip), userInfo: nil, repeats: false)
-            RunLoop.main.add(hoverTimer!, forMode: .common)
-        }
-        if gesture.state == .ended || gesture.state == .cancelled {
-            hoverTimer?.invalidate()
-            hideTooltip()
-        }
-    }
-    
-    @objc private func showTooltip() {
-        guard let item = item else { return }
-
-        let text = GalleryManager.shared.dateString(for: item) ?? ""
-        var location = tooltipGesture.location(in: self)
-        location.y += 15 // approximate cursor height
-        tooltipView.show(text: text, from: self, location: location)
-    }
-    
-    func hideTooltip() {
-        tooltipView.dismiss()
-    }
+    private var tooltipView: TooltipView!
 
     // MARK: Content
     func update(item: GalleryItem, mode: Mode, spinnerColor: UIColor) {

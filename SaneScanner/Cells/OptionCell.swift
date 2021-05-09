@@ -20,6 +20,15 @@ class OptionCell: TableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        titleLabel.isUserInteractionEnabled = true
+        tooltipView = TooltipView(for: titleLabel, title: { [weak self] in
+            if self?.catalystValueControl != nil {
+                return self?.option?.localizedDescr
+            } else {
+                return nil
+            }
+        })
+
         titleLabel.autoAdjustsFontSize = true
         valueLabel.autoAdjustsFontSize = true
         descrLabel.autoAdjustsFontSize = true
@@ -28,6 +37,7 @@ class OptionCell: TableViewCell {
     }
     
     // MARK: Views
+    private var tooltipView: TooltipView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var valueLabel: UILabel!
     #if targetEnvironment(macCatalyst)
@@ -42,6 +52,8 @@ class OptionCell: TableViewCell {
             setNeedsUpdateConstraints()
         }
     }
+    #else
+    private let catalystValueControl: UIView? = nil
     #endif
     @IBOutlet private var descrLabel: UILabel!
 
@@ -90,6 +102,10 @@ class OptionCell: TableViewCell {
         let descTextColor   = disabled ? UIColor.disabledText : UIColor.altText
         
         self.backgroundColor = backgroundColor
+        #if targetEnvironment(macCatalyst)
+        self.backgroundColor = .clear
+        #endif
+
         titleLabel.textColor = normalTextColor
         valueLabel.textColor = normalTextColor
         descrLabel.textColor = descTextColor
@@ -251,7 +267,8 @@ extension OptionCell: DeviceOptionControllable {
         }
 
         let selectedIndex = values.firstIndex(of: option.value) ?? -1
-        catalystValueControl = obtainCatalystPlugin().dropdown(options: dropdownOptions, selectedIndex: selectedIndex, disabled: option.disabledOrReadOnly, changed: { selected in
+        catalystValueControl = obtainCatalystPlugin().dropdown(options: dropdownOptions, selectedIndex: selectedIndex, disabled: option.disabledOrReadOnly, changed: { [weak self] selected in
+            guard let self = self else { return }
             if selected.value == nil {
                 Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
             } else {
@@ -270,7 +287,6 @@ extension OptionCell: DeviceOptionControllable {
         }
 
         // TODO: handle Auto
-
         let slider = Slider()
         slider.useMacOSThumb = true
         slider.minimumValue = Float(min)
@@ -279,7 +295,8 @@ extension OptionCell: DeviceOptionControllable {
         slider.step = step.flatMap { Float($0) }
         slider.formatter = { optionInt?.stringForValue(Int($0), userFacing: true) ?? optionFixed!.stringForValue(Double($0), userFacing: true) }
         slider.isEnabled = !option.disabledOrReadOnly
-        slider.changedBlock = { value in
+        slider.changedBlock = { [weak self] value in
+            guard let self = self else { return }
             if let optionInt = optionInt {
                 Sane.shared.updateOption(optionInt, with: .value(Int(value)), completion: self.optionUpdateCompletion(_:))
             }

@@ -11,24 +11,29 @@ import UIKit
 class TooltipView : UIView {
     
     // MARK: Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    required init(for view: UIView, title: @escaping () -> String?) {
+        self.containingView = view
+        self.titleBlock = title
+        super.init(frame: .zero)
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setup() {
         backgroundColor = .background
         layer.borderColor = UIColor.backgroundAlt.cgColor
         layer.borderWidth = 1
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = .zero
+        layer.shadowRadius = 10
+        layer.shadowOpacity = 1
 
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.textColor = .normalText
-        label.font = .preferredFont(forTextStyle: .footnote)
+        label.font = .preferredFont(forTextStyle: .callout)
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -40,14 +45,62 @@ class TooltipView : UIView {
             make.left.equalToSuperview().offset(4)
             make.right.equalToSuperview().offset(-4).priority(.high)
             make.bottom.equalToSuperview().offset(-2).priority(.high)
+            make.width.lessThanOrEqualTo(400)
+        }
+        
+        if #available(iOS 13.0, *) {
+            tooltipGesture = UIHoverGestureRecognizer(target: self, action: #selector(hoverGestureRecognized(_:)))
+            containingView.addGestureRecognizer(tooltipGesture)
         }
     }
 
     // MARK: Views
+    private let containingView: UIView
     private let label = UILabel()
-    
+    private var hoverTimer: Timer? {
+        didSet {
+            oldValue?.invalidate()
+        }
+    }
+    private var tooltipGesture: UIGestureRecognizer!
+    private var titleBlock: (() -> String?)?
+
     // MARK: Actions
-    func show(text: String, from view: UIView, location: CGPoint) {
+    @objc private func hoverGestureRecognized(_ gesture: UIGestureRecognizer) {
+        if gesture.state == .began {
+            hoverTimer = Timer(timeInterval: 0.7, target: self, selector: #selector(showTooltip), userInfo: nil, repeats: false)
+            RunLoop.main.add(hoverTimer!, forMode: .common)
+        }
+        if gesture.state == .ended || gesture.state == .cancelled {
+            hoverTimer?.invalidate()
+            dismiss()
+        }
+    }
+    
+    @objc private func showTooltip() {
+        guard let title = titleBlock?() else { return }
+
+        var location = tooltipGesture.location(in: containingView)
+        location.y += 20 // approximate cursor height
+        show(text: title, from: containingView, location: location)
+    }
+
+    private func observePositionRelativeToWindow(_ previousOrigin: CGPoint?) {
+        guard let window = window else { return }
+        
+        let origin = containingView.convert(CGPoint.zero, to: window) ?? .zero
+        if previousOrigin != nil && previousOrigin != origin {
+            dismiss()
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            self?.observePositionRelativeToWindow(origin)
+        }
+    }
+
+    // MARK: Content
+    private func show(text: String, from view: UIView, location: CGPoint) {
         guard let window = view.window else { return }
 
         self.alpha = 0
@@ -61,7 +114,9 @@ class TooltipView : UIView {
         adjustedLocation.y -= max(0, adjustedLocation.y + size.height - window.bounds.size.height)
         frame = CGRect(origin: adjustedLocation, size: size)
         window.addSubview(self)
-        
+
+        observePositionRelativeToWindow(nil)
+
         UIView.animate(withDuration: 0.2) {
             self.alpha = 1
         }
