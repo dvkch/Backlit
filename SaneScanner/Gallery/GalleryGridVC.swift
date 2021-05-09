@@ -8,7 +8,6 @@
 
 #if !targetEnvironment(macCatalyst)
 import UIKit
-import SVProgressHUD
 
 class GalleryGridVC: UIViewController {
 
@@ -85,6 +84,7 @@ class GalleryGridVC: UIViewController {
     @IBOutlet private var emptyStateLabel: UILabel!
     private let collectionViewLayout = GalleryGridLayout()
     @IBOutlet private var collectionView: UICollectionView!
+    private weak var hud: HUDAlertController?
     
     // MARK: Actions
     #if DEBUG
@@ -109,11 +109,11 @@ class GalleryGridVC: UIViewController {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "ACTION DELETE".localized, style: .destructive, handler: { (_) in
-            SVProgressHUD.show()
+            self.hud = HUDAlertController.show(in: self)
             selectedItems.forEach { (item) in
                 GalleryManager.shared.deleteItem(item)
             }
-            SVProgressHUD.dismiss()
+            self.hud?.dismiss(animated: true, completion: nil)
             self.setEditing(false, animated: true)
         }))
         alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
@@ -124,9 +124,9 @@ class GalleryGridVC: UIViewController {
     @objc private func pdfButtonTap(sender: UIBarButtonItem) {
         guard let selected = collectionView.indexPathsForSelectedItems, !selected.isEmpty else { return }
         
-        SVProgressHUD.show()
+        hud = HUDAlertController.show(in: self)
         
-        // needed to let SVProgressHUD appear, even if PDF is generated on main thread
+        // needed to let HUD appear, even if PDF is generated on main thread
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.shareSelectedItemsAsPDF(sender: sender)
         }
@@ -155,17 +155,20 @@ class GalleryGridVC: UIViewController {
         
         do {
             try PDFGenerator.generatePDF(destination: tempURL, images: selectedURLs(), aspectRatio: 210 / 297, jpegQuality: 0.9, fixedPageSize: true)
-            SVProgressHUD.dismiss()
         }
         catch {
-            SVProgressHUD.showError(withStatus: error.localizedDescription)
+            HUDAlertController.dismiss(hud) {
+                UIAlertController.show(for: error, in: self)
+            }
             return
         }
         
-        UIActivityViewController.showForURLs([tempURL], from: sender, presentingVC: self) {
-            // is called when the interaction with the PDF is done. It's either been copied, imported,
-            // displayed, shared or printed, but we can dispose of it
-            GalleryManager.shared.deleteTempPDF()
+        HUDAlertController.dismiss(hud) {
+            UIActivityViewController.showForURLs([tempURL], from: sender, presentingVC: self) {
+                // is called when the interaction with the PDF is done. It's either been copied, imported,
+                // displayed, shared or printed, but we can dispose of it
+                GalleryManager.shared.deleteTempPDF()
+            }
         }
     }
     

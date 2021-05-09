@@ -24,9 +24,6 @@ extension SceneDelegate : UISceneDelegate {
             window = context?.window
             windowScene.sizeRestrictions?.minimumSize = .init(width: 800, height: 550)
 
-            // temporary fix for SVProgressHUD
-            (UIApplication.shared.delegate as? AppDelegate)?.window = window
-
             #if targetEnvironment(macCatalyst)
             if let titlebar = windowScene.titlebar {
                 titlebar.titleVisibility = .hidden

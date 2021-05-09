@@ -9,12 +9,12 @@
 #if !targetEnvironment(macCatalyst)
 import UIKit
 import SYKit
-import SVProgressHUD
 
 class PDFActivity: UIActivity {
     
     // MARK: Properties
     weak var presentingViewController: UIViewController?
+    private weak var hud: HUDAlertController?
     
     // MARK: Original activity properties
     private var items: [URL] = []
@@ -66,25 +66,39 @@ class PDFActivity: UIActivity {
         self.items = activityItems
             .compactMap { $0 as? URL }
             .sorted { $0.lastPathComponent > $1.lastPathComponent }
-        SVProgressHUD.show()
+        
+        obtainPresentingViewController {
+            self.hud = HUDAlertController.show(in: $0, animated: false)
+        }
+    }
+    
+    private func obtainPresentingViewController(_ completion: @escaping (UIViewController) -> ()) {
+        guard let presentingViewController = presentingViewController else { return }
+        if let vc = presentingViewController.presentedViewController {
+            vc.dismiss(animated: true, completion: {
+                completion(presentingViewController)
+            })
+        }
+        else {
+            completion(presentingViewController)
+        }
     }
     
     override func perform() {
         super.perform()
-        
         let tempURL = GalleryManager.shared.tempPdfFileUrl()
         
         do {
             try PDFGenerator.generatePDF(destination: tempURL, images: self.items, aspectRatio: 210 / 297, jpegQuality: 0.9, fixedPageSize: true)
         }
         catch {
-            SVProgressHUD.showError(withStatus: error.localizedDescription)
+            obtainPresentingViewController {
+                UIAlertController.show(for: error, in: $0)
+            }
             activityDidFinish(false)
             return
         }
-        
-        SVProgressHUD.dismiss()
-        
+
         let vc = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
         vc.popoverPresentationController?.barButtonItem = barButtonItem
         vc.popoverPresentationController?.sourceView = sourceView
@@ -98,7 +112,9 @@ class PDFActivity: UIActivity {
             self.activityDidFinish(completed)
         }
         
-        presentingViewController?.present(vc, animated: true, completion: nil)
+        obtainPresentingViewController {
+            $0.present(vc, animated: true, completion: nil)
+        }
     }
 }
 #endif

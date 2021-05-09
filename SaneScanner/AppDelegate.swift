@@ -11,12 +11,7 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
-#if !targetEnvironment(macCatalyst)
-import SVProgressHUD
-#endif
-
 // TODO: UX: loader à la place de l'accessory à l'ouvertue du device. voir si possible de rendre cancellable ?
-// TODO: UX: supprimer un maximum de SVProgressHUD, surtout pour les taches cancellables
 // TODO: UX: verouillage des options pendant un scan/preview/update d'options. utilisation d'une propriété Device.lock observable? est-ce necesaire puisque les calls sont tous sur une queue synchrone (are they tho?)
 
 // TODO: Catalyst: replace pull to refresh with navBar item ?
@@ -25,6 +20,7 @@ import SVProgressHUD
 // LATER: add auto search on local network
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)
 // LATER: see if blocking IO is necessary (seems to be an issue after a scan, where it might prevent updating an option... and can even ask for auth even if none is set)
+// LATER: test text field input for String & Int and handle Auto
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
@@ -52,11 +48,6 @@ extension AppDelegate : UIApplicationDelegate {
             window = context?.window
         }
 
-        // customize HUD
-        #if !targetEnvironment(macCatalyst)
-        SVProgressHUD.applyStyle()
-        #endif
-        
         // Snapshots
         if SnapshotKind.fromLaunchOptions == .other {
             Sane.shared.configuration.clearHosts()
