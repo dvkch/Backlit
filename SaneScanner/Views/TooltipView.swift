@@ -88,7 +88,7 @@ class TooltipView : UIView {
     private func observePositionRelativeToWindow(_ previousOrigin: CGPoint?) {
         guard let window = window else { return }
         
-        let origin = containingView.convert(CGPoint.zero, to: window) ?? .zero
+        let origin = containingView.convert(CGPoint.zero, to: window)
         if previousOrigin != nil && previousOrigin != origin {
             dismiss()
             return
