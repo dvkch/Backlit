@@ -11,7 +11,6 @@ target :'SaneScanner' do
     pod 'KeychainAccess'
     pod 'SnapKit'
     pod 'SpinKit'
-    pod 'SVProgressHUD'
     pod 'SYEmailHelper'
     pod 'SYKit', '>= 0.1.16'
     pod 'SYOperationQueue'
