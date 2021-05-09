@@ -65,6 +65,7 @@ class DevicesVC: UIViewController {
     
     // MARK: Properties
     private var devices = [Device]()
+    private var loadingDevice: Device?
     
     // MARK: Actions
     @objc private func settingsButtonTap() {
@@ -137,9 +138,6 @@ extension DevicesVC: SaneDelegate {
             return
         }
 
-        let hudShowing = SVProgressHUD.isVisible()
-        SVProgressHUD.dismiss()
-        
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentAuthInputAlert(
             title: "DIALOG TITLE AUTH".localized,
@@ -150,7 +148,6 @@ extension DevicesVC: SaneDelegate {
             remember: "ACTION CONTINUE REMEMBER".localized,
             cancel: "ACTION CANCEL".localized
         ) { (username, password, remember) in
-            if hudShowing { SVProgressHUD.show() }
             if let username = username, let password = password {
                 let auth = DeviceAuthentication(username: username, password: password)
                 if remember {
@@ -179,19 +176,16 @@ extension DevicesVC: SaneDelegate {
         alert.addAction(UIAlertAction(title: "ACTION CONTINUE".localized, style: .default, handler: { (_) in
             let username = alert.textFields?.first?.text
             let password = alert.textFields?.last?.text
-            if hudShowing { SVProgressHUD.show() }
             completion(DeviceAuthentication(username: username, password: password))
         }))
         alert.addAction(UIAlertAction(title: "ACTION CONTINUE REMEMBER".localized, style: .default, handler: { (_) in
             let username = alert.textFields?.first?.text
             let password = alert.textFields?.last?.text
-            if hudShowing { SVProgressHUD.show() }
             let auth = DeviceAuthentication(username: username, password: password)
             auth.save(for: device)
             completion(auth)
         }))
         alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
-            if hudShowing { SVProgressHUD.show() }
             completion(nil)
         }))
         present(alert, animated: true, completion: nil)
@@ -224,6 +218,7 @@ extension DevicesVC : UITableViewDataSource {
         
         let cell = tableView.dequeueCell(DeviceCell.self, for: indexPath)
         cell.device = devices[indexPath.row]
+        cell.isLoading = cell.device == loadingDevice
         return cell
     }
     
@@ -297,14 +292,13 @@ extension DevicesVC : UITableViewDelegate {
             return
         }
         
+        guard loadingDevice == nil else { return }
         let device = devices[indexPath.row]
-        SVProgressHUD.show(withStatus: "LOADING".localized)
+        loadingDevice = device
+        (tableView.cellForRow(at: indexPath) as? DeviceCell)?.isLoading = true
         
         Sane.shared.openDevice(device) { (error) in
-            if SnapshotKind.fromLaunchOptions == .none {
-                SVProgressHUD.dismiss()
-            }
-            
+            self.loadingDevice = nil
             if let error = error {
                 if let error = (error as? SaneError), case let .saneError(status) = error, status.rawValue == 11, DeviceAuthentication.saved(for: device.name) != nil {
                     // this is an auth error, let's forget current auth and restart connexion

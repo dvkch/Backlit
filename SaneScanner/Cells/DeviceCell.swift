@@ -30,6 +30,20 @@ class DeviceCell: TableViewCell {
             updateTexts()
         }
     }
+    var isLoading: Bool = false {
+        didSet {
+            if isLoading {
+                let spinner = UIActivityIndicatorView(style: .medium)
+                spinner.color = .normalText
+                spinner.accessibilityLabel = "LOADING".localized
+                accessoryView = spinner
+                spinner.startAnimating()
+            }
+            else {
+                accessoryType = .disclosureIndicator
+            }
+        }
+    }
     
     private func updateTexts() {
         guard let device = device else { return }
