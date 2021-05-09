@@ -19,10 +19,9 @@ import SVProgressHUD
 // TODO: UX: supprimer un maximum de SVProgressHUD, surtout pour les taches cancellables
 // TODO: UX: verouillage des options pendant un scan/preview/update d'options. utilisation d'une propriété Device.lock observable? est-ce necesaire puisque les calls sont tous sur une queue synchrone (are they tho?)
 
-// TODO: Catalyst: use dropdowns, checkboxes and other idiomatic inputs for options. possibly drop the grouped table style
-// TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
-// TODO: Catalyst: change tableView grouped style
 // TODO: Catalyst: replace pull to refresh with navBar item ?
+// TODO: Catalyst: change tableView grouped style
+// TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
 
 // LATER: add auto search on local network
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)
