@@ -10,10 +10,6 @@ import UIKit
 import SaneSwift
 import SYKit
 
-#if !targetEnvironment(macCatalyst)
-import SVProgressHUD
-#endif
-
 class DevicesVC: UIViewController {
 
     override func viewDidLoad() {
@@ -80,11 +76,8 @@ class DevicesVC: UIViewController {
             self.devices = devices ?? []
             self.tableView.reloadData()
             
-            // in case it was opened (e.g. for screenshots)
-            SVProgressHUD.dismiss()
-
             if let error = error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                UIAlertController.show(for: error, in: self)
             }
         }
     }
@@ -307,13 +300,7 @@ extension DevicesVC : UITableViewDelegate {
                     return
                 }
 
-                let alert = UIAlertController(
-                    title: "DIALOG TITLE COULDNT OPEN DEVICE".localized,
-                    message: error.localizedDescription,
-                    preferredStyle: .alert
-                )
-                alert.addAction(UIAlertAction(title: "ACTION CLOSE".localized, style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                UIAlertController.show(for: error, title: "DIALOG TITLE COULDNT OPEN DEVICE".localized, in: self)
                 return
             }
             let vc = DeviceVC(device: device)

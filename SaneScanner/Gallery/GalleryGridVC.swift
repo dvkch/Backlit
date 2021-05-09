@@ -6,9 +6,8 @@
 //  Copyright © 2019 Syan. All rights reserved.
 //
 
-import UIKit
-
 #if !targetEnvironment(macCatalyst)
+import UIKit
 import SVProgressHUD
 
 class GalleryGridVC: UIViewController {

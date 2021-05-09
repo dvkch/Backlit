@@ -6,12 +6,8 @@
 //  Copyright © 2019 Syan. All rights reserved.
 //
 
-import UIKit
-
 #if !targetEnvironment(macCatalyst)
-import SVProgressHUD
-#endif
-
+import UIKit
 
 extension UIActivityViewController {
 
@@ -22,7 +18,7 @@ extension UIActivityViewController {
         
         vc.completionWithItemsHandler = { activityType, completed, returnedItems, error in
             if let error = error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                UIAlertController.show(for: error, in: presentingVC)
             }
             else if completed {
                 completion?()
@@ -44,7 +40,7 @@ extension UIActivityViewController {
         
         vc.completionWithItemsHandler = { activityType, completed, returnedItems, error in
             if let error = error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                UIAlertController.show(for: error, in: presentingVC)
             }
             else if completed {
                 completion?()
@@ -60,3 +56,4 @@ extension UIActivityViewController {
         presentingVC.present(vc, animated: true, completion: nil)
     }
 }
+#endif

@@ -6,12 +6,10 @@
 //  Copyright © 2019 Syan. All rights reserved.
 //
 
+#if !targetEnvironment(macCatalyst)
 import UIKit
 import SYKit
-
-#if !targetEnvironment(macCatalyst)
 import SVProgressHUD
-#endif
 
 class PDFActivity: UIActivity {
     
@@ -103,4 +101,4 @@ class PDFActivity: UIActivity {
         presentingViewController?.present(vc, animated: true, completion: nil)
     }
 }
-
+#endif

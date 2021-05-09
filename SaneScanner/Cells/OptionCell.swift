@@ -11,10 +11,6 @@ import SaneSwift
 import SYKit
 import SnapKit
 
-protocol OptionCellDelegate: NSObjectProtocol {
-    func optionCell(_ cell: OptionCell, didUpdateValueFor option: DeviceOption, with error: Error?)
-}
-
 class OptionCell: TableViewCell {
 
     override func awakeFromNib() {
@@ -58,7 +54,7 @@ class OptionCell: TableViewCell {
     @IBOutlet private var descrLabel: UILabel!
 
     // MARK: Properties
-    weak var delegate: OptionCellDelegate?
+    weak var delegate: DeviceOptionControllableDelegate?
     private var option: DeviceOption?
     private var prefKey: Preferences.Key?
     var showDescription: Bool = false {
@@ -269,6 +265,7 @@ extension OptionCell: DeviceOptionControllable {
         let selectedIndex = values.firstIndex(of: option.value) ?? -1
         catalystValueControl = obtainCatalystPlugin().dropdown(options: dropdownOptions, selectedIndex: selectedIndex, disabled: option.disabledOrReadOnly, changed: { [weak self] selected in
             guard let self = self else { return }
+            self.delegate?.deviceOptionControllable(self, willUpdate: option)
             if selected.value == nil {
                 Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
             } else {
@@ -297,15 +294,18 @@ extension OptionCell: DeviceOptionControllable {
         slider.changedBlock = { [weak self] value in
             guard let self = self else { return }
             if let optionInt = optionInt {
+                self.delegate?.deviceOptionControllable(self, willUpdate: option)
                 Sane.shared.updateOption(optionInt, with: .value(Int(value)), completion: self.optionUpdateCompletion(_:))
             }
             if let optionFixed = optionFixed {
+                self.delegate?.deviceOptionControllable(self, willUpdate: option)
                 Sane.shared.updateOption(optionFixed, with: .value(Double(value)), completion: self.optionUpdateCompletion(_:))
             }
         }
         slider.doubleTapBlock = { [weak self] in
             guard let self = self else { return }
             if supportsAuto {
+                self.delegate?.deviceOptionControllable(self, willUpdate: option)
                 Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
             }
         }
@@ -328,35 +328,37 @@ extension OptionCell: DeviceOptionControllable {
         }
         field.addTarget(self, action: #selector(deviceOptionTextFieldValueChanged), for: .primaryActionTriggered)
 
-        // LATER: test text field input for String & Int and handle Auto
         catalystValueControl = field
     }
 
     @objc private func deviceOptionTextFieldValueChanged(_ field: UITextField) {
-        SVProgressHUD.show()
         let stringValue = field.text ?? ""
 
         if let option = option as? DeviceOptionString {
+            delegate?.deviceOptionControllable(self, willUpdate: option)
             Sane.shared.updateOption(option, with: .value(stringValue), completion: self.optionUpdateCompletion(_:))
         }
         if let option = option as? DeviceOptionInt {
+            delegate?.deviceOptionControllable(self, willUpdate: option)
             Sane.shared.updateOption(option, with: .value(Int(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
         }
         if let option = option as? DeviceOptionFixed {
+            delegate?.deviceOptionControllable(self, willUpdate: option)
             Sane.shared.updateOption(option, with: .value(Double(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
         }
     }
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
-        catalystValueControl = obtainCatalystPlugin().button(title: "ACTION PRESS".localized) {
-            SVProgressHUD.show()
+        catalystValueControl = obtainCatalystPlugin().button(title: "ACTION PRESS".localized) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.deviceOptionControllable(self, willUpdate: option)
             option.press(self.optionUpdateCompletion(_:))
         }.view
     }
 
     private func optionUpdateCompletion(_ error: Error?) {
         guard let option = option else { return }
-        delegate?.optionCell(self, didUpdateValueFor: option, with: error)
+        delegate?.deviceOptionControllable(self, didUpdate: option, error: error)
     }
 
 }

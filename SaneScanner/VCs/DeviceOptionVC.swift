@@ -10,15 +10,12 @@ import UIKit
 import SaneSwift
 import SYKit
 
-#if !targetEnvironment(macCatalyst)
-import SVProgressHUD
-#endif
-
 class DeviceOptionVC : UIAlertController {
 
     // MARK: Init
-    init(option: DeviceOption) {
+    init(option: DeviceOption, delegate: DeviceOptionControllableDelegate?) {
         self.option = option
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
         
         title = option.localizedTitle
@@ -36,23 +33,15 @@ class DeviceOptionVC : UIAlertController {
 
     // MARK: Properties
     let option: DeviceOption
-    var closeBlock: (() -> ())?
-    
+    weak var delegate: DeviceOptionControllableDelegate?
+
     override var preferredStyle: UIAlertController.Style {
         return .actionSheet
     }
     
     // MARK: Completion
     private func optionUpdateCompletion(_ error: Error?) {
-        if let error = error {
-            SVProgressHUD.showError(withStatus: error.localizedDescription)
-        }
-        else {
-            SVProgressHUD.dismiss()
-        }
-        
-        dismiss(animated: true, completion: nil)
-        closeBlock?()
+        delegate?.deviceOptionControllable(self, didUpdate: option, error: error)
     }
 }
 
@@ -68,7 +57,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
     func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
         for value in values {
             addAction(title: option.stringForValue(value, userFacing: true), style: .default) { (_) in
-                SVProgressHUD.show()
+                self.delegate?.deviceOptionControllable(self, willUpdate: option)
                 Sane.shared.updateOption(option, with: .value(value), completion: self.optionUpdateCompletion(_:))
             }
         }
@@ -90,7 +79,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
         setContentViewController(sliderVC)
         
         addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
-            SVProgressHUD.show()
+            self.delegate?.deviceOptionControllable(self, willUpdate: option)
             if let optionInt = optionInt {
                 Sane.shared.updateOption(optionInt, with: .value(Int(sliderVC.sliderValue)), completion: self.optionUpdateCompletion(_:))
             }
@@ -104,7 +93,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
         addAction(title: "ACTION PRESS".localized, style: .default) { (_) in
-            SVProgressHUD.show()
+            self.delegate?.deviceOptionControllable(self, willUpdate: option)
             option.press(self.optionUpdateCompletion(_:))
         }
     }
@@ -124,7 +113,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
         }
         
         addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
-            SVProgressHUD.show()
+            self.delegate?.deviceOptionControllable(self, willUpdate: option)
             let stringValue = self.textFields?.first?.text ?? ""
 
             switch kind {
@@ -143,7 +132,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
     private func addAutoButton<V, T: DeviceOptionTyped<V>>(for option: T) {
         if option.capabilities.contains(.automatic) {
             addAction(title: "OPTION VALUE AUTO".localized, style: .default) { (_) in
-                SVProgressHUD.show()
+                self.delegate?.deviceOptionControllable(self, willUpdate: option)
                 Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
             }
         }

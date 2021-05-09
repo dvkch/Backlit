@@ -14,11 +14,18 @@ enum DeviceOptionControllableFieldKind {
 }
 
 protocol DeviceOptionControllable {
+    var delegate: DeviceOptionControllableDelegate? { get set }
+
     func updateDeviceOptionControlForDisabledOption()
     func updateDeviceOptionControlForList<T: Equatable & CustomStringConvertible>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool)
     func updateDeviceOptionControlForRange<T: Numeric>(option: DeviceOptionTyped<T>, current: Double, min: Double, max: Double, step: Double?, supportsAuto: Bool)
     func updateDeviceOptionControlForField<T: Equatable & CustomStringConvertible>(option: DeviceOptionTyped<T>, current: T, kind: DeviceOptionControllableFieldKind, supportsAuto: Bool)
     func updateDeviceOptionControlForButton(option: DeviceOptionButton)
+}
+
+protocol DeviceOptionControllableDelegate: NSObjectProtocol {
+    func deviceOptionControllable(_ controllable: DeviceOptionControllable, willUpdate option: DeviceOption)
+    func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, error: Error?)
 }
 
 extension DeviceOption {

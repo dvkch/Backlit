@@ -11,10 +11,6 @@ import SaneSwift
 import SYKit
 import SYPictureMetadata
 
-#if !targetEnvironment(macCatalyst)
-import SVProgressHUD
-#endif
-
 protocol DeviceVCDelegate: NSObjectProtocol {
     func deviceVC(_ deviceVC: DeviceVC, didRefreshDevice device: Device)
 }
@@ -159,13 +155,13 @@ class DeviceVC: UIViewController {
                     item = try GalleryManager.shared.addImage(image, metadata: metadata)
                 }
                 catch {
-                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    UIAlertController.show(for: error, in: self)
                 }
                 self.updatePreviewImageCell(image: image, scanParameters: parameters)
 
             case .failure(let error):
                 progressVC?.dismiss(animated: false, completion: nil)
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                UIAlertController.show(for: error, in: self)
             }
             
             completion?(result)
@@ -195,10 +191,11 @@ class DeviceVC: UIViewController {
             self?.scanProgress = p
             progress?(p)
         }, completion: { [weak self] (result) in
-            self?.scanProgress = nil
+            guard let self = self else { return }
+            self.scanProgress = nil
             completion?(result)
             if case let .failure(error) = result {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                UIAlertController.show(for: error, in: self)
             }
         })
     }
@@ -209,10 +206,12 @@ class DeviceVC: UIViewController {
         present(nc, animated: true, completion: nil)
     }
     
+    #if !targetEnvironment(macCatalyst)
     private func shareItem(_ item: GalleryItem?) {
         guard let url = item?.URL else { return }
         UIActivityViewController.showForURLs([url], fromBottomIn: self, completion: nil)
     }
+    #endif
     
     @objc private func prefsChangedNotification() {
         tableView.reloadData()
@@ -320,10 +319,6 @@ extension DeviceVC {
             let firstOption = IndexPath(row: 0, section: 1)
             self.tableView(tableView, didSelectRowAt: firstOption)
         }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            SVProgressHUD.dismiss()
-        }
     }
 }
 
@@ -418,16 +413,10 @@ extension DeviceVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         guard indexPath.section > 0, let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] else { return }
-        
-        if let cell = tableView.cellForRow(at: indexPath) as? OptionCell, cell.hasControlToUpdateItsValue {
-            return
-        }
+        guard let cell = tableView.cellForRow(at: indexPath) as? OptionCell else { return }
+        guard !cell.hasControlToUpdateItsValue else { return }
 
-        let vc = DeviceOptionVC(option: option)
-        vc.closeBlock = {
-            self.tableView.reloadData()
-        }
-
+        let vc = DeviceOptionVC(option: option, delegate: self)
         vc.popoverPresentationController?.sourceView = view
         if let cell = tableView.cellForRow(at: indexPath) {
             vc.popoverPresentationController?.sourceRect = view.convert(cell.bounds, from: cell)
@@ -457,13 +446,15 @@ extension DeviceVC : SanePreviewViewDelegate {
     }
 }
 
-extension DeviceVC : OptionCellDelegate {
-    func optionCell(_ cell: OptionCell, didUpdateValueFor option: DeviceOption, with error: Error?) {
+extension DeviceVC : DeviceOptionControllableDelegate {
+    func deviceOptionControllable(_ controllable: DeviceOptionControllable, willUpdate option: DeviceOption) {
+        // TODO: show something and block next updates ?
+    }
+    func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, error: Error?) {
+        // TODO: hide loader if we presented any
+
         if let error = error {
-            SVProgressHUD.showError(withStatus: error.localizedDescription)
-        }
-        else {
-            SVProgressHUD.dismiss()
+            UIAlertController.show(for: error, in: self)
         }
         
         tableView.reloadData()

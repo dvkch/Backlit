@@ -10,10 +10,6 @@ import UIKit
 import SYKit
 import SYEmailHelper
 
-#if !targetEnvironment(macCatalyst)
-import SVProgressHUD
-#endif
-
 class PreferencesVC: UIViewController {
 
     override func viewDidLoad() {
@@ -121,7 +117,7 @@ extension PreferencesVC : UITableViewDelegate {
                 tableView.cellForRow(at: indexPath))
             { (launched, service, error) in
                     if service is PasteboardEmailService {
-                        SVProgressHUD.showSuccess(withStatus: nil)
+                        UIAlertController.show(message: "MAIL COPY PASTEBOARD SUCCESS".localized, in: self)
                     }
                     print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
             }

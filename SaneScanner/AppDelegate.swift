@@ -53,13 +53,14 @@ extension AppDelegate : UIApplicationDelegate {
         }
 
         // customize HUD
+        #if !targetEnvironment(macCatalyst)
         SVProgressHUD.applyStyle()
+        #endif
         
         // Snapshots
         if SnapshotKind.fromLaunchOptions == .other {
             Sane.shared.configuration.clearHosts()
             Sane.shared.configuration.addHost("192.168.69.42")
-            SVProgressHUD.show()
         }
         
         return true
