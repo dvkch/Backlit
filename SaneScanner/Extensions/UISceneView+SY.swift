@@ -10,7 +10,6 @@ import UIKit
 
 // https://gist.github.com/stefanceriu/3c21452b7d481ceae41c0ca5f0f5c15d
 extension NSObject {
-
     static func fixCatalystScaling() {
         if #available(macCatalyst 14.0, *) {
             // 14.0 corresponds to Big Sur 11.0
