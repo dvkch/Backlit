@@ -56,7 +56,7 @@ class DevicesVC: UIViewController {
     }
     
     // MARK: Views
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
     private var thumbsView: GalleryThumbsView!
     
     // MARK: Properties

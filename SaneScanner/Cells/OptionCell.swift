@@ -171,36 +171,36 @@ class OptionCell: TableViewCell {
         valueLabel.isHidden = catalystValueControl != nil
         descrLabel.isHidden = !showDescription
 
-        if #available(macCatalyst 13.0, *) {
-            let valueView: UIView = catalystValueControl ?? valueLabel
-            valueView.isHidden = false
+        #if targetEnvironment(macCatalyst)
+        let valueView: UIView = catalystValueControl ?? valueLabel
+        valueView.isHidden = false
 
-            let hiddenValueView = catalystValueControl != nil ? valueLabel : nil
-            hiddenValueView?.snp.removeConstraints()
-            hiddenValueView?.isHidden = true
+        let hiddenValueView = catalystValueControl != nil ? valueLabel : nil
+        hiddenValueView?.snp.removeConstraints()
+        hiddenValueView?.isHidden = true
 
-            titleLabel.snp.remakeConstraints { (make) in
-                make.top.left.equalTo(contentView.layoutMarginsGuide)
-                make.width.equalTo(contentView.layoutMarginsGuide).multipliedBy(0.35)
-            }
+        titleLabel.snp.remakeConstraints { (make) in
+            make.top.left.equalTo(contentView.layoutMarginsGuide)
+            make.width.equalTo(contentView.layoutMarginsGuide).multipliedBy(0.35)
+        }
 
-            valueView.snp.remakeConstraints { (make) in
-                make.left.equalTo(titleLabel.snp.right).offset(20)
-                make.top.right.equalTo(contentView.layoutMarginsGuide)
-                make.height.equalTo(titleLabel).priority(760)
-            }
+        valueView.snp.remakeConstraints { (make) in
+            make.left.equalTo(titleLabel.snp.right).offset(20)
+            make.top.right.equalTo(contentView.layoutMarginsGuide)
+            make.height.equalTo(titleLabel).priority(760)
+        }
 
-            descrLabel.snp.remakeConstraints { (make) in
-                make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
-                make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
-                make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
-                make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
-                if !showDescription {
-                    make.height.equalTo(0)
-                }
+        descrLabel.snp.remakeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
+            make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
+            make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
+            make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
+            if !showDescription {
+                make.height.equalTo(0)
             }
         }
-        else if traitCollection.preferredContentSizeCategory.isAccessibilitySize {
+        #else
+        if traitCollection.preferredContentSizeCategory.isAccessibilitySize {
             titleLabel.snp.remakeConstraints { (make) in
                 make.top.left.right.equalTo(contentView.layoutMarginsGuide)
             }
@@ -238,6 +238,7 @@ class OptionCell: TableViewCell {
                 }
             }
         }
+        #endif
         
         super.updateConstraints()
         invalidateIntrinsicContentSize()

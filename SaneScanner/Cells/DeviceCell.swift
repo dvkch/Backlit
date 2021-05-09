@@ -33,7 +33,12 @@ class DeviceCell: TableViewCell {
     var isLoading: Bool = false {
         didSet {
             if isLoading {
-                let spinner = UIActivityIndicatorView(style: .medium)
+                let spinner: UIActivityIndicatorView
+                if #available(iOS 13.0, *) {
+                    spinner = UIActivityIndicatorView(style: .medium)
+                } else {
+                    spinner = UIActivityIndicatorView(style: .white)
+                }
                 spinner.color = .normalText
                 spinner.accessibilityLabel = "LOADING".localized
                 accessoryView = spinner

@@ -103,7 +103,7 @@ class DeviceVC: UIViewController {
 
     // MARK: Views
     private var thumbsView: GalleryThumbsView!
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
     private let scanButtonStackView = UIStackView()
     private let scanButton = ScanButton(type: .custom)
     

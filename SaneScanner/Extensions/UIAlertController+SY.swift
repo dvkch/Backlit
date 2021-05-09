@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import SaneSwift
 
 extension UIAlertController {
     static func show(for error: Error, title: String? = nil, in viewController: UIViewController) {
+        if case .cancelled = error as? SaneError {
+            return
+        }
+
         let alert = self.init(title: title, message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(title: "ACTION CLOSE".localized, style: .cancel, handler: nil)
         viewController.present(alert, animated: true, completion: nil)
