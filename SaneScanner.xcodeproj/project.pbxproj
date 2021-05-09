@@ -42,13 +42,14 @@
 		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
 		979576AB223022C400680A80 /* UILabel+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979576AA223022C400680A80 /* UILabel+SY.swift */; };
-		979D310826434C8D004F56F6 /* CatalystPlugin+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D310726434C8D004F56F6 /* CatalystPlugin+iOS.swift */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
 		979FCEF925D811FB00DD9E0E /* UIContentSizeCategory+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */; };
 		97A9FCEA2640906F0027F462 /* CatalystPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCE92640906F0027F462 /* CatalystPlugin.swift */; };
 		97A9FCEC264090960027F462 /* CatalystPluginImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */; };
 		97A9FCED264091500027F462 /* CatalystPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCE92640906F0027F462 /* CatalystPlugin.swift */; };
 		97A9FCF0264093920027F462 /* SaneScanner-CatalystPlugin.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */; platformFilter = maccatalyst; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		97B8C7772643EA4F00C06617 /* CatalystView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B8C7762643EA4F00C06617 /* CatalystView.swift */; };
+		97B8C7782643EA4F00C06617 /* CatalystView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B8C7762643EA4F00C06617 /* CatalystView.swift */; };
 		97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */; };
 		97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */; };
 		97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */; };
@@ -152,13 +153,13 @@
 		97865080220B69AC00F52DE6 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
 		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		979576AA223022C400680A80 /* UILabel+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+SY.swift"; sourceTree = "<group>"; };
-		979D310726434C8D004F56F6 /* CatalystPlugin+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CatalystPlugin+iOS.swift"; sourceTree = "<group>"; };
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContentSizeCategory+SY.swift"; sourceTree = "<group>"; };
 		97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SaneScanner-CatalystPlugin.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97A9FCE5264090500027F462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97A9FCE92640906F0027F462 /* CatalystPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystPlugin.swift; sourceTree = "<group>"; };
 		97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystPluginImplementation.swift; sourceTree = "<group>"; };
+		97B8C7762643EA4F00C06617 /* CatalystView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystView.swift; sourceTree = "<group>"; };
 		97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
 		97BE129C220BC1A1006A2AE8 /* SVProgressHUD+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+SY.swift"; sourceTree = "<group>"; };
 		97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SY.swift"; sourceTree = "<group>"; };
@@ -244,10 +245,18 @@
 			isa = PBXGroup;
 			children = (
 				97A9FCE5264090500027F462 /* Info.plist */,
-				97A9FCE92640906F0027F462 /* CatalystPlugin.swift */,
 				97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */,
 			);
 			path = "SaneScanner-CatalystPlugin";
+			sourceTree = "<group>";
+		};
+		97B8C7752643EA2600C06617 /* SaneScanner-Shared */ = {
+			isa = PBXGroup;
+			children = (
+				97A9FCE92640906F0027F462 /* CatalystPlugin.swift */,
+				97B8C7762643EA4F00C06617 /* CatalystView.swift */,
+			);
+			path = "SaneScanner-Shared";
 			sourceTree = "<group>";
 		};
 		97CD8488263AC581006DD44B /* Views */ = {
@@ -319,7 +328,6 @@
 		97CD848D263AC5ED006DD44B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				979D310726434C8D004F56F6 /* CatalystPlugin+iOS.swift */,
 				973066B6220C73D40068E8C7 /* CoreGraphics+SY.swift */,
 				9730FD9125CF6365009ABCBC /* DeviceAuthentication+SY.swift */,
 				973066C2220C8C740068E8C7 /* FileManager+SY.swift */,
@@ -371,6 +379,7 @@
 			children = (
 				F8CBD20F1AF9A58C00B4C221 /* SaneScanner */,
 				97EDB9171E4924D40012CB7E /* SaneScannerUITests */,
+				97B8C7752643EA2600C06617 /* SaneScanner-Shared */,
 				97A9FCE4264090500027F462 /* SaneScanner-CatalystPlugin */,
 				F8CBD20E1AF9A58C00B4C221 /* Products */,
 				1D470155F708E88FADB3A792 /* Pods */,
@@ -682,6 +691,7 @@
 			files = (
 				97A9FCEA2640906F0027F462 /* CatalystPlugin.swift in Sources */,
 				97A9FCEC264090960027F462 /* CatalystPluginImplementation.swift in Sources */,
+				97B8C7782643EA4F00C06617 /* CatalystView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,12 +741,12 @@
 				97BE129D220BC1A1006A2AE8 /* SVProgressHUD+SY.swift in Sources */,
 				978263CB221E253D0095E6ED /* DotsRefreshControl.swift in Sources */,
 				973066B7220C73D40068E8C7 /* CoreGraphics+SY.swift in Sources */,
+				97B8C7772643EA4F00C06617 /* CatalystView.swift in Sources */,
 				97F2FB4F2223084B006BD617 /* GalleryNC.swift in Sources */,
 				97499E5B220862FE006DED20 /* ScanNC.swift in Sources */,
 				9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */,
 				973066B3220C55000068E8C7 /* GalleryThumbsView.swift in Sources */,
 				97A9FCED264091500027F462 /* CatalystPlugin.swift in Sources */,
-				979D310826434C8D004F56F6 /* CatalystPlugin+iOS.swift in Sources */,
 				977712D625CCB376009EC50D /* Context.swift in Sources */,
 				979576AB223022C400680A80 /* UILabel+SY.swift in Sources */,
 				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,

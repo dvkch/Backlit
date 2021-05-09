@@ -25,10 +25,11 @@ import AppKit
         textField.isBezeled = true
         textField.bezelStyle = .roundedBezel
         alert.accessoryView = textField
-        alert.window.initialFirstResponder = textField
+        alert.window.initialFirstResponder = alert.accessoryView
 
         if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
             completion(textField.stringValue)
         }
     }
 }
+
