@@ -35,11 +35,32 @@ class DeviceVC: UIViewController {
         view.backgroundColor = .background
         title = device.model
 
+        #if targetEnvironment(macCatalyst)
+        tableView.separatorStyle = .none
+        #endif
+        tableView.clipsToBounds = true
+        tableView.alwaysBounceVertical = true
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide)
+            make.left.right.equalToSuperview()
+        }
 
+        scanButtonStackView.distribution = .fill
+        view.addSubview(scanButtonStackView)
+        scanButtonStackView.snp.makeConstraints { make in
+            make.top.equalTo(tableView.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(view.layoutMarginsGuide)
+        }
+        
         scanButton.kind = .scan
         scanButton.style = .cell
+        scanButtonStackView.addArrangedSubview(scanButton)
         
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)
         
@@ -85,8 +106,9 @@ class DeviceVC: UIViewController {
 
     // MARK: Views
     private var thumbsView: GalleryThumbsView!
-    @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var scanButton: ScanButton!
+    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let scanButtonStackView = UIStackView()
+    private let scanButton = ScanButton(type: .custom)
     
     // MARK: Actions
     @IBAction private func scanButtonTap() {

@@ -20,17 +20,30 @@ class DevicesVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         
-        thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: nil)
-        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
+
+        #if targetEnvironment(macCatalyst)
+        tableView.contentInset.top = 18
+        tableView.separatorStyle = .none
+        #endif
+        tableView.clipsToBounds = true
+        tableView.alwaysBounceVertical = true
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.registerCell(HostCell.self, xib: true)
         tableView.registerCell(DeviceCell.self, xib: true)
         tableView.addPullToResfresh { [weak self] (_) in
             self?.refreshDevices()
         }
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
-        
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.bottom.equalTo(view.layoutMarginsGuide)
+        }
+
+        thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: nil)
+
         Sane.shared.delegate = self
     }
 
@@ -46,7 +59,7 @@ class DevicesVC: UIViewController {
     }
     
     // MARK: Views
-    @IBOutlet private var tableView: UITableView!
+    private let tableView = UITableView(frame: .zero, style: .grouped)
     private var thumbsView: GalleryThumbsView!
     
     // MARK: Properties

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		97044903220875D300E13C6A /* DeviceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97044901220875D300E13C6A /* DeviceVC.swift */; };
-		97044904220875D300E13C6A /* DeviceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97044902220875D300E13C6A /* DeviceVC.xib */; };
 		9704490C2208900700E13C6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704490B2208900700E13C6A /* AppDelegate.swift */; };
 		971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971584CD222F36C100DC46CA /* SYPictureMetdata+SY.swift */; };
 		971584D0222F445200DC46CA /* UIImage+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971584CF222F445200DC46CA /* UIImage+SY.swift */; };
@@ -30,7 +29,6 @@
 		97499E5F220874B3006DED20 /* SplitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5E220874B3006DED20 /* SplitVC.swift */; };
 		9755651625CB712800FDAD07 /* UISceneView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9755651525CB712800FDAD07 /* UISceneView+SY.swift */; };
 		9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9757FCEF2207112D00AB59F1 /* DevicesVC.swift */; };
-		9757FCF22207112D00AB59F1 /* DevicesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9757FCF02207112D00AB59F1 /* DevicesVC.xib */; };
 		977712D225CCB2F1009EC50D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977712D125CCB2F1009EC50D /* SceneDelegate.swift */; };
 		977712D625CCB376009EC50D /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977712D525CCB376009EC50D /* Context.swift */; };
 		977C4F5B264739AF00856E0E /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977C4F5A264739AF00856E0E /* Slider.swift */; };
@@ -118,7 +116,6 @@
 		685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.release.xcconfig"; sourceTree = "<group>"; };
 		767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.debug.xcconfig"; sourceTree = "<group>"; };
 		97044901220875D300E13C6A /* DeviceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVC.swift; sourceTree = "<group>"; };
-		97044902220875D300E13C6A /* DeviceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceVC.xib; sourceTree = "<group>"; };
 		9704490B2208900700E13C6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		970A587F1E41665C0033A116 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		971584CD222F36C100DC46CA /* SYPictureMetdata+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYPictureMetdata+SY.swift"; sourceTree = "<group>"; };
@@ -141,7 +138,6 @@
 		97499E5E220874B3006DED20 /* SplitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVC.swift; sourceTree = "<group>"; };
 		9755651525CB712800FDAD07 /* UISceneView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISceneView+SY.swift"; sourceTree = "<group>"; };
 		9757FCEF2207112D00AB59F1 /* DevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesVC.swift; sourceTree = "<group>"; };
-		9757FCF02207112D00AB59F1 /* DevicesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicesVC.xib; sourceTree = "<group>"; };
 		976E423D23D2158100FFEFD0 /* SaneScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaneScanner.entitlements; sourceTree = "<group>"; };
 		977712D125CCB2F1009EC50D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		977712D525CCB376009EC50D /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
@@ -350,9 +346,7 @@
 				97499E5E220874B3006DED20 /* SplitVC.swift */,
 				97499E5A220862FE006DED20 /* ScanNC.swift */,
 				9757FCEF2207112D00AB59F1 /* DevicesVC.swift */,
-				9757FCF02207112D00AB59F1 /* DevicesVC.xib */,
 				97044901220875D300E13C6A /* DeviceVC.swift */,
-				97044902220875D300E13C6A /* DeviceVC.xib */,
 				97D590122637565800E84198 /* DevicePreviewVC.swift */,
 				97D590132637565800E84198 /* DevicePreviewVC.xib */,
 				97FDF401222C55EE00B71E4C /* DeviceOptionVC.swift */,
@@ -571,10 +565,8 @@
 				97F2FB4D22230325006BD617 /* GalleryGridVC.xib in Resources */,
 				97CC34E42205F48B00304345 /* OptionCell.xib in Resources */,
 				97EB32B322071F880027CCAE /* PreferencesVC.xib in Resources */,
-				9757FCF22207112D00AB59F1 /* DevicesVC.xib in Resources */,
 				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
 				97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */,
-				97044904220875D300E13C6A /* DeviceVC.xib in Resources */,
 				971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
