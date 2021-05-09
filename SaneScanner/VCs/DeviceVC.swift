@@ -42,6 +42,7 @@ class DeviceVC: UIViewController {
         tableView.alwaysBounceVertical = true
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.registerHeader(TableViewHeader.self, xib: false)
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
         view.addSubview(tableView)
@@ -358,11 +359,19 @@ extension DeviceVC : UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return useLargeLayout ? nil : "DEVICE SECTION PREVIEW".localized
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 && useLargeLayout {
+            return nil
         }
-        return optionGroup(tableViewSection: section)?.localizedTitle
+
+        let header = tableView.dequeueHeader(TableViewHeader.self)
+        if section == 0 {
+            header.text = "DEVICE SECTION PREVIEW".localized
+        }
+        else {
+            header.text = optionGroup(tableViewSection: section)?.localizedTitle
+        }
+        return header
     }
     
     func previewCellHeight(in tableView: UITableView) -> CGFloat {

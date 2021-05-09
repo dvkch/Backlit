@@ -15,7 +15,7 @@ protocol OptionCellDelegate: NSObjectProtocol {
     func optionCell(_ cell: OptionCell, didUpdateValueFor option: DeviceOption, with error: Error?)
 }
 
-class OptionCell: UITableViewCell {
+class OptionCell: TableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

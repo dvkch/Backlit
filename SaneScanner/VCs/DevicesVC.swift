@@ -33,6 +33,7 @@ class DevicesVC: UIViewController {
         tableView.delegate = self
         tableView.registerCell(HostCell.self, xib: true)
         tableView.registerCell(DeviceCell.self, xib: true)
+        tableView.registerHeader(TableViewHeader.self, xib: false)
         tableView.addPullToResfresh { [weak self] (_) in
             self?.refreshDevices()
         }
@@ -226,8 +227,15 @@ extension DevicesVC : UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "DEVICES SECTION HOSTS".localized : "DEVICES SECTION DEVICES".localized;
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueHeader(TableViewHeader.self)
+        if section == 0 {
+            header.text = "DEVICES SECTION HOSTS".localized
+        }
+        else {
+            header.text = "DEVICES SECTION DEVICES".localized;
+        }
+        return header
     }
 }
 

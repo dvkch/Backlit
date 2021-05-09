@@ -9,7 +9,7 @@
 import UIKit
 import SaneSwift
 
-class DeviceCell: UITableViewCell {
+class DeviceCell: TableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
