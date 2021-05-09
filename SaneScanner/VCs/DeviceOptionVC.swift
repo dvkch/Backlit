@@ -57,62 +57,15 @@ class DeviceOptionVC : UIAlertController {
 }
 
 // MARK: Content
-extension DeviceOptionVC {
+extension DeviceOptionVC: DeviceOptionControllable {
     private func updateContent() {
-        if option.disabledOrReadOnly || option.hasSingleOption {
-            return
-        }
-        
-        if let option = option as? DeviceOptionBool {
-            updateForValueList(for: option, values: [true, false])
-        }
-        else if let option = option as? DeviceOptionInt {
-            if case .range(let min, let max) = option.constraint {
-                updateForRange(for: option, current: Double(option.value), min: Double(min), max: Double(max), step: nil)
-            }
-            else if case .stepRange(let min, let max, let step, _) = option.constraint {
-                updateForRange(for: option, current: Double(option.value), min: Double(min), max: Double(max), step: Double(step))
-            }
-            else if case let .list(values) = option.constraint {
-                updateForValueList(for: option, values: values)
-            }
-            else {
-                fatalError("Int option should have a constraint!")
-            }
-        }
-        else if let option = option as? DeviceOptionFixed {
-            if case .range(let min, let max) = option.constraint {
-                updateForRange(for: option, current: option.value, min: Double(min), max: Double(max), step: nil)
-            }
-            else if case .stepRange(let min, let max, let step, _) = option.constraint {
-                updateForRange(for: option, current: option.value, min: Double(min), max: Double(max), step: Double(step))
-            }
-            else if case let .list(values) = option.constraint {
-                updateForValueList(for: option, values: values)
-            }
-            else {
-                fatalError("Int option should have a constraint!")
-            }
-        }
-        else if let option = option as? DeviceOptionString {
-            if case let .list(values) = option.constraint {
-                updateForValueList(for: option, values: values)
-            }
-            else {
-                updateForTextInput(option)
-            }
-        }
-        else if let option = option as? DeviceOptionButton {
-            updateForButton(option)
-        }
-        else if option is DeviceOptionGroup {
-        }
-        else {
-            fatalError("ALL OPTION TYPES SHOULD ALREADY BE HANDLED")
-        }
+        option.updateDeviceOptionControl(using: self, filterDisabled: true, filterSingleOption: true)
     }
     
-    private func updateForValueList<V, T: DeviceOptionTyped<V>>(for option: T, values: [T.Value]) {
+    func updateDeviceOptionControlForDisabledOption() {
+    }
+    
+    func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
         for value in values {
             addAction(title: option.stringForValue(value, userFacing: true), style: .default) { (_) in
                 SVProgressHUD.show()
@@ -122,8 +75,8 @@ extension DeviceOptionVC {
         
         addAutoButton(for: option)
     }
-
-    private func updateForRange<V, T: DeviceOptionTyped<V>>(for option: T, current: Double, min: Double, max: Double, step: Double?) {
+    
+    func updateDeviceOptionControlForRange<T>(option: DeviceOptionTyped<T>, current: Double, min: Double, max: Double, step: Double?, supportsAuto: Bool) where T : Numeric {
         let optionInt = option as? DeviceOptionInt
         let optionFixed = option as? DeviceOptionFixed
         
@@ -131,55 +84,57 @@ extension DeviceOptionVC {
             fatalError("This method should only be used with numeric options")
         }
         
-        var stepperVC: SYStepperViewController?
-        var sliderVC: SYSliderViewController?
-        
-        if let step = step {
-            let vc = SYStepperViewController(current: current, min: min, max: max, step: step) { (value) -> String? in
-                return optionInt?.stringForValue(Int(value), userFacing: true) ?? optionFixed?.stringForValue(Double(value), userFacing: true)
-            }
-            setContentViewController(vc)
-            stepperVC = vc
+        let sliderVC: SYSliderViewController = SYSliderViewController(current: current, min: min, max: max, step: step) { (value) -> String in
+            return optionInt?.stringForValue(Int(value), userFacing: true) ?? optionFixed?.stringForValue(value, userFacing: true) ?? String(value)
         }
-        else {
-            let vc = SYSliderViewController(current: current, min: min, max: max) { (value) -> String? in
-                return optionInt?.stringForValue(Int(value), userFacing: true) ?? optionFixed?.stringForValue(Double(value), userFacing: true)
-            }
-            setContentViewController(vc)
-            sliderVC = vc
-        }
+        setContentViewController(sliderVC)
         
         addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
             SVProgressHUD.show()
-            let value = stepperVC?.stepperValue ?? sliderVC?.sliderValue ?? 0
             if let optionInt = optionInt {
-                Sane.shared.updateOption(optionInt, with: .value(Int(value)), completion: self.optionUpdateCompletion(_:))
+                Sane.shared.updateOption(optionInt, with: .value(Int(sliderVC.sliderValue)), completion: self.optionUpdateCompletion(_:))
             }
             if let optionFixed = optionFixed {
-                Sane.shared.updateOption(optionFixed, with: .value(value), completion: self.optionUpdateCompletion(_:))
+                Sane.shared.updateOption(optionFixed, with: .value(sliderVC.sliderValue), completion: self.optionUpdateCompletion(_:))
             }
         }
         
         addAutoButton(for: option)
     }
     
-    private func updateForButton(_ option: DeviceOptionButton) {
+    func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
         addAction(title: "ACTION PRESS".localized, style: .default) { (_) in
             SVProgressHUD.show()
             option.press(self.optionUpdateCompletion(_:))
         }
     }
     
-    private func updateForTextInput(_ option: DeviceOptionString) {
+    func updateDeviceOptionControlForField<T>(option: DeviceOptionTyped<T>, current: T, kind: DeviceOptionControllableFieldKind, supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
+        
         addTextField { (field) in
             field.autocorrectionType = .no
             field.autocapitalizationType = .none
-            field.text = option.value
+            field.text = option.value.description
+            
+            switch kind {
+            case .string:   field.keyboardType = .asciiCapable
+            case .int:      field.keyboardType = .numberPad
+            case .double:   field.keyboardType = .decimalPad
+            }
         }
         
         addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
             SVProgressHUD.show()
-            Sane.shared.updateOption(option, with: .value(self.textFields?.first?.text ?? ""), completion: self.optionUpdateCompletion(_:))
+            let stringValue = self.textFields?.first?.text ?? ""
+
+            switch kind {
+            case .string(let option):
+                Sane.shared.updateOption(option, with: .value(stringValue), completion: self.optionUpdateCompletion(_:))
+            case .int(let option):
+                Sane.shared.updateOption(option, with: .value(Int(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
+            case .double(let option):
+                Sane.shared.updateOption(option, with: .value(Double(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
+            }
         }
         
         addAutoButton(for: option)
@@ -197,38 +152,23 @@ extension DeviceOptionVC {
 
 fileprivate class SYSliderViewController: UIViewController {
     // MARK: Init
-    init(current: Double, min: Double, max: Double, conversion: @escaping (Double) -> String?) {
-        self.conversion = conversion
+    init(current: Double, min: Double, max: Double, step: Double?, conversion: @escaping (Double) -> String  ) {
         super.init(nibName: nil, bundle: nil)
-        label.textColor = .normalText
-        label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .body)
-        label.autoAdjustsFontSize = true
         slider.minimumValue = Float(min)
         slider.maximumValue = Float(max)
-        slider.value        = Float(current)
-        slider.addTarget(self, action: #selector(self.sliderChanged), for: .valueChanged)
-        updateText()
+        slider.value = Float(current)
+        slider.step = step.flatMap { Float($0) }
+        slider.formatter = { conversion(Double($0)) }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(label)
-        label.setContentHuggingPriority(UILayoutPriority.defaultLow - 1, for: NSLayoutConstraint.Axis.horizontal)
-        label.snp.makeConstraints { (make) in
-            make.top.greaterThanOrEqualToSuperview()
-            make.left.equalTo(20)
-            make.right.equalTo(-20)
-            make.bottom.equalTo(view.snp.centerY).offset(-10)
-        }
-
         view.addSubview(slider)
         slider.snp.makeConstraints { (make) in
-            make.top.equalTo(view.snp.centerY)
+            make.top.equalTo(10)
             make.left.equalTo(20)
             make.right.equalTo(-20)
-            make.bottom.lessThanOrEqualTo(-10)
+            make.bottom.equalTo(-10)
         }
     }
     
@@ -237,85 +177,11 @@ fileprivate class SYSliderViewController: UIViewController {
     }
     
     // MARK: Properties
-    private let conversion: (Double) -> String?
-    
     var sliderValue: Double {
         return Double(slider.value)
     }
     
     // MARK: Views
-    private let slider = UISlider()
-    private let label = UILabel()
-    
-    // MARK: Actions
-    @objc private func sliderChanged() {
-        updateText()
-    }
-    
-    // MARK: Content
-    private func updateText() {
-        label.text = conversion(sliderValue)
-    }
+    private let slider = Slider()
 }
 
-
-fileprivate class SYStepperViewController: UIViewController {
-    // MARK: Init
-    init(current: Double, min: Double, max: Double, step: Double, conversion: @escaping (Double) -> String?) {
-        self.conversion = conversion
-        super.init(nibName: nil, bundle: nil)
-        label.textColor = .normalText
-        label.font = .preferredFont(forTextStyle: .body)
-        label.autoAdjustsFontSize = true
-        stepper.minimumValue = min
-        stepper.maximumValue = max
-        stepper.stepValue    = step
-        stepper.value        = current
-        stepper.addTarget(self, action: #selector(self.stepperChanged), for: .valueChanged)
-        updateText()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.addSubview(stepper)
-        stepper.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.top.greaterThanOrEqualTo(10)
-            make.right.equalTo(-10)
-            make.bottom.equalTo(-10)
-        }
-        
-        label.setContentHuggingPriority(UILayoutPriority.defaultLow - 1, for: NSLayoutConstraint.Axis.horizontal)
-        view.addSubview(label)
-        label.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.left.equalTo(20)
-            make.right.equalTo(stepper).offset(-20)
-        }
-    }
-  
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: Properties
-    private let conversion: (Double) -> String?
-    
-    var stepperValue: Double {
-        return stepper.value
-    }
-    
-    // MARK: Views
-    private let stepper = UIStepper()
-    private let label = UILabel()
-    
-    // MARK: Actions
-    @objc private func stepperChanged() {
-        updateText()
-    }
-    
-    // MARK: Content
-    private func updateText() {
-        label.text = conversion(stepperValue)
-    }
-}
