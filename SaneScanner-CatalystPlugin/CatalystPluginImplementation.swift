@@ -101,5 +101,25 @@ import AppKit
         }
         return CatalystViewContainer(containing: view)
     }
+    
+    public func button(title: String, completion: @escaping () -> ()) -> CatalystView {
+        let view = Button(title: title, target: nil, action: nil)
+        // TODO: view.bezelStyle = .regularSquare
+        view.pressedBlock = completion
+        return CatalystViewContainer(containing: view)
+    }
+}
+
+private class Button: NSButton {
+    var pressedBlock: (() -> ())? {
+        didSet {
+            target = self
+            action = #selector(pressed)
+        }
+    }
+    
+    @objc private func pressed() {
+        pressedBlock?()
+    }
 }
 

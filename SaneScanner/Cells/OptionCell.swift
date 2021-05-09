@@ -24,10 +24,6 @@ class OptionCell: UITableViewCell {
         valueLabel.autoAdjustsFontSize = true
         descrLabel.autoAdjustsFontSize = true
         
-        #if targetEnvironment(macCatalyst)
-        titleLabel.textAlignment = .right
-        #endif
-        
         setNeedsUpdateConstraints()
     }
     
@@ -104,6 +100,7 @@ class OptionCell: UITableViewCell {
             descrLabel.text = option.localizedDescr
 
             #if targetEnvironment(macCatalyst)
+            titleLabel.textAlignment = .right
             catalystValueControl = nil
             option.updateDeviceOptionControl(using: self, filterDisabled: false, filterSingleOption: false)
             #endif
@@ -162,22 +159,29 @@ class OptionCell: UITableViewCell {
         valueLabel.isHidden = catalystValueControl != nil
         descrLabel.isHidden = !showDescription
 
-        if let catalystValueControl = catalystValueControl {
+        if #available(macCatalyst 13.0, *) {
+            let valueView: UIView = catalystValueControl ?? valueLabel
+            valueView.isHidden = false
+
+            let hiddenValueView = catalystValueControl != nil ? valueLabel : nil
+            hiddenValueView?.snp.removeConstraints()
+            hiddenValueView?.isHidden = true
+
             titleLabel.snp.remakeConstraints { (make) in
                 make.top.left.equalTo(contentView.layoutMarginsGuide)
                 make.width.equalTo(contentView.layoutMarginsGuide).multipliedBy(0.35)
             }
 
-            catalystValueControl.snp.remakeConstraints { (make) in
+            valueView.snp.remakeConstraints { (make) in
                 make.left.equalTo(titleLabel.snp.right).offset(20)
                 make.top.right.equalTo(contentView.layoutMarginsGuide)
-                make.height.equalTo(titleLabel)
+                make.height.equalTo(titleLabel).priority(760)
             }
 
             descrLabel.snp.remakeConstraints { (make) in
                 make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
                 make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
-                make.top.greaterThanOrEqualTo(catalystValueControl.snp.bottom).offset(showDescription ? 20 : 0)
+                make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
                 make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
                 if !showDescription {
                     make.height.equalTo(0)
@@ -288,11 +292,44 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForField<T>(option: DeviceOptionTyped<T>, current: T, kind: DeviceOptionControllableFieldKind, supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
-        catalystValueControl = nil
+        
+        let field = UITextField()
+        field.autocorrectionType = .no
+        field.autocapitalizationType = .none
+        field.text = option.value.description
+        field.isEnabled = !option.disabledOrReadOnly
+            
+        switch kind {
+        case .string:   field.keyboardType = .asciiCapable
+        case .int:      field.keyboardType = .numberPad
+        case .double:   field.keyboardType = .decimalPad
+        }
+        field.addTarget(self, action: #selector(deviceOptionTextFieldValueChanged), for: .primaryActionTriggered)
+
+        // TODO: handle Auto
+        catalystValueControl = field
+    }
+
+    @objc private func deviceOptionTextFieldValueChanged(_ field: UITextField) {
+        SVProgressHUD.show()
+        let stringValue = field.text ?? ""
+
+        if let option = option as? DeviceOptionString {
+            Sane.shared.updateOption(option, with: .value(stringValue), completion: self.optionUpdateCompletion(_:))
+        }
+        if let option = option as? DeviceOptionInt {
+            Sane.shared.updateOption(option, with: .value(Int(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
+        }
+        if let option = option as? DeviceOptionFixed {
+            Sane.shared.updateOption(option, with: .value(Double(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
+        }
     }
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
-        catalystValueControl = nil
+        catalystValueControl = obtainCatalystPlugin().button(title: "ACTION PRESS".localized) {
+            SVProgressHUD.show()
+            option.press(self.optionUpdateCompletion(_:))
+        }.view
     }
 
     private func optionUpdateCompletion(_ error: Error?) {
