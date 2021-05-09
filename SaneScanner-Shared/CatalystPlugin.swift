@@ -13,6 +13,8 @@ import Foundation
 
     func presentHostInputAlert(title: String, message: String, add: String, cancel: String, completion: (String) -> ())
 
+    func presentAuthInputAlert(title: String, message: String, usernamePlaceholder: String, passwordPlaceholder: String, continue: String, remember: String, cancel: String, completion: (_ username: String?, _ password: String?, _ remember: Bool) -> ())
+
     func dropdown(options: [CatalystDropdownValueProtocol], selectedIndex: Int, disabled: Bool, changed: @escaping (CatalystDropdownValueProtocol) -> ()) -> CatalystView
 }
 

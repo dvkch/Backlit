@@ -126,6 +126,29 @@ extension DevicesVC: SaneDelegate {
         let hudShowing = SVProgressHUD.isVisible()
         SVProgressHUD.dismiss()
         
+        #if targetEnvironment(macCatalyst)
+        obtainCatalystPlugin().presentAuthInputAlert(
+            title: "DIALOG TITLE AUTH".localized,
+            message: String(format: "DIALOG MESSAGE AUTH %@".localized, device),
+            usernamePlaceholder: "DIALOG AUTH PLACEHOLDER USERNAME".localized,
+            passwordPlaceholder: "DIALOG AUTH PLACEHOLDER PASSWORD".localized,
+            continue: "ACTION CONTINUE".localized,
+            remember: "ACTION CONTINUE REMEMBER".localized,
+            cancel: "ACTION CANCEL".localized
+        ) { (username, password, remember) in
+            if hudShowing { SVProgressHUD.show() }
+            if let username = username, let password = password {
+                let auth = DeviceAuthentication(username: username, password: password)
+                if remember {
+                    auth.save(for: device)
+                }
+                completion(auth)
+            }
+            else {
+                completion(nil)
+            }
+        }
+        #else
         let alert = UIAlertController(title: "DIALOG TITLE AUTH".localized, message: nil, preferredStyle: .alert)
         alert.message = String(format: "DIALOG MESSAGE AUTH %@".localized, device)
         alert.addTextField { (field) in
@@ -158,6 +181,7 @@ extension DevicesVC: SaneDelegate {
             completion(nil)
         }))
         present(alert, animated: true, completion: nil)
+        #endif
     }
 }
 
