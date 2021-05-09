@@ -38,7 +38,12 @@ class Slider: UIControl {
         label.textColor = .normalText
         label.font = .preferredFont(forTextStyle: .body)
         label.autoAdjustsFontSize = true
+        label.isUserInteractionEnabled = true
         container.addArrangedSubview(label)
+        
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapGestureRecognized))
+        doubleTapGesture.numberOfTapsRequired = 2
+        label.addGestureRecognizer(doubleTapGesture)
     }
 
     // MARK: Properties
@@ -86,6 +91,7 @@ class Slider: UIControl {
         }
     }
     var changedBlock: ((Float) -> ())?
+    var doubleTapBlock: (() -> ())?
     
     // MARK: Views
     private let container = UIStackView()
@@ -101,6 +107,11 @@ class Slider: UIControl {
         }
     }
     
+    @objc private func doubleTapGestureRecognized() {
+        doubleTapBlock?()
+    }
+
+    // MARK: Content
     private func updateContent() {
         if let step = step {
             slider.value = roundf(slider.value / step) * step;

@@ -286,7 +286,6 @@ extension OptionCell: DeviceOptionControllable {
             fatalError("This method should only be used with numeric options")
         }
 
-        // TODO: handle Auto
         let slider = Slider()
         slider.useMacOSThumb = true
         slider.minimumValue = Float(min)
@@ -302,6 +301,12 @@ extension OptionCell: DeviceOptionControllable {
             }
             if let optionFixed = optionFixed {
                 Sane.shared.updateOption(optionFixed, with: .value(Double(value)), completion: self.optionUpdateCompletion(_:))
+            }
+        }
+        slider.doubleTapBlock = { [weak self] in
+            guard let self = self else { return }
+            if supportsAuto {
+                Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
             }
         }
         slider.translatesAutoresizingMaskIntoConstraints = false
@@ -323,7 +328,7 @@ extension OptionCell: DeviceOptionControllable {
         }
         field.addTarget(self, action: #selector(deviceOptionTextFieldValueChanged), for: .primaryActionTriggered)
 
-        // TODO: handle Auto
+        // LATER: test text field input for String & Int and handle Auto
         catalystValueControl = field
     }
 

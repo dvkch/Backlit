@@ -20,7 +20,6 @@ import SVProgressHUD
 // TODO: UX: verouillage des options pendant un scan/preview/update d'options. utilisation d'une propriété Device.lock observable? est-ce necesaire puisque les calls sont tous sur une queue synchrone (are they tho?)
 
 // TODO: Catalyst: replace pull to refresh with navBar item ?
-// TODO: Catalyst: change tableView grouped style
 // TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
 
 // LATER: add auto search on local network
