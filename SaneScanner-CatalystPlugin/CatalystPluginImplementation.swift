@@ -31,5 +31,25 @@ import AppKit
             completion(textField.stringValue)
         }
     }
+
+    public func dropdown(options: [CatalystDropdownValueProtocol], selectedIndex: Int, disabled: Bool, changed: @escaping (CatalystDropdownValueProtocol) -> ()) -> CatalystView {
+        let view = NSPopUpButton()
+
+        if selectedIndex >= 0 && selectedIndex < options.count {
+            view.addItem(withTitle: options[selectedIndex].title)
+            view.selectItem(at: 0)
+        }
+        view.isEnabled = !disabled
+        
+        NotificationCenter.default.addObserver(forName: NSPopUpButton.willPopUpNotification, object: view, queue: .main) { _ in
+            view.removeAllItems()
+            view.addItems(withTitles: options.map(\.title))
+            view.selectItem(at: selectedIndex >= 0 ? selectedIndex : -1)
+        }
+        NotificationCenter.default.addObserver(forName: NSMenu.didSendActionNotification, object: view.menu, queue: .main) { _ in
+            changed(options[view.indexOfSelectedItem])
+        }
+        return CatalystViewContainer(containing: view)
+    }
 }
 

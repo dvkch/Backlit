@@ -328,6 +328,7 @@ extension DeviceVC : UITableViewDataSource {
         }
         
         let cell = tableView.dequeueCell(OptionCell.self, for: indexPath)
+        cell.delegate = self
         if let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] {
             cell.updateWith(option: option)
         }
@@ -387,6 +388,10 @@ extension DeviceVC : UITableViewDelegate {
         
         guard indexPath.section > 0, let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] else { return }
         
+        if let cell = tableView.cellForRow(at: indexPath) as? OptionCell, cell.hasControlToUpdateItsValue {
+            return
+        }
+
         let vc = DeviceOptionVC(option: option)
         vc.closeBlock = {
             self.tableView.reloadData()
@@ -418,5 +423,18 @@ extension DeviceVC : SanePreviewViewDelegate {
     
     func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device) {
         Sane.shared.cancelCurrentScan()
+    }
+}
+
+extension DeviceVC : OptionCellDelegate {
+    func optionCell(_ cell: OptionCell, didUpdateValueFor option: DeviceOption, with error: Error?) {
+        if let error = error {
+            SVProgressHUD.showError(withStatus: error.localizedDescription)
+        }
+        else {
+            SVProgressHUD.dismiss()
+        }
+        
+        tableView.reloadData()
     }
 }

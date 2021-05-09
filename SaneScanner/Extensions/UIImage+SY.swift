@@ -19,13 +19,18 @@ extension UIImage {
         label.backgroundColor = .clear
         label.frame = CGRect(x: 0, y: 0, width: size, height: size)
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: size, height: size), true, 1)
+        return .screenshottingContext(size: CGSize(width: size, height: size), scale: 1) {
+            UIColor.random.setFill()
+            UIBezierPath(rect: label.bounds).fill()
+
+            label.draw(label.bounds)
+        }
+    }
+    
+    static func screenshottingContext(size: CGSize, scale: CGFloat = 1, _ block: () -> ()) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, true, scale)
         defer { UIGraphicsEndImageContext() }
-        
-        UIColor.random.setFill()
-        UIBezierPath(rect: label.bounds).fill()
-        
-        label.draw(label.bounds)
+        block()
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 }
