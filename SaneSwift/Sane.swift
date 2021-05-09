@@ -105,12 +105,16 @@ extension Sane {
 
 // MARK: Benchmarking
 extension Sane {
-    private static func logTime<T>(ifOver minReportDuration: TimeInterval = 1, function: String = #function, block: () -> T) -> T {
+    private static func logTime<T>(ifOver minReportDuration: TimeInterval = 1, function: String = #function, message: String? = nil, block: () -> T) -> T {
         let startDate = Date()
         let returnValue = block()
         let interval = Date().timeIntervalSince(startDate)
         if interval > minReportDuration {
-            print(function + ": " + String(interval) + "s")
+            if let message = message {
+                print("\(function), \(message): " + String(interval) + "s")
+            } else {
+                print(function + ": " + String(interval) + "s")
+            }
         }
         return returnValue
     }
@@ -333,7 +337,7 @@ extension Sane {
         runOnSaneThread {
             let bytes = malloc(option.size)!
             
-            let s = Sane.logTime { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_GET_VALUE, bytes, nil) }
+            let s = Sane.logTime(message: option.localizedTitle) { sane_control_option(handle, SANE_Int(option.index), SANE_ACTION_GET_VALUE, bytes, nil) }
             let value = option.valueForBytes(bytes)
             free(bytes)
 
