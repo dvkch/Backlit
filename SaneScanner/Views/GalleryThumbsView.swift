@@ -76,6 +76,17 @@ class GalleryThumbsView: UIView {
     private var galleryItems = [GalleryItem]()
     private let leftGradientView = SYGradientView()
     private let rightGradientView = SYGradientView()
+    
+    // MARK: Actions
+    private func openGallery(at index: Int) {
+        #if targetEnvironment(macCatalyst)
+        // TODO: fix crash on Catalyst
+        UIApplication.shared.open(galleryItems[index].URL, options: [:], completionHandler: nil)
+        #else
+        let nc = GalleryNC(openedAt: index)
+        parentViewController?.present(nc, animated: true, completion: nil)
+        #endif
+    }
 
     // MARK: Content
     override var backgroundColor: UIColor? {
@@ -288,13 +299,21 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
-        
-        #if targetEnvironment(macCatalyst)
-        // TODO: fix crash on Catalyst
-        UIApplication.shared.open(galleryItems[indexPath.item].URL, options: [:], completionHandler: nil)
-        #else
-        let nc = GalleryNC(openedAt: indexPath.row)
-        parentViewController?.present(nc, animated: true, completion: nil)
-        #endif
+        openGallery(at: indexPath.item)
+    }
+    
+    @available(iOS 13.0, *)
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let open = UIAction(title: "ACTION OPEN".localized, image: UIImage(systemName: "folder")) { _ in
+                self.openGallery(at: indexPath.item)
+            }
+            let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
+                guard let parentViewController = self.parentViewController else { return }
+                UIActivityViewController.showForURLs([self.galleryItems[indexPath.item].URL], in: parentViewController, sender: collectionView.cellForItem(at: indexPath), completion: nil)
+            }
+            return UIMenu(title: "", children: [open, share])
+        }
+        return configuration
     }
 }

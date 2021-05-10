@@ -33,7 +33,7 @@ extension UIActivityViewController {
     }
 
 
-    static func showForURLs(_ urls: [URL], fromBottomIn presentingVC: UIViewController, completion: (() -> ())?) {
+    static func showForURLs(_ urls: [URL], in presentingVC: UIViewController, sender: UIView?, completion: (() -> ())?) {
         let pdfActivity = PDFActivity()
         
         let vc = UIActivityViewController(activityItems: urls, applicationActivities: [pdfActivity])
@@ -47,9 +47,15 @@ extension UIActivityViewController {
             }
         }
         
-        vc.popoverPresentationController?.permittedArrowDirections = .up
-        vc.popoverPresentationController?.sourceView = presentingVC.view
-        vc.popoverPresentationController?.sourceRect = CGRect(x: presentingVC.view.bounds.width / 2, y: presentingVC.view.bounds.height, width: 1, height: 1)
+        vc.popoverPresentationController?.permittedArrowDirections = .any
+        if let sender = sender {
+            vc.popoverPresentationController?.sourceView = sender
+            vc.popoverPresentationController?.sourceRect = sender.bounds
+        }
+        else {
+            vc.popoverPresentationController?.sourceView = presentingVC.view
+            vc.popoverPresentationController?.sourceRect = CGRect(x: presentingVC.view.bounds.width / 2, y: presentingVC.view.bounds.height, width: 1, height: 1)
+        }
         pdfActivity.presentingViewController = presentingVC
         pdfActivity.configure(using: vc)
         

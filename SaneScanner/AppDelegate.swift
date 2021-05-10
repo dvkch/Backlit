@@ -12,7 +12,7 @@ import SaneSwift
 import SYPictureMetadata
 
 // TODO: add review prompt every N scans
-// TODO: UX: verouillage des options pendant un scan/preview/update d'options. utilisation d'une propriété Device.lock observable? est-ce necesaire puisque les calls sont tous sur une queue synchrone (are they tho?)
+// TODO: UX: verrouillage des options pendant un scan/preview/update d'options. utilisation d'une propriété Device.lock observable? est-ce necesaire puisque les calls sont tous sur une queue synchrone (are they tho?)
 
 // TODO: Catalyst: replace pull to refresh with navBar item ?
 // TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
