@@ -55,6 +55,7 @@ class SanePreviewView: UIView {
 
         progressMask.gradientLayer.type = .axial
         progressMask.isUserInteractionEnabled = false
+        updateProgressMaskColors()
         progressMaskContainer.addSubview(progressMask)
         
         buttonsStackView.spacing = contentInsets
@@ -160,6 +161,7 @@ class SanePreviewView: UIView {
         previewButton.style = showScanButton ? .rounded : .cell
         
         updateImageAndCrop()
+        updateProgressMask()
 
         #if targetEnvironment(simulator)
         prepareForSnapshotting()
@@ -183,6 +185,36 @@ class SanePreviewView: UIView {
         else {
             imageView.image = device.lastPreviewImage
         }
+    }
+    
+    private func updateProgressMask() {
+        guard let device = device, device.currentOperation?.operation == .scan, case let .scanning(progress, _, parameters) = device.currentOperation?.progress, let parameters = parameters else {
+            progressMaskContainer.isHidden = true
+            return
+        }
+        
+        if progressMaskContainer.isHidden {
+            let cropPercent = parameters.cropArea.asPercents(of: device.maxCropArea)
+            progressMaskContainer.isHidden = false
+            progressMask.snp.remakeConstraints { make in
+                make.left.equalTo(progressMaskContainer.snp.right).multipliedBy(max(cropPercent.minX, CGFloat.leastNonzeroMagnitude))
+                make.top.equalTo(progressMaskContainer.snp.bottom).multipliedBy(max(cropPercent.minY, CGFloat.leastNonzeroMagnitude))
+                make.width.equalToSuperview().multipliedBy(cropPercent.width)
+                make.height.equalToSuperview().multipliedBy(cropPercent.height)
+            }
+            layoutIfNeeded()
+        }
+        
+        let progressHeight = 10 / progressMask.bounds.height
+        progressMask.gradientLayer.startPoint = .init(x: 0, y: CGFloat(progress))
+        progressMask.gradientLayer.endPoint = .init(x: 0, y: CGFloat(progress) + progressHeight)
+    }
+    
+    private func updateProgressMaskColors() {
+        progressMask.gradientLayer.colors = [
+            UIColor.tint.withAlphaComponent(0.7).cgColor,
+            UIColor.tint.withAlphaComponent(0).cgColor
+        ]
     }
     
     // MARK: Layout
@@ -210,6 +242,11 @@ class SanePreviewView: UIView {
     override func layoutSubviews() {
         buttonsStackView.axis = bounds.width > 400 ? .horizontal : .vertical
         super.layoutSubviews()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateProgressMaskColors()
     }
 }
 

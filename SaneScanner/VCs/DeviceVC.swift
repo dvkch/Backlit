@@ -112,8 +112,8 @@ class DeviceVC: UIViewController {
             return
         }
         
-        var progressVC: DeviceScanPreviewVC?
-        var item: GalleryItem?
+        let updatePreviewCell = { [weak self] in
+            self?.tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first?.refresh()        }
         
         // block that will be called to show progress
         let progressBlock = { [weak self] (progress: ScanProgress) in
@@ -125,9 +125,8 @@ class DeviceVC: UIViewController {
             case .warmingUp, .cancelling:
                 break;
 
-            case .scanning(_, let incompletePreview):
-                progressVC?.isScanning = true
-                progressVC?.image = incompletePreview ?? progressVC?.image
+            case .scanning:
+                updatePreviewCell()
             }
             
             progressCallback?(progress)
@@ -141,40 +140,21 @@ class DeviceVC: UIViewController {
 
             switch result {
             case .success((let image, let parameters)):
-                progressVC?.isScanning = false
-                progressVC?.image = image
-
                 let metadata = SYMetadata(device: self.device, scanParameters: parameters)
                 do {
-                    item = try GalleryManager.shared.addImage(image, metadata: metadata)
+                    try GalleryManager.shared.addImage(image, metadata: metadata)
                 }
                 catch {
                     UIAlertController.show(for: error, in: self)
                 }
-                self.updatePreviewImageCell(image: image, scanParameters: parameters)
+                updatePreviewCell()
 
             case .failure(let error):
-                progressVC?.dismiss(animated: false, completion: nil)
                 UIAlertController.show(for: error, in: self)
             }
             
             completion?(result)
         }
-        
-        // need to show image (finished or partial with preview)
-        #if !targetEnvironment(macCatalyst)
-        if Sane.shared.configuration.showIncompleteScanImages {
-            progressVC = DeviceScanPreviewVC(shareTap: {
-                self.shareItem(item)
-            }, cancelTap: {
-                // cancels scan if running
-                if self.isScanning {
-                    Sane.shared.cancelCurrentScan()
-                }
-            })
-            self.present(progressVC!, animated: true, completion: nil)
-        }
-        #endif
 
         // start scan
         Sane.shared.scan(device: device, progress: progressBlock, completion: completionBlock)
@@ -182,9 +162,11 @@ class DeviceVC: UIViewController {
 
     private func preview(device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
         Sane.shared.preview(device: device, progress: { [weak self] (p) in
+            self?.scanButton.isEnabled = false
             progress?(p)
         }, completion: { [weak self] (result) in
             guard let self = self else { return }
+            self.scanButton.isEnabled = true
             completion?(result)
             if case let .failure(error) = result {
                 UIAlertController.show(for: error, in: self)
@@ -197,13 +179,6 @@ class DeviceVC: UIViewController {
         nc.modalPresentationStyle = .formSheet
         present(nc, animated: true, completion: nil)
     }
-    
-    #if !targetEnvironment(macCatalyst)
-    private func shareItem(_ item: GalleryItem?) {
-        guard let url = item?.URL else { return }
-        UIActivityViewController.showForURLs([url], fromBottomIn: self, completion: nil)
-    }
-    #endif
     
     @objc private func prefsChangedNotification() {
         tableView.reloadData()
@@ -241,46 +216,6 @@ class DeviceVC: UIViewController {
         return optionGroup(tableViewSection: section)?.options(includeAdvanced: Preferences.shared.showAdvancedOptions)
     }
 
-    private func updatePreviewCell(cropAreaPercent: CGRect) {
-        guard device.canCrop else { return }
-        
-        var cropArea = CGRect()
-        cropArea.origin.x = device.maxCropArea.origin.x + device.maxCropArea.width * cropAreaPercent.origin.x
-        cropArea.origin.y = device.maxCropArea.origin.y + device.maxCropArea.height * cropAreaPercent.origin.y
-        cropArea.size.width = device.maxCropArea.width * cropAreaPercent.width
-        cropArea.size.height = device.maxCropArea.height * cropAreaPercent.height
-
-        device.cropArea = device.maxCropArea.intersection(cropArea)
-        
-        if let previewCell = tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first {
-            previewCell.refresh()
-        }
-    }
-    
-    private func updatePreviewImageCell(image: UIImage?, scanParameters: ScanParameters?) {
-        // update only if we scanned without cropping
-        guard device.cropArea == device.maxCropArea else { return }
-        
-        // prevent keeping a scan image if resolution is very high. A color A4 150dpi (6.7MB) is used as maximum
-        guard scanParameters == nil || (scanParameters?.fileSize ?? 0) < 8_000_000 else { return }
-    
-        // if we require color mode to be set to auto, update only if auto is not available or scan mode is color
-        let shouldUpdate: Bool
-        if Preferences.shared.previewWithAutoColorMode, let colorOption = device.standardOption(for: .colorMode) as? DeviceOptionString {
-            shouldUpdate = !colorOption.capabilities.contains(.automatic) || colorOption.value == SaneValueScanMode.color.value
-        } else {
-            shouldUpdate = true
-        }
-        
-        guard shouldUpdate else { return }
-    
-        device.lastPreviewImage = image
-        
-        if let previewCell = tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first {
-            previewCell.refresh()
-        }
-    }
-
     // MARK: Layout
     private func updateLayoutStyle() {
         scanButton.sy_isHidden = useLargeLayout
@@ -294,14 +229,6 @@ extension DeviceVC {
         let snapshotType = SnapshotKind.fromLaunchOptions
         guard snapshotType != .none else { return }
     
-        if snapshotType == .devicePreview || snapshotType == .deviceOptions || snapshotType == .deviceOptionPopup {
-            let rect = CGRect(x: 0.1, y: 0.2, width: 0.8, height: 0.6)
-            if let path = SnapshotKind.snapshotTestScanImagePath {
-                device.lastPreviewImage = UIImage(contentsOfFile: path)
-            }
-            updatePreviewCell(cropAreaPercent: rect)
-        }
-
         if snapshotType == .deviceOptions || snapshotType == .deviceOptionPopup {
             let firstOption = IndexPath(row: 0, section: 1)
             tableView.scrollToRow(at: firstOption, at: .top, animated: false)

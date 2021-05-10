@@ -628,8 +628,8 @@ extension Sane {
                     }
                     else {
                         Sane.runOn(mainThread: true) {
-                            device.currentOperation = (operation, .scanning(progress: percent, incompletePreview: nil, estimatedParameters: nil))
-                            progress(.scanning(progress: percent, incompletePreview: nil, estimatedParameters: nil))
+                            device.currentOperation = (operation, .scanning(progress: percent, incompletePreview: nil, estimatedParameters: parameters))
+                            progress(.scanning(progress: percent, incompletePreview: nil, estimatedParameters: parameters))
                         }
                     }
                 }
