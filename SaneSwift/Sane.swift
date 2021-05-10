@@ -258,6 +258,9 @@ extension Sane {
     }
     
     public func closeDevice(_ device: Device) {
+        device.currentOperation = nil
+        device.updatePreviewImage(nil, scannedWith: nil, fallbackToExisting: false)
+
         runOnSaneThread {
             guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else { return }
             Sane.logTime { sane_close(handle) }
@@ -518,7 +521,7 @@ extension Sane {
             
             var finalResult: ScanResult?
 
-            self.scan(device: device, useScanCropArea: false, progress: progress, completion: { (result) in
+            self.internalScan(device: device, operation: .preview, useScanCropArea: false, generateIntermediateImages: true, progress: progress, completion: { (result) in
                 finalResult = result
             })
             
@@ -529,12 +532,16 @@ extension Sane {
                 restoreBlocks.forEach { $0() }
             }
             
-            device.lastPreviewImage = finalResult?.image
+            device.updatePreviewImage(finalResult?.image, scannedWith: nil, fallbackToExisting: false)
             Sane.runOn(mainThread: mainThread) { completion?(finalResult!) }
         }
     }
-    
+
     public func scan(device: Device, useScanCropArea: Bool = true, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+        internalScan(device: device, operation: .scan, useScanCropArea: useScanCropArea, generateIntermediateImages: false, progress: progress, completion: completion)
+    }
+
+    private func internalScan(device: Device, operation: ScanOperation, useScanCropArea: Bool, generateIntermediateImages: Bool, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
         
         let mainThread = Thread.isMainThread
 
@@ -543,13 +550,21 @@ extension Sane {
             return
         }
         
-        Sane.runOn(mainThread: true) { progress?(.warmingUp) }
-
+        Sane.runOn(mainThread: true) {
+            device.currentOperation = (operation, .warmingUp)
+            progress?(.warmingUp)
+        }
+        
         runOnSaneThread {
             self.stopScanOperation = false
             
+            let crop: CGRect
             if device.canCrop && useScanCropArea {
                 self.setCropArea(device.cropArea, useAuto: false, device: device, completion: nil)
+                crop = device.cropArea
+            }
+            else {
+                crop = device.maxCropArea
             }
             
             var status = Sane.logTime { sane_start(handle) }
@@ -574,7 +589,7 @@ extension Sane {
                 return
             }
 
-            let estimatedParameters = ScanParameters(cParams: estimatedParams)
+            let estimatedParameters = ScanParameters(cParams: estimatedParams, cropArea: crop)
             
             var data = Data(capacity: estimatedParameters.fileSize + 1)
             let bufferMaxSize = max(100 * 1000, estimatedParameters.fileSize / 100)
@@ -595,7 +610,7 @@ extension Sane {
                 if let parameters = parameters, let progress = progress, parameters.fileSize > 0 {
                     let percent = Float(data.count) / Float(parameters.fileSize)
                     
-                    if self.configuration.showIncompleteScanImages {
+                    if generateIntermediateImages {
                         if percent > progressForLastIncompletePreview + incompletePreviewStep {
                             progressForLastIncompletePreview = percent
                             
@@ -606,13 +621,15 @@ extension Sane {
                             // image creation needs to be done on main thread
                             Sane.runOn(mainThread: true) {
                                 let incompleteImage = try? UIImage.sy_imageFromIncompleteSane(data: dataCopy, parameters: parameters)
-                                progress(.scanning(progress: percent, incompletePreview: incompleteImage))
+                                device.currentOperation = (operation, .scanning(progress: percent, incompletePreview: incompleteImage, estimatedParameters: parameters))
+                                progress(.scanning(progress: percent, incompletePreview: incompleteImage, estimatedParameters: parameters))
                             }
                         }
                     }
                     else {
                         Sane.runOn(mainThread: true) {
-                            progress(.scanning(progress: percent, incompletePreview: nil))
+                            device.currentOperation = (operation, .scanning(progress: percent, incompletePreview: nil, estimatedParameters: nil))
+                            progress(.scanning(progress: percent, incompletePreview: nil, estimatedParameters: nil))
                         }
                     }
                 }
@@ -622,7 +639,10 @@ extension Sane {
                 
                 if self.stopScanOperation {
                     self.stopScanOperation = false
-                    Sane.runOn(mainThread: true) { progress?(.cancelling) }
+                    Sane.runOn(mainThread: true) {
+                        device.currentOperation = (operation, .cancelling)
+                        progress?(.cancelling)
+                    }
                     sane_cancel(handle)
                 }
                 
@@ -631,7 +651,7 @@ extension Sane {
                 if parameters == nil {
                     var params = SANE_Parameters()
                     sane_get_parameters(handle, &params)
-                    parameters = ScanParameters(cParams: params)
+                    parameters = ScanParameters(cParams: params, cropArea: crop)
                 }
                 
                 // lineart requires inverting pixel values
@@ -646,17 +666,18 @@ extension Sane {
             
             SaneSetLogLevel(prevLogLevel)
             
-            guard status == SANE_STATUS_EOF, parameters != nil else {
+            guard status == SANE_STATUS_EOF, let finalParameters = parameters else {
                 Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
 
-            do {
-                let image = try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: parameters!)
-                Sane.runOn(mainThread: mainThread) { completion?(.success((image, parameters!))) }
-            }
-            catch {
-                Sane.runOn(mainThread: mainThread) { completion?(.failure(error)) }
+            let result = Result(catching: { try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: finalParameters) })
+            Sane.runOn(mainThread: mainThread) {
+                device.currentOperation = nil
+                if let image = try? result.get() {
+                    device.updatePreviewImage(image, scannedWith: finalParameters, fallbackToExisting: true)
+                }
+                completion?(result.map { ($0, finalParameters) })
             }
         }
     }

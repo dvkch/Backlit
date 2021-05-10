@@ -10,7 +10,7 @@ import UIKit
 import ImageIO
 import CommonCrypto
 
-public extension String {
+internal extension String {
     func md5() -> String {
         let length = Int(CC_MD5_DIGEST_LENGTH)
         var digest = [UInt8](repeating: 0, count: length)
@@ -27,7 +27,7 @@ public extension String {
     }
 }
 
-public extension Collection {
+internal extension Collection {
     func subarray(maxCount: Int) -> Self.SubSequence {
         let max = Swift.min(maxCount, count)
         let maxIndex = index(startIndex, offsetBy: max)
@@ -35,8 +35,7 @@ public extension Collection {
     }
 }
 
-public extension UIImage {
-    
+internal extension UIImage {
     enum SaneSource {
         case data(Data)
         case file(URL)

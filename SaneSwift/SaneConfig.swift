@@ -15,16 +15,10 @@ public struct SaneConfig: Codable {
         case hosts = "hosts"
         case connectTimeout = "connect_timeout"
         case previewWithAutoColorMode = "preview_auto_color_mode"
-        case showIncompleteScanImages = "show_incomplete_scan_images"
     }
     
     // MARK: Properties
     public var previewWithAutoColorMode: Bool = true {
-        didSet {
-            persistConfig()
-        }
-    }
-    public var showIncompleteScanImages: Bool = true {
         didSet {
             persistConfig()
         }

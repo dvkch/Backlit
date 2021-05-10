@@ -173,13 +173,17 @@ public extension SaneValueScanMode {
 }
 
 // MARK: Scan status
-public enum ScanProgress {
+public enum ScanOperation {
+    case scan, preview
+}
+
+public enum ScanProgress: Equatable {
     case warmingUp
-    case scanning(progress: Float, incompletePreview: UIImage?)
+    case scanning(progress: Float, incompletePreview: UIImage?, estimatedParameters: ScanParameters?)
     case cancelling
 
     var image: UIImage? {
-        if case .scanning(_, let image) = self {
+        if case .scanning(_, let image, _) = self {
             return image
         }
         return nil

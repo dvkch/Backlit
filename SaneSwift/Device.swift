@@ -47,9 +47,41 @@ public class Device {
         }.joined(separator: "\n")
     }
     
-    // MARK: Cache properties
-    public var lastPreviewImage: UIImage?
+    // MARK: SaneSwift properties
     public var cropArea: CGRect = .zero
+
+    public internal(set) var currentOperation: (operation: ScanOperation, progress: ScanProgress)?
+
+    public var isScanning: Bool {
+        switch currentOperation?.1 {
+        case .warmingUp, .scanning: return true
+        case .none, .cancelling: return false
+        }
+    }
+    
+    // MARK: Cache properties
+    public private(set) var lastPreviewImage: UIImage?
+
+    internal func updatePreviewImage(_ image: UIImage?, scannedWith parameters: ScanParameters?, fallbackToExisting: Bool) {
+        guard let image = image else {
+            if !fallbackToExisting {
+                lastPreviewImage = nil
+            }
+            return
+        }
+
+        // update only if we scanned without cropping
+        if let crop = parameters?.cropArea, crop != maxCropArea { return }
+
+        // prevent keeping a scan image if resolution is very high. A color A4 150dpi (6.7MB) is used as maximum
+        if let parameters = parameters, parameters.fileSize > 8_000_000 { return }
+
+        // if we require color mode to be set to auto, update only if auto is not available or scan mode is color
+        if Sane.shared.configuration.previewWithAutoColorMode, let parameters = parameters, parameters.currentlyAcquiredChannel != SANE_FRAME_RGB { return }
+        
+        // all seems good, let's keep it
+        lastPreviewImage = image
+    }
 }
 
 // MARK: Equatable
