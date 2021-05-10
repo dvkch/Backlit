@@ -35,11 +35,6 @@ class Preferences: NSObject {
         set { UserDefaults.standard.set(newValue, forKey: useDefaultsKeyShowAdvancedOptions); postNotification() }
     }
     
-    var showIncompleteScanImages: Bool {
-        get { return Sane.shared.configuration.showIncompleteScanImages }
-        set { Sane.shared.configuration.showIncompleteScanImages = newValue; postNotification() }
-    }
-    
     var previewWithAutoColorMode: Bool {
         get { return Sane.shared.configuration.previewWithAutoColorMode }
         set { Sane.shared.configuration.previewWithAutoColorMode = newValue; postNotification() }
@@ -61,13 +56,12 @@ class Preferences: NSObject {
 // MARK: UI
 extension Preferences {
     enum Key {
-        case saveAsPNG, showAdvancedOptions, showIncompleteScanImages, previewWithAutoColorMode
+        case saveAsPNG, showAdvancedOptions, previewWithAutoColorMode
         
         var localizedTitle: String {
             switch self {
             case .saveAsPNG:                return "PREFERENCES TITLE SAVE AS PNG".localized
             case .showAdvancedOptions:      return "PREFERENCES TITLE SHOW ADVANCED OPTIONS".localized
-            case .showIncompleteScanImages: return "PREFERENCES TITLE SHOW INCOMPLETE SCAN".localized
             case .previewWithAutoColorMode: return "PREFERENCES TITLE PREVIEW DEFAULT COLOR MODE".localized
             }
         }
@@ -76,7 +70,6 @@ extension Preferences {
             switch self {
             case .saveAsPNG:                return "PREFERENCES MESSAGE SAVE AS PNG".localized
             case .showAdvancedOptions:      return "PREFERENCES MESSAGE SHOW ADVANCED OPTIONS".localized
-            case .showIncompleteScanImages: return "PREFERENCES MESSAGE SHOW INCOMPLETE SCAN".localized
             case .previewWithAutoColorMode: return "PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE".localized
             }
         }
@@ -84,7 +77,7 @@ extension Preferences {
     
     var groupedKeys: [(String, [Key])] {
         return [
-            ("PREFERENCES SECTION PREVIEW".localized, [.previewWithAutoColorMode, .showIncompleteScanImages, .saveAsPNG]),
+            ("PREFERENCES SECTION PREVIEW".localized, [.previewWithAutoColorMode, .saveAsPNG]),
             ("PREFERENCES SECTION SCAN".localized, [.showAdvancedOptions]),
         ]
     }
@@ -94,7 +87,6 @@ extension Preferences {
             switch key {
             case .saveAsPNG:                return self.saveAsPNG
             case .showAdvancedOptions:      return self.showAdvancedOptions
-            case .showIncompleteScanImages: return self.showIncompleteScanImages
             case .previewWithAutoColorMode: return self.previewWithAutoColorMode
             }
         }
@@ -102,7 +94,6 @@ extension Preferences {
             switch key {
             case .saveAsPNG:                self.saveAsPNG = newValue
             case .showAdvancedOptions:      self.showAdvancedOptions = newValue
-            case .showIncompleteScanImages: self.showIncompleteScanImages = newValue
             case .previewWithAutoColorMode: self.previewWithAutoColorMode = newValue
             }
         }
