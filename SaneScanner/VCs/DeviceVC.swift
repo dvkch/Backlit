@@ -57,6 +57,7 @@ class DeviceVC: UIViewController {
         
         scanButton.kind = .scan
         scanButton.style = .cell
+        scanButton.addTarget(self, action: #selector(scanButtonTap), for: .primaryActionTriggered)
         scanButtonStackView.addArrangedSubview(scanButton)
         
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)
@@ -74,7 +75,7 @@ class DeviceVC: UIViewController {
     }
 
     deinit {
-        if isScanning {
+        if device.isScanning {
             Sane.shared.cancelCurrentScan()
         }
 
@@ -93,13 +94,6 @@ class DeviceVC: UIViewController {
     }
 
     private var isRefreshing: Bool = false
-    private var scanProgress: ScanProgress? = nil
-    private var isScanning: Bool {
-        switch scanProgress {
-        case .warmingUp, .scanning: return true
-        case .none, .cancelling: return false
-        }
-    }
 
     // MARK: Views
     private var thumbsView: GalleryThumbsView!
@@ -108,12 +102,12 @@ class DeviceVC: UIViewController {
     private let scanButton = ScanButton(type: .custom)
     
     // MARK: Actions
-    @IBAction private func scanButtonTap() {
+    @objc private func scanButtonTap() {
         scan(device: device, progress: nil, completion: nil)
     }
     
     private func scan(device: Device, progress progressCallback: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
-        if isScanning {
+        if device.isScanning {
             Sane.shared.cancelCurrentScan()
             return
         }
@@ -124,7 +118,7 @@ class DeviceVC: UIViewController {
         // block that will be called to show progress
         let progressBlock = { [weak self] (progress: ScanProgress) in
             guard let self = self else { return }
-            self.scanProgress = progress
+
             self.scanButton.progress = progress
 
             switch progress {
@@ -142,7 +136,7 @@ class DeviceVC: UIViewController {
         // block that will be called to handle completion
         let completionBlock = { [weak self] (result: ScanResult) in
             guard let self = self else { return }
-            self.scanProgress = nil
+
             self.scanButton.progress = nil
 
             switch result {
@@ -188,11 +182,9 @@ class DeviceVC: UIViewController {
 
     private func preview(device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
         Sane.shared.preview(device: device, progress: { [weak self] (p) in
-            self?.scanProgress = p
             progress?(p)
         }, completion: { [weak self] (result) in
             guard let self = self else { return }
-            self.scanProgress = nil
             completion?(result)
             if case let .failure(error) = result {
                 UIAlertController.show(for: error, in: self)
@@ -430,8 +422,11 @@ extension DeviceVC : UITableViewDelegate {
 }
 
 extension DeviceVC : SanePreviewViewDelegate {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, device: Device, tapped action: SanePreviewView.Action, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
-        guard !isScanning else { return }
+    func sanePreviewView(_ sanePreviewView: SanePreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+        guard !device.isScanning else {
+            completion?(.failure(SaneError.cancelled))
+            return
+        }
         
         if action == .preview {
             preview(device: device, progress: progress, completion: completion)

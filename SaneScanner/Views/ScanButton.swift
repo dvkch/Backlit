@@ -19,8 +19,7 @@ class ScanButton : UIButton {
     }
 
     // MARK: Properties
-    enum Kind { case scan, preview }
-    var kind: Kind = .scan {
+    var kind: ScanOperation = .scan {
         didSet {
             updateContent()
         }
@@ -35,6 +34,7 @@ class ScanButton : UIButton {
     
     var progress: ScanProgress? {
         didSet {
+            guard progress != oldValue else { return }
             updateContent()
         }
     }
@@ -80,7 +80,7 @@ class ScanButton : UIButton {
             let string = kind == .preview ? "PREVIEWING" : "SCANNING"
             setTitle(string.localized, for: .normal)
 
-        case .scanning(let progress, _):
+        case .scanning(let progress, _, _):
             let string = kind == .preview ? "PREVIEWING %f" : "SCANNING %f"
             let title = NSAttributedString(string: String(format: string.localized, progress * 100), font: titleLabel?.font, color: .normalText)
             let subtitle = NSAttributedString(string: "ACTION HINT TAP TO CANCEL".localized, font: titleLabel?.font, color: .altText)

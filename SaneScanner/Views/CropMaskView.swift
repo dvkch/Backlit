@@ -10,7 +10,7 @@ import UIKit
 import SYKit
 import SnapKit
 
-class CropMaskView: UIView {
+class CropMaskView: UIControl {
 
     // MARK: Init
     override init(frame: CGRect) {
@@ -26,7 +26,6 @@ class CropMaskView: UIView {
     private func setup() {
         backgroundColor = .clear
         
-        maskingView.shapeLayer.fillColor = UIColor(white: 0, alpha: 0.4).cgColor
         maskingView.shapeLayer.fillRule = .evenOdd
         addSubview(maskingView)
         
@@ -80,6 +79,7 @@ class CropMaskView: UIView {
         }
         
         setNeedsLayout()
+        updateColors()
     }
     
     // MARK: Views
@@ -92,6 +92,11 @@ class CropMaskView: UIView {
     // MARK: Properties
     private(set) var maxCropArea: CGRect = .zero
     private(set) var cropArea: CGRect = .zero
+    override var isEnabled: Bool {
+        didSet {
+            updateColors()
+        }
+    }
     var cropAreaDidChangeBlock: ((CGRect) -> ())?
     
     // MARK: Data
@@ -178,6 +183,18 @@ class CropMaskView: UIView {
             return true
         }
         return super.point(inside: point, with: event)
+    }
+    
+    // MARK: Style
+    private func updateColors() {
+        maskingView.shapeLayer.fillColor = UIColor(white: 0, alpha: 0.4).cgColor
+        cornerViews.values.forEach { $0.backgroundColor = isEnabled ? .tint : .disabledText }
+        borderViews.values.forEach { $0.backgroundColor = isEnabled ? .tint : .disabledText }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateColors()
     }
     
     // MARK: Layout
