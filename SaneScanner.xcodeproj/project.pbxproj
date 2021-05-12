@@ -62,7 +62,7 @@
 		97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590122637565800E84198 /* DevicePreviewVC.swift */; };
 		97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D590132637565800E84198 /* DevicePreviewVC.xib */; };
 		97D5902526377CBE00E84198 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5902426377CBE00E84198 /* TooltipView.swift */; };
-		97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* SanePreviewView.swift */; };
+		97EAF238220B54A700435DE6 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* PreviewView.swift */; };
 		97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B022071F880027CCAE /* PreferencesVC.swift */; };
 		97EB32B322071F880027CCAE /* PreferencesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EB32B122071F880027CCAE /* PreferencesVC.xib */; };
 		97EB32B52207BB740027CCAE /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B42207BB740027CCAE /* Preferences.swift */; };
@@ -172,7 +172,7 @@
 		97D590122637565800E84198 /* DevicePreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePreviewVC.swift; sourceTree = "<group>"; };
 		97D590132637565800E84198 /* DevicePreviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicePreviewVC.xib; sourceTree = "<group>"; };
 		97D5902426377CBE00E84198 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
-		97EAF237220B54A700435DE6 /* SanePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanePreviewView.swift; sourceTree = "<group>"; };
+		97EAF237220B54A700435DE6 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		97EB32B022071F880027CCAE /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		97EB32B122071F880027CCAE /* PreferencesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesVC.xib; sourceTree = "<group>"; };
 		97EB32B42207BB740027CCAE /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 				973066B4220C5CD90068E8C7 /* CropMaskView.swift */,
 				978263CA221E253D0095E6ED /* DotsRefreshControl.swift */,
 				973066B2220C55000068E8C7 /* GalleryThumbsView.swift */,
-				97EAF237220B54A700435DE6 /* SanePreviewView.swift */,
+				97EAF237220B54A700435DE6 /* PreviewView.swift */,
 				9740C16E2638DC8B00CAC543 /* ScanButton.swift */,
 				977C4F5A264739AF00856E0E /* Slider.swift */,
 				9731D89022C548CE008D7525 /* TapInsetsView.swift */,
@@ -751,7 +751,7 @@
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,
 				97D4CE8A2636EB7800F84150 /* SnapshotKind.swift in Sources */,
 				97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */,
-				97EAF238220B54A700435DE6 /* SanePreviewView.swift in Sources */,
+				97EAF238220B54A700435DE6 /* PreviewView.swift in Sources */,
 				97499E5D220872F5006DED20 /* Toolbar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

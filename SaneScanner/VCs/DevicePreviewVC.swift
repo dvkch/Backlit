@@ -35,7 +35,7 @@ class DevicePreviewVC: UIViewController {
     }
     
     // MARK: Properties
-    var delegate: SanePreviewViewDelegate? {
+    var delegate: PreviewViewDelegate? {
         didSet {
             previewView?.delegate = delegate
         }
@@ -50,7 +50,7 @@ class DevicePreviewVC: UIViewController {
     // MARK: Views
     @IBOutlet private var emptyStateView: UIView!
     @IBOutlet private var emptyStateLabel: UILabel!
-    @IBOutlet private var previewView: SanePreviewView!
+    @IBOutlet private var previewView: PreviewView!
     @IBOutlet private var separatorView: UIView!
     @IBOutlet private var separatorViewWidth: NSLayoutConstraint!
     @IBOutlet private var galleryThumbsView: GalleryThumbsView!

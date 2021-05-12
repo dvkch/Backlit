@@ -1,5 +1,5 @@
 //
-//  SanePreviewView.swift
+//  PreviewView.swift
 //  SaneScanner
 //
 //  Created by Stanislas Chevallier on 06/02/2019.
@@ -11,12 +11,12 @@ import SaneSwift
 import SnapKit
 import SYKit
 
-protocol SanePreviewViewDelegate: NSObjectProtocol {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?)
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device)
+protocol PreviewViewDelegate: NSObjectProtocol {
+    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?)
+    func previewView(_ previewView: PreviewView, canceledScan device: Device)
 }
 
-class SanePreviewView: UIView {
+class PreviewView: UIView {
 
     // MARK: Init
     override init(frame: CGRect) {
@@ -100,7 +100,7 @@ class SanePreviewView: UIView {
     }
     
     // MARK: Properties
-    weak var delegate: SanePreviewViewDelegate?
+    weak var delegate: PreviewViewDelegate?
     var device: Device? {
         didSet {
             setNeedsUpdateConstraints()
@@ -134,13 +134,13 @@ class SanePreviewView: UIView {
         }
 
         if device.currentOperation?.progress != nil {
-            delegate?.sanePreviewView(self, canceledScan: device)
+            delegate?.previewView(self, canceledScan: device)
             return
         }
 
         let action: ScanOperation = sender == previewButton ? .preview : .scan
         
-        delegate?.sanePreviewView(self, device: device, tapped: action, progress: { [weak self] (progress) in
+        delegate?.previewView(self, device: device, tapped: action, progress: { [weak self] (progress) in
             self?.refresh()
         }, completion: { [weak self] (result) in
             self?.refresh()
@@ -250,7 +250,7 @@ class SanePreviewView: UIView {
     }
 }
 
-extension SanePreviewView {
+extension PreviewView {
     private func prepareForSnapshotting() {
         guard let device = device else { return }
 

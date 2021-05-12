@@ -348,8 +348,8 @@ extension DeviceVC : UITableViewDelegate {
     }
 }
 
-extension DeviceVC : SanePreviewViewDelegate {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+extension DeviceVC : PreviewViewDelegate {
+    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
         guard !device.isScanning else {
             completion?(.failure(SaneError.cancelled))
             return
@@ -363,7 +363,7 @@ extension DeviceVC : SanePreviewViewDelegate {
         }
     }
     
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device) {
+    func previewView(_ previewView: PreviewView, canceledScan device: Device) {
         Sane.shared.cancelCurrentScan()
     }
 }

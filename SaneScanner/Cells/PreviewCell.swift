@@ -19,10 +19,10 @@ class PreviewCell: UITableViewCell {
     }
 
     // MARK: Views
-    @IBOutlet private var previewView: SanePreviewView!
+    @IBOutlet private var previewView: PreviewView!
     
     // MARK: Properties
-    weak var delegate: SanePreviewViewDelegate?
+    weak var delegate: PreviewViewDelegate?
     var device: Device? {
         didSet {
             previewView.device = device
@@ -43,12 +43,12 @@ class PreviewCell: UITableViewCell {
     }
 }
 
-extension PreviewCell : SanePreviewViewDelegate {
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
-        delegate?.sanePreviewView(sanePreviewView, device: device, tapped: action, progress: progress, completion: completion)
+extension PreviewCell : PreviewViewDelegate {
+    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+        delegate?.previewView(previewView, device: device, tapped: action, progress: progress, completion: completion)
     }
     
-    func sanePreviewView(_ sanePreviewView: SanePreviewView, canceledScan device: Device) {
-        delegate?.sanePreviewView(sanePreviewView, canceledScan: device)
+    func previewView(_ previewView: PreviewView, canceledScan device: Device) {
+        delegate?.previewView(previewView, canceledScan: device)
     }
 }

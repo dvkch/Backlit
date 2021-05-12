@@ -302,6 +302,7 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
         openGallery(at: indexPath.item)
     }
     
+    #if !targetEnvironment(macCatalyst)
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
@@ -316,4 +317,5 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
         }
         return configuration
     }
+    #endif
 }
