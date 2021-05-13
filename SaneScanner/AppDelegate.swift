@@ -12,11 +12,12 @@ import SaneSwift
 import SYPictureMetadata
 import TelemetryClient
 
-// TODO: add review prompt every N scans
 // TODO: UX: verrouillage des options pendant un scan/preview/update d'options. utilisation d'une propriété Device.lock observable? est-ce necesaire puisque les calls sont tous sur une queue synchrone (are they tho?)
 
 // TODO: Catalyst: replace pull to refresh with navBar item ?
+// TODO: Catalyst: drag and drop from list of thumbs
 // TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
+// TODO: Catalyst: test using made for mac idiom
 
 // LATER: add auto search on local network
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)

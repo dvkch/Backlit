@@ -10,6 +10,7 @@ import UIKit
 import SaneSwift
 import SYKit
 import SYPictureMetadata
+import StoreKit
 
 protocol DeviceVCDelegate: NSObjectProtocol {
     func deviceVC(_ deviceVC: DeviceVC, didRefreshDevice device: Device)
@@ -143,6 +144,7 @@ class DeviceVC: UIViewController {
                 let metadata = SYMetadata(device: self.device, scanParameters: parameters)
                 do {
                     try GalleryManager.shared.addImage(image, metadata: metadata)
+                    self.presentReviewPrompt()
                 }
                 catch {
                     UIAlertController.show(for: error, in: self)
@@ -182,6 +184,17 @@ class DeviceVC: UIViewController {
     
     @objc private func prefsChangedNotification() {
         tableView.reloadData()
+    }
+    
+    private func presentReviewPrompt() {
+        #if !DEBUG
+        if #available(iOS 14.0, *), let scene = view.window?.windowScene {
+            SKStoreReviewController.requestReview(in: scene)
+        }
+        else {
+            SKStoreReviewController.requestReview()
+        }
+        #endif
     }
     
     // MARK: Content
