@@ -13,7 +13,6 @@ import SYPictureMetadata
 import TelemetryClient
 
 // TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
-// TODO: Catalyst: test using made for mac idiom
 
 // LATER: add auto search on local network
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)
