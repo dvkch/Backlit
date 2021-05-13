@@ -1,0 +1,23 @@
+{
+  "name": "TelemetryClient",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "summary": "AppTelemetry",
+  "homepage": "https://github.com/AppTelemetry",
+  "authors": {
+    "Daniel Jilg": "winsmith@winsmith.de"
+  },
+  "source": {
+    "git": "https://github.com/AppTelemetry/SwiftClient.git"
+  },
+  "swift_versions": "5.0",
+  "source_files": "Sources/TelemetryClient/*.{h,c,m,swift}",
+  "requires_arc": true,
+  "xcconfig": {
+    "CLANG_MODULES_AUTOLINK": "YES"
+  },
+  "swift_version": "5.0"
+}

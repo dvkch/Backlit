@@ -20,24 +20,35 @@ class Preferences: NSObject {
     private override init() {
         super.init()
             
-        UserDefaults.standard.register(defaults: [useDefaultsKeySaveAsPNG: false])
-        UserDefaults.standard.register(defaults: [useDefaultsKeyShowAdvancedOptions: false])
+        UserDefaults.standard.register(defaults: [userDefaultsKeySaveAsPNG: false])
+        UserDefaults.standard.register(defaults: [userDefaultsKeyShowAdvancedOptions: false])
     }
     
     // MARK: Properties
     var saveAsPNG: Bool {
-        get { return UserDefaults.standard.bool(forKey: useDefaultsKeySaveAsPNG) }
-        set { UserDefaults.standard.set(newValue, forKey: useDefaultsKeySaveAsPNG); postNotification() }
+        get { return UserDefaults.standard.bool(forKey: userDefaultsKeySaveAsPNG) }
+        set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeySaveAsPNG); postNotification() }
     }
     
     var showAdvancedOptions: Bool {
-        get { return UserDefaults.standard.bool(forKey: useDefaultsKeyShowAdvancedOptions) }
-        set { UserDefaults.standard.set(newValue, forKey: useDefaultsKeyShowAdvancedOptions); postNotification() }
+        get { return UserDefaults.standard.bool(forKey: userDefaultsKeyShowAdvancedOptions) }
+        set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyShowAdvancedOptions); postNotification() }
     }
     
     var previewWithAutoColorMode: Bool {
         get { return Sane.shared.configuration.previewWithAutoColorMode }
         set { Sane.shared.configuration.previewWithAutoColorMode = newValue; postNotification() }
+    }
+    
+    var telemetryUserID: String {
+        get {
+            if let id = UserDefaults.standard.string(forKey: userDefaultsKeyTelemetryUserID) {
+                return id
+            }
+            let id = NSUUID().uuidString
+            UserDefaults.standard.set(id, forKey: userDefaultsKeyTelemetryUserID)
+            return id
+        }
     }
     
     // MARK: Notification
@@ -48,9 +59,9 @@ class Preferences: NSObject {
     }
     
     // MARK: UserDefaults keys
-    private let useDefaultsKeyShowAdvancedOptions   = "ShowAdvancedOptions"
-    private let useDefaultsKeySaveAsPNG             = "SaveAsPNG"
-
+    private let userDefaultsKeyShowAdvancedOptions  = "ShowAdvancedOptions"
+    private let userDefaultsKeySaveAsPNG            = "SaveAsPNG"
+    private let userDefaultsKeyTelemetryUserID      = "TelemetryUserID"
 }
 
 // MARK: UI

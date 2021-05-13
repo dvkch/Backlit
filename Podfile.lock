@@ -11,6 +11,7 @@ PODS:
   - SYKit (0.1.16)
   - SYOperationQueue (1.0.3)
   - SYPictureMetadata (2.1)
+  - TelemetryClient (1.0.0)
 
 DEPENDENCIES:
   - DirectoryWatcher
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - SYKit (>= 0.1.16)
   - SYOperationQueue
   - SYPictureMetadata (~> 2.0)
+  - TelemetryClient (from `https://raw.githubusercontent.com/dvkch/SYPods/master/TelemetryClient.podspec`)
 
 SPEC REPOS:
   trunk:
@@ -40,6 +42,13 @@ EXTERNAL SOURCES:
     :path: "./"
   SaneSwift:
     :path: "./"
+  TelemetryClient:
+    :podspec: https://raw.githubusercontent.com/dvkch/SYPods/master/TelemetryClient.podspec
+
+CHECKOUT OPTIONS:
+  TelemetryClient:
+    :commit: f3cfa64313d578e37c69afd88b6ff553b42dde90
+    :git: https://github.com/AppTelemetry/SwiftClient.git
 
 SPEC CHECKSUMS:
   DirectoryWatcher: 493f7a86318070e46bb7b8d6a296b2bf139e3880
@@ -52,7 +61,8 @@ SPEC CHECKSUMS:
   SYKit: 2eaf235862d8de406af61a66c73bb7b58887f4af
   SYOperationQueue: d4ddc74419eb67a2d3b68d3933ab818a13867e16
   SYPictureMetadata: 2cf07fc671e7ce547aca9eeaf34462dc160411c1
+  TelemetryClient: a322074f7e257c3e0d9559f7485acbf7c077aabe
 
-PODFILE CHECKSUM: e0dca64f6617967e190b81069b302633d0afbd72
+PODFILE CHECKSUM: a6056f6e7d5081de0c1395c448492940802bbcf7
 
 COCOAPODS: 1.10.1

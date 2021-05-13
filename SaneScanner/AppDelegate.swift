@@ -10,6 +10,7 @@ import UIKit
 import SYKit
 import SaneSwift
 import SYPictureMetadata
+import TelemetryClient
 
 // TODO: add review prompt every N scans
 // TODO: UX: verrouillage des options pendant un scan/preview/update d'options. utilisation d'une propriété Device.lock observable? est-ce necesaire puisque les calls sont tous sur une queue synchrone (are they tho?)
@@ -47,6 +48,10 @@ extension AppDelegate : UIApplicationDelegate {
             context = Context()
             window = context?.window
         }
+        
+        // Analytics
+        TelemetryManager.initialize(with: .init(appID: "9CF71A71-190A-4B84-AB6B-2E0DE0A44F12s"))
+        TelemetryManager.send("start", for: Preferences.shared.telemetryUserID, with: [:])
 
         // Snapshots
         if SnapshotKind.fromLaunchOptions == .other {

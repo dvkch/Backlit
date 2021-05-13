@@ -15,6 +15,7 @@ target :'SaneScanner' do
     pod 'SYKit', '>= 0.1.16'
     pod 'SYOperationQueue'
     pod 'SYPictureMetadata', '~> 2.0'
+    pod 'TelemetryClient', :podspec => "https://raw.githubusercontent.com/dvkch/SYPods/master/TelemetryClient.podspec"
 end
 
 post_install do |installer|
