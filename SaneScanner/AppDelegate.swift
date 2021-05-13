@@ -12,9 +12,6 @@ import SaneSwift
 import SYPictureMetadata
 import TelemetryClient
 
-// TODO: UX: verrouillage des options pendant un scan/preview/update d'options. utilisation d'une propriété Device.lock observable? est-ce necesaire puisque les calls sont tous sur une queue synchrone (are they tho?)
-
-// TODO: Catalyst: drag and drop from list of thumbs
 // TODO: Catalyst: keyboard shortcuts, menu, etc (+ test on iPad)
 // TODO: Catalyst: test using made for mac idiom
 

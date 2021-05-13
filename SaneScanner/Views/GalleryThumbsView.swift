@@ -45,6 +45,9 @@ class GalleryThumbsView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
+        if #available(iOS 11.0, *) {
+            collectionView.dragDelegate = self
+        }
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
         collectionView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         addSubview(collectionView)
@@ -318,4 +321,12 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
         return configuration
     }
     #endif
+}
+
+@available(iOS 11.0, *)
+extension GalleryThumbsView: UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let item = galleryItems[indexPath.item]
+        return [UIDragItem(itemProvider: NSItemProvider(object: item))]
+    }
 }

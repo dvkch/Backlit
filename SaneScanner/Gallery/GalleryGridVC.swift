@@ -93,6 +93,12 @@ class GalleryGridVC: UIViewController {
     }
     #endif
     
+    private func openGallery(at index: Int) {
+        let imagesVC = GalleryImagesVC()
+        imagesVC.initialIndex = index
+        navigationController?.pushViewController(imagesVC, animated: true)
+    }
+    
     @objc private func deleteButtonTap(sender: UIBarButtonItem) {
         guard let selectedIndices = collectionView.indexPathsForSelectedItems, !selectedIndices.isEmpty else { return }
         
@@ -259,11 +265,32 @@ extension GalleryGridVC : UICollectionViewDelegate {
         }
         else {
             collectionView.deselectItem(at: indexPath, animated: true)
-            
-            let imagesVC = GalleryImagesVC()
-            imagesVC.initialIndex = indexPath.row
-            navigationController?.pushViewController(imagesVC, animated: true)
+            openGallery(at: indexPath.item)
         }
+    }
+
+    #if !targetEnvironment(macCatalyst)
+    @available(iOS 13.0, *)
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let open = UIAction(title: "ACTION OPEN".localized, image: UIImage(systemName: "folder")) { _ in
+                self.openGallery(at: indexPath.item)
+            }
+            let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
+                UIActivityViewController.showForURLs([self.items[indexPath.item].url], in: self, sender: collectionView.cellForItem(at: indexPath), completion: nil)
+            }
+            return UIMenu(title: "", children: [open, share])
+        }
+        return configuration
+    }
+    #endif
+}
+
+@available(iOS 11.0, *)
+extension GalleryGridVC : UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let item = items[indexPath.item]
+        return [UIDragItem(itemProvider: NSItemProvider(object: item))]
     }
 }
 
