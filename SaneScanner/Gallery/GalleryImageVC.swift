@@ -62,7 +62,7 @@ class GalleryImageVC: UIViewController {
         
         // lazy loading only when view will appear for the first time
         if self.imageView.image == nil {
-            self.imageView.image = UIImage(contentsOfFile: self.item.URL.path)
+            self.imageView.image = UIImage(contentsOfFile: self.item.url.path)
             self.view.setNeedsUpdateConstraints()
         }
     }

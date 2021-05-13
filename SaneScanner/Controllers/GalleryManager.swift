@@ -123,8 +123,8 @@ class GalleryManager: NSObject {
     
     private func galleryItemForImage(at url: URL) -> GalleryItem {
         let item = GalleryItem(
-            URL: url,
-            thumbnailURL: thumbURL(for: url)
+            url: url,
+            thumbnailUrl: thumbUrl(for: url)
         )
         return item
     }
@@ -177,10 +177,10 @@ class GalleryManager: NSObject {
     }
     
     func deleteItem(_ item: GalleryItem) {
-        try? FileManager.default.removeItem(at: item.URL)
-        try? FileManager.default.removeItem(at: item.thumbnailURL)
+        try? FileManager.default.removeItem(at: item.url)
+        try? FileManager.default.removeItem(at: item.thumbnailUrl)
         
-        if let firstIndex = imageURLs.firstIndex(of: item.URL) {
+        if let firstIndex = imageURLs.firstIndex(of: item.url) {
             imageURLs.remove(at: firstIndex)
         }
     }
@@ -223,8 +223,8 @@ class GalleryManager: NSObject {
             .map { galleryItemForImage(at: $0) }
 
         removedItems.forEach { (item) in
-            thumbnailCache.removeObject(forKey: item.URL as NSURL)
-            imageSizeCache.removeObject(forKey: item.URL as NSURL)
+            thumbnailCache.removeObject(forKey: item.url as NSURL)
+            imageSizeCache.removeObject(forKey: item.url as NSURL)
         }
         
         let items = self.items
@@ -237,7 +237,7 @@ class GalleryManager: NSObject {
     func thumbnail(for item: GalleryItem?) -> UIImage? {
         guard let item = item else { return nil }
         
-        let image = thumbnailCache.object(forKey: item.thumbnailURL as NSURL) ?? UIImage(contentsOfFile: item.thumbnailURL.path)
+        let image = thumbnailCache.object(forKey: item.thumbnailUrl as NSURL) ?? UIImage(contentsOfFile: item.thumbnailUrl.path)
         if image == nil {
             generateThumbAsync(for: item, fullImage: nil, tellDelegates: true)
         }
@@ -245,7 +245,7 @@ class GalleryManager: NSObject {
     }
     
     func dateString(for item: GalleryItem) -> String? {
-        guard let date = item.URL.creationDate else { return nil }
+        guard let date = item.url.creationDate else { return nil }
 
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -254,34 +254,34 @@ class GalleryManager: NSObject {
     }
     
     func imageSize(for item: GalleryItem) -> CGSize? {
-        if let size = self.imageSizeCache.object(forKey: item.URL as NSURL)?.cgSizeValue {
+        if let size = self.imageSizeCache.object(forKey: item.url as NSURL)?.cgSizeValue {
             return size
         }
         
-        guard let imageSize = UIImage.sizeOfImage(at: item.URL) else { return nil }
+        guard let imageSize = UIImage.sizeOfImage(at: item.url) else { return nil }
 
-        imageSizeCache.setObject(NSValue(cgSize: imageSize), forKey: item.URL as NSURL)
+        imageSizeCache.setObject(NSValue(cgSize: imageSize), forKey: item.url as NSURL)
         return imageSize
     }
     
     // MARK: Thumb
     private func generateThumbAsync(for item: GalleryItem, fullImage: UIImage?, tellDelegates: Bool) {
-        guard !thumbsBeingCreated.contains(item.URL) else { return }
-        thumbsBeingCreated.append(item.URL)
+        guard !thumbsBeingCreated.contains(item.url) else { return }
+        thumbsBeingCreated.append(item.url)
         
         let dequeue = { [weak self] in
-            if let index = self?.thumbsBeingCreated.firstIndex(of: item.URL) {
+            if let index = self?.thumbsBeingCreated.firstIndex(of: item.url) {
                 self?.thumbsBeingCreated.remove(at: index)
             }
         }
 
         thumbsQueue.addOperation {
             // this first method is a bit longer to generate images, but uses far less memory on the device
-            var thumb = UIImage.thumbnailForImage(at: item.URL, maxEdgeSize: 200)
+            var thumb = UIImage.thumbnailForImage(at: item.url, maxEdgeSize: 200)
             
             // in case the first method fails we do it the old way
             if thumb == nil {
-                guard let original = fullImage ?? UIImage(contentsOfFile: item.URL.path) else { return dequeue() }
+                guard let original = fullImage ?? UIImage(contentsOfFile: item.url.path) else { return dequeue() }
                 thumb = original.resizingLongestEdge(to: 200)
             }
             
@@ -289,9 +289,9 @@ class GalleryManager: NSObject {
             
             try? thumb!
                 .jpegData(compressionQuality: 0.6)?
-                .write(to: item.thumbnailURL, options: .atomicWrite)
+                .write(to: item.thumbnailUrl, options: .atomicWrite)
             
-            self.thumbnailCache.setObject(thumb!, forKey: item.URL as NSURL)
+            self.thumbnailCache.setObject(thumb!, forKey: item.url as NSURL)
             
             dequeue()
             
@@ -334,8 +334,8 @@ class GalleryManager: NSObject {
         return FileManager.cacheDirectoryURL.appendingPathComponent(kImagePDFFolder, isDirectory: true)
     }
     
-    private func thumbURL(for imageURL: URL) -> URL {
-        let filename = imageURL.deletingPathExtension().appendingPathExtension(kImageThumbsSuffix).lastPathComponent
+    private func thumbUrl(for imageUrl: URL) -> URL {
+        let filename = imageUrl.deletingPathExtension().appendingPathExtension(kImageThumbsSuffix).lastPathComponent
         return thumbnailsFolderURL.appendingPathComponent(filename, isDirectory: false)
     }
 }

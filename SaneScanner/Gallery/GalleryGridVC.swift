@@ -144,7 +144,7 @@ class GalleryGridVC: UIViewController {
         return (collectionView.indexPathsForSelectedItems ?? [])
             .sorted()
             .reversed()
-            .compactMap { self.items[$0.row].URL }
+            .compactMap { self.items[$0.row].url }
     }
     
     private func shareSelectedItemsAsPDF(sender: UIBarButtonItem) {

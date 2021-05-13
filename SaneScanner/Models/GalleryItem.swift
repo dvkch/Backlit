@@ -8,13 +8,17 @@
 
 import UIKit
 
-struct GalleryItem {
-    let URL: URL
-    let thumbnailURL: URL
-}
-
-extension GalleryItem : Equatable {
-    static func ==(lhs: GalleryItem, rhs: GalleryItem) -> Bool {
-        return lhs.URL == rhs.URL
+class GalleryItem: NSObject {
+    let url: URL
+    let thumbnailUrl: URL
+    
+    init(url: URL, thumbnailUrl: URL) {
+        self.url = url
+        self.thumbnailUrl = thumbnailUrl
+        super.init()
+    }
+    
+    override func isEqual(_ object: Any?) -> Bool {
+        (object as? GalleryItem)?.url == url
     }
 }

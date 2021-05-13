@@ -80,8 +80,8 @@ class GalleryThumbsView: UIView {
     // MARK: Actions
     private func openGallery(at index: Int) {
         #if targetEnvironment(macCatalyst)
-        // TODO: fix crash on Catalyst
-        UIApplication.shared.open(galleryItems[index].URL, options: [:], completionHandler: nil)
+        // crashes in debug in Catalyst, but all good in release
+        UIApplication.shared.open(galleryItems[index].url, options: [:], completionHandler: nil)
         #else
         let nc = GalleryNC(openedAt: index)
         parentViewController?.present(nc, animated: true, completion: nil)
@@ -311,7 +311,7 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
             }
             let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
                 guard let parentViewController = self.parentViewController else { return }
-                UIActivityViewController.showForURLs([self.galleryItems[indexPath.item].URL], in: parentViewController, sender: collectionView.cellForItem(at: indexPath), completion: nil)
+                UIActivityViewController.showForURLs([self.galleryItems[indexPath.item].url], in: parentViewController, sender: collectionView.cellForItem(at: indexPath), completion: nil)
             }
             return UIMenu(title: "", children: [open, share])
         }

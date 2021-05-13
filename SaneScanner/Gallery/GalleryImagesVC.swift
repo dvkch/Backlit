@@ -96,7 +96,7 @@ class GalleryImagesVC: UIViewController {
         guard let currentIndex = currentIndex else { return }
         let item = items[currentIndex]
 
-        UIActivityViewController.showForURLs([item.URL], from: sender, presentingVC: self, completion: nil)
+        UIActivityViewController.showForURLs([item.url], from: sender, presentingVC: self, completion: nil)
     }
 
     // MARK: Content
