@@ -30,13 +30,14 @@ class DevicesVC: UIViewController {
         tableView.registerCell(HostCell.self, xib: true)
         tableView.registerCell(DeviceCell.self, xib: true)
         tableView.registerHeader(TableViewHeader.self, xib: false)
-        tableView.addPullToResfresh { [weak self] (_) in
-            self?.refreshDevices()
-        }
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.bottom.equalTo(view.layoutMarginsGuide)
+        }
+        
+        loaderView = .init(tableView: tableView, viewController: self) { [weak self] in
+            self?.refreshDevices()
         }
 
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: nil)
@@ -58,6 +59,7 @@ class DevicesVC: UIViewController {
     // MARK: Views
     private let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
     private var thumbsView: GalleryThumbsView!
+    private var loaderView: LoaderView!
     
     // MARK: Properties
     private var devices = [Device]()
@@ -116,11 +118,11 @@ class DevicesVC: UIViewController {
 
 extension DevicesVC: SaneDelegate {
     func saneDidStartUpdatingDevices(_ sane: Sane) {
-        tableView.showPullToRefresh()
+        loaderView.startLoading()
     }
     
     func saneDidEndUpdatingDevices(_ sane: Sane) {
-        tableView.endPullToRefresh()
+        loaderView.stopLoading()
     }
     
     func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ()) {

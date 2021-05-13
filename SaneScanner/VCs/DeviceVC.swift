@@ -65,7 +65,7 @@ class DeviceVC: UIViewController {
         
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         
-        tableView.addPullToResfresh { [weak self] (_) in
+        loaderView = .init(tableView: tableView, viewController: self) { [weak self] in
             self?.refresh()
         }
         
@@ -101,6 +101,7 @@ class DeviceVC: UIViewController {
     private let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
     private let scanButtonStackView = UIStackView()
     private let scanButton = ScanButton(type: .custom)
+    private var loaderView: LoaderView!
     
     // MARK: Actions
     @objc private func scanButtonTap() {
@@ -202,12 +203,12 @@ class DeviceVC: UIViewController {
         guard !isRefreshing else { return }
         isRefreshing = true
         
-        tableView.showPullToRefresh()
+        loaderView.startLoading()
         Sane.shared.listOptions(for: device) { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
             self.isRefreshing = false
-            self.tableView.endPullToRefresh()
+            self.loaderView.stopLoading()
             self.delegate?.deviceVC(self, didRefreshDevice: self.device)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -383,10 +384,11 @@ extension DeviceVC : PreviewViewDelegate {
 
 extension DeviceVC : DeviceOptionControllableDelegate {
     func deviceOptionControllable(_ controllable: DeviceOptionControllable, willUpdate option: DeviceOption) {
-        // TODO: show something and block next updates ?
+        loaderView.startLoading(discreet: true)
     }
+
     func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, error: Error?) {
-        // TODO: hide loader if we presented any
+        loaderView.stopLoading()
 
         if let error = error {
             UIAlertController.show(for: error, in: self)

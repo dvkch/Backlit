@@ -27,6 +27,8 @@
 		97499E5D220872F5006DED20 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5C220872F5006DED20 /* Toolbar.swift */; };
 		97499E5F220874B3006DED20 /* SplitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5E220874B3006DED20 /* SplitVC.swift */; };
 		975277C8264D48AB00FFAAF4 /* ProgressMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C7264D48AB00FFAAF4 /* ProgressMaskView.swift */; };
+		975277CA264D5C1A00FFAAF4 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C9264D5C1A00FFAAF4 /* LoaderView.swift */; };
+		975277CC264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277CB264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift */; };
 		9755651625CB712800FDAD07 /* UISceneView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9755651525CB712800FDAD07 /* UISceneView+SY.swift */; };
 		9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9757FCEF2207112D00AB59F1 /* DevicesVC.swift */; };
 		977712D225CCB2F1009EC50D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977712D125CCB2F1009EC50D /* SceneDelegate.swift */; };
@@ -138,6 +140,8 @@
 		97499E5C220872F5006DED20 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		97499E5E220874B3006DED20 /* SplitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVC.swift; sourceTree = "<group>"; };
 		975277C7264D48AB00FFAAF4 /* ProgressMaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressMaskView.swift; sourceTree = "<group>"; };
+		975277C9264D5C1A00FFAAF4 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		975277CB264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+SY.swift"; sourceTree = "<group>"; };
 		9755651525CB712800FDAD07 /* UISceneView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISceneView+SY.swift"; sourceTree = "<group>"; };
 		9757FCEF2207112D00AB59F1 /* DevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesVC.swift; sourceTree = "<group>"; };
 		976E423D23D2158100FFEFD0 /* SaneScanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaneScanner.entitlements; sourceTree = "<group>"; };
@@ -265,6 +269,7 @@
 				973066B4220C5CD90068E8C7 /* CropMaskView.swift */,
 				978263CA221E253D0095E6ED /* DotsRefreshControl.swift */,
 				973066B2220C55000068E8C7 /* GalleryThumbsView.swift */,
+				975277C9264D5C1A00FFAAF4 /* LoaderView.swift */,
 				97EAF237220B54A700435DE6 /* PreviewView.swift */,
 				975277C7264D48AB00FFAAF4 /* ProgressMaskView.swift */,
 				9740C16E2638DC8B00CAC543 /* ScanButton.swift */,
@@ -337,6 +342,7 @@
 				971584CD222F36C100DC46CA /* SYPictureMetdata+SY.swift */,
 				973066C6220C951B0068E8C7 /* UIActivityViewController+SY.swift */,
 				977C4F6426484F1500856E0E /* UIAlertController+SY.swift */,
+				975277CB264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift */,
 				97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */,
 				979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */,
 				971584CF222F445200DC46CA /* UIImage+SY.swift */,
@@ -714,6 +720,7 @@
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */,
 				979FCEF925D811FB00DD9E0E /* UIContentSizeCategory+SY.swift in Sources */,
+				975277CA264D5C1A00FFAAF4 /* LoaderView.swift in Sources */,
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
 				973066C1220C898E0068E8C7 /* GalleryGridLayout.swift in Sources */,
 				97F2FB5122230A6B006BD617 /* GalleryImagesVC.swift in Sources */,
@@ -752,6 +759,7 @@
 				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,
 				973066C3220C8C740068E8C7 /* FileManager+SY.swift in Sources */,
 				97FDF403222C55EE00B71E4C /* DeviceOptionVC.swift in Sources */,
+				975277CC264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift in Sources */,
 				977C4F6526484F1500856E0E /* UIAlertController+SY.swift in Sources */,
 				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,
@@ -1051,6 +1059,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1081,6 +1090,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
