@@ -202,7 +202,9 @@ class CropMaskView: UIControl {
     private let kBorderWidth   = CGFloat(2)
     
     override func layoutSubviews() {
-        super.layoutSubviews()
+        defer {
+            super.layoutSubviews()
+        }
         
         guard !cropArea.isNull, !maxCropArea.isNull else {
             cornerViews.values.forEach { $0.isHidden = true }

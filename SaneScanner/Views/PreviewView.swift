@@ -45,18 +45,12 @@ class PreviewView: UIView {
         lineView.backgroundColor = UITableView(frame: .zero, style: .grouped).separatorColor
         addSubview(lineView)
         
+        addSubview(progressMask)
+
         cropMask.cropAreaDidChangeBlock = { [weak self] (newCropArea) in
             self?.device?.cropArea = newCropArea
         }
         addSubview(cropMask)
-        
-        progressMaskContainer.isUserInteractionEnabled = false
-        addSubview(progressMaskContainer)
-
-        progressMask.gradientLayer.type = .axial
-        progressMask.isUserInteractionEnabled = false
-        updateProgressMaskColors()
-        progressMaskContainer.addSubview(progressMask)
         
         buttonsStackView.spacing = contentInsets
         buttonsStackView.axis = .horizontal
@@ -85,7 +79,7 @@ class PreviewView: UIView {
             make.edges.equalTo(imageView)
         }
         
-        progressMaskContainer.snp.makeConstraints { make in
+        progressMask.snp.makeConstraints { make in
             make.edges.equalTo(imageView)
         }
 
@@ -117,8 +111,7 @@ class PreviewView: UIView {
     private let imageView = UIImageView()
     private let lineView = UIView()
     private let cropMask = CropMaskView()
-    private let progressMaskContainer = UIView()
-    private let progressMask = SYGradientView()
+    private let progressMask = ProgressMaskView()
     private let buttonsStackView = UIStackView()
     private let previewButton = ScanButton(type: .custom)
     private let scanButton = ScanButton(type: .custom)
@@ -189,32 +182,13 @@ class PreviewView: UIView {
     
     private func updateProgressMask() {
         guard let device = device, device.currentOperation?.operation == .scan, case let .scanning(progress, _, parameters) = device.currentOperation?.progress, let parameters = parameters else {
-            progressMaskContainer.isHidden = true
+            progressMask.cropAreaPercent = nil
+            progressMask.progress = nil
             return
         }
-        
-        if progressMaskContainer.isHidden {
-            let cropPercent = parameters.cropArea.asPercents(of: device.maxCropArea)
-            progressMaskContainer.isHidden = false
-            progressMask.snp.remakeConstraints { make in
-                make.left.equalTo(progressMaskContainer.snp.right).multipliedBy(max(cropPercent.minX, CGFloat.leastNonzeroMagnitude))
-                make.top.equalTo(progressMaskContainer.snp.bottom).multipliedBy(max(cropPercent.minY, CGFloat.leastNonzeroMagnitude))
-                make.width.equalToSuperview().multipliedBy(cropPercent.width)
-                make.height.equalToSuperview().multipliedBy(cropPercent.height)
-            }
-            layoutIfNeeded()
-        }
-        
-        let progressHeight = 10 / progressMask.bounds.height
-        progressMask.gradientLayer.startPoint = .init(x: 0, y: CGFloat(progress))
-        progressMask.gradientLayer.endPoint = .init(x: 0, y: CGFloat(progress) + progressHeight)
-    }
-    
-    private func updateProgressMaskColors() {
-        progressMask.gradientLayer.colors = [
-            UIColor.tint.withAlphaComponent(0.7).cgColor,
-            UIColor.tint.withAlphaComponent(0).cgColor
-        ]
+
+        progressMask.cropAreaPercent = parameters.cropArea.asPercents(of: device.maxCropArea)
+        progressMask.progress = progress
     }
     
     // MARK: Layout
@@ -242,11 +216,6 @@ class PreviewView: UIView {
     override func layoutSubviews() {
         buttonsStackView.axis = bounds.width > 400 ? .horizontal : .vertical
         super.layoutSubviews()
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        updateProgressMaskColors()
     }
 }
 
