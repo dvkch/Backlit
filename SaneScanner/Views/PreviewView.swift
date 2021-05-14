@@ -12,7 +12,7 @@ import SnapKit
 import SYKit
 
 protocol PreviewViewDelegate: NSObjectProtocol {
-    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?)
+    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation)
     func previewView(_ previewView: PreviewView, canceledScan device: Device)
 }
 
@@ -132,12 +132,7 @@ class PreviewView: UIView {
         }
 
         let action: ScanOperation = sender == previewButton ? .preview : .scan
-        
-        delegate?.previewView(self, device: device, tapped: action, progress: { [weak self] (progress) in
-            self?.refresh()
-        }, completion: { [weak self] (result) in
-            self?.refresh()
-        })
+        delegate?.previewView(self, device: device, tapped: action)
     }
     
     // MARK: Content

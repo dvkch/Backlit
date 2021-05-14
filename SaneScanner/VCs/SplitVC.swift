@@ -46,6 +46,27 @@ class SplitVC: UISplitViewController {
         return nc
     }()
     
+    // MARK: Actions
+    @objc func openGallery() {
+        #if targetEnvironment(macCatalyst)
+        // crashes in debug in Catalyst, but all good in release
+        UIApplication.shared.open(GalleryManager.shared.galleryFolder, options: [:], completionHandler: nil)
+        #else
+        let nc = GalleryNC(openedAt: 0)
+        parentViewController?.present(nc, animated: true, completion: nil)
+        #endif
+    }
+
+    @objc func openGallery(at index: Int = 0) {
+        #if targetEnvironment(macCatalyst)
+        // crashes in debug in Catalyst, but all good in release
+        UIApplication.shared.open(GalleryManager.shared.items[index].url, options: [:], completionHandler: nil)
+        #else
+        let nc = GalleryNC(openedAt: index)
+        parentViewController?.present(nc, animated: true, completion: nil)
+        #endif
+    }
+    
     // MARK: Layout
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)

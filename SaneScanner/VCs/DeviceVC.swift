@@ -58,12 +58,14 @@ class DeviceVC: UIViewController {
         
         scanButton.kind = .scan
         scanButton.style = .cell
-        scanButton.addTarget(self, action: #selector(scanButtonTap), for: .primaryActionTriggered)
+        scanButton.addTarget(self, action: #selector(scan), for: .primaryActionTriggered)
         scanButtonStackView.addArrangedSubview(scanButton)
         
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)
         
+        #if !targetEnvironment(macCatalyst)
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
+        #endif
         
         loaderView = .init(tableView: tableView, viewController: self) { [weak self] in
             self?.refresh()
@@ -104,41 +106,24 @@ class DeviceVC: UIViewController {
     private var loaderView: LoaderView!
     
     // MARK: Actions
-    @objc private func scanButtonTap() {
-        scan(device: device, progress: nil, completion: nil)
-    }
-    
-    private func scan(device: Device, progress progressCallback: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+    @objc func scan() {
         if device.isScanning {
             Sane.shared.cancelCurrentScan()
             return
         }
         
-        let updatePreviewCell = { [weak self] in
-            self?.tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first?.refresh()        }
-        
         // block that will be called to show progress
         let progressBlock = { [weak self] (progress: ScanProgress) in
             guard let self = self else { return }
-
             self.scanButton.progress = progress
-
-            switch progress {
-            case .warmingUp, .cancelling:
-                break;
-
-            case .scanning:
-                updatePreviewCell()
-            }
-            
-            progressCallback?(progress)
+            self.updatePreviewViews()
         }
         
         // block that will be called to handle completion
         let completionBlock = { [weak self] (result: ScanResult) in
             guard let self = self else { return }
-
             self.scanButton.progress = nil
+            self.updatePreviewViews()
 
             switch result {
             case .success((let image, let parameters)):
@@ -150,31 +135,32 @@ class DeviceVC: UIViewController {
                 catch {
                     UIAlertController.show(for: error, in: self)
                 }
-                updatePreviewCell()
 
             case .failure(let error):
                 UIAlertController.show(for: error, in: self)
             }
-            
-            completion?(result)
         }
 
         // start scan
         Sane.shared.scan(device: device, progress: progressBlock, completion: completionBlock)
     }
 
-    private func preview(device: Device, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
+    @objc func preview() {
         Sane.shared.preview(device: device, progress: { [weak self] (p) in
             self?.scanButton.isEnabled = false
-            progress?(p)
+            self?.updatePreviewViews()
         }, completion: { [weak self] (result) in
             guard let self = self else { return }
             self.scanButton.isEnabled = true
-            completion?(result)
+            self.updatePreviewViews()
             if case let .failure(error) = result {
                 UIAlertController.show(for: error, in: self)
             }
         })
+    }
+    
+    @objc func cancelOperation() {
+        Sane.shared.cancelCurrentScan()
     }
 
     @objc private func settingsButtonTap() {
@@ -199,7 +185,7 @@ class DeviceVC: UIViewController {
     }
     
     // MARK: Content
-    private func refresh() {
+    @objc private func refresh() {
         guard !isRefreshing else { return }
         isRefreshing = true
         
@@ -215,6 +201,11 @@ class DeviceVC: UIViewController {
                 self.prepareForSnapshotting()
             }
         }
+    }
+    
+    private func updatePreviewViews() {
+        tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first?.refresh()
+        (splitViewController as? SplitVC)?.previewNC.viewControllers.forEach { ($0 as? DevicePreviewVC)?.refresh() }
     }
     
     func optionGroups() -> [DeviceOptionGroup] {
@@ -363,17 +354,14 @@ extension DeviceVC : UITableViewDelegate {
 }
 
 extension DeviceVC : PreviewViewDelegate {
-    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
-        guard !device.isScanning else {
-            completion?(.failure(SaneError.cancelled))
-            return
-        }
+    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation) {
+        guard !device.isScanning else { return }
         
         if action == .preview {
-            preview(device: device, progress: progress, completion: completion)
+            preview()
         }
         if action == .scan {
-            scan(device: device, progress: progress, completion: completion)
+            scan()
         }
     }
     

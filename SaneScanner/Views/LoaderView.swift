@@ -15,8 +15,7 @@ enum LoaderView {
     init(tableView: UITableView, viewController: UIViewController, _ completion: @escaping () -> ()) {
         #if targetEnvironment(macCatalyst)
         self = .barButtonItem(viewController, completion)
-        viewController.navigationItem.leftItemsSupplementBackButton = true
-        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: completion)
+        viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: completion)
         #else
         self = .pullToRefresh(tableView, completion)
         tableView.addPullToResfresh { _ in
@@ -37,7 +36,7 @@ enum LoaderView {
             loader.color = .tint
             loader.startAnimating()
             loader.accessibilityLabel = "LOADING".localized
-            viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: loader)
+            viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loader)
             
         case .pullToRefresh(let tableView, _):
             if !discreet {
@@ -49,7 +48,7 @@ enum LoaderView {
     func stopLoading() {
         switch self {
         case .barButtonItem(let viewController, let block):
-            viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: block)
+            viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: block)
 
         case .pullToRefresh(let tableView, _):
             tableView.endPullToRefresh()

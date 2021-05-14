@@ -44,8 +44,8 @@ class PreviewCell: UITableViewCell {
 }
 
 extension PreviewCell : PreviewViewDelegate {
-    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation, progress: ((ScanProgress) -> ())?, completion: ((ScanResult) -> ())?) {
-        delegate?.previewView(previewView, device: device, tapped: action, progress: progress, completion: completion)
+    func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation) {
+        delegate?.previewView(previewView, device: device, tapped: action)
     }
     
     func previewView(_ previewView: PreviewView, canceledScan device: Device) {

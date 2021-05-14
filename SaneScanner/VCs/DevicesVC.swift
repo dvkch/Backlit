@@ -17,7 +17,9 @@ class DevicesVC: UIViewController {
         view.backgroundColor = .background
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        #if !targetEnvironment(macCatalyst)
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
+        #endif
 
         #if targetEnvironment(macCatalyst)
         tableView.contentInset.top = 18
@@ -37,7 +39,7 @@ class DevicesVC: UIViewController {
         }
         
         loaderView = .init(tableView: tableView, viewController: self) { [weak self] in
-            self?.refreshDevices()
+            self?.refresh()
         }
 
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: nil)
@@ -52,7 +54,7 @@ class DevicesVC: UIViewController {
         tableView.reloadData()
         
         if devices.isEmpty {
-            refreshDevices()
+            refresh()
         }
     }
     
@@ -72,7 +74,7 @@ class DevicesVC: UIViewController {
         present(nc, animated: true, completion: nil)
     }
     
-    private func refreshDevices() {
+    @objc func refresh() {
         Sane.shared.updateDevices { [weak self] (devices, error) in
             guard let self = self else { return }
             self.devices = devices ?? []
@@ -84,11 +86,11 @@ class DevicesVC: UIViewController {
         }
     }
     
-    private func addHostButtonTap() {
+    @objc func addHostButtonTap() {
         let completion = { (host: String) in
             Sane.shared.configuration.addHost(host)
             self.tableView.reloadData()
-            self.refreshDevices()
+            self.refresh()
         }
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentHostInputAlert(
@@ -245,7 +247,7 @@ extension DevicesVC : UITableViewDelegate {
                 
                 CATransaction.begin()
                 CATransaction.setCompletionBlock {
-                    self?.refreshDevices()
+                    self?.refresh()
                 }
                 tableView.beginUpdates()
                 tableView.deleteRows(at: [indexPath], with: .bottom)

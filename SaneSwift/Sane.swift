@@ -667,7 +667,10 @@ extension Sane {
             SaneSetLogLevel(prevLogLevel)
             
             guard status == SANE_STATUS_EOF, let finalParameters = parameters else {
-                Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }
+                Sane.runOn(mainThread: mainThread) {
+                    device.currentOperation = nil
+                    completion?(.failure(SaneError(saneStatus: status)!))
+                }
                 return
             }
 

@@ -16,9 +16,7 @@ class DevicePreviewVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         
-        #if targetEnvironment(macCatalyst)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(openFolderInFinderTap))
-        #endif
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(openGallery))
 
         emptyStateView.backgroundColor = .background
         emptyStateLabel.autoAdjustsFontSize = true
@@ -54,16 +52,14 @@ class DevicePreviewVC: UIViewController {
     @IBOutlet private var separatorView: UIView!
     @IBOutlet private var separatorViewWidth: NSLayoutConstraint!
     @IBOutlet private var galleryThumbsView: GalleryThumbsView!
-
-    // MARK: Actions
-    #if targetEnvironment(macCatalyst)
-    @objc private func openFolderInFinderTap() {
-        UIApplication.shared.open(GalleryManager.shared.galleryFolder, options: [:], completionHandler: nil)
-    }
-    #endif
     
+    // MARK: Actions
+    @objc private func openGallery() {
+        (splitViewController as? SplitVC)?.openGallery()
+    }
+
     // MARK: Content
-    private func refresh() {
+    func refresh() {
         updateEmptyState()
 
         guard device != nil else { return }
