@@ -21,6 +21,7 @@ class PreferencesVC: UIViewController {
         tableView.registerCell(OptionCell.self, xib: true)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
+        addKeyCommand(UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(closeButtonTap)))
     }
 
     static func settingsBarButtonItem(target: Any, action: Selector) -> UIBarButtonItem {

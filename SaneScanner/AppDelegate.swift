@@ -71,4 +71,14 @@ extension AppDelegate : UIApplicationDelegate {
             UIApplication.shared.endBackgroundTask(taskID)
         }
     }
+    
+    @available(iOS 13.0, *)
+    override func buildMenu(with builder: UIMenuBuilder) {
+        super.buildMenu(with: builder)
+        
+        guard builder.system == UIMenuSystem.main else { return }
+        
+        let setttingsCommand = UIKeyCommand(title: "MENU PREFERENCES".localized, action: #selector(DevicesVC.settingsButtonTap), input: ",", modifierFlags: .command)
+        builder.insertChild(setttingsCommand.asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.preferences")), atStartOfMenu: .help)
+    }
 }

@@ -66,7 +66,7 @@ class DevicesVC: UIViewController {
     private var loadingDevice: Device?
     
     // MARK: Actions
-    @objc private func settingsButtonTap() {
+    @objc func settingsButtonTap() {
         let nc = UINavigationController(rootViewController: PreferencesVC())
         nc.modalPresentationStyle = .formSheet
         present(nc, animated: true, completion: nil)
