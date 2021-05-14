@@ -88,7 +88,7 @@ class PreviewView: UIView {
             make.left.right.equalToSuperview()
             make.bottom.equalTo(buttonsStackView.snp.top)
         }
-
+        
         setNeedsUpdateConstraints()
         refresh()
     }
@@ -164,8 +164,8 @@ class PreviewView: UIView {
         }
         
         cropMask.sy_isHidden = !device.canCrop
+        cropMask.isEnabled = device.canCrop && device.currentOperation == nil
         cropMask.setCropArea(device.cropArea, maxCropArea: device.maxCropArea)
-        cropMask.isEnabled = device.currentOperation == nil
 
         if device.currentOperation?.operation == .preview, let progress = device.currentOperation?.progress, case .scanning(_, let image, _) = progress, image != nil {
             imageView.image = image

@@ -185,6 +185,78 @@ class CropMaskView: UIControl {
         return super.point(inside: point, with: event)
     }
     
+    // MARK: Keyboard
+    override var keyCommands: [UIKeyCommand]? {
+        let keys = [UIKeyCommand.inputUpArrow, UIKeyCommand.inputLeftArrow, UIKeyCommand.inputRightArrow, UIKeyCommand.inputDownArrow]
+        let modifiers = [
+            UIKeyModifierFlags(),
+            .alternate,
+            .shift,
+            [.shift, .alternate],
+        ]
+        
+        let commands = keys.map { key in
+            modifiers.map { modifier in
+                UIKeyCommand(input: key, modifierFlags: modifier, action: #selector(pressedArrow(_:)))
+            }
+        }.reduce([], +)
+
+        return commands
+    }
+    
+    @objc private func pressedArrow(_ command: UIKeyCommand) {
+        guard isEnabled else { return }
+        let shift = command.modifierFlags.contains(.shift)
+        let option = command.modifierFlags.contains(.alternate)
+
+        var cropArea = self.cropArea
+        let dx = option ? maxCropArea.width / 300 : maxCropArea.width / 50
+        let dy = option ? maxCropArea.height / 300 : maxCropArea.height / 50
+
+        switch command.input {
+        case UIKeyCommand.inputUpArrow:
+            if !shift {
+                cropArea.origin.y -= dy
+                cropArea.size.height += dy
+            }
+            else {
+                cropArea.size.height -= dy
+            }
+
+        case UIKeyCommand.inputLeftArrow:
+            if !shift {
+                cropArea.origin.x -= dx
+                cropArea.size.width += dx
+            }
+            else {
+                cropArea.size.width -= dx
+            }
+
+        case UIKeyCommand.inputRightArrow:
+            if !shift {
+                cropArea.origin.x += dx
+                cropArea.size.width -= dx
+            }
+            else {
+                cropArea.size.width += dx
+            }
+
+        case UIKeyCommand.inputDownArrow:
+            if !shift {
+                cropArea.origin.y += dy
+                cropArea.size.height -= dy
+            }
+            else {
+                cropArea.size.height += dy
+            }
+
+        default: break
+        }
+        
+        setCropArea(cropArea, maxCropArea: maxCropArea)
+        cropAreaDidChangeBlock?(cropArea)
+    }
+
     // MARK: Style
     private func updateColors() {
         maskingView.shapeLayer.fillColor = UIColor(white: 0, alpha: 0.4).cgColor
