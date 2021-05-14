@@ -12,7 +12,6 @@ import SaneSwift
 import SYPictureMetadata
 import TelemetryClient
 
-// TODO: add more telemetry
 // TODO: check if we can play with BT trackpad and keyboard on iPad
 // TODO: add tabs/arrows/space handling on macos?
 
@@ -49,7 +48,7 @@ extension AppDelegate : UIApplicationDelegate {
         
         // Analytics
         TelemetryManager.initialize(with: .init(appID: "9CF71A71-190A-4B84-AB6B-2E0DE0A44F12s"))
-        TelemetryManager.send("start", for: Preferences.shared.telemetryUserID, with: [:])
+        TelemetryManager.send("App Launch", for: Preferences.shared.telemetryUserID, with: [:])
 
         // Snapshots
         if SnapshotKind.fromLaunchOptions == .other {
