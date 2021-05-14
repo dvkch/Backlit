@@ -23,7 +23,7 @@ extension CatalystView {
 
     static var catalystScaling: CGFloat {
         if #available(macOS 11.0, *) {
-            return 1 / 0.77
+            return 0.77
         }
         return 1
     }
@@ -45,7 +45,7 @@ internal class CatalystViewContainer: NSView {
             containedView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
-        containedView.scaleUnitSquare(to: NSSize(width: NSView.catalystScaling, height: NSView.catalystScaling))
+        containedView.scaleUnitSquare(to: NSSize(width: 1 / NSView.catalystScaling, height: 1 / NSView.catalystScaling))
     }
 
     override func layout() {
@@ -56,10 +56,10 @@ internal class CatalystViewContainer: NSView {
     override var intrinsicContentSize: NSSize {
         var size = containedView.intrinsicContentSize
         if size.width != NSView.noIntrinsicMetric {
-            size.width *= NSView.catalystScaling
+            size.width /= NSView.catalystScaling
         }
         if size.height != NSView.noIntrinsicMetric {
-            size.height *= NSView.catalystScaling
+            size.height /= NSView.catalystScaling
         }
         return size
     }
@@ -73,8 +73,14 @@ internal class CatalystViewContainer: NSView {
 #if os(iOS)
 import UIKit
 
+extension UIView: CatalystView {}
+
 extension CatalystView {
     var view: UIView? {
+        if let view = self as? UIView {
+            return view
+        }
+        
         guard let containerClass = NSClassFromString("_UINSView") as? NSObject.Type else {
             return nil
         }
@@ -88,7 +94,7 @@ extension CatalystView {
 
     static var catalystScaling: CGFloat {
         if #available(macCatalyst 14.0, *) {
-            return 1 / 0.77
+            return 0.77
         }
         else {
             return 1

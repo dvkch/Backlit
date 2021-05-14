@@ -28,8 +28,8 @@ class SplitVC: UISplitViewController {
         scanNC.delegate = self
         
         #if targetEnvironment(macCatalyst)
-        maximumPrimaryColumnWidth = 600
-        minimumPrimaryColumnWidth = 450
+        maximumPrimaryColumnWidth = 500 / UIView.catalystScaling
+        minimumPrimaryColumnWidth = 350 / UIView.catalystScaling
         #endif
     }
 
