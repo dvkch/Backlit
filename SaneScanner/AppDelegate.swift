@@ -12,8 +12,8 @@ import SaneSwift
 import SYPictureMetadata
 import TelemetryClient
 
-// TODO: check if we can play with BT trackpad and keyboard on iPad
 // TODO: add tabs/arrows/space handling on macos?
+// TODO: check if we can play with BT trackpad and keyboard on iPad
 
 // LATER: add auto search on local network
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)

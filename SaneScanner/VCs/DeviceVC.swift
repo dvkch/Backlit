@@ -107,7 +107,17 @@ class DeviceVC: UIViewController {
     private var loaderView: LoaderView!
     
     // MARK: Actions
-    @objc func scanButtonTap() {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(scan) || action == #selector(preview) {
+            return !device.isScanning
+        }
+        if action == #selector(cancelOperation) {
+            return device.isScanning
+        }
+        return super.canPerformAction(action, withSender: sender)
+    }
+    
+    @objc private func scanButtonTap() {
         if device.isScanning {
             Sane.shared.cancelCurrentScan()
         }
