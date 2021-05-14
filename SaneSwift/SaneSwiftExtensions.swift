@@ -49,61 +49,64 @@ internal extension UIImage {
     }
     
     static func sy_imageFromSane(source: SaneSource, parameters: ScanParameters) throws -> UIImage {
-        guard let provider = source.provider else {
-            throw SaneError.noImageData
-        }
-        
-        let colorSpace: CGColorSpace
-        let destBitmapInfo: CGBitmapInfo
-        let destNumberOfComponents: Int
+        return try autoreleasepool {
+            guard let provider = source.provider else {
+                throw SaneError.noImageData
+            }
+            
+            let colorSpace: CGColorSpace
+            let destBitmapInfo: CGBitmapInfo
+            let destNumberOfComponents: Int
 
-        switch parameters.currentlyAcquiredChannel {
-        case SANE_FRAME_RGB:
-            colorSpace = CGColorSpaceCreateDeviceRGB()
-            destBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue)
-            destNumberOfComponents = 4
-        case SANE_FRAME_GRAY:
-            colorSpace = CGColorSpaceCreateDeviceGray()
-            destBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
-            destNumberOfComponents = 1;
-        default:
-            throw SaneError.unsupportedChannels
-        }
-        
-        guard let sourceImage = CGImage(
-            width: parameters.width,
-            height: parameters.height,
-            bitsPerComponent: parameters.depth,
-            bitsPerPixel: parameters.depth * parameters.numberOfChannels,
-            bytesPerRow: parameters.bytesPerLine,
-            space: colorSpace,
-            bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue),
-            provider: provider,
-            decode: nil,
-            shouldInterpolate: false,
-            intent: CGColorRenderingIntent.defaultIntent
-        ) else {
-            throw SaneError.cannotGenerateImage
-        }
+            switch parameters.currentlyAcquiredChannel {
+            case SANE_FRAME_RGB:
+                colorSpace = CGColorSpaceCreateDeviceRGB()
+                destBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue)
+                destNumberOfComponents = 4
+            case SANE_FRAME_GRAY:
+                colorSpace = CGColorSpaceCreateDeviceGray()
+                destBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+                destNumberOfComponents = 1;
+            default:
+                throw SaneError.unsupportedChannels
+            }
+            
+            guard let sourceImage = CGImage(
+                width: parameters.width,
+                height: parameters.height,
+                bitsPerComponent: parameters.depth,
+                bitsPerPixel: parameters.depth * parameters.numberOfChannels,
+                bytesPerRow: parameters.bytesPerLine,
+                space: colorSpace,
+                bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue),
+                provider: provider,
+                decode: nil,
+                shouldInterpolate: false,
+                intent: CGColorRenderingIntent.defaultIntent
+            ) else {
+                throw SaneError.cannotGenerateImage
+            }
 
-        guard let context = CGContext(
-            data: nil, // let iOS deal with allocating the memory
-            width: parameters.width,
-            height: parameters.height,
-            bitsPerComponent: 8,
-            bytesPerRow: parameters.width * destNumberOfComponents,
-            space: colorSpace,
-            bitmapInfo: destBitmapInfo.rawValue
-        ) else {
-            throw SaneError.cannotGenerateImage
+            guard let context = CGContext(
+                data: nil, // let iOS deal with allocating the memory
+                width: parameters.width,
+                height: parameters.height,
+                bitsPerComponent: 8,
+                bytesPerRow: parameters.width * destNumberOfComponents,
+                space: colorSpace,
+                bitmapInfo: destBitmapInfo.rawValue
+            ) else {
+                throw SaneError.cannotGenerateImage
+            }
+            
+            // TODO: this call seams to leak, at least on Catalyst (macOS 11.3)
+            context.draw(sourceImage, in: CGRect(origin: .zero, size: parameters.size))
+            
+            guard let destCGImage = context.makeImage() else {
+                throw SaneError.cannotGenerateImage
+            }
+            return UIImage(cgImage: destCGImage, scale: 1, orientation: .up)
         }
-        
-        context.draw(sourceImage, in: CGRect(origin: .zero, size: parameters.size))
-        
-        guard let destCGImage = context.makeImage() else {
-            throw SaneError.cannotGenerateImage
-        }
-        return UIImage(cgImage: destCGImage, scale: 1, orientation: .up)
     }
     
     
