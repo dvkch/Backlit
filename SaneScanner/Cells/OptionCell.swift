@@ -18,7 +18,7 @@ class OptionCell: TableViewCell {
         
         titleLabel.isUserInteractionEnabled = true
         tooltipView = TooltipView(for: titleLabel, title: { [weak self] in
-            if self?.catalystValueControl != nil {
+            if self?.valueControl != nil {
                 return self?.option?.localizedDescr
             } else {
                 return nil
@@ -36,27 +36,24 @@ class OptionCell: TableViewCell {
     private var tooltipView: TooltipView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var valueLabel: UILabel!
-    #if targetEnvironment(macCatalyst)
-    @IBOutlet private var catalystValueControl: UIView? {
+    @IBOutlet private var valueControl: UIView? {
         didSet {
             oldValue?.removeFromSuperview()
-            if let catalystValueControl = catalystValueControl {
-                catalystValueControl.setContentCompressionResistancePriority(.required, for: .vertical)
-                catalystValueControl.setContentHuggingPriority(.required, for: .horizontal)
-                contentView.addSubview(catalystValueControl)
+            if let valueControl = valueControl {
+                valueControl.setContentCompressionResistancePriority(.required, for: .vertical)
+                valueControl.setContentHuggingPriority(.required, for: .horizontal)
+                contentView.addSubview(valueControl)
             }
             setNeedsUpdateConstraints()
         }
     }
-    #else
-    private let catalystValueControl: UIView? = nil
-    #endif
     @IBOutlet private var descrLabel: UILabel!
 
     // MARK: Properties
     weak var delegate: DeviceOptionControllableDelegate?
     private var option: DeviceOption?
     private var prefKey: Preferences.Key?
+    private var useMacOSLayout: Bool = false
     var showDescription: Bool = false {
         didSet {
             setNeedsUpdateConstraints()
@@ -64,7 +61,7 @@ class OptionCell: TableViewCell {
     }
     
     var hasControlToUpdateItsValue: Bool {
-        return catalystValueControl != nil
+        return valueControl != nil
     }
 
     // MARK: Content
@@ -112,8 +109,9 @@ class OptionCell: TableViewCell {
             descrLabel.text = option.localizedDescr
 
             #if targetEnvironment(macCatalyst)
+            useMacOSLayout = true
             titleLabel.textAlignment = .right
-            catalystValueControl = nil
+            valueControl = nil
             option.updateDeviceOptionControl(using: self, filterDisabled: false, filterSingleOption: false)
             #endif
         }
@@ -168,39 +166,38 @@ class OptionCell: TableViewCell {
     }
     
     override func updateConstraints() {
-        valueLabel.isHidden = catalystValueControl != nil
         descrLabel.isHidden = !showDescription
 
-        #if targetEnvironment(macCatalyst)
-        let valueView: UIView = catalystValueControl ?? valueLabel
-        valueView.isHidden = false
+        if option != nil && useMacOSLayout {
+            let valueView: UIView = valueControl ?? valueLabel
+            valueView.isHidden = false
 
-        let hiddenValueView = catalystValueControl != nil ? valueLabel : nil
-        hiddenValueView?.snp.removeConstraints()
-        hiddenValueView?.isHidden = true
+            let hiddenValueView = valueControl != nil ? valueLabel : nil
+            hiddenValueView?.snp.removeConstraints()
+            hiddenValueView?.isHidden = true
 
-        titleLabel.snp.remakeConstraints { (make) in
-            make.top.left.equalTo(contentView.layoutMarginsGuide)
-            make.width.equalTo(contentView.layoutMarginsGuide).multipliedBy(0.35)
-        }
+            titleLabel.snp.remakeConstraints { (make) in
+                make.top.left.equalTo(contentView.layoutMarginsGuide)
+                make.width.equalTo(contentView.layoutMarginsGuide).multipliedBy(0.35)
+            }
 
-        valueView.snp.remakeConstraints { (make) in
-            make.left.equalTo(titleLabel.snp.right).offset(20)
-            make.top.right.equalTo(contentView.layoutMarginsGuide)
-            make.height.equalTo(titleLabel).priority(760)
-        }
+            valueView.snp.remakeConstraints { (make) in
+                make.left.equalTo(titleLabel.snp.right).offset(20)
+                make.top.right.equalTo(contentView.layoutMarginsGuide)
+                make.height.equalTo(titleLabel).priority(760)
+            }
 
-        descrLabel.snp.remakeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
-            make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
-            make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
-            make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
-            if !showDescription {
-                make.height.equalTo(0)
+            descrLabel.snp.remakeConstraints { (make) in
+                make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
+                make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
+                make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
+                make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
+                if !showDescription {
+                    make.height.equalTo(0)
+                }
             }
         }
-        #else
-        if traitCollection.preferredContentSizeCategory.isAccessibilitySize {
+        else if traitCollection.preferredContentSizeCategory.isAccessibilitySize {
             titleLabel.snp.remakeConstraints { (make) in
                 make.top.left.right.equalTo(contentView.layoutMarginsGuide)
             }
@@ -238,7 +235,6 @@ class OptionCell: TableViewCell {
                 }
             }
         }
-        #endif
         
         super.updateConstraints()
         invalidateIntrinsicContentSize()
@@ -248,7 +244,7 @@ class OptionCell: TableViewCell {
 #if targetEnvironment(macCatalyst)
 extension OptionCell: DeviceOptionControllable {
     func updateDeviceOptionControlForDisabledOption() {
-        catalystValueControl = nil
+        valueControl = nil
     }
     
     func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
@@ -264,7 +260,7 @@ extension OptionCell: DeviceOptionControllable {
         }
 
         let selectedIndex = values.firstIndex(of: option.value) ?? -1
-        catalystValueControl = obtainCatalystPlugin().dropdown(options: dropdownOptions, selectedIndex: selectedIndex, disabled: option.disabledOrReadOnly, changed: { [weak self] selected in
+        valueControl = obtainCatalystPlugin().dropdown(options: dropdownOptions, selectedIndex: selectedIndex, disabled: option.disabledOrReadOnly, changed: { [weak self] selected in
             guard let self = self else { return }
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
             if selected.value == nil {
@@ -273,7 +269,6 @@ extension OptionCell: DeviceOptionControllable {
                 Sane.shared.updateOption(option, with: .value((selected.value as! NSValue).nonretainedObjectValue as! T), completion: self.optionUpdateCompletion(_:))
             }
         }).view
-        catalystValueControl?.clipsToBounds = false
     }
     
     func updateDeviceOptionControlForRange<T>(option: DeviceOptionTyped<T>, current: Double, min: Double, max: Double, step: Double?, supportsAuto: Bool) where T : CustomStringConvertible, T : Numeric {
@@ -311,7 +306,7 @@ extension OptionCell: DeviceOptionControllable {
             }
         }
         slider.translatesAutoresizingMaskIntoConstraints = false
-        catalystValueControl = slider
+        valueControl = slider
     }
     
     func updateDeviceOptionControlForField<T>(option: DeviceOptionTyped<T>, current: T, kind: DeviceOptionControllableFieldKind, supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
@@ -329,7 +324,7 @@ extension OptionCell: DeviceOptionControllable {
         }
         field.addTarget(self, action: #selector(deviceOptionTextFieldValueChanged), for: .primaryActionTriggered)
 
-        catalystValueControl = field
+        valueControl = field
     }
 
     @objc private func deviceOptionTextFieldValueChanged(_ field: UITextField) {
@@ -350,7 +345,7 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
-        catalystValueControl = obtainCatalystPlugin().button(title: "ACTION PRESS".localized) { [weak self] in
+        valueControl = obtainCatalystPlugin().button(title: "ACTION PRESS".localized) { [weak self] in
             guard let self = self else { return }
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
             option.press(self.optionUpdateCompletion(_:))
