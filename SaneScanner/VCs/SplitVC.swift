@@ -53,7 +53,7 @@ class SplitVC: UISplitViewController {
         UIApplication.shared.open(GalleryManager.shared.galleryFolder, options: [:], completionHandler: nil)
         #else
         let nc = GalleryNC(openedAt: 0)
-        parentViewController?.present(nc, animated: true, completion: nil)
+        present(nc, animated: true, completion: nil)
         #endif
     }
 
@@ -63,7 +63,7 @@ class SplitVC: UISplitViewController {
         UIApplication.shared.open(GalleryManager.shared.items[index].url, options: [:], completionHandler: nil)
         #else
         let nc = GalleryNC(openedAt: index)
-        parentViewController?.present(nc, animated: true, completion: nil)
+        present(nc, animated: true, completion: nil)
         #endif
     }
     
