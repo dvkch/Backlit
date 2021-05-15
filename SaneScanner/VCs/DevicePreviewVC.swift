@@ -86,10 +86,12 @@ class DevicePreviewVC: UIViewController {
     // MARK: Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        #if targetEnvironment(macCatalyst)
-        separatorViewWidth.constant = 1.5
-        #else
-        separatorViewWidth.constant = 1 / (view.window?.screen.scale ?? 1)
-        #endif
+        
+        if UIDevice.isCatalyst {
+            separatorViewWidth.constant = 1.5
+        }
+        else {
+            separatorViewWidth.constant = 1 / (view.window?.screen.scale ?? 1)
+        }
     }
 }

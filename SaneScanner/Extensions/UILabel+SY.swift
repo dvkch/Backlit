@@ -12,22 +12,16 @@ extension UILabel {
 
     var autoAdjustsFontSize: Bool {
         get {
-            #if !targetEnvironment(macCatalyst)
             if #available(iOS 10.0, *) {
                 return self.adjustsFontForContentSizeCategory
             } else {
                 return false
             }
-            #else
-            return false
-            #endif
         }
         set {
-            #if !targetEnvironment(macCatalyst)
             if #available(iOS 10.0, *) {
                 self.adjustsFontForContentSizeCategory = newValue
             }
-            #endif
         }
     }
 }

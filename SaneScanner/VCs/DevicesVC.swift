@@ -18,15 +18,15 @@ class DevicesVC: UIViewController {
         view.backgroundColor = .background
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        #if !targetEnvironment(macCatalyst)
-        addKeyCommand(.settings)
-        navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
-        #endif
+        if !UIDevice.isCatalyst {
+            addKeyCommand(.settings)
+            navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
+        }
 
-        #if targetEnvironment(macCatalyst)
-        tableView.contentInset.top = 18
-        tableView.separatorStyle = .none
-        #endif
+        if UIDevice.isCatalyst {
+            tableView.contentInset.top = 18
+            tableView.separatorStyle = .none
+        }
         tableView.clipsToBounds = true
         tableView.alwaysBounceVertical = true
         tableView.dataSource = self

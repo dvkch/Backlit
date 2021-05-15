@@ -12,8 +12,8 @@ class TableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        #if targetEnvironment(macCatalyst)
-        backgroundColor = .clear
-        #endif
+        if UIDevice.isCatalyst {
+            backgroundColor = .clear
+        }
     }
 }

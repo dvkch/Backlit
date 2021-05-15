@@ -180,9 +180,6 @@ class GalleryGridVC: UIViewController {
     
     @objc private func editButtonTap() {
         setEditing(!isEditing, animated: true)
-        #if targetEnvironment(macCatalyst)
-        navigationItem.prompt = isEditing ? "GALLERY HINT CATALYST MULTI SELECT".localized : nil
-        #endif
     }
 
     @objc private func closeButtonTap() {

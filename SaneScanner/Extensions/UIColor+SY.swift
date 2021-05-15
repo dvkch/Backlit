@@ -12,7 +12,7 @@ extension UIColor {
     
     static var accentColor: UIColor? {
         #if targetEnvironment(macCatalyst)
-        return UIColor.value(forKey: "controlAccentColor") as? UIColor ?? .systemPurple
+        return UIColor.value(forKey: "controlAccentColor") as? UIColor
         #else
         return nil
         #endif
@@ -52,15 +52,13 @@ extension UIColor {
     }
 
     static var splitSeparator: UIColor {
-        #if targetEnvironment(macCatalyst)
-        return UIColor.black
-        #else
-        if #available(iOS 13.0, *) {
+        if UIDevice.isCatalyst {
+            return UIColor.black
+        } else if #available(iOS 13.0, *) {
             return UIColor.opaqueSeparator
         } else {
             return UIColor.darkGray
         }
-        #endif
     }
 
     static var normalText: UIColor {

@@ -13,11 +13,9 @@ extension FileManager {
         return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
     
-    #if targetEnvironment(macCatalyst)
     static var imageDirectoryURL: URL {
         return try! FileManager.default.url(for: .picturesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
-    #endif
     
     static var cacheDirectoryURL: URL {
         return try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)

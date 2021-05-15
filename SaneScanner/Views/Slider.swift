@@ -41,9 +41,7 @@ class Slider: UIControl {
         label.isUserInteractionEnabled = true
         container.addArrangedSubview(label)
         
-        #if targetEnvironment(macCatalyst)
-        useMacOSThumb = true
-        #endif
+        useMacOSThumb = UIDevice.isCatalyst
         
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapGestureRecognized))
         doubleTapGesture.numberOfTapsRequired = 2

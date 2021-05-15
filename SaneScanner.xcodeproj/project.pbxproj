@@ -58,6 +58,7 @@
 		97CC34E32205F48B00304345 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E12205F48B00304345 /* OptionCell.swift */; };
 		97CC34E42205F48B00304345 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97CC34E22205F48B00304345 /* OptionCell.xib */; };
 		97CCA362264F14BD0042F790 /* UIKeyCommand+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CCA361264F14BD0042F790 /* UIKeyCommand+SY.swift */; };
+		97CCA366265019540042F790 /* UIDevice+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CCA365265019540042F790 /* UIDevice+SY.swift */; };
 		97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E03F220607E500AC74D0 /* DeviceCell.swift */; };
 		97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E040220607E500AC74D0 /* DeviceCell.xib */; };
 		97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E04322060C5700AC74D0 /* PreviewCell.swift */; };
@@ -172,6 +173,7 @@
 		97CC34E12205F48B00304345 /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
 		97CC34E22205F48B00304345 /* OptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionCell.xib; sourceTree = "<group>"; };
 		97CCA361264F14BD0042F790 /* UIKeyCommand+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKeyCommand+SY.swift"; sourceTree = "<group>"; };
+		97CCA365265019540042F790 /* UIDevice+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+SY.swift"; sourceTree = "<group>"; };
 		97D0E03F220607E500AC74D0 /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		97D0E040220607E500AC74D0 /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 		97D0E04322060C5700AC74D0 /* PreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				975277CB264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift */,
 				97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */,
 				979FCEF825D811FB00DD9E0E /* UIContentSizeCategory+SY.swift */,
+				97CCA365265019540042F790 /* UIDevice+SY.swift */,
 				971584CF222F445200DC46CA /* UIImage+SY.swift */,
 				97CCA361264F14BD0042F790 /* UIKeyCommand+SY.swift */,
 				979576AA223022C400680A80 /* UILabel+SY.swift */,
@@ -717,6 +720,7 @@
 			files = (
 				97D5902526377CBE00E84198 /* TooltipView.swift in Sources */,
 				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
+				97CCA366265019540042F790 /* UIDevice+SY.swift in Sources */,
 				9755651625CB712800FDAD07 /* UISceneView+SY.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
 				9730FD9225CF6365009ABCBC /* DeviceAuthentication+SY.swift in Sources */,

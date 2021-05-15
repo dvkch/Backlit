@@ -33,9 +33,7 @@ class DeviceVC: UIViewController {
         view.backgroundColor = .background
         title = device.model
 
-        #if targetEnvironment(macCatalyst)
-        tableView.separatorStyle = .none
-        #endif
+        tableView.separatorStyle = UIDevice.isCatalyst ? .none : .singleLine
         tableView.clipsToBounds = true
         tableView.alwaysBounceVertical = true
         tableView.dataSource = self
@@ -68,10 +66,10 @@ class DeviceVC: UIViewController {
 
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)
         
-        #if !targetEnvironment(macCatalyst)
-        addKeyCommand(.settings)
-        navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
-        #endif
+        if !UIDevice.isCatalyst {
+            addKeyCommand(.settings)
+            navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
+        }
         
         addKeyCommand(.refresh)
         refreshView = .init(tableView: tableView, viewController: self) { [weak self] in
