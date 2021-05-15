@@ -12,8 +12,7 @@ import SaneSwift
 import SYPictureMetadata
 import TelemetryClient
 
-// TODO: add arraow support for OptionCell with slider, and space support for OptionCell with Dropdown
-// TODO: check if we can play with BT trackpad and keyboard on iPad
+// TODO: Add File provider extension
 
 // LATER: add auto search on local network
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)
