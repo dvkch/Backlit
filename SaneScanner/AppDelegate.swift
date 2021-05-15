@@ -12,7 +12,7 @@ import SaneSwift
 import SYPictureMetadata
 import TelemetryClient
 
-// TODO: add tabs/arrows/space handling on macos?
+// TODO: add arraow support for OptionCell with slider, and space support for OptionCell with Dropdown
 // TODO: check if we can play with BT trackpad and keyboard on iPad
 
 // LATER: add auto search on local network
@@ -76,24 +76,12 @@ extension AppDelegate : UIApplicationDelegate {
     @available(iOS 13.0, *)
     override func buildMenu(with builder: UIMenuBuilder) {
         super.buildMenu(with: builder)
-        
+
         guard builder.system == UIMenuSystem.main else { return }
-        
-        let previewCommand = UIKeyCommand(title: "MENU PREVIEW".localized, action: #selector(DeviceVC.preview), input: "P", modifierFlags: .command)
-        let scanCommand = UIKeyCommand(title: "MENU SCAN".localized, action: #selector(DeviceVC.scan), input: "S", modifierFlags: .command)
-        let abortCommand = UIKeyCommand(title: "MENU ABORT".localized, action: #selector(DeviceVC.cancelOperation), input: UIKeyCommand.inputEscape, modifierFlags: .command)
-        builder.insertChild([previewCommand, scanCommand, abortCommand].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.scan-actions")), atStartOfMenu: .file)
-
-        let openGalleryCommand = UIKeyCommand(title: "MENU OPEN GALLERY".localized, action: #selector(SplitVC.openGallery), input: "O", modifierFlags: .command)
-        builder.insertChild([openGalleryCommand].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.gallery")), atStartOfMenu: .file)
-
-        let addHostCommand = UIKeyCommand(title: "MENU ADD HOST".localized, action: #selector(DevicesVC.addHostButtonTap), input: "N", modifierFlags: .command)
-        builder.insertChild([addHostCommand].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.hosts")), atStartOfMenu: .file)
-
-        let refreshCommand = UIKeyCommand(title: "MENU REFRESH".localized, action: #selector(DevicesVC.refresh), input: "R", modifierFlags: .command)
-        builder.insertChild([refreshCommand].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.refresh")), atStartOfMenu: .view)
-
-        let settingsCommand = UIKeyCommand(title: "MENU PREFERENCES".localized, action: #selector(DevicesVC.settingsButtonTap), input: ",", modifierFlags: .command)
-        builder.insertChild([settingsCommand].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.preferences")), atStartOfMenu: .help)
+        builder.insertChild([UIKeyCommand.preview, .scan, .abort].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.scan-actions")), atStartOfMenu: .file)
+        builder.insertChild([UIKeyCommand.openGallery].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.gallery")), atStartOfMenu: .file)
+        builder.insertChild([UIKeyCommand.addHost].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.hosts")), atStartOfMenu: .file)
+        builder.insertChild([UIKeyCommand.refresh].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.refresh")), atStartOfMenu: .view)
+        builder.insertChild([UIKeyCommand.settings].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.preferences")), atStartOfMenu: .help)
     }
 }

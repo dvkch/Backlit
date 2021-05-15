@@ -26,6 +26,7 @@ class SplitVC: UISplitViewController {
         viewControllers = [scanNC, previewNC]
         preferredDisplayMode = .allVisible
         scanNC.delegate = self
+        addKeyCommand(.openGallery)
         
         #if targetEnvironment(macCatalyst)
         maximumPrimaryColumnWidth = 500 / UIView.catalystScaling
@@ -47,6 +48,13 @@ class SplitVC: UISplitViewController {
     }()
     
     // MARK: Actions
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(openGallery) {
+            return presentedViewController == nil
+        }
+        return super.canPerformAction(action, withSender: sender)
+    }
+ 
     @objc func openGallery() {
         #if targetEnvironment(macCatalyst)
         // crashes in debug in Catalyst, but all good in release

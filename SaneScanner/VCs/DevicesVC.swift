@@ -19,6 +19,7 @@ class DevicesVC: UIViewController {
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         #if !targetEnvironment(macCatalyst)
+        addKeyCommand(.settings)
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         #endif
 
@@ -39,9 +40,12 @@ class DevicesVC: UIViewController {
             make.top.bottom.equalTo(view.layoutMarginsGuide)
         }
         
+        addKeyCommand(.refresh)
         loaderView = .init(tableView: tableView, viewController: self) { [weak self] in
             self?.refresh()
         }
+
+        addKeyCommand(.addHost)
 
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: nil)
 

@@ -40,6 +40,7 @@ class GalleryNC: UINavigationController {
     // MARK: ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        addKeyCommand(.close)
         GalleryManager.shared.addDelegate(self)
     }
     
@@ -55,10 +56,10 @@ class GalleryNC: UINavigationController {
     }
     
     // MARK: Actions
-    func openGallery(animated: Bool) {
-        popToRootViewController(animated: animated)
+    @objc func closeButtonTap() {
+        dismiss(animated: true, completion: nil)
     }
-    
+
     func openImage(at index: Int, animated: Bool) {
         if let imagesVC = topViewController as? GalleryImagesVC {
             imagesVC.openImage(at: index, animated: animated)

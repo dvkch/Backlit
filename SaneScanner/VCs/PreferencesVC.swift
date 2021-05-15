@@ -21,7 +21,7 @@ class PreferencesVC: UIViewController {
         tableView.registerCell(OptionCell.self, xib: true)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
-        addKeyCommand(UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(closeButtonTap)))
+        addKeyCommand(.close)
     }
 
     static func settingsBarButtonItem(target: Any, action: Selector) -> UIBarButtonItem {
@@ -35,7 +35,7 @@ class PreferencesVC: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     // MARK: Actions
-    @objc private func closeButtonTap() {
+    @objc func closeButtonTap() {
         dismiss(animated: true, completion: nil)
     }
 }

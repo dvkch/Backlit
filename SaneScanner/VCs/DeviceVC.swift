@@ -61,23 +61,29 @@ class DeviceVC: UIViewController {
         scanButton.style = .cell
         scanButton.addTarget(self, action: #selector(scanButtonTap), for: .primaryActionTriggered)
         scanButtonStackView.addArrangedSubview(scanButton)
-        
+
+        addKeyCommand(.preview)
+        addKeyCommand(.scan)
+        addKeyCommand(.abort)
+
         thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)
         
         #if !targetEnvironment(macCatalyst)
+        addKeyCommand(.settings)
         navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         #endif
         
+        addKeyCommand(.refresh)
         loaderView = .init(tableView: tableView, viewController: self) { [weak self] in
             self?.refresh()
         }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: .preferencesChanged, object: nil)
         
         updateLayoutStyle()
         refresh()
     }
-
+    
     deinit {
         if device.isScanning {
             Sane.shared.cancelCurrentScan()
