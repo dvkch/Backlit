@@ -9,23 +9,53 @@
 import Foundation
 
 @objc(CatalystView) public protocol CatalystView: NSObjectProtocol {
+    var originalView: NSObject { get }
+    func triggerAction(position: CGPoint)
 }
 
 #if os(macOS)
 import AppKit
 
-extension NSView: CatalystView {}
+let catalystViewScaling: CGFloat = {
+    if #available(macOS 11.0, *) {
+        return 0.77
+    }
+    return 1
+}()
 
-extension CatalystView {
-    var view: NSView {
-        return self as! NSView
+class CatalystViewImplementation: NSObject, CatalystView {
+    init(originalView: NSView) {
+        self.originalView = originalView
+        super.init()
     }
 
-    static var catalystScaling: CGFloat {
-        if #available(macOS 11.0, *) {
-            return 0.77
+    let originalView: NSObject
+    
+    func triggerAction(position: CGPoint) {
+        if let container = originalView as? CatalystViewContainer {
+            CatalystViewImplementation(originalView: container.containedView).triggerAction(position: position)
+            return
         }
-        return 1
+        if let button = originalView as? NSPopUpButton {
+            guard let window = NSApp.keyWindow?.contentView else { return }
+
+            NotificationCenter.default.post(name: NSPopUpButton.willPopUpNotification, object: button)
+            var nsPosition = NSPoint(x: position.x * catalystViewScaling, y: position.y * catalystViewScaling)
+            nsPosition.y = window.bounds.height - nsPosition.y
+
+            button.menu?.popUp(positioning: button.selectedItem, at: nsPosition, in: window)
+            return
+        }
+        if let button = originalView as? NSButton {
+            button.performClick(button)
+            return
+        }
+    }
+}
+
+extension CatalystView {
+    var containerWithProperScaling: CatalystView {
+        return CatalystViewImplementation(originalView: CatalystViewContainer(containing: originalView as! NSView))
     }
 }
 
@@ -45,7 +75,7 @@ internal class CatalystViewContainer: NSView {
             containedView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
-        containedView.scaleUnitSquare(to: NSSize(width: 1 / NSView.catalystScaling, height: 1 / NSView.catalystScaling))
+        containedView.scaleUnitSquare(to: NSSize(width: 1 / catalystViewScaling, height: 1 / catalystViewScaling))
     }
 
     override func layout() {
@@ -56,10 +86,10 @@ internal class CatalystViewContainer: NSView {
     override var intrinsicContentSize: NSSize {
         var size = containedView.intrinsicContentSize
         if size.width != NSView.noIntrinsicMetric {
-            size.width /= NSView.catalystScaling
+            size.width /= catalystViewScaling
         }
         if size.height != NSView.noIntrinsicMetric {
-            size.height /= NSView.catalystScaling
+            size.height /= catalystViewScaling
         }
         return size
     }
@@ -73,32 +103,48 @@ internal class CatalystViewContainer: NSView {
 #if os(iOS)
 import UIKit
 
-extension UIView: CatalystView {}
+let catalystViewScaling: CGFloat = {
+    if #available(macCatalyst 14.0, *) {
+        return 0.77
+    }
+    else {
+        return 1
+    }
+}()
 
 extension CatalystView {
+    private var containerClassName: String {
+        // _UINSView
+        return ["_UIN", String("weiVS".reversed())].joined()
+    }
+    
+    private var containerInitSelector: String {
+        // initWithContentNSView:
+        return ["initWithCon", String(":weiVSNtnet".reversed())].joined()
+    }
+    
+    private var containerContentSelector: String {
+        // contentNSView
+        return ["conten", String("weiVSNt".reversed())].joined()
+    }
+    
     var view: UIView? {
-        if let view = self as? UIView {
-            return view
-        }
-        
-        guard let containerClass = NSClassFromString("_UINSView") as? NSObject.Type else {
+        guard let containerClass = NSClassFromString(containerClassName) as? NSObject.Type else {
             return nil
         }
         
         let container = containerClass
             .perform(NSSelectorFromString("alloc")).takeUnretainedValue()
-            .perform(NSSelectorFromString("initWithContentNSView:"), with: self).takeUnretainedValue()
+            .perform(NSSelectorFromString(containerInitSelector), with: originalView).takeUnretainedValue()
 
-        return container as? UIView
+        (container as? UIView)?.accessibilityIdentifier = String(describing: self)
+        return (container as? UIView)
     }
-
-    static var catalystScaling: CGFloat {
-        if #available(macCatalyst 14.0, *) {
-            return 0.77
-        }
-        else {
-            return 1
-        }
+    
+    var nsView: CatalystView? {
+        guard let object = self as? NSObject else { return nil }
+        guard object.responds(to: NSSelectorFromString(containerContentSelector)) else { return nil }
+        return object.value(forKey: containerContentSelector) as? CatalystView
     }
 }
 #endif

@@ -36,7 +36,14 @@ class OptionCell: TableViewCell {
     private var tooltipView: TooltipView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var valueLabel: UILabel!
-    @IBOutlet private var valueControl: UIView? {
+    #if targetEnvironment(macCatalyst)
+    private var valueControlCatalyst: CatalystView? {
+        didSet {
+            valueControl = valueControlCatalyst?.view
+        }
+    }
+    #endif
+    private var valueControl: UIView? {
         didSet {
             oldValue?.removeFromSuperview()
             if let valueControl = valueControl {
@@ -80,6 +87,14 @@ class OptionCell: TableViewCell {
                 return slider.increment()
             }
         }
+
+        #if targetEnvironment(macCatalyst)
+        if let valueControl = valueControl, let control = valueControlCatalyst, press.type == .select {
+            return control.triggerAction(position: valueControl.window?.convert(.zero, from: valueControl) ?? .zero)
+        }
+        #endif
+        
+        super.pressesEnded(presses, with: event)
     }
     
     // MARK: Content
@@ -126,7 +141,7 @@ class OptionCell: TableViewCell {
             #if targetEnvironment(macCatalyst)
             useMacOSLayout = true
             titleLabel.textAlignment = .right
-            valueControl = nil
+            valueControlCatalyst = nil
             option.updateDeviceOptionControl(using: self, filterDisabled: false, filterSingleOption: false)
             #endif
         }
@@ -259,7 +274,7 @@ class OptionCell: TableViewCell {
 #if targetEnvironment(macCatalyst)
 extension OptionCell: DeviceOptionControllable {
     func updateDeviceOptionControlForDisabledOption() {
-        valueControl = nil
+        valueControlCatalyst = nil
     }
     
     func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
@@ -275,7 +290,7 @@ extension OptionCell: DeviceOptionControllable {
         }
 
         let selectedIndex = values.firstIndex(of: option.value) ?? -1
-        valueControl = obtainCatalystPlugin().dropdown(options: dropdownOptions, selectedIndex: selectedIndex, disabled: option.disabledOrReadOnly, changed: { [weak self] selected in
+        valueControlCatalyst = obtainCatalystPlugin().dropdown(options: dropdownOptions, selectedIndex: selectedIndex, disabled: option.disabledOrReadOnly, changed: { [weak self] selected in
             guard let self = self else { return }
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
             if selected.value == nil {
@@ -283,7 +298,7 @@ extension OptionCell: DeviceOptionControllable {
             } else {
                 Sane.shared.updateOption(option, with: .value((selected.value as! NSValue).nonretainedObjectValue as! T), completion: self.optionUpdateCompletion(_:))
             }
-        }).view
+        })
     }
     
     func updateDeviceOptionControlForRange<T>(option: DeviceOptionTyped<T>, current: Double, min: Double, max: Double, step: Double?, supportsAuto: Bool) where T : CustomStringConvertible, T : Numeric {
@@ -359,11 +374,11 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
-        valueControl = obtainCatalystPlugin().button(title: "ACTION PRESS".localized) { [weak self] in
+        valueControlCatalyst = obtainCatalystPlugin().button(title: "ACTION PRESS".localized) { [weak self] in
             guard let self = self else { return }
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
             option.press(self.optionUpdateCompletion(_:))
-        }.view
+        }
     }
 
     private func optionUpdateCompletion(_ error: Error?) {

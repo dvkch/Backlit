@@ -29,8 +29,8 @@ class SplitVC: UISplitViewController {
         addKeyCommand(.openGallery)
         
         #if targetEnvironment(macCatalyst)
-        maximumPrimaryColumnWidth = 500 / UIView.catalystScaling
-        minimumPrimaryColumnWidth = 350 / UIView.catalystScaling
+        maximumPrimaryColumnWidth = 500 / catalystViewScaling
+        minimumPrimaryColumnWidth = 350 / catalystViewScaling
         #endif
     }
 

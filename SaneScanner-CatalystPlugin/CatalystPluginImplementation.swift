@@ -98,13 +98,13 @@ import AppKit
         NotificationCenter.default.addObserver(forName: NSMenu.didSendActionNotification, object: view.menu, queue: .main) { _ in
             changed(options[view.indexOfSelectedItem])
         }
-        return CatalystViewContainer(containing: view)
+        return CatalystViewImplementation(originalView: view).containerWithProperScaling
     }
     
     public func button(title: String, completion: @escaping () -> ()) -> CatalystView {
         let view = Button(title: title, target: nil, action: nil)
         view.pressedBlock = completion
-        return CatalystViewContainer(containing: view)
+        return CatalystViewImplementation(originalView: view).containerWithProperScaling
     }
 }
 
