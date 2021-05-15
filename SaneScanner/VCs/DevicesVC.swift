@@ -273,7 +273,7 @@ extension DevicesVC : UITableViewDelegate {
             
             CATransaction.begin()
             CATransaction.setCompletionBlock {
-                self.refreshDevices()
+                self.refresh()
             }
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .bottom)
