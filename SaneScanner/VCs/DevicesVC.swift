@@ -41,7 +41,7 @@ class DevicesVC: UIViewController {
         }
         
         addKeyCommand(.refresh)
-        loaderView = .init(tableView: tableView, viewController: self) { [weak self] in
+        refreshView = .init(tableView: tableView, viewController: self) { [weak self] in
             self?.refresh()
         }
 
@@ -66,7 +66,7 @@ class DevicesVC: UIViewController {
     // MARK: Views
     private let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
     private var thumbsView: GalleryThumbsView!
-    private var loaderView: LoaderView!
+    private var refreshView: RefreshView!
     
     // MARK: Properties
     private var devices = [Device]()
@@ -128,11 +128,11 @@ class DevicesVC: UIViewController {
 
 extension DevicesVC: SaneDelegate {
     func saneDidStartUpdatingDevices(_ sane: Sane) {
-        loaderView.startLoading()
+        refreshView.startLoading()
     }
     
     func saneDidEndUpdatingDevices(_ sane: Sane) {
-        loaderView.stopLoading()
+        refreshView.stopLoading()
     }
     
     func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ()) {
@@ -299,11 +299,14 @@ extension DevicesVC : UITableViewDelegate {
         
         guard loadingDevice == nil else { return }
         let device = devices[indexPath.row]
+
         loadingDevice = device
         (tableView.cellForRow(at: indexPath) as? DeviceCell)?.isLoading = true
         
         Sane.shared.openDevice(device) { (error) in
             self.loadingDevice = nil
+            self.tableView.reloadData()
+
             if let error = error {
                 if let error = (error as? SaneError), case let .saneError(status) = error, status.rawValue == 11, DeviceAuthentication.saved(for: device.name) != nil {
                     // this is an auth error, let's forget current auth and restart connexion

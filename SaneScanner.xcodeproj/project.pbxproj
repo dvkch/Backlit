@@ -27,7 +27,7 @@
 		97499E5D220872F5006DED20 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5C220872F5006DED20 /* Toolbar.swift */; };
 		97499E5F220874B3006DED20 /* SplitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5E220874B3006DED20 /* SplitVC.swift */; };
 		975277C8264D48AB00FFAAF4 /* ProgressMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C7264D48AB00FFAAF4 /* ProgressMaskView.swift */; };
-		975277CA264D5C1A00FFAAF4 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C9264D5C1A00FFAAF4 /* LoaderView.swift */; };
+		975277CA264D5C1A00FFAAF4 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C9264D5C1A00FFAAF4 /* RefreshView.swift */; };
 		975277CC264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277CB264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift */; };
 		9755651625CB712800FDAD07 /* UISceneView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9755651525CB712800FDAD07 /* UISceneView+SY.swift */; };
 		9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9757FCEF2207112D00AB59F1 /* DevicesVC.swift */; };
@@ -141,7 +141,7 @@
 		97499E5C220872F5006DED20 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		97499E5E220874B3006DED20 /* SplitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVC.swift; sourceTree = "<group>"; };
 		975277C7264D48AB00FFAAF4 /* ProgressMaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressMaskView.swift; sourceTree = "<group>"; };
-		975277C9264D5C1A00FFAAF4 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		975277C9264D5C1A00FFAAF4 /* RefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshView.swift; sourceTree = "<group>"; };
 		975277CB264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+SY.swift"; sourceTree = "<group>"; };
 		9755651525CB712800FDAD07 /* UISceneView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISceneView+SY.swift"; sourceTree = "<group>"; };
 		9757FCEF2207112D00AB59F1 /* DevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesVC.swift; sourceTree = "<group>"; };
@@ -271,9 +271,9 @@
 				973066B4220C5CD90068E8C7 /* CropMaskView.swift */,
 				978263CA221E253D0095E6ED /* DotsRefreshControl.swift */,
 				973066B2220C55000068E8C7 /* GalleryThumbsView.swift */,
-				975277C9264D5C1A00FFAAF4 /* LoaderView.swift */,
 				97EAF237220B54A700435DE6 /* PreviewView.swift */,
 				975277C7264D48AB00FFAAF4 /* ProgressMaskView.swift */,
+				975277C9264D5C1A00FFAAF4 /* RefreshView.swift */,
 				9740C16E2638DC8B00CAC543 /* ScanButton.swift */,
 				977C4F5A264739AF00856E0E /* Slider.swift */,
 				9731D89022C548CE008D7525 /* TapInsetsView.swift */,
@@ -723,7 +723,7 @@
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */,
 				979FCEF925D811FB00DD9E0E /* UIContentSizeCategory+SY.swift in Sources */,
-				975277CA264D5C1A00FFAAF4 /* LoaderView.swift in Sources */,
+				975277CA264D5C1A00FFAAF4 /* RefreshView.swift in Sources */,
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
 				973066C1220C898E0068E8C7 /* GalleryGridLayout.swift in Sources */,
 				97F2FB5122230A6B006BD617 /* GalleryImagesVC.swift in Sources */,

@@ -74,7 +74,7 @@ class DeviceVC: UIViewController {
         #endif
         
         addKeyCommand(.refresh)
-        loaderView = .init(tableView: tableView, viewController: self) { [weak self] in
+        refreshView = .init(tableView: tableView, viewController: self) { [weak self] in
             self?.refresh()
         }
 
@@ -110,7 +110,7 @@ class DeviceVC: UIViewController {
     private let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
     private let scanButtonStackView = UIStackView()
     private let scanButton = ScanButton(type: .custom)
-    private var loaderView: LoaderView!
+    private var refreshView: RefreshView!
     
     // MARK: Actions
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -232,12 +232,12 @@ class DeviceVC: UIViewController {
         guard !isRefreshing else { return }
         isRefreshing = true
         
-        loaderView.startLoading()
+        refreshView.startLoading()
         Sane.shared.listOptions(for: device) { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
             self.isRefreshing = false
-            self.loaderView.stopLoading()
+            self.refreshView.stopLoading()
             self.delegate?.deviceVC(self, didRefreshDevice: self.device)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -415,11 +415,11 @@ extension DeviceVC : PreviewViewDelegate {
 
 extension DeviceVC : DeviceOptionControllableDelegate {
     func deviceOptionControllable(_ controllable: DeviceOptionControllable, willUpdate option: DeviceOption) {
-        loaderView.startLoading(discreet: true)
+        refreshView.startLoading(discreet: true)
     }
 
     func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, error: Error?) {
-        loaderView.stopLoading()
+        refreshView.stopLoading()
 
         if let error = error {
             UIAlertController.show(for: error, in: self)

@@ -1,5 +1,5 @@
 //
-//  LoaderView.swift
+//  RefreshView.swift
 //  SaneScanner
 //
 //  Created by Stanislas Chevallier on 13/05/2021.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum LoaderView {
+enum RefreshView {
     case pullToRefresh(UITableView, () -> ())
     case barButtonItem(UIViewController, () -> ())
     
