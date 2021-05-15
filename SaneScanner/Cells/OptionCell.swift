@@ -280,7 +280,6 @@ extension OptionCell: DeviceOptionControllable {
         }
 
         let slider = Slider()
-        slider.useMacOSThumb = true
         slider.minimumValue = Float(min)
         slider.maximumValue = Float(max)
         slider.value = Float(current)

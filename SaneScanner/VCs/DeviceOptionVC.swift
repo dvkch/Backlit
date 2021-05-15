@@ -18,6 +18,8 @@ class DeviceOptionVC : UIAlertController {
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
         
+        self.view.tintColor = .normalText
+        
         title = option.localizedTitle
         message = option.localizedDescr
         

@@ -41,6 +41,10 @@ class Slider: UIControl {
         label.isUserInteractionEnabled = true
         container.addArrangedSubview(label)
         
+        #if targetEnvironment(macCatalyst)
+        useMacOSThumb = true
+        #endif
+        
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapGestureRecognized))
         doubleTapGesture.numberOfTapsRequired = 2
         label.addGestureRecognizer(doubleTapGesture)
@@ -75,7 +79,7 @@ class Slider: UIControl {
             updateContent()
         }
     }
-    var useMacOSThumb: Bool = false {
+    private var useMacOSThumb: Bool = false {
         didSet {
             if !useMacOSThumb {
                 slider.setThumbImage(nil, for: .normal)

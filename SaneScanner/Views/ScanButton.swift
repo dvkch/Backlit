@@ -70,26 +70,34 @@ class ScanButton : UIButton {
 
     private func updateContent() {
         setAttributedTitle(nil, for: .normal)
+        
+        let title: String
+        let subtitle: String?
 
         switch progress {
         case .none:
-            let string = kind == .preview ? "DEVICE BUTTON UPDATE PREVIEW" : "ACTION SCAN"
-            setTitle(string.localized, for: .normal)
+            title = kind == .preview ? "DEVICE BUTTON UPDATE PREVIEW".localized : "ACTION SCAN".localized
+            subtitle = nil
 
         case .warmingUp:
-            let string = kind == .preview ? "PREVIEWING" : "SCANNING"
-            setTitle(string.localized, for: .normal)
+            title = kind == .preview ? "PREVIEWING".localized : "SCANNING".localized
+            subtitle = "WARMING UP".localized
 
         case .scanning(let progress, _, _):
-            let string = kind == .preview ? "PREVIEWING %f" : "SCANNING %f"
-            let title = NSAttributedString(string: String(format: string.localized, progress * 100), font: titleLabel?.font, color: .normalText)
-            let subtitle = NSAttributedString(string: "ACTION HINT TAP TO CANCEL".localized, font: titleLabel?.font, color: .altText)
-            let fullTitle: NSAttributedString = [title, subtitle].concat(separator: "\n").setParagraphStyle(alignment: .center, lineSpacing: 0, paragraphSpacing: 0)
-            setAttributedTitle(fullTitle, for: .normal)
+            let titleFormat = kind == .preview ? "PREVIEWING %f" : "SCANNING %f"
+            title = String(format: titleFormat.localized, progress * 100)
+            subtitle = "ACTION HINT TAP TO CANCEL".localized
 
         case .cancelling:
-            setTitle("CANCELLING".localized, for: .normal)
+            title = "CANCELLING".localized
+            subtitle = nil
         }
+
+        let fullTitle = [
+            NSAttributedString(string: title, font: titleLabel?.font, color: .normalText),
+            NSAttributedString(string: subtitle, font: titleLabel?.font, color: .altText)
+        ].concat(separator: "\n").setParagraphStyle(alignment: .center, lineSpacing: 0, paragraphSpacing: 0)
+        setAttributedTitle(fullTitle, for: .normal)
     }
 
     // MARK: Layout
