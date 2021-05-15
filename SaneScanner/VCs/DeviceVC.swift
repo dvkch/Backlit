@@ -33,6 +33,7 @@ class DeviceVC: UIViewController {
         view.backgroundColor = .background
         title = device.model
 
+        tableView.remembersLastFocusedIndexPath = true
         tableView.separatorStyle = UIDevice.isCatalyst ? .none : .singleLine
         tableView.clipsToBounds = true
         tableView.alwaysBounceVertical = true
@@ -423,6 +424,8 @@ extension DeviceVC : DeviceOptionControllableDelegate {
             UIAlertController.show(for: error, in: self)
         }
         
+        // TODO: refresh cell if not all cells changed ?
         tableView.reloadData()
+        tableView.updateFocusIfNeeded()
     }
 }

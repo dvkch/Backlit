@@ -63,7 +63,25 @@ class OptionCell: TableViewCell {
     var hasControlToUpdateItsValue: Bool {
         return valueControl != nil
     }
+    
+    // MARK: Actions
+    override var canBecomeFirstResponder: Bool {
+        return hasControlToUpdateItsValue
+    }
+    
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        guard let press = presses.first else { return }
 
+        if let slider = valueControl as? Slider, slider.isEnabled {
+            if press.type == .leftArrow {
+                return slider.decrement()
+            }
+            if press.type == .rightArrow {
+                return slider.increment()
+            }
+        }
+    }
+    
     // MARK: Content
     func updateWith(option: DeviceOption) {
         self.option = option

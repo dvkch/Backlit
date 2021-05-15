@@ -58,7 +58,7 @@ class Slider: UIControl {
         set { slider.minimumValue = newValue; updateContent() }
     }
     var maximumValue: Float {
-        get { return slider.minimumValue }
+        get { return slider.maximumValue }
         set { slider.maximumValue = newValue; updateContent() }
     }
     var step: Float? {
@@ -111,6 +111,45 @@ class Slider: UIControl {
     
     @objc private func doubleTapGestureRecognized() {
         doubleTapBlock?()
+    }
+    
+    func incrementStep(smallSteps: Bool = false) -> Float {
+        if let step = step {
+            return step
+        }
+        return (maximumValue - minimumValue) / (smallSteps ? 100 : 25)
+    }
+
+    func increment(smallSteps: Bool = false) {
+        guard isEnabled else { return }
+
+        value += incrementStep(smallSteps: smallSteps)
+        changedBlock?(value)
+    }
+    
+    func decrement(smallSteps: Bool = false) {
+        guard isEnabled else { return }
+
+        value -= incrementStep(smallSteps: smallSteps)
+        changedBlock?(value)
+    }
+
+    // MARK: Keyboard
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:))),
+            UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:))),
+        ]
+    }
+    
+    @objc func pressedArrow(_ command: UIKeyCommand) {
+        guard isEnabled else { return }
+
+        switch command.input {
+        case UIKeyCommand.inputLeftArrow: decrement()
+        case UIKeyCommand.inputRightArrow: increment()
+        default: break
+        }
     }
 
     // MARK: Content
