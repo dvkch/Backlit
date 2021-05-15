@@ -42,7 +42,6 @@ import AppKit
     
     public func presentAuthInputAlert(title: String, message: String, usernamePlaceholder: String, passwordPlaceholder: String, continue: String, remember: String, cancel: String, completion: (_ username: String?, _ password: String?, _ remember: Bool) -> ()) {
 
-        // TODO: work on password input in macOS
         let alert = NSAlert()
 
         let continueButton = alert.addButton(withTitle: `continue`)
@@ -104,7 +103,6 @@ import AppKit
     
     public func button(title: String, completion: @escaping () -> ()) -> CatalystView {
         let view = Button(title: title, target: nil, action: nil)
-        // TODO: view.bezelStyle = .regularSquare
         view.pressedBlock = completion
         return CatalystViewContainer(containing: view)
     }
