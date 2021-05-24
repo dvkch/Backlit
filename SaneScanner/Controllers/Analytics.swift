@@ -21,6 +21,18 @@ class Analytics {
         TelemetryManager.initialize(with: config)
     }
     
+    func askPermission(from: UIViewController) {
+        guard !Preferences.shared.askedAnalytics else { return }
+        Preferences.shared.askedAnalytics = true
+
+        let alert = UIAlertController(title: "ANALYTICS ALERT TITLE".localized, message: Preferences.Key.enableAnalytics.localizedDescription, preferredStyle: .alert)
+        alert.addAction(title: "ACTION ANALYTICS YES".localized, style: .default) { _IOFBF in
+            Preferences.shared.enableAnalytics = true
+        }
+        alert.addAction(title: "ACTION ANALYTICS NO".localized, style: .cancel, handler: nil)
+        from.present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: Events
     enum Event {
         case appLaunch

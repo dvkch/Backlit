@@ -154,6 +154,8 @@ class DeviceVC: UIViewController {
                 let metadata = SYMetadata(device: self.device, scanParameters: parameters)
                 do {
                     try GalleryManager.shared.addImage(image, metadata: metadata)
+
+                    Analytics.shared.askPermission(from: self)
                     self.presentReviewPrompt()
                 }
                 catch {

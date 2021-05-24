@@ -22,6 +22,7 @@ class Preferences: NSObject {
         UserDefaults.standard.register(defaults: [userDefaultsKeySaveAsPNG: false])
         UserDefaults.standard.register(defaults: [userDefaultsKeyShowAdvancedOptions: false])
         UserDefaults.standard.register(defaults: [userDefaultsKeyEnableAnalytics: false])
+        UserDefaults.standard.register(defaults: [userDefaultsKeyAskedAnalytics: false])
     }
     
     // MARK: Properties
@@ -40,9 +41,14 @@ class Preferences: NSObject {
         set { Sane.shared.configuration.previewWithAutoColorMode = newValue; postNotification() }
     }
     
+    var askedAnalytics: Bool {
+        get { return UserDefaults.standard.bool(forKey: userDefaultsKeyAskedAnalytics) }
+        set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyAskedAnalytics); postNotification() }
+    }
+
     var enableAnalytics: Bool {
         get { return UserDefaults.standard.bool(forKey: userDefaultsKeyEnableAnalytics) }
-        set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyEnableAnalytics); postNotification() }
+        set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyEnableAnalytics); askedAnalytics = true; postNotification() }
     }
     
     var analyticsUserID: String {
@@ -66,6 +72,7 @@ class Preferences: NSObject {
     // MARK: UserDefaults keys
     private let userDefaultsKeyShowAdvancedOptions  = "ShowAdvancedOptions"
     private let userDefaultsKeySaveAsPNG            = "SaveAsPNG"
+    private let userDefaultsKeyAskedAnalytics       = "AnalyticsAsked"
     private let userDefaultsKeyEnableAnalytics      = "AnalyticsEnabled"
     private let userDefaultsKeyAnalyticsUserID      = "AnalyticsUserID"
 }
