@@ -81,6 +81,12 @@ extension DeviceOption: CustomStringConvertible {
     }
 }
 
+extension DeviceOption: Equatable {
+    public static func == (lhs: DeviceOption, rhs: DeviceOption) -> Bool {
+        return lhs.device == rhs.device && lhs.index == rhs.index
+    }
+}
+
 // MARK: Typed option
 public class DeviceOptionTyped<T: Equatable & CustomStringConvertible>: DeviceOption {
     
@@ -450,7 +456,7 @@ public class DeviceOptionButton: DeviceOptionTyped<Bool> {
         super.init(cOption: cOption, index: index, device: device, initialValue: initialValue)
     }
     
-    public func press(_ completion: ((_ error: Error?) -> Void)?) {
+    public func press(_ completion: ((_ reloadAll: Result<SaneInfo, Error>) -> Void)?) {
         Sane.shared.updateOption(self, with: .value(true), completion: completion)
     }
 

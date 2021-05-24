@@ -35,6 +35,15 @@ internal extension Collection {
     }
 }
 
+internal extension Result {
+    var error: Error? {
+        switch self {
+        case .success: return nil
+        case .failure(let error): return error
+        }
+    }
+}
+
 internal extension UIImage {
     enum SaneSource {
         case data(Data)

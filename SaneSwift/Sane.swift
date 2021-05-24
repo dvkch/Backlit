@@ -369,13 +369,13 @@ extension Sane {
             
             for (option, value) in zip(stdOptions, values) {
                 if let option = device.standardOption(for: option) as? DeviceOptionInt {
-                    self.updateOption(option, with: .value(Int(value)), completion: { (error) in
-                        finalError = error
+                    self.updateOption(option, with: .value(Int(value)), completion: { (result) in
+                        finalError = result.error
                     })
                 }
                 if let option = device.standardOption(for: option) as? DeviceOptionFixed {
-                    self.updateOption(option, with: .value(Double(value)), completion: { (error) in
-                        finalError = error
+                    self.updateOption(option, with: .value(Double(value)), completion: { (result) in
+                        finalError = result.error
                     })
                 }
 
@@ -386,16 +386,16 @@ extension Sane {
         }
     }
 
-    public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<V>, completion: ((_ error: Error?) -> ())?) {
+    public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<V>, completion: ((_ result: Result<SaneInfo, Error>) -> ())?) {
         let mainThread = Thread.isMainThread
         
         guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
-            completion?(SaneError.deviceNotOpened)
+            completion?(.failure(SaneError.deviceNotOpened))
             return
         }
         
         guard option.type != SANE_TYPE_GROUP else {
-            completion?(SaneError.setValueForGroupType)
+            completion?(.failure(SaneError.setValueForGroupType))
             return
         }
         
@@ -428,6 +428,7 @@ extension Sane {
                 byteValue?.deallocate()
             }
             
+            let result: Result<SaneInfo, Error>
             if status == SANE_STATUS_GOOD {
                 if SaneInfo(rawValue: info).contains(.reloadOptions) {
                     // this is absolutely needed, because if the option declares it needs to reload other options, setting any option before
@@ -438,9 +439,13 @@ extension Sane {
                     // some changes can be accepted but inexact, or we used an auto value and need to figure out the value that is actually used
                     option.refreshValue(nil)
                 }
+                result = .success(SaneInfo(rawValue: info))
+            }
+            else {
+                result = .failure(SaneError(saneStatus: status, expected: SANE_STATUS_GOOD)!)
             }
             
-            Sane.runOn(mainThread: mainThread) { completion?(SaneError(saneStatus: status)) }
+            Sane.runOn(mainThread: mainThread) { completion?(result) }
         }
     }
     

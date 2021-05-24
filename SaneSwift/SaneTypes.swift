@@ -110,16 +110,16 @@ extension SaneCapabilities: CustomStringConvertible {
 }
 
 // MARK: Option info
-struct SaneInfo: OptionSet {
-    var rawValue: SANE_Int
+public struct SaneInfo: OptionSet {
+    public var rawValue: SANE_Int
     
-    init(rawValue: SANE_Int) {
+    public init(rawValue: SANE_Int) {
         self.rawValue = rawValue
     }
 
-    static let inexact          = SaneInfo(rawValue: SANE_INFO_INEXACT)
-    static let reloadOptions    = SaneInfo(rawValue: SANE_INFO_RELOAD_OPTIONS)
-    static let reloadScanParams = SaneInfo(rawValue: SANE_INFO_RELOAD_PARAMS)
+    public static let inexact          = SaneInfo(rawValue: SANE_INFO_INEXACT)
+    public static let reloadOptions    = SaneInfo(rawValue: SANE_INFO_RELOAD_OPTIONS)
+    public static let reloadScanParams = SaneInfo(rawValue: SANE_INFO_RELOAD_PARAMS)
 }
 
 // MARK: Standard options
