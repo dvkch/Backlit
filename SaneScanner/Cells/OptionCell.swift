@@ -58,7 +58,7 @@ class OptionCell: TableViewCell {
 
     // MARK: Properties
     weak var delegate: DeviceOptionControllableDelegate?
-    private var option: DeviceOption?
+    private(set) var option: DeviceOption?
     private var prefKey: Preferences.Key?
     private var useMacOSLayout: Bool = false
     var showDescription: Bool = false {
@@ -381,10 +381,9 @@ extension OptionCell: DeviceOptionControllable {
         }
     }
 
-    private func optionUpdateCompletion(_ error: Error?) {
+    private func optionUpdateCompletion(_ result: Result<SaneInfo, Error>) {
         guard let option = option else { return }
-        delegate?.deviceOptionControllable(self, didUpdate: option, error: error)
+        delegate?.deviceOptionControllable(self, didUpdate: option, result: result)
     }
-
 }
 #endif

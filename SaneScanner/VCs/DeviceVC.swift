@@ -417,16 +417,25 @@ extension DeviceVC : DeviceOptionControllableDelegate {
     func deviceOptionControllable(_ controllable: DeviceOptionControllable, willUpdate option: DeviceOption) {
         refreshView.startLoading(discreet: true)
     }
-
-    func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, error: Error?) {
+    
+    func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, result: Result<SaneInfo, Error>) {
         refreshView.stopLoading()
 
-        if let error = error {
+        switch result {
+        case .success(let info):
+            if info.contains(.reloadOptions) {
+                tableView.reloadData()
+                tableView.updateFocusIfNeeded()
+            }
+            else {
+                tableView.visibleCells
+                    .compactMap { $0 as? OptionCell }
+                    .filter { $0.option == option }
+                    .forEach { $0.updateWith(option: option) }
+            }
+            
+        case .failure(let error):
             UIAlertController.show(for: error, in: self)
         }
-        
-        // TODO: refresh cell if not all cells changed ?
-        tableView.reloadData()
-        tableView.updateFocusIfNeeded()
     }
 }
