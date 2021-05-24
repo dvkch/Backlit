@@ -9,7 +9,6 @@
 import UIKit
 import SaneSwift
 import SYKit
-import TelemetryClient
 
 class DevicesVC: UIViewController {
 
@@ -92,13 +91,13 @@ class DevicesVC: UIViewController {
     }
     
     @objc func addHostButtonTap() {
-        TelemetryManager.send("New Host Tap", for: Preferences.shared.telemetryUserID, with: [:])
+        Analytics.shared.send(event: .newHostTapped)
 
         let completion = { (host: String) in
             Sane.shared.configuration.addHost(host)
             self.tableView.reloadData()
             self.refresh()
-            TelemetryManager.send("New Host Added", for: Preferences.shared.telemetryUserID, with: [:])
+            Analytics.shared.send(event: .newHostAdded(count: Sane.shared.configuration.hosts.count))
         }
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentHostInputAlert(

@@ -11,7 +11,6 @@ import SaneSwift
 import SYKit
 import SYPictureMetadata
 import StoreKit
-import TelemetryClient
 
 protocol DeviceVCDelegate: NSObjectProtocol {
     func deviceVC(_ deviceVC: DeviceVC, didRefreshDevice device: Device)
@@ -134,7 +133,7 @@ class DeviceVC: UIViewController {
     @objc func scan() {
         guard !device.isScanning else { return }
 
-        TelemetryManager.send("Scan Start", for: Preferences.shared.telemetryUserID, with: [:])
+        Analytics.shared.send(event: .scanStarted(device: device))
 
         // block that will be called to show progress
         let progressBlock = { [weak self] (progress: ScanProgress) in
@@ -151,7 +150,7 @@ class DeviceVC: UIViewController {
 
             switch result {
             case .success((let image, let parameters)):
-                TelemetryManager.send("Scan End", for: Preferences.shared.telemetryUserID, with: [:])
+                Analytics.shared.send(event: .scanEnded(device: self.device))
                 let metadata = SYMetadata(device: self.device, scanParameters: parameters)
                 do {
                     try GalleryManager.shared.addImage(image, metadata: metadata)
@@ -163,9 +162,9 @@ class DeviceVC: UIViewController {
 
             case .failure(let error):
                 if case .cancelled = (error as? SaneError) {
-                    TelemetryManager.send("Scan Cancelled", for: Preferences.shared.telemetryUserID, with: [:])
+                    Analytics.shared.send(event: .scanCancelled(device: self.device))
                 } else {
-                    TelemetryManager.send("Scan Failed", for: Preferences.shared.telemetryUserID, with: ["error": error.localizedDescription])
+                    Analytics.shared.send(event: .scanFailed(device: self.device, error: error))
                 }
                 UIAlertController.show(for: error, in: self)
             }
@@ -178,7 +177,7 @@ class DeviceVC: UIViewController {
     @objc func preview() {
         guard !device.isScanning else { return }
 
-        TelemetryManager.send("Preview Start", for: Preferences.shared.telemetryUserID, with: [:])
+        Analytics.shared.send(event: .previewStarted(device: device))
 
         Sane.shared.preview(device: device, progress: { [weak self] (p) in
             self?.scanButton.isEnabled = false
@@ -189,14 +188,14 @@ class DeviceVC: UIViewController {
             self.updatePreviewViews()
             if case let .failure(error) = result {
                 if case .cancelled = (error as? SaneError) {
-                    TelemetryManager.send("Preview Cancelled", for: Preferences.shared.telemetryUserID, with: [:])
+                    Analytics.shared.send(event: .previewCancelled(device: self.device))
                 } else {
-                    TelemetryManager.send("Preview Failed", for: Preferences.shared.telemetryUserID, with: ["error": error.localizedDescription])
+                    Analytics.shared.send(event: .previewFailed(device: self.device, error: error))
                 }
                 UIAlertController.show(for: error, in: self)
             }
             else {
-                TelemetryManager.send("Preview End", for: Preferences.shared.telemetryUserID, with: [:])
+                Analytics.shared.send(event: .previewEnded(device: self.device))
             }
         })
     }

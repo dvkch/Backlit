@@ -10,7 +10,6 @@ import UIKit
 import SYKit
 import SaneSwift
 import SYPictureMetadata
-import TelemetryClient
 
 // TODO: Add File provider extension
 
@@ -46,8 +45,7 @@ extension AppDelegate : UIApplicationDelegate {
         }
         
         // Analytics
-        TelemetryManager.initialize(with: .init(appID: "9CF71A71-190A-4B84-AB6B-2E0DE0A44F12s"))
-        TelemetryManager.send("App Launch", for: Preferences.shared.telemetryUserID, with: [:])
+        Analytics.shared.send(event: .appLaunch)
 
         // Snapshots
         if SnapshotKind.fromLaunchOptions == .other {

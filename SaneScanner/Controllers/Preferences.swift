@@ -19,9 +19,9 @@ class Preferences: NSObject {
     
     private override init() {
         super.init()
-            
         UserDefaults.standard.register(defaults: [userDefaultsKeySaveAsPNG: false])
         UserDefaults.standard.register(defaults: [userDefaultsKeyShowAdvancedOptions: false])
+        UserDefaults.standard.register(defaults: [userDefaultsKeyEnableAnalytics: false])
     }
     
     // MARK: Properties
@@ -40,13 +40,18 @@ class Preferences: NSObject {
         set { Sane.shared.configuration.previewWithAutoColorMode = newValue; postNotification() }
     }
     
-    var telemetryUserID: String {
+    var enableAnalytics: Bool {
+        get { return UserDefaults.standard.bool(forKey: userDefaultsKeyEnableAnalytics) }
+        set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyEnableAnalytics); postNotification() }
+    }
+    
+    var analyticsUserID: String {
         get {
-            if let id = UserDefaults.standard.string(forKey: userDefaultsKeyTelemetryUserID) {
+            if let id = UserDefaults.standard.string(forKey: userDefaultsKeyAnalyticsUserID) {
                 return id
             }
             let id = NSUUID().uuidString
-            UserDefaults.standard.set(id, forKey: userDefaultsKeyTelemetryUserID)
+            UserDefaults.standard.set(id, forKey: userDefaultsKeyAnalyticsUserID)
             return id
         }
     }
@@ -61,19 +66,21 @@ class Preferences: NSObject {
     // MARK: UserDefaults keys
     private let userDefaultsKeyShowAdvancedOptions  = "ShowAdvancedOptions"
     private let userDefaultsKeySaveAsPNG            = "SaveAsPNG"
-    private let userDefaultsKeyTelemetryUserID      = "TelemetryUserID"
+    private let userDefaultsKeyEnableAnalytics      = "AnalyticsEnabled"
+    private let userDefaultsKeyAnalyticsUserID      = "AnalyticsUserID"
 }
 
 // MARK: UI
 extension Preferences {
     enum Key {
-        case saveAsPNG, showAdvancedOptions, previewWithAutoColorMode
+        case saveAsPNG, showAdvancedOptions, previewWithAutoColorMode, enableAnalytics
         
         var localizedTitle: String {
             switch self {
             case .saveAsPNG:                return "PREFERENCES TITLE SAVE AS PNG".localized
             case .showAdvancedOptions:      return "PREFERENCES TITLE SHOW ADVANCED OPTIONS".localized
             case .previewWithAutoColorMode: return "PREFERENCES TITLE PREVIEW DEFAULT COLOR MODE".localized
+            case .enableAnalytics:          return "PREFERENCES TITLE ENABLE ANALYTICS".localized
             }
         }
         
@@ -82,6 +89,7 @@ extension Preferences {
             case .saveAsPNG:                return "PREFERENCES MESSAGE SAVE AS PNG".localized
             case .showAdvancedOptions:      return "PREFERENCES MESSAGE SHOW ADVANCED OPTIONS".localized
             case .previewWithAutoColorMode: return "PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE".localized
+            case .enableAnalytics:          return "PREFERENCES MESSAGE ENABLE ANALYTICS".localized
             }
         }
     }
@@ -90,6 +98,7 @@ extension Preferences {
         return [
             ("PREFERENCES SECTION PREVIEW".localized, [.previewWithAutoColorMode, .saveAsPNG]),
             ("PREFERENCES SECTION SCAN".localized, [.showAdvancedOptions]),
+            ("PREFERENCES SECTION ANALYTICS".localized, [.enableAnalytics]),
         ]
     }
     
@@ -99,6 +108,7 @@ extension Preferences {
             case .saveAsPNG:                return self.saveAsPNG
             case .showAdvancedOptions:      return self.showAdvancedOptions
             case .previewWithAutoColorMode: return self.previewWithAutoColorMode
+            case .enableAnalytics:          return self.enableAnalytics
             }
         }
         set {
@@ -106,6 +116,7 @@ extension Preferences {
             case .saveAsPNG:                self.saveAsPNG = newValue
             case .showAdvancedOptions:      self.showAdvancedOptions = newValue
             case .previewWithAutoColorMode: self.previewWithAutoColorMode = newValue
+            case .enableAnalytics:          self.enableAnalytics = newValue
             }
         }
     }
