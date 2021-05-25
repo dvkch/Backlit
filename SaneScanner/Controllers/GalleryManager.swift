@@ -65,13 +65,9 @@ class GalleryManager: NSObject {
     
     // MARK: Private vars
     let galleryFolder: URL = {
-        #if targetEnvironment(macCatalyst)
-        let url = FileManager.imageDirectoryURL.appendingPathComponent("SaneScanner", isDirectory: true)
+        let url = FileManager.galleryURL
         try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: [:])
         return url
-        #else
-        return FileManager.documentsDirectoryURL
-        #endif
     }()
     private var watcher: DirectoryWatcher?
     private var thumbsBeingCreated = [URL]()

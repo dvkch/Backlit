@@ -1066,7 +1066,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner Development";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner macOS Development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner Development 1620904413";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";
@@ -1084,7 +1084,7 @@
 				CODE_SIGN_ENTITLEMENTS = SaneScanner/SaneScanner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 79RY8264V4;
@@ -1097,8 +1097,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner AppStore";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner macOS AppStore";
+				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner AdHoc";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner DeveloperID";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SaneScanner/SaneScanner-Bridging-Header.h";

@@ -9,11 +9,19 @@
 import UIKit
 
 extension FileManager {
-    static var documentsDirectoryURL: URL {
-        return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    static var galleryURL: URL {
+        #if targetEnvironment(macCatalyst)
+        FileManager.imageDirectoryURL.appendingPathComponent("SaneScanner", isDirectory: true)
+        #else
+        FileManager.sharedGroupDirectoryURL.appendingPathComponent("Scans", isDirectory: true)
+        #endif
     }
     
-    static var imageDirectoryURL: URL {
+    private static var sharedGroupDirectoryURL: URL {
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.me.syan.SaneScanner")!
+    }
+    
+    private static var imageDirectoryURL: URL {
         return try! FileManager.default.url(for: .picturesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
     
@@ -32,3 +40,4 @@ extension FileManager {
         return url
     }
 }
+
