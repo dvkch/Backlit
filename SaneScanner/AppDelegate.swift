@@ -11,7 +11,6 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
-// TODO: Add File provider extension
 
 // LATER: add auto search on local network
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)

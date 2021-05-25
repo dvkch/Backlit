@@ -30,6 +30,10 @@ extension GalleryItem : NSItemProviderWriting {
     }
     
     var writableTypeIdentifiersForItemProvider: [String] {
+        if let detected = try? url.resourceValues(forKeys: Set([.typeIdentifierKey])).typeIdentifier {
+            return [detected] + type(of: self).writableTypeIdentifiersForItemProvider
+        }
+
         switch url.pathExtension.lowercased() {
         case "jpeg", "jpg":
             return [String(kUTTypeJPEG)] + type(of: self).writableTypeIdentifiersForItemProvider

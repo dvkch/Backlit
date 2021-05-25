@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D56C7B8382704CC6EE0EBAE /* Pods_SaneScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51BB8C9CADC9997EFC1F3F17 /* Pods_SaneScanner.framework */; };
 		97044903220875D300E13C6A /* DeviceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97044901220875D300E13C6A /* DeviceVC.swift */; };
 		9704490C2208900700E13C6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704490B2208900700E13C6A /* AppDelegate.swift */; };
 		971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971584CD222F36C100DC46CA /* SYPictureMetdata+SY.swift */; };
@@ -56,6 +57,11 @@
 		97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */; };
 		97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */; };
 		97C11149265C497900794994 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C11148265C497900794994 /* Analytics.swift */; };
+		97C11179265C5C8600794994 /* FileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C11178265C5C8600794994 /* FileProviderExtension.swift */; };
+		97C1117B265C5C8600794994 /* FileProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1117A265C5C8600794994 /* FileProviderItem.swift */; };
+		97C1117D265C5C8600794994 /* FileProviderEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1117C265C5C8600794994 /* FileProviderEnumerator.swift */; };
+		97C11182265C5C8600794994 /* SaneScanner-FileProvider.appex in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 97C11176265C5C8500794994 /* SaneScanner-FileProvider.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		97C11189265C5E1600794994 /* FileManager+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066C2220C8C740068E8C7 /* FileManager+SY.swift */; };
 		97CC34E32205F48B00304345 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E12205F48B00304345 /* OptionCell.swift */; };
 		97CC34E42205F48B00304345 /* OptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97CC34E22205F48B00304345 /* OptionCell.xib */; };
 		97CCA362264F14BD0042F790 /* UIKeyCommand+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CCA361264F14BD0042F790 /* UIKeyCommand+SY.swift */; };
@@ -84,7 +90,6 @@
 		97F2FB55222318D5006BD617 /* GalleryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F2FB54222318D5006BD617 /* GalleryItem.swift */; };
 		97FDF403222C55EE00B71E4C /* DeviceOptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FDF401222C55EE00B71E4C /* DeviceOptionVC.swift */; };
 		97FE556F264556D60036357E /* DeviceOptionControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE556E264556D60036357E /* DeviceOptionControllable.swift */; };
-		E380CA5C5F90A86D8A42FE99 /* Pods_SaneScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +99,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 97A9FCE2264090500027F462;
 			remoteInfo = "SaneScanner-CatalystPlugin";
+		};
+		97C11180265C5C8600794994 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97C11175265C5C8500794994;
+			remoteInfo = "SaneScanner-FileProvider";
 		};
 		97EDB91B1E4924D40012CB7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -112,6 +124,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				97A9FCF0264093920027F462 /* SaneScanner-CatalystPlugin.bundle in Embed PlugIns */,
+				97C11182265C5C8600794994 /* SaneScanner-FileProvider.appex in Embed PlugIns */,
 			);
 			name = "Embed PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,9 +132,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaneScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51BB8C9CADC9997EFC1F3F17 /* Pods_SaneScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SaneScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D7430C747F3D5FD163E478D /* Pods-Common-SaneScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Common-SaneScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Common-SaneScanner/Pods-Common-SaneScanner.release.xcconfig"; sourceTree = "<group>"; };
 		685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.release.xcconfig"; sourceTree = "<group>"; };
 		767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.debug.xcconfig"; sourceTree = "<group>"; };
+		8E724CC5F498342CD1BC8026 /* Pods-Common-SaneScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Common-SaneScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Common-SaneScanner/Pods-Common-SaneScanner.debug.xcconfig"; sourceTree = "<group>"; };
 		97044901220875D300E13C6A /* DeviceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVC.swift; sourceTree = "<group>"; };
 		9704490B2208900700E13C6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		970A587F1E41665C0033A116 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -171,6 +186,12 @@
 		97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
 		97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SY.swift"; sourceTree = "<group>"; };
 		97C11148265C497900794994 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		97C11176265C5C8500794994 /* SaneScanner-FileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SaneScanner-FileProvider.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97C11178265C5C8600794994 /* FileProviderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderExtension.swift; sourceTree = "<group>"; };
+		97C1117A265C5C8600794994 /* FileProviderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderItem.swift; sourceTree = "<group>"; };
+		97C1117C265C5C8600794994 /* FileProviderEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderEnumerator.swift; sourceTree = "<group>"; };
+		97C1117E265C5C8600794994 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97C1117F265C5C8600794994 /* SaneScanner_FileProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaneScanner_FileProvider.entitlements; sourceTree = "<group>"; };
 		97CC34E02205F48B00304345 /* SaneScanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SaneScanner-Bridging-Header.h"; sourceTree = "<group>"; };
 		97CC34E12205F48B00304345 /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
 		97CC34E22205F48B00304345 /* OptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionCell.xib; sourceTree = "<group>"; };
@@ -215,6 +236,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		97C11173265C5C8500794994 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97EDB9131E4924D40012CB7E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -226,7 +254,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E380CA5C5F90A86D8A42FE99 /* Pods_SaneScanner.framework in Frameworks */,
+				2D56C7B8382704CC6EE0EBAE /* Pods_SaneScanner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,7 +264,7 @@
 		06F2387C18FBB76B71AD189B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				23020D7DAE006AF3741F1127 /* Pods_SaneScanner.framework */,
+				51BB8C9CADC9997EFC1F3F17 /* Pods_SaneScanner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -247,6 +275,8 @@
 				767334121290C07CE121D5C0 /* Pods-SaneScanner.debug.xcconfig */,
 				685F44FB0583297FC8951521 /* Pods-SaneScanner.release.xcconfig */,
 				E4150E772CE5FCDA9956F3BE /* Pods-SaneScanner.macos.xcconfig */,
+				8E724CC5F498342CD1BC8026 /* Pods-Common-SaneScanner.debug.xcconfig */,
+				5D7430C747F3D5FD163E478D /* Pods-Common-SaneScanner.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -267,6 +297,18 @@
 				97B8C7762643EA4F00C06617 /* CatalystView.swift */,
 			);
 			path = "SaneScanner-Shared";
+			sourceTree = "<group>";
+		};
+		97C11177265C5C8600794994 /* SaneScanner-FileProvider */ = {
+			isa = PBXGroup;
+			children = (
+				97C11178265C5C8600794994 /* FileProviderExtension.swift */,
+				97C1117A265C5C8600794994 /* FileProviderItem.swift */,
+				97C1117C265C5C8600794994 /* FileProviderEnumerator.swift */,
+				97C1117E265C5C8600794994 /* Info.plist */,
+				97C1117F265C5C8600794994 /* SaneScanner_FileProvider.entitlements */,
+			);
+			path = "SaneScanner-FileProvider";
 			sourceTree = "<group>";
 		};
 		97CD8488263AC581006DD44B /* Views */ = {
@@ -396,6 +438,7 @@
 				97EDB9171E4924D40012CB7E /* SaneScannerUITests */,
 				97B8C7752643EA2600C06617 /* SaneScanner-Shared */,
 				97A9FCE4264090500027F462 /* SaneScanner-CatalystPlugin */,
+				97C11177265C5C8600794994 /* SaneScanner-FileProvider */,
 				F8CBD20E1AF9A58C00B4C221 /* Products */,
 				1D470155F708E88FADB3A792 /* Pods */,
 				06F2387C18FBB76B71AD189B /* Frameworks */,
@@ -408,6 +451,7 @@
 				F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */,
 				97EDB9161E4924D40012CB7E /* SaneScannerUITests.xctest */,
 				97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */,
+				97C11176265C5C8500794994 /* SaneScanner-FileProvider.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -464,6 +508,23 @@
 			productReference = 97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
+		97C11175265C5C8500794994 /* SaneScanner-FileProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97C11185265C5C8600794994 /* Build configuration list for PBXNativeTarget "SaneScanner-FileProvider" */;
+			buildPhases = (
+				97C11172265C5C8500794994 /* Sources */,
+				97C11173265C5C8500794994 /* Frameworks */,
+				97C11174265C5C8500794994 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SaneScanner-FileProvider";
+			productName = "SaneScanner-FileProvider";
+			productReference = 97C11176265C5C8500794994 /* SaneScanner-FileProvider.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		97EDB9151E4924D40012CB7E /* SaneScannerUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97EDB91F1E4924D40012CB7E /* Build configuration list for PBXNativeTarget "SaneScannerUITests" */;
@@ -500,6 +561,7 @@
 			);
 			dependencies = (
 				97A9FCF2264093920027F462 /* PBXTargetDependency */,
+				97C11181265C5C8600794994 /* PBXTargetDependency */,
 			);
 			name = SaneScanner;
 			productName = SaneScanner;
@@ -513,13 +575,16 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SY;
-				LastSwiftUpdateCheck = 0820;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					97A9FCE2264090500027F462 = {
 						CreatedOnToolsVersion = 12.5;
 						LastSwiftMigration = 1250;
+					};
+					97C11175265C5C8500794994 = {
+						CreatedOnToolsVersion = 12.5;
 					};
 					97EDB9151E4924D40012CB7E = {
 						CreatedOnToolsVersion = 8.2;
@@ -553,12 +618,20 @@
 				F8CBD20C1AF9A58C00B4C221 /* SaneScanner */,
 				97EDB9151E4924D40012CB7E /* SaneScannerUITests */,
 				97A9FCE2264090500027F462 /* SaneScanner-CatalystPlugin */,
+				97C11175265C5C8500794994 /* SaneScanner-FileProvider */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		97A9FCE1264090500027F462 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97C11174265C5C8500794994 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -655,7 +728,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"LATER:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneScanner\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneScanner-CatalystPlugin\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneSwift\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
+			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"LATER:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneScanner\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneScanner-CatalystPlugin\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneScanner-FileProvider\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneSwift\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
 		};
 		DCF69B669EC8701B2D500461 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -705,6 +778,17 @@
 				97A9FCEA2640906F0027F462 /* CatalystPlugin.swift in Sources */,
 				97A9FCEC264090960027F462 /* CatalystPluginImplementation.swift in Sources */,
 				97B8C7782643EA4F00C06617 /* CatalystView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97C11172265C5C8500794994 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97C11189265C5E1600794994 /* FileManager+SY.swift in Sources */,
+				97C11179265C5C8600794994 /* FileProviderExtension.swift in Sources */,
+				97C1117B265C5C8600794994 /* FileProviderItem.swift in Sources */,
+				97C1117D265C5C8600794994 /* FileProviderEnumerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,6 +875,11 @@
 			target = 97A9FCE2264090500027F462 /* SaneScanner-CatalystPlugin */;
 			targetProxy = 97A9FCF1264093920027F462 /* PBXContainerItemProxy */;
 		};
+		97C11181265C5C8600794994 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97C11175265C5C8500794994 /* SaneScanner-FileProvider */;
+			targetProxy = 97C11180265C5C8600794994 /* PBXContainerItemProxy */;
+		};
 		97EDB91C1E4924D40012CB7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8CBD20C1AF9A58C00B4C221 /* SaneScanner */;
@@ -871,6 +960,76 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		97C11183265C5C8600794994 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = "SaneScanner-FileProvider/SaneScanner_FileProvider.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 21;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SaneScanner-FileProvider/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.SaneScanner.SaneScanner-FileProvider";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		97C11184265C5C8600794994 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = "SaneScanner-FileProvider/SaneScanner_FileProvider.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 21;
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SaneScanner-FileProvider/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.SaneScanner.SaneScanner-FileProvider";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -974,6 +1133,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1031,6 +1191,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1114,6 +1275,15 @@
 			buildConfigurations = (
 				97A9FCE7264090500027F462 /* Debug */,
 				97A9FCE8264090500027F462 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97C11185265C5C8600794994 /* Build configuration list for PBXNativeTarget "SaneScanner-FileProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97C11183265C5C8600794994 /* Debug */,
+				97C11184265C5C8600794994 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
