@@ -81,6 +81,10 @@ extension UIColor {
         }
     }
 
+    static var altTextOnTint: UIColor {
+        return UIColor.lightGray
+    }
+
     static var disabledText: UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.placeholderText

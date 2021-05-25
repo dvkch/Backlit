@@ -46,7 +46,7 @@ class ScanButton : UIButton {
         layer.masksToBounds = true
         layer.cornerRadius = style == .rounded ? 10 : 0
         setTitleColor(kind == .preview ? .normalText : .normalTextOnTint, for: .normal)
-        setTitleColor(.altText, for: .disabled)
+        setTitleColor(kind == .preview ? .altText : .altTextOnTint, for: .disabled)
         titleLabel?.font = .preferredFont(forTextStyle: .body)
         titleLabel?.autoAdjustsFontSize = true
         titleLabel?.numberOfLines = 2
@@ -66,6 +66,9 @@ class ScanButton : UIButton {
             heightConstraint?.isActive = true
         }
         heightConstraint?.constant = ScanButton.preferredHeight
+        
+        // styles are copied in the attributed string, let's rebuild it
+        updateContent()
     }
 
     private func updateContent() {
@@ -94,8 +97,8 @@ class ScanButton : UIButton {
         }
 
         let fullTitle = [
-            NSAttributedString(string: title, font: .preferredFont(forTextStyle: .body), color: .normalText),
-            NSAttributedString(string: subtitle, font: .preferredFont(forTextStyle: .callout), color: .altText)
+            NSAttributedString(string: title, font: .preferredFont(forTextStyle: .body), color: titleColor(for: .normal)),
+            NSAttributedString(string: subtitle, font: .preferredFont(forTextStyle: .callout), color: titleColor(for: .disabled))
         ].concat(separator: "\n").setParagraphStyle(alignment: .center, lineSpacing: 0, paragraphSpacing: 0)
         setAttributedTitle(fullTitle, for: .normal)
     }
