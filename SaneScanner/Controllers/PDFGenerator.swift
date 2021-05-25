@@ -121,7 +121,7 @@ class PDFGenerator: NSObject {
             {
                 // add image in a page of the same size as the image
                 let rect = CGRect(origin: .zero, size: sizeThatFits)
-                UIGraphicsBeginPDFPageWithInfo(rect, nil);
+                UIGraphicsBeginPDFPageWithInfo(rect, nil)
                 UIImage(cgImage: cgImage).draw(in: rect)
             }
         }

@@ -137,7 +137,7 @@ extension Sane {
                 self.saneInitError = nil
             }
             
-            self.saneStarted = (s == SANE_STATUS_GOOD);
+            self.saneStarted = (s == SANE_STATUS_GOOD)
             print("SANE started:", self.saneStarted)
         }
     }
@@ -292,9 +292,9 @@ extension Sane {
                 var count = SANE_Int(0)
                 
                 // needed for sane to update the value of the option count
-                var descriptor = sane_get_option_descriptor(handle, 0);
+                var descriptor = sane_get_option_descriptor(handle, 0)
                 
-                let s = sane_control_option(handle, 0, SANE_ACTION_GET_VALUE, &count, nil);
+                let s = sane_control_option(handle, 0, SANE_ACTION_GET_VALUE, &count, nil)
                 guard s == SANE_STATUS_GOOD else {
                     Sane.runOn(mainThread: mainThread) { completion?() }
                     return
@@ -640,7 +640,7 @@ extension Sane {
                 }
                 
                 data.append(buffer, count: Int(bufferActualSize))
-                //[fileHandle writeData:[NSData dataWithBytes:buffer length:bufferActualSize]];
+                // could buffer to a file instead [fileHandle writeData:[NSData dataWithBytes:buffer length:bufferActualSize]]
                 
                 if self.stopScanOperation {
                     self.stopScanOperation = false

@@ -155,7 +155,7 @@ class Slider: UIControl {
     // MARK: Content
     private func updateContent() {
         if let step = step {
-            slider.value = roundf(slider.value / step) * step;
+            slider.value = roundf(slider.value / step) * step
         }
 
         label.text = formatter?(slider.value) ?? String(slider.value)

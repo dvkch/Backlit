@@ -232,7 +232,7 @@ extension DevicesVC : UITableViewDataSource {
             header.text = "DEVICES SECTION HOSTS".localized
         }
         else {
-            header.text = "DEVICES SECTION DEVICES".localized;
+            header.text = "DEVICES SECTION DEVICES".localized
         }
         return header
     }

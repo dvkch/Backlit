@@ -75,7 +75,7 @@ internal extension UIImage {
             case SANE_FRAME_GRAY:
                 colorSpace = CGColorSpaceCreateDeviceGray()
                 destBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
-                destNumberOfComponents = 1;
+                destNumberOfComponents = 1
             default:
                 throw SaneError.unsupportedChannels
             }
