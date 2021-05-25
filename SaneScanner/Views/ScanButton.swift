@@ -94,8 +94,8 @@ class ScanButton : UIButton {
         }
 
         let fullTitle = [
-            NSAttributedString(string: title, font: titleLabel?.font, color: .normalText),
-            NSAttributedString(string: subtitle, font: titleLabel?.font, color: .altText)
+            NSAttributedString(string: title, font: .preferredFont(forTextStyle: .body), color: .normalText),
+            NSAttributedString(string: subtitle, font: .preferredFont(forTextStyle: .callout), color: .altText)
         ].concat(separator: "\n").setParagraphStyle(alignment: .center, lineSpacing: 0, paragraphSpacing: 0)
         setAttributedTitle(fullTitle, for: .normal)
     }
