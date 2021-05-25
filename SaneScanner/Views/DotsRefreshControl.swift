@@ -13,11 +13,18 @@ class DotsRefreshControl : UIRefreshControl {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        recreateDotsView()
+        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        isAccessibilityElement = true
+        accessibilityLabel = "LOADING".localized
+        accessibilityTraits = .staticText
         recreateDotsView()
     }
     

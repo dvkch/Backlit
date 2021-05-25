@@ -46,9 +46,9 @@ extension AppDelegate : UIApplicationDelegate {
         Analytics.shared.send(event: .appLaunch)
 
         // Snapshots
-        if SnapshotKind.fromLaunchOptions == .other {
+        if Snapshot.isSnapshotting, let snapshotHost = Snapshot.snapshotHost {
             Sane.shared.configuration.clearHosts()
-            Sane.shared.configuration.addHost("192.168.69.42")
+            Sane.shared.configuration.addHost(snapshotHost)
         }
         
         return true

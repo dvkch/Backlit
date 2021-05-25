@@ -70,10 +70,11 @@
 		97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E040220607E500AC74D0 /* DeviceCell.xib */; };
 		97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D0E04322060C5700AC74D0 /* PreviewCell.swift */; };
 		97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D0E04422060C5700AC74D0 /* PreviewCell.xib */; };
-		97D4CE8A2636EB7800F84150 /* SnapshotKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D4CE892636EB7800F84150 /* SnapshotKind.swift */; };
+		97D4CE8A2636EB7800F84150 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D4CE892636EB7800F84150 /* Snapshot.swift */; };
 		97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590122637565800E84198 /* DevicePreviewVC.swift */; };
 		97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D590132637565800E84198 /* DevicePreviewVC.xib */; };
 		97D5902526377CBE00E84198 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5902426377CBE00E84198 /* TooltipView.swift */; };
+		97E8B36C265DB34C00971AF7 /* XCTestCase+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E8B36B265DB34C00971AF7 /* XCTestCase+SY.swift */; };
 		97EAF238220B54A700435DE6 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* PreviewView.swift */; };
 		97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B022071F880027CCAE /* PreferencesVC.swift */; };
 		97EB32B322071F880027CCAE /* PreferencesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EB32B122071F880027CCAE /* PreferencesVC.xib */; };
@@ -201,10 +202,11 @@
 		97D0E040220607E500AC74D0 /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 		97D0E04322060C5700AC74D0 /* PreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
 		97D0E04422060C5700AC74D0 /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
-		97D4CE892636EB7800F84150 /* SnapshotKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotKind.swift; sourceTree = "<group>"; };
+		97D4CE892636EB7800F84150 /* Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
 		97D590122637565800E84198 /* DevicePreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePreviewVC.swift; sourceTree = "<group>"; };
 		97D590132637565800E84198 /* DevicePreviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicePreviewVC.xib; sourceTree = "<group>"; };
 		97D5902426377CBE00E84198 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
+		97E8B36B265DB34C00971AF7 /* XCTestCase+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+SY.swift"; sourceTree = "<group>"; };
 		97EAF237220B54A700435DE6 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		97EB32B022071F880027CCAE /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		97EB32B122071F880027CCAE /* PreferencesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesVC.xib; sourceTree = "<group>"; };
@@ -377,7 +379,7 @@
 			children = (
 				97FE556E264556D60036357E /* DeviceOptionControllable.swift */,
 				97F2FB54222318D5006BD617 /* GalleryItem.swift */,
-				97D4CE892636EB7800F84150 /* SnapshotKind.swift */,
+				97D4CE892636EB7800F84150 /* Snapshot.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -423,10 +425,11 @@
 		97EDB9171E4924D40012CB7E /* SaneScannerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				9747AF0F1E5257080090E6B2 /* test_scan_image.png */,
-				9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */,
-				97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */,
 				97EDB91A1E4924D40012CB7E /* Info.plist */,
+				97EDB9181E4924D40012CB7E /* SaneScannerUITests.swift */,
+				9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */,
+				9747AF0F1E5257080090E6B2 /* test_scan_image.png */,
+				97E8B36B265DB34C00971AF7 /* XCTestCase+SY.swift */,
 			);
 			path = SaneScannerUITests;
 			sourceTree = "<group>";
@@ -796,6 +799,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97E8B36C265DB34C00971AF7 /* XCTestCase+SY.swift in Sources */,
 				97EDB9191E4924D40012CB7E /* SaneScannerUITests.swift in Sources */,
 				9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */,
 			);
@@ -859,7 +863,7 @@
 				977C4F6526484F1500856E0E /* UIAlertController+SY.swift in Sources */,
 				97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */,
 				97499E5F220874B3006DED20 /* SplitVC.swift in Sources */,
-				97D4CE8A2636EB7800F84150 /* SnapshotKind.swift in Sources */,
+				97D4CE8A2636EB7800F84150 /* Snapshot.swift in Sources */,
 				97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */,
 				97EAF238220B54A700435DE6 /* PreviewView.swift in Sources */,
 				97499E5D220872F5006DED20 /* Toolbar.swift in Sources */,

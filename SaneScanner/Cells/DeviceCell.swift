@@ -43,9 +43,11 @@ class DeviceCell: TableViewCell {
                 spinner.accessibilityLabel = "LOADING".localized
                 accessoryView = spinner
                 spinner.startAnimating()
+                accessibilityIdentifier = "loading_device"
             }
             else {
                 accessoryType = .disclosureIndicator
+                accessibilityIdentifier = nil
             }
         }
     }

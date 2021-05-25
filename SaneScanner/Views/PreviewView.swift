@@ -218,9 +218,8 @@ extension PreviewView {
     private func prepareForSnapshotting() {
         guard let device = device else { return }
 
-        let snapshotType = SnapshotKind.fromLaunchOptions
-        if snapshotType == .devicePreview || snapshotType == .deviceOptions || snapshotType == .deviceOptionPopup {
-            imageView.image = SnapshotKind.snapshotTestScanImagePath.flatMap { UIImage(contentsOfFile: $0) }
+        if Snapshot.isSnapshotting, let testImagePath = Snapshot.snapshotTestScanImagePath {
+            imageView.image = UIImage(contentsOfFile: testImagePath)
 
             let cropAreaPercent = CGRect(x: 0.1, y: 0.2, width: 0.8, height: 0.6)
             var cropArea = CGRect()

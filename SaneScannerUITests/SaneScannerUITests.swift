@@ -8,150 +8,79 @@
 
 import XCTest
 
-extension XCTestCase {
-    
-    func localizedString(key:String) -> String
-    {
-        let mainBundle = Bundle(for: SaneScannerUITests.self)
-        
-        var localizationPath = mainBundle.path(forResource: deviceLanguage, ofType: "lproj")
-        
-        if (localizationPath == nil)
-        {
-            let language = deviceLanguage.components(separatedBy: "-").first!;
-            localizationPath = mainBundle.path(forResource: language, ofType: "lproj")
-        }
-        
-        let localizationBundle = Bundle(path: localizationPath!)
-        return NSLocalizedString(key, bundle:localizationBundle!, comment: "")
-    }
-    
-    func wait(forElement element: XCUIElement, toExist exist: Bool , withTimeout timeout: TimeInterval)
-    {
-        expectation(for: NSPredicate(format: "exists == %@", NSNumber(booleanLiteral: exist)),
-                    evaluatedWith: element,
-                    handler: nil)
-        
-        waitForExpectations(timeout: timeout, handler: nil)
-    }
-    
-    func waitForProgessHUDToAppearThenDisappear()
-    {
-        let app = XCUIApplication()
-        let query = app.otherElements["SVProgressHUD"]
-        
-        wait(forElement: query, toExist: true,  withTimeout:  5)
-        wait(forElement: query, toExist: false, withTimeout: 30)
-    }
-}
-
 class SaneScannerUITests: XCTestCase {
-    
-    var snapshotType:String = ""
-    
     override func setUp() {
         super.setUp()
-        
-        let testScanImagePath = Bundle(for: SaneScannerUITests.self).path(forResource: "test_scan_image", ofType: "png")
         
         continueAfterFailure = false
         let app = XCUIApplication()
         Snapshot.setupSnapshot(app)
         app.launchArguments.append("DOING_SNAPSHOT")
         app.launchArguments.append(snapshotType)
-        app.launchArguments.append("SNAPSHOT_TEST_IMAGE_PATH=" + testScanImagePath!);
+        app.launchArguments.append("SNAPSHOT_TEST_IMAGE_PATH=" + snapshotTestImagePath!)
+        app.launchArguments.append("SNAPSHOT_HOST=" + snapshotHost)
         app.launch()
         
-        
-        // Landscape on iPad
-        if (UIDevice.current.userInterfaceIdiom == .pad)
-        {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             XCUIDevice.shared.orientation = .landscapeRight
         }
     }
-    
+
+    var snapshotType: String { "" }
+    let snapshotHost: String = "192.168.69.42"
+    let snapshotDevice: String = "Canon PIXMA MP270"
+    let snapshotTestImagePath = Bundle(for: SaneScannerUITests.self).path(forResource: "test_scan_image", ofType: "png")
 }
 
 class SaneScannerUITests_Others : SaneScannerUITests {
-    func testDevices()
-    {
-        waitForProgessHUDToAppearThenDisappear();
+    func testDevices() {
+        waitForTableViewRefreshControl()
         Snapshot.snapshot("01-Devices")
     }
     
-    func testSettings()
-    {
-        waitForProgessHUDToAppearThenDisappear();
-        
-        let app = XCUIApplication()
-        app.navigationBars["SaneScanner"].buttons["settings"].tap()
-        
+    func testSettings() {
+        waitForTableViewRefreshControl()
+
+        XCUIApplication().navigationBars["SaneScanner"].buttons["settings"].tap()
         Snapshot.snapshot("05-Settings")
     }
 }
 
 class SaneScannerUITests_Preview : SaneScannerUITests {
+    override var snapshotType: String { "SNAPSHOT_PREVIEW" }
     
-    override func setUp() {
-        snapshotType = "SNAPSHOT_PREVIEW"
-        super.setUp()
-    }
-    
-    func testDeviceWithPreview()
-    {
-        waitForProgessHUDToAppearThenDisappear();
+    func testDeviceWithPreview() {
+        waitForTableViewRefreshControl()
+
+        XCUIApplication().tables.staticTexts[snapshotDevice].tap()
+        waitForDeviceOpening()
         
-        let app = XCUIApplication()
-        
-        let tablesQuery = app.tables
-        tablesQuery.staticTexts["Canon PIXMA MP270"].tap()
-        
-        waitForProgessHUDToAppearThenDisappear()
-        
-        Snapshot.snapshot("02-DeviceWithPreview");
+        Snapshot.snapshot("02-DeviceWithPreview")
     }
 }
 
 class SaneScannerUITests_Options : SaneScannerUITests {
+    override var snapshotType: String { "SNAPSHOT_OPTIONS" }
     
-    override func setUp() {
-        snapshotType = "SNAPSHOT_OPTIONS"
-        super.setUp()
-    }
-    
-    func testDeviceWithOptions()
-    {
-        waitForProgessHUDToAppearThenDisappear();
+    func testDeviceWithOptions() {
+        waitForTableViewRefreshControl()
         
-        let app = XCUIApplication()
-        
-        let tablesQuery = app.tables
-        tablesQuery.staticTexts["Canon PIXMA MP270"].tap()
-        
-        waitForProgessHUDToAppearThenDisappear()
-        
-        Snapshot.snapshot("03-DeviceWithOptions");
+        XCUIApplication().tables.staticTexts[snapshotDevice].tap()
+        waitForDeviceOpening()
+
+        Snapshot.snapshot("03-DeviceWithOptions")
     }
 }
 
 class SaneScannerUITests_OptionPopup : SaneScannerUITests {
+    override var snapshotType: String { "SNAPSHOT_OPTION_POPUP" }
     
-    override func setUp() {
-        snapshotType = "SNAPSHOT_OPTION_POPUP"
-        super.setUp()
-    }
-    
-    func testDeviceWithOptions()
-    {
-        waitForProgessHUDToAppearThenDisappear();
+    func testDeviceWithOptionsPopup() {
+        waitForTableViewRefreshControl()
         
-        let app = XCUIApplication()
-        
-        let tablesQuery = app.tables
-        tablesQuery.staticTexts["Canon PIXMA MP270"].tap()
-        
-        waitForProgessHUDToAppearThenDisappear()
-        
-        Snapshot.snapshot("04-DeviceWithOptionPopup");
+        XCUIApplication().tables.staticTexts[snapshotDevice].tap()
+        waitForDeviceOpening()
+
+        Snapshot.snapshot("04-DeviceWithOptionPopup")
     }
 }
