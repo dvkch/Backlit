@@ -16,8 +16,7 @@ class Analytics {
     // MARK: Init
     static let shared = Analytics()
     private init() {
-        let config = TelemetryManagerConfiguration.init(appID: "9CF71A71-190A-4B84-AB6B-2E0DE0A44F12")
-        config.telemetryAllowDebugBuilds = true
+        let config = TelemetryManagerConfiguration(appID: "9CF71A71-190A-4B84-AB6B-2E0DE0A44F12")
         TelemetryManager.initialize(with: config)
     }
     
