@@ -7,14 +7,20 @@ platform :ios do
 
     desc "Create signing certs and provisioning profiles if needed"
     lane :signing do
+        app = "me.syan.SaneScanner"
+        ext = "me.syan.SaneScanner.SaneScanner-FileProvider"
+
         cert(team_id: "79RY8264V4", development: true)
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "ios",      development: true)
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "catalyst", development: true)
+        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios",      development: true)
+        sigh(team_id: "79RY8264V4", app_identifier: ext, platform: "ios",      development: true)
+        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "catalyst", development: true)
 
         cert(team_id: "79RY8264V4")
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "ios")
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "ios",   adhoc: true)
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.SaneScanner", platform: "catalyst")
+        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios")
+        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios",      adhoc: true)
+        sigh(team_id: "79RY8264V4", app_identifier: ext, platform: "ios")
+        sigh(team_id: "79RY8264V4", app_identifier: ext, platform: "ios",      adhoc: true)
+        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "catalyst")
 
         system "rm ../*.mobileprovision"
         system "rm ../*.provisionprofile"
