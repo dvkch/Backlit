@@ -143,6 +143,9 @@ internal extension UIImage {
 
 /*
 // LATER: work on big images
+// to stream lower resolutions :
+// - https://twitter.com/PDucks32/status/1417553099825238028
+// - https://developer.apple.com/documentation/uikit/uiimage/building_high-performance_lists_and_collection_views
 + (void)sy_convertTempImage
 {
     SYSaneScanParameters *params = [[SYSaneScanParameters alloc] init];

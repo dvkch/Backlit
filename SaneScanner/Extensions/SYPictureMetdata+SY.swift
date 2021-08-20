@@ -43,7 +43,7 @@ extension SYMetadata {
         metadataTIFF?.orientation = .up
         metadataTIFF?.make = device.vendor
         metadataTIFF?.model = device.model
-        metadataTIFF?.software = (Bundle.main.localizedName ?? "") + " " + Bundle.main.fullVersion
+        metadataTIFF?.software = Bundle.main.localizedName
         metadataTIFF?.xResolution = resXInches
         metadataTIFF?.yResolution = resYInches
         metadataTIFF?.resolutionUnit = 2 // 2 = inches, let's hope it'll make sense for every device
