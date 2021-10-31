@@ -43,20 +43,24 @@ class DeviceVC: UIViewController {
         tableView.registerCell(OptionCell.self, xib: true)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.layoutMarginsGuide)
+            make.top.bottom.equalTo(view.layoutMarginsGuide)
             make.left.right.equalToSuperview()
         }
 
         scanButtonStackView.distribution = .fill
         view.addSubview(scanButtonStackView)
         scanButtonStackView.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom)
             make.left.right.equalToSuperview()
             make.bottom.equalTo(view.layoutMarginsGuide)
         }
         
         scanButton.kind = .scan
         scanButton.style = .cell
+        if #available(iOS 11.0, *) {
+            scanButton.layer.masksToBounds = true
+            scanButton.layer.cornerRadius = 10
+            scanButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
         scanButton.addTarget(self, action: #selector(scanButtonTap), for: .primaryActionTriggered)
         scanButtonStackView.addArrangedSubview(scanButton)
 
@@ -268,6 +272,12 @@ class DeviceVC: UIViewController {
     private func updateLayoutStyle() {
         scanButton.sy_isHidden = useLargeLayout
         tableView.reloadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.contentInset.bottom = scanButton.sy_isHidden ? 0 : scanButton.bounds.height
+        tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
     }
 }
 
