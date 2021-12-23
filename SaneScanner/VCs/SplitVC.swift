@@ -119,6 +119,15 @@ extension SplitVC : UINavigationControllerDelegate {
         if navigationController == scanNC {
             refreshPreviewVC()
             adaptPresentedVCs()
+            viewController.transitionCoordinator?.animate(alongsideTransition: nil, completion: { _ in
+                self.adaptPresentedVCs()
+            })
+        }
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        if navigationController == scanNC {
+            adaptPresentedVCs()
         }
     }
 }

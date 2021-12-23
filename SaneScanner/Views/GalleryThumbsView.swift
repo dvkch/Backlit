@@ -13,12 +13,12 @@ import SYKit
 class GalleryThumbsView: UIView {
 
     // MARK: Init
-    static func showInToolbar(of controller: UIViewController, tintColor: UIColor?) -> GalleryThumbsView {
+    static func showInToolbar(of controller: UIViewController) -> GalleryThumbsView {
         let initialRect = controller.navigationController?.toolbar.bounds ?? .zero
         
         let view = GalleryThumbsView(frame: initialRect)
         view.parentViewController = controller
-        view.backgroundColor = tintColor ?? .cellBackground
+        view.backgroundColor = .clear
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         controller.toolbarItems = [UIBarButtonItem(customView: view)]
         
@@ -54,13 +54,9 @@ class GalleryThumbsView: UIView {
         
         collectionViewLayout.scrollDirection = scrollDirection
         
-        leftGradientView.gradientLayer.locations = [0.2, 1]
-        addSubview(leftGradientView)
+        gradientMask.colors = [UIColor.black.withAlphaComponent(0), .black, .black, .black.withAlphaComponent(0)].map(\.cgColor)
+        layer.mask = gradientMask
         
-        rightGradientView.gradientLayer.locations = [0.2, 1]
-        addSubview(rightGradientView)
-        
-        updateGradientColors()
         setNeedsUpdateConstraints()
         
         GalleryManager.shared.addDelegate(self)
@@ -77,8 +73,7 @@ class GalleryThumbsView: UIView {
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private var collectionView: UICollectionView!
     private var galleryItems = [GalleryItem]()
-    private let leftGradientView = SYGradientView()
-    private let rightGradientView = SYGradientView()
+    private let gradientMask = CAGradientLayer()
     
     // MARK: Actions
     private func openGallery(at index: Int) {
@@ -91,30 +86,6 @@ class GalleryThumbsView: UIView {
         #endif
     }
 
-    // MARK: Content
-    override var backgroundColor: UIColor? {
-        didSet {
-            updateGradientColors()
-        }
-    }
-    
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        // need this callback too, because if we start on an iPhone layout (hidden DevicePreviewVC => window = nil => traitCollection = nil), then move
-        // to large layout the gradients will be messed up
-        updateGradientColors()
-    }
-    
-    private func updateGradientColors() {
-        var gradientOpaqueColor = backgroundColor ?? .white
-        if #available(iOS 13.0, *) {
-            gradientOpaqueColor = gradientOpaqueColor.resolvedColor(with: traitCollection)
-        }
-
-        leftGradientView.gradientLayer.colors  = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
-        rightGradientView.gradientLayer.colors = [gradientOpaqueColor.cgColor, gradientOpaqueColor.withAlphaComponent(0).cgColor]
-    }
-    
     // MARK: Layout
     var preferredSize: CGSize = .zero {
         didSet {
@@ -126,49 +97,40 @@ class GalleryThumbsView: UIView {
         return preferredSize
     }
     
+    #if targetEnvironment(macCatalyst)
     private let gradientSize = CGFloat(30)
+    #else
+    private let gradientSize = CGFloat(15)
+    #endif
     
     private var prevSize = CGSize.zero
     override func layoutSubviews() {
-        
         if prevSize != bounds.size {
             prevSize = bounds.size
             // needs to be called *BEFORE* super.layoutSubviews or the layout won't refresh properly
             collectionViewLayout.invalidateLayout()
             collectionView.setNeedsLayout()
         }
-        
         super.layoutSubviews()
         
         // needs to be called *AFTER* super.layoutSubviews or the layout won't be properly refreshed and it will fail
-        centerContent()
+        updateGradient()
     }
     
-    private func centerContent() {
-        guard scrollDirection == .horizontal else { return }
+    private func updateGradient() {
+        gradientMask.frame = layer.bounds
 
-        let visibleIndexPaths = collectionView.indexPathsForVisibleItems.sorted()
-        
-        var leftIndexPath = visibleIndexPaths.first
-        if leftIndexPath == nil && !galleryItems.isEmpty {
-            leftIndexPath = IndexPath(item: 0, section: 0)
+        let size = scrollDirection == .horizontal ? bounds.width : bounds.height
+        let sizePercent: Double = min(0.5, max(0, Double(gradientSize / size)))
+        gradientMask.locations = [0, sizePercent, 1 - sizePercent, 1].map { NSNumber(value: $0) }
+
+        if scrollDirection == .horizontal {
+            gradientMask.startPoint = .zero
+            gradientMask.endPoint = .init(x: 1, y: 0)
+        } else {
+            gradientMask.startPoint = .zero
+            gradientMask.endPoint = .init(x: 0, y: 1)
         }
-        
-        collectionViewLayout.minimumInteritemSpacing = 10
-        
-        if let leftIndexPath = leftIndexPath {
-            collectionView.scrollToItem(at: leftIndexPath, at: scrollDirection == .horizontal ? .left : .top, animated: false)
-        }
-        
-        // makes sure contentSize is correct
-        collectionView.layoutIfNeeded()
-        
-        var availableWidth = collectionView.bounds.width - collectionView.contentSize.width
-        availableWidth = max(0, availableWidth - 2 * gradientSize)
-        
-        // center the content
-        let horizontalInset = gradientSize + availableWidth / 2
-        collectionView.contentInset = .init(top: 0, left: horizontalInset, bottom: 0, right: horizontalInset)
     }
     
     override func updateConstraints() {
@@ -183,26 +145,6 @@ class GalleryThumbsView: UIView {
             collectionView.scrollIndicatorInsets = .init(top: gradientSize, left: 0, bottom: gradientSize, right: 0)
         }
 
-        leftGradientView.snp.makeConstraints { (make) in
-            if scrollDirection == .horizontal {
-                make.top.left.bottom.equalToSuperview()
-                make.width.equalTo(gradientSize)
-            } else {
-                make.top.left.right.equalToSuperview()
-                make.height.equalTo(gradientSize)
-            }
-        }
-        
-        rightGradientView.snp.makeConstraints { (make) in
-            if scrollDirection == .horizontal {
-                make.top.right.bottom.equalToSuperview()
-                make.width.equalTo(gradientSize)
-            } else {
-                make.left.right.bottom.equalToSuperview()
-                make.height.equalTo(gradientSize)
-            }
-        }
-        
         collectionView.snp.makeConstraints { (make) in
             if scrollDirection == .horizontal {
                 make.top.equalTo(10).priority(.low)
@@ -215,27 +157,8 @@ class GalleryThumbsView: UIView {
             }
         }
         
-        if scrollDirection == .horizontal {
-            leftGradientView.gradientLayer.startPoint = .zero
-            leftGradientView.gradientLayer.endPoint = .init(x: 1, y: 0)
-            rightGradientView.gradientLayer.startPoint = .init(x: 1, y: 0)
-            rightGradientView.gradientLayer.endPoint = .zero
-        } else {
-            leftGradientView.gradientLayer.startPoint = .zero
-            leftGradientView.gradientLayer.endPoint = .init(x: 0, y: 1)
-            rightGradientView.gradientLayer.startPoint = .init(x: 0, y: 1)
-            rightGradientView.gradientLayer.endPoint = .zero
-        }
-        
         collectionViewLayout.invalidateLayout()
         super.updateConstraints()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 12.0, *), traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-            updateGradientColors()
-        }
     }
 }
 

@@ -64,11 +64,20 @@ class DeviceVC: UIViewController {
         scanButton.addTarget(self, action: #selector(scanButtonTap), for: .primaryActionTriggered)
         scanButtonStackView.addArrangedSubview(scanButton)
 
+        let belowScanButtonBackgroundView = UIView()
+        belowScanButtonBackgroundView.backgroundColor = .tint
+        view.addSubview(belowScanButtonBackgroundView)
+        belowScanButtonBackgroundView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(scanButtonStackView.snp.bottom)
+            make.bottom.equalToSuperview()
+        }
+
         addKeyCommand(.preview)
         addKeyCommand(.scan)
         addKeyCommand(.abort)
 
-        thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: .tint)
+        thumbsView = GalleryThumbsView.showInToolbar(of: self)
         
         if !UIDevice.isCatalyst {
             addKeyCommand(.settings)
@@ -277,7 +286,12 @@ class DeviceVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.contentInset.bottom = scanButton.sy_isHidden ? 0 : scanButton.bounds.height
-        tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
+        if #available(iOS 11.1, *) {
+            tableView.horizontalScrollIndicatorInsets.bottom = tableView.contentInset.bottom
+            tableView.verticalScrollIndicatorInsets.bottom = tableView.contentInset.bottom
+        } else {
+            tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
+        }
     }
 }
 

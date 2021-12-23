@@ -46,7 +46,7 @@ class DevicesVC: UIViewController {
 
         addKeyCommand(.addHost)
 
-        thumbsView = GalleryThumbsView.showInToolbar(of: self, tintColor: nil)
+        thumbsView = GalleryThumbsView.showInToolbar(of: self)
 
         Sane.shared.delegate = self
     }

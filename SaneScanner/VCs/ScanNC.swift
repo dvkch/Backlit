@@ -48,8 +48,25 @@ class ScanNC: UINavigationController {
         toolbar.isHidden = true
         toolbar.isHidden = false
 
-        let toolbarHidden = splitViewController?.traitCollection.horizontalSizeClass != .compact || GalleryManager.shared.items.isEmpty
+        let largeLayout = splitViewController?.traitCollection.horizontalSizeClass != .compact
+        let showingScanVC = viewControllers.contains { $0 is DeviceVC }
+        let noImages = GalleryManager.shared.items.isEmpty
+        let toolbarHidden = largeLayout || noImages
         setToolbarHidden(toolbarHidden, animated: animated)
+        
+        if #available(iOS 13.0, *) {
+            let appearance = UIToolbarAppearance()
+            appearance.backgroundColor = showingScanVC ? .tint : .cellBackground
+            toolbar.standardAppearance = appearance
+            toolbar.compactAppearance = appearance
+            if #available(iOS 15.0, *) {
+                toolbar.scrollEdgeAppearance = appearance
+                toolbar.compactScrollEdgeAppearance = appearance
+            }
+        }
+        else {
+            toolbar.backgroundColor = showingScanVC ? .tint : .cellBackground
+        }
     }
     
     // MARK: Layout
