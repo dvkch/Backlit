@@ -16,6 +16,7 @@ platform :ios do
         sigh(team_id: "79RY8264V4", app_identifier: app, platform: "catalyst", development: true)
 
         cert(team_id: "79RY8264V4")
+        cert(team_id: "79RY8264V4", type: "mac_installer_distribution")
         sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios")
         sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios",      adhoc: true)
         sigh(team_id: "79RY8264V4", app_identifier: ext, platform: "ios")
@@ -35,25 +36,32 @@ platform :ios do
         end
     end
 
-    desc "Push a new beta build to TestFlight"
-    lane :beta do
-        promptIncrementBuild
+    def build(catalyst:)
+        profile_suffix = catalyst ? " macOS" : ""
         build_app(
             workspace: "SaneScanner.xcworkspace", 
             scheme: "SaneScanner",
             output_directory: "./build",
+            catalyst_platform: catalyst ? 'macos' : 'ios',
+            skip_profile_detection: true,
+            export_method: "app-store",
+            export_options: {
+                method: "app-store",
+                signingCertificate: "Apple Distribution",
+                installerSigningCertificate: "Mac Installer Distribution",
+                provisioningProfiles: {
+                    "me.syan.SaneScanner" => "me.syan.SaneScanner AppStore" + profile_suffix,
+                    "me.syan.SaneScanner.SaneScanner-FileProvider" => "me.syan.SaneScanner.SaneScanner-FileProvider AppStore" + profile_suffix
+                }
+            }
         )
         upload_to_testflight(skip_waiting_for_build_processing: true)
     end
 
-    desc "Deploy a new version to the App Store"
-    lane :release do
-        beta
-        deliver(force: true)
-    end
-
-    desc "Create snapshots"
-    lane :snaps do
-        snapshot
+    desc "Push a new beta build to TestFlight"
+    lane :beta do
+        promptIncrementBuild
+        build(catalyst: false)
+        build(catalyst: true)
     end
 end

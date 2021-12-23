@@ -26,16 +26,6 @@ Create signing certs and provisioning profiles if needed
 fastlane ios beta
 ```
 Push a new beta build to TestFlight
-### ios release
-```
-fastlane ios release
-```
-Deploy a new version to the App Store
-### ios snaps
-```
-fastlane ios snaps
-```
-Create snapshots
 
 ----
 
