@@ -129,6 +129,10 @@ extension CatalystView {
     }
     
     var view: UIView? {
+        if let originalView = originalView as? UIView {
+            return originalView
+        }
+
         guard let containerClass = NSClassFromString(containerClassName) as? NSObject.Type else {
             return nil
         }
@@ -145,6 +149,13 @@ extension CatalystView {
         guard let object = self as? NSObject else { return nil }
         guard object.responds(to: NSSelectorFromString(containerContentSelector)) else { return nil }
         return object.value(forKey: containerContentSelector) as? CatalystView
+    }
+}
+
+
+extension UIView: CatalystView {
+    public var originalView: NSObject { self }
+    public func triggerAction(position: CGPoint) {
     }
 }
 #endif
