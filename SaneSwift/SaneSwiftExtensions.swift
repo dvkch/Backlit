@@ -108,7 +108,7 @@ internal extension UIImage {
                 throw SaneError.cannotGenerateImage
             }
             
-            // TODO: this call seams to leak, at least on Catalyst (macOS 11.3)
+            // LATER: this call seams to leak, at least on Catalyst (macOS 11.3)
             context.draw(sourceImage, in: CGRect(origin: .zero, size: parameters.size))
             
             guard let destCGImage = context.makeImage() else {

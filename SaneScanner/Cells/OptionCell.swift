@@ -278,6 +278,21 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
+        // LATER: replace by UIButton.showsMenuAsPrimaryAction on iOS 14+ and macOS 11+
+        /*
+        if #available(macCatalyst 14.0, *) {
+            let button = UIButton(type: .system)
+            button.setTitle(current.description, for: .normal)
+            button.showsMenuAsPrimaryAction = true
+            button.menu = UIMenu(children: values.map { value in
+                UIAction(title: value.description) { action in
+                    print("selected: \(value.description)")
+                }
+            })
+            valueControlCatalyst = button
+        }
+         */
+
         var dropdownOptions = values.map {
             CatalystDropdownValue(
                 title: option.stringForValue($0, userFacing: true),

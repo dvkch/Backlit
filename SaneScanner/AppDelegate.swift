@@ -11,8 +11,9 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
-// LATER: add auto search on local network
-// LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition licence)
+// LATER: add support for https://github.com/alexpevzner/sane-airscan
+// LATER: add auto search on local network (using Bonjour service sane-port
+// LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition license)
 // LATER: see if blocking IO is necessary (seems to be an issue after a scan, where it might prevent updating an option... and can even ask for auth even if none is set)
 // LATER: test text field input for String & Int and handle Auto
 

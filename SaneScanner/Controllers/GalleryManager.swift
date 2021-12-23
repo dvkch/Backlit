@@ -74,6 +74,7 @@ class GalleryManager: NSObject {
     private var thumbsQueue = SYOperationQueue()
     
     // MARK: Caches
+    // LATER: replace with https://github.com/nicklockwood/LRUCache when dropping iOS 10 support
     private var thumbnailCache = NSCache<NSURL, UIImage>()
     private var imageSizeCache = NSCache<NSURL, NSValue>()
     
