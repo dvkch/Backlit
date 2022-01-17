@@ -39,6 +39,12 @@ class ScanButton : UIButton {
         }
     }
     
+    override var isEnabled: Bool {
+        didSet {
+            updateContent()
+        }
+    }
+    
     private var heightConstraint: NSLayoutConstraint?
     
     // MARK: Content
@@ -59,7 +65,7 @@ class ScanButton : UIButton {
             background = background.resolvedColor(with: traitCollection)
         }
         setBackgrounColor(background, for: .normal)
-        setBackgrounColor(background.withAlphaComponent(0.7), for: .disabled)
+        setBackgrounColor(background.withAlphaComponent(style == .rounded ? 0.7 : 1), for: .disabled)
 
         if heightConstraint == nil {
             heightConstraint = heightAnchor.constraint(equalToConstant: 0)
@@ -97,7 +103,7 @@ class ScanButton : UIButton {
         }
 
         let fullTitle = [
-            NSAttributedString(string: title, font: .preferredFont(forTextStyle: .body), color: titleColor(for: .normal)),
+            NSAttributedString(string: title, font: .preferredFont(forTextStyle: .body), color: titleColor(for: isEnabled ? .normal : .disabled)),
             NSAttributedString(string: subtitle, font: .preferredFont(forTextStyle: .callout), color: titleColor(for: .disabled))
         ].concat(separator: "\n").setParagraphStyle(alignment: .center, lineSpacing: 0, paragraphSpacing: 0)
         setAttributedTitle(fullTitle, for: .normal)
