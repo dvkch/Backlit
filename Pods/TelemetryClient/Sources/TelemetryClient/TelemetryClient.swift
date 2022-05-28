@@ -1,46 +1,140 @@
-//
-//  Telemetry
-//
-//  Created by Daniel Jilg on 27.11.19.
-//  Copyright © 2019 breakthesystem. All rights reserved.
-//
-
-import CommonCrypto
 import Foundation
 
 #if os(iOS)
     import UIKit
-#endif
-
-#if os(watchOS)
+#elseif os(macOS)
+    import AppKit
+#elseif os(watchOS)
     import WatchKit
-#endif
-
-#if os(tvOS)
+#elseif os(tvOS)
     import TVUIKit
 #endif
 
+
+let TelemetryClientVersion = "SwiftClient 1.1.5"
+
 public typealias TelemetrySignalType = String
+
+/// Configuration for TelemetryManager
+///
+/// Use an instance of this class to specify settings for TelemetryManager. If these settings change during the course of
+/// your runtime, it might be a good idea to hold on to the instance and update it as needed. TelemetryManager's behaviour
+/// will update as well.
 public final class TelemetryManagerConfiguration {
+    /// Your app's ID for Telemetry. Set this during initialization.
     public let telemetryAppID: String
-    public let telemetryServerBaseURL: URL
-    public var telemetryAllowDebugBuilds: Bool = false
-    public var sessionID: UUID = UUID()
+
+    /// The domain to send signals to. Defaults to the default Telemetry API server.
+    /// (Don't change this unless you know exactly what you're doing)
+    public let apiBaseURL: URL
+
+    /// Instead of specifying a user identifier with each `send` call, you can set your user's name/email/identifier here and
+    /// it will be sent with every signal from now on.
+    ///
+    /// Note that just as with specifying the user identifier with the `send` call, the identifier will never leave the device.
+    /// Instead it is used to create a hash, which is included in your signal to allow you to count distinct users.
+    public var defaultUser: String?
+
+    /// If `true`, sends a "newSessionBegan" Signal on each app foreground or cold launch
+    ///
+    /// Defaults to true. Set to false to prevent automatically sending this signal.
+    public var sendNewSessionBeganSignal: Bool = true
+
+    /// A random identifier for the current user session.
+    ///
+    /// On iOS, tvOS, and watchOS, the session identifier will automatically update whenever your app returns from background, or if it is
+    /// launched from cold storage. On other platforms, a new identifier will be generated each time your app launches. If you'd like
+    /// more fine-grained session support, write a new random session identifier into this property each time a new session begins.
+    ///
+    /// Beginning a new session automatically sends a "newSessionBegan" Signal if `sendNewSessionBeganSignal` is `true`
+    public var sessionID = UUID() { didSet { if sendNewSessionBeganSignal { TelemetryManager.send("newSessionBegan") } } }
+
+    @available(*, deprecated, message: "Please use the testMode property instead")
+    public var sendSignalsInDebugConfiguration: Bool = false
+    
+    
+    /// If `true` any signals sent will be marked as *Testing* signals.
+    ///
+    /// Testing signals are only shown when your Telemetry Viewer App is in Testing mode. In live mode, they are ignored.
+    ///
+    /// By default, this is the same value as `DEBUG`, i.e. you'll be in Testing Mode when you develop and in live mode when
+    /// you release. You can manually override this, however.
+    public var testMode: Bool {
+        get {
+            if let testMode = _testMode { return testMode }
+            
+            #if DEBUG
+            return true
+            #else
+            return false
+            #endif
+        }
+        
+        set { _testMode = newValue }
+    }
+    private var _testMode: Bool?
+
+    /// Log the current status to the signal cache to the console.
+    public var showDebugLogs: Bool = false
 
     public init(appID: String, baseURL: URL? = nil) {
         telemetryAppID = appID
 
         if let baseURL = baseURL {
-            telemetryServerBaseURL = baseURL
+            apiBaseURL = baseURL
         } else {
-            telemetryServerBaseURL = URL(string: "https://apptelemetry.io")!
+            apiBaseURL = URL(string: "https://nom.telemetrydeck.com")!
         }
+
+        #if os(iOS)
+            NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        #elseif os(watchOS)
+        if #available(watchOS 7.0, *) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterForeground), name: WKExtension.applicationWillEnterForegroundNotification, object: nil)
+            }
+        } else {
+            // Pre watchOS 7.0, this library will not use multiple sessions after backgrounding since there are no notifications we can observe.
+        }
+        #elseif os(tvOS)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+            }
+        #endif
+    }
+
+    #if os(iOS) || os(watchOS) || os(tvOS)
+        @objc func didEnterForeground() {
+            // generate a new session identifier
+            sessionID = UUID()
+        }
+    #endif
+
+    @available(*, deprecated, renamed: "sendSignalsInDebugConfiguration")
+    public var telemetryAllowDebugBuilds: Bool {
+        get { return sendSignalsInDebugConfiguration }
+        set { sendSignalsInDebugConfiguration = newValue }
     }
 }
 
+/// Accepts signals that signify events in your app's life cycle, collects and caches them, and pushes them to the Telemetry API.
+///
+/// Use an instance of `TelemetryManagerConfiguration` to configure this at initialization and during its lifetime.
 public class TelemetryManager {
+    /// Returns `true` when the TelemetryManager already has been initialized correctly, `false` otherwise.
+    public static var isInitialized: Bool {
+        initializedTelemetryManager != nil
+    }
+    
     public static func initialize(with configuration: TelemetryManagerConfiguration) {
         initializedTelemetryManager = TelemetryManager(configuration: configuration)
+    }
+    
+    /// Shuts down the SDK and deinitializes the current `TelemetryManager`.
+    ///
+    /// Once called, you must call `TelemetryManager.initialize(with:)` again before using the manager.
+    public static func terminate() {
+        initializedTelemetryManager = nil
     }
 
     public static func send(_ signalType: TelemetrySignalType, for clientUser: String? = nil, with additionalPayload: [String: String] = [:]) {
@@ -54,268 +148,50 @@ public class TelemetryManager {
 
         return telemetryManager
     }
-    
-    /// Generate a new Session ID for all new Signals, in order to begin a new session instead of continuing the old one.
+
+    /// Change the default user identifier sent with each signal.
     ///
-    /// It is recommended to call this function when returning from background. If you never call it, your session lasts until your
-    /// app is killed and the user restarts it. 
+    /// Instead of specifying a user identifier with each `send` call, you can set your user's name/email/identifier here and
+    /// it will be sent with every signal from now on. If you still specify a user in the `send` call, that takes precedence.
+    ///
+    /// Set to `nil` to disable this behavior.
+    ///
+    /// Note that just as with specifying the user identifier with the `send` call, the identifier will never leave the device.
+    /// Instead it is used to create a hash, which is included in your signal to allow you to count distinct users.
+    public static func updateDefaultUser(to newDefaultUser: String?) {
+        TelemetryManager.shared.updateDefaultUser(to: newDefaultUser)
+    }
+
+    public func updateDefaultUser(to newDefaultUser: String?) {
+        configuration.defaultUser = newDefaultUser
+    }
+
+    /// Generate a new Session ID for all new Signals, in order to begin a new session instead of continuing the old one.
     public static func generateNewSession() {
         TelemetryManager.shared.generateNewSession()
     }
-    
+
     public func generateNewSession() {
         configuration.sessionID = UUID()
     }
 
+    /// Send a Signal to TelemetryDeck, to record that an event has occurred.
+    ///
+    /// If you specify a user identifier here, it will take precedence over the default user identifier specified in the `TelemetryManagerConfiguration`.
+    ///
+    /// If you specify a payload, it will be sent in addition to the default payload which includes OS Version, App Version, and more.
     public func send(_ signalType: TelemetrySignalType, for clientUser: String? = nil, with additionalPayload: [String: String] = [:]) {
-        // Do not send telemetry in DEBUG mode
-        #if DEBUG
-            if configuration.telemetryAllowDebugBuilds == false {
-                print("[Telemetry] Debug is enabled, signal type \(signalType) will not be sent to server.")
-                return
-            }
-        #endif
-
-        DispatchQueue.global().async { [self] in
-            let path = "/api/v1/apps/\(configuration.telemetryAppID)/signals/"
-            let url = configuration.telemetryServerBaseURL.appendingPathComponent(path)
-
-            var urlRequest = URLRequest(url: url)
-            urlRequest.httpMethod = "POST"
-            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-            let payLoad: [String: String] = [
-                "platform": platform,
-                "systemVersion": systemVersion,
-                "appVersion": appVersion,
-                "buildNumber": buildNumber,
-                "isSimulator": "\(isSimulator)",
-                "isTestFlight": "\(isTestFlight)",
-                "isAppStore": "\(isAppStore)",
-                "modelName": "\(modelName)",
-                "architecture": architecture,
-                "operatingSystem": operatingSystem,
-                "targetEnvironment": targetEnvironment,
-            ].merging(additionalPayload, uniquingKeysWith: { _, last in last })
-
-            let signalPostBody = SignalPostBody(
-                type: "\(signalType)",
-                clientUser: sha256(str: clientUser ?? defaultUserIdentifier),
-                sessionID: configuration.sessionID.uuidString,
-                payload: payLoad
-            )
-
-            urlRequest.httpBody = try! JSONEncoder().encode(signalPostBody)
-
-            let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-                if let error = error { print(error, data as Any, response as Any) }
-                if let data = data, let dataAsUTF8 = String(data: data, encoding: .utf8) {
-                    print(dataAsUTF8)
-                }
-            }
-            task.resume()
-        }
+        signalManager.processSignal(signalType, for: clientUser, with: additionalPayload, configuration: configuration)
     }
 
     private init(configuration: TelemetryManagerConfiguration) {
         self.configuration = configuration
+        signalManager = SignalManager(configuration: configuration)
     }
 
     private static var initializedTelemetryManager: TelemetryManager?
 
     private let configuration: TelemetryManagerConfiguration
 
-    private struct SignalPostBody: Codable {
-        let type: String
-        let clientUser: String
-        let sessionID: String
-        let payload: [String: String]?
-    }
-}
-
-private extension TelemetryManager {
-    var isSimulatorOrTestFlight: Bool {
-        (isSimulator || isTestFlight)
-    }
-
-    var isSimulator: Bool {
-        #if targetEnvironment(simulator)
-            return true
-        #else
-            return false
-        #endif
-    }
-
-    var isTestFlight: Bool {
-        guard let path = Bundle.main.appStoreReceiptURL?.path else {
-            return false
-        }
-        return path.contains("sandboxReceipt")
-    }
-
-    var isAppStore: Bool {
-        !isSimulatorOrTestFlight
-    }
-
-    /// The operating system and its version
-    var systemVersion: String {
-        #if os(macOS)
-            return "\(platform) \(ProcessInfo.processInfo.operatingSystemVersion.majorVersion).\(ProcessInfo.processInfo.operatingSystemVersion.minorVersion).\(ProcessInfo.processInfo.operatingSystemVersion.patchVersion)"
-        #elseif os(iOS)
-            return "\(platform)  \(UIDevice.current.systemVersion)"
-        #elseif os(watchOS)
-            return "\(platform) \(WKInterfaceDevice.current().systemVersion)"
-        #elseif os(tvOS)
-            return "\(platform) \(UIDevice.current.systemVersion)"
-        #else
-            return "\(platform)"
-        #endif
-    }
-
-    /// The Bundle Short Version String, as described in Info.plist
-    var appVersion: String {
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        return appVersion ?? "0"
-    }
-
-    /// The Bundle Version String, as described in Info.plist
-    var buildNumber: String {
-        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        return buildNumber ?? "0"
-    }
-
-    /// The default user identifier. If the platform supports it, the identifierForVendor. Otherwise, system version
-    /// and build number (in which case it's strongly recommended to supply an email or UUID or similar identifier for
-    /// your user yourself.
-    var defaultUserIdentifier: String {
-        #if os(iOS)
-            return UIDevice.current.identifierForVendor?.uuidString ?? "unknown user \(systemVersion) \(buildNumber)"
-        #elseif os(watchOS)
-            if #available(watchOS 6.2, *) {
-                return WKInterfaceDevice.current().identifierForVendor?.uuidString ?? "unknown user \(systemVersion) \(buildNumber)"
-            } else {
-                return "unknown user \(platform) \(systemVersion) \(buildNumber)"
-            }
-        #else
-            #if DEBUG
-                print("[Telemetry] On this platform, Telemetry can't generate a unique user identifier. It is recommended you supply one yourself. More info: https://apptelemetry.io/pages/telemetry-swift-client-reference.html")
-            #endif
-            return "unknown user \(platform) \(systemVersion) \(buildNumber)"
-        #endif
-    }
-
-    /// The modelname as reported by systemInfo.machine
-    var modelName: String {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        let machineMirror = Mirror(reflecting: systemInfo.machine)
-        let identifier = machineMirror.children.reduce("") { identifier, element in
-            guard let value = element.value as? Int8, value != 0 else { return identifier }
-            return identifier + String(UnicodeScalar(UInt8(value)))
-        }
-        return identifier
-    }
-
-    /// The build architecture
-    var architecture: String {
-        #if arch(x86_64)
-            return "x86_64"
-        #elseif arch(arm)
-            return "arm"
-        #elseif arch(arm64)
-            return "arm64"
-        #elseif arch(i386)
-            return "i386"
-        #elseif arch(powerpc64)
-            return "powerpc64"
-        #elseif arch(powerpc64le)
-            return "powerpc64le"
-        #elseif arch(s390x)
-            return "s390x"
-        #else
-            return "unknown"
-        #endif
-    }
-
-    /// The operating system as reported by Swift. Note that this will report catalyst apps and iOS apps running on
-    /// macOS as "iOS". See `platform` for an alternative.
-    var operatingSystem: String {
-        #if os(macOS)
-            return "macOS"
-        #elseif os(iOS)
-            return "iOS"
-        #elseif os(watchOS)
-            return "watchOS"
-        #elseif os(tvOS)
-            return "tvOS"
-        #else
-            return "Unknown Operating System"
-        #endif
-    }
-
-    /// Based on the operating version reported by swift, but adding some smartness to better detect the actual
-    /// platform. Should correctly identify catalyst apps on macOS. Will probably not detect iOS apps running on
-    /// ARM based Macs.
-    var platform: String {
-        #if os(macOS)
-            return "macOS"
-        #elseif os(iOS)
-            #if targetEnvironment(macCatalyst)
-                return "macCatalyst"
-            #else
-                return "iOS"
-            #endif
-        #elseif os(watchOS)
-            return "watchOS"
-        #elseif os(tvOS)
-            return "tvOS"
-        #else
-            return "Unknown Platform"
-        #endif
-    }
-
-    /// The target environment as reported by swift. Either "simulator", "macCatalyst" or
-    var targetEnvironment: String {
-        #if targetEnvironment(simulator)
-            return "simulator"
-        #elseif targetEnvironment(macCatalyst)
-            return "macCatalyst"
-        #else
-            return "native"
-        #endif
-    }
-}
-
-private extension TelemetryManager {
-    /**
-     * Example SHA 256 Hash using CommonCrypto
-     * CC_SHA256 API exposed from from CommonCrypto-60118.50.1:
-     * https://opensource.apple.com/source/CommonCrypto/CommonCrypto-60118.50.1/include/CommonDigest.h.auto.html
-     **/
-    func sha256(str: String) -> String {
-        if let strData = str.data(using: String.Encoding.utf8) {
-            /// #define CC_SHA256_DIGEST_LENGTH     32
-            /// Creates an array of unsigned 8 bit integers that contains 32 zeros
-            var digest = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-
-            /// CC_SHA256 performs digest calculation and places the result in the caller-supplied buffer for digest (md)
-            /// Takes the strData referenced value (const unsigned char *d) and hashes it into a reference to the digest parameter.
-            _ = strData.withUnsafeBytes {
-                // CommonCrypto
-                // extern unsigned char *CC_SHA256(const void *data, CC_LONG len, unsigned char *md)  -|
-                // OpenSSL                                                                             |
-                // unsigned char *SHA256(const unsigned char *d, size_t n, unsigned char *md)        <-|
-                CC_SHA256($0.baseAddress, UInt32(strData.count), &digest)
-            }
-
-            var sha256String = ""
-            /// Unpack each byte in the digest array and add them to the sha256String
-            for byte in digest {
-                sha256String += String(format: "%02x", UInt8(byte))
-            }
-
-            return sha256String
-        }
-        return ""
-    }
+    private let signalManager: SignalManager
 }

@@ -1,17 +1,17 @@
 PODS:
-  - DirectoryWatcher (2.7.1)
+  - DirectoryWatcher (2.7.3)
   - KeychainAccess (4.2.2)
-  - Sane (1.0.32)
+  - Sane (1.1.1)
   - SaneSwift (1.0.0):
     - Sane
     - SYPictureMetadata (~> 2.0)
-  - SnapKit (5.0.1)
+  - SnapKit (5.6.0)
   - SpinKit (1.2.0)
   - SYEmailHelper (2.1)
   - SYKit (0.1.16)
   - SYOperationQueue (1.0.3)
   - SYPictureMetadata (2.1)
-  - TelemetryClient (1.0.0)
+  - TelemetryClient (1.1.6)
 
 DEPENDENCIES:
   - DirectoryWatcher
@@ -47,22 +47,22 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   TelemetryClient:
-    :commit: f3cfa64313d578e37c69afd88b6ff553b42dde90
-    :git: https://github.com/AppTelemetry/SwiftClient.git
+    :commit: 2efe11d74f8c0318ee860831dd44ffb08196b3d5
+    :git: https://github.com/TelemetryDeck/SwiftClient.git
 
 SPEC CHECKSUMS:
-  DirectoryWatcher: 493f7a86318070e46bb7b8d6a296b2bf139e3880
+  DirectoryWatcher: 43e1ae45c7539d3deeea9db4384ab158bae368e3
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Sane: d469f1b50464f9855d10cf7ea34c305ebb16fcec
+  Sane: a2af0ce4c9d3ddb89c559b8d7db8372ed462a7e0
   SaneSwift: 00a28c6807d816790f274c3fcc5c7019fd05a549
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SYEmailHelper: 12895920efdc31fed96ada514ac2cbd6f024fcf8
   SYKit: 2eaf235862d8de406af61a66c73bb7b58887f4af
   SYOperationQueue: d4ddc74419eb67a2d3b68d3933ab818a13867e16
   SYPictureMetadata: 2cf07fc671e7ce547aca9eeaf34462dc160411c1
-  TelemetryClient: a322074f7e257c3e0d9559f7485acbf7c077aabe
+  TelemetryClient: be6b374b0d3843139956426f0ef0725c042d8fa0
 
-PODFILE CHECKSUM: a6056f6e7d5081de0c1395c448492940802bbcf7
+PODFILE CHECKSUM: e36b6c05ffac0f9fee64a6b33a8509c04943c894
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3

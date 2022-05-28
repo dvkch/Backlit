@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "TelemetryClient.h"
 
 FOUNDATION_EXPORT double TelemetryClientVersionNumber;
 FOUNDATION_EXPORT const unsigned char TelemetryClientVersionString[];
