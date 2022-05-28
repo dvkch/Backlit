@@ -11,7 +11,7 @@ FINAL_DIR = DEST_DIR + 'all'
 LOG_PATH = Pathname.pwd + 'Sane-build-log.txt'
 
 # Release tag
-GIT_TAG = '1.0.32'.freeze
+GIT_TAG = '1.1.1'.freeze
 
 # Build flags
 MAKE_JOBS = 4
@@ -28,10 +28,11 @@ BUILDS = {
     # iOS Simulator
     'sim-i386'   => { platform: 'sim', arch: 'i386',   sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'i386-apple-darwin' },
     'sim-x86_64' => { platform: 'sim', arch: 'x86_64', sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'x86_64-apple-darwin' },
+    'sim-arm64'  => { platform: 'sim', arch: 'arm64',  sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'arm64-apple-darwin' },
 
     # Catalyst
-    "catalyst-x86_64" => { platform: 'catalyst', arch: 'x86_64', sdk: 'macosx', min: 'iphoneos-version-min=13.0', host: 'x86_64-apple-darwin', target: 'x86_64-apple-ios-macabi' },
-    "catalyst-arm64"  => { platform: 'catalyst', arch: 'arm64',  sdk: 'macosx', min: 'iphoneos-version-min=13.0', host: 'arm64-apple-darwin',  target: 'arm64-apple-ios-macabi' },
+    "catalyst-x86_64" => { platform: 'catalyst', arch: 'x86_64', sdk: 'macosx', min: 'iphoneos-version-min=13.1', host: 'x86_64-apple-darwin', target: 'x86_64-apple-ios13.1-macabi' },
+    "catalyst-arm64"  => { platform: 'catalyst', arch: 'arm64',  sdk: 'macosx', min: 'iphoneos-version-min=13.1', host: 'arm64-apple-darwin',  target: 'arm64-apple-ios13.1-macabi' },
 }.freeze
 
 # Makes sure the folder exists and is empty
@@ -254,9 +255,9 @@ def main
     puts 'This tools needs the developer command line tools to be installed.'
     puts ''
     puts 'You may also need the following tools:'
-    puts '    brew install autoconf autoconf-archive libtool gettext'
+    puts '    brew install automake autoconf autoconf-archive libtool gettext'
     puts ''
-    puts 'Then add gettext to your $PATH, using /usr/local/opt/gettext/bin'
+    puts 'Then add gettext to your $PATH, using /usr/local/opt/gettext/bin or /opt/homebrew/bin/'
     puts ''
 
     LOG_PATH.delete if LOG_PATH.exist?

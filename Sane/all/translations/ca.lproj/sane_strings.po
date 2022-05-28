@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sane-backends 1.0.29\n"
 "Report-Msgid-Bugs-To: sane-devel@alioth-lists.debian.net\n"
-"POT-Creation-Date: 2021-02-14 07:21+0000\n"
+"POT-Creation-Date: 2021-09-20 20:08-0700\n"
 "PO-Revision-Date: 2020-01-17 11:40+0100\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -28,8 +28,8 @@ msgid "Standard"
 msgstr "Estàndard"
 
 #: include/sane/saneopts.h:159 backend/artec_eplus48u.c:2882
-#: backend/canon_lide70.c:416 backend/epson.c:3296 backend/epson2.c:1287
-#: backend/epsonds.c:684 backend/genesys/genesys.cpp:4701
+#: backend/canon_lide70.c:416 backend/epson.c:3296 backend/epson2.c:1281
+#: backend/epsonds.c:1973 backend/genesys/genesys.cpp:4701
 #: backend/gt68xx.c:694 backend/hp-option.c:3295 backend/hp3500.c:1017
 #: backend/kvs1025_opt.c:639 backend/kvs20xx_opt.c:285
 #: backend/kvs40xx_opt.c:506 backend/leo.c:820 backend/lexmark.c:197
@@ -58,7 +58,7 @@ msgstr "Geometria"
 msgid "Enhancement"
 msgstr "Millora"
 
-#: include/sane/saneopts.h:161 backend/epson.c:3195 backend/epson2.c:1212
+#: include/sane/saneopts.h:161 backend/epson.c:3195 backend/epson2.c:1206
 #: backend/kvs20xx_opt.c:366 backend/kvs40xx_opt.c:597
 #: backend/rts8891.c:2830 backend/snapscan-options.c:923
 #: backend/umax.c:5563
@@ -1308,7 +1308,7 @@ msgstr "Escàner de pel·lícula"
 msgid "flatbed scanner"
 msgstr "Escàner de superfície plana"
 
-#: backend/canon.c:1176 backend/epson.c:3384 backend/epson2.c:1394
+#: backend/canon.c:1176 backend/epson.c:3384 backend/epson2.c:1388
 #, no-c-format
 msgid "Film type"
 msgstr "Tipus de pel·lícula"
@@ -1339,7 +1339,7 @@ msgstr "Resolució del maquinari"
 msgid "Use only hardware resolutions"
 msgstr "Usa només les resolucions del maquinari"
 
-#: backend/canon.c:1311 backend/epson2.c:1337
+#: backend/canon.c:1311 backend/epson2.c:1331
 #, no-c-format
 msgid "Focus"
 msgstr "Enfocament"
@@ -1386,7 +1386,7 @@ msgstr "Escaneja els marges"
 msgid "Extra color adjustments"
 msgstr "Ajustaments addicionals per al color"
 
-#: backend/canon.c:1531 backend/epson.c:3203 backend/epson2.c:1251
+#: backend/canon.c:1531 backend/epson.c:3203 backend/epson2.c:1245
 #: backend/kvs1025.h:55 backend/kvs40xx_opt.c:826
 #, no-c-format
 msgid "Mirror image"
@@ -1582,10 +1582,10 @@ msgid "Selects the gamma corrected transfer curve"
 msgstr ""
 "Selecciona la corba de transferència per a la correcció de la gamma"
 
-#: backend/canon_dr.c:419 backend/epjitsu.c:231 backend/epson.c:499
-#: backend/epson2-ops.c:101 backend/epson2.c:115 backend/epsonds-ops.c:32
-#: backend/epsonds.c:97 backend/epsonds.h:65 backend/fujitsu.c:683
-#: backend/genesys/genesys.h:76 backend/gt68xx.c:146
+#: backend/canon_dr.c:429 backend/epjitsu.c:231 backend/epson.c:499
+#: backend/epson2-ops.c:101 backend/epson2.c:111 backend/epsonds-ops.c:31
+#: backend/epsonds.c:1319 backend/epsonds.h:65 backend/epsonds.h:69
+#: backend/fujitsu.c:683 backend/genesys/genesys.h:76 backend/gt68xx.c:146
 #: backend/hp3900_sane.c:417 backend/hp3900_sane.c:426
 #: backend/hp3900_sane.c:1016 backend/hp5590.c:90 backend/kodakaio.c:617
 #: backend/ma1509.c:106 backend/magicolor.c:181 backend/mustek.c:154
@@ -1596,82 +1596,84 @@ msgstr ""
 msgid "Flatbed"
 msgstr "De superfície plana"
 
-#: backend/canon_dr.c:420 backend/epjitsu.c:232 backend/fujitsu.c:684
+#: backend/canon_dr.c:430 backend/epjitsu.c:232 backend/epsonds-ops.c:32
+#: backend/epsonds.c:1320 backend/epsonds.h:70 backend/fujitsu.c:684
 #: backend/kodak.c:138
 #, no-c-format
 msgid "ADF Front"
 msgstr "ADF per a l'anvers"
 
-#: backend/canon_dr.c:421 backend/epjitsu.c:233 backend/fujitsu.c:685
+#: backend/canon_dr.c:431 backend/epjitsu.c:233 backend/fujitsu.c:685
 #: backend/kodak.c:139
 #, no-c-format
 msgid "ADF Back"
 msgstr "ADF per al revers"
 
-#: backend/canon_dr.c:422 backend/epjitsu.c:234 backend/fujitsu.c:686
+#: backend/canon_dr.c:432 backend/epjitsu.c:234 backend/epsonds-ops.c:33
+#: backend/epsonds.c:1321 backend/epsonds.h:71 backend/fujitsu.c:686
 #: backend/hp5590.c:92 backend/kodak.c:140 backend/pixma/pixma.c:1007
 #, no-c-format
 msgid "ADF Duplex"
 msgstr "ADF per a les dues cares"
 
-#: backend/canon_dr.c:423 backend/fujitsu.c:687
+#: backend/canon_dr.c:433 backend/fujitsu.c:687
 #, no-c-format
 msgid "Card Front"
 msgstr "Targeta per a l'anvers"
 
-#: backend/canon_dr.c:424 backend/fujitsu.c:688
+#: backend/canon_dr.c:434 backend/fujitsu.c:688
 #, no-c-format
 msgid "Card Back"
 msgstr "Targeta per al revers"
 
-#: backend/canon_dr.c:425 backend/fujitsu.c:689
+#: backend/canon_dr.c:435 backend/fujitsu.c:689
 #, no-c-format
 msgid "Card Duplex"
 msgstr "Targeta per a les dues cares"
 
-#: backend/canon_dr.c:432 backend/epson.c:597 backend/epson.c:3094
-#: backend/epson2.c:195 backend/fujitsu.c:706
+#: backend/canon_dr.c:442 backend/epson.c:597 backend/epson.c:3094
+#: backend/epson2.c:191 backend/fujitsu.c:706
 #: backend/genesys/genesys.cpp:117 backend/genesys/genesys.cpp:124
 #: backend/gt68xx_low.h:134 backend/hp-option.c:3091
 #, no-c-format
 msgid "Red"
 msgstr "Vermell"
 
-#: backend/canon_dr.c:433 backend/epson.c:598 backend/epson.c:3090
-#: backend/epson2.c:196 backend/fujitsu.c:707
+#: backend/canon_dr.c:443 backend/epson.c:598 backend/epson.c:3090
+#: backend/epson2.c:192 backend/fujitsu.c:707
 #: backend/genesys/genesys.cpp:118 backend/genesys/genesys.cpp:125
 #: backend/gt68xx_low.h:135 backend/hp-option.c:3092
 #, no-c-format
 msgid "Green"
 msgstr "Verd"
 
-#: backend/canon_dr.c:434 backend/epson.c:599 backend/epson.c:3098
-#: backend/epson2.c:197 backend/fujitsu.c:708
+#: backend/canon_dr.c:444 backend/epson.c:599 backend/epson.c:3098
+#: backend/epson2.c:193 backend/fujitsu.c:708
 #: backend/genesys/genesys.cpp:119 backend/genesys/genesys.cpp:126
 #: backend/gt68xx_low.h:136 backend/hp-option.c:3093
 #, no-c-format
 msgid "Blue"
 msgstr "Blau"
 
-#: backend/canon_dr.c:435
+#: backend/canon_dr.c:445
 #, no-c-format
 msgid "Enhance Red"
 msgstr "Vermell realçat"
 
-#: backend/canon_dr.c:436
+#: backend/canon_dr.c:446
 #, no-c-format
 msgid "Enhance Green"
 msgstr "Verd realçat"
 
-#: backend/canon_dr.c:437
+#: backend/canon_dr.c:447
 #, no-c-format
 msgid "Enhance Blue"
 msgstr "Blau realçat"
 
-#: backend/canon_dr.c:439 backend/epson.c:554 backend/epson.c:562
-#: backend/epson.c:574 backend/epson.c:596 backend/epson2.c:159
-#: backend/epson2.c:167 backend/epson2.c:179 backend/epson2.c:194
-#: backend/epson2.c:208 backend/fujitsu.c:712
+#: backend/canon_dr.c:449 backend/epson.c:554 backend/epson.c:562
+#: backend/epson.c:574 backend/epson.c:596 backend/epson2.c:155
+#: backend/epson2.c:163 backend/epson2.c:175 backend/epson2.c:190
+#: backend/epson2.c:204 backend/fujitsu.c:712
 #: backend/genesys/genesys.cpp:127 backend/leo.c:106
 #: backend/matsushita.c:135 backend/matsushita.c:156
 #: backend/matsushita.c:188 backend/matsushita.c:210
@@ -1680,26 +1682,26 @@ msgstr "Blau realçat"
 msgid "None"
 msgstr "Cap"
 
-#: backend/canon_dr.c:440 backend/fujitsu.c:713
+#: backend/canon_dr.c:450 backend/fujitsu.c:713
 #, no-c-format
 msgid "JPEG"
 msgstr "JPEG"
 
-#: backend/canon_dr.c:2526 backend/fujitsu.c:4140 backend/kvs1025_opt.c:910
+#: backend/canon_dr.c:2623 backend/fujitsu.c:4140 backend/kvs1025_opt.c:910
 #, no-c-format
 msgid "Software blank skip percentage"
 msgstr "El percentatge per a saltar el blanc del programari"
 
-#: backend/canon_dr.c:2527 backend/fujitsu.c:4141
+#: backend/canon_dr.c:2624 backend/fujitsu.c:4141
 #, no-c-format
 msgid "Request driver to discard pages with low percentage of dark pixels"
 msgstr ""
 "Sol·licita al controlador que descarti les pàgines amb un percentatge "
 "baix de píxels foscos"
 
-#: backend/canon_lide70.c:342 backend/epson.c:2811 backend/epson2.c:973
-#: backend/epsonds.c:636 backend/genesys/genesys.cpp:4632
-#: backend/gt68xx.c:449 backend/hp-option.c:2912 backend/kvs1025_opt.c:521
+#: backend/canon_lide70.c:342 backend/epson.c:2811 backend/epson2.c:967
+#: backend/genesys/genesys.cpp:4632 backend/gt68xx.c:449
+#: backend/hp-option.c:2912 backend/kvs1025_opt.c:521
 #: backend/kvs20xx_opt.c:171 backend/kvs40xx_opt.c:320 backend/ma1509.c:499
 #: backend/matsushita.c:1081 backend/microtek2.h:596 backend/mustek.c:4213
 #: backend/mustek_usb.c:254 backend/mustek_usb2.c:342 backend/niash.c:731
@@ -1723,40 +1725,39 @@ msgstr ""
 "Usa una E/S que no es bloquegi per a la «sane_read()» si està admès pel "
 "frontal."
 
-#: backend/epson.c:489 backend/epson2.c:108 backend/epsonds.c:90
-#: backend/kodakaio.c:611 backend/magicolor.c:174
+#: backend/epson.c:489 backend/epson2.c:104 backend/kodakaio.c:611
+#: backend/magicolor.c:174
 #, no-c-format
 msgid "Simplex"
 msgstr "Una cara"
 
-#: backend/epson.c:490 backend/epson2.c:109 backend/epsonds.c:91
-#: backend/kodakaio.c:612 backend/kvs1025.h:50 backend/kvs20xx_opt.c:204
-#: backend/kvs40xx_opt.c:353 backend/magicolor.c:175
-#: backend/matsushita.h:212
+#: backend/epson.c:490 backend/epson2.c:105 backend/kodakaio.c:612
+#: backend/kvs1025.h:50 backend/kvs20xx_opt.c:204 backend/kvs40xx_opt.c:353
+#: backend/magicolor.c:175 backend/matsushita.h:212
 #, no-c-format
 msgid "Duplex"
 msgstr "Dues cares"
 
-#: backend/epson.c:500 backend/epson2-ops.c:102 backend/epson2.c:116
-#: backend/epsonds-ops.c:33 backend/epsonds.h:66 backend/pixma/pixma.c:1013
+#: backend/epson.c:500 backend/epson2-ops.c:102 backend/epson2.c:112
+#: backend/epsonds.h:66 backend/pixma/pixma.c:1013
 #, no-c-format
 msgid "Transparency Unit"
 msgstr "Unitat per a la transparència"
 
-#: backend/epson.c:501 backend/epson2-ops.c:104 backend/epson2.c:118
-#: backend/epsonds-ops.c:34 backend/epsonds.c:98 backend/epsonds.h:67
-#: backend/kodakaio.c:618 backend/magicolor.c:182 backend/mustek.c:158
-#: backend/pixma/pixma.c:1001 backend/test.c:232 backend/umax.c:181
+#: backend/epson.c:501 backend/epson2-ops.c:104 backend/epson2.c:114
+#: backend/epsonds.h:67 backend/kodakaio.c:618 backend/magicolor.c:182
+#: backend/mustek.c:158 backend/pixma/pixma.c:1001 backend/test.c:232
+#: backend/umax.c:181
 #, no-c-format
 msgid "Automatic Document Feeder"
 msgstr "Alimentador automàtic de documents"
 
-#: backend/epson.c:521 backend/epson2.c:134
+#: backend/epson.c:521 backend/epson2.c:130
 #, no-c-format
 msgid "Positive Film"
 msgstr "Pel·lícula en positiu"
 
-#: backend/epson.c:522 backend/epson2.c:135
+#: backend/epson.c:522 backend/epson2.c:131
 #, no-c-format
 msgid "Negative Film"
 msgstr "Pel·lícula en negatiu"
@@ -1772,58 +1773,58 @@ msgid "Focus 2.5mm above glass"
 msgstr "Enfocament de 2,5 mm per sobre del vidre"
 
 #: backend/epson.c:555 backend/epson.c:563 backend/epson.c:575
-#: backend/epson2.c:160 backend/epson2.c:168 backend/epson2.c:180
+#: backend/epson2.c:156 backend/epson2.c:164 backend/epson2.c:176
 #, no-c-format
 msgid "Halftone A (Hard Tone)"
 msgstr "Semi to A (to dur)"
 
 #: backend/epson.c:556 backend/epson.c:564 backend/epson.c:576
-#: backend/epson2.c:161 backend/epson2.c:169 backend/epson2.c:181
+#: backend/epson2.c:157 backend/epson2.c:165 backend/epson2.c:177
 #, no-c-format
 msgid "Halftone B (Soft Tone)"
 msgstr "Semi to B (to suau)"
 
 #: backend/epson.c:557 backend/epson.c:565 backend/epson.c:577
-#: backend/epson2.c:162 backend/epson2.c:170 backend/epson2.c:182
+#: backend/epson2.c:158 backend/epson2.c:166 backend/epson2.c:178
 #, no-c-format
 msgid "Halftone C (Net Screen)"
 msgstr "Semi to C (matisat)"
 
-#: backend/epson.c:566 backend/epson.c:578 backend/epson2.c:171
-#: backend/epson2.c:183
+#: backend/epson.c:566 backend/epson.c:578 backend/epson2.c:167
+#: backend/epson2.c:179
 #, no-c-format
 msgid "Dither A (4x4 Bayer)"
 msgstr "Trama A (bayer 4x4)"
 
-#: backend/epson.c:567 backend/epson.c:579 backend/epson2.c:172
-#: backend/epson2.c:184
+#: backend/epson.c:567 backend/epson.c:579 backend/epson2.c:168
+#: backend/epson2.c:180
 #, no-c-format
 msgid "Dither B (4x4 Spiral)"
 msgstr "Trama B (espiral 4x4)"
 
-#: backend/epson.c:568 backend/epson.c:580 backend/epson2.c:173
-#: backend/epson2.c:185
+#: backend/epson.c:568 backend/epson.c:580 backend/epson2.c:169
+#: backend/epson2.c:181
 #, no-c-format
 msgid "Dither C (4x4 Net Screen)"
 msgstr "Trama C (matisat 4x4)"
 
-#: backend/epson.c:569 backend/epson.c:581 backend/epson2.c:174
-#: backend/epson2.c:186
+#: backend/epson.c:569 backend/epson.c:581 backend/epson2.c:170
+#: backend/epson2.c:182
 #, no-c-format
 msgid "Dither D (8x4 Net Screen)"
 msgstr "Trama D (matisat 8x4)"
 
-#: backend/epson.c:582 backend/epson2.c:187
+#: backend/epson.c:582 backend/epson2.c:183
 #, no-c-format
 msgid "Text Enhanced Technology"
 msgstr "Tecnologia per a la millora del text"
 
-#: backend/epson.c:583 backend/epson2.c:188
+#: backend/epson.c:583 backend/epson2.c:184
 #, no-c-format
 msgid "Download pattern A"
 msgstr "Descarrega el patró A"
 
-#: backend/epson.c:584 backend/epson2.c:189
+#: backend/epson.c:584 backend/epson2.c:185
 #, no-c-format
 msgid "Download pattern B"
 msgstr "Descarrega el patró B"
@@ -1833,7 +1834,7 @@ msgstr "Descarrega el patró B"
 msgid "No Correction"
 msgstr "Sense correcció"
 
-#: backend/epson.c:630 backend/epson.c:655 backend/epson2.c:249
+#: backend/epson.c:630 backend/epson.c:655 backend/epson2.c:245
 #, no-c-format
 msgid "User defined"
 msgstr "Definit per l'usuari"
@@ -1858,33 +1859,33 @@ msgstr "Impressores d'injecció de tinta"
 msgid "CRT monitors"
 msgstr "Monitors CRT"
 
-#: backend/epson.c:654 backend/epson2.c:248 backend/fujitsu.c:696
+#: backend/epson.c:654 backend/epson2.c:244 backend/fujitsu.c:696
 #: backend/hp-option.c:3224 backend/test.c:147
 #, no-c-format
 msgid "Default"
 msgstr "Predeterminat"
 
-#: backend/epson.c:656 backend/epson2.c:250
+#: backend/epson.c:656 backend/epson2.c:246
 #, no-c-format
 msgid "High density printing"
 msgstr "Impressió d'alta densitat"
 
-#: backend/epson.c:657 backend/epson2.c:251
+#: backend/epson.c:657 backend/epson2.c:247
 #, no-c-format
 msgid "Low density printing"
 msgstr "Impressió de baixa densitat"
 
-#: backend/epson.c:658 backend/epson2.c:252
+#: backend/epson.c:658 backend/epson2.c:248
 #, no-c-format
 msgid "High contrast printing"
 msgstr "Impressió d'alt contrast"
 
-#: backend/epson.c:676 backend/epson2.c:270
+#: backend/epson.c:676 backend/epson2.c:266
 #, no-c-format
 msgid "User defined (Gamma=1.0)"
 msgstr "Definit per l'usuari (gamma=1.0)"
 
-#: backend/epson.c:677 backend/epson2.c:271
+#: backend/epson.c:677 backend/epson2.c:267
 #, no-c-format
 msgid "User defined (Gamma=1.8)"
 msgstr "Definit per l'usuari (gamma=1.8)"
@@ -1922,37 +1923,37 @@ msgstr "A4"
 msgid "Max"
 msgstr "Màx"
 
-#: backend/epson.c:2843 backend/epson2.c:1008
+#: backend/epson.c:2843 backend/epson2.c:1002
 #, no-c-format
 msgid "Selects the halftone."
 msgstr "Selecciona el semi to."
 
-#: backend/epson.c:2865 backend/epson2.c:1029
+#: backend/epson.c:2865 backend/epson2.c:1023
 #, no-c-format
 msgid "Dropout"
 msgstr "Exclusió"
 
-#: backend/epson.c:2866 backend/epson2.c:1030
+#: backend/epson.c:2866 backend/epson2.c:1024
 #, no-c-format
 msgid "Selects the dropout."
 msgstr "Selecciona el que s'exclourà."
 
-#: backend/epson.c:2878 backend/epson2.c:1042
+#: backend/epson.c:2878 backend/epson2.c:1036
 #, no-c-format
 msgid "Selects the brightness."
 msgstr "Selecciona la brillantor."
 
-#: backend/epson.c:2893 backend/epson2.c:1055
+#: backend/epson.c:2893 backend/epson2.c:1049
 #, no-c-format
 msgid "Sharpness"
 msgstr "Agudesa"
 
-#: backend/epson.c:3029 backend/epson2.c:1171 backend/epson2.c:1218
+#: backend/epson.c:3029 backend/epson2.c:1165 backend/epson2.c:1212
 #, no-c-format
 msgid "Color correction"
 msgstr "Correcció del color"
 
-#: backend/epson.c:3032 backend/epson2.c:1173
+#: backend/epson.c:3032 backend/epson2.c:1167
 #, no-c-format
 msgid "Sets the color correction table for the selected output device."
 msgstr ""
@@ -2044,7 +2045,7 @@ msgstr "Afegeix vermell en funció del nivell de blau"
 msgid "Controls blue level"
 msgstr "Controla el nivell de blau"
 
-#: backend/epson.c:3204 backend/epson2.c:1252
+#: backend/epson.c:3204 backend/epson2.c:1246
 #, no-c-format
 msgid "Mirror the image."
 msgstr "Emmiralla la imatge."
@@ -2054,7 +2055,7 @@ msgstr "Emmiralla la imatge."
 msgid "Fast preview"
 msgstr "Vista prèvia ràpida"
 
-#: backend/epson.c:3243 backend/epson2.c:1262
+#: backend/epson.c:3243 backend/epson2.c:1256
 #, no-c-format
 msgid "Auto area segmentation"
 msgstr "Segmentació automàtica de l'àrea"
@@ -2084,49 +2085,49 @@ msgstr "Defineix el factor de zoom que usarà l'escàner"
 msgid "Quick format"
 msgstr "Format ràpid"
 
-#: backend/epson.c:3358 backend/epson2.c:1370 backend/epsonds.c:733
+#: backend/epson.c:3358 backend/epson2.c:1364 backend/epsonds.c:2022
 #, no-c-format
 msgid "Optional equipment"
 msgstr "Equipament opcional"
 
-#: backend/epson.c:3429 backend/epson2.c:1407 backend/epsonds.c:749
+#: backend/epson.c:3429 backend/epson2.c:1401 backend/epsonds.c:2038
 #, no-c-format
 msgid "Eject"
 msgstr "Expulsa"
 
-#: backend/epson.c:3430 backend/epson2.c:1408 backend/epsonds.c:750
+#: backend/epson.c:3430 backend/epson2.c:1402 backend/epsonds.c:2039
 #, no-c-format
 msgid "Eject the sheet in the ADF"
 msgstr "Expulsa el full de l'ADF"
 
-#: backend/epson.c:3442 backend/epson2.c:1418
+#: backend/epson.c:3442 backend/epson2.c:1412
 #, no-c-format
 msgid "Auto eject"
 msgstr "Expulsa automàticament"
 
-#: backend/epson.c:3443 backend/epson2.c:1420
+#: backend/epson.c:3443 backend/epson2.c:1414
 #, no-c-format
 msgid "Eject document after scanning"
 msgstr "Expulsa el document després de l'escaneig"
 
-#: backend/epson.c:3455 backend/epson2.c:1430 backend/epsonds.c:765
-#: backend/kodakaio.c:2859 backend/magicolor.c:2454
+#: backend/epson.c:3455 backend/epson2.c:1424 backend/kodakaio.c:2859
+#: backend/magicolor.c:2454
 #, no-c-format
 msgid "ADF Mode"
 msgstr "Mode ADF"
 
-#: backend/epson.c:3457 backend/epson2.c:1432 backend/epsonds.c:767
-#: backend/kodakaio.c:2861 backend/magicolor.c:2456
+#: backend/epson.c:3457 backend/epson2.c:1426 backend/kodakaio.c:2861
+#: backend/magicolor.c:2456
 #, no-c-format
 msgid "Selects the ADF mode (simplex/duplex)"
 msgstr "Seleccionar el mode de l'ADF (una cara/dues cares)"
 
-#: backend/epson.c:3471 backend/epson2.c:1444
+#: backend/epson.c:3471 backend/epson2.c:1438
 #, no-c-format
 msgid "Bay"
 msgstr "Badia"
 
-#: backend/epson.c:3472 backend/epson2.c:1445
+#: backend/epson.c:3472 backend/epson2.c:1439
 #, no-c-format
 msgid "Select bay to scan"
 msgstr "Selecciona la badia per escanejar"
@@ -2169,55 +2170,65 @@ msgstr ""
 "botó de l'escàner per iniciar realment el procés d'escaneig."
 
 # Nota: https://github.com/Scan-o-Matic/scanomatic/wiki/Installing-scanners
-#: backend/epson2-ops.c:103 backend/epson2.c:117
+#: backend/epson2-ops.c:103 backend/epson2.c:113
 #, no-c-format
 msgid "TPU8x10"
 msgstr "TPU8x10"
 
-#: backend/epson2.c:102 backend/pixma/pixma.c:414
+#: backend/epson2.c:98 backend/pixma/pixma.c:414
 #, no-c-format
 msgid "Infrared"
 msgstr "Infraroigs"
 
-#: backend/epson2.c:136
+#: backend/epson2.c:132
 #, no-c-format
 msgid "Positive Slide"
 msgstr "Diapositiva en positiu"
 
-#: backend/epson2.c:137
+#: backend/epson2.c:133
 #, no-c-format
 msgid "Negative Slide"
 msgstr "Diapositiva en negatiu"
 
 # Nota: https://en.wikipedia.org/wiki/Color_temperature#Correlated_color_temperature
-#: backend/epson2.c:209
+#: backend/epson2.c:205
 #, no-c-format
 msgid "Built in CCT profile"
 msgstr "Incorpora el perfil CCT"
 
-#: backend/epson2.c:210
+#: backend/epson2.c:206
 #, no-c-format
 msgid "User defined CCT profile"
 msgstr "Perfil CCT definit per l'usuari"
 
-#: backend/epsonds.c:757
+#: backend/epsonds.c:2046
 #, no-c-format
 msgid "Load"
 msgstr "Carrega"
 
-#: backend/epsonds.c:758
+#: backend/epsonds.c:2047
 #, no-c-format
 msgid "Load a sheet in the ADF"
 msgstr "Carrega un full a l'ADF"
 
-#: backend/epsonds.c:778
+#: backend/epsonds.c:2055
 #, no-c-format
 msgid "ADF Skew Correction"
 msgstr "Correcció de la inclinació a l'ADF"
 
-#: backend/epsonds.c:780
+#: backend/epsonds.c:2057
 #, no-c-format
 msgid "Enables ADF skew correction"
+msgstr "Habilita la correcció de la inclinació a l'ADF"
+
+#: backend/epsonds.c:2063
+#, fuzzy, no-c-format
+msgid "ADF CRP Correction"
+msgstr "Correcció de la inclinació a l'ADF"
+
+#: backend/epsonds.c:2065
+#, fuzzy, no-c-format
+msgid "Enables ADF auto cropping"
 msgstr "Habilita la correcció de la inclinació a l'ADF"
 
 #: backend/fujitsu.c:697 backend/hp-option.c:3325 backend/hp-option.c:3338
