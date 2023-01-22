@@ -17,11 +17,14 @@ RSYNC_PROTECT_TMP_FILES=(--filter "P .*.??????")
 variant_for_slice()
 {
   case "$1" in
+  "Sane.xcframework/ios-arm64_x86_64-maccatalyst")
+    echo "maccatalyst"
+    ;;
   "Sane.xcframework/ios-arm64_i386_x86_64-simulator")
     echo "simulator"
     ;;
-  "Sane.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "maccatalyst"
+  "Sane.xcframework/macos-arm64_x86_64")
+    echo ""
     ;;
   "Sane.xcframework/ios-arm64_arm64e_armv7_armv7s")
     echo ""
@@ -32,10 +35,13 @@ variant_for_slice()
 archs_for_slice()
 {
   case "$1" in
+  "Sane.xcframework/ios-arm64_x86_64-maccatalyst")
+    echo "arm64 x86_64"
+    ;;
   "Sane.xcframework/ios-arm64_i386_x86_64-simulator")
     echo "arm64 i386 x86_64"
     ;;
-  "Sane.xcframework/ios-arm64_x86_64-maccatalyst")
+  "Sane.xcframework/macos-arm64_x86_64")
     echo "arm64 x86_64"
     ;;
   "Sane.xcframework/ios-arm64_arm64e_armv7_armv7s")
@@ -123,5 +129,5 @@ install_xcframework() {
   echo "Copied $source to $destination"
 }
 
-install_xcframework "${PODS_ROOT}/../Sane/all/Sane.xcframework" "Sane" "library" "ios-arm64_i386_x86_64-simulator" "ios-arm64_x86_64-maccatalyst" "ios-arm64_arm64e_armv7_armv7s"
+install_xcframework "${PODS_ROOT}/../Sane/all/Sane.xcframework" "Sane" "library" "ios-arm64_x86_64-maccatalyst" "ios-arm64_i386_x86_64-simulator" "ios-arm64_arm64e_armv7_armv7s"
 

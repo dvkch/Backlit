@@ -26,13 +26,17 @@ BUILDS = {
     'ios-arm64e' => { platform: 'ios', arch: 'arm64e', sdk: 'iphoneos', min: 'iphoneos-version-min=9.0', host: 'armv64-apple-darwin' },
 
     # iOS Simulator
-    'sim-i386'   => { platform: 'sim', arch: 'i386',   sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'i386-apple-darwin' },
-    'sim-x86_64' => { platform: 'sim', arch: 'x86_64', sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'x86_64-apple-darwin' },
-    'sim-arm64'  => { platform: 'sim', arch: 'arm64',  sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'arm64-apple-darwin' },
+    'sim-i386'   => { platform: 'sim', arch: 'i386',   sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'i386-apple-darwin',   target: 'i386-apple-ios9.0-simulator' },
+    'sim-x86_64' => { platform: 'sim', arch: 'x86_64', sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'x86_64-apple-darwin', target: 'x86_64-apple-ios9.0-simulator' },
+    'sim-arm64'  => { platform: 'sim', arch: 'arm64',  sdk: 'iphonesimulator', min: 'ios-simulator-version-min=9.0', host: 'arm64-apple-darwin',  target: 'arm64-apple-ios9.0-simulator' },
 
     # Catalyst
     "catalyst-x86_64" => { platform: 'catalyst', arch: 'x86_64', sdk: 'macosx', min: 'iphoneos-version-min=13.1', host: 'x86_64-apple-darwin', target: 'x86_64-apple-ios13.1-macabi' },
     "catalyst-arm64"  => { platform: 'catalyst', arch: 'arm64',  sdk: 'macosx', min: 'iphoneos-version-min=13.1', host: 'arm64-apple-darwin',  target: 'arm64-apple-ios13.1-macabi' },
+
+    # macOS
+    "macos-x86-64" => { platform: 'macosx', arch: 'x86_64', sdk: 'macosx', min: 'macosx-version-min=11.0', host: 'x86_64-apple-darwin', target: 'x86_64-apple-darwin' },
+    "macos-arm64"  => { platform: 'macosx', arch: 'arm64',  sdk: 'macosx', min: 'macosx-version-min=11.0', host: 'arm64-apple-darwin',  target: 'arm64-apple-darwin' },
 }.freeze
 
 # Makes sure the folder exists and is empty
@@ -105,21 +109,20 @@ def build_lib(name)
         "-isysroot #{sdk_path}",
     ]
     host_flags << "-target #{options[:target]}" if options.key?(:target)
-    # host_flags << "-isystem #{sdk_path}/System/iOSSupport/usr/include" if options[:platform] == 'catalyst'
-    # host_flags << "-iframework #{sdk_path}/System/iOSSupport/System/Library/Frameworks" if options[:platform] == 'catalyst'
     host_flags = host_flags.join(' ')
 
     flags = {
-        "CC"        => `xcrun -find -sdk #{options[:sdk]} cc`,
+        "CC"        => `xcrun -find -sdk #{options[:sdk]} clang`,
+        "CXX"       => `xcrun -find -sdk #{options[:sdk]} clang++`,
         "CPP"       => `xcrun -find -sdk #{options[:sdk]} cpp`,
         "CFLAGS"    => host_flags + " " + FLAGS,
         "CXXFLAGS"  => host_flags + " " + FLAGS + " ",
-        "LDFLAGS"   => host_flags,
+        "LDFLAGS"   => host_flags + " -v",
     }
 
     # compiling with USB support would require compiling libusb which itself needs iOS IOKit headers. Unfortunately
     # those are private and the app would require root privileges to use the USB devices
-    configure_options = '--disable-local-backends --without-libcurl --without-snmp --without-usb --enable-static --disable-shared --disable-warnings --enable-pthread --enable-silent-rules'
+    configure_options = '--disable-local-backends --without-libcurl --without-snmp --without-usb --without-poppler-glib --enable-static --disable-shared --disable-warnings --enable-pthread --enable-silent-rules'
 
     Dir.chdir(GIT_DIR)
     puts '   => Configuring'
@@ -145,7 +148,7 @@ def merge_libs(platform)
 
     # This will merge libsane.a, libsane-dll.a and libsane-net.a into a single sane.a
     combined = builds.keys.map do |name|
-        input = input_libs.map { |lib| DEST_DIR + name + "lib" + lib }
+        input = input_libs.map { |lib| DEST_DIR + name + "lib" + lib }.filter { |lib| File.exist?(lib) }
         output = DEST_DIR + name + "lib" + output_combined_lib
 
         command = "libtool -static #{input.join(' ')} -o #{output}"
