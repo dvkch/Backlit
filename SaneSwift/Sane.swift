@@ -560,6 +560,11 @@ extension Sane {
             progress?(.warmingUp)
         }
         
+        let fullCompletion = { (status: ScanResult) in
+            device.currentOperation = nil
+            completion?(status)
+        }
+        
         runOnSaneThread {
             self.stopScanOperation = false
             
@@ -575,7 +580,7 @@ extension Sane {
             var status = Sane.logTime { sane_start(handle) }
             
             guard status == SANE_STATUS_GOOD else {
-                Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }
+                Sane.runOn(mainThread: mainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
             
@@ -590,7 +595,7 @@ extension Sane {
             status = sane_get_parameters(handle, &estimatedParams)
             
             guard status == SANE_STATUS_GOOD else {
-                Sane.runOn(mainThread: mainThread) { completion?(.failure(SaneError(saneStatus: status)!)) }
+                Sane.runOn(mainThread: mainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
 
@@ -671,21 +676,17 @@ extension Sane {
             
             SaneSetLogLevel(prevLogLevel)
             
-            guard status == SANE_STATUS_EOF, let finalParameters = parameters else {
-                Sane.runOn(mainThread: mainThread) {
-                    device.currentOperation = nil
-                    completion?(.failure(SaneError(saneStatus: status)!))
-                }
+            guard status == SANE_STATUS_EOF else {
+                Sane.runOn(mainThread: mainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
 
             let result = Result(catching: { try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: finalParameters) })
             Sane.runOn(mainThread: mainThread) {
-                device.currentOperation = nil
                 if let image = try? result.get() {
                     device.updatePreviewImage(image, scannedWith: finalParameters, fallbackToExisting: true)
                 }
-                completion?(result.map { ($0, finalParameters) })
+                fullCompletion(result.map { ($0, parameters) })
             }
         }
     }
