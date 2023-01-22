@@ -66,8 +66,11 @@ internal extension SaneConfig {
         return try? PropertyListDecoder().decode(SaneConfig.self, from: data)
     }
 
-    private func persistConfig() {
-        guard let saneNetConfURL = SaneConfig.saneNetConfURL,  let saneSwiftConfigPlistURL = SaneConfig.saneSwiftConfigPlistURL else {
+    func persistConfig() {
+        guard let saneNetConfURL = SaneConfig.saneNetConfURL,
+            let saneSwiftConfigPlistURL = SaneConfig.saneSwiftConfigPlistURL,
+            let saneDllConfURL = SaneConfig.saneDllConfURL else
+        {
             print("Couldn't create config paths")
             return
         }
@@ -77,8 +80,10 @@ internal extension SaneConfig {
             return
         }
         
+        print(saneDllConfURL)
         try? plistData.write(to: saneSwiftConfigPlistURL)
         try? saneNetConfContent().write(to: saneNetConfURL, atomically: true, encoding: .utf8)
+        try? ["net"].joined(separator: "\n").write(to: saneDllConfURL, atomically: true, encoding: .utf8)
     }
 }
 
@@ -98,6 +103,10 @@ extension SaneConfig {
         }
         
         return saneConfigDirURL
+    }
+    
+    private static var saneDllConfURL: URL? {
+        return configFolderURL?.appendingPathComponent("dll.conf", isDirectory: false)
     }
     
     private static var saneNetConfURL: URL? {

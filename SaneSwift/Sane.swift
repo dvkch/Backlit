@@ -32,6 +32,7 @@ public class Sane: NSObject {
         #endif
         
         SaneConfig.makeConfigAvailableToSaneLib()
+        configuration.persistConfig()
     }
     
     // MARK: Properties
