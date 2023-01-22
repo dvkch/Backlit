@@ -591,22 +591,24 @@ extension Sane {
                 return
             }
             
-            var estimatedParams = SANE_Parameters()
-            status = sane_get_parameters(handle, &estimatedParams)
-            
+            var params = SANE_Parameters()
+            status = sane_get_parameters(handle, &params)
+
             guard status == SANE_STATUS_GOOD else {
                 Sane.runOn(mainThread: mainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
                 return
             }
 
-            let estimatedParameters = ScanParameters(cParams: estimatedParams, cropArea: crop)
+            // read scan parameters as soon as possible. now that the scan has started they should not change. this is
+            // helpful since some backends don't give valid ones later on, especially when scanning in non blocking
+            // IO mode
+            let parameters = ScanParameters(cParams: params, cropArea: crop)
             
-            var data = Data(capacity: estimatedParameters.fileSize + 1)
-            let bufferMaxSize = max(100 * 1000, estimatedParameters.fileSize / 100)
+            var data = Data(capacity: parameters.fileSize + 1)
+            let bufferMaxSize = max(100 * 1000, parameters.fileSize / 100)
 
             let buffer = malloc(bufferMaxSize)!.bindMemory(to: UInt8.self, capacity: bufferMaxSize)
             var bufferActualSize: SANE_Int = 0
-            var parameters: ScanParameters?
             
             let prevLogLevel = SaneGetLogLevel()
             SaneSetLogLevel(0)
@@ -616,8 +618,7 @@ extension Sane {
             let incompletePreviewStep: Float = 0.02
             
             while status == SANE_STATUS_GOOD {
-                
-                if let parameters = parameters, let progress = progress, parameters.fileSize > 0 {
+                if let progress = progress, parameters.fileSize > 0 {
                     let percent = Float(data.count) / Float(parameters.fileSize)
                     
                     if generateIntermediateImages {
@@ -658,14 +659,8 @@ extension Sane {
                 
                 status = sane_read(handle, buffer, SANE_Int(bufferMaxSize), &bufferActualSize)
                 
-                if parameters == nil {
-                    var params = SANE_Parameters()
-                    sane_get_parameters(handle, &params)
-                    parameters = ScanParameters(cParams: params, cropArea: crop)
-                }
-                
                 // lineart requires inverting pixel values
-                if parameters?.currentlyAcquiredChannel == SANE_FRAME_GRAY && parameters?.depth == 1 {
+                if parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY && parameters.depth == 1 {
                     (0..<Int(bufferActualSize)).forEach { i in
                         buffer[i] = ~buffer[i]
                     }
@@ -681,10 +676,10 @@ extension Sane {
                 return
             }
 
-            let result = Result(catching: { try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: finalParameters) })
+            let result = Result(catching: { try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: parameters) })
             Sane.runOn(mainThread: mainThread) {
                 if let image = try? result.get() {
-                    device.updatePreviewImage(image, scannedWith: finalParameters, fallbackToExisting: true)
+                    device.updatePreviewImage(image, scannedWith: parameters, fallbackToExisting: true)
                 }
                 fullCompletion(result.map { ($0, parameters) })
             }
