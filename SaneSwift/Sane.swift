@@ -579,6 +579,14 @@ extension Sane {
             
             var status = Sane.logTime { sane_start(handle) }
             
+            // dirty hack: for Epson ET-2810, that doesn't have a document feeder, the first scan works, but the next ones
+            // fail with SANE_STATUS_NO_DOCS. This gives us another shot at scanning. It probably makes other devices break
+            // but I'll probably keep it until I can find another way to make it work :)
+            if status == SANE_STATUS_NO_DOCS {
+                sane_cancel(handle)
+                status = sane_start(handle)
+            }
+            
             guard status == SANE_STATUS_GOOD else {
                 Sane.runOn(mainThread: mainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
                 return
