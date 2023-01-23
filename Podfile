@@ -32,6 +32,9 @@ post_install do |installer|
             # Fix bundle targets' 'Signing Certificate' to 'Sign to Run Locally'
             # https://github.com/CocoaPods/CocoaPods/issues/8891#issuecomment-573301570
             config.build_settings['CODE_SIGN_IDENTITY[sdk=macosx*]'] = '-' if is_bundle
+
+            # Fix bundle targets' not signed on iOS
+            config.build_settings['DEVELOPMENT_TEAM'] = '79RY8264V4' if is_bundle
         end
     end
 end
