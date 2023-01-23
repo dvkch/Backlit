@@ -18,9 +18,7 @@ platform :ios do
         cert(team_id: "79RY8264V4")
         cert(team_id: "79RY8264V4", type: "mac_installer_distribution")
         sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios")
-        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios",      adhoc: true)
         sigh(team_id: "79RY8264V4", app_identifier: ext, platform: "ios")
-        sigh(team_id: "79RY8264V4", app_identifier: ext, platform: "ios",      adhoc: true)
         sigh(team_id: "79RY8264V4", app_identifier: app, platform: "catalyst")
 
         system "rm ../*.mobileprovision"
