@@ -68,7 +68,7 @@ public class Sane: NSObject {
     // MARK: Private properties
     private var thread: Thread!
     private var saneStarted = false
-    private var openedDevices = [String: NSValue]()
+    private var openedDevices = [Device.Name: NSValue]()
     private var stopScanOperation = false
     private let lockIsUpdatingDevices = NSLock()
     private var internalIsUpdatingDevices: Bool = false
@@ -127,7 +127,7 @@ extension Sane {
         runOnSaneThread {
             guard !self.saneStarted else { return }
             
-            self.openedDevices = [String: NSValue]()
+            self.openedDevices = [Device.Name: NSValue]()
             self.isUpdatingDevices = false
             
             let s = sane_init(nil, SaneAuthenticationCallback(deviceName:username:password:))
@@ -147,7 +147,7 @@ extension Sane {
         runOnSaneThread {
             guard self.saneStarted else { return }
             
-            self.openedDevices = [String: NSValue]()
+            self.openedDevices = [Device.Name: NSValue]()
             self.isUpdatingDevices = false
             sane_exit()
             
@@ -241,7 +241,7 @@ extension Sane {
             var h: SANE_Handle? = nil
             
             let s: SANE_Status = Sane.logTime {
-                sane_open(device.name.cString(using: .utf8), &h)
+                sane_open(device.name.rawValue.cString(using: .utf8), &h)
             }
             
             if s == SANE_STATUS_GOOD {

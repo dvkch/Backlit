@@ -307,9 +307,13 @@ extension DevicesVC : UITableViewDelegate {
             self.tableView.reloadData()
 
             if let error = error {
-                if let error = (error as? SaneError), case let .saneError(status) = error, status.rawValue == 11, DeviceAuthentication.saved(for: device.name) != nil {
+                if let error = (error as? SaneError),
+                    case let .saneError(status) = error,
+                    status.rawValue == SANE_STATUS_ACCESS_DENIED.rawValue,
+                    DeviceAuthentication.saved(for: device.name.rawValue) != nil
+                {
                     // this is an auth error, let's forget current auth and restart connexion
-                    DeviceAuthentication.forget(for: device.name)
+                    DeviceAuthentication.forget(for: device.name.rawValue)
                     self.tableView(tableView, didSelectRowAt: indexPath)
                     return
                 }

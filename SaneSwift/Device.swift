@@ -9,23 +9,24 @@
 import UIKit
 
 public class Device {
+
     // MARK: Initializers
     init(name: String, type: String, vendor: String, model: String) {
-        self.name = name
+        self.name = Name(rawValue: name)
         self.type = type
         self.vendor = vendor
         self.model = model
     }
     
     init(cDevice: SANE_Device) {
-        self.name   = cDevice.name.asString()   ?? ""
-        self.model  = cDevice.model.asString()  ?? ""
-        self.vendor = cDevice.vendor.asString() ?? ""
+        self.name   = Name(rawValue: cDevice.name.asString()   ?? "")
+        self.model  = cDevice.model.asString()                 ?? ""
+        self.vendor = cDevice.vendor.asString()                ?? ""
         self.type   = cDevice.type.asString()?.saneTranslation ?? ""
     }
     
     // MARK: Device properties
-    public let name: String
+    public let name: Name
     public let type: String
     public let vendor: String
     public let model: String
@@ -88,6 +89,20 @@ public class Device {
 extension Device: Equatable {
     public static func == (lhs: Device, rhs: Device) -> Bool {
         return lhs.name == rhs.name
+    }
+}
+
+// MARK: Name
+extension Device {
+    public struct Name: CustomStringConvertible, Equatable, Hashable {
+        public let rawValue: String
+        internal init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+        
+        public var description: String {
+            return rawValue
+        }
     }
 }
 
@@ -183,7 +198,8 @@ extension Device {
 extension Device {
     public var host: String {
         // documentation about net backend names is available at https://www.systutorials.com/docs/linux/man/5-sane-net/
-        
+        let name = self.name.rawValue
+
         guard name.contains(":") else {
             // according to man page, if the device name doesn't contain a ":", this is the default host, the last one in the configuration
             return Sane.shared.configuration.hosts.last ?? ""
