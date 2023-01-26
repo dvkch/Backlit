@@ -8,50 +8,53 @@
 
 import UIKit
 
-enum RefreshView {
-    case pullToRefresh(UITableView, () -> ())
-    case barButtonItem(UIViewController, () -> ())
-    
+struct RefreshView {
     init(tableView: UITableView, viewController: UIViewController, _ completion: @escaping () -> ()) {
         #if targetEnvironment(macCatalyst)
-        self = .barButtonItem(viewController, completion)
+        self.viewController = viewController
+        self.completionBlock = completion
         viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: completion)
         #else
-        self = .pullToRefresh(tableView, completion)
+        self.tableView = tableView
+        self.completionBlock = completion
         tableView.addPullToResfresh { _ in
             completion()
         }
         #endif
     }
     
+    #if targetEnvironment(macCatalyst)
+    weak var viewController: UIViewController?
+    #else
+    weak var tableView: UITableView?
+    #endif
+    var completionBlock: () -> ()
+
+    
     func startLoading(discreet: Bool = false) {
-        switch self {
-        case .barButtonItem(let viewController, _):
-            let loader: UIActivityIndicatorView
-            if #available(iOS 13.0, *) {
-                loader = UIActivityIndicatorView(style: .medium)
-            } else {
-                loader = UIActivityIndicatorView(style: .white)
-            }
-            loader.color = .tint
-            loader.startAnimating()
-            loader.accessibilityLabel = "LOADING".localized
-            viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loader)
-            
-        case .pullToRefresh(let tableView, _):
-            if !discreet {
-                tableView.showPullToRefresh()
-            }
+        #if targetEnvironment(macCatalyst)
+        let loader: UIActivityIndicatorView
+        if #available(iOS 13.0, *) {
+            loader = UIActivityIndicatorView(style: .medium)
+        } else {
+            loader = UIActivityIndicatorView(style: .white)
         }
+        loader.color = .tint
+        loader.startAnimating()
+        loader.accessibilityLabel = "LOADING".localized
+        viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loader)
+        #else
+        if !discreet {
+            tableView?.showPullToRefresh()
+        }
+        #endif
     }
     
     func stopLoading() {
-        switch self {
-        case .barButtonItem(let viewController, let block):
-            viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: block)
-
-        case .pullToRefresh(let tableView, _):
-            tableView.endPullToRefresh()
-        }
+        #if targetEnvironment(macCatalyst)
+        viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: completionBlock)
+        #else
+        tableView.endPullToRefresh()
+        #endif
     }
 }
