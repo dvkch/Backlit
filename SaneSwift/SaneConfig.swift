@@ -80,7 +80,6 @@ internal extension SaneConfig {
             return
         }
         
-        print(saneDllConfURL)
         try? plistData.write(to: saneSwiftConfigPlistURL)
         try? saneNetConfContent().write(to: saneNetConfURL, atomically: true, encoding: .utf8)
         try? ["net"].joined(separator: "\n").write(to: saneDllConfURL, atomically: true, encoding: .utf8)

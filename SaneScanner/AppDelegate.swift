@@ -31,9 +31,6 @@ class AppDelegate: UIResponder {
 
 extension AppDelegate : UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        // log
-        print("Gallery path:", GalleryManager.shared.galleryFolder)
-        
         // catalyst
         NSObject.fixCatalystScaling()
 
@@ -51,6 +48,9 @@ extension AppDelegate : UIApplicationDelegate {
             Sane.shared.configuration.clearHosts()
             Sane.shared.configuration.addHost(snapshotHost)
         }
+        
+        SaneSetLogLevel(0)
+        SaneLogger.level = .info
         
         return true
     }
