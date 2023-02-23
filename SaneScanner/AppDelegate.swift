@@ -16,6 +16,7 @@ import SYPictureMetadata
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition license)
 // LATER: see if blocking IO is necessary (seems to be an issue after a scan, where it might prevent updating an option... and can even ask for auth even if none is set)
 // LATER: test text field input for String & Int and handle Auto
+// LATER: add auto update on macOS using https://sparkle-project.org/
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
