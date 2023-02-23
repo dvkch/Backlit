@@ -353,7 +353,8 @@ extension Sane {
     }
     
     public func valueForOption<V, T: DeviceOptionTyped<V>>(_ option: T, completion: @escaping (_ value: V?, _ error: Error?) -> ()) {
-        SaneLogger.d(.sane, "Get value for \(option.device.model) > \(option.localizedTitle)")
+        let optionName = "\(option.device.model) > \(option.localizedTitle)"
+        SaneLogger.d(.sane, "Get value for \(optionName)")
         let startedOnMainThread = Thread.isMainThread
         
         guard let handle = obtainDeviceHandle(device: option.device) else {
@@ -381,8 +382,9 @@ extension Sane {
             let value = option.valueForBytes(bytes)
             free(bytes)
 
-            guard s == SANE_STATUS_GOOD else {
-                SaneLogger.e(.sane, "> Couldn't obtain value: \(s)")
+            // some backends allow reading the value fo a disabled option, so we try anyway, but ignore it if it fails
+            guard s == SANE_STATUS_GOOD || !option.capabilities.isActive else {
+                SaneLogger.e(.sane, "> Couldn't obtain value for \(optionName): \(s)")
                 Sane.runOn(mainThread: startedOnMainThread) { completion(nil, SaneError(saneStatus: s)) }
                 return
             }
@@ -436,7 +438,7 @@ extension Sane {
 
     public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<V>, completion: ((_ result: Result<SaneInfo, Error>) -> ())?) {
         let startedOnMainThread = Thread.isMainThread
-        SaneLogger.d(.sane, "Setting value \(value) for option \(option.localizedTitle)")
+        SaneLogger.i(.sane, "Setting value \(value) for option \(option.localizedTitle)")
 
         guard let handle = obtainDeviceHandle(device: option.device) else {
             SaneLogger.e(.sane, "> Device is not opened")
@@ -482,11 +484,11 @@ extension Sane {
             let result: Result<SaneInfo, Error>
             if status == SANE_STATUS_GOOD {
                 if SaneInfo(rawValue: info).contains(.reloadOptions) {
-                    SaneLogger.d(.sane, "> Reloading options after update")
+                    SaneLogger.d(.sane, "> Reloading all options after update")
                     // this is absolutely needed, because if the option declares it needs to reload other options, setting any option before
                     // doing so will result in SANE_STATUS_INVAL. So we make sure each changes that needs to reload options *does* reload them
                     self.listOptions(for: option.device, completion: nil)
-                    SaneLogger.d(.sane, "> Reloaded options after update")
+                    SaneLogger.d(.sane, "> Reloaded all options after update")
                 }
                 else {
                     SaneLogger.d(.sane, "> Reloading option to make sure its value is correct")
