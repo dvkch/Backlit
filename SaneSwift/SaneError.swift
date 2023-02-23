@@ -14,7 +14,6 @@ public enum SaneError: Error {
     case deviceNotOpened
     case getValueForButtonType
     case getValueForGroupType
-    case getValueForInactiveOption
     case setValueForGroupType
     case noImageData
     case cannotGenerateImage
@@ -42,11 +41,10 @@ extension SaneError : CustomNSError {
         case .deviceNotOpened:              return 1
         case .getValueForButtonType:        return 2
         case .getValueForGroupType:         return 3
-        case .getValueForInactiveOption:    return 4
-        case .setValueForGroupType:         return 5
-        case .noImageData:                  return 6
-        case .cannotGenerateImage:          return 7
-        case .unsupportedChannels:          return 8
+        case .setValueForGroupType:         return 4
+        case .noImageData:                  return 5
+        case .cannotGenerateImage:          return 6
+        case .unsupportedChannels:          return 7
         }
     }
     
@@ -63,7 +61,6 @@ extension SaneError: LocalizedError {
         case .deviceNotOpened:              return "ERROR MESSAGE DEVICE NOT OPENED".saneTranslation
         case .getValueForButtonType:        return "ERROR MESSAGE GET VALUE TYPE BUTTON".saneTranslation
         case .getValueForGroupType:         return "ERROR MESSAGE GET VALUE TYPE GROUP".saneTranslation
-        case .getValueForInactiveOption:    return "ERROR MESSAGE GET VALUE INACTIVE OPTION".saneTranslation
         case .setValueForGroupType:         return "ERROR MESSAGE SET VALUE TYPE GROUP".saneTranslation
         case .noImageData:                  return "ERROR MESSAGE NO IMAGE DATA".saneTranslation
         case .cannotGenerateImage:          return "ERROR MESSAGE CANNOT GENERATE IMAGE".saneTranslation

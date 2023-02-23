@@ -363,12 +363,6 @@ extension Sane {
             return
         }
         
-        guard option.capabilities.isActive else {
-            SaneLogger.w(.sane, "> Inactive option, nothing to obtain, aborting")
-            completion(nil, SaneError.getValueForInactiveOption)
-            return
-        }
-        
         runOnSaneThread {
             let bytes = malloc(option.size)!
             
