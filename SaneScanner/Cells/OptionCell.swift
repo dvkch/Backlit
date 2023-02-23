@@ -278,42 +278,54 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
-        // LATER: replace by UIButton.showsMenuAsPrimaryAction on iOS 14+ and macOS 11+
-        /*
-        if #available(macCatalyst 14.0, *) {
-            let button = UIButton(type: .system)
-            button.setTitle(current.description, for: .normal)
-            button.showsMenuAsPrimaryAction = true
-            button.menu = UIMenu(children: values.map { value in
-                UIAction(title: value.description) { action in
-                    print("selected: \(value.description)")
-                }
-            })
-            valueControlCatalyst = button
-        }
-         */
-
-        var dropdownOptions = values.map {
-            CatalystDropdownValue(
-                title: option.stringForValue($0, userFacing: true),
-                value: NSValue(nonretainedObject: $0)
-            )
+        var dropdownOptions: [(String, T?)] = values.map {
+            let title = option.stringForValue($0, userFacing: true)
+            return (title, $0)
         }
         
         if option.capabilities.contains(.automatic) {
-            dropdownOptions.append(CatalystDropdownValue(title: "OPTION VALUE AUTO".localized, value: nil))
+            dropdownOptions.append(("OPTION VALUE AUTO".localized, nil))
         }
 
+        let optionTitles: [String] = dropdownOptions.map(\.0)
         let selectedIndex = values.firstIndex(of: option.value) ?? -1
-        valueControlCatalyst = obtainCatalystPlugin().dropdown(options: dropdownOptions, selectedIndex: selectedIndex, disabled: option.disabledOrReadOnly, changed: { [weak self] selected in
+        let selectedTitle = selectedIndex == -1 ? "" : optionTitles[selectedIndex]
+
+        let valueChangedClosure = { [weak self] (selectedIndex: Int) -> Void in
             guard let self = self else { return }
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
-            if selected.value == nil {
-                Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
+            if let selectedValue = dropdownOptions[selectedIndex].1 {
+                Sane.shared.updateOption(option, with: .value(selectedValue), completion: self.optionUpdateCompletion(_:))
             } else {
-                Sane.shared.updateOption(option, with: .value((selected.value as! NSValue).nonretainedObjectValue as! T), completion: self.optionUpdateCompletion(_:))
+                Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
             }
-        })
+        }
+        
+        // LATER: replace by UIButton.showsMenuAsPrimaryAction on iOS 14+ and macOS 11+
+        if #available(macCatalyst 15.0, *) {
+            var config = UIButton.Configuration.bordered()
+            config.macIdiomStyle = .borderlessTinted
+            let button = UIButton(configuration: config)
+            button.preferredBehavioralStyle = .mac
+            button.setTitle(selectedTitle, for: .normal)
+            button.showsMenuAsPrimaryAction = true
+            button.menu = UIMenu(children: dropdownOptions.enumerated().map { i, option in
+                let action = UIAction(title: option.0) { action in
+                    valueChangedClosure(i)
+                }
+                action.state = i == selectedIndex ? .on : .off
+                return action
+            })
+            valueControlCatalyst = button
+            return
+        }
+        else {
+            valueControlCatalyst = obtainCatalystPlugin().dropdown(
+                optionsTitles: optionTitles,
+                selectedIndex: selectedIndex,
+                disabled: option.disabledOrReadOnly
+            ) {  valueChangedClosure($0) }
+        }
     }
     
     func updateDeviceOptionControlForRange<T>(option: DeviceOptionTyped<T>, current: Double, min: Double, max: Double, step: Double?, supportsAuto: Bool) where T : CustomStringConvertible, T : Numeric {
@@ -359,6 +371,7 @@ extension OptionCell: DeviceOptionControllable {
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
         field.text = option.value.description
+        field.borderStyle = .roundedRect
         field.isEnabled = !option.disabledOrReadOnly
             
         switch kind {

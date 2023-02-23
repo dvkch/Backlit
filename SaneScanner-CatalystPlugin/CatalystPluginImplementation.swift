@@ -81,22 +81,22 @@ import AppKit
         completion(cancelled ? nil : usernameField.stringValue, cancelled ? nil : passwordField.stringValue, rv == NSApplication.ModalResponse.alertSecondButtonReturn)
     }
 
-    public func dropdown(options: [CatalystDropdownValueProtocol], selectedIndex: Int, disabled: Bool, changed: @escaping (CatalystDropdownValueProtocol) -> ()) -> CatalystView {
+    public func dropdown(optionsTitles: [String], selectedIndex: Int, disabled: Bool, changed: @escaping (Int) -> ()) -> CatalystView {
         let view = NSPopUpButton()
 
-        if selectedIndex >= 0 && selectedIndex < options.count {
-            view.addItem(withTitle: options[selectedIndex].title)
+        if selectedIndex >= 0 && selectedIndex < optionsTitles.count {
+            view.addItem(withTitle: optionsTitles[selectedIndex])
             view.selectItem(at: 0)
         }
         view.isEnabled = !disabled
         
         NotificationCenter.default.addObserver(forName: NSPopUpButton.willPopUpNotification, object: view, queue: .main) { _ in
             view.removeAllItems()
-            view.addItems(withTitles: options.map(\.title))
+            view.addItems(withTitles: optionsTitles)
             view.selectItem(at: selectedIndex >= 0 ? selectedIndex : -1)
         }
         NotificationCenter.default.addObserver(forName: NSMenu.didSendActionNotification, object: view.menu, queue: .main) { _ in
-            changed(options[view.indexOfSelectedItem])
+            changed(view.indexOfSelectedItem)
         }
         return CatalystViewImplementation(originalView: view).containerWithProperScaling
     }

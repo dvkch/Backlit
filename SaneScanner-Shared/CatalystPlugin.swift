@@ -15,7 +15,7 @@ import Foundation
 
     func presentAuthInputAlert(title: String, message: String, usernamePlaceholder: String, passwordPlaceholder: String, continue: String, remember: String, cancel: String, completion: (_ username: String?, _ password: String?, _ remember: Bool) -> ())
 
-    func dropdown(options: [CatalystDropdownValueProtocol], selectedIndex: Int, disabled: Bool, changed: @escaping (CatalystDropdownValueProtocol) -> ()) -> CatalystView
+    func dropdown(optionsTitles: [String], selectedIndex: Int, disabled: Bool, changed: @escaping (Int) -> ()) -> CatalystView
     
     func button(title: String, completion: @escaping () -> ()) -> CatalystView
 }
@@ -35,29 +35,4 @@ func obtainCatalystPlugin() -> CatalystPlugin {
     }
 
     return pluginClass.init()
-}
-
-@objc(CatalystDropdownValue) public protocol CatalystDropdownValueProtocol: NSObjectProtocol {
-    var title: String { get }
-    var value: NSObject? { get }
-    
-    init(title: String, value: NSObject?)
-}
-
-class CatalystDropdownValue: NSObject, NSCopying, CatalystDropdownValueProtocol {
-    let title: String
-    let value: NSObject?
-
-    required init(title: String, value: NSObject?) {
-        self.title = title
-        self.value = value
-    }
-    
-    func copy(with zone: NSZone? = nil) -> Any {
-        return type(of: self).init(title: title, value: value)
-    }
-
-    public override var description: String {
-        return title
-    }
 }
