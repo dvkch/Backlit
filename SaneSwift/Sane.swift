@@ -673,8 +673,8 @@ extension Sane {
                 return
             }
             
-            SaneLogger.i(.sane, "> Setting blocing IO mode")
-            status = sane_set_io_mode(handle, SANE_FALSE) // blocking IO mode
+            SaneLogger.i(.sane, "> Setting blocking IO mode")
+            status = sane_set_io_mode(handle, SANE_FALSE) // false = blocking IO mode
             
             guard status == SANE_STATUS_GOOD || status == SANE_STATUS_UNSUPPORTED else {
                 SaneLogger.e(.sane, "> Couldn't set IO mode: \(status)")
@@ -753,8 +753,8 @@ extension Sane {
                     sane_cancel(handle)
                 }
                 
-                SaneLogger.d(.sane, "> Reading next data")
                 status = sane_read(handle, buffer, SANE_Int(bufferMaxSize), &bufferActualSize)
+                SaneLogger.d(.sane, "> Reading next data: requested \(bufferMaxSize), got \(bufferActualSize) bytes")
                 
                 // lineart requires inverting pixel values
                 if parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY && parameters.depth == 1 {
