@@ -699,7 +699,7 @@ extension Sane {
             SaneLogger.i(.sane, "> Scan parameters are \(parameters)")
 
             var data = Data(capacity: parameters.fileSize + 1)
-            let bufferMaxSize = max(100 * 1000, parameters.fileSize / 100)
+            let bufferMaxSize = max(500 * 1000, parameters.fileSize / 100)
             SaneLogger.d(.sane, "> Preparing buffer of size \(bufferMaxSize) bytes")
 
             let buffer = malloc(bufferMaxSize)!.bindMemory(to: UInt8.self, capacity: bufferMaxSize)
