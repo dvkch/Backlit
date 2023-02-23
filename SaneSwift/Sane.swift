@@ -77,7 +77,18 @@ extension Sane {
     
     private static func runOn(mainThread: Bool, block: @escaping () -> ()) {
         if mainThread {
-            DispatchQueue.main.async { block() }
+            if Thread.isMainThread {
+                block()
+            }
+            else {
+                // async could be useful, for instance to allow generation of previews on the main thread without
+                // blocking the reading of more data, but this used to lead to out of order blocks, putting the UI
+                // at of sync with the actual scanning status (e.g. receives notification for scanning progress,
+                // then scanning end, then scanning progress again)
+                DispatchQueue.main.sync {
+                    block()
+                }
+            }
         }
         else {
             block()
@@ -710,9 +721,9 @@ extension Sane {
                             // is being written to in the sane thread at the same time
                             let dataCopy = Data(data)
 
-                            SaneLogger.i(.sane, "> Generating preview")
                             // image creation needs to be done on main thread
                             Sane.runOn(mainThread: true) {
+                                SaneLogger.i(.sane, "> Generating preview")
                                 let incompleteImage = try? UIImage.sy_imageFromIncompleteSane(data: dataCopy, parameters: parameters)
                                 device.currentOperation = (operation, .scanning(progress: percent, incompletePreview: incompleteImage, estimatedParameters: parameters))
                                 progress(.scanning(progress: percent, incompletePreview: incompleteImage, estimatedParameters: parameters))
@@ -720,8 +731,8 @@ extension Sane {
                         }
                     }
                     else {
-                        SaneLogger.i(.sane, "> Reporting progress: \(percent)")
                         Sane.runOn(mainThread: true) {
+                            SaneLogger.i(.sane, "> Reporting progress: \(percent)")
                             device.currentOperation = (operation, .scanning(progress: percent, incompletePreview: nil, estimatedParameters: parameters))
                             progress(.scanning(progress: percent, incompletePreview: nil, estimatedParameters: parameters))
                         }
