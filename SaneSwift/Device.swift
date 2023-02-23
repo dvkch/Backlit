@@ -106,6 +106,19 @@ extension Device {
     }
 }
 
+// MARK: Handle
+extension Device {
+    internal struct Handle {
+        let pointer: SANE_Handle
+        init?(pointer: SANE_Handle?) {
+            guard let pointer else {
+                return nil
+            }
+            self.pointer = pointer
+        }
+    }
+}
+
 // MARK: Options
 extension Device {
     public func optionGroups(includeAdvanced: Bool) -> [DeviceOptionGroup] {

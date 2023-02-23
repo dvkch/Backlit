@@ -10,6 +10,31 @@ import UIKit
 import ImageIO
 import CommonCrypto
 
+@propertyWrapper
+internal struct SaneLocked<Value> {
+    private var lock = NSLock()
+    private var _stored: Value
+
+    public init(wrappedValue initialValue: Value) {
+      _stored = initialValue
+    }
+
+    public var wrappedValue: Value {
+        get {
+            lock.lock()
+            defer { lock.unlock() }
+
+            return _stored
+        }
+        set(newValue) {
+            lock.lock()
+            defer { lock.unlock() }
+
+            _stored = newValue
+        }
+    }
+}
+
 internal extension String {
     func md5() -> String {
         let length = Int(CC_MD5_DIGEST_LENGTH)

@@ -34,25 +34,19 @@ public class Sane: NSObject {
     // MARK: Properties
     public weak var delegate: SaneDelegate?
     public private(set) var saneInitError: String?
-    public private(set) var isUpdatingDevices: Bool {
-        get {
-            var value = false
-            lockIsUpdatingDevices.lock()
-            value = internalIsUpdatingDevices
-            lockIsUpdatingDevices.unlock()
-            return value
-        }
-        set {
-            if internalIsUpdatingDevices == newValue {
-                return
-            }
-            
-            lockIsUpdatingDevices.lock()
-            internalIsUpdatingDevices = newValue
-            lockIsUpdatingDevices.unlock()
-            
+    public var isUpdatingDevices: Bool {
+        return isUpdatingDevicesInternal
+    }
+
+    // MARK: Private properties
+    private var thread: Thread!
+    private var saneStarted = false
+    @SaneLocked private var isUpdatingDevicesInternal: Bool = false {
+        didSet {
+            guard isUpdatingDevicesInternal != oldValue else { return }
+
             DispatchQueue.main.async {
-                if newValue {
+                if self.isUpdatingDevices {
                     self.delegate?.saneDidStartUpdatingDevices(self)
                 } else {
                     self.delegate?.saneDidEndUpdatingDevices(self)
@@ -60,17 +54,8 @@ public class Sane: NSObject {
             }
         }
     }
-    
-    // MARK: Private properties
-    private var thread: Thread!
-    private var saneStarted = false
-    private var openedDevices = [Device.Name: NSValue]()
+    @SaneLocked private var openedDevices = [Device.Name: Device.Handle]()
     private var stopScanOperation = false
-    private let lockIsUpdatingDevices = NSLock()
-    private var internalIsUpdatingDevices: Bool = false
-    
-    private var lockQueueBlocks = NSLock()
-    private var queuedBlocks = [() -> ()]()
 
     // MARK: Configuration
     public var configuration: SaneConfig = SaneConfig.restored() ?? SaneConfig()
@@ -123,8 +108,8 @@ extension Sane {
         runOnSaneThread {
             guard !self.saneStarted else { return }
             
-            self.openedDevices = [Device.Name: NSValue]()
-            self.isUpdatingDevices = false
+            self.clearOpenedDevices()
+            self.isUpdatingDevicesInternal = false
             
             let s = sane_init(nil, SaneAuthenticationCallback(deviceName:username:password:))
             
@@ -143,8 +128,8 @@ extension Sane {
         runOnSaneThread {
             guard self.saneStarted else { return }
             
-            self.openedDevices = [Device.Name: NSValue]()
-            self.isUpdatingDevices = false
+            self.clearOpenedDevices()
+            self.isUpdatingDevicesInternal = false
             sane_exit()
             
             self.saneStarted = false
@@ -199,7 +184,7 @@ extension Sane {
             }
             
             self.startSane()
-            self.isUpdatingDevices = true
+            self.isUpdatingDevicesInternal = true
             
             var rawDevices: UnsafeMutablePointer<UnsafePointer<SANE_Device>?>? = nil
             
@@ -208,7 +193,7 @@ extension Sane {
             }
             
             guard s == SANE_STATUS_GOOD else {
-                self.isUpdatingDevices = false
+                self.isUpdatingDevicesInternal = false
                 Sane.runOn(mainThread: true, block: {
                     SaneLogger.e(.sane, "Couldn't update devices: \(s)")
                     completion(nil, SaneError(saneStatus: s))
@@ -225,8 +210,7 @@ extension Sane {
             }
             SaneLogger.i(.sane, "Found \(devices.count) devices")
 
-            self.isUpdatingDevices = false
-            
+            self.isUpdatingDevicesInternal = false
             Sane.runOn(mainThread: true, block: {
                 completion(devices, nil)
             })
@@ -240,7 +224,7 @@ extension Sane {
         let startedOnMainThread = Thread.isMainThread
         
         runOnSaneThread {
-            guard self.openedDevices[device.name] == nil else {
+            guard self.isDeviceOpened(device) == false else {
                 SaneLogger.w(.sane, "Device is already opened")
                 Sane.runOn(mainThread: startedOnMainThread, block: {
                     completion(nil)
@@ -256,7 +240,7 @@ extension Sane {
             }
             
             if s == SANE_STATUS_GOOD {
-                self.openedDevices[device.name] = NSValue(pointer: h)
+                self.markDevice(device: device, openedWith: h)
             }
             
             if s == SANE_STATUS_GOOD && listOptions {
@@ -281,12 +265,12 @@ extension Sane {
         device.updatePreviewImage(nil, scannedWith: nil, fallbackToExisting: false)
 
         runOnSaneThread {
-            guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
+            guard let handle = self.obtainDeviceHandle(device: device) else {
                 SaneLogger.w(.sane, "Device doesn't seem opened, skipping")
                 return
             }
             Sane.logTime { sane_close(handle) }
-            self.openedDevices.removeValue(forKey: device.name)
+            self.markDevice(device: device, openedWith: nil)
             SaneLogger.i(.sane, "Device closed")
 
             if self.openedDevices.isEmpty {
@@ -295,8 +279,20 @@ extension Sane {
         }
     }
     
+    private func clearOpenedDevices() {
+        openedDevices = [:]
+    }
+    
+    private func obtainDeviceHandle(device: Device) -> SANE_Handle? {
+        return openedDevices[device.name]?.pointer
+    }
+    
+    private func markDevice(device: Device, openedWith pointer: SANE_Handle?) {
+        openedDevices[device.name] = .init(pointer: pointer)
+    }
+    
     public func isDeviceOpened(_ device: Device) -> Bool {
-        return self.openedDevices[device.name]?.pointerValue != nil
+        return obtainDeviceHandle(device: device) != nil
     }
 }
 
@@ -306,7 +302,7 @@ extension Sane {
         SaneLogger.i(.sane, "Listing options for \(device.model)")
         let startedOnMainThread = Thread.isMainThread
         
-        guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
+        guard let handle = obtainDeviceHandle(device: device) else {
             SaneLogger.e(.sane, "Device is not opened, skipping")
             completion?()
             return
@@ -349,7 +345,7 @@ extension Sane {
         SaneLogger.d(.sane, "Get value for \(option.device.model) > \(option.localizedTitle)")
         let startedOnMainThread = Thread.isMainThread
         
-        guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
+        guard let handle = obtainDeviceHandle(device: option.device) else {
             SaneLogger.e(.sane, "> Device is not opened, aborting")
             completion(nil, SaneError.deviceNotOpened)
             return
@@ -395,7 +391,7 @@ extension Sane {
         SaneLogger.i(.sane, "Setting crop area to \(useAuto ? "auto" : cropArea.debugDescription) for \(device.model)")
         let startedOnMainThread = Thread.isMainThread
         
-        guard openedDevices[device.name]?.pointerValue != nil else {
+        guard isDeviceOpened(device) else {
             SaneLogger.e(.sane, "Device is not opened")
             completion?(SaneError.deviceNotOpened)
             return
@@ -437,7 +433,7 @@ extension Sane {
         let startedOnMainThread = Thread.isMainThread
         SaneLogger.d(.sane, "Setting value \(value) for option \(option.localizedTitle)")
 
-        guard let handle: SANE_Handle = self.openedDevices[option.device.name]?.pointerValue else {
+        guard let handle = obtainDeviceHandle(device: option.device) else {
             SaneLogger.e(.sane, "> Device is not opened")
             completion?(.failure(SaneError.deviceNotOpened))
             return
@@ -539,7 +535,7 @@ extension Sane {
         let startedOnMainThread = Thread.isMainThread
         SaneLogger.i(.sane, "Starting preview for \(device.model)")
 
-        guard openedDevices[device.name]?.pointerValue != nil else {
+        guard isDeviceOpened(device) else {
             SaneLogger.e(.sane, "> Device is not opened")
             completion?(.failure(SaneError.deviceNotOpened))
             return
@@ -624,7 +620,7 @@ extension Sane {
 
         let startedOnMainThread = Thread.isMainThread
 
-        guard let handle: SANE_Handle = self.openedDevices[device.name]?.pointerValue else {
+        guard let handle = obtainDeviceHandle(device: device) else {
             SaneLogger.e(.sane, "> Device is not opened")
             Sane.runOn(mainThread: startedOnMainThread) { completion?(.failure(SaneError.deviceNotOpened)) }
             return
