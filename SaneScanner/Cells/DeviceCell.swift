@@ -46,6 +46,7 @@ class DeviceCell: TableViewCell {
                 accessibilityIdentifier = "loading_device"
             }
             else {
+                accessoryView = nil
                 accessoryType = .disclosureIndicator
                 accessibilityIdentifier = nil
             }

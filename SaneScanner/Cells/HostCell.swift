@@ -28,7 +28,16 @@ class HostCell: TableViewCell {
     
     var showAddIndicator: Bool = false {
         didSet {
-            accessoryView = showAddIndicator ? UIImageView(image: UIImage(named: "button-add")) : nil
+            if showAddIndicator {
+                let imageView = UIImageView(image: UIImage(named: "scanner"))
+                imageView.tintColor = .normalText
+                imageView.frame.size = .init(width: 20, height: 20)
+                imageView.contentMode = .scaleAspectFit
+                accessoryView = imageView
+            }
+            else {
+                accessoryView = nil
+            }
         }
     }
 }
