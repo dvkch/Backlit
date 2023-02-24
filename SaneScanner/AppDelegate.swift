@@ -31,9 +31,6 @@ class AppDelegate: UIResponder {
 
 extension AppDelegate : UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        // catalyst
-        NSObject.fixCatalystScaling()
-
         // create UI on iOS < 13
         if #available(iOS 13.0, *) {} else {
             context = Context()
