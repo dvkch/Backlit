@@ -225,7 +225,7 @@ extension Device {
             return firstPart + secondPart
         }
         
-        return name.components(separatedBy: ":").first ?? ""
+        return name.components(separatedBy: ":").filter { $0 != "net" }.first ?? ""
     }
 }
 
