@@ -22,6 +22,11 @@ class Slider: UIControl {
     }
     
     private func setup() {
+        if #available(macCatalyst 15.0, *) {
+            // prevent crash when modifying thumb
+            slider.preferredBehavioralStyle = .pad
+        }
+
         container.axis = .horizontal
         container.distribution = .fill
         container.spacing = 10
@@ -42,7 +47,7 @@ class Slider: UIControl {
         container.addArrangedSubview(label)
         
         useMacOSThumb = UIDevice.isCatalyst
-        
+
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapGestureRecognized))
         doubleTapGesture.numberOfTapsRequired = 2
         label.addGestureRecognizer(doubleTapGesture)
@@ -137,6 +142,7 @@ class Slider: UIControl {
     // MARK: Keyboard
     override var keyCommands: [UIKeyCommand]? {
         return [
+            // TODO: those don't work anymore
             UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:))),
             UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:))),
         ]

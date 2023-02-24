@@ -36,13 +36,6 @@ class OptionCell: TableViewCell {
     private var tooltipView: TooltipView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var valueLabel: UILabel!
-    #if targetEnvironment(macCatalyst)
-    private var valueControlCatalyst: CatalystView? {
-        didSet {
-            valueControl = valueControlCatalyst?.view
-        }
-    }
-    #endif
     private var valueControl: UIView? {
         didSet {
             oldValue?.removeFromSuperview()
@@ -88,12 +81,6 @@ class OptionCell: TableViewCell {
             }
         }
 
-        #if targetEnvironment(macCatalyst)
-        if let valueControl = valueControl, let control = valueControlCatalyst, press.type == .select {
-            return control.triggerAction(position: valueControl.window?.convert(.zero, from: valueControl) ?? .zero)
-        }
-        #endif
-        
         super.pressesEnded(presses, with: event)
     }
     
@@ -141,7 +128,7 @@ class OptionCell: TableViewCell {
             #if targetEnvironment(macCatalyst)
             useMacOSLayout = true
             titleLabel.textAlignment = .right
-            valueControlCatalyst = nil
+            valueControl = nil
             option.updateDeviceOptionControl(using: self, filterDisabled: false, filterSingleOption: false)
             #endif
         }
@@ -155,16 +142,13 @@ class OptionCell: TableViewCell {
     // MARK: Layout
     // cell heights are not proper because they depend on layoutMargins, that change according to safeAreaInsets. we only use those for estimated heights
     private static let sizingCell = UINib(nibName: "OptionCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! OptionCell
-    
+    private var isSizingCell: Bool {
+        return self == type(of: self).sizingCell
+    }
     static func cellHeight(option: DeviceOption, showDescription: Bool, width: CGFloat) -> CGFloat {
-        #if targetEnvironment(macCatalyst)
-        // Somehow on macCatayst (maybe even on iOS 13+) the cell sizing is slower than computing it ourselves (possibly because of menu rebuilding)
-        return UITableView.automaticDimension
-        #else
         sizingCell.updateWith(option: option)
         sizingCell.showDescription = showDescription
         return sizingCell.cellHeight(forWidth: width)
-        #endif
     }
     
     static func cellHeight(prefKey: Preferences.Key, showDescription: Bool, width: CGFloat) -> CGFloat {
@@ -272,12 +256,15 @@ class OptionCell: TableViewCell {
 }
 
 #if targetEnvironment(macCatalyst)
+// TODO: test on iOS as well
 extension OptionCell: DeviceOptionControllable {
     func updateDeviceOptionControlForDisabledOption() {
-        valueControlCatalyst = nil
+        valueControl = nil
     }
     
     func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
+        guard !isSizingCell else { return }
+
         var dropdownOptions: [(String, T?)] = values.map {
             let title = option.stringForValue($0, userFacing: true)
             return (title, $0)
@@ -301,34 +288,27 @@ extension OptionCell: DeviceOptionControllable {
             }
         }
         
-        // LATER: replace by UIButton.showsMenuAsPrimaryAction on iOS 14+ and macOS 11+
+        let button = UIButton(type: .system)
         if #available(macCatalyst 15.0, *) {
-            var config = UIButton.Configuration.bordered()
-            config.macIdiomStyle = .borderlessTinted
-            let button = UIButton(configuration: config)
+            // TODO: test on Catalyst 14.0
+            button.configuration = .bordered()
             button.preferredBehavioralStyle = .mac
-            button.setTitle(selectedTitle, for: .normal)
-            button.showsMenuAsPrimaryAction = true
-            button.menu = UIMenu(children: dropdownOptions.enumerated().map { i, option in
-                let action = UIAction(title: option.0) { action in
-                    valueChangedClosure(i)
-                }
-                action.state = i == selectedIndex ? .on : .off
-                return action
-            })
-            valueControlCatalyst = button
-            return
         }
-        else {
-            valueControlCatalyst = obtainCatalystPlugin().dropdown(
-                optionsTitles: optionTitles,
-                selectedIndex: selectedIndex,
-                disabled: option.disabledOrReadOnly
-            ) {  valueChangedClosure($0) }
-        }
+        button.setTitle(selectedTitle, for: .normal)
+        button.showsMenuAsPrimaryAction = true
+        button.menu = UIMenu(children: dropdownOptions.enumerated().map { i, option in
+            let action = UIAction(title: option.0) { action in
+                valueChangedClosure(i)
+            }
+            action.state = i == selectedIndex ? .on : .off
+            return action
+        })
+        valueControl = button
     }
     
     func updateDeviceOptionControlForRange<T>(option: DeviceOptionTyped<T>, current: Double, min: Double, max: Double, step: Double?, supportsAuto: Bool) where T : CustomStringConvertible, T : Numeric {
+        guard !isSizingCell else { return }
+
         let optionInt = option as? DeviceOptionInt
         let optionFixed = option as? DeviceOptionFixed
         
@@ -366,7 +346,6 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForField<T>(option: DeviceOptionTyped<T>, current: T, kind: DeviceOptionControllableFieldKind, supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
-        
         let field = UITextField()
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
@@ -402,11 +381,19 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
-        valueControlCatalyst = obtainCatalystPlugin().button(title: "ACTION PRESS".localized) { [weak self] in
+        let button = UIButton(type: .roundedRect)
+        button.setTitle("ACTION PRESS".localized, for: .normal)
+        if #available(macCatalyst 15.0, *) {
+            // TODO: test on Catalyst 14.0
+            button.configuration = .bordered()
+            button.preferredBehavioralStyle = .mac
+        }
+        button.addPrimaryAction { [weak self] in
             guard let self = self else { return }
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
             option.press(self.optionUpdateCompletion(_:))
         }
+        valueControl = button
     }
 
     private func optionUpdateCompletion(_ result: Result<SaneInfo, Error>) {

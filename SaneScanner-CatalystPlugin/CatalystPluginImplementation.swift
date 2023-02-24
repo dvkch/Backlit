@@ -80,44 +80,5 @@ import AppKit
         let cancelled = rv == NSApplication.ModalResponse.alertThirdButtonReturn
         completion(cancelled ? nil : usernameField.stringValue, cancelled ? nil : passwordField.stringValue, rv == NSApplication.ModalResponse.alertSecondButtonReturn)
     }
-
-    public func dropdown(optionsTitles: [String], selectedIndex: Int, disabled: Bool, changed: @escaping (Int) -> ()) -> CatalystView {
-        let view = NSPopUpButton()
-
-        if selectedIndex >= 0 && selectedIndex < optionsTitles.count {
-            view.addItem(withTitle: optionsTitles[selectedIndex])
-            view.selectItem(at: 0)
-        }
-        view.isEnabled = !disabled
-        
-        NotificationCenter.default.addObserver(forName: NSPopUpButton.willPopUpNotification, object: view, queue: .main) { _ in
-            view.removeAllItems()
-            view.addItems(withTitles: optionsTitles)
-            view.selectItem(at: selectedIndex >= 0 ? selectedIndex : -1)
-        }
-        NotificationCenter.default.addObserver(forName: NSMenu.didSendActionNotification, object: view.menu, queue: .main) { _ in
-            changed(view.indexOfSelectedItem)
-        }
-        return CatalystViewImplementation(originalView: view).containerWithProperScaling
-    }
-    
-    public func button(title: String, completion: @escaping () -> ()) -> CatalystView {
-        let view = Button(title: title, target: nil, action: nil)
-        view.pressedBlock = completion
-        return CatalystViewImplementation(originalView: view).containerWithProperScaling
-    }
-}
-
-private class Button: NSButton {
-    var pressedBlock: (() -> ())? {
-        didSet {
-            target = self
-            action = #selector(pressed)
-        }
-    }
-    
-    @objc private func pressed() {
-        pressedBlock?()
-    }
 }
 

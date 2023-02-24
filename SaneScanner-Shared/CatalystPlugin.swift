@@ -14,10 +14,6 @@ import Foundation
     func presentHostInputAlert(title: String, message: String, add: String, cancel: String, completion: (String) -> ())
 
     func presentAuthInputAlert(title: String, message: String, usernamePlaceholder: String, passwordPlaceholder: String, continue: String, remember: String, cancel: String, completion: (_ username: String?, _ password: String?, _ remember: Bool) -> ())
-
-    func dropdown(optionsTitles: [String], selectedIndex: Int, disabled: Bool, changed: @escaping (Int) -> ()) -> CatalystView
-    
-    func button(title: String, completion: @escaping () -> ()) -> CatalystView
 }
 
 @available(macCatalyst 10.0, *)

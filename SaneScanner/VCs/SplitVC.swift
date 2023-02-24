@@ -24,14 +24,15 @@ class SplitVC: UISplitViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewControllers = [scanNC, previewNC]
+        #if targetEnvironment(macCatalyst)
+        maximumPrimaryColumnWidth = 500
+        minimumPrimaryColumnWidth = 350
+        preferredDisplayMode = .oneBesideSecondary
+        #else
         preferredDisplayMode = .allVisible
+        #endif
         scanNC.delegate = self
         addKeyCommand(.openGallery)
-        
-        #if targetEnvironment(macCatalyst)
-        maximumPrimaryColumnWidth = 500 / catalystViewScaling
-        minimumPrimaryColumnWidth = 350 / catalystViewScaling
-        #endif
     }
 
     // MARK: Properties

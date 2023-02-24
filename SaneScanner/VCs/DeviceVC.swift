@@ -38,6 +38,9 @@ class DeviceVC: UIViewController {
         tableView.alwaysBounceVertical = true
         tableView.dataSource = self
         tableView.delegate = self
+        if #available(macCatalyst 15.0, *) {
+            tableView.isPrefetchingEnabled = false
+        }
         tableView.registerHeader(TableViewHeader.self, xib: false)
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
