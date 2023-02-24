@@ -54,6 +54,7 @@ class DevicesVC: UIViewController {
 
         Sane.shared.delegate = self
         SaneBonjour.shared.delegate = self
+        SaneBonjour.shared.start()
     }
 
     override func viewWillAppear(_ animated: Bool) {
