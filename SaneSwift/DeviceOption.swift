@@ -281,6 +281,7 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
         switch value {
         case .auto:
             return .auto
+
         case .min, .max:
             switch constraint {
             case .range(let min, let max), .stepRange(let min, let max, _, _):
@@ -288,9 +289,21 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
             case .list(let values):
                 guard !values.isEmpty else { return .none }
                 return value == .min ? .value(values.min()!) : .value(values.max()!)
-            default:
+            case .none:
                 return .none
             }
+
+        case .value(let specificValue):
+            switch constraint {
+            case .range(let min, let max), .stepRange(let min, let max, _, _):
+                return .value(specificValue.clamped(min: min, max: max))
+            case .list(let values):
+                guard let closest = values.closest(to: specificValue) else { return .none }
+                return .value(closest)
+            case .none:
+                return .value(specificValue)
+            }
+
         default:
             fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
         }
@@ -355,6 +368,7 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
         switch value {
         case .auto:
             return .auto
+
         case .min, .max:
             switch constraint {
             case .range(let min, let max), .stepRange(let min, let max, _, _):
@@ -362,9 +376,21 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
             case .list(let values):
                 guard !values.isEmpty else { return .none }
                 return value == .min ? .value(values.min()!) : .value(values.max()!)
-            default:
+            case .none:
                 return .none
             }
+            
+        case .value(let specificValue):
+            switch constraint {
+            case .range(let min, let max), .stepRange(let min, let max, _, _):
+                return .value(Double(specificValue).clamped(min: min, max: max))
+            case .list(let values):
+                guard let closest = values.closest(to: Double(specificValue)) else { return .none }
+                return .value(closest)
+            case .none:
+                return .value(Double(specificValue))
+            }
+
         default:
             fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
         }

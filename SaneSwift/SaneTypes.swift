@@ -150,15 +150,15 @@ public enum SaneStandardOption: CaseIterable {
         return [.areaTopLeftX, .areaTopLeftY, .areaBottomRightX, .areaBottomRightY]
     }
     
-    public enum PreviewValue {
-        case auto, on, off, min, max
+    public enum PreviewValue: Equatable {
+        case auto, on, off, min, max, value(Int)
     }
     
     var bestPreviewValue: PreviewValue {
         switch self {
         case .preview:                                  return .on
         case .colorMode, .imageIntensity:               return .auto
-        case .resolution, .resolutionX, .resolutionY:   return .min
+        case .resolution, .resolutionX, .resolutionY:   return .value(150)
         case .areaTopLeftX, .areaTopLeftY:              return .min
         case .areaBottomRightX, .areaBottomRightY:      return .max
         }

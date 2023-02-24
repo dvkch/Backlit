@@ -52,11 +52,24 @@ internal extension String {
     }
 }
 
+internal extension Numeric where Self: Comparable {
+    func clamped(min: Self, max: Self) -> Self {
+        return Swift.max(min, Swift.min(max, self))
+    }
+}
+
 internal extension Collection {
     func subarray(maxCount: Int) -> Self.SubSequence {
         let max = Swift.min(maxCount, count)
         let maxIndex = index(startIndex, offsetBy: max)
         return self[startIndex..<maxIndex]
+    }
+}
+
+internal extension Collection where Element: Comparable {
+    func closest(to value: Element) -> Element? {
+        let sorted = self.sorted()
+        return sorted.first(where: { $0 >= value }) ?? sorted.last(where: { $0 <= value })
     }
 }
 
@@ -69,6 +82,7 @@ internal extension Result {
     }
 }
 
+// LATER: Support 3-channel images
 internal extension UIImage {
     enum SaneSource {
         case data(Data)
