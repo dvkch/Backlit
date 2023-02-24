@@ -53,6 +53,7 @@ class DevicesVC: UIViewController {
         thumbsView = GalleryThumbsView.showInToolbar(of: self)
 
         Sane.shared.delegate = self
+        SaneBonjour.shared.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +75,7 @@ class DevicesVC: UIViewController {
     // MARK: Properties
     private var devices = [Device]()
     private var loadingDevice: Device?
+    private var hosts: [HostCell.Host] = []
     
     // MARK: Actions
     @objc func settingsButtonTap() {
@@ -83,6 +85,25 @@ class DevicesVC: UIViewController {
     }
     
     @objc func refresh() {
+        // refresh hosts
+        var hosts: [HostCell.Host] = Sane.shared.configuration.hosts.map { .init(kind: .saneConfig, value: $0) }
+        SaneBonjour.shared.hosts
+            .sorted(by: \.0)
+            .filter { !hosts.map(\.value).contains($0.0) }
+            .forEach { hosts.append(.init(kind: .bonjour, value: $0.0)) }
+        hosts.append(.init(kind: .add, value: ""))
+        
+        let prevSaneHosts = self.hosts.filter { $0.kind == .saneConfig }.map(\.value).sorted()
+        let newSaneHosts = hosts.filter { $0.kind == .saneConfig }.map(\.value).sorted()
+        self.hosts = hosts
+        self.tableView.reloadData()
+
+        if prevSaneHosts == newSaneHosts {
+            return
+        }
+        
+        // refresh devices
+        SaneBonjour.shared.start()
         Sane.shared.updateDevices { [weak self] (devices, error) in
             guard let self = self else { return }
             self.devices = devices ?? []
@@ -94,19 +115,23 @@ class DevicesVC: UIViewController {
         }
     }
     
-    @objc func addHostButtonTap() {
+    @objc func addHostButtonTap(bonjourSuggestion: String?) {
         Analytics.shared.send(event: .newHostTapped)
 
         let completion = { (host: String) in
             Sane.shared.configuration.addHost(host)
             self.tableView.reloadData()
             self.refresh()
-            Analytics.shared.send(event: .newHostAdded(count: Sane.shared.configuration.hosts.count))
+            Analytics.shared.send(event: .newHostAdded(
+                count: Sane.shared.configuration.hosts.count,
+                foundByAvahi: bonjourSuggestion != nil
+            ))
         }
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentHostInputAlert(
             title: "DIALOG TITLE ADD HOST".localized,
             message: "DIALOG MESSAGE ADD HOST".localized,
+            initial: bonjourSuggestion,
             add: "ACTION ADD".localized,
             cancel: "ACTION CANCEL".localized,
             completion: completion
@@ -118,6 +143,7 @@ class DevicesVC: UIViewController {
             field.autocorrectionType = .no
             field.autocapitalizationType = .none
             field.keyboardType = .URL
+            field.text = bonjourSuggestion
         }
         alert.addAction(UIAlertAction(title: "ACTION ADD".localized, style: .default, handler: { (_) in
             let host = alert.textFields?.first?.text ?? ""
@@ -201,26 +227,25 @@ extension DevicesVC: SaneDelegate {
     }
 }
 
+extension DevicesVC : SaneBonjourDelegate {
+    func saneBonjour(_ bonjour: SaneBonjour, updatedHosts: [(String, Int)]) {
+        refresh()
+    }
+}
+
 extension DevicesVC : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? Sane.shared.configuration.hosts.count + 1 : devices.count
+        return section == 0 ? hosts.count : devices.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueCell(HostCell.self, for: indexPath)
-            if indexPath.row < Sane.shared.configuration.hosts.count {
-                cell.title = Sane.shared.configuration.hosts[indexPath.row]
-                cell.showAddIndicator = false
-            }
-            else {
-                cell.title = "DEVICES ROW ADD HOST".localized
-                cell.showAddIndicator = true
-            }
+            cell.host = hosts[indexPath.row]
             return cell
         }
         
@@ -250,18 +275,20 @@ extension DevicesVC : UITableViewDelegate {
     @available(iOS 13.0, *)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard indexPath.section == 0 else { return nil }
-        guard indexPath.row < Sane.shared.configuration.hosts.count else { return nil }
         
+        let host = hosts[indexPath.row]
+        guard host.kind == .saneConfig else { return nil }
+
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
             let deleteAction = UIAction(title: "ACTION REMOVE".localized, image: UIImage(systemName: "trash.fill"), attributes: .destructive) { [weak self] (_) in
-                Sane.shared.configuration.removeHost(Sane.shared.configuration.hosts[indexPath.row])
+                Sane.shared.configuration.removeHost(host.value)
                 
                 CATransaction.begin()
                 CATransaction.setCompletionBlock {
                     self?.refresh()
                 }
                 tableView.beginUpdates()
-                tableView.deleteRows(at: [indexPath], with: .bottom)
+                tableView.reloadSections(IndexSet(integer: 0), with: .none)
                 tableView.endUpdates()
                 CATransaction.commit()
             }
@@ -273,17 +300,19 @@ extension DevicesVC : UITableViewDelegate {
     #if !targetEnvironment(macCatalyst)
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         guard indexPath.section == 0 else { return nil }
-        guard indexPath.row < Sane.shared.configuration.hosts.count else { return nil }
         
+        let host = hosts[indexPath.row]
+        guard host.kind == .saneConfig else { return nil }
+
         let deleteAction = UITableViewRowAction(style: .destructive, title: "ACTION REMOVE".localized) { (_, indexPath) in
-            Sane.shared.configuration.removeHost(Sane.shared.configuration.hosts[indexPath.row])
-            
+            Sane.shared.configuration.removeHost(host.value)
+
             CATransaction.begin()
             CATransaction.setCompletionBlock {
                 self.refresh()
             }
             tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .bottom)
+            tableView.reloadSections(IndexSet(integer: 0), with: .none)
             tableView.endUpdates()
             CATransaction.commit()
         }
@@ -295,8 +324,16 @@ extension DevicesVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 {
-            guard indexPath.row >= Sane.shared.configuration.hosts.count else { return }
-            addHostButtonTap()
+            switch hosts[indexPath.row].kind {
+            case .saneConfig:
+                break
+
+            case .bonjour:
+                addHostButtonTap(bonjourSuggestion: hosts[indexPath.row].value)
+                
+            case .add:
+                addHostButtonTap(bonjourSuggestion: nil)
+            }
             return
         }
         

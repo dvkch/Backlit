@@ -37,6 +37,8 @@
 	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>To find your scanners</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>readdle-spark</string>
@@ -73,6 +75,10 @@
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_sane-port._tcp</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

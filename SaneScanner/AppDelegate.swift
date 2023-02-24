@@ -11,8 +11,8 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
+// LATER: add names to hosts
 // LATER: add support for https://github.com/alexpevzner/sane-airscan
-// LATER: add auto search on local network (using Bonjour service sane-port)
 // LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition license)
 // LATER: test text field input for String & Int and handle Auto
 // LATER: add auto update on macOS using https://sparkle-project.org/
@@ -42,7 +42,7 @@ extension AppDelegate : UIApplicationDelegate {
         
         // Analytics
         Analytics.shared.send(event: .appLaunch)
-
+        
         // Snapshots
         if Snapshot.isSnapshotting, let snapshotHost = Snapshot.snapshotHost {
             Sane.shared.configuration.clearHosts()
@@ -51,13 +51,17 @@ extension AppDelegate : UIApplicationDelegate {
         
         SaneSetLogLevel(0)
         SaneLogger.level = .info
-        
+
         return true
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: {})
         
+        // will be restarted by DevicesVC
+        SaneBonjour.shared.stop()
+
+        // Let's make Sane end gracefully to prevent using a dangling SANE_Handle
         Sane.shared.cancelCurrentScan()
         
         // give time to the system to really close the deviceVC if

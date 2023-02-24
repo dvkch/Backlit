@@ -36,7 +36,7 @@ class Analytics {
     enum Event {
         case appLaunch
         case newHostTapped
-        case newHostAdded(count: Int)
+        case newHostAdded(count: Int, foundByAvahi: Bool)
         case scanStarted(device: Device)
         case scanEnded(device: Device)
         case scanCancelled(device: Device)
@@ -66,7 +66,7 @@ class Analytics {
             switch self {
             case .appLaunch:                            return [:]
             case .newHostTapped:                        return [:]
-            case .newHostAdded(let count):              return ["Hosts Count": String(count)]
+            case .newHostAdded(let count, let avahi):   return ["Hosts Count": String(count), "Found by Avahi": String(avahi)]
             case .scanStarted(let device):              return ["Device Maker": device.vendor]
             case .scanEnded(let device):                return ["Device Maker": device.vendor]
             case .scanCancelled(let device):            return ["Device Maker": device.vendor]

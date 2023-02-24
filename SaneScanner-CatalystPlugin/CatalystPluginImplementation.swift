@@ -14,7 +14,7 @@ import AppKit
     
     private let fieldSize = NSSize(width: 230, height: 25)
 
-    public func presentHostInputAlert(title: String, message: String, add: String, cancel: String, completion: (String) -> ()) {
+    public func presentHostInputAlert(title: String, message: String, initial: String?, add: String, cancel: String, completion: (String) -> ()) {
         let alert = NSAlert()
 
         let addButton = alert.addButton(withTitle: add)
@@ -23,7 +23,7 @@ import AppKit
         alert.informativeText = message
 
         let textField = NSTextField(frame: NSRect(origin: .zero, size: fieldSize))
-        textField.stringValue = ""
+        textField.stringValue = initial ?? ""
         textField.isBezeled = true
         textField.bezelStyle = .roundedBezel
 

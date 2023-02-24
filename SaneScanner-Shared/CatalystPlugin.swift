@@ -11,7 +11,7 @@ import Foundation
 @objc(CatalystPlugin) public protocol CatalystPlugin: NSObjectProtocol {
     init()
 
-    func presentHostInputAlert(title: String, message: String, add: String, cancel: String, completion: (String) -> ())
+    func presentHostInputAlert(title: String, message: String, initial: String?, add: String, cancel: String, completion: (String) -> ())
 
     func presentAuthInputAlert(title: String, message: String, usernamePlaceholder: String, passwordPlaceholder: String, continue: String, remember: String, cancel: String, completion: (_ username: String?, _ password: String?, _ remember: Bool) -> ())
 }

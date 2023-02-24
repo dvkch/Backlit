@@ -21,23 +21,50 @@ class HostCell: TableViewCell {
     @IBOutlet private var label: UILabel!
     
     // MARK: Properties
-    var title: String? {
-        get { return label.text }
-        set { label.text = newValue }
+    struct Host {
+        enum Kind {
+            case saneConfig, bonjour, add
+        }
+        let kind: Kind
+        let value: String
+    }
+
+    var host: Host? {
+        didSet {
+            updateContent()
+        }
     }
     
-    var showAddIndicator: Bool = false {
-        didSet {
-            if showAddIndicator {
-                let imageView = UIImageView(image: UIImage(named: "scanner"))
-                imageView.tintColor = .normalText
-                imageView.frame.size = .init(width: 20, height: 20)
-                imageView.contentMode = .scaleAspectFit
-                accessoryView = imageView
-            }
-            else {
-                accessoryView = nil
-            }
+    private func updateContent() {
+        guard let host else { return }
+
+        var indicator: UIImage? = nil
+        
+        switch host.kind {
+        case .saneConfig:
+            label.text = host.value
+            label.textColor = .normalText
+
+        case .bonjour:
+            label.text = host.value
+            label.textColor = .altText
+            indicator = UIImage(named: "network")
+            
+        case .add:
+            label.text = "DEVICES ROW ADD HOST".localized
+            label.textColor = .normalText
+            indicator = UIImage(named: "scanner")
+        }
+        
+        if let indicator {
+            let imageView = UIImageView(image: indicator)
+            imageView.tintColor = label.textColor
+            imageView.frame.size = .init(width: 20, height: 20)
+            imageView.contentMode = .scaleAspectFit
+            accessoryView = imageView
+        }
+        else {
+            accessoryView = nil
         }
     }
 }
