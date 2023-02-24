@@ -13,8 +13,9 @@ import SYKit
 class DeviceOptionVC : UIAlertController {
 
     // MARK: Init
-    init(option: DeviceOption, delegate: DeviceOptionControllableDelegate?) {
+    init(option: DeviceOption, showHelpOnly: Bool, delegate: DeviceOptionControllableDelegate?) {
         self.option = option
+        self.showHelpOnly = showHelpOnly
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
         
@@ -34,7 +35,8 @@ class DeviceOptionVC : UIAlertController {
     }
 
     // MARK: Properties
-    let option: DeviceOption
+    private let option: DeviceOption
+    private let showHelpOnly: Bool
     weak var delegate: DeviceOptionControllableDelegate?
 
     override var preferredStyle: UIAlertController.Style {
@@ -50,6 +52,7 @@ class DeviceOptionVC : UIAlertController {
 // MARK: Content
 extension DeviceOptionVC: DeviceOptionControllable {
     private func updateContent() {
+        guard !showHelpOnly else { return }
         option.updateDeviceOptionControl(using: self, filterDisabled: true, filterSingleOption: true)
     }
     
@@ -102,29 +105,19 @@ extension DeviceOptionVC: DeviceOptionControllable {
     
     func updateDeviceOptionControlForField<T>(option: DeviceOptionTyped<T>, current: T, kind: DeviceOptionControllableFieldKind, supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
         
-        addTextField { (field) in
-            field.autocorrectionType = .no
-            field.autocapitalizationType = .none
-            field.text = option.value.description
-            
-            switch kind {
-            case .string:   field.keyboardType = .asciiCapable
-            case .int:      field.keyboardType = .numberPad
-            case .double:   field.keyboardType = .decimalPad
-            }
-        }
-        
+        let textFieldVC: SYTextInputViewController = .init(current: current.description, kind: kind)
+        setContentViewController(textFieldVC)
+
         addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
-            let stringValue = self.textFields?.first?.text ?? ""
 
             switch kind {
             case .string(let option):
-                Sane.shared.updateOption(option, with: .value(stringValue), completion: self.optionUpdateCompletion(_:))
+                Sane.shared.updateOption(option, with: .value(textFieldVC.stringValue), completion: self.optionUpdateCompletion(_:))
             case .int(let option):
-                Sane.shared.updateOption(option, with: .value(Int(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
+                Sane.shared.updateOption(option, with: .value(Int(textFieldVC.stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
             case .double(let option):
-                Sane.shared.updateOption(option, with: .value(Double(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
+                Sane.shared.updateOption(option, with: .value(.parse(from: textFieldVC.stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
             }
         }
         
@@ -176,3 +169,45 @@ fileprivate class SYSliderViewController: UIViewController {
     private let slider = Slider()
 }
 
+fileprivate class SYTextInputViewController: UIViewController {
+    // MARK: Init
+    init(current: String, kind: DeviceOptionControllableFieldKind) {
+        super.init(nibName: nil, bundle: nil)
+
+        textField.text = current
+        textField.font = .preferredFont(forTextStyle: .body)
+        textField.backgroundColor = .background
+        textField.layer.cornerRadius = 5
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .sentences
+
+        switch kind {
+        case .string:   textField.keyboardType = .asciiCapable
+        case .int:      textField.keyboardType = .numberPad
+        case .double:   textField.keyboardType = .decimalPad
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(textField)
+        textField.snp.makeConstraints { (make) in
+            make.top.equalTo(10)
+            make.left.equalTo(20)
+            make.right.equalTo(-20)
+            make.bottom.equalTo(-10)
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Properties
+    var stringValue: String {
+        return textField.text ?? ""
+    }
+    
+    // MARK: Views
+    private let textField = UITextView()
+}

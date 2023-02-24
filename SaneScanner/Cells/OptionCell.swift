@@ -41,6 +41,7 @@ class OptionCell: TableViewCell {
             oldValue?.removeFromSuperview()
             if let valueControl = valueControl {
                 valueControl.setContentCompressionResistancePriority(.required, for: .vertical)
+                valueControl.setContentCompressionResistancePriority(.required, for: .horizontal)
                 valueControl.setContentHuggingPriority(.required, for: .horizontal)
                 contentView.addSubview(valueControl)
             }
@@ -128,9 +129,9 @@ class OptionCell: TableViewCell {
             #if targetEnvironment(macCatalyst)
             useMacOSLayout = true
             titleLabel.textAlignment = .right
+            #endif
             valueControl = nil
             option.updateDeviceOptionControl(using: self, filterDisabled: false, filterSingleOption: false)
-            #endif
         }
         else if let prefKey = self.prefKey {
             titleLabel.text = prefKey.localizedTitle
@@ -182,22 +183,24 @@ class OptionCell: TableViewCell {
     override func updateConstraints() {
         descrLabel.isHidden = !showDescription
 
+        let valueView: UIView = valueControl ?? valueLabel
+        valueView.isHidden = false
+
+        let hiddenValueView = valueControl != nil ? valueLabel : nil
+        hiddenValueView?.snp.removeConstraints()
+        hiddenValueView?.isHidden = true
+
         if option != nil && useMacOSLayout {
-            let valueView: UIView = valueControl ?? valueLabel
-            valueView.isHidden = false
-
-            let hiddenValueView = valueControl != nil ? valueLabel : nil
-            hiddenValueView?.snp.removeConstraints()
-            hiddenValueView?.isHidden = true
-
             titleLabel.snp.remakeConstraints { (make) in
-                make.top.left.equalTo(contentView.layoutMarginsGuide)
+                make.top.equalTo(contentView.layoutMarginsGuide).priority(980)
+                make.left.equalTo(contentView.layoutMarginsGuide)
                 make.width.equalTo(contentView.layoutMarginsGuide).multipliedBy(0.35)
             }
 
             valueView.snp.remakeConstraints { (make) in
                 make.left.equalTo(titleLabel.snp.right).offset(20)
                 make.top.right.equalTo(contentView.layoutMarginsGuide)
+                make.firstBaseline.equalTo(titleLabel)
                 make.height.equalTo(titleLabel).priority(760)
             }
 
@@ -216,13 +219,13 @@ class OptionCell: TableViewCell {
                 make.top.left.right.equalTo(contentView.layoutMarginsGuide)
             }
 
-            valueLabel.snp.remakeConstraints { (make) in
+            valueView.snp.remakeConstraints { (make) in
                 make.top.equalTo(titleLabel.snp.bottom).offset(10)
                 make.left.right.equalTo(contentView.layoutMarginsGuide)
             }
             
             descrLabel.snp.remakeConstraints { (make) in
-                make.top.equalTo(valueLabel.snp.bottom).offset(showDescription ? 20 : 0)
+                make.top.equalTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
                 make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
                 if !showDescription {
                     make.height.equalTo(0)
@@ -231,18 +234,20 @@ class OptionCell: TableViewCell {
         }
         else {
             titleLabel.snp.remakeConstraints { (make) in
-                make.top.left.equalTo(contentView.layoutMarginsGuide)
+                make.top.equalTo(contentView.layoutMarginsGuide).priority(980)
+                make.left.equalTo(contentView.layoutMarginsGuide)
             }
 
-            valueLabel.snp.remakeConstraints { (make) in
+            valueView.snp.remakeConstraints { (make) in
                 make.left.equalTo(titleLabel.snp.right).offset(20)
                 make.top.right.equalTo(contentView.layoutMarginsGuide)
+                make.firstBaseline.equalTo(titleLabel)
             }
 
             descrLabel.snp.remakeConstraints { (make) in
                 make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
                 make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
-                make.top.greaterThanOrEqualTo(valueLabel.snp.bottom).offset(showDescription ? 20 : 0)
+                make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
                 make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
                 if !showDescription {
                     make.height.equalTo(0)
@@ -255,8 +260,6 @@ class OptionCell: TableViewCell {
     }
 }
 
-#if targetEnvironment(macCatalyst)
-// TODO: test on iOS as well
 extension OptionCell: DeviceOptionControllable {
     func updateDeviceOptionControlForDisabledOption() {
         valueControl = nil
@@ -264,6 +267,10 @@ extension OptionCell: DeviceOptionControllable {
     
     func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
         guard !isSizingCell else { return }
+        guard #available(iOS 14.0, *) else { return }
+
+        let selectedIndex = values.firstIndex(of: option.value) ?? -1
+        if option.disabledOrReadOnly && selectedIndex == -1 { return } // no title to display, and no action required anyway
 
         var dropdownOptions: [(String, T?)] = values.map {
             let title = option.stringForValue($0, userFacing: true)
@@ -275,7 +282,6 @@ extension OptionCell: DeviceOptionControllable {
         }
 
         let optionTitles: [String] = dropdownOptions.map(\.0)
-        let selectedIndex = values.firstIndex(of: option.value) ?? -1
         let selectedTitle = selectedIndex == -1 ? "" : optionTitles[selectedIndex]
 
         let valueChangedClosure = { [weak self] (selectedIndex: Int) -> Void in
@@ -289,12 +295,13 @@ extension OptionCell: DeviceOptionControllable {
         }
         
         let button = UIButton(type: .system)
-        if #available(macCatalyst 15.0, *) {
+        if #available(macCatalyst 15.0, iOS 15.0, *) {
             // TODO: test on Catalyst 14.0
-            button.configuration = .bordered()
+            button.configuration = .borderedTinted()
             button.preferredBehavioralStyle = .mac
         }
         button.setTitle(selectedTitle, for: .normal)
+        button.isEnabled = !option.disabledOrReadOnly
         button.showsMenuAsPrimaryAction = true
         button.menu = UIMenu(children: dropdownOptions.enumerated().map { i, option in
             let action = UIAction(title: option.0) { action in
@@ -308,6 +315,7 @@ extension OptionCell: DeviceOptionControllable {
     
     func updateDeviceOptionControlForRange<T>(option: DeviceOptionTyped<T>, current: Double, min: Double, max: Double, step: Double?, supportsAuto: Bool) where T : CustomStringConvertible, T : Numeric {
         guard !isSizingCell else { return }
+        guard UIDevice.isCatalyst else { return }
 
         let optionInt = option as? DeviceOptionInt
         let optionFixed = option as? DeviceOptionFixed
@@ -346,6 +354,8 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForField<T>(option: DeviceOptionTyped<T>, current: T, kind: DeviceOptionControllableFieldKind, supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
+        guard UIDevice.isCatalyst else { return }
+
         let field = UITextField()
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
@@ -376,16 +386,17 @@ extension OptionCell: DeviceOptionControllable {
         }
         if let option = option as? DeviceOptionFixed {
             delegate?.deviceOptionControllable(self, willUpdate: option)
-            Sane.shared.updateOption(option, with: .value(Double(stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
+            Sane.shared.updateOption(option, with: .value(.parse(from: stringValue) ?? option.value), completion: self.optionUpdateCompletion(_:))
         }
     }
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
         let button = UIButton(type: .roundedRect)
         button.setTitle("ACTION PRESS".localized, for: .normal)
-        if #available(macCatalyst 15.0, *) {
+        button.isEnabled = !option.disabledOrReadOnly
+        if #available(macCatalyst 15.0, iOS 15.0, *) {
             // TODO: test on Catalyst 14.0
-            button.configuration = .bordered()
+            button.configuration = .filled()
             button.preferredBehavioralStyle = .mac
         }
         button.addPrimaryAction { [weak self] in
@@ -401,4 +412,3 @@ extension OptionCell: DeviceOptionControllable {
         delegate?.deviceOptionControllable(self, didUpdate: option, result: result)
     }
 }
-#endif

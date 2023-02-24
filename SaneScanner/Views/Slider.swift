@@ -22,7 +22,7 @@ class Slider: UIControl {
     }
     
     private func setup() {
-        if #available(macCatalyst 15.0, *) {
+        if #available(macCatalyst 15.0, iOS 15.0, *) {
             // prevent crash when modifying thumb
             slider.preferredBehavioralStyle = .pad
         }

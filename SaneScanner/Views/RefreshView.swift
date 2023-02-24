@@ -54,7 +54,7 @@ struct RefreshView {
         #if targetEnvironment(macCatalyst)
         viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: completionBlock)
         #else
-        tableView.endPullToRefresh()
+        tableView?.endPullToRefresh()
         #endif
     }
 }

@@ -36,9 +36,10 @@ class DeviceVC: UIViewController {
         tableView.separatorStyle = UIDevice.isCatalyst ? .none : .singleLine
         tableView.clipsToBounds = true
         tableView.alwaysBounceVertical = true
+        tableView.delaysContentTouches = false
         tableView.dataSource = self
         tableView.delegate = self
-        if #available(macCatalyst 15.0, *) {
+        if #available(macCatalyst 15.0, iOS 15.0, *) {
             tableView.isPrefetchingEnabled = false
         }
         tableView.registerHeader(TableViewHeader.self, xib: false)
@@ -407,9 +408,9 @@ extension DeviceVC : UITableViewDelegate {
         
         guard indexPath.section > 0, let option = optionsInGroup(tableViewSection: indexPath.section)?[indexPath.row] else { return }
         guard let cell = tableView.cellForRow(at: indexPath) as? OptionCell else { return }
-        guard !cell.hasControlToUpdateItsValue else { return }
+        if UIDevice.isCatalyst && cell.hasControlToUpdateItsValue { return }
 
-        let vc = DeviceOptionVC(option: option, delegate: self)
+        let vc = DeviceOptionVC(option: option, showHelpOnly: cell.hasControlToUpdateItsValue, delegate: self)
         vc.popoverPresentationController?.sourceView = view
         if let cell = tableView.cellForRow(at: indexPath) {
             vc.popoverPresentationController?.sourceRect = view.convert(cell.bounds, from: cell)
