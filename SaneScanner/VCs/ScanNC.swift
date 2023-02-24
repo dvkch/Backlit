@@ -29,6 +29,12 @@ class ScanNC: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationBar.prefersLargeTitles = true
+        navigationBar.isTranslucent = true
+        if #available(iOS 13.0, *) {
+            navigationBar.scrollEdgeAppearance = UINavigationBarAppearance()
+            navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
+        }
         updateToolbar(animated: false)
    }
     

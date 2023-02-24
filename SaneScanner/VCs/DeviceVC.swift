@@ -31,6 +31,7 @@ class DeviceVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         title = device.model
+        navigationItem.largeTitleDisplayMode = .never
 
         tableView.remembersLastFocusedIndexPath = true
         tableView.separatorStyle = UIDevice.isCatalyst ? .none : .singleLine

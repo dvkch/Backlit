@@ -15,6 +15,7 @@ class DevicesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
+        navigationItem.largeTitleDisplayMode = .always
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         if !UIDevice.isCatalyst {
@@ -22,6 +23,9 @@ class DevicesVC: UIViewController {
             navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         }
 
+        // prevent collapsing of nnavigationBar large title when scrolling
+        view.addSubview(UIView())
+        
         if UIDevice.isCatalyst {
             tableView.contentInset.top = 18
             tableView.separatorStyle = .none
