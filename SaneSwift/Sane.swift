@@ -389,7 +389,7 @@ extension Sane {
                 return
             }
             
-            SaneLogger.d(.sane, "> Obtained value: \(value)")
+            SaneLogger.d(.sane, "> Obtained value: \(value), constraints: \(option.constraint.description)")
             Sane.runOn(mainThread: startedOnMainThread) { completion(value, nil) }
         }
     }
@@ -499,7 +499,7 @@ extension Sane {
                 result = .success(SaneInfo(rawValue: info))
             }
             else {
-                SaneLogger.e(.sane, "> Couldn't update option: \(status)")
+                SaneLogger.e(.sane, "> Couldn't update option \(option.localizedTitle): \(status)")
                 result = .failure(SaneError(saneStatus: status, expected: SANE_STATUS_GOOD)!)
             }
             
