@@ -33,16 +33,38 @@ extension UIButton {
     }
     
     static func system(prominent: Bool) -> Self {
+        // TODO: test on macOS 11.0
+
         let button = Self(type: .roundedRect)
         
-        // TODO: test on macOS 11.0
-        // TODO: test on iOS 14.0
-
         if #available(macCatalyst 15.0, iOS 15.0, *) {
             button.preferredBehavioralStyle = .mac
             #if !targetEnvironment(macCatalyst)
-            button.configuration = prominent ? .filled() : .borderedTinted()
+            if prominent {
+                button.configuration = .filled()
+            }
+            else {
+                button.configuration = .borderedTinted()
+                button.setTitleColor(.tint.adjustBrightness(by: 0.2), for: .normal)
+            }
+            button.configuration?.contentInsets = .init(top: 5, leading: 10, bottom: 5, trailing: 10)
             #endif
+        }
+        else {
+            button.clipsToBounds = true
+            button.layer.cornerRadius = 5
+            button.contentEdgeInsets = .init(top: 5, left: 10, bottom: 5, right: 10)
+            if prominent {
+                button.setBackgrounColor(.tint, for: .normal)
+                button.setBackgrounColor(.altText, for: .disabled)
+                button.setTitleColor(.normalText, for: .normal)
+            }
+            else {
+                button.setBackgrounColor(.tint.withAlphaComponent(0.2), for: .normal)
+                button.setBackgrounColor(.altText.withAlphaComponent(0.1), for: .disabled)
+                button.setTitleColor(.tint.adjustBrightness(by: 0.2), for: .normal)
+                button.setTitleColor(.altText.withAlphaComponent(0.5), for: .disabled)
+            }
         }
         
         return button
