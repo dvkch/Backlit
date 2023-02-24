@@ -22,7 +22,6 @@ public class DeviceOption {
         self.type           = cOption.type
         self.unit           = cOption.unit
         self.size           = Int(cOption.size)
-        self.cOption        = cOption
     }
     
     // MARK: Properties
@@ -35,7 +34,6 @@ public class DeviceOption {
     internal var type: SANE_Value_Type
     internal var unit: SANE_Unit
     internal var size: Int
-    internal var cOption: SANE_Option_Descriptor
     
     // MARK: Computed properties
     public var disabledOrReadOnly: Bool {
@@ -93,6 +91,7 @@ public class DeviceOptionTyped<T: Equatable & CustomStringConvertible>: DeviceOp
     // MARK: Init
     init(cOption: SANE_Option_Descriptor, index: Int, device: Device, initialValue: T) {
         self.value = initialValue
+        self.constraint = Swift.type(of: self).parseConstraint(cOption: cOption)
         super.init(cOption: cOption, index: index, device: device)
     }
     
@@ -111,9 +110,13 @@ public class DeviceOptionTyped<T: Equatable & CustomStringConvertible>: DeviceOp
         fatalError("Not implemented")
     }
     
-    public var constraint: OptionConstraint<T> {
+    internal class func parseConstraint(cOption: SANE_Option_Descriptor) -> OptionConstraint<T> {
+        // it is very important to compute the constraint at init time, instead of keeping a ref to cOption
+        // because cOption.contraint.word_list might be freed if we're trying to access it on an option
+        // that has since been reloaded.
         fatalError("Not implemented")
     }
+    public private(set) var constraint: OptionConstraint<T>
     
     public var bestPreviewValue: DeviceOptionNewValue<T> {
         fatalError("Not implemented")
@@ -208,7 +211,7 @@ public class DeviceOptionBool: DeviceOptionTyped<Bool> {
         return bytes.bindMemory(to: SANE_Bool.self, capacity: size).pointee == SANE_TRUE
     }
 
-    public override var constraint: OptionConstraint<Bool> {
+    override class func parseConstraint(cOption: SANE_Option_Descriptor) -> OptionConstraint<Bool> {
         return .none
     }
     
@@ -252,7 +255,7 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
         return Int(saneValue)
     }
 
-    public override var constraint: OptionConstraint<Int> {
+    internal override class func parseConstraint(cOption: SANE_Option_Descriptor) -> OptionConstraint<Int> {
         switch cOption.constraint_type {
         case SANE_CONSTRAINT_NONE:
             return .none
@@ -339,7 +342,7 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
         return SaneDoubleFromFixed(saneValue)
     }
 
-    public override var constraint: OptionConstraint<Double> {
+    internal override class func parseConstraint(cOption: SANE_Option_Descriptor) -> OptionConstraint<Double> {
         switch cOption.constraint_type {
         case SANE_CONSTRAINT_NONE:
             return .none
@@ -451,7 +454,7 @@ public class DeviceOptionString: DeviceOptionTyped<String> {
         return String(cString: saneValue)
     }
 
-    public override var constraint: OptionConstraint<String> {
+    internal override class func parseConstraint(cOption: SANE_Option_Descriptor) -> OptionConstraint<String> {
         switch cOption.constraint_type {
         case SANE_CONSTRAINT_NONE:
             return .none
@@ -507,7 +510,7 @@ public class DeviceOptionButton: DeviceOptionTyped<Bool> {
         return false
     }
 
-    public override var constraint: OptionConstraint<Bool> {
+    override class func parseConstraint(cOption: SANE_Option_Descriptor) -> OptionConstraint<Bool> {
         return .none
     }
     
