@@ -13,9 +13,9 @@ class TableViewHeader: UITableViewHeaderFooterView {
     var text: String? {
         didSet {
             #if targetEnvironment(macCatalyst)
-            label.text = text?.uppercased()
+            label.text = text?.uppercased(with: .current)
             #else
-            textLabel?.text = text?.uppercased()
+            textLabel?.text = text?.uppercased(with: .current)
             #endif
             accessibilityLabel = text
         }

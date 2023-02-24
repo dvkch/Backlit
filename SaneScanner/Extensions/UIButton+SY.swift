@@ -31,4 +31,20 @@ extension UIButton {
     @objc private func blockActionTrigger() {
         self.primaryActionClosure?()
     }
+    
+    static func system(prominent: Bool) -> Self {
+        let button = Self(type: .roundedRect)
+        
+        // TODO: test on macOS 11.0
+        // TODO: test on iOS 14.0
+
+        if #available(macCatalyst 15.0, iOS 15.0, *) {
+            button.preferredBehavioralStyle = .mac
+            #if !targetEnvironment(macCatalyst)
+            button.configuration = prominent ? .filled() : .borderedTinted()
+            #endif
+        }
+        
+        return button
+    }
 }

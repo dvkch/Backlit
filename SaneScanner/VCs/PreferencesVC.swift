@@ -14,10 +14,22 @@ class PreferencesVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        if #available(iOS 13.0, *) {
+            navigationController?.navigationBar.scrollEdgeAppearance = .init()
+            navigationController?.navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
+        navigationItem.largeTitleDisplayMode = .always
+
         title = "PREFERENCES TITLE".localized
         view.backgroundColor = .background
         
+        if UIDevice.isCatalyst {
+            tableView.contentInset.top = 18
+            tableView.separatorStyle = .none
+        }
+        tableView.registerHeader(TableViewHeader.self, xib: false)
         tableView.registerCell(OptionCell.self, xib: true)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
@@ -70,11 +82,16 @@ extension PreferencesVC : UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueHeader(TableViewHeader.self)
+
         if section < Preferences.shared.groupedKeys.count {
-            return Preferences.shared.groupedKeys[section].0
+            header.text = Preferences.shared.groupedKeys[section].0
         }
-        return "PREFERENCES SECTION ABOUT APP".localized
+        else {
+            header.text = "PREFERENCES SECTION ABOUT APP".localized
+        }
+        return header
     }
 }
 

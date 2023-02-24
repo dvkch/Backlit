@@ -137,6 +137,12 @@ class OptionCell: TableViewCell {
             titleLabel.text = prefKey.localizedTitle
             valueLabel.text = Preferences.shared[prefKey] ? "OPTION BOOL ON".localized : "OPTION BOOL OFF".localized
             descrLabel.text = prefKey.localizedDescription
+            
+            let control = UISwitch()
+            control.isOn = Preferences.shared[prefKey]
+            control.isUserInteractionEnabled = false
+            control.onTintColor = UIColor.tint
+            valueControl = control
         }
     }
 
@@ -192,7 +198,7 @@ class OptionCell: TableViewCell {
 
         if option != nil && useMacOSLayout {
             titleLabel.snp.remakeConstraints { (make) in
-                make.top.equalTo(contentView.layoutMarginsGuide).priority(980)
+                make.top.equalTo(contentView.layoutMarginsGuide)
                 make.left.equalTo(contentView.layoutMarginsGuide)
                 make.width.equalTo(contentView.layoutMarginsGuide).multipliedBy(0.35)
             }
@@ -200,8 +206,8 @@ class OptionCell: TableViewCell {
             valueView.snp.remakeConstraints { (make) in
                 make.left.equalTo(titleLabel.snp.right).offset(20)
                 make.top.right.equalTo(contentView.layoutMarginsGuide)
-                make.firstBaseline.equalTo(titleLabel)
                 make.height.equalTo(titleLabel).priority(760)
+                make.centerY.equalTo(titleLabel)
             }
 
             descrLabel.snp.remakeConstraints { (make) in
@@ -235,19 +241,27 @@ class OptionCell: TableViewCell {
         else {
             titleLabel.snp.remakeConstraints { (make) in
                 make.top.equalTo(contentView.layoutMarginsGuide).priority(980)
+                make.top.greaterThanOrEqualTo(contentView.layoutMarginsGuide)
                 make.left.equalTo(contentView.layoutMarginsGuide)
             }
 
             valueView.snp.remakeConstraints { (make) in
                 make.left.equalTo(titleLabel.snp.right).offset(20)
                 make.top.right.equalTo(contentView.layoutMarginsGuide)
-                make.firstBaseline.equalTo(titleLabel)
+                
+                if valueControl is UISwitch {
+                    make.centerY.equalTo(titleLabel)
+                }
+                else {
+                    make.firstBaseline.equalTo(titleLabel)
+                }
             }
 
             descrLabel.snp.remakeConstraints { (make) in
-                make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
-                make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
-                make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
+                let margin: CGFloat = showDescription ? 12 : 0
+                make.top.equalTo(titleLabel.snp.bottom).offset(margin).priority(ConstraintPriority.required.value - 1)
+                make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(margin)
+                make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(margin)
                 make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
                 if !showDescription {
                     make.height.equalTo(0)
@@ -294,12 +308,7 @@ extension OptionCell: DeviceOptionControllable {
             }
         }
         
-        let button = UIButton(type: .system)
-        if #available(macCatalyst 15.0, iOS 15.0, *) {
-            // TODO: test on Catalyst 14.0
-            button.configuration = .borderedTinted()
-            button.preferredBehavioralStyle = .mac
-        }
+        let button = UIButton.system(prominent: false)
         button.setTitle(selectedTitle, for: .normal)
         button.isEnabled = !option.disabledOrReadOnly
         button.showsMenuAsPrimaryAction = true
@@ -391,14 +400,9 @@ extension OptionCell: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
-        let button = UIButton(type: .roundedRect)
+        let button = UIButton.system(prominent: true)
         button.setTitle("ACTION PRESS".localized, for: .normal)
         button.isEnabled = !option.disabledOrReadOnly
-        if #available(macCatalyst 15.0, iOS 15.0, *) {
-            // TODO: test on Catalyst 14.0
-            button.configuration = .filled()
-            button.preferredBehavioralStyle = .mac
-        }
         button.addPrimaryAction { [weak self] in
             guard let self = self else { return }
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
