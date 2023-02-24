@@ -248,6 +248,7 @@ class OptionCell: TableViewCell {
             valueView.snp.remakeConstraints { (make) in
                 make.left.equalTo(titleLabel.snp.right).offset(20)
                 make.top.right.equalTo(contentView.layoutMarginsGuide)
+                make.width.lessThanOrEqualToSuperview().multipliedBy(0.5)
                 
                 if valueControl is UISwitch {
                     make.centerY.equalTo(titleLabel)

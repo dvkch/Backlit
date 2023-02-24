@@ -191,12 +191,16 @@ fileprivate class SYTextInputViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(textField)
+        textField.delegate = self
         textField.snp.makeConstraints { (make) in
             make.top.equalTo(10)
             make.left.equalTo(20)
             make.right.equalTo(-20)
             make.bottom.equalTo(-10)
         }
+        textFieldHeight = textField.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+        textFieldHeight.priority = .defaultHigh
+        textFieldHeight.isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -210,4 +214,18 @@ fileprivate class SYTextInputViewController: UIViewController {
     
     // MARK: Views
     private let textField = UITextView()
+    private var textFieldHeight: NSLayoutConstraint!
+    
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        textField.layoutIfNeeded()
+        textFieldHeight.constant = textField.contentSize.height
+    }
+}
+
+extension SYTextInputViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        view.setNeedsLayout()
+    }
 }
