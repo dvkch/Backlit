@@ -45,7 +45,7 @@ class DevicesVC: UIViewController {
         
         addKeyCommand(.refresh)
         refreshView = .init(tableView: tableView, viewController: self) { [weak self] in
-            self?.refresh()
+            self?.refresh(afterHostChange: false)
         }
 
         addKeyCommand(.addHost)
@@ -64,7 +64,7 @@ class DevicesVC: UIViewController {
         tableView.reloadData()
         
         if devices.isEmpty {
-            refresh()
+            refresh(afterHostChange: false)
         }
     }
     
@@ -85,7 +85,7 @@ class DevicesVC: UIViewController {
         present(nc, animated: true, completion: nil)
     }
     
-    @objc func refresh() {
+    @objc func refresh(afterHostChange: Bool) {
         // refresh hosts
         var hosts: [HostCell.Host] = Sane.shared.configuration.hosts.map { .init(kind: .saneConfig, value: $0) }
         SaneBonjour.shared.hosts
@@ -99,7 +99,7 @@ class DevicesVC: UIViewController {
         self.hosts = hosts
         self.tableView.reloadData()
 
-        if prevSaneHosts == newSaneHosts {
+        if afterHostChange && prevSaneHosts == newSaneHosts {
             return
         }
         
@@ -122,7 +122,7 @@ class DevicesVC: UIViewController {
         let completion = { (host: String) in
             Sane.shared.configuration.addHost(host)
             self.tableView.reloadData()
-            self.refresh()
+            self.refresh(afterHostChange: true)
             Analytics.shared.send(event: .newHostAdded(
                 count: Sane.shared.configuration.hosts.count,
                 foundByAvahi: bonjourSuggestion != nil
@@ -230,7 +230,7 @@ extension DevicesVC: SaneDelegate {
 
 extension DevicesVC : SaneBonjourDelegate {
     func saneBonjour(_ bonjour: SaneBonjour, updatedHosts: [(String, Int)]) {
-        refresh()
+        refresh(afterHostChange: true)
     }
 }
 
@@ -286,7 +286,7 @@ extension DevicesVC : UITableViewDelegate {
                 
                 CATransaction.begin()
                 CATransaction.setCompletionBlock {
-                    self?.refresh()
+                    self?.refresh(afterHostChange: true)
                 }
                 tableView.beginUpdates()
                 tableView.reloadSections(IndexSet(integer: 0), with: .none)
