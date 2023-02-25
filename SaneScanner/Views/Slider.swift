@@ -141,11 +141,13 @@ class Slider: UIControl {
 
     // MARK: Keyboard
     override var keyCommands: [UIKeyCommand]? {
-        return [
-            // TODO: those don't work anymore
-            UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:))),
-            UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:))),
-        ]
+        let leftCommand = UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:)))
+        let rightCommand = UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:)))
+        if #available(macCatalyst 15.0, *) {
+            leftCommand.wantsPriorityOverSystemBehavior = true
+            rightCommand.wantsPriorityOverSystemBehavior = true
+        }
+        return [leftCommand, rightCommand]
     }
     
     @objc func pressedArrow(_ command: UIKeyCommand) {

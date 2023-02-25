@@ -8,6 +8,7 @@
 
 import UIKit
 
+// LATER: replace with UIToolTipInteraction when dropping macOS 11.0
 class TooltipView : UIView {
     
     // MARK: Init

@@ -38,8 +38,14 @@ extension UIButton {
         let button = Self(type: .roundedRect)
         
         if #available(macCatalyst 15.0, iOS 15.0, *) {
+            #if targetEnvironment(macCatalyst)
             button.preferredBehavioralStyle = .mac
-            #if !targetEnvironment(macCatalyst)
+            // by default macOS counts 20px for the intrinsicContentSize.height of the button, but
+            // it is actually 21px. to prevent the button from being cut, let's try to improve this
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.heightAnchor.constraint(greaterThanOrEqualToConstant: 22).isActive = true
+
+            #else
             if prominent {
                 button.configuration = .filled()
             }
