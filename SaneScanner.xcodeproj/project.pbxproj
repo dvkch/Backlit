@@ -1273,6 +1273,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 79RY8264V4;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 79RY8264V4;
 				INFOPLIST_FILE = SaneScanner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.0;
@@ -1285,6 +1286,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner AdHoc";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "me.syan.SaneScanner AppStore";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner DeveloperID";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
