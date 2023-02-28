@@ -657,133 +657,147 @@ extension Sane {
                 crop = device.maxCropArea
             }
             
-            SaneLogger.i(.sane, "> Starting scan")
-            var status = Sane.logTime { sane_start(handle) }
-            
-            // dirty hack: for Epson ET-2810, that doesn't have a document feeder, the first scan works, but the next ones
-            // fail with SANE_STATUS_NO_DOCS. This gives us another shot at scanning. It probably makes other devices break
-            // but I'll probably keep it until I can find another way to make it work :)
-            if status == SANE_STATUS_NO_DOCS {
-                SaneLogger.w(.sane, "> Driver indicates 'No documents', cancelling and retrying")
-                sane_cancel(handle)
-                status = sane_start(handle)
+            // TODO: try to run the loop again, fi we reached document feeder empty then we have scanned everything there was to scan !
+            // TODO: also loop over the multiple SNAE_FRAME in case we're scanning channel per channel.
+            let result = self.internalFrameScan(
+                device: device, handle: handle, crop: crop, generateIntermediateImages: generateIntermediateImages
+            ) { p in
+                Sane.runOn(mainThread: startedOnMainThread) { progress?(p) }
             }
             
-            guard status == SANE_STATUS_GOOD else {
-                SaneLogger.e(.sane, "> Couldn't start scan: \(status)")
-                Sane.runOn(mainThread: startedOnMainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
-                return
-            }
-            
-            SaneLogger.i(.sane, "> Setting blocking IO mode")
-            status = sane_set_io_mode(handle, SANE_FALSE) // false = blocking IO mode
-            
-            guard status == SANE_STATUS_GOOD || status == SANE_STATUS_UNSUPPORTED else {
-                SaneLogger.e(.sane, "> Couldn't set IO mode: \(status)")
-                Sane.runOn(mainThread: startedOnMainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
-                return
-            }
-            
-            SaneLogger.i(.sane, "> Obtaining scan parameters")
-            var params = SANE_Parameters()
-            status = sane_get_parameters(handle, &params)
+            // after a finished scan, we need to call cancel, as per the documentation
+            sane_cancel(handle)
 
-            guard status == SANE_STATUS_GOOD else {
-                SaneLogger.e(.sane, "> Couldn't obtain scan parameters: \(status)")
-                Sane.runOn(mainThread: startedOnMainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
-                return
-            }
-
-            // read scan parameters as soon as possible. now that the scan has started they should not change. this is
-            // helpful since some backends don't give valid ones later on, especially when scanning in non blocking
-            // IO mode
-            let parameters = ScanParameters(cParams: params, cropArea: crop)
-            SaneLogger.i(.sane, "> Scan parameters are \(parameters)")
-
-            var data = Data(capacity: parameters.fileSize + 1)
-            let bufferMaxSize = max(500 * 1000, parameters.fileSize / 100)
-            SaneLogger.d(.sane, "> Preparing buffer of size \(bufferMaxSize) bytes")
-
-            let buffer = malloc(bufferMaxSize)!.bindMemory(to: UInt8.self, capacity: bufferMaxSize)
-            var bufferActualSize: SANE_Int = 0
-            
-            // generate incomplete image preview every 2%
-            var progressForLastIncompletePreview: Float = 0
-            let incompletePreviewStep: Float = 0.02
-            
-            while status == SANE_STATUS_GOOD {
-                if let progress = progress, parameters.fileSize > 0 {
-                    let percent = Float(data.count) / Float(parameters.fileSize)
-                    
-                    if generateIntermediateImages {
-                        if percent > progressForLastIncompletePreview + incompletePreviewStep {
-                            progressForLastIncompletePreview = percent
-                            
-                            // copy the data before passing it to the main thread, or it might return size == 0 if it
-                            // is being written to in the sane thread at the same time
-                            let dataCopy = Data(data)
-
-                            // image creation needs to be done on main thread
-                            Sane.runOn(mainThread: true) {
-                                SaneLogger.i(.sane, "> Generating preview")
-                                let incompleteImage = try? UIImage.sy_imageFromIncompleteSane(data: dataCopy, parameters: parameters)
-                                device.currentOperation = (operation, .scanning(progress: percent, incompletePreview: incompleteImage, estimatedParameters: parameters))
-                                progress(.scanning(progress: percent, incompletePreview: incompleteImage, estimatedParameters: parameters))
-                            }
-                        }
-                    }
-                    else {
-                        Sane.runOn(mainThread: true) {
-                            SaneLogger.i(.sane, "> Reporting progress: \(percent)")
-                            device.currentOperation = (operation, .scanning(progress: percent, incompletePreview: nil, estimatedParameters: parameters))
-                            progress(.scanning(progress: percent, incompletePreview: nil, estimatedParameters: parameters))
-                        }
-                    }
-                }
-                
-                SaneLogger.d(.sane, "> Appending image data")
-                data.append(buffer, count: Int(bufferActualSize))
-                // could buffer to a file instead [fileHandle writeData:[NSData dataWithBytes:buffer length:bufferActualSize]]
-                
-                if self.stopScanOperation {
-                    SaneLogger.i(.sane, "> Scan cancel was required, stopping now")
-                    self.stopScanOperation = false
-                    Sane.runOn(mainThread: true) {
-                        device.currentOperation = (operation, .cancelling)
-                        progress?(.cancelling)
-                    }
-                    sane_cancel(handle)
-                }
-                
-                status = sane_read(handle, buffer, SANE_Int(bufferMaxSize), &bufferActualSize)
-                SaneLogger.d(.sane, "> Reading next data: requested \(bufferMaxSize), got \(bufferActualSize) bytes")
-                
-                // lineart requires inverting pixel values
-                if parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY && parameters.depth == 1 {
-                    (0..<Int(bufferActualSize)).forEach { i in
-                        buffer[i] = ~buffer[i]
-                    }
-                }
-            }
-            
-            free(buffer)
-            SaneLogger.d(.sane, "> Freeing buffer")
-
-            guard status == SANE_STATUS_EOF else {
-                SaneLogger.e(.sane, "> Scan stopped unexpectedly: \(status)")
-                Sane.runOn(mainThread: startedOnMainThread) { fullCompletion(.failure(SaneError(saneStatus: status)!)) }
-                return
-            }
-            
-            SaneLogger.i(.sane, "> Finished scanning with success")
-            let result = Result(catching: { try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: parameters) })
             Sane.runOn(mainThread: startedOnMainThread) {
-                if let image = try? result.get() {
-                    device.updatePreviewImage(image, scannedWith: parameters, fallbackToExisting: true)
+                if let result = try? result.get() {
+                    device.updatePreviewImage(result.0, scannedWith: result.1, fallbackToExisting: true)
                 }
-                fullCompletion(result.map { ($0, parameters) })
+                fullCompletion(result)
             }
         }
+    }
+    
+    /// Device should be opened at this point
+    private func internalFrameScan(device: Device, handle: SANE_Handle, crop: CGRect, generateIntermediateImages: Bool, progress: @escaping (ScanProgress) -> ()) -> ScanResult {
+
+        SaneLogger.i(.sane, "> Starting scan")
+        var status = Sane.logTime { sane_start(handle) }
+        
+        guard status == SANE_STATUS_GOOD else {
+            SaneLogger.e(.sane, "> Couldn't start scan: \(status)")
+            return .failure(SaneError(saneStatus: status)!)
+        }
+        
+        SaneLogger.i(.sane, "> Setting blocking IO mode")
+        status = sane_set_io_mode(handle, SANE_FALSE) // false = blocking IO mode
+        
+        guard status == SANE_STATUS_GOOD || status == SANE_STATUS_UNSUPPORTED else {
+            SaneLogger.e(.sane, "> Couldn't set IO mode: \(status)")
+            return .failure(SaneError(saneStatus: status)!)
+        }
+
+        SaneLogger.i(.sane, "> Obtaining scan parameters")
+        var params = SANE_Parameters()
+        status = sane_get_parameters(handle, &params)
+
+        guard status == SANE_STATUS_GOOD else {
+            SaneLogger.e(.sane, "> Couldn't obtain scan parameters: \(status)")
+            return .failure(SaneError(saneStatus: status)!)
+        }
+
+        // read scan parameters as soon as possible. now that the scan has started they should not change. this is
+        // helpful since some backends don't give valid ones later on, especially when scanning in non blocking
+        // IO mode
+        let parameters = ScanParameters(cParams: params, cropArea: crop)
+        assert(parameters.fileSize > 0, "Scan parameters invalid")
+        SaneLogger.i(.sane, "> Scan parameters are \(parameters)")
+
+        var data = Data(capacity: parameters.fileSize + 1)
+        let bufferMaxSize = max(500 * 1000, parameters.fileSize / 100)
+        SaneLogger.d(.sane, "> Preparing buffer of size \(bufferMaxSize) bytes")
+
+        let buffer = malloc(bufferMaxSize)!.bindMemory(to: UInt8.self, capacity: bufferMaxSize)
+        defer {
+            SaneLogger.d(.sane, "> Freeing buffer")
+            free(buffer)
+        }
+        var bufferActualSize: SANE_Int = 0
+        
+        // generate incomplete image preview every 2%
+        var progressForLastIncompletePreview: Float = 0
+        let incompletePreviewStep: Float = 0.02
+        
+        while status == SANE_STATUS_GOOD && !stopScanOperation {
+            // Handle progress reporting
+            let percentScanned = Float(data.count) / Float(parameters.fileSize)
+            var imagePreviewData: Data? = nil
+            var reportProgress = true
+
+            if generateIntermediateImages {
+                if percentScanned > progressForLastIncompletePreview + incompletePreviewStep {
+                    progressForLastIncompletePreview = percentScanned
+                    // copy the data before passing it to the main thread, or it might return size == 0 if it
+                    // is being written to in the sane thread at the same time
+                    imagePreviewData = Data(data)
+                }
+                else {
+                    reportProgress = false
+                }
+            }
+            if reportProgress {
+                // image creation needs to be done on main thread
+                Sane.runOn(mainThread: true) {
+                    if imagePreviewData != nil {
+                        SaneLogger.i(.sane, "> Generating preview: \(percentScanned)")
+                    }
+                    else {
+                        SaneLogger.i(.sane, "> Reporting progress: \(percentScanned)")
+                    }
+                    let incompleteImage = imagePreviewData.map {
+                        try? UIImage.sy_imageFromIncompleteSane(data: $0, parameters: parameters)
+                    } ?? nil
+                    let p: ScanProgress = .scanning(
+                        progress: percentScanned, incompletePreview: incompleteImage, estimatedParameters: parameters
+                    )
+                    device.currentOperation?.progress = p
+                    progress(p)
+                }
+            }
+            
+            SaneLogger.d(.sane, "> Appending image data")
+            data.append(buffer, count: Int(bufferActualSize))
+            // could buffer to a file instead [fileHandle writeData:[NSData dataWithBytes:buffer length:bufferActualSize]]
+            
+            status = sane_read(handle, buffer, SANE_Int(bufferMaxSize), &bufferActualSize)
+            SaneLogger.d(.sane, "> Reading next data: requested \(bufferMaxSize), got \(bufferActualSize) bytes")
+            
+            // lineart requires inverting pixel values
+            if parameters.currentlyAcquiredChannel == SANE_FRAME_GRAY && parameters.depth == 1 {
+                (0..<Int(bufferActualSize)).forEach { i in
+                    buffer[i] = ~buffer[i]
+                }
+            }
+        }
+
+        if self.stopScanOperation {
+            SaneLogger.i(.sane, "> Scan cancel was required, stopping now")
+            self.stopScanOperation = false
+            Sane.runOn(mainThread: true) {
+                device.currentOperation?.progress = .cancelling
+                progress(.cancelling)
+            }
+            sane_cancel(handle)
+            return .failure(SaneError.cancelled)
+        }
+
+        guard status == SANE_STATUS_EOF else {
+            SaneLogger.e(.sane, "> Scan stopped unexpectedly: \(status)")
+            return .failure(SaneError(saneStatus: status)!)
+        }
+        
+        SaneLogger.i(.sane, "> Finished scanning with success")
+        let result = Result(catching: { try UIImage.sy_imageFromSane(source: UIImage.SaneSource.data(data), parameters: parameters) })
+        return result.map { ($0, parameters) }
     }
     
     public func cancelCurrentScan() {
