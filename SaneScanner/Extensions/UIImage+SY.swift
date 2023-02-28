@@ -27,7 +27,7 @@ extension UIImage {
         }
     }
     
-    static func screenshottingContext(size: CGSize, scale: CGFloat = 1, _ block: () -> ()) -> UIImage? {
+    static func screenshottingContext(size: CGSize, scale: CGFloat = UIScreen.main.scale, _ block: () -> ()) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         defer { UIGraphicsEndImageContext() }
         block()

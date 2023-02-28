@@ -214,7 +214,8 @@ class OptionCell: TableViewCell {
                 make.top.equalTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0).priority(ConstraintPriority.required.value - 1)
                 make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(showDescription ? 20 : 0)
                 make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
-                make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
+                make.left.right.equalTo(contentView.layoutMarginsGuide)
+                make.bottom.equalTo(contentView.layoutMarginsGuide).priority(950)
                 if !showDescription {
                     make.height.equalTo(0)
                 }
@@ -232,7 +233,8 @@ class OptionCell: TableViewCell {
             
             descrLabel.snp.remakeConstraints { (make) in
                 make.top.equalTo(valueView.snp.bottom).offset(showDescription ? 20 : 0)
-                make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
+                make.left.right.equalTo(contentView.layoutMarginsGuide)
+                make.bottom.equalTo(contentView.layoutMarginsGuide).priority(950)
                 if !showDescription {
                     make.height.equalTo(0)
                 }
@@ -263,7 +265,8 @@ class OptionCell: TableViewCell {
                 make.top.equalTo(titleLabel.snp.bottom).offset(margin).priority(ConstraintPriority.required.value - 1)
                 make.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(margin)
                 make.top.greaterThanOrEqualTo(valueView.snp.bottom).offset(margin)
-                make.left.right.bottom.equalTo(contentView.layoutMarginsGuide)
+                make.left.right.equalTo(contentView.layoutMarginsGuide)
+                make.bottom.equalTo(contentView.layoutMarginsGuide).priority(950)
                 if !showDescription {
                     make.height.equalTo(0)
                 }
@@ -284,9 +287,6 @@ extension OptionCell: DeviceOptionControllable {
         guard !isSizingCell else { return }
         guard #available(iOS 14.0, *) else { return }
 
-        let selectedIndex = values.firstIndex(of: option.value) ?? -1
-        if option.disabledOrReadOnly && selectedIndex == -1 { return } // no title to display, and no action required anyway
-
         var dropdownOptions: [(String, T?)] = values.map {
             let title = option.stringForValue($0, userFacing: true)
             return (title, $0)
@@ -297,7 +297,8 @@ extension OptionCell: DeviceOptionControllable {
         }
 
         let optionTitles: [String] = dropdownOptions.map(\.0)
-        let selectedTitle = selectedIndex == -1 ? "" : optionTitles[selectedIndex]
+        let initialIndex = values.firstIndex(of: option.value)
+        let initialTitle = initialIndex.map { optionTitles[$0] }
 
         let valueChangedClosure = { [weak self] (selectedIndex: Int) -> Void in
             guard let self = self else { return }
@@ -310,14 +311,16 @@ extension OptionCell: DeviceOptionControllable {
         }
         
         let button = UIButton.system(prominent: false)
-        button.setTitle(selectedTitle, for: .normal)
+        // we modify the selected title to be != than the corresponding option title, or on macOS the corresponding
+        // menu option won't be shown
+        button.setTitle((initialTitle ?? "") + " ", for: .normal)
         button.isEnabled = !option.disabledOrReadOnly
         button.showsMenuAsPrimaryAction = true
         button.menu = UIMenu(children: dropdownOptions.enumerated().map { i, option in
             let action = UIAction(title: option.0) { action in
                 valueChangedClosure(i)
             }
-            action.state = i == selectedIndex ? .on : .off
+            action.state = i == initialIndex ? .on : .off
             return action
         })
         valueControl = button
@@ -372,7 +375,11 @@ extension OptionCell: DeviceOptionControllable {
         field.text = option.value.description
         field.borderStyle = .roundedRect
         field.isEnabled = !option.disabledOrReadOnly
-            
+
+        // default intrinsic height is a bit too low, let's fix that
+        field.translatesAutoresizingMaskIntoConstraints = false
+        field.heightAnchor.constraint(greaterThanOrEqualToConstant: 24).isActive = true
+
         switch kind {
         case .string:   field.keyboardType = .asciiCapable
         case .int:      field.keyboardType = .numberPad

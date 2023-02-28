@@ -88,7 +88,7 @@ class DevicePreviewVC: UIViewController {
         super.viewDidLayoutSubviews()
         
         if UIDevice.isCatalyst {
-            separatorViewWidth.constant = 1.5
+            separatorViewWidth.constant = 1
         }
         else {
             separatorViewWidth.constant = 1 / (view.window?.screen.scale ?? 1)

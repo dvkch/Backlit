@@ -25,12 +25,13 @@ class TooltipView : UIView {
     
     private func setup() {
         backgroundColor = .background
-        layer.borderColor = UIColor.backgroundAlt.cgColor
+        layer.borderColor = UIColor.separator.cgColor
         layer.borderWidth = 1
+        layer.cornerRadius = 2
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = .zero
         layer.shadowRadius = 10
-        layer.shadowOpacity = 1
+        layer.shadowOpacity = 0.6
 
         label.numberOfLines = 0
         label.textColor = .normalText

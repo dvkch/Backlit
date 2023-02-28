@@ -22,10 +22,15 @@ class Slider: UIControl {
     }
     
     private func setup() {
+        #if targetEnvironment(macCatalyst)
         if #available(macCatalyst 15.0, iOS 15.0, *) {
-            // prevent crash when modifying thumb
+            // prevents crash when modifying thumb
             slider.preferredBehavioralStyle = .pad
+            // can only be enabled on macOS 12+, the mac catalyst idiom doesn't allow changing the thumb style, and
+            // we can't switch to .pad idiom on macOS 11.x
+            useMacOSThumb = UIDevice.isCatalyst
         }
+        #endif
 
         container.axis = .horizontal
         container.distribution = .fill
@@ -46,8 +51,6 @@ class Slider: UIControl {
         label.isUserInteractionEnabled = true
         container.addArrangedSubview(label)
         
-        useMacOSThumb = UIDevice.isCatalyst
-
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapGestureRecognized))
         doubleTapGesture.numberOfTapsRequired = 2
         label.addGestureRecognizer(doubleTapGesture)
@@ -90,9 +93,13 @@ class Slider: UIControl {
             }
 
             let size = CGSize(width: 10, height: 20)
-            let image = UIImage.screenshottingContext(size: size) {
-                UIColor.normalText.setFill()
-                UIBezierPath(roundedRect: .init(origin: .zero, size: size), cornerRadius: 4).fill()
+            let image = UIImage.screenshottingContext(size: size + 2) {
+                let path = UIBezierPath(roundedRect: .init(origin: .init(x: 1, y: 1), size: size), cornerRadius: 4)
+                let shadowPath = UIBezierPath(roundedRect: .init(origin: .zero, size: size + 2), cornerRadius: 4)
+                UIColor.altText.withAlphaComponent(0.1).setFill()
+                shadowPath.fill()
+                UIColor.white.setFill()
+                path.fill()
             }
             slider.setThumbImage(image, for: .normal)
         }
@@ -167,5 +174,15 @@ class Slider: UIControl {
         }
 
         label.text = formatter?(slider.value) ?? String(slider.value)
+    }
+    
+    // MARK: Layout
+    override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize
+        #if targetEnvironment(macCatalyst)
+        // default intrinsic height is a bit too low, let's fix that
+        size.height = max(size.height, 26)
+        #endif
+        return size
     }
 }

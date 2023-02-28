@@ -15,3 +15,9 @@ extension Double {
         return formatter.number(from: string)?.doubleValue ?? Double(string)
     }
 }
+
+extension CGSize {
+    static func +(lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return .init(width: lhs.width + rhs, height: lhs.height + rhs)
+    }
+}

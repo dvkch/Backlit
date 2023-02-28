@@ -130,6 +130,7 @@ class GalleryThumbsView: UIView {
         } else {
             gradientMask.startPoint = .zero
             gradientMask.endPoint = .init(x: 0, y: 1)
+            gradientMask.frame.origin.x = 1
         }
     }
     

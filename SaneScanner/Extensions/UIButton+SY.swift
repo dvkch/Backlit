@@ -33,19 +33,16 @@ extension UIButton {
     }
     
     static func system(prominent: Bool) -> Self {
-        // TODO: test on macOS 11.0
-
         let button = Self(type: .roundedRect)
         
-        if #available(macCatalyst 15.0, iOS 15.0, *) {
-            #if targetEnvironment(macCatalyst)
-            button.preferredBehavioralStyle = .mac
-            // by default macOS counts 20px for the intrinsicContentSize.height of the button, but
-            // it is actually 21px. to prevent the button from being cut, let's try to improve this
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.heightAnchor.constraint(greaterThanOrEqualToConstant: 22).isActive = true
-
-            #else
+        #if targetEnvironment(macCatalyst)
+        // by default macOS counts 20px for the intrinsicContentSize.height of the button, but
+        // it is actually 21px. to prevent the button from being cut, let's try to improve this
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(greaterThanOrEqualToConstant: 22).isActive = true
+        #else
+        
+        if #available(iOS 15.0, *) {
             if prominent {
                 button.configuration = .filled()
             }
@@ -54,7 +51,6 @@ extension UIButton {
                 button.setTitleColor(.tint.adjustBrightness(by: 0.2), for: .normal)
             }
             button.configuration?.contentInsets = .init(top: 5, leading: 10, bottom: 5, trailing: 10)
-            #endif
         }
         else {
             button.clipsToBounds = true
@@ -72,7 +68,8 @@ extension UIButton {
                 button.setTitleColor(.altText.withAlphaComponent(0.5), for: .disabled)
             }
         }
-        
+        #endif
+
         return button
     }
 }
