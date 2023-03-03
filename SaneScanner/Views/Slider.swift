@@ -150,7 +150,7 @@ class Slider: UIControl {
     override var keyCommands: [UIKeyCommand]? {
         let leftCommand = UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:)))
         let rightCommand = UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:)))
-        if #available(macCatalyst 15.0, *) {
+        if #available(macCatalyst 15.0, iOS 15.0, *) {
             leftCommand.wantsPriorityOverSystemBehavior = true
             rightCommand.wantsPriorityOverSystemBehavior = true
         }

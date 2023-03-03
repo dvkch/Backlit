@@ -310,7 +310,7 @@ extension DevicesVC : UITableViewDelegate {
 
             CATransaction.begin()
             CATransaction.setCompletionBlock {
-                self.refresh()
+                self.refresh(afterHostChange: true)
             }
             tableView.beginUpdates()
             tableView.reloadSections(IndexSet(integer: 0), with: .none)

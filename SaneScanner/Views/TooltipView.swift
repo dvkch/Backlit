@@ -25,7 +25,7 @@ class TooltipView : UIView {
     
     private func setup() {
         backgroundColor = .background
-        layer.borderColor = UIColor.separator.cgColor
+        layer.borderColor = UIColor.splitSeparator.cgColor
         layer.borderWidth = 1
         layer.cornerRadius = 2
         layer.shadowColor = UIColor.black.cgColor
