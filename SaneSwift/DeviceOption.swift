@@ -298,9 +298,9 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
 
         case .value(let specificValue):
             switch constraint {
-            case .range(let min, let max), .stepRange(let min, let max, _, _):
+            case .range(let min, let max):
                 return .value(specificValue.clamped(min: min, max: max))
-            case .list(let values):
+            case .list(let values), .stepRange(_, _, _, let values):
                 guard let closest = values.closest(to: specificValue) else { return .none }
                 return .value(closest)
             case .none:
@@ -385,9 +385,9 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
             
         case .value(let specificValue):
             switch constraint {
-            case .range(let min, let max), .stepRange(let min, let max, _, _):
+            case .range(let min, let max):
                 return .value(Double(specificValue).clamped(min: min, max: max))
-            case .list(let values):
+            case .list(let values), .stepRange(_, _, _, let values):
                 guard let closest = values.closest(to: Double(specificValue)) else { return .none }
                 return .value(closest)
             case .none:
