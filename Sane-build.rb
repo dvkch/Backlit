@@ -11,7 +11,7 @@ FINAL_DIR = DEST_DIR + 'all'
 LOG_PATH = Pathname.pwd + 'Sane-build-log.txt'
 
 # Release tag
-GIT_TAG = '1.1.1'.freeze
+GIT_TAG = '1.2.1'.freeze
 
 # Build flags
 MAKE_JOBS = 4
