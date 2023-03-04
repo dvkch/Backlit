@@ -37,6 +37,7 @@ public class Sane: NSObject {
     public var isUpdatingDevices: Bool {
         return isUpdatingDevicesInternal
     }
+    public private(set) var saneVersion: OperatingSystemVersion = .init()
 
     // MARK: Private properties
     private var thread: Thread!
@@ -122,7 +123,9 @@ extension Sane {
             self.clearOpenedDevices()
             self.isUpdatingDevicesInternal = false
             
-            let s = sane_init(nil, SaneAuthenticationCallback(deviceName:username:password:))
+            var version: SANE_Int = 0
+            let s = sane_init(&version, SaneAuthenticationCallback(deviceName:username:password:))
+            self.saneVersion = SaneVersionFromInt(version)
             
             if s != SANE_STATUS_GOOD {
                 self.saneInitError = s.description

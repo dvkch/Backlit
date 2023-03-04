@@ -27,6 +27,14 @@ double SaneDoubleFromFixed(SANE_Word value) {
     return SANE_UNFIX(value);
 }
 
+FOUNDATION_EXPORT NSOperatingSystemVersion SaneVersionFromInt(SANE_Int version) {
+    NSOperatingSystemVersion v = {};
+    v.majorVersion = SANE_VERSION_MAJOR(version);
+    v.minorVersion = SANE_VERSION_MINOR(version);
+    v.patchVersion = SANE_VERSION_BUILD(version);
+    return v;
+}
+
 NSString * _Nullable NSStringFromSaneValueScanMode(SaneValueScanMode value) {
     // we do this in ObjC because SANE_I18N() macro doesn't expand properly and is not available in Swift..
     switch (value) {

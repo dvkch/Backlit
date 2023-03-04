@@ -15,6 +15,8 @@ FOUNDATION_EXPORT int SaneGetLogLevel(void);
 FOUNDATION_EXPORT SANE_Word SaneFixedFromDouble(double value);
 FOUNDATION_EXPORT double SaneDoubleFromFixed(SANE_Word value);
 
+FOUNDATION_EXPORT NSOperatingSystemVersion SaneVersionFromInt(SANE_Int version);
+
 typedef NS_ENUM(NSUInteger, SaneValueScanMode) {
     SaneValueScanModeColor,
     SaneValueScanModeColorLineart,

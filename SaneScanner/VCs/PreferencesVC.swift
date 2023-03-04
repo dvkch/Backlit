@@ -9,6 +9,7 @@
 import UIKit
 import SYKit
 import SYEmailHelper
+import SaneSwift
 
 class PreferencesVC: UIViewController {
 
@@ -41,6 +42,20 @@ class PreferencesVC: UIViewController {
     }
 
     // MARK: Properties
+    private enum Section {
+        case prefGroup(title: String, keys: [Preferences.Key])
+        case about(rows: [AboutRow])
+        
+        enum AboutRow {
+            case appVersion, saneVersion, contact
+        }
+        
+        static var allSections: [Section] = {
+            let prefs = Preferences.shared.groupedKeys.map { Section.prefGroup(title: $0.0, keys: $0.1) }
+            let about = Section.about(rows: [.appVersion, .saneVersion, .contact])
+            return prefs + [about]
+        }()
+    }
     private static let contactEmailAddress = "contact@syan.me"
 
     // MARK: Views:
@@ -54,29 +69,43 @@ class PreferencesVC: UIViewController {
 
 extension PreferencesVC : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return Preferences.shared.groupedKeys.count + 1 // contact section
+        return Section.allSections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < Preferences.shared.groupedKeys.count {
-            return Preferences.shared.groupedKeys[section].1.count
+        switch Section.allSections[section] {
+        case .prefGroup(_, let keys):
+            return keys.count
+        case .about(let rows):
+            return rows.count
         }
-        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(OptionCell.self, for: indexPath)
-        if indexPath.section < Preferences.shared.groupedKeys.count {
-            let prefKey = Preferences.shared.groupedKeys[indexPath.section].1[indexPath.row]
-            cell.updateWith(prefKey: prefKey)
+        
+        switch Section.allSections[indexPath.section] {
+        case .prefGroup(_, let keys):
+            cell.updateWith(prefKey: keys[indexPath.row])
             cell.showDescription = true
-        }
-        else {
-            if indexPath.row == 0 {
-                cell.updateWith(leftText: "PREFERENCES TITLE CONTACT".localized, rightText: PreferencesVC.contactEmailAddress)
-            }
-            else {
-                cell.updateWith(leftText: "PREFERENCES TITLE VERSION".localized, rightText: Bundle.main.fullVersion)
+
+        case .about(let rows):
+            switch rows[indexPath.row] {
+            case .appVersion:
+                cell.updateWith(    
+                    leftText: "PREFERENCES TITLE APP VERSION".localized,
+                    rightText: Bundle.main.fullVersion
+                )
+            case .saneVersion:
+                cell.updateWith(
+                    leftText: "PREFERENCES TITLE SANE VERSION".localized,
+                    rightText: Sane.shared.saneVersion.stringVersion
+                )
+            case .contact:
+                cell.updateWith(
+                    leftText: "PREFERENCES TITLE CONTACT".localized,
+                    rightText: PreferencesVC.contactEmailAddress
+                )
             }
         }
         return cell
@@ -85,10 +114,10 @@ extension PreferencesVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueHeader(TableViewHeader.self)
 
-        if section < Preferences.shared.groupedKeys.count {
-            header.text = Preferences.shared.groupedKeys[section].0
-        }
-        else {
+        switch Section.allSections[section] {
+        case .prefGroup(let title, _):
+            header.text = title
+        case .about(_):
             header.text = "PREFERENCES SECTION ABOUT APP".localized
         }
         return header
@@ -97,15 +126,11 @@ extension PreferencesVC : UITableViewDataSource {
 
 extension PreferencesVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section < Preferences.shared.groupedKeys.count {
-            let prefKey = Preferences.shared.groupedKeys[indexPath.section].1[indexPath.row]
-            return OptionCell.cellHeight(prefKey: prefKey, showDescription: true, width: tableView.bounds.width)
-        }
-        if indexPath.row == 0 {
-            return OptionCell.cellHeight(leftText: "PREFERENCES TITLE CONTACT".localized, rightText: PreferencesVC.contactEmailAddress, width: tableView.bounds.width)
-        }
-        else {
-            return OptionCell.cellHeight(leftText: "PREFERENCES TITLE VERSION".localized, rightText: Bundle.main.fullVersion, width: tableView.bounds.width)
+        switch Section.allSections[indexPath.section] {
+        case .prefGroup(_, let keys):
+            return OptionCell.cellHeight(prefKey: keys[indexPath.row], showDescription: true, width: tableView.bounds.width)
+        case .about(_):
+            return OptionCell.cellHeight(leftText: "TEST TITLE", rightText: "TEST VALUE", width: tableView.bounds.width)
         }
     }
     
@@ -124,37 +149,40 @@ extension PreferencesVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // ABOUT APP section
-        if indexPath.section >= Preferences.shared.groupedKeys.count {
-            guard indexPath.row == 0 else { return }
+        switch Section.allSections[indexPath.section] {
+        case .prefGroup(_, let keys):
+            Preferences.shared.toggle(key: keys[indexPath.row])
             
-            let subject = String(format: "CONTACT SUBJECT ABOUT APP %@ %@".localized, Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
-            
-            PasteboardEmailService.name = "MAIL COPY PASTEBOARD NAME".localized
-            EmailHelper.shared.actionSheetTitle = "MAIL ALERT TITLE".localized
-            EmailHelper.shared.actionSheetMessage = "MAIL ALERT MESSAGE".localized
-            EmailHelper.shared.actionSheetCancelButtonText = "MAIL ALERT CANCEL".localized
-            EmailHelper.shared.presentActionSheet(
-                address: PreferencesVC.contactEmailAddress,
-                subject: subject,
-                body: nil,
-                presentingViewController: self,
-                sender:
-                tableView.cellForRow(at: indexPath))
-            { (launched, service, error) in
-                    if service is PasteboardEmailService {
-                        UIAlertController.show(message: "MAIL COPY PASTEBOARD SUCCESS".localized, in: self)
-                    }
-                    print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
+            tableView.beginUpdates()
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+
+        case .about(let rows):
+            switch rows[indexPath.row] {
+            case .appVersion, .saneVersion:
+                break
+                
+            case .contact:
+                let subject = String(format: "CONTACT SUBJECT ABOUT APP %@ %@".localized, Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
+                
+                PasteboardEmailService.name = "MAIL COPY PASTEBOARD NAME".localized
+                EmailHelper.shared.actionSheetTitle = "MAIL ALERT TITLE".localized
+                EmailHelper.shared.actionSheetMessage = "MAIL ALERT MESSAGE".localized
+                EmailHelper.shared.actionSheetCancelButtonText = "MAIL ALERT CANCEL".localized
+                EmailHelper.shared.presentActionSheet(
+                    address: PreferencesVC.contactEmailAddress,
+                    subject: subject,
+                    body: nil,
+                    presentingViewController: self,
+                    sender:
+                    tableView.cellForRow(at: indexPath))
+                { (launched, service, error) in
+                        if service is PasteboardEmailService {
+                            UIAlertController.show(message: "MAIL COPY PASTEBOARD SUCCESS".localized, in: self)
+                        }
+                        print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
+                }
             }
-            return
         }
-        
-        let prefKey = Preferences.shared.groupedKeys[indexPath.section].1[indexPath.row]
-        Preferences.shared.toggle(key: prefKey)
-        
-        tableView.beginUpdates()
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-        tableView.endUpdates()
     }
 }
