@@ -123,7 +123,7 @@ internal extension UIImage {
                 bitsPerPixel: parameters.depth * parameters.numberOfChannels,
                 bytesPerRow: parameters.bytesPerLine,
                 space: colorSpace,
-                bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue),
+                bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue + CGImageByteOrderInfo.order16Little.rawValue),
                 provider: provider,
                 decode: nil,
                 shouldInterpolate: false,
