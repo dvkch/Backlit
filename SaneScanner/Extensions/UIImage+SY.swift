@@ -33,4 +33,21 @@ extension UIImage {
         block()
         return UIGraphicsGetImageFromCurrentImageContext()
     }
+    
+    func scanPngData() -> Data? {
+        // TODO: check for leaks
+        guard let cgImage else { return pngData() }
+        
+        // images created with CoreGraphics in Gray with 1bit per pixel don't get saved properly by `.pngData()`
+        // so we revert to the proper methods in CoreGraphics to generate our PNG data
+        let outputData = CFDataCreateMutable(nil, 0)!
+        guard let destination = CGImageDestinationCreateWithData(outputData, kUTTypePNG as CFString, 1, nil) else {
+            return pngData()
+        }
+        CGImageDestinationAddImage(destination, cgImage, nil)
+        guard CGImageDestinationFinalize(destination) else {
+            return pngData()
+        }
+        return outputData as Data
+    }
 }

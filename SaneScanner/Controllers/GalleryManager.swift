@@ -148,7 +148,7 @@ class GalleryManager: NSObject {
         let imageData: Data
         if Preferences.shared.saveAsPNG {
             fileURL.appendPathExtension(kImageExtensionPNG)
-            if let data = image.pngData() {
+            if let data = image.scanPngData() {
                 imageData = data
             } else {
                 return nil
