@@ -135,27 +135,10 @@ internal extension UIImage {
             return UIImage(cgImage: cgImage)
         }
     }
-    
-    
+
     static func sy_imageFromIncompleteSane(data: Data, parameters: ScanParameters) throws -> UIImage {
-        let incompleteParams = parameters.incompleteParameters(dataLength: data.count)
-        guard incompleteParams.fileSize > 0 else {
-            throw SaneError.noImageData
-        }
-        
-        let image = try self.sy_imageFromSane(source: .data(data), parameters: incompleteParams)
-        
-        UIGraphicsBeginImageContextWithOptions(parameters.size, true, 1.0)
-        defer { UIGraphicsEndImageContext() }
-        
-        UIColor.white.setFill()
-        UIBezierPath(rect: CGRect(origin: .zero, size: parameters.size)).fill()
-        image.draw(in: CGRect(origin: .zero, size: image.size))
-        
-        guard let paddedImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            throw SaneError.cannotGenerateImage
-        }
-        return paddedImage
+        let completedData = data + Data(repeating: UInt8.max, count: parameters.fileSize - data.count)
+        return try self.sy_imageFromSane(source: .data(completedData), parameters: parameters)
     }
 }
 
