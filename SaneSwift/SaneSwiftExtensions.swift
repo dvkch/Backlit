@@ -96,6 +96,9 @@ internal extension UIImage {
         }
     }
     
+    // Nota: if the source image is 1 bit Grayscale (monochrome), the method `pngData()` on the output UIImage will
+    // produce an invalid file (at least on macOS 13.2.1), but using CGImageDestinationCreateWithData with kUTTypePNG
+    // will produce a valid PNG file.
     static func sy_imageFromSane(source: SaneSource, parameters: ScanParameters) throws -> UIImage {
         return try autoreleasepool {
             guard let provider = source.provider else {
@@ -103,23 +106,17 @@ internal extension UIImage {
             }
             
             let colorSpace: CGColorSpace
-            let destBitmapInfo: CGBitmapInfo
-            let destNumberOfComponents: Int
 
             switch parameters.currentlyAcquiredChannel {
             case SANE_FRAME_RGB:
                 colorSpace = CGColorSpaceCreateDeviceRGB()
-                destBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue)
-                destNumberOfComponents = 4
             case SANE_FRAME_GRAY:
                 colorSpace = CGColorSpaceCreateDeviceGray()
-                destBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
-                destNumberOfComponents = 1
             default:
                 throw SaneError.unsupportedChannels
             }
-            
-            guard let sourceImage = CGImage(
+
+            guard let cgImage = CGImage(
                 width: parameters.width,
                 height: parameters.height,
                 bitsPerComponent: parameters.depth,
@@ -130,30 +127,12 @@ internal extension UIImage {
                 provider: provider,
                 decode: nil,
                 shouldInterpolate: false,
-                intent: CGColorRenderingIntent.defaultIntent
+                intent: .defaultIntent
             ) else {
                 throw SaneError.cannotGenerateImage
             }
 
-            guard let context = CGContext(
-                data: nil, // let iOS deal with allocating the memory
-                width: parameters.width,
-                height: parameters.height,
-                bitsPerComponent: 8,
-                bytesPerRow: parameters.width * destNumberOfComponents,
-                space: colorSpace,
-                bitmapInfo: destBitmapInfo.rawValue
-            ) else {
-                throw SaneError.cannotGenerateImage
-            }
-            
-            // LATER: this call seams to leak, at least on Catalyst (macOS 11.3)
-            context.draw(sourceImage, in: CGRect(origin: .zero, size: parameters.size))
-            
-            guard let destCGImage = context.makeImage() else {
-                throw SaneError.cannotGenerateImage
-            }
-            return UIImage(cgImage: destCGImage, scale: 1, orientation: .up)
+            return UIImage(cgImage: cgImage)
         }
     }
     
