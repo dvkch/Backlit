@@ -27,6 +27,13 @@ public enum SaneError: Error {
             self = .saneError(saneStatus)
         }
     }
+    
+    public var saneStatus: SANE_Status? {
+        switch self {
+        case .saneError(let status): return status
+        default: return nil
+        }
+    }
 }
 
 extension SaneError : CustomNSError {

@@ -179,10 +179,10 @@ public enum ScanOperation {
 
 public enum ScanProgress: Equatable {
     case warmingUp
-    case scanning(progress: Float, incompletePreview: UIImage?, estimatedParameters: ScanParameters?)
+    case scanning(progress: Float, incompletePreview: UIImage?, parameters: ScanParameters?)
     case cancelling
 
-    var image: UIImage? {
+    var incompletePreview: UIImage? {
         if case .scanning(_, let image, _) = self {
             return image
         }
@@ -190,7 +190,8 @@ public enum ScanProgress: Equatable {
     }
 }
 
-public typealias ScanResult = Result<(UIImage, ScanParameters), Error>
+public typealias ScanImage = (image: UIImage, parameters: ScanParameters)
+public typealias ScanResult = Result<ScanImage, SaneError>
 
 public extension ScanResult {
     var image: UIImage? {

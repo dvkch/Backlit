@@ -181,7 +181,7 @@ class DeviceVC: UIViewController {
                 }
 
             case .failure(let error):
-                if case .cancelled = (error as? SaneError) {
+                if case .cancelled = error {
                     Analytics.shared.send(event: .scanCancelled(device: self.device))
                 } else {
                     Analytics.shared.send(event: .scanFailed(device: self.device, error: error))
@@ -207,7 +207,7 @@ class DeviceVC: UIViewController {
             self.scanButton.isEnabled = true
             self.updatePreviewViews()
             if case let .failure(error) = result {
-                if case .cancelled = (error as? SaneError) {
+                if case .cancelled = error {
                     Analytics.shared.send(event: .previewCancelled(device: self.device))
                 } else {
                     Analytics.shared.send(event: .previewFailed(device: self.device, error: error))
