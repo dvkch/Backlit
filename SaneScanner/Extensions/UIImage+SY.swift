@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MobileCoreServices
+import SYPictureMetadata
 
 extension UIImage {
     static func testImage(size: CGFloat) -> UIImage? {
@@ -34,19 +36,63 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
-    func scanPngData() -> Data? {
+    enum ImageFormat {
+        case png
+        case jpeg(quality: CGFloat)
+        
+        var utType: CFString {
+            switch self {
+            case .png:  return kUTTypePNG as CFString
+            case .jpeg: return kUTTypeJPEG as CFString
+            }
+        }
+        
+        var fileExtension: String {
+            switch self {
+            case .png:  return "png"
+            case .jpeg: return "jpg"
+            }
+        }
+        
+        func systemEncode(image: UIImage, metadata: [String: Any]) -> Data? {
+            // this is the default way to encode. unfortunately it is twice as slow since it compresses
+            // once to NSData, then again to add the metadata, since UIImage helper methods don't allow
+            // to pass it directly. It also fucks up monochrome images.
+            // we use it only as a fallback if manually using `CGImageDestination` doesn't work
+            var data: Data?
+            switch self {
+            case .png:                  data = image.pngData()
+            case .jpeg(let quality):    data = image.jpegData(compressionQuality: quality)
+            }
+            guard let data else { return nil }
+            return (try? SYMetadata.apply(metadata: metadata, to: data)) ?? data
+        }
+    }
+    
+    func scanData(format: ImageFormat, metadata: [String: Any]) -> Data? {
         // TODO: check for leaks
-        guard let cgImage else { return pngData() }
+        guard let cgImage else {
+            return format.systemEncode(image: self, metadata: metadata)
+        }
         
         // images created with CoreGraphics in Gray with 1bit per pixel don't get saved properly by `.pngData()`
         // so we revert to the proper methods in CoreGraphics to generate our PNG data
         let outputData = CFDataCreateMutable(nil, 0)!
-        guard let destination = CGImageDestinationCreateWithData(outputData, kUTTypePNG as CFString, 1, nil) else {
-            return pngData()
+        var options = metadata
+        options[kCGImageDestinationEmbedThumbnail as String] = kCFBooleanTrue
+
+        if case .jpeg(let quality) = format {
+            options[kCGImageDestinationLossyCompressionQuality as String] = quality
         }
-        CGImageDestinationAddImage(destination, cgImage, nil)
+
+        guard let destination = CGImageDestinationCreateWithData(outputData, format.utType, 1, options as NSDictionary) else {
+            return format.systemEncode(image: self, metadata: metadata)
+        }
+
+        CGImageDestinationSetProperties(destination, options as CFDictionary)
+        CGImageDestinationAddImage(destination, cgImage, options as CFDictionary)
         guard CGImageDestinationFinalize(destination) else {
-            return pngData()
+            return format.systemEncode(image: self, metadata: metadata)
         }
         return outputData as Data
     }

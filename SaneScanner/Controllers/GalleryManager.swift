@@ -65,7 +65,12 @@ class GalleryManager: NSObject {
     
     // MARK: Private vars
     let galleryFolder: URL = {
-        let url = FileManager.galleryURL
+        // resolving symlinks because:
+        // 1. the path given will be /Users/nickname/Library/Containers/me.syan.SaneScanner/Data/Pictures/SaneScanner/
+        // 2. when we use FileManager.default.contentsOfDirectory, paths get resolved to /Users/nickname/Pictures/SaneScanner
+        // so we need to resolve the galleryURL to make sure unicity checks using thumbsBeingCreated are working properly
+        // and we don't create thumbnails twice for instance
+        let url = FileManager.galleryURL.resolvingSymlinksInPath()
         try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: [:])
         return url
     }()
@@ -143,32 +148,24 @@ class GalleryManager: NSObject {
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
-        var fileURL = galleryFolder.appendingPathComponent(formatter.string(from: Date()), isDirectory: false)
+        let format: UIImage.ImageFormat = Preferences.shared.saveAsPNG ? .png : .jpeg(quality: 0.9)
         
-        let imageData: Data
-        if Preferences.shared.saveAsPNG {
-            fileURL.appendPathExtension(kImageExtensionPNG)
-            if let data = image.scanPngData() {
-                imageData = data
-            } else {
-                return nil
-            }
-        } else {
-            fileURL.appendPathExtension(kImageExtensionJPG)
-            if let data = image.jpegData(compressionQuality: 0.9) {
-                imageData = data
-            } else {
-                return nil
-            }
-        }
+        let fileURL = galleryFolder
+            .appendingPathComponent(formatter.string(from: Date()), isDirectory: false)
+            .appendingPathExtension(format.fileExtension)
         
-        let imageDataWithMetadata = try metadata?.apply(to: imageData)
-
-        let dataToWrite = imageDataWithMetadata ?? imageData
-        try dataToWrite.write(to: fileURL, options: .atomicWrite)
+        let imageData = image.scanData(
+            format: format,
+            metadata: metadata?.currentDictionary ?? [:]
+        )
+        guard let imageData else { return nil }
+        
+        // TODO: add placeholder image and save file in the background
+        
+        try imageData.write(to: fileURL, options: .atomicWrite)
         imageURLs.insert(fileURL.standardizedFileURL, at: 0)
         
-        let item = galleryItemForImage(at: fileURL)
+        let item = galleryItemForImage(at: fileURL.standardizedFileURL)
         generateThumbAsync(for: item, fullImage: image, tellDelegates: true)
         return item
     }
