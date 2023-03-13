@@ -25,7 +25,7 @@ protocol DeviceOptionControllable {
 
 protocol DeviceOptionControllableDelegate: NSObjectProtocol {
     func deviceOptionControllable(_ controllable: DeviceOptionControllable, willUpdate option: DeviceOption)
-    func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, result: Result<SaneInfo, Error>)
+    func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, result: Result<SaneInfo, SaneError>)
 }
 
 extension DeviceOption {

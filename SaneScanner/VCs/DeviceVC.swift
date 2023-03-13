@@ -161,7 +161,7 @@ class DeviceVC: UIViewController {
         }
         
         // block that will be called to handle completion
-        let completionBlock = { [weak self] (results: ScanResults) in
+        let completionBlock = { [weak self] (results: SaneResult<[ScanImage]>) in
             guard let self = self else { return }
             self.scanButton.progress = nil
             self.updatePreviewViews()
@@ -249,7 +249,7 @@ class DeviceVC: UIViewController {
         isRefreshing = true
         
         refreshView.startLoading()
-        Sane.shared.listOptions(for: device) { [weak self] in
+        Sane.shared.listOptions(for: device) { [weak self] _ in
             guard let self = self else { return }
             self.tableView.reloadData()
             self.isRefreshing = false
@@ -444,7 +444,7 @@ extension DeviceVC : DeviceOptionControllableDelegate {
         refreshView.startLoading(discreet: true)
     }
     
-    func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, result: Result<SaneInfo, Error>) {
+    func deviceOptionControllable(_ controllable: DeviceOptionControllable, didUpdate option: DeviceOption, result: Result<SaneInfo, SaneError>) {
         refreshView.stopLoading()
 
         switch result {

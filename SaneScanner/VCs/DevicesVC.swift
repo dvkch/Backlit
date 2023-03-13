@@ -105,12 +105,15 @@ class DevicesVC: UIViewController {
         
         // refresh devices
         SaneBonjour.shared.start()
-        Sane.shared.updateDevices { [weak self] (devices, error) in
+        Sane.shared.updateDevices { [weak self] result in
             guard let self = self else { return }
-            self.devices = devices ?? []
-            self.tableView.reloadData()
-            
-            if let error = error {
+            switch result {
+            case .success(let devices):
+                self.devices = devices
+                self.tableView.reloadData()
+            case .failure(let error):
+                self.devices = []
+                self.tableView.reloadData()
                 UIAlertController.show(for: error, in: self)
             }
         }
@@ -344,24 +347,21 @@ extension DevicesVC : UITableViewDelegate {
         loadingDevice = device
         (tableView.cellForRow(at: indexPath) as? DeviceCell)?.isLoading = true
         
-        Sane.shared.openDevice(device) { (error) in
+        Sane.shared.openDevice(device) { (result) in
             self.loadingDevice = nil
             self.tableView.reloadData()
 
-            if let error = error {
-                if let error = (error as? SaneError),
-                    case let .saneError(status) = error,
-                    status.rawValue == SANE_STATUS_ACCESS_DENIED.rawValue,
-                    DeviceAuthentication.saved(for: device.name.rawValue) != nil
-                {
+            if case .failure(let error) = result {
+                if error.isSaneAuthDenied, DeviceAuthentication.saved(for: device.name.rawValue) != nil {
                     // this is an auth error, let's forget current auth and restart connexion
                     DeviceAuthentication.forget(for: device.name.rawValue)
                     self.tableView(tableView, didSelectRowAt: indexPath)
                     return
                 }
-
-                UIAlertController.show(for: error, title: "DIALOG TITLE COULDNT OPEN DEVICE".localized, in: self)
-                return
+                else {
+                    UIAlertController.show(for: error, title: "DIALOG TITLE COULDNT OPEN DEVICE".localized, in: self)
+                    return
+                }
             }
             let vc = DeviceVC(device: device)
             self.navigationController?.pushViewController(vc, animated: true)

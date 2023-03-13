@@ -419,7 +419,7 @@ extension OptionCell: DeviceOptionControllable {
         valueControl = button
     }
 
-    private func optionUpdateCompletion(_ result: Result<SaneInfo, Error>) {
+    private func optionUpdateCompletion(_ result: Result<SaneInfo, SaneError>) {
         guard let option = option else { return }
         delegate?.deviceOptionControllable(self, didUpdate: option, result: result)
     }

@@ -192,9 +192,8 @@ public enum ScanProgress: Equatable {
     }
 }
 
-public typealias ScanImage = (image: UIImage, parameters: ScanParameters)
-public typealias ScanResult = Result<ScanImage, SaneError>
-public typealias ScanResults = Result<[ScanImage], SaneError>
+public typealias SaneResult<T> = Result<T, SaneError>
+public typealias SaneCompletion<T> = (Result<T, SaneError>) -> ()
 
 internal extension Result {
     var value: Success? {
@@ -205,8 +204,10 @@ internal extension Result {
     }
 }
 
-internal extension Array where Element == ScanResult {
-    var scanResults: ScanResults {
+public typealias ScanImage = (image: UIImage, parameters: ScanParameters)
+
+internal extension Array where Element == SaneResult<ScanImage> {
+    func flattened() -> SaneResult<[ScanImage]> {
         if let error = compactMap(\.error).last {
             return .failure(error)
         }

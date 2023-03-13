@@ -48,8 +48,8 @@ public class DeviceOption {
         return ""
     }
     
-    internal func refreshValue(_ block: ((Error?) -> ())?) {
-        block?(nil)
+    internal func refreshValue(_ block: SaneCompletion<()>?) {
+        block?(.success(()))
     }
     
     // MARK: Helpers
@@ -122,12 +122,12 @@ public class DeviceOptionTyped<T: Equatable & CustomStringConvertible>: DeviceOp
         fatalError("Not implemented")
     }
     
-    internal override func refreshValue(_ block: ((Error?) -> ())?) {
-        Sane.shared.valueForOption(self) { (value, error) in
-            if let value = value, error == nil {
+    internal override func refreshValue(_ block: SaneCompletion<()>?) {
+        Sane.shared.valueForOption(self) { result in
+            if case .success(let value) = result {
                 self.value = value
             }
-            block?(error)
+            block?(result.map { _ in () })
         }
     }
     
@@ -485,7 +485,7 @@ public class DeviceOptionButton: DeviceOptionTyped<Bool> {
         super.init(cOption: cOption, index: index, device: device, initialValue: initialValue)
     }
     
-    public func press(_ completion: ((_ reloadAll: Result<SaneInfo, Error>) -> Void)?) {
+    public func press(_ completion: SaneCompletion<SaneInfo>?) {
         Sane.shared.updateOption(self, with: .value(true), completion: completion)
     }
 

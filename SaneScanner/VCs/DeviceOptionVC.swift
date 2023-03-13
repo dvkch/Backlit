@@ -44,7 +44,7 @@ class DeviceOptionVC : UIAlertController {
     }
     
     // MARK: Completion
-    private func optionUpdateCompletion(_ result: Result<SaneInfo, Error>) {
+    private func optionUpdateCompletion(_ result: Result<SaneInfo, SaneError>) {
         delegate?.deviceOptionControllable(self, didUpdate: option, result: result)
     }
 }
