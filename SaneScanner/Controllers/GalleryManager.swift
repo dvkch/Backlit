@@ -11,6 +11,7 @@ import SYKit
 import SYOperationQueue
 import DirectoryWatcher
 import SYPictureMetadata
+import SaneSwift
 
 protocol GalleryManagerDelegate: NSObjectProtocol {
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem])
@@ -143,31 +144,38 @@ class GalleryManager: NSObject {
         }
     }
     
-    @discardableResult func addImage(_ image: UIImage, metadata: SYMetadata?) throws -> GalleryItem? {
+    @discardableResult func saveScans(device: Device, _ scans: [ScanImage]) throws -> [GalleryItem] {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
         let format: UIImage.ImageFormat = Preferences.shared.saveAsPNG ? .png : .jpeg(quality: 0.9)
         
-        let fileURL = galleryFolder
-            .appendingPathComponent(formatter.string(from: Date()), isDirectory: false)
-            .appendingPathExtension(format.fileExtension)
-        
-        let imageData = image.scanData(
-            format: format,
-            metadata: metadata?.currentDictionary ?? [:]
-        )
-        guard let imageData else { return nil }
-        
-        // TODO: add placeholder image and save file in the background
-        
-        try imageData.write(to: fileURL, options: .atomicWrite)
-        imageURLs.insert(fileURL.standardizedFileURL, at: 0)
-        
-        let item = galleryItemForImage(at: fileURL.standardizedFileURL)
-        generateThumbAsync(for: item, fullImage: image, tellDelegates: true)
-        return item
+        return try scans.enumerated().map { index, scan in
+            var filename = formatter.string(from: Date())
+            if scans.count > 1 {
+                filename += String(format: "_%03d", index)
+            }
+            let fileURL = galleryFolder
+                .appendingPathComponent(filename, isDirectory: false)
+                .appendingPathExtension(format.fileExtension)
+            
+            let metadata = SYMetadata.init(device: device, scanParameters: scan.parameters)
+            let imageData = scan.image.scanData(
+                format: format,
+                metadata: metadata.currentDictionary
+            )
+            guard let imageData else { throw SaneError.cannotGenerateImage }
+            
+            // TODO: add placeholder image and save file in the background
+            
+            try imageData.write(to: fileURL, options: .atomicWrite)
+            imageURLs.insert(fileURL.standardizedFileURL, at: 0)
+            
+            let item = galleryItemForImage(at: fileURL.standardizedFileURL)
+            generateThumbAsync(for: item, fullImage: scan.image, tellDelegates: true)
+            return item
+        }
     }
     
     func deleteItem(_ item: GalleryItem) {

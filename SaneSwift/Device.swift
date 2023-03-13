@@ -63,8 +63,8 @@ public class Device {
     // MARK: Cache properties
     public private(set) var lastPreviewImage: UIImage?
 
-    internal func updatePreviewImage(_ image: UIImage?, scannedWith parameters: ScanParameters?, fallbackToExisting: Bool) {
-        guard let image = image else {
+    internal func updatePreviewImage(_ scan: ScanImage?, fallbackToExisting: Bool) {
+        guard let scan else {
             if !fallbackToExisting {
                 lastPreviewImage = nil
             }
@@ -72,16 +72,16 @@ public class Device {
         }
 
         // update only if we scanned without cropping
-        if let crop = parameters?.cropArea, crop != maxCropArea { return }
+        guard scan.parameters.cropArea == maxCropArea else { return }
 
         // prevent keeping a scan image if resolution is very high. A color A4 300dpi (13.4MB) is used as maximum
-        if let parameters = parameters, parameters.fileSize > 16_000_000 { return }
+        guard scan.parameters.fileSize <= 16_000_000 else { return }
 
         // if we require color mode to be set to auto, update only if auto is not available or scan mode is color
-        if Sane.shared.configuration.previewWithAutoColorMode, let parameters = parameters, parameters.currentlyAcquiredChannel != SANE_FRAME_RGB { return }
+        if Sane.shared.configuration.previewWithAutoColorMode, scan.parameters.currentlyAcquiredFrame == SANE_FRAME_GRAY { return }
         
         // all seems good, let's keep it
-        lastPreviewImage = image
+        lastPreviewImage = scan.image
     }
 }
 

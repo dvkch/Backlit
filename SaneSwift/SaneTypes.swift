@@ -124,7 +124,7 @@ public struct SaneInfo: OptionSet {
 
 // MARK: Standard options
 public enum SaneStandardOption: CaseIterable {
-    case preview, resolution, resolutionX, resolutionY, colorMode, areaTopLeftX, areaTopLeftY, areaBottomRightX, areaBottomRightY, imageIntensity
+    case preview, resolution, resolutionX, resolutionY, colorMode, areaTopLeftX, areaTopLeftY, areaBottomRightX, areaBottomRightY, imageIntensity, source
     
     var saneIdentifier: String {
         switch self {
@@ -138,6 +138,7 @@ public enum SaneStandardOption: CaseIterable {
         case .areaBottomRightX: return SANE_NAME_SCAN_BR_X
         case .areaBottomRightY: return SANE_NAME_SCAN_BR_Y
         case .imageIntensity:   return SANE_NAME_GAMMA_VECTOR
+        case .source:           return SANE_NAME_SCAN_SOURCE
         }
     }
     
@@ -151,7 +152,7 @@ public enum SaneStandardOption: CaseIterable {
     }
     
     public enum PreviewValue: Equatable {
-        case auto, on, off, min, max, value(Int)
+        case auto, on, off, min, max, value(Int), none
     }
     
     var bestPreviewValue: PreviewValue {
@@ -161,6 +162,7 @@ public enum SaneStandardOption: CaseIterable {
         case .resolution, .resolutionX, .resolutionY:   return .value(150)
         case .areaTopLeftX, .areaTopLeftY:              return .min
         case .areaBottomRightX, .areaBottomRightY:      return .max
+        case .source:                                   return .none
         }
     }
 }
@@ -179,11 +181,11 @@ public enum ScanOperation {
 
 public enum ScanProgress: Equatable {
     case warmingUp
-    case scanning(progress: Float, incompletePreview: UIImage?, parameters: ScanParameters?)
+    case scanning(progress: Float, finishedDocs: Int, incompletePreview: UIImage?, parameters: ScanParameters)
     case cancelling
 
     var incompletePreview: UIImage? {
-        if case .scanning(_, let image, _) = self {
+        if case .scanning(_, _, let image, _) = self {
             return image
         }
         return nil
@@ -192,12 +194,24 @@ public enum ScanProgress: Equatable {
 
 public typealias ScanImage = (image: UIImage, parameters: ScanParameters)
 public typealias ScanResult = Result<ScanImage, SaneError>
+public typealias ScanResults = Result<[ScanImage], SaneError>
 
-public extension ScanResult {
-    var image: UIImage? {
-        if case .success(let data) = self {
-            return data.0
+internal extension Result {
+    var value: Success? {
+        if case .success(let value) = self {
+            return value
         }
         return nil
+    }
+}
+
+internal extension Array where Element == ScanResult {
+    var scanResults: ScanResults {
+        if let error = compactMap(\.error).last {
+            return .failure(error)
+        }
+        else {
+            return .success(map({ try! $0.get() }))
+        }
     }
 }

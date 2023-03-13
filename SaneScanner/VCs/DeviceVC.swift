@@ -161,18 +161,16 @@ class DeviceVC: UIViewController {
         }
         
         // block that will be called to handle completion
-        let completionBlock = { [weak self] (result: ScanResult) in
+        let completionBlock = { [weak self] (results: ScanResults) in
             guard let self = self else { return }
             self.scanButton.progress = nil
             self.updatePreviewViews()
 
-            switch result {
-            case .success((let image, let parameters)):
-                Analytics.shared.send(event: .scanEnded(device: self.device))
-                let metadata = SYMetadata(device: self.device, scanParameters: parameters)
+            switch results {
+            case .success(let scans):
+                Analytics.shared.send(event: .scanEnded(device: self.device, imagesCount: scans.count))
                 do {
-                    try GalleryManager.shared.addImage(image, metadata: metadata)
-
+                    try GalleryManager.shared.saveScans(device: self.device, scans)
                     Analytics.shared.askPermission(from: self)
                     self.presentReviewPrompt()
                 }

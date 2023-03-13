@@ -38,7 +38,7 @@ class Analytics {
         case newHostTapped
         case newHostAdded(count: Int, foundByAvahi: Bool)
         case scanStarted(device: Device)
-        case scanEnded(device: Device)
+        case scanEnded(device: Device, imagesCount: Int)
         case scanCancelled(device: Device)
         case scanFailed(device: Device, error: Error)
         case previewStarted(device: Device)
@@ -68,7 +68,7 @@ class Analytics {
             case .newHostTapped:                        return [:]
             case .newHostAdded(let count, let avahi):   return ["Hosts Count": String(count), "Found by Avahi": String(avahi)]
             case .scanStarted(let device):              return ["Device Maker": device.vendor]
-            case .scanEnded(let device):                return ["Device Maker": device.vendor]
+            case .scanEnded(let device, let imgCount):  return ["Device Maker": device.vendor, "Images": String(imgCount)]
             case .scanCancelled(let device):            return ["Device Maker": device.vendor]
             case .scanFailed(let device, let error):    return ["Device Maker": device.vendor, "Error": error.localizedDescription]
             case .previewStarted(let device):           return ["Device Maker": device.vendor]

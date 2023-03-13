@@ -82,48 +82,43 @@ internal extension Result {
     }
 }
 
-// LATER: Support 3-channel images
 internal extension UIImage {
-    enum SaneSource {
-        case data(Data)
-        case file(URL)
-        
-        var provider: CGDataProvider? {
-            switch self {
-            case .data(let data):   return CGDataProvider(data: data as CFData)
-            case .file(let url):    return CGDataProvider(url: url as CFURL)
-            }
-        }
-    }
-    
     // Nota: if the source image is 1 bit Grayscale (monochrome), the method `pngData()` on the output UIImage will
     // produce an invalid file (at least on macOS 13.2.1), but using CGImageDestinationCreateWithData with kUTTypePNG
     // will produce a valid PNG file.
-    static func sy_imageFromSane(source: SaneSource, parameters: ScanParameters) throws -> UIImage {
+    static func sy_imageFromSane(data: Data, parameters: ScanParameters, previousFrames: [ScanImage]) throws -> UIImage {
+        // TODO: release pool necessary ?
         return try autoreleasepool {
-            guard let provider = source.provider else {
+            guard let provider = CGDataProvider(data: data as CFData) else {
                 throw SaneError.noImageData
             }
-            
+
             let colorSpace: CGColorSpace
 
-            switch parameters.currentlyAcquiredChannel {
+            switch parameters.currentlyAcquiredFrame {
             case SANE_FRAME_RGB:
                 colorSpace = CGColorSpaceCreateDeviceRGB()
             case SANE_FRAME_GRAY:
                 colorSpace = CGColorSpaceCreateDeviceGray()
+            case SANE_FRAME_RED, SANE_FRAME_GREEN, SANE_FRAME_BLUE:
+                colorSpace = CGColorSpaceCreateDeviceRGB()
             default:
                 throw SaneError.unsupportedChannels
             }
-
+            
+            var bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+            if parameters.depth >= 16 {
+                bitmapInfo.insert(CGBitmapInfo(rawValue: CGImageByteOrderInfo.order16Little.rawValue))
+            }
+            
             guard let cgImage = CGImage(
                 width: parameters.width,
                 height: parameters.height,
                 bitsPerComponent: parameters.depth,
-                bitsPerPixel: parameters.depth * parameters.numberOfChannels,
-                bytesPerRow: parameters.bytesPerLine,
+                bitsPerPixel: parameters.depth * parameters.numberOfChannels * parameters.expectedFramesCount,
+                bytesPerRow: parameters.bytesPerLine * parameters.expectedFramesCount,
                 space: colorSpace,
-                bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue + CGImageByteOrderInfo.order16Little.rawValue),
+                bitmapInfo: bitmapInfo,
                 provider: provider,
                 decode: nil,
                 shouldInterpolate: false,
@@ -136,9 +131,10 @@ internal extension UIImage {
         }
     }
 
-    static func sy_imageFromIncompleteSane(data: Data, parameters: ScanParameters) throws -> UIImage {
-        let completedData = data + Data(repeating: UInt8.max, count: parameters.fileSize - data.count)
-        return try self.sy_imageFromSane(source: .data(completedData), parameters: parameters)
+    static func sy_imageFromIncompleteSane(data: Data, parameters: ScanParameters, previousFrames: [ScanImage]) throws -> UIImage {
+        let size = (parameters.fileSize * parameters.expectedFramesCount) - data.count
+        let completedData = data + Data(repeating: UInt8.max, count: size)
+        return try self.sy_imageFromSane(data: completedData, parameters: parameters, previousFrames: previousFrames)
     }
 }
 

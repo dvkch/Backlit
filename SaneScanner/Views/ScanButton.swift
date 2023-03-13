@@ -92,9 +92,15 @@ class ScanButton : UIButton {
             title = kind == .preview ? "PREVIEWING".localized : "SCANNING".localized
             subtitle = "WARMING UP".localized
 
-        case .scanning(let progress, _, _):
-            let titleFormat = kind == .preview ? "PREVIEWING %f" : "SCANNING %f"
-            title = String(format: titleFormat.localized, progress * 100)
+        case .scanning(let progress, let finishedDocs, _, _):
+            let titleFormat: String
+            switch kind {
+            case .scan:
+                titleFormat = finishedDocs > 0 ? "SCANNING %f %d" : "SCANNING %f"
+            case .preview:
+                titleFormat = "PREVIEWING %f"
+            }
+            title = String(format: titleFormat.localized, progress * 100, finishedDocs)
             subtitle = "ACTION HINT TAP TO CANCEL".localized
 
         case .cancelling:

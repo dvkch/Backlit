@@ -167,7 +167,7 @@ class PreviewView: UIView {
         cropMask.isEnabled = device.canCrop && device.currentOperation == nil
         cropMask.setCropArea(device.cropArea, maxCropArea: device.maxCropArea)
 
-        if device.currentOperation?.operation == .preview, let progress = device.currentOperation?.progress, case .scanning(_, let image, _) = progress, image != nil {
+        if device.currentOperation?.operation == .preview, let progress = device.currentOperation?.progress, case .scanning(_, _, let image, _) = progress, image != nil {
             imageView.image = image
         }
         else {
@@ -176,7 +176,7 @@ class PreviewView: UIView {
     }
     
     private func updateProgressMask() {
-        guard let device = device, device.currentOperation?.operation == .scan, case let .scanning(progress, _, parameters) = device.currentOperation?.progress, let parameters = parameters else {
+        guard let device = device, device.currentOperation?.operation == .scan, case let .scanning(progress, _, _, parameters) = device.currentOperation?.progress else {
             progressMask.cropAreaPercent = nil
             progressMask.progress = nil
             return
