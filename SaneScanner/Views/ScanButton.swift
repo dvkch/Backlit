@@ -51,7 +51,6 @@ class ScanButton : UIButton {
     
     var progress: ScanProgress? {
         didSet {
-            // TODO: CHECK IF IT MAKES A DIFF IN CPU USAGE WHEN SCANNING (CF DESKTOP SCREENSHOT 1200DPI LIDE COLOR 16BIT)
             switch progress {
             case .none, .cancelling, .warmingUp:
                 roundedProgress = progress

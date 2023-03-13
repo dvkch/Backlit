@@ -12,7 +12,6 @@ import SaneSwift
 import SYPictureMetadata
 
 // LATER: add support for https://github.com/alexpevzner/sane-airscan
-// LATER: add auto update on macOS using https://sparkle-project.org/
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
