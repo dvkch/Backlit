@@ -12,7 +12,7 @@ target :'SaneScanner' do
     pod 'SnapKit'
     pod 'SpinKit'
     pod 'SYEmailHelper'
-    pod 'SYKit', '>= 0.1.16'
+    pod 'SYKit', '>= 0.1.17'
     pod 'SYOperationQueue'
     pod 'SYPictureMetadata', '~> 2.0'
     pod 'TelemetryClient', :podspec => "https://raw.githubusercontent.com/dvkch/SYPods/master/TelemetryClient.podspec"

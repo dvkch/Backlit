@@ -2226,25 +2226,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		01ED0CB07CAC091F4B119C158A0FFD40 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE1B4B2767C450B364CE34DD3380B0A9 /* Sane.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Sane";
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				ENABLE_BITCODE = NO;
-				IBSC_MODULE = Sane;
-				INFOPLIST_FILE = "Target Support Files/Sane/ResourceBundle-Sane-Translations-Sane-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_NAME = "Sane-Translations";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
 		0B0425AC794F7F2D9B103BDF08D1C15F /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 35F37DE8EFD35F16F85512B35AAC2C87 /* KeychainAccess.release.xcconfig */;
@@ -2390,6 +2371,26 @@
 			};
 			name = Release;
 		};
+		1CAC30C9B2D5F6940A35D16FE968A680 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4CAA84AC2EAAF998968D2238DCD4E6A4 /* SaneSwift.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SaneSwift";
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				ENABLE_BITCODE = NO;
+				IBSC_MODULE = SaneSwift;
+				INFOPLIST_FILE = "Target Support Files/SaneSwift/ResourceBundle-SaneSwift-Translations-SaneSwift-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "SaneSwift-Translations";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 		2336EAA224ED07F3D52B1CAA17AA6850 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3F7DBF22FBA8615A985E80613D0156E5 /* SYKit.debug.xcconfig */;
@@ -2425,6 +2426,26 @@
 			};
 			name = Debug;
 		};
+		25DADD29CDD7B197FBC460DA02F62D99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 834EC318BC7A342499DB3BED7362B3BF /* SaneSwift.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SaneSwift";
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				ENABLE_BITCODE = NO;
+				IBSC_MODULE = SaneSwift;
+				INFOPLIST_FILE = "Target Support Files/SaneSwift/ResourceBundle-SaneSwift-Translations-SaneSwift-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "SaneSwift-Translations";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		2A496305032F9F96A529EF4ACA27FA57 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 705201DE9482A45214715433CE51F124 /* DirectoryWatcher.release.xcconfig */;
@@ -2458,44 +2479,6 @@
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		2C5DE4B3D281D7711746B71481DE0718 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 82EEA5E0A7953E46757823FD9FB852A3 /* Sane.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Sane";
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				ENABLE_BITCODE = NO;
-				IBSC_MODULE = Sane;
-				INFOPLIST_FILE = "Target Support Files/Sane/ResourceBundle-Sane-Translations-Sane-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_NAME = "Sane-Translations";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		3383A231CF0BEDDCAD03F40CD8CFCA51 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 834EC318BC7A342499DB3BED7362B3BF /* SaneSwift.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SaneSwift";
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				ENABLE_BITCODE = NO;
-				IBSC_MODULE = SaneSwift;
-				INFOPLIST_FILE = "Target Support Files/SaneSwift/ResourceBundle-SaneSwift-Translations-SaneSwift-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_NAME = "SaneSwift-Translations";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -3088,25 +3071,6 @@
 			};
 			name = Debug;
 		};
-		B2E2C56970AB0F0401BB6592A13D293F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CAA84AC2EAAF998968D2238DCD4E6A4 /* SaneSwift.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SaneSwift";
-				DEVELOPMENT_TEAM = 79RY8264V4;
-				ENABLE_BITCODE = NO;
-				IBSC_MODULE = SaneSwift;
-				INFOPLIST_FILE = "Target Support Files/SaneSwift/ResourceBundle-SaneSwift-Translations-SaneSwift-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_NAME = "SaneSwift-Translations";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
 		B4EFE046ACF8F37157F6E322C7FCFC28 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3191,6 +3155,26 @@
 			};
 			name = Debug;
 		};
+		B8F2ED0F5B8F6D3D9434349CBFB05AC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE1B4B2767C450B364CE34DD3380B0A9 /* Sane.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Sane";
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				ENABLE_BITCODE = NO;
+				IBSC_MODULE = Sane;
+				INFOPLIST_FILE = "Target Support Files/Sane/ResourceBundle-Sane-Translations-Sane-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "Sane-Translations";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 		CAE77B5EE583E33F29B91ABD8A4C3D3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BFBE48CF9413AFE8040E73F085B55827 /* SYEmailHelper.debug.xcconfig */;
@@ -3225,6 +3209,26 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		DE6F5736D93FE8BE450D121CF34FC6F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82EEA5E0A7953E46757823FD9FB852A3 /* Sane.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Sane";
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				ENABLE_BITCODE = NO;
+				IBSC_MODULE = Sane;
+				INFOPLIST_FILE = "Target Support Files/Sane/ResourceBundle-Sane-Translations-Sane-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "Sane-Translations";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
 		};
 		F3163FF793746A2EEB4F6D023E9D347B /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3304,8 +3308,8 @@
 		2E134F778F24FFBCD83C958632A78CED /* Build configuration list for PBXNativeTarget "SaneSwift-SaneSwift-Translations" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B2E2C56970AB0F0401BB6592A13D293F /* Debug */,
-				3383A231CF0BEDDCAD03F40CD8CFCA51 /* Release */,
+				1CAC30C9B2D5F6940A35D16FE968A680 /* Debug */,
+				25DADD29CDD7B197FBC460DA02F62D99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3322,8 +3326,8 @@
 		37E68AD4DCEAECF5153C504F19C09031 /* Build configuration list for PBXNativeTarget "Sane-Sane-Translations" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				01ED0CB07CAC091F4B119C158A0FFD40 /* Debug */,
-				2C5DE4B3D281D7711746B71481DE0718 /* Release */,
+				B8F2ED0F5B8F6D3D9434349CBFB05AC1 /* Debug */,
+				DE6F5736D93FE8BE450D121CF34FC6F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

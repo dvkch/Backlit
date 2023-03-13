@@ -23,11 +23,11 @@ variant_for_slice()
   "Sane.xcframework/ios-arm64_i386_x86_64-simulator")
     echo "simulator"
     ;;
-  "Sane.xcframework/macos-arm64_x86_64")
-    echo ""
-    ;;
   "Sane.xcframework/ios-arm64_x86_64-maccatalyst")
     echo "maccatalyst"
+    ;;
+  "Sane.xcframework/macos-arm64_x86_64")
+    echo ""
     ;;
   esac
 }
@@ -41,10 +41,10 @@ archs_for_slice()
   "Sane.xcframework/ios-arm64_i386_x86_64-simulator")
     echo "arm64 i386 x86_64"
     ;;
-  "Sane.xcframework/macos-arm64_x86_64")
+  "Sane.xcframework/ios-arm64_x86_64-maccatalyst")
     echo "arm64 x86_64"
     ;;
-  "Sane.xcframework/ios-arm64_x86_64-maccatalyst")
+  "Sane.xcframework/macos-arm64_x86_64")
     echo "arm64 x86_64"
     ;;
   esac

@@ -96,8 +96,8 @@ class ScanButton : UIButton {
         if #available(iOS 13.0, *) {
             background = background.resolvedColor(with: traitCollection)
         }
-        setBackgrounColor(background, for: .normal)
-        setBackgrounColor(background.withAlphaComponent(style == .rounded ? 0.7 : 1), for: .disabled)
+        setBackgroundColor(background, for: .normal)
+        setBackgroundColor(background.withAlphaComponent(style == .rounded ? 0.7 : 1), for: .disabled)
 
         if heightConstraint == nil {
             heightConstraint = heightAnchor.constraint(equalToConstant: 0)

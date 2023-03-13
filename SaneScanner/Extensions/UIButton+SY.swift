@@ -14,6 +14,7 @@ private var UIButtonPrimaryActionClosure: UInt8?
 
 extension UIButton {
     
+    // MARK: Primary action block
     private var primaryActionClosure: (() -> ())? {
         get {
             return objc_getAssociatedObject(self, &UIButtonPrimaryActionClosure) as? () -> ()
@@ -32,6 +33,7 @@ extension UIButton {
         self.primaryActionClosure?()
     }
     
+    // MARK: Style
     static func system(prominent: Bool) -> Self {
         let button = Self(type: .roundedRect)
         
@@ -57,13 +59,13 @@ extension UIButton {
             button.layer.cornerRadius = 5
             button.contentEdgeInsets = .init(top: 5, left: 10, bottom: 5, right: 10)
             if prominent {
-                button.setBackgrounColor(.tint, for: .normal)
-                button.setBackgrounColor(.altText, for: .disabled)
+                button.setBackgroundColor(.tint, for: .normal)
+                button.setBackgroundColor(.altText, for: .disabled)
                 button.setTitleColor(.normalText, for: .normal)
             }
             else {
-                button.setBackgrounColor(.tint.withAlphaComponent(0.2), for: .normal)
-                button.setBackgrounColor(.altText.withAlphaComponent(0.1), for: .disabled)
+                button.setBackgroundColor(.tint.withAlphaComponent(0.2), for: .normal)
+                button.setBackgroundColor(.altText.withAlphaComponent(0.1), for: .disabled)
                 button.setTitleColor(.tint.adjustBrightness(by: 0.2), for: .normal)
                 button.setTitleColor(.altText.withAlphaComponent(0.5), for: .disabled)
             }
