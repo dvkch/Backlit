@@ -12,8 +12,22 @@ import SaneSwift
 class ScanButton : UIButton {
     
     // MARK: Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        setup()
+    }
+    
+    private func setup() {
         updateStyle()
         updateContent()
     }
@@ -21,6 +35,7 @@ class ScanButton : UIButton {
     // MARK: Properties
     var kind: ScanOperation = .scan {
         didSet {
+            updateStyle()
             updateContent()
         }
     }
@@ -28,11 +43,28 @@ class ScanButton : UIButton {
     enum Style { case cell, rounded }
     var style: Style = .cell {
         didSet {
+            // super important to ignore identical style, or we'll multiply scanning time ~4x because of the progress updates
+            guard style != oldValue else { return }
             updateStyle()
         }
     }
     
     var progress: ScanProgress? {
+        didSet {
+            // TODO: CHECK IF IT MAKES A DIFF IN CPU USAGE WHEN SCANNING (CF DESKTOP SCREENSHOT 1200DPI LIDE COLOR 16BIT)
+            switch progress {
+            case .none, .cancelling, .warmingUp:
+                roundedProgress = progress
+            case .scanning(let p, let c, let img, let params):
+                roundedProgress = .scanning(
+                    progress: Float(Int(p * 100)) / 100, finishedDocs: c,
+                    incompletePreview: img, parameters: params
+                )
+            }
+        }
+    }
+    
+    private var roundedProgress: ScanProgress? {
         didSet {
             guard progress != oldValue else { return }
             updateContent()
