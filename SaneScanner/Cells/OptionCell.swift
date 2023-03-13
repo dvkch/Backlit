@@ -385,6 +385,41 @@ extension OptionCell: DeviceOptionControllable {
         case .double:   field.keyboardType = .decimalPad
         }
         field.addTarget(self, action: #selector(deviceOptionTextFieldValueChanged), for: .primaryActionTriggered)
+        
+        // buttons
+        // yep, using NSAttributedString to show a UIImage... this is because if the button
+        // has no title and just an image, then macOS removes the border and background, and
+        // shows the image on a clear background, no matter what I tried... I ain't happy
+        // about it either
+        let saveButton = UIButton.system(prominent: true)
+        let saveIcon = UIImage(systemName: "checkmark")?.withTintColor(.label)
+        saveButton.setAttributedTitle(NSAttributedString(image: saveIcon, offset: .init(x: 0, y: -2)), for: .normal)
+        saveButton.addTooltip { "ACTION SAVE".localized }
+        saveButton.accessibilityLabel = "ACTION SAVE".localized
+        saveButton.addPrimaryAction { [weak self] in
+            self?.deviceOptionTextFieldValueChanged(field)
+        }
+        
+        let autoButton = UIButton.system(prominent: true)
+        let autoIcon = UIImage(systemName: "wand.and.stars.inverse")?.withTintColor(.label)
+        autoButton.setAttributedTitle(NSAttributedString(image: autoIcon, offset: .init(x: 0, y: -3)), for: .normal)
+        autoButton.addTooltip { "OPTION VALUE AUTO".localized }
+        autoButton.accessibilityLabel = "OPTION VALUE AUTO".localized
+        autoButton.addPrimaryAction { [weak self] in
+            guard let self else { return }
+            Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
+        }
+
+        let stackView = UIStackView(arrangedSubviews: [saveButton])
+        stackView.spacing = 2
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        if option.capabilities.contains(.automatic) {
+            stackView.addArrangedSubview(autoButton)
+        }
+
+        field.rightView = stackView
+        field.rightViewMode = .always
 
         valueControl = field
     }

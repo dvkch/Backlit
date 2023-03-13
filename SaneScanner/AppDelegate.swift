@@ -11,7 +11,6 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
-// TODO: handle auto for text fields on macOS
 // LATER: add support for https://github.com/alexpevzner/sane-airscan
 // LATER: add auto update on macOS using https://sparkle-project.org/
 
