@@ -25,9 +25,9 @@ class OptionCell: TableViewCell {
             }
         })
 
-        titleLabel.autoAdjustsFontSize = true
-        valueLabel.autoAdjustsFontSize = true
-        descrLabel.autoAdjustsFontSize = true
+        titleLabel.adjustsFontForContentSizeCategory = true
+        valueLabel.adjustsFontForContentSizeCategory = true
+        descrLabel.adjustsFontForContentSizeCategory = true
         
         setNeedsUpdateConstraints()
     }

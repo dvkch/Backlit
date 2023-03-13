@@ -86,7 +86,7 @@ class ScanButton : UIButton {
         setTitleColor(kind == .preview ? .normalText : .normalTextOnTint, for: .normal)
         setTitleColor(kind == .preview ? .altText : .altTextOnTint, for: .disabled)
         titleLabel?.font = .preferredFont(forTextStyle: .body)
-        titleLabel?.autoAdjustsFontSize = true
+        titleLabel?.adjustsFontForContentSizeCategory = true
         titleLabel?.numberOfLines = 2
         setContentHuggingPriority(.required, for: .vertical)
         setContentCompressionResistancePriority(.required, for: .vertical)

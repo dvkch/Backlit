@@ -16,7 +16,7 @@ class GalleryGridVC: UIViewController {
         view.backgroundColor = .background
 
         emptyStateView.backgroundColor = .background
-        emptyStateLabel.autoAdjustsFontSize = true
+        emptyStateLabel.adjustsFontForContentSizeCategory = true
         
         collectionViewLayout.maxSize = 320/3
         collectionViewLayout.margin = 2

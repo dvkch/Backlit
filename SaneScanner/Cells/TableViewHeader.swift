@@ -43,7 +43,7 @@ class TableViewHeader: UITableViewHeaderFooterView {
         
         label.textColor = .background
         label.font = .boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .caption1).pointSize)
-        label.autoAdjustsFontSize = true
+        label.adjustsFontForContentSizeCategory = true
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .vertical)
         container.addSubview(label)

@@ -23,7 +23,7 @@ class DevicePreviewVC: UIViewController {
         }
 
         emptyStateView.backgroundColor = .background
-        emptyStateLabel.autoAdjustsFontSize = true
+        emptyStateLabel.adjustsFontForContentSizeCategory = true
 
         previewView.showScanButton = true
         

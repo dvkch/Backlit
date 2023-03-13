@@ -47,7 +47,7 @@ class Slider: UIControl {
 
         label.textColor = .normalText
         label.font = .preferredFont(forTextStyle: .body)
-        label.autoAdjustsFontSize = true
+        label.adjustsFontForContentSizeCategory = true
         label.isUserInteractionEnabled = true
         container.addArrangedSubview(label)
         

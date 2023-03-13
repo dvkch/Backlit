@@ -14,9 +14,9 @@ class DeviceCell: TableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        labelName.autoAdjustsFontSize = true
+        labelName.adjustsFontForContentSizeCategory = true
         labelName.textColor = .normalText
-        labelDetails.autoAdjustsFontSize = true
+        labelDetails.adjustsFontForContentSizeCategory = true
         labelDetails.textColor = .altText
     }
     

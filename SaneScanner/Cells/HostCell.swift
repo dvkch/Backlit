@@ -15,7 +15,8 @@ class HostCell: TableViewCell {
         super.awakeFromNib()
         
         accessoryType = .none
-        label.autoAdjustsFontSize = true
+        nameLabel.adjustsFontForContentSizeCategory = true
+        hostLabel.adjustsFontForContentSizeCategory = true
     }
     
     // MARK: Views
