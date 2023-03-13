@@ -74,11 +74,68 @@ internal extension Collection where Element: Comparable {
 }
 
 internal extension Result {
+    var value: Success? {
+        switch self {
+        case .success(let value): return value
+        case .failure: return nil
+        }
+    }
     var error: Failure? {
         switch self {
         case .success: return nil
         case .failure(let error): return error
         }
+    }
+}
+
+public protocol WithID<ID> {
+    associatedtype ID : Hashable
+    var id: Self.ID { get }
+}
+
+internal extension Array where Element: WithID {
+    func find(_ id: Element.ID) -> Element? {
+        return first(where: { $0.id == id })
+    }
+}
+
+internal extension Array where Element == String {
+    func saneJoined() -> String {
+        return map { (element: String) -> String in
+            if !element.contains(":") {
+                return element
+            }
+            if element.hasPrefix("[") && element.hasSuffix("]") {
+                return element
+            }
+            return "[\(element)]"
+        }.joined(separator: ":")
+    }
+}
+
+internal extension String {
+    func saneSplit() -> [String] {
+        var result: [String] = []
+        var currentComponent = ""
+        var bracketsLevel = 0
+        
+        for char in self {
+            if char == ":" && bracketsLevel == 0 {
+                result.append(currentComponent)
+                currentComponent = ""
+            }
+            else {
+                currentComponent.append(char)
+                if char == "[" {
+                    bracketsLevel += 1
+                }
+                else if char == "]" {
+                    bracketsLevel -= 1
+                }
+            }
+        }
+        result.append(currentComponent)
+        return result
     }
 }
 

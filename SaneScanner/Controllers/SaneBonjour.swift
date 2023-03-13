@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import SaneSwift
 
 protocol SaneBonjourDelegate: NSObjectProtocol {
-    func saneBonjour(_ bonjour: SaneBonjour, updatedHosts: [(String, Int)])
+    func saneBonjour(_ bonjour: SaneBonjour, updatedHosts: [SaneHost])
 }
 
 class SaneBonjour: NSObject {
@@ -24,7 +25,8 @@ class SaneBonjour: NSObject {
     // MARK: Properties
     weak var delegate: SaneBonjourDelegate?
     private(set) var isRunning: Bool = false
-    private(set) var hosts: [(String, Int)] = [] {
+    
+    private(set) var hosts: [SaneHost] = [] {
         didSet {
             delegate?.saneBonjour(self, updatedHosts: hosts)
         }
@@ -33,9 +35,11 @@ class SaneBonjour: NSObject {
     // MARK: Internal properties
     private let browser = NetServiceBrowser()
     private var services: [NetService] = []
-    private var addresses: [NetService: [(String, Int)]] = [:] {
+    private var addresses: [NetService: [SaneHost]] = [:] {
         didSet {
-            hosts = addresses.values.reduce([], +).sorted(by: \.0)
+            hosts = addresses
+                .values.reduce([], +)
+                .sorted(by: \.displayName)
         }
     }
     
@@ -75,7 +79,9 @@ extension SaneBonjour: NetServiceBrowserDelegate {
 
 extension SaneBonjour: NetServiceDelegate {
     func netServiceDidResolveAddress(_ sender: NetService) {
-        addresses[sender] = sender.ipAddresses(allowIPv6: false)
+        addresses[sender] = sender.parsedAddresses(types: [.ip4])?.map({ (host, port) in
+            SaneHost(hostname: host, displayName: sender.hostName?.replacingOccurrences(of: ".local.", with: "") ?? host)
+        })
     }
 
     func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {

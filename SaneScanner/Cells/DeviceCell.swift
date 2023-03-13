@@ -56,7 +56,7 @@ class DeviceCell: TableViewCell {
     private func updateTexts() {
         guard let device = device else { return }
         labelName.text = device.model
-        labelDetails.text = [device.host, device.type]
+        labelDetails.text = [device.host.displayName, device.type]
             .compactMap { $0 }
             .joined(separator: " – ")
     }

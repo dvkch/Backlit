@@ -45,7 +45,7 @@ class DevicesVC: UIViewController {
         
         addKeyCommand(.refresh)
         refreshView = .init(tableView: tableView, viewController: self) { [weak self] in
-            self?.refresh(afterHostChange: false)
+            self?.refresh(silently: false)
         }
 
         addKeyCommand(.addHost)
@@ -63,9 +63,7 @@ class DevicesVC: UIViewController {
         title = Bundle.main.localizedName
         tableView.reloadData()
         
-        if devices.isEmpty {
-            refresh(afterHostChange: false)
-        }
+        refresh(silently: devices.count > 0)
     }
     
     // MARK: Views
@@ -76,7 +74,7 @@ class DevicesVC: UIViewController {
     // MARK: Properties
     private var devices = [Device]()
     private var loadingDevice: Device?
-    private var hosts: [HostCell.Host] = []
+    private var hosts: [HostCell.Kind] = []
     
     // MARK: Actions
     @objc func settingsButtonTap() {
@@ -85,25 +83,23 @@ class DevicesVC: UIViewController {
         present(nc, animated: true, completion: nil)
     }
     
-    @objc func refresh(afterHostChange: Bool) {
-        // refresh hosts
-        var hosts: [HostCell.Host] = Sane.shared.configuration.hosts.map { .init(kind: .saneConfig, value: $0) }
-        SaneBonjour.shared.hosts
-            .sorted(by: \.0)
-            .filter { !hosts.map(\.value).contains($0.0) }
-            .forEach { hosts.append(.init(kind: .bonjour, value: $0.0)) }
-        hosts.append(.init(kind: .add, value: ""))
-        
-        let prevSaneHosts = self.hosts.filter { $0.kind == .saneConfig }.map(\.value).sorted()
-        let newSaneHosts = hosts.filter { $0.kind == .saneConfig }.map(\.value).sorted()
-        self.hosts = hosts
-        self.tableView.reloadData()
+    @objc func refresh(silently: Bool) {
+        // TODO: refreshing seems to never end when done with a pull to refresh
 
-        if afterHostChange && prevSaneHosts == newSaneHosts {
-            return
-        }
-        
+        let bonjourHosts = Sane.shared.configuration.transientdHosts
+            .filter { !Sane.shared.configuration.hosts.contains($0) }
+
+        // refresh hosts
+        hosts = (
+            Sane.shared.configuration.hosts.map { .saneHost($0) }
+            + bonjourHosts.map { .bonjourHost($0) }
+            + [.add]
+        )
+        tableView.reloadData()
+
         // refresh devices
+        refreshView.startLoading(discreet: silently)
+
         SaneBonjour.shared.start()
         Sane.shared.updateDevices { [weak self] result in
             guard let self = self else { return }
@@ -119,49 +115,130 @@ class DevicesVC: UIViewController {
         }
     }
     
-    @objc func addHostButtonTap(bonjourSuggestion: String?) {
+    @objc func addHostButtonTap() {
+        showHostForm(.add(suggestion: nil))
+    }
+
+    private enum DeviceForm {
+        case add(suggestion: SaneHost?)
+        case edit(host: SaneHost)
+    }
+    private func showHostForm(_ kind: DeviceForm) {
         Analytics.shared.send(event: .newHostTapped)
 
-        let completion = { (host: String) in
-            Sane.shared.configuration.addHost(host)
-            self.tableView.reloadData()
-            self.refresh(afterHostChange: true)
-            Analytics.shared.send(event: .newHostAdded(
-                count: Sane.shared.configuration.hosts.count,
-                foundByAvahi: bonjourSuggestion != nil
-            ))
+        let initialHost: SaneHost?
+        switch kind {
+        case .add(let suggestion):  initialHost = suggestion
+        case .edit(let host):       initialHost = host
+        }
+        
+        let title: String
+        switch kind {
+        case .add(.none): title = "DIALOG ADD HOST TITLE".localized
+        case .add(.some): title = "DIALOG PERSIST HOST TITLE".localized
+        case .edit:       title = "DIALOG EDIT HOST TITLE".localized
+        }
+
+        
+        let completion = { (hostname: String, displayName: String) in
+            let newHost = SaneHost(hostname: hostname, displayName: displayName)
+            switch kind {
+            case .add(let suggestion):
+                Sane.shared.configuration.hosts.append(newHost)
+                Analytics.shared.send(event: .newHostAdded(
+                    count: Sane.shared.configuration.hosts.count,
+                    foundByAvahi: suggestion != nil
+                ))
+                
+            case .edit(let originalHost):
+                guard let index = Sane.shared.configuration.hosts.firstIndex(of: originalHost) else { return }
+                Sane.shared.configuration.hosts[index] = newHost
+                Analytics.shared.send(event: .hostEdited(
+                    count: Sane.shared.configuration.hosts.count
+                ))
+            }
         }
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentHostInputAlert(
-            title: "DIALOG TITLE ADD HOST".localized,
-            message: "DIALOG MESSAGE ADD HOST".localized,
-            initial: bonjourSuggestion,
+            title: title,
+            message: "DIALOG ADD HOST MESSAGE".localized,
+            hostPlaceholder: "DIALOG ADD HOST PLACEHOLDER HOST".localized,
+            namePlaceholder: "DIALOG ADD HOST PLACEHOLDER NAME".localized,
+            suggestedHost: initialHost?.hostname ?? "",
+            suggestedName: initialHost?.displayName ?? "",
             add: "ACTION ADD".localized,
             cancel: "ACTION CANCEL".localized,
             completion: completion
         )
         #else
-        let alert = UIAlertController(title: "DIALOG TITLE ADD HOST".localized, message: "DIALOG MESSAGE ADD HOST".localized, preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: title,
+            message: "DIALOG ADD HOST MESSAGE".localized,
+            preferredStyle: .alert
+        )
         alert.addTextField { (field) in
             field.borderStyle = .none
             field.autocorrectionType = .no
             field.autocapitalizationType = .none
             field.keyboardType = .URL
-            field.text = bonjourSuggestion
+            field.text = initialHost?.hostname
+            field.placeholder = "DIALOG ADD HOST PLACEHOLDER HOST".localized
+        }
+        alert.addTextField { (field) in
+            field.borderStyle = .none
+            field.autocorrectionType = .default
+            field.autocapitalizationType = .words
+            field.text = initialHost?.displayName
+            field.placeholder = "DIALOG ADD HOST PLACEHOLDER NAME".localized
         }
         alert.addAction(UIAlertAction(title: "ACTION ADD".localized, style: .default, handler: { (_) in
             let host = alert.textFields?.first?.text ?? ""
-            completion(host)
+            let name = alert.textFields?.last?.text ?? ""
+            completion(host, name)
         }))
         alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
         #endif
     }
+    
+    private func openDevice(_ device: Device, indexPath: IndexPath) {
+        guard loadingDevice == nil else { return }
+
+        loadingDevice = device
+        (tableView.cellForRow(at: indexPath) as? DeviceCell)?.isLoading = true
+        
+        Sane.shared.openDevice(device) { (result) in
+            self.loadingDevice = nil
+            self.tableView.reloadData()
+
+            if case .failure(let error) = result {
+                if error.isSaneAuthDenied, DeviceAuthentication.saved(for: device.name.rawValue) != nil {
+                    // this is an auth error, let's forget current auth and restart connexion
+                    DeviceAuthentication.forget(for: device.name.rawValue)
+                    self.tableView(self.tableView, didSelectRowAt: indexPath)
+                    return
+                }
+                else {
+                    UIAlertController.show(for: error, title: "DIALOG COULDNT OPEN DEVICE TITLE".localized, in: self)
+                    return
+                }
+            }
+            let vc = DeviceVC(device: device)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
 extension DevicesVC: SaneDelegate {
+    func saneDidUpdateConfig(_ sane: Sane, previousConfig: SaneConfig) {
+        let hostsChanged = (
+            sane.configuration.hosts != previousConfig.hosts ||
+            sane.configuration.transientdHosts != previousConfig.transientdHosts
+        )
+        refresh(silently: !hostsChanged)
+    }
+
     func saneDidStartUpdatingDevices(_ sane: Sane) {
-        refreshView.startLoading()
     }
     
     func saneDidEndUpdatingDevices(_ sane: Sane) {
@@ -178,8 +255,8 @@ extension DevicesVC: SaneDelegate {
 
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentAuthInputAlert(
-            title: "DIALOG TITLE AUTH".localized,
-            message: String(format: "DIALOG MESSAGE AUTH %@".localized, device),
+            title: "DIALOG AUTH TITLE".localized,
+            message: String(format: "DIALOG AUTH MESSAGE %@".localized, device),
             usernamePlaceholder: "DIALOG AUTH PLACEHOLDER USERNAME".localized,
             passwordPlaceholder: "DIALOG AUTH PLACEHOLDER PASSWORD".localized,
             continue: "ACTION CONTINUE".localized,
@@ -198,8 +275,8 @@ extension DevicesVC: SaneDelegate {
             }
         }
         #else
-        let alert = UIAlertController(title: "DIALOG TITLE AUTH".localized, message: nil, preferredStyle: .alert)
-        alert.message = String(format: "DIALOG MESSAGE AUTH %@".localized, device)
+        let alert = UIAlertController(title: "DIALOG AUTH TITLE".localized, message: nil, preferredStyle: .alert)
+        alert.message = String(format: "DIALOG AUTH MESSAGE %@".localized, device)
         alert.addTextField { (field) in
             field.borderStyle = .none
             field.placeholder = "DIALOG AUTH PLACEHOLDER USERNAME".localized
@@ -232,8 +309,8 @@ extension DevicesVC: SaneDelegate {
 }
 
 extension DevicesVC : SaneBonjourDelegate {
-    func saneBonjour(_ bonjour: SaneBonjour, updatedHosts: [(String, Int)]) {
-        refresh(afterHostChange: true)
+    func saneBonjour(_ bonjour: SaneBonjour, updatedHosts: [SaneHost]) {
+        Sane.shared.configuration.transientdHosts = updatedHosts
     }
 }
 
@@ -249,7 +326,7 @@ extension DevicesVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueCell(HostCell.self, for: indexPath)
-            cell.host = hosts[indexPath.row]
+            cell.kind = hosts[indexPath.row]
             return cell
         }
         
@@ -279,46 +356,30 @@ extension DevicesVC : UITableViewDelegate {
     @available(iOS 13.0, *)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard indexPath.section == 0 else { return nil }
-        
-        let host = hosts[indexPath.row]
-        guard host.kind == .saneConfig else { return nil }
+        guard case .saneHost(let host) = hosts[indexPath.row] else { return nil }
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
-            let deleteAction = UIAction(title: "ACTION REMOVE".localized, image: UIImage(systemName: "trash.fill"), attributes: .destructive) { [weak self] (_) in
-                Sane.shared.configuration.removeHost(host.value)
-                
-                CATransaction.begin()
-                CATransaction.setCompletionBlock {
-                    self?.refresh(afterHostChange: true)
-                }
-                tableView.beginUpdates()
-                tableView.reloadSections(IndexSet(integer: 0), with: .none)
-                tableView.endUpdates()
-                CATransaction.commit()
+            let editAction = UIAction(title: "ACTION EDIT".localized, image: UIImage(systemName: "pencil"), attributes: []) { [weak self] (_) in
+                self?.showHostForm(.edit(host: host))
+            }
+            let deleteAction = UIAction(title: "ACTION REMOVE".localized, image: UIImage(systemName: "trash.fill"), attributes: .destructive) { (_) in
+                Sane.shared.configuration.hosts.remove(host)
             }
 
-            return UIMenu(title: "", children: [deleteAction])
+            return UIMenu(title: "", children: [editAction, deleteAction])
         }
     }
 
     #if !targetEnvironment(macCatalyst)
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         guard indexPath.section == 0 else { return nil }
-        
-        let host = hosts[indexPath.row]
-        guard host.kind == .saneConfig else { return nil }
+        guard case .saneHost(let host) = hosts[indexPath.row] else { return nil }
 
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "ACTION REMOVE".localized) { (_, indexPath) in
-            Sane.shared.configuration.removeHost(host.value)
-
-            CATransaction.begin()
-            CATransaction.setCompletionBlock {
-                self.refresh(afterHostChange: true)
-            }
-            tableView.beginUpdates()
-            tableView.reloadSections(IndexSet(integer: 0), with: .none)
-            tableView.endUpdates()
-            CATransaction.commit()
+        let editAction = UITableViewRowAction(style: .default, title: "ACTION EDIT".localized) { [weak self] (_, _) in
+            self?.showHostForm(.edit(host: host))
+        }
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "ACTION REMOVE".localized) { (_, _) in
+            Sane.shared.configuration.hosts.remove(host)
         }
         return [deleteAction]
     }
@@ -328,43 +389,19 @@ extension DevicesVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 {
-            switch hosts[indexPath.row].kind {
-            case .saneConfig:
+            switch hosts[indexPath.row] {
+            case .saneHost:
                 break
 
-            case .bonjour:
-                addHostButtonTap(bonjourSuggestion: hosts[indexPath.row].value)
+            case .bonjourHost(let host):
+                showHostForm(.add(suggestion: host))
                 
             case .add:
-                addHostButtonTap(bonjourSuggestion: nil)
+                showHostForm(.add(suggestion: nil))
             }
             return
         }
-        
-        guard loadingDevice == nil else { return }
-        let device = devices[indexPath.row]
 
-        loadingDevice = device
-        (tableView.cellForRow(at: indexPath) as? DeviceCell)?.isLoading = true
-        
-        Sane.shared.openDevice(device) { (result) in
-            self.loadingDevice = nil
-            self.tableView.reloadData()
-
-            if case .failure(let error) = result {
-                if error.isSaneAuthDenied, DeviceAuthentication.saved(for: device.name.rawValue) != nil {
-                    // this is an auth error, let's forget current auth and restart connexion
-                    DeviceAuthentication.forget(for: device.name.rawValue)
-                    self.tableView(tableView, didSelectRowAt: indexPath)
-                    return
-                }
-                else {
-                    UIAlertController.show(for: error, title: "DIALOG TITLE COULDNT OPEN DEVICE".localized, in: self)
-                    return
-                }
-            }
-            let vc = DeviceVC(device: device)
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        openDevice(devices[indexPath.row], indexPath: indexPath)
     }
 }

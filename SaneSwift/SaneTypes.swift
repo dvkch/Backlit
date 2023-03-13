@@ -192,18 +192,9 @@ public enum ScanProgress: Equatable {
     }
 }
 
+// MARK: Results and completions
 public typealias SaneResult<T> = Result<T, SaneError>
 public typealias SaneCompletion<T> = (Result<T, SaneError>) -> ()
-
-internal extension Result {
-    var value: Success? {
-        if case .success(let value) = self {
-            return value
-        }
-        return nil
-    }
-}
-
 public typealias ScanImage = (image: UIImage, parameters: ScanParameters)
 
 internal extension Array where Element == SaneResult<ScanImage> {

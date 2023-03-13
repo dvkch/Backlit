@@ -12,9 +12,7 @@ import AppKit
     required public override init() {
     }
     
-    private let fieldSize = NSSize(width: 230, height: 25)
-
-    public func presentHostInputAlert(title: String, message: String, initial: String?, add: String, cancel: String, completion: (String) -> ()) {
+    public func presentHostInputAlert(title: String, message: String, hostPlaceholder: String, namePlaceholder: String, suggestedHost: String, suggestedName: String, add: String, cancel: String, completion: (String, String) -> ()) {
         let alert = NSAlert()
 
         let addButton = alert.addButton(withTitle: add)
@@ -22,21 +20,25 @@ import AppKit
         alert.messageText = title
         alert.informativeText = message
 
-        let textField = NSTextField(frame: NSRect(origin: .zero, size: fieldSize))
-        textField.stringValue = initial ?? ""
-        textField.isBezeled = true
-        textField.bezelStyle = .roundedBezel
+        let fields = alert.setupTextFields([.regular, .regular], nextView: addButton, previousView: cancelButton)
+        let hostField = fields[0]
+        let nameField = fields[1]
 
-        alert.accessoryView = textField
-        alert.window.initialFirstResponder = alert.accessoryView
+        hostField.placeholderString = hostPlaceholder
+        hostField.stringValue = suggestedHost
+
+        nameField.placeholderString = namePlaceholder
+        nameField.stringValue = suggestedName
         
+        /*
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            textField.nextKeyView = addButton
-            cancelButton.nextKeyView = textField
-        }
+            textFieldHost.nextKeyView = textFieldName
+            textFieldName.nextKeyView = addButton
+            cancelButton.nextKeyView = textFieldHost
+        }*/
 
         if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
-            completion(textField.stringValue)
+            completion(hostField.stringValue, nameField.stringValue)
         }
     }
     
@@ -50,31 +52,12 @@ import AppKit
         alert.messageText = title
         alert.informativeText = message
 
-        let usernameField = NSTextField(frame: NSRect(x: 0, y: fieldSize.height + 5, width: fieldSize.width, height: fieldSize.height))
+        let fields = alert.setupTextFields([.regular, .secure], nextView: continueButton, previousView: cancelButton)
+        let usernameField = fields[0]
+        let passwordField = fields[1]
+
         usernameField.placeholderString = usernamePlaceholder
-        usernameField.stringValue = ""
-        usernameField.isBezeled = true
-        usernameField.bezelStyle = .roundedBezel
-
-        let passwordField = NSSecureTextField(frame: NSRect(x: 0, y: 0, width: fieldSize.width, height: fieldSize.height))
         passwordField.placeholderString = passwordPlaceholder
-        passwordField.stringValue = ""
-        passwordField.isBezeled = true
-        passwordField.bezelStyle = .roundedBezel
-
-        let accessory = NSView(frame: NSRect(x: 0, y: 0, width: fieldSize.width, height: fieldSize.height * 2 + 5))
-        accessory.autoresizingMask = .width
-        accessory.wantsLayer = true
-        accessory.addSubview(usernameField)
-        accessory.addSubview(passwordField)
-        accessory.translatesAutoresizingMaskIntoConstraints = false
-        accessory.setContentHuggingPriority(.required, for: .vertical)
-        alert.accessoryView = accessory
-        alert.window.initialFirstResponder = usernameField
-        
-        usernameField.nextKeyView = passwordField
-        passwordField.nextKeyView = continueButton
-        cancelButton.nextKeyView = usernameField
 
         let rv = alert.runModal()
         let cancelled = rv == NSApplication.ModalResponse.alertThirdButtonReturn
@@ -82,3 +65,49 @@ import AppKit
     }
 }
 
+internal extension NSAlert {
+    enum FieldKind {
+        case regular
+        case secure
+    }
+    func setupTextFields(_ kinds: [FieldKind], nextView: NSView, previousView: NSView) -> [NSTextField] {
+        let fieldSize = NSSize(width: 230, height: 25)
+        let margin: CGFloat = 5
+
+        let fields = kinds.reversed().enumerated().map { (index: Int, kind: FieldKind) -> NSTextField in
+            let frame = NSRect(
+                x: 0, y: (fieldSize.height + margin) * CGFloat(index),
+                width: fieldSize.width, height: fieldSize.height
+            )
+            let field: NSTextField
+            switch kind {
+            case .regular: field = NSTextField(frame: frame)
+            case .secure:  field = NSSecureTextField(frame: frame)
+            }
+            
+            field.stringValue = ""
+            field.isBezeled = true
+            field.bezelStyle = .roundedBezel
+            return field
+        }.reversed()
+
+        let accessory = NSView(frame: NSRect(
+            x: 0, y: 0,
+            width: fieldSize.width, height: (fieldSize.height + margin) * CGFloat(kinds.count) - margin
+        ))
+        accessory.autoresizingMask = .width
+        accessory.wantsLayer = true
+        fields.forEach { accessory.addSubview($0) }
+        accessory.translatesAutoresizingMaskIntoConstraints = false
+        accessory.setContentHuggingPriority(.required, for: .vertical)
+        accessoryView = accessory
+        window.initialFirstResponder = fields.first
+        
+        let allViews: [NSView] = [previousView] + Array(fields) + [nextView]
+        (0..<allViews.count - 1).forEach { index in
+            allViews[index].nextKeyView = allViews[index + 1]
+        }
+        
+        return Array(fields)
+    }
+}

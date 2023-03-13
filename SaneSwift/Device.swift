@@ -209,23 +209,21 @@ extension Device {
 
 // MARK: Helpers
 extension Device {
-    public var host: String {
+    public var host: SaneHost {
         // documentation about net backend names is available at https://www.systutorials.com/docs/linux/man/5-sane-net/
         let name = self.name.rawValue
 
         guard name.contains(":") else {
             // according to man page, if the device name doesn't contain a ":", this is the default host, the last one in the configuration
-            return Sane.shared.configuration.hosts.last ?? ""
+            return (Sane.shared.configuration.hosts + Sane.shared.configuration.transientdHosts).last!
         }
         
-        // if the host name contains ":" (IPv6 address for instance), it will be between brackets
-        if let closingBracketIndex = name.firstIndex(of: "]") {
-            let firstPart = name[name.startIndex...closingBracketIndex]
-            let secondPart = name[closingBracketIndex..<name.endIndex].components(separatedBy: ":").first ?? ""
-            return firstPart + secondPart
+        guard let hostID = name.saneSplit().first(where: { $0 != "net" }) else {
+            fatalError("Couldn't find host name")
         }
-        
-        return name.components(separatedBy: ":").filter { $0 != "net" }.first ?? ""
+        return (Sane.shared.configuration.hosts.find(hostID) ??
+                Sane.shared.configuration.transientdHosts.find(hostID) ??
+                SaneHost(hostname: hostID, displayName: hostID))
     }
 }
 
@@ -235,6 +233,3 @@ extension Device : CustomStringConvertible {
         return "Device: \(name), \(type), \(vendor), \(model), \(options.count) options"
     }
 }
-
-
-

@@ -22,6 +22,7 @@
 "ACTION OPEN"               = "Open";
 "ACTION ANALYTICS YES"      = "Allow analytics";
 "ACTION ANALYTICS NO"       = "Don't ask again";
+"ACTION EDIT"               = "Edit";
 
 "LOADING"           = "Loading...";
 "SCANNING"          = "Scanning...";
@@ -95,21 +96,25 @@
 "GALLERY OVERVIEW SELECTED PLURAL %d"   = "%d scans selected";
 
 // Dialogs
-"DIALOG TITLE ADD HOST"             = "Add a host";
-"DIALOG MESSAGE ADD HOST"           = "Enter the hostname or IP address for the new host";
+"DIALOG ADD HOST TITLE"             = "Add a host";
+"DIALOG EDIT HOST TITLE"            = "Edit the host";
+"DIALOG PERSIST HOST TITLE"         = "Memorize this host";
+"DIALOG ADD HOST MESSAGE"           = "Enter the hostname or IP address for the new host";
+"DIALOG ADD HOST PLACEHOLDER HOST"  = "Host";
+"DIALOG ADD HOST PLACEHOLDER NAME"  = "Nickname";
 
-"DIALOG TITLE AUTH"                 = "Authentication needed";
-"DIALOG MESSAGE AUTH %@"            = "Please enter the username and password for %@";
-"DIALOG AUTH PLACEHOLDER USERNAME"  = "Username";
-"DIALOG AUTH PLACEHOLDER PASSWORD"  = "Password";
+"DIALOG AUTH TITLE"                 = "Authentication needed";
+"DIALOG AUTH MESSAGE %@"            = "Please enter the username and password for %@";
+"DIALOG AUTH PLACEHOLDER HOST"      = "Username";
+"DIALOG AUTH PLACEHOLDER NAME"      = "Password";
 
-"DIALOG TITLE DELETE SCAN"          = "Confirmation";
-"DIALOG MESSAGE DELETE SCAN"        = "Are you sure you want to delete this scan?";
+"DIALOG DELETE SCAN TITLE"          = "Confirmation";
+"DIALOG DELETE SCAN MESSAGE"        = "Are you sure you want to delete this scan?";
 
-"DIALOG TITLE DELETE SCANS"         = "Confirmation";
-"DIALOG MESSAGE DELETE SCANS %d"    = "Are you sure you want to delete %d scans?";
+"DIALOG DELETE SCANS TITLE"         = "Confirmation";
+"DIALOG DELETE SCANS MESSAGE %d"    = "Are you sure you want to delete %d scans?";
 
-"DIALOG TITLE COULDNT OPEN DEVICE"  = "Couldn't open device";
+"DIALOG COULDNT OPEN DEVICE TITLE"  = "Couldn't open device";
 
 "OPTION BOOL ON"    = "On";
 "OPTION BOOL OFF"   = "Off";

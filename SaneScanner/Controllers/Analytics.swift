@@ -37,6 +37,7 @@ class Analytics {
         case appLaunch
         case newHostTapped
         case newHostAdded(count: Int, foundByAvahi: Bool)
+        case hostEdited(count: Int)
         case scanStarted(device: Device)
         case scanEnded(device: Device, imagesCount: Int)
         case scanCancelled(device: Device)
@@ -51,14 +52,15 @@ class Analytics {
             case .appLaunch:        return "App Launch"
             case .newHostTapped:    return "New Host Tap"
             case .newHostAdded:     return "New Host Added"
+            case .hostEdited:       return "Host Edited"
             case .scanStarted:      return "Scan Started"
             case .scanEnded:        return "Scan Ended"
             case .scanCancelled:    return "Scan Cancelled"
             case .scanFailed:       return "Scan Failed"
-            case .previewStarted:    return "Preview Started"
-            case .previewEnded:      return "Preview Ended"
-            case .previewCancelled:  return "Preview Cancelled"
-            case .previewFailed:     return "Preview Failed"
+            case .previewStarted:   return "Preview Started"
+            case .previewEnded:     return "Preview Ended"
+            case .previewCancelled: return "Preview Cancelled"
+            case .previewFailed:    return "Preview Failed"
             }
         }
         
@@ -67,6 +69,7 @@ class Analytics {
             case .appLaunch:                            return [:]
             case .newHostTapped:                        return [:]
             case .newHostAdded(let count, let avahi):   return ["Hosts Count": String(count), "Found by Avahi": String(avahi)]
+            case .hostEdited(let count):                return ["Hosts Count": String(count)]
             case .scanStarted(let device):              return ["Device Maker": device.vendor]
             case .scanEnded(let device, let imgCount):  return ["Device Maker": device.vendor, "Images": String(imgCount)]
             case .scanCancelled(let device):            return ["Device Maker": device.vendor]

@@ -105,12 +105,12 @@ class GalleryGridVC: UIViewController {
         // keep a ref to the items, since we'll be deleting one by one and thus indices may become invalid, ending up deleting the wrong files
         let selectedItems = selectedIndices.map { self.items[$0.item] }
         
-        var title = "DIALOG TITLE DELETE SCAN".localized
-        var message = "DIALOG MESSAGE DELETE SCAN".localized
+        var title = "DIALOG DELETE SCAN TITLE".localized
+        var message = "DIALOG DELETE SCAN MESSAGE".localized
         
         if selectedItems.count > 1 {
-            title   = "DIALOG TITLE DELETE SCANS".localized
-            message = String(format: "DIALOG MESSAGE DELETE SCANS %d".localized, selectedItems.count)
+            title   = "DIALOG DELETE SCANS TITLE".localized
+            message = String(format: "DIALOG DELETE SCANS MESSAGE %d".localized, selectedItems.count)
         }
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)

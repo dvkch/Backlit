@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SaneSwift
 
 class HostCell: TableViewCell {
 
@@ -18,47 +19,44 @@ class HostCell: TableViewCell {
     }
     
     // MARK: Views
-    @IBOutlet private var label: UILabel!
-    
+    @IBOutlet private var nameLabel: UILabel!
+    @IBOutlet private var hostLabel: UILabel!
+
     // MARK: Properties
-    struct Host {
-        enum Kind {
-            case saneConfig, bonjour, add
-        }
-        let kind: Kind
-        let value: String
+    enum Kind {
+        case saneHost(SaneHost)
+        case bonjourHost(SaneHost)
+        case add
     }
 
-    var host: Host? {
+    var kind: Kind = .add {
         didSet {
             updateContent()
         }
     }
     
     private func updateContent() {
-        guard let host else { return }
-
         var indicator: UIImage? = nil
         
-        switch host.kind {
-        case .saneConfig:
-            label.text = host.value
-            label.textColor = .normalText
-
-        case .bonjour:
-            label.text = host.value
-            label.textColor = .altText
-            indicator = UIImage(named: "network")
+        switch kind {
+        case .saneHost(let host):
+            nameLabel.text = host.displayName
+            hostLabel.text = host.hostname
             
+        case .bonjourHost(let host):
+            nameLabel.text = host.displayName
+            hostLabel.text = host.hostname
+            indicator = UIImage(named: "network")
+
         case .add:
-            label.text = "DEVICES ROW ADD HOST".localized
-            label.textColor = .normalText
+            nameLabel.text = "DEVICES ROW ADD HOST".localized
+            hostLabel.text = nil
             indicator = UIImage(named: "scanner")
         }
         
         if let indicator {
             let imageView = UIImageView(image: indicator)
-            imageView.tintColor = label.textColor
+            imageView.tintColor = nameLabel.textColor
             imageView.frame.size = .init(width: 20, height: 20)
             imageView.contentMode = .scaleAspectFit
             accessoryView = imageView

@@ -10,91 +10,63 @@ import Foundation
 
 public struct SaneConfig: Codable {
     
+    // MARK: Properties
+    public var previewWithAutoColorMode: Bool = true
+    public var hosts: [SaneHost] = []
+    public var transientdHosts: [SaneHost] = []
+    public var connectTimeout: Int = 10
+    
     // MARK: Codable
     private enum CodingKeys: String, CodingKey {
         case hosts = "hosts"
         case connectTimeout = "connect_timeout"
         case previewWithAutoColorMode = "preview_auto_color_mode"
     }
-    
-    // MARK: Properties
-    public var previewWithAutoColorMode: Bool = true {
-        didSet {
-            persistConfig()
-        }
-    }
-    public private(set) var hosts: [String] = [] {
-        didSet {
-            persistConfig()
-        }
-    }
-    public var connectTimeout: Int = 30 {
-        didSet {
-            persistConfig()
-        }
-    }
-    
-    public mutating func addHost(_ host: String) {
-        hosts.append(host)
-    }
-    
-    public mutating func removeHost(_ host: String) {
-        while let index = hosts.firstIndex(of: host) {
-            hosts.remove(at: index)
-        }
-    }
-    
-    public mutating func clearHosts() {
-        hosts = []
-    }
 }
 
 // MARK: Persistence
 internal extension SaneConfig {
-    private func saneNetConfContent() -> String {
-        var content = [String]()
-        content.append(contentsOf: hosts)
-        content.append("connect_timeout = " + String(connectTimeout))
-        return content.joined(separator: "\n")
-    }
-    
     static func restored() -> SaneConfig? {
-        guard let url = SaneConfig.saneSwiftConfigPlistURL, let data = try? Data(contentsOf: url) else {
+        do {
+            let data = try Data(contentsOf: SaneConfig.saneSwiftConfigPlistURL)
+            return try PropertyListDecoder().decode(SaneConfig.self, from: data)
+        }
+        catch {
+            print("Couldn't restore config: \(error)")
             return nil
         }
-        
-        return try? PropertyListDecoder().decode(SaneConfig.self, from: data)
     }
 
-    func persistConfig() {
-        guard let saneNetConfURL = SaneConfig.saneNetConfURL,
-            let saneSwiftConfigPlistURL = SaneConfig.saneSwiftConfigPlistURL,
-            let saneDllConfURL = SaneConfig.saneDllConfURL else
-        {
-            print("Couldn't create config paths")
-            return
+    static func persist(_ config: SaneConfig) {
+        // Step 1: save the configuration
+        do {
+            let plistData = try PropertyListEncoder().encode(config)
+            try plistData.write(to: saneSwiftConfigPlistURL)
+        }
+        catch {
+            SaneLogger.e(.sane, "Couldn't save config: \(error)")
         }
         
-        guard let plistData = try? PropertyListEncoder().encode(self) else {
-            print("Coudln't serialize SaneConfig to plist")
-            return
-        }
-        
-        try? plistData.write(to: saneSwiftConfigPlistURL)
-        try? saneNetConfContent().write(to: saneNetConfURL, atomically: true, encoding: .utf8)
-        try? ["net"].joined(separator: "\n").write(to: saneDllConfURL, atomically: true, encoding: .utf8)
+        // Step 2: expose the new config to SANE
+        let hostsEnv = (config.hosts + config.transientdHosts).map(\.hostname).saneJoined()
+        setenv("SANE_NET_HOSTS", hostsEnv, 1)
+        setenv("SANE_NET_TIMEOUT", String(config.connectTimeout), 1)
     }
 }
 
 // MARK: Paths
-extension SaneConfig {
+internal extension SaneConfig {
     static func makeConfigAvailableToSaneLib() {
-        guard let url = configFolderURL else { return }
-        FileManager.default.changeCurrentDirectoryPath(url.path)
+        setenv("SANE_CONFIG_DIR", configFolderURL.absoluteURL.path, 1)
+        
+        let dllConf = "net\n"
+        try? dllConf.write(to: saneDllConfURL, atomically: true, encoding: .utf8)
     }
     
-    private static var configFolderURL: URL? {
-        guard let baseURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
+    private static var configFolderURL: URL {
+        guard let baseURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+            fatalError("Should have access to config directory")
+        }
         let saneConfigDirURL = baseURL.appendingPathComponent("SaneScanner", isDirectory: true)
         
         if !FileManager.default.fileExists(atPath: saneConfigDirURL.path) {
@@ -104,15 +76,11 @@ extension SaneConfig {
         return saneConfigDirURL
     }
     
-    private static var saneDllConfURL: URL? {
-        return configFolderURL?.appendingPathComponent("dll.conf", isDirectory: false)
+    private static var saneDllConfURL: URL {
+        return configFolderURL.appendingPathComponent("dll.conf", isDirectory: false)
     }
     
-    private static var saneNetConfURL: URL? {
-        return configFolderURL?.appendingPathComponent("net.conf", isDirectory: false)
-    }
-    
-    private static var saneSwiftConfigPlistURL: URL? {
-        return configFolderURL?.appendingPathComponent("saneswift.plist", isDirectory: false)
+    private static var saneSwiftConfigPlistURL: URL {
+        return configFolderURL.appendingPathComponent("saneswift.plist", isDirectory: false)
     }
 }

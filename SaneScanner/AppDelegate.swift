@@ -12,7 +12,6 @@ import SaneSwift
 import SYPictureMetadata
 
 // TODO: handle auto for text fields on macOS
-// LATER: add names to hosts, load devices from Bonjour without having to add them
 // LATER: add support for https://github.com/alexpevzner/sane-airscan
 // LATER: add auto update on macOS using https://sparkle-project.org/
 
@@ -41,8 +40,7 @@ extension AppDelegate : UIApplicationDelegate {
         
         // Snapshots
         if Snapshot.isSnapshotting, let snapshotHost = Snapshot.snapshotHost {
-            Sane.shared.configuration.clearHosts()
-            Sane.shared.configuration.addHost(snapshotHost)
+            Sane.shared.configuration.hosts = [.init(hostname: snapshotHost, displayName: snapshotHost)]
         }
         
         SaneSetLogLevel(0)

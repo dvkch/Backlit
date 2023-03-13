@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 public protocol SaneDelegate: NSObjectProtocol {
+    func saneDidUpdateConfig(_ sane: Sane, previousConfig: SaneConfig)
     func saneDidStartUpdatingDevices(_ sane: Sane)
     func saneDidEndUpdatingDevices(_ sane: Sane)
     func saneNeedsAuth(_ sane: Sane, for device: String?, completion: @escaping (DeviceAuthentication?) -> ())
@@ -28,7 +29,7 @@ public class Sane: NSObject {
         thread.start()
         
         SaneConfig.makeConfigAvailableToSaneLib()
-        configuration.persistConfig()
+        SaneConfig.persist(configuration)
     }
     
     // MARK: Properties
@@ -59,7 +60,12 @@ public class Sane: NSObject {
     private var stopScanOperation = false
 
     // MARK: Configuration
-    public var configuration: SaneConfig = SaneConfig.restored() ?? SaneConfig()
+    public var configuration: SaneConfig = SaneConfig.restored() ?? SaneConfig() {
+        didSet {
+            SaneConfig.persist(configuration)
+            delegate?.saneDidUpdateConfig(self, previousConfig: oldValue)
+        }
+    }
 }
 
 // MARK: Threading
