@@ -13,7 +13,9 @@ class GalleryThumbnailCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        tooltipView = TooltipView(for: self, title: { [weak self] in self?.item.flatMap { GalleryManager.shared.dateString(for: $0) } })
+        addTooltip { [weak self] in
+            self?.item.flatMap { GalleryManager.shared.dateString(for: $0) }
+        }
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -76,7 +78,6 @@ class GalleryThumbnailCell: UICollectionViewCell {
         }
     }()
     private let selectionView = UIView()
-    private var tooltipView: TooltipView!
 
     // MARK: Content
     func update(item: GalleryItem, mode: Mode, spinnerColor: UIColor) {

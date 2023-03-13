@@ -17,13 +17,13 @@ class OptionCell: TableViewCell {
         super.awakeFromNib()
         
         titleLabel.isUserInteractionEnabled = true
-        tooltipView = TooltipView(for: titleLabel, title: { [weak self] in
+        titleLabel.addTooltip { [weak self] in
             if self?.valueControl != nil {
                 return self?.option?.localizedDescr
             } else {
                 return nil
             }
-        })
+        }
 
         titleLabel.adjustsFontForContentSizeCategory = true
         valueLabel.adjustsFontForContentSizeCategory = true
@@ -33,7 +33,6 @@ class OptionCell: TableViewCell {
     }
     
     // MARK: Views
-    private var tooltipView: TooltipView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var valueLabel: UILabel!
     private var valueControl: UIView? {

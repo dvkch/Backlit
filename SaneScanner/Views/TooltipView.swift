@@ -9,7 +9,7 @@
 import UIKit
 
 // LATER: replace with UIToolTipInteraction when dropping macOS 11.0
-class TooltipView : UIView {
+private class TooltipView : UIView {
     
     // MARK: Init
     required init(for view: UIView, title: @escaping () -> String?) {
@@ -130,5 +130,26 @@ class TooltipView : UIView {
         } completion: { (_) in
             self.removeFromSuperview()
         }
+    }
+}
+
+private var UIButtonTooltip: UInt8?
+extension UIView {
+    private var tooltipView: TooltipView? {
+        get {
+            return objc_getAssociatedObject(self, &UIButtonTooltip) as? TooltipView
+        }
+        set {
+            objc_setAssociatedObject(self, &UIButtonTooltip, newValue, .OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+
+    func addTooltip(_ value: @escaping () -> String?) {
+        tooltipView = TooltipView(for: self, title: value)
+    }
+
+    func removeTooltip() {
+        tooltipView?.dismiss(animated: false)
+        tooltipView = nil
     }
 }
