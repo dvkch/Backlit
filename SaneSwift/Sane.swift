@@ -742,6 +742,7 @@ extension Sane {
             return .failure(SaneError(saneStatus: status)!)
         }
 
+        // LATER: handle lines == -1 when height isn't known at first
         // read scan parameters as soon as possible. now that the scan has started they should not change. this is
         // helpful since some backends don't give valid ones later on, especially when scanning in non blocking
         // IO mode

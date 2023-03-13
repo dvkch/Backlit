@@ -11,10 +11,9 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
-// LATER: add names to hosts
+// TODO: handle auto for text fields on macOS
+// LATER: add names to hosts, load devices from Bonjour without having to add them
 // LATER: add support for https://github.com/alexpevzner/sane-airscan
-// LATER: usb support for Catalyst ? (excluding those that don't include the Sane condition license)
-// LATER: test text field input for String & Int and handle Auto
 // LATER: add auto update on macOS using https://sparkle-project.org/
 
 @UIApplicationMain
@@ -53,6 +52,9 @@ extension AppDelegate : UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
+        // TODO: disable on macOS ? count how much time is spent not on the
+        // app and close the current scan if more than 10min when coming back ?
+
         let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: {})
         
         // will be restarted by DevicesVC
