@@ -84,8 +84,6 @@ class DevicesVC: UIViewController {
     }
     
     @objc func refresh(silently: Bool) {
-        // TODO: refreshing seems to never end when done with a pull to refresh
-
         let bonjourHosts = Sane.shared.configuration.transientdHosts
             .filter { !Sane.shared.configuration.hosts.contains($0) }
 
@@ -378,10 +376,11 @@ extension DevicesVC : UITableViewDelegate {
         let editAction = UITableViewRowAction(style: .default, title: "ACTION EDIT".localized) { [weak self] (_, _) in
             self?.showHostForm(.edit(host: host))
         }
+        editAction.backgroundColor = .tint
         let deleteAction = UITableViewRowAction(style: .destructive, title: "ACTION REMOVE".localized) { (_, _) in
             Sane.shared.configuration.hosts.remove(host)
         }
-        return [deleteAction]
+        return [editAction, deleteAction]
     }
     #endif
     
