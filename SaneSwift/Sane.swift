@@ -36,16 +36,16 @@ public class Sane: NSObject {
     public weak var delegate: SaneDelegate?
     public private(set) var saneInitError: String?
     public var isUpdatingDevices: Bool {
-        return isUpdatingDevicesInternal
+        return runningDeviceUpdates > 0
     }
     public private(set) var saneVersion: OperatingSystemVersion = .init()
 
     // MARK: Private properties
     private var thread: Thread!
     private var saneStarted = false
-    @SaneLocked private var isUpdatingDevicesInternal: Bool = false {
+    @SaneLocked private var runningDeviceUpdates: Int = 0 {
         didSet {
-            guard isUpdatingDevicesInternal != oldValue else { return }
+            guard runningDeviceUpdates != oldValue else { return }
 
             DispatchQueue.main.async {
                 if self.isUpdatingDevices {
@@ -62,6 +62,7 @@ public class Sane: NSObject {
     // MARK: Configuration
     public var configuration: SaneConfig = SaneConfig.restored() ?? SaneConfig() {
         didSet {
+            guard configuration != oldValue else { return }
             SaneConfig.persist(configuration)
             delegate?.saneDidUpdateConfig(self, previousConfig: oldValue)
         }
@@ -127,7 +128,7 @@ extension Sane {
             guard !self.saneStarted else { return }
             
             self.clearOpenedDevices()
-            self.isUpdatingDevicesInternal = false
+            self.runningDeviceUpdates = 0
             
             var version: SANE_Int = 0
             let s = sane_init(&version, SaneAuthenticationCallback(deviceName:username:password:))
@@ -149,7 +150,7 @@ extension Sane {
             guard self.saneStarted else { return }
             
             self.clearOpenedDevices()
-            self.isUpdatingDevicesInternal = false
+            self.runningDeviceUpdates = 0
             sane_exit()
             
             self.saneStarted = false
@@ -196,15 +197,17 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
 extension Sane {
     // MARK: Device management
     public func updateDevices(completion: @escaping SaneCompletion<[Device]>) {
+        // if multiple updates are sent, we'll do them all, without sending "saneDidEndUpdatingDevices"
+        // to the delegate in between
+        self.runningDeviceUpdates += 1
+
         SaneLogger.i(.sane, "Updating devices")
         runOnSaneThread {
-            guard !self.isUpdatingDevices else {
-                SaneLogger.w(.sane, "Already updating, skipping")
-                return
-            }
-            
             self.startSane()
-            self.isUpdatingDevicesInternal = true
+            defer {
+                self.stopSane()
+                self.runningDeviceUpdates -= 1
+            }
             
             var rawDevices: UnsafeMutablePointer<UnsafePointer<SANE_Device>?>? = nil
             
@@ -213,7 +216,6 @@ extension Sane {
             }
             
             guard s == SANE_STATUS_GOOD else {
-                self.isUpdatingDevicesInternal = false
                 Sane.runOn(mainThread: true, block: {
                     SaneLogger.e(.sane, "Couldn't update devices: \(s)")
                     completion(.failure(SaneError(saneStatus: s)))
@@ -222,16 +224,12 @@ extension Sane {
             }
             
             var devices = [Device]()
-            var i = 0
-            
-            while let rawDevice = rawDevices?.advanced(by: i).pointee {
+            while let rawDevice = rawDevices?.advanced(by: devices.count).pointee {
                 devices.append(Device(cDevice: rawDevice.pointee))
-                i += 1
             }
-            SaneLogger.i(.sane, "Found \(devices.count) devices")
 
-            self.isUpdatingDevicesInternal = false
             Sane.runOn(mainThread: true, block: {
+                SaneLogger.i(.sane, "Found \(devices.count) devices")
                 completion(.success(devices))
             })
             

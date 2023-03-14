@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct SaneConfig: Codable {
+public struct SaneConfig: Codable, Equatable {
     
     // MARK: Properties
     public var previewWithAutoColorMode: Bool = true
