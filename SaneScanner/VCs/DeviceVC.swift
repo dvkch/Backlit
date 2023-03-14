@@ -32,12 +32,16 @@ class DeviceVC: UIViewController {
         view.backgroundColor = .background
         title = device.model
         navigationItem.largeTitleDisplayMode = .never
-
+        
         tableView.remembersLastFocusedIndexPath = true
         tableView.separatorStyle = UIDevice.isCatalyst ? .none : .singleLine
         tableView.clipsToBounds = true
+        tableView.shouldDelayTouch = { view in
+            // allow immediate highlight of pressed buttons, while allowing scroll when
+            // panning from the ScanButton or anything else
+            view.isKind(of: ScanButton.self) || !view.isKind(of: UIButton.self)
+        }
         tableView.alwaysBounceVertical = true
-        tableView.delaysContentTouches = false
         tableView.dataSource = self
         tableView.delegate = self
         if #available(macCatalyst 15.0, iOS 15.0, *) {
@@ -123,7 +127,7 @@ class DeviceVC: UIViewController {
 
     // MARK: Views
     private var thumbsView: GalleryThumbsView!
-    private let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
+    private let tableView = TableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
     private let scanButtonStackView = UIStackView()
     private let scanButton = ScanButton(type: .custom)
     private var refreshView: RefreshView!

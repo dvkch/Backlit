@@ -368,6 +368,7 @@ extension OptionCell: DeviceOptionControllable {
     func updateDeviceOptionControlForField<T>(option: DeviceOptionTyped<T>, current: T, kind: DeviceOptionControllableFieldKind, supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
         guard UIDevice.isCatalyst else { return }
 
+        #if targetEnvironment(macCatalyst)
         let field = UITextField()
         field.autocorrectionType = .no
         field.autocapitalizationType = .none
@@ -422,6 +423,7 @@ extension OptionCell: DeviceOptionControllable {
         field.rightViewMode = .always
 
         valueControl = field
+        #endif
     }
 
     @objc private func deviceOptionTextFieldValueChanged(_ field: UITextField) {
