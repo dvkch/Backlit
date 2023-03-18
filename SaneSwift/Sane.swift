@@ -725,9 +725,6 @@ extension Sane {
     /// Device should be opened at this point
     private func internalFrameScan(device: Device, handle: SANE_Handle, crop: CGRect, generateIntermediateImages: Bool, scannedDocsCount: Int, previousFrames: [ScanImage], progress: @escaping (ScanProgress) -> ()) -> SaneResult<ScanImage> {
 
-        device.currentOperation?.progress = .warmingUp
-        progress(.warmingUp)
-
         SaneLogger.i(.sane, "> Starting scan")
         var status = Sane.logTime { sane_start(handle) }
         
@@ -760,13 +757,6 @@ extension Sane {
         let parameters = ScanParameters(cParams: params, cropArea: crop)
         assert(parameters.fileSize > 0, "Scan parameters invalid")
         SaneLogger.i(.sane, "> Scan parameters are \(parameters)")
-
-        device.currentOperation!.progress = .scanning(
-            progress: 0, finishedDocs: scannedDocsCount,
-            incompletePreview: nil,
-            parameters: parameters
-        )
-        progress(device.currentOperation!.progress)
 
         var data = Data(capacity: parameters.fileSize)
         if parameters.expectedFramesCount > 1 {
@@ -850,7 +840,7 @@ extension Sane {
                         SaneLogger.d(.sane, "> Reporting progress: \(percentScanned)")
                     }
                     let incompleteImage = imagePreviewData.map {
-                        try? UIImage.sy_imageFromIncompleteSane(data: $0, parameters: parameters, previousFrames: previousFrames)
+                        try? UIImage.sy_imageFromIncompleteSane(data: $0, parameters: parameters)
                     } ?? nil
                     let p: ScanProgress = .scanning(
                         progress: globalPercentScanned, finishedDocs: scannedDocsCount,
@@ -880,7 +870,7 @@ extension Sane {
         
         SaneLogger.i(.sane, "> Finished scanning \(parameters.currentlyAcquiredFrame) frame with success")
         let result = Result(catching: {
-            try UIImage.sy_imageFromSane(data: data, parameters: parameters, previousFrames: previousFrames)
+            try UIImage.sy_imageFromSane(data: data, parameters: parameters)
         })
         return result.map { ($0, parameters) }.mapError { $0 as! SaneError }
     }

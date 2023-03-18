@@ -143,7 +143,7 @@ internal extension UIImage {
     // Nota: if the source image is 1 bit Grayscale (monochrome), the method `pngData()` on the output UIImage will
     // produce an invalid file (at least on macOS 13.2.1), but using CGImageDestinationCreateWithData with kUTTypePNG
     // will produce a valid PNG file.
-    static func sy_imageFromSane(data: Data, parameters: ScanParameters, previousFrames: [ScanImage]) throws -> UIImage {
+    static func sy_imageFromSane(data: Data, parameters: ScanParameters) throws -> UIImage {
         // TODO: release pool necessary ?
         return try autoreleasepool {
             guard let provider = CGDataProvider(data: data as CFData) else {
@@ -188,10 +188,10 @@ internal extension UIImage {
         }
     }
 
-    static func sy_imageFromIncompleteSane(data: Data, parameters: ScanParameters, previousFrames: [ScanImage]) throws -> UIImage {
+    static func sy_imageFromIncompleteSane(data: Data, parameters: ScanParameters) throws -> UIImage {
         let size = (parameters.fileSize * parameters.expectedFramesCount) - data.count
-        let completedData = data + Data(repeating: UInt8.max, count: size)
-        return try self.sy_imageFromSane(data: completedData, parameters: parameters, previousFrames: previousFrames)
+        let completedData = data + Data(repeating: UInt8.max, count: max(0, size))
+        return try self.sy_imageFromSane(data: completedData, parameters: parameters)
     }
 }
 
