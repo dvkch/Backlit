@@ -50,7 +50,6 @@ class GalleryImagesVC: UIViewController {
         return navigationController?.isNavigationBarHidden ?? super.prefersStatusBarHidden
     }
     
-    @available(iOS 11.0, *)
     override var prefersHomeIndicatorAutoHidden: Bool {
         return navigationController?.isNavigationBarHidden ?? super.prefersHomeIndicatorAutoHidden
     }
@@ -128,9 +127,7 @@ class GalleryImagesVC: UIViewController {
         view.backgroundColor = hideNavBars ? .black : .background
         
         setNeedsStatusBarAppearanceUpdate()
-        if #available(iOS 11.0, *) {
-            setNeedsUpdateOfHomeIndicatorAutoHidden()
-        }
+        setNeedsUpdateOfHomeIndicatorAutoHidden()
     }
     
     private func updateNavBarContent() {

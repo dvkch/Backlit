@@ -39,9 +39,7 @@ class GalleryImageVC: UIViewController {
         
         singleTap.require(toFail: doubleTap)
 
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        }
+        scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.delegate = self
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
@@ -122,7 +120,7 @@ class GalleryImageVC: UIViewController {
         var bounds = scrollView.frame
         bounds.origin = .zero
         
-        if #available(iOS 11.0, *), !sy_isModal {
+        if !sy_isModal {
             // when we're not modal we can't dismiss the nav & tool bars, so we take them into account
             bounds = bounds.inset(by: scrollView.safeAreaInsets)
         }

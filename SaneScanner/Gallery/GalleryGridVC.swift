@@ -283,7 +283,6 @@ extension GalleryGridVC : UICollectionViewDelegate {
     #endif
 }
 
-@available(iOS 11.0, *)
 extension GalleryGridVC : UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let item = items[indexPath.item]

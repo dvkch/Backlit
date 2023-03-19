@@ -65,11 +65,9 @@ class DeviceVC: UIViewController {
         
         scanButton.kind = .scan
         scanButton.style = .cell
-        if #available(iOS 11.0, *) {
-            scanButton.layer.masksToBounds = true
-            scanButton.layer.cornerRadius = 10
-            scanButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        }
+        scanButton.layer.masksToBounds = true
+        scanButton.layer.cornerRadius = 10
+        scanButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         scanButton.addTarget(self, action: #selector(scanButtonTap), for: .primaryActionTriggered)
         scanButtonStackView.addArrangedSubview(scanButton)
 
@@ -293,12 +291,8 @@ class DeviceVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.contentInset.bottom = scanButton.sy_isHidden ? 0 : scanButton.bounds.height
-        if #available(iOS 11.1, *) {
-            tableView.horizontalScrollIndicatorInsets.bottom = tableView.contentInset.bottom
-            tableView.verticalScrollIndicatorInsets.bottom = tableView.contentInset.bottom
-        } else {
-            tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
-        }
+        tableView.horizontalScrollIndicatorInsets.bottom = tableView.contentInset.bottom
+        tableView.verticalScrollIndicatorInsets.bottom = tableView.contentInset.bottom
     }
 }
 

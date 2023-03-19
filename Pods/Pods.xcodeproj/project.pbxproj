@@ -17,7 +17,6 @@
 				DBACB403A86702221FE0DA8AAB02735D /* PBXTargetDependency */,
 			);
 			name = Sane;
-			productName = Sane;
 		};
 /* End PBXAggregateTarget section */
 
@@ -364,7 +363,7 @@
 		088CD03CA8B5CACF49CE696B1B0D588E /* SYEmailHelper-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SYEmailHelper-dummy.m"; sourceTree = "<group>"; };
 		089ADBD3C6794709E706B63090B5161E /* LayoutConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraintItem.swift; path = Sources/LayoutConstraintItem.swift; sourceTree = "<group>"; };
 		09E71663135E161935895A6F31645638 /* SYOperationQueue.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SYOperationQueue.modulemap; sourceTree = "<group>"; };
-		0A70680A759F779DA78681A7415F6C7B /* eo.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = eo.lproj; path = Sane/all/translations/eo.lproj; sourceTree = "<group>"; };
+		0A70680A759F779DA78681A7415F6C7B /* eo.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = eo.lproj; path = Sane/all/translations/eo.lproj; sourceTree = "<group>"; };
 		0D4FA70CC9A86DE244A0A04A378B5356 /* SYMetadataJFIF.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataJFIF.swift; path = SYPictureMetadata/SYMetadataJFIF.swift; sourceTree = "<group>"; };
 		0D5F54A8DBC71AC69F5069BFF605EDB4 /* DirectoryWatcher-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DirectoryWatcher-prefix.pch"; sourceTree = "<group>"; };
 		0DE2823D3987F817C9E1E9765B97331C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -377,9 +376,9 @@
 		13F8E173D9CEA635467CC10D2F704632 /* ConstraintMakerExtendable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerExtendable.swift; path = Sources/ConstraintMakerExtendable.swift; sourceTree = "<group>"; };
 		13FA0358626316E76690723E59CE1892 /* SYOperationQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SYOperationQueue.m; sourceTree = "<group>"; };
 		140EA5826477E962A4B3D52B45A2BF93 /* UISearchBar+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UISearchBar+SYKit.swift"; path = "SYKit/Extensions/UISearchBar+SYKit.swift"; sourceTree = "<group>"; };
-		15762C29E115AEAF8B0F71225B0F8E98 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE.txt; path = Sane/all/Sane.xcframework/LICENSE.txt; sourceTree = "<group>"; };
+		15762C29E115AEAF8B0F71225B0F8E98 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE.txt; path = Sane/all/Sane.xcframework/LICENSE.txt; sourceTree = "<group>"; };
 		16291494A22AF94FDC4A814F9381A75D /* SaneSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SaneSwift-prefix.pch"; sourceTree = "<group>"; };
-		1843E85CBA93B93A0D89DA18684C76A3 /* nb.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = nb.lproj; path = Sane/all/translations/nb.lproj; sourceTree = "<group>"; };
+		1843E85CBA93B93A0D89DA18684C76A3 /* nb.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = nb.lproj; path = Sane/all/translations/nb.lproj; sourceTree = "<group>"; };
 		19B14EF09C4625AB8CDC2C3C5F5973BD /* Pods-SaneScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SaneScanner.debug.xcconfig"; sourceTree = "<group>"; };
 		1B7D7B5362EB1A236AC8205B736E4271 /* SnapKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.release.xcconfig; sourceTree = "<group>"; };
 		1C21F5280FD66F6E04F95D837971622E /* TelemetryClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TelemetryClient.swift; path = Sources/TelemetryClient/TelemetryClient.swift; sourceTree = "<group>"; };
@@ -391,7 +390,7 @@
 		214998A4E70AB2F088C9707C8DD39713 /* Bundle+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Bundle+SYKit.swift"; path = "SYKit/Extensions/Bundle+SYKit.swift"; sourceTree = "<group>"; };
 		22B468BF90F0FC8392AFD68630AB7ED4 /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Sources/ConstraintMaker.swift; sourceTree = "<group>"; };
 		23458BB7EDF7BAF97F6F909A9C4698DF /* RTSpinKitWaveAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitWaveAnimation.h; path = SpinKit/Animations/RTSpinKitWaveAnimation.h; sourceTree = "<group>"; };
-		23737D0C6D9DE3764E842BEA183F4BF9 /* he.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = he.lproj; path = Sane/all/translations/he.lproj; sourceTree = "<group>"; };
+		23737D0C6D9DE3764E842BEA183F4BF9 /* he.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = he.lproj; path = Sane/all/translations/he.lproj; sourceTree = "<group>"; };
 		23C563E98DDC4415C80DA0AB232FFE88 /* AVAsset+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AVAsset+SYKit.swift"; path = "SYKit/Extensions/AVAsset+SYKit.swift"; sourceTree = "<group>"; };
 		23CBA8F7E11529ED3AE4D61E05E1474B /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Sources/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		259FC3D882D5AD2283B905DF8EBF065A /* UIScrollView+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIScrollView+SYKit.swift"; path = "SYKit/Extensions/UIScrollView+SYKit.swift"; sourceTree = "<group>"; };
@@ -415,23 +414,23 @@
 		33950145EBB6DBC591BA14D4ABB61CD5 /* Sane-Sane-Translations */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Sane-Sane-Translations"; path = "Sane-Translations.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		35F37DE8EFD35F16F85512B35AAC2C87 /* KeychainAccess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KeychainAccess.release.xcconfig; sourceTree = "<group>"; };
 		367ADBA48F38738F73737423BEB0246F /* SYMetadataMakerCanon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataMakerCanon.swift; path = SYPictureMetadata/SYMetadataMakerCanon.swift; sourceTree = "<group>"; };
-		38D93D0EBA08B7D0E4BDDE1E45FFB213 /* fi.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = fi.lproj; path = Sane/all/translations/fi.lproj; sourceTree = "<group>"; };
+		38D93D0EBA08B7D0E4BDDE1E45FFB213 /* fi.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fi.lproj; path = Sane/all/translations/fi.lproj; sourceTree = "<group>"; };
 		3A3F266BEA67829A5B74B6AC213E873E /* String+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+SYKit.swift"; path = "SYKit/Extensions/String+SYKit.swift"; sourceTree = "<group>"; };
 		3E6BE98072359DD841436190745BF579 /* RTSpinKitChasingDotsAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitChasingDotsAnimation.h; path = SpinKit/Animations/RTSpinKitChasingDotsAnimation.h; sourceTree = "<group>"; };
 		3EFB2AD7663C26D42D0FC82B2B5FABC1 /* SpinKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SpinKit-Info.plist"; sourceTree = "<group>"; };
 		3F7DBF22FBA8615A985E80613D0156E5 /* SYKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SYKit.debug.xcconfig; sourceTree = "<group>"; };
 		3F8AC4C85B71D02341D2A411553659AC /* NSObject+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSObject+SYKit.swift"; path = "SYKit/Extensions/NSObject+SYKit.swift"; sourceTree = "<group>"; };
-		4034AA608842E31E304143EE41BE706F /* cs.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = cs.lproj; path = Sane/all/translations/cs.lproj; sourceTree = "<group>"; };
+		4034AA608842E31E304143EE41BE706F /* cs.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = cs.lproj; path = Sane/all/translations/cs.lproj; sourceTree = "<group>"; };
 		408D508C85AE7DE6DAF9295CFC39C9F7 /* RTSpinKitFadingCircleAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitFadingCircleAnimation.h; path = SpinKit/Animations/RTSpinKitFadingCircleAnimation.h; sourceTree = "<group>"; };
 		40E224F249E548B66DACD60730A84565 /* RTSpinKitUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitUtils.h; path = SpinKit/RTSpinKitUtils.h; sourceTree = "<group>"; };
-		429DD0ED4A6C8F15DF3046A1A8544BD1 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = fr.lproj; path = Sane/all/translations/fr.lproj; sourceTree = "<group>"; };
+		429DD0ED4A6C8F15DF3046A1A8544BD1 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fr.lproj; path = Sane/all/translations/fr.lproj; sourceTree = "<group>"; };
 		433A33E72B57C7A38C752F50FDE5AA88 /* UILayoutSupport+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UILayoutSupport+Extensions.swift"; path = "Sources/UILayoutSupport+Extensions.swift"; sourceTree = "<group>"; };
 		441A3F2FB9BF6655A28597AEDA5BC74E /* ConstraintMakerPrioritizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerPrioritizable.swift; path = Sources/ConstraintMakerPrioritizable.swift; sourceTree = "<group>"; };
 		441D114CEDEC65A05CE1508ADF49C667 /* DeviceAuthentication.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DeviceAuthentication.swift; path = SaneSwift/DeviceAuthentication.swift; sourceTree = "<group>"; };
 		45FCFE06FA93B0A92DF435F07EF04DBC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		48A32A6404C43A1219551A5E8810971E /* TelemetryClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TelemetryClient.debug.xcconfig; sourceTree = "<group>"; };
 		498BD273AADEEF34622FF1F96D9C9E98 /* SYMetadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadata.swift; path = SYPictureMetadata/SYMetadata.swift; sourceTree = "<group>"; };
-		4A0FB042459F65C66AC7699315C524E5 /* zh-CN.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-CN.lproj"; path = "Sane/all/translations/zh-CN.lproj"; sourceTree = "<group>"; };
+		4A0FB042459F65C66AC7699315C524E5 /* zh-CN.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-CN.lproj"; path = "Sane/all/translations/zh-CN.lproj"; sourceTree = "<group>"; };
 		4A7C5D201B0ED112839EF5EEA8FC809E /* SYMetadata8BIM.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadata8BIM.swift; path = SYPictureMetadata/SYMetadata8BIM.swift; sourceTree = "<group>"; };
 		4A99F7D2233447215407D45A1B617616 /* SYKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SYKit-Info.plist"; sourceTree = "<group>"; };
 		4B76B8C5BB06E1A252D791E62F9CD275 /* RTSpinKitArcAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitArcAnimation.m; path = SpinKit/Animations/RTSpinKitArcAnimation.m; sourceTree = "<group>"; };
@@ -439,7 +438,7 @@
 		4E2FFC197DE6C49E7B7775EC1E60C362 /* SYMetadataExportedKeys.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SYMetadataExportedKeys.h; path = SYPictureMetadata/SYMetadataExportedKeys.h; sourceTree = "<group>"; };
 		4E6F398F6419B76E1CE1D59DDA54145F /* Pods-SaneScanner.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SaneScanner.modulemap"; sourceTree = "<group>"; };
 		4E8D9CB978EE7EE18AC3A3A41C5B73FD /* SaneSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SaneSwift-Info.plist"; sourceTree = "<group>"; };
-		4F6AEE8C19FF49446DE2BFEA59F10E46 /* Sane.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = Sane.xcframework; path = Sane/all/Sane.xcframework; sourceTree = "<group>"; };
+		4F6AEE8C19FF49446DE2BFEA59F10E46 /* Sane.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = Sane.xcframework; path = Sane/all/Sane.xcframework; sourceTree = "<group>"; };
 		503CB3129086442C720106D86D587F1E /* RTSpinKitCircleFlipAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitCircleFlipAnimation.h; path = SpinKit/Animations/RTSpinKitCircleFlipAnimation.h; sourceTree = "<group>"; };
 		506F2373EC4DE4716F8B0D1B8A67C592 /* SYMetadataExifAux.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataExifAux.swift; path = SYPictureMetadata/SYMetadataExifAux.swift; sourceTree = "<group>"; };
 		51A808BA5054CAC5A9D3245285862DFC /* SaneSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SaneSwift-umbrella.h"; sourceTree = "<group>"; };
@@ -457,21 +456,21 @@
 		5E547FB9CE63E01C07BC7EC3435F30A7 /* KeychainAccess-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KeychainAccess-Info.plist"; sourceTree = "<group>"; };
 		5EB8EEDCFC385E1B05F85CFAC4DA10DD /* KeychainAccess-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KeychainAccess-dummy.m"; sourceTree = "<group>"; };
 		62B24B58A25E6765C361F3266DA9DF93 /* RTSpinKitUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitUtils.m; path = SpinKit/RTSpinKitUtils.m; sourceTree = "<group>"; };
-		63D0E42688E594A3417A8835E47DA1C0 /* ru.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ru.lproj; path = Sane/all/translations/ru.lproj; sourceTree = "<group>"; };
+		63D0E42688E594A3417A8835E47DA1C0 /* ru.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ru.lproj; path = Sane/all/translations/ru.lproj; sourceTree = "<group>"; };
 		6422B60CFD4ADADFDED49DA2FE186DA4 /* ResourceBundle-Sane-Translations-Sane-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-Sane-Translations-Sane-Info.plist"; sourceTree = "<group>"; };
 		647959F4512576379638307AF540FFBB /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Sources/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
 		64D8B4825344C59B2CE4153626F66A20 /* Device.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Device.swift; path = SaneSwift/Device.swift; sourceTree = "<group>"; };
 		64E352E030EDC4D151D7BF18EAA53B27 /* SYMetadataGIF.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataGIF.swift; path = SYPictureMetadata/SYMetadataGIF.swift; sourceTree = "<group>"; };
 		65A2A1A1E7598D98BE31179404DB5EA7 /* ConstraintView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintView.swift; path = Sources/ConstraintView.swift; sourceTree = "<group>"; };
 		679E04C2628711FAD7257D28BFD741C6 /* ConstraintRelatableTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelatableTarget.swift; path = Sources/ConstraintRelatableTarget.swift; sourceTree = "<group>"; };
-		69B262A35319682A2411B064E1A72244 /* pl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = pl.lproj; path = Sane/all/translations/pl.lproj; sourceTree = "<group>"; };
+		69B262A35319682A2411B064E1A72244 /* pl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pl.lproj; path = Sane/all/translations/pl.lproj; sourceTree = "<group>"; };
 		6A6997F78560409CDF02DAF80E8235A6 /* SnapKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SnapKit-Info.plist"; sourceTree = "<group>"; };
 		6B2DDC34FA30E1C243CFC99B77EA6784 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
 		6B5C35DB37D675CD50F906E2E9F27016 /* NSObject+SYKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SYKit.m"; path = "SYKit/Extensions/NSObject+SYKit.m"; sourceTree = "<group>"; };
 		6BF8E8CC66E464B7DADB5C294C2FA8C7 /* LayoutConstraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraint.swift; path = Sources/LayoutConstraint.swift; sourceTree = "<group>"; };
 		6C1C6534C003C5B1F61706A9933728AE /* SignalManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignalManager.swift; path = Sources/TelemetryClient/SignalManager.swift; sourceTree = "<group>"; };
 		6D174929D05E107D778C86AFC65A2DEC /* SYWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYWindow.swift; path = SYKit/Views/SYWindow.swift; sourceTree = "<group>"; };
-		6DD006BCCCBE61395046F9DF137C2281 /* hu.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = hu.lproj; path = Sane/all/translations/hu.lproj; sourceTree = "<group>"; };
+		6DD006BCCCBE61395046F9DF137C2281 /* hu.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = hu.lproj; path = Sane/all/translations/hu.lproj; sourceTree = "<group>"; };
 		6E5242E18274F9817ABA9D1E61132612 /* RTSpinKitBounceAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitBounceAnimation.h; path = SpinKit/Animations/RTSpinKitBounceAnimation.h; sourceTree = "<group>"; };
 		6E6F87A31DE9241FD2E920F2E41A7F48 /* CoreGraphics+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CoreGraphics+SYKit.swift"; path = "SYKit/Extensions/CoreGraphics+SYKit.swift"; sourceTree = "<group>"; };
 		6E9B8E8D8ED440F4F7132F8AFF31DCD3 /* KeychainAccess.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KeychainAccess.modulemap; sourceTree = "<group>"; };
@@ -484,11 +483,11 @@
 		705201DE9482A45214715433CE51F124 /* DirectoryWatcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DirectoryWatcher.release.xcconfig; sourceTree = "<group>"; };
 		714537BE090561E517CC2EEFFA216E12 /* ConstraintDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDSL.swift; path = Sources/ConstraintDSL.swift; sourceTree = "<group>"; };
 		72F063E5655303BF924828D07075E00E /* SYPictureMetadata.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SYPictureMetadata.debug.xcconfig; sourceTree = "<group>"; };
-		73F73C67FE4CFF2E3F9A52F5343ED775 /* da.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = da.lproj; path = Sane/all/translations/da.lproj; sourceTree = "<group>"; };
+		73F73C67FE4CFF2E3F9A52F5343ED775 /* da.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = da.lproj; path = Sane/all/translations/da.lproj; sourceTree = "<group>"; };
 		75EDE16F7333317A061B9EE49B8C7873 /* ConstraintLayoutGuideDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuideDSL.swift; path = Sources/ConstraintLayoutGuideDSL.swift; sourceTree = "<group>"; };
 		773D9DB0072F46FA25FBB2A8E5707813 /* RTSpinKitWanderingCubesAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitWanderingCubesAnimation.m; path = SpinKit/Animations/RTSpinKitWanderingCubesAnimation.m; sourceTree = "<group>"; };
 		77FF89679325BEC2606F468CF8266B4A /* TelemetryClient-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TelemetryClient-dummy.m"; sourceTree = "<group>"; };
-		785C3E91F74050536C62955493E564F6 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = es.lproj; path = Sane/all/translations/es.lproj; sourceTree = "<group>"; };
+		785C3E91F74050536C62955493E564F6 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = es.lproj; path = Sane/all/translations/es.lproj; sourceTree = "<group>"; };
 		78EFBF573C66E75775FB59FDCEB0060B /* RTSpinKitPlaneAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitPlaneAnimation.m; path = SpinKit/Animations/RTSpinKitPlaneAnimation.m; sourceTree = "<group>"; };
 		7A0041145E800D68D4320987A0664861 /* SYMetadataIPTC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataIPTC.swift; path = SYPictureMetadata/SYMetadataIPTC.swift; sourceTree = "<group>"; };
 		7B5656C0D057CCFDDF8313453002B074 /* ConstraintView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintView+Extensions.swift"; path = "Sources/ConstraintView+Extensions.swift"; sourceTree = "<group>"; };
@@ -498,11 +497,11 @@
 		7EAE253284468F7D297024516481B03A /* SYKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SYKit.modulemap; sourceTree = "<group>"; };
 		7FCD3F624AF954206A3D3436920D66C0 /* DirectoryWatcher-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DirectoryWatcher-umbrella.h"; sourceTree = "<group>"; };
 		813482C0BA2E72D669877033BC6300F9 /* SYOperationQueue-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SYOperationQueue-Info.plist"; sourceTree = "<group>"; };
-		81AE03C207A2BE039FB9E1A2FA3A2857 /* SaneSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = SaneSwift.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		81AE03C207A2BE039FB9E1A2FA3A2857 /* SaneSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = SaneSwift.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		81D031B488A406B71BE0F18DDDEBC132 /* Pods-SaneScanner-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SaneScanner-dummy.m"; sourceTree = "<group>"; };
 		82EEA5E0A7953E46757823FD9FB852A3 /* Sane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Sane.release.xcconfig; sourceTree = "<group>"; };
 		834EC318BC7A342499DB3BED7362B3BF /* SaneSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SaneSwift.release.xcconfig; sourceTree = "<group>"; };
-		84536D3D8733E02BA4BB1928CFD7E088 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ja.lproj; path = Sane/all/translations/ja.lproj; sourceTree = "<group>"; };
+		84536D3D8733E02BA4BB1928CFD7E088 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ja.lproj; path = Sane/all/translations/ja.lproj; sourceTree = "<group>"; };
 		84688CD914C417E03A322513D1C6D48A /* SYScrollMaskView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYScrollMaskView.swift; path = SYKit/Views/SYScrollMaskView.swift; sourceTree = "<group>"; };
 		849300173A26B4DE8744BA2A3A03644B /* SYMetadataExportedKeys.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SYMetadataExportedKeys.m; path = SYPictureMetadata/SYMetadataExportedKeys.m; sourceTree = "<group>"; };
 		84A3280171C8B0E83BF5E47F1FE88124 /* RTSpinKitArcAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitArcAnimation.h; path = SpinKit/Animations/RTSpinKitArcAnimation.h; sourceTree = "<group>"; };
@@ -539,17 +538,17 @@
 		9B2AC465DE4625AD59C3FD383E129C91 /* SaneSwiftExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SaneSwiftExtensions.swift; path = SaneSwift/SaneSwiftExtensions.swift; sourceTree = "<group>"; };
 		9C317BC660898083EBEE96A2FC14545D /* URL+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URL+SYKit.swift"; path = "SYKit/Extensions/URL+SYKit.swift"; sourceTree = "<group>"; };
 		9D85FF070EEDB428CCA54D9F12423FB7 /* RTSpinKitWordPressAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitWordPressAnimation.m; path = SpinKit/Animations/RTSpinKitWordPressAnimation.m; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9DF72A0469FA981A4A694E5BB3710ED9 /* gl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = gl.lproj; path = Sane/all/translations/gl.lproj; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9DF72A0469FA981A4A694E5BB3710ED9 /* gl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = gl.lproj; path = Sane/all/translations/gl.lproj; sourceTree = "<group>"; };
 		9FA8E53F8EA0273B811121E8052EB721 /* UIWindow+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIWindow+SYKit.swift"; path = "SYKit/Extensions/UIWindow+SYKit.swift"; sourceTree = "<group>"; };
-		A00648F7F7E9945D8385490101839674 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = SaneSwift/Localizable/en.lproj; sourceTree = "<group>"; };
-		A02E338421543D7F4AE530ED8E1656E7 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = fr.lproj; path = SaneSwift/Localizable/fr.lproj; sourceTree = "<group>"; };
+		A00648F7F7E9945D8385490101839674 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = SaneSwift/Localizable/en.lproj; sourceTree = "<group>"; };
+		A02E338421543D7F4AE530ED8E1656E7 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fr.lproj; path = SaneSwift/Localizable/fr.lproj; sourceTree = "<group>"; };
 		A4AC993C32A8A32C642BD5233090A4CF /* SYMetadataRaw.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataRaw.swift; path = SYPictureMetadata/SYMetadataRaw.swift; sourceTree = "<group>"; };
 		A52AFF58C59F4144C8B2D30066C66B7C /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Sources/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
 		A8876095B9C3513CBCC7D4592727B724 /* RTSpinKitFadingCircleAltAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitFadingCircleAltAnimation.h; path = SpinKit/Animations/RTSpinKitFadingCircleAltAnimation.h; sourceTree = "<group>"; };
 		A89C3E8F0750490561AB8F6CD08D27B1 /* RTSpinKitCircleAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitCircleAnimation.h; path = SpinKit/Animations/RTSpinKitCircleAnimation.h; sourceTree = "<group>"; };
 		AA92D56D94D56E2F1B05DE3A0239F891 /* SYMetadataGPS.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataGPS.swift; path = SYPictureMetadata/SYMetadataGPS.swift; sourceTree = "<group>"; };
-		AAAD9F415995EA7FC7979979F28039BD /* en-GB.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "en-GB.lproj"; path = "Sane/all/translations/en-GB.lproj"; sourceTree = "<group>"; };
+		AAAD9F415995EA7FC7979979F28039BD /* en-GB.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "en-GB.lproj"; path = "Sane/all/translations/en-GB.lproj"; sourceTree = "<group>"; };
 		AB5569F9F3F7769D98250056EF532797 /* ConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintItem.swift; path = Sources/ConstraintItem.swift; sourceTree = "<group>"; };
 		AD4692ECB6319893B1787AFF8723AA94 /* RTSpinKitPulseAnimation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitPulseAnimation.h; path = SpinKit/Animations/RTSpinKitPulseAnimation.h; sourceTree = "<group>"; };
 		ADCFFD87FF7989437EF2BA65875CF798 /* KeychainAccess-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainAccess-prefix.pch"; sourceTree = "<group>"; };
@@ -557,7 +556,7 @@
 		AE1481B96D55DDFC0B02D96D13222D7A /* SYPictureMetadata-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SYPictureMetadata-prefix.pch"; sourceTree = "<group>"; };
 		AEBEE275D2355157CC284E5133BADDF6 /* SYMetadataCIFF.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataCIFF.swift; path = SYPictureMetadata/SYMetadataCIFF.swift; sourceTree = "<group>"; };
 		AF6922DDDB179EEED839318F0C7AA611 /* SnapKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-prefix.pch"; sourceTree = "<group>"; };
-		B01B3A544B53967AE7399FC6641319F1 /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = de.lproj; path = Sane/all/translations/de.lproj; sourceTree = "<group>"; };
+		B01B3A544B53967AE7399FC6641319F1 /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = de.lproj; path = Sane/all/translations/de.lproj; sourceTree = "<group>"; };
 		B0F772411CE35200C9ECA0CB967C3BD0 /* DirectoryWatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DirectoryWatcher.swift; path = Sources/DirectoryWatcher/DirectoryWatcher.swift; sourceTree = "<group>"; };
 		B12A92D49FEB0242E174B2211FC323F9 /* JSONFormatting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONFormatting.swift; path = Sources/TelemetryClient/JSONFormatting.swift; sourceTree = "<group>"; };
 		B1F5F2EC8A76F6009DF20013DABA2B57 /* ConstraintMakerEditable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerEditable.swift; path = Sources/ConstraintMakerEditable.swift; sourceTree = "<group>"; };
@@ -573,21 +572,21 @@
 		BA3E4BDE2C4CCC241720C1889698C27E /* Keychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Keychain.swift; path = Lib/KeychainAccess/Keychain.swift; sourceTree = "<group>"; };
 		BA988BC93432B71582A8795D3CF04529 /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Sources/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		BE724B1EF5307D3A6AF1D6567862553C /* RTSpinKitChasingDotsAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitChasingDotsAnimation.m; path = SpinKit/Animations/RTSpinKitChasingDotsAnimation.m; sourceTree = "<group>"; };
-		BE7CBC402302477BED0049231B897092 /* sv.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = sv.lproj; path = Sane/all/translations/sv.lproj; sourceTree = "<group>"; };
+		BE7CBC402302477BED0049231B897092 /* sv.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = sv.lproj; path = Sane/all/translations/sv.lproj; sourceTree = "<group>"; };
 		BEEB9F5913F67CD4F00442E6269C01E3 /* SYMetadataPNG.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataPNG.swift; path = SYPictureMetadata/SYMetadataPNG.swift; sourceTree = "<group>"; };
 		BF47C9D0A108971052BDAD4C29B56914 /* Pods-SaneScanner-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SaneScanner-resources.sh"; sourceTree = "<group>"; };
 		BF655FB57079D2918B870872A9B6956E /* UIImage+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+SYKit.swift"; path = "SYKit/Extensions/UIImage+SYKit.swift"; sourceTree = "<group>"; };
 		BFBE48CF9413AFE8040E73F085B55827 /* SYEmailHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SYEmailHelper.debug.xcconfig; sourceTree = "<group>"; };
 		BFF26FDD66B543BF2B30A96383DF0D80 /* SYKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SYKit-umbrella.h"; sourceTree = "<group>"; };
 		C0ED53914544339D5D90967BCFA4CA6F /* CoreGraphics+SYKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "CoreGraphics+SYKit.h"; path = "SYKit/Extensions/CoreGraphics+SYKit.h"; sourceTree = "<group>"; };
-		C196862DE97677857165453B9F1107FD /* bg.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = bg.lproj; path = Sane/all/translations/bg.lproj; sourceTree = "<group>"; };
+		C196862DE97677857165453B9F1107FD /* bg.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = bg.lproj; path = Sane/all/translations/bg.lproj; sourceTree = "<group>"; };
 		C2491CA35ADEAFDB6948D31A8F913055 /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Sources/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
 		C30F09B3D7DAC2E619255AF624F4C392 /* UIView+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+SYKit.swift"; path = "SYKit/Extensions/UIView+SYKit.swift"; sourceTree = "<group>"; };
 		C4194C7E3E8FF010C120EA3666D0DE0C /* SYMetadataMakerApple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataMakerApple.swift; path = SYPictureMetadata/SYMetadataMakerApple.swift; sourceTree = "<group>"; };
 		C4349E8086DCA8B2D01A148DF77999DF /* RTSpinKitThreeBounceAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitThreeBounceAnimation.m; path = SpinKit/Animations/RTSpinKitThreeBounceAnimation.m; sourceTree = "<group>"; };
 		C4B9C3D682BA2BEF735B98D9622A525F /* SYPictureMetadata-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SYPictureMetadata-umbrella.h"; sourceTree = "<group>"; };
 		C733C6F115C0091E0A3AD7E25B616826 /* RTSpinKitFadingCircleAnimation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitFadingCircleAnimation.m; path = SpinKit/Animations/RTSpinKitFadingCircleAnimation.m; sourceTree = "<group>"; };
-		C97FC8F5C8D4161B79CF69C093E173E0 /* uk.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = uk.lproj; path = Sane/all/translations/uk.lproj; sourceTree = "<group>"; };
+		C97FC8F5C8D4161B79CF69C093E173E0 /* uk.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = uk.lproj; path = Sane/all/translations/uk.lproj; sourceTree = "<group>"; };
 		CA482F9638D7D482B2B552F0C7A194CA /* KeychainAccess-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainAccess-umbrella.h"; sourceTree = "<group>"; };
 		CC20DBF1EE4F5170742E2FCE2CEB29A4 /* SpinKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SpinKit-umbrella.h"; sourceTree = "<group>"; };
 		CC231277097EEC46F5704760B89F6D81 /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Sources/ConstraintInsets.swift; sourceTree = "<group>"; };
@@ -595,22 +594,22 @@
 		CE6D7440254AABB2B94DB006B4A40DEE /* SaneTypes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SaneTypes.swift; path = SaneSwift/SaneTypes.swift; sourceTree = "<group>"; };
 		CF1031F2BF4695E4B74885457BC4F7D5 /* SnapKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-umbrella.h"; sourceTree = "<group>"; };
 		CF28F83A79B80A4674A23B05799BE127 /* TelemetryClient-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "TelemetryClient-Info.plist"; sourceTree = "<group>"; };
-		D1F6391775C67364C77E076EE9E68363 /* nl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = nl.lproj; path = Sane/all/translations/nl.lproj; sourceTree = "<group>"; };
+		D1F6391775C67364C77E076EE9E68363 /* nl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = nl.lproj; path = Sane/all/translations/nl.lproj; sourceTree = "<group>"; };
 		D28B36EEBDEE93F7C87D9B8D6A74F9FA /* SaneSwiftC.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SaneSwiftC.m; path = SaneSwift/SaneSwiftC.m; sourceTree = "<group>"; };
-		D28BA0BDEAD446090F068BE14DC726BF /* it.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = it.lproj; path = Sane/all/translations/it.lproj; sourceTree = "<group>"; };
+		D28BA0BDEAD446090F068BE14DC726BF /* it.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = it.lproj; path = Sane/all/translations/it.lproj; sourceTree = "<group>"; };
 		D469EEA737A312120DEDFF4A8ACC934A /* SYMetadataExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SYMetadataExtensions.swift; path = SYPictureMetadata/SYMetadataExtensions.swift; sourceTree = "<group>"; };
 		D71CA65835FB248FA38E953C3CEAD90E /* SYEmailHelper.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SYEmailHelper.modulemap; sourceTree = "<group>"; };
 		D73D315EDDDBAC9C6E98D0A1EE307C79 /* Pods-SaneScanner */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SaneScanner"; path = Pods_SaneScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D876B40DB2D5AA680B5A3329AD2DFF05 /* DeviceOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DeviceOption.swift; path = SaneSwift/DeviceOption.swift; sourceTree = "<group>"; };
 		DC579CE10CEDEECDC720BF31C5E204CA /* ConstraintDirectionalInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsets.swift; path = Sources/ConstraintDirectionalInsets.swift; sourceTree = "<group>"; };
-		DC9A9600152C42F54A026688698EABFD /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = pt.lproj; path = Sane/all/translations/pt.lproj; sourceTree = "<group>"; };
+		DC9A9600152C42F54A026688698EABFD /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pt.lproj; path = Sane/all/translations/pt.lproj; sourceTree = "<group>"; };
 		DDC91C7080887B4A87E8E443A97B19F9 /* SaneSwift-SaneSwift-Translations */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "SaneSwift-SaneSwift-Translations"; path = "SaneSwift-Translations.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE06FEC0F0C060E313B65D63D9C6D125 /* Sane.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sane.swift; path = SaneSwift/Sane.swift; sourceTree = "<group>"; };
 		DE411DD3C2186A14AC4C92133B9B45F1 /* ConstraintDirectionalInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsetTarget.swift; path = Sources/ConstraintDirectionalInsetTarget.swift; sourceTree = "<group>"; };
 		DE4D2DC45BA1010081E4EB1D5C88B904 /* DirectoryWatcher-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DirectoryWatcher-dummy.m"; sourceTree = "<group>"; };
 		DE852C83F534AFF0DBCD9DCB84B7481C /* Debugging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debugging.swift; path = Sources/Debugging.swift; sourceTree = "<group>"; };
 		E0267F4DB0DE4996CCE8BFE13A7BC8C8 /* SYOperationQueue */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SYOperationQueue; path = SYOperationQueue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E093B108322513A47E06C7454E1DC43E /* ca.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ca.lproj; path = Sane/all/translations/ca.lproj; sourceTree = "<group>"; };
+		E093B108322513A47E06C7454E1DC43E /* ca.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ca.lproj; path = Sane/all/translations/ca.lproj; sourceTree = "<group>"; };
 		E32AC9C35422DC56B5465C61E0B7E399 /* RTSpinKitView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitView.h; path = SpinKit/RTSpinKitView.h; sourceTree = "<group>"; };
 		E40E39C6E710C281F72196213E88B94C /* RTSpinKitAnimating.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSpinKitAnimating.h; path = SpinKit/RTSpinKitAnimating.h; sourceTree = "<group>"; };
 		E45C3E722C69908DDB847E1E1EBC96E3 /* RTSpinKitView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSpinKitView.m; path = SpinKit/RTSpinKitView.m; sourceTree = "<group>"; };
@@ -641,7 +640,7 @@
 		FB57B53AB52CCD4E55F8F6A923A1AB32 /* SYOperationQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SYOperationQueue.h; sourceTree = "<group>"; };
 		FB95689D11F07AAF4709D20F1C75941B /* UIAlertController+SYKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIAlertController+SYKit.swift"; path = "SYKit/Extensions/UIAlertController+SYKit.swift"; sourceTree = "<group>"; };
 		FC23656617535275DA7726A210CAB2BB /* SpinKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SpinKit-prefix.pch"; sourceTree = "<group>"; };
-		FC42BA6BAED9BBD035B7BAF399E17A01 /* Sane.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = Sane.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		FC42BA6BAED9BBD035B7BAF399E17A01 /* Sane.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = Sane.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		FC861FEFD4061FFB027310E04377A9C9 /* ConstraintLayoutGuide+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintLayoutGuide+Extensions.swift"; path = "Sources/ConstraintLayoutGuide+Extensions.swift"; sourceTree = "<group>"; };
 		FE19EFFA3DF994D040B9C3019D543D3F /* SaneSwiftC.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SaneSwiftC.h; path = SaneSwift/SaneSwiftC.h; sourceTree = "<group>"; };
 		FE1B4B2767C450B364CE34DD3380B0A9 /* Sane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Sane.debug.xcconfig; sourceTree = "<group>"; };
@@ -765,6 +764,7 @@
 				B0F772411CE35200C9ECA0CB967C3BD0 /* DirectoryWatcher.swift */,
 				E8D2F4AFD0BDA6C303A75C5AD21EBA27 /* Support Files */,
 			);
+			name = DirectoryWatcher;
 			path = DirectoryWatcher;
 			sourceTree = "<group>";
 		};
@@ -798,6 +798,7 @@
 				E57023E6B7B1941346ACD491D8A40645 /* SYMetadataTIFF.swift */,
 				F57FDB4BA683A57650610C7A1827965E /* Support Files */,
 			);
+			name = SYPictureMetadata;
 			path = SYPictureMetadata;
 			sourceTree = "<group>";
 		};
@@ -890,6 +891,7 @@
 				1C21F5280FD66F6E04F95D837971622E /* TelemetryClient.swift */,
 				BDA0C9828F2C5585F2430636CA153880 /* Support Files */,
 			);
+			name = TelemetryClient;
 			path = TelemetryClient;
 			sourceTree = "<group>";
 		};
@@ -959,6 +961,7 @@
 				9D85FF070EEDB428CCA54D9F12423FB7 /* RTSpinKitWordPressAnimation.m */,
 				CBF1EB71180E4E93631065DFDB5873D4 /* Support Files */,
 			);
+			name = SpinKit;
 			path = SpinKit;
 			sourceTree = "<group>";
 		};
@@ -984,6 +987,7 @@
 				90E8E7073B9D67CDB5A032DB0F022EB9 /* EmailHelper.swift */,
 				118D9D89CE6D636D3C2747B04DEB8965 /* Support Files */,
 			);
+			name = SYEmailHelper;
 			path = SYEmailHelper;
 			sourceTree = "<group>";
 		};
@@ -1130,6 +1134,7 @@
 				433A33E72B57C7A38C752F50FDE5AA88 /* UILayoutSupport+Extensions.swift */,
 				5CECD8C489466D5DB5767BFAABFA71D1 /* Support Files */,
 			);
+			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -1140,6 +1145,7 @@
 				13FA0358626316E76690723E59CE1892 /* SYOperationQueue.m */,
 				56CFAD824EFC0A4D3AF973B0BE3D5F8C /* Support Files */,
 			);
+			name = SYOperationQueue;
 			path = SYOperationQueue;
 			sourceTree = "<group>";
 		};
@@ -1253,6 +1259,7 @@
 				BA3E4BDE2C4CCC241720C1889698C27E /* Keychain.swift */,
 				94DA67BBD1D2A939AA5A3F18E14792C5 /* Support Files */,
 			);
+			name = KeychainAccess;
 			path = KeychainAccess;
 			sourceTree = "<group>";
 		};
@@ -1307,6 +1314,7 @@
 				9C317BC660898083EBEE96A2FC14545D /* URL+SYKit.swift */,
 				1A50B8E94272BDC2E9DDAC74170CDE1F /* Support Files */,
 			);
+			name = SYKit;
 			path = SYKit;
 			sourceTree = "<group>";
 		};
@@ -2242,7 +2250,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/KeychainAccess/KeychainAccess-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/KeychainAccess/KeychainAccess-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2279,7 +2287,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SYPictureMetadata/SYPictureMetadata-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SYPictureMetadata/SYPictureMetadata-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2314,7 +2322,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SYEmailHelper/SYEmailHelper-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SYEmailHelper/SYEmailHelper-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2331,6 +2339,68 @@
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		12E068767CF35B513130A458C3536CFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
@@ -2351,7 +2421,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SYPictureMetadata/SYPictureMetadata-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SYPictureMetadata/SYPictureMetadata-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2382,7 +2452,7 @@
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = SaneSwift;
 				INFOPLIST_FILE = "Target Support Files/SaneSwift/ResourceBundle-SaneSwift-Translations-SaneSwift-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				PRODUCT_NAME = "SaneSwift-Translations";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2407,7 +2477,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SYKit/SYKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SYKit/SYKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2437,7 +2507,7 @@
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = SaneSwift;
 				INFOPLIST_FILE = "Target Support Files/SaneSwift/ResourceBundle-SaneSwift-Translations-SaneSwift-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				PRODUCT_NAME = "SaneSwift-Translations";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2462,7 +2532,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DirectoryWatcher/DirectoryWatcher-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DirectoryWatcher/DirectoryWatcher-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2482,6 +2552,72 @@
 			};
 			name = Release;
 		};
+		2FF1CABA2F393C5AC709D7FB7D5C2319 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
 		4B56119B322F54E3F18C0C8E39F8833E /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DE85CDEAC81127CD8D45E18235E7921 /* TelemetryClient.release.xcconfig */;
@@ -2499,7 +2635,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/TelemetryClient/TelemetryClient-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/TelemetryClient/TelemetryClient-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2535,7 +2671,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SaneSwift/SaneSwift-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SaneSwift/SaneSwift-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2556,6 +2692,44 @@
 			};
 			name = Release;
 		};
+		64D14106369918784110B7AFD2997D6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19B14EF09C4625AB8CDC2C3C5F5973BD /* Pods-SaneScanner.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-SaneScanner/Pods-SaneScanner-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SaneScanner/Pods-SaneScanner.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		7C69A812141D28E1AA83D3728C53DEC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48A32A6404C43A1219551A5E8810971E /* TelemetryClient.debug.xcconfig */;
@@ -2573,7 +2747,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/TelemetryClient/TelemetryClient-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/TelemetryClient/TelemetryClient-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2608,7 +2782,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SaneSwift/SaneSwift-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SaneSwift/SaneSwift-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2635,7 +2809,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2663,7 +2837,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SnapKit/SnapKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SnapKit/SnapKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2699,7 +2873,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/KeychainAccess/KeychainAccess-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/KeychainAccess/KeychainAccess-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2718,69 +2892,6 @@
 			};
 			name = Debug;
 		};
-		903A0004D3E6651EFD5D2E16214D101B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Release;
-		};
 		991180E7257EFAE1DCAA33D0605C74DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED9ED3401ABBFA7E1E4EC265DD859B60 /* SYOperationQueue.release.xcconfig */;
@@ -2797,7 +2908,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SYOperationQueue/SYOperationQueue-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SYOperationQueue/SYOperationQueue-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2833,7 +2944,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SpinKit/SpinKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SpinKit/SpinKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2852,7 +2963,7 @@
 			};
 			name = Debug;
 		};
-		9F10358465A0C89C9035D7BD5F36E485 /* Release */ = {
+		9F8446A55527702164B1055BE2B3E26A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F3E41BB777B987ABF7BA758E56216DF /* Pods-SaneScanner.release.xcconfig */;
 			buildSettings = {
@@ -2869,7 +2980,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-SaneScanner/Pods-SaneScanner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2907,7 +3018,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DirectoryWatcher/DirectoryWatcher-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DirectoryWatcher/DirectoryWatcher-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2943,7 +3054,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SnapKit/SnapKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SnapKit/SnapKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2978,7 +3089,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SYOperationQueue/SYOperationQueue-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SYOperationQueue/SYOperationQueue-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3013,7 +3124,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SYKit/SYKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SYKit/SYKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3033,111 +3144,6 @@
 			};
 			name = Release;
 		};
-		B1A8B566F9142F6924709AE3B5A802BD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19B14EF09C4625AB8CDC2C3C5F5973BD /* Pods-SaneScanner.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "Target Support Files/Pods-SaneScanner/Pods-SaneScanner-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SaneScanner/Pods-SaneScanner.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		B4EFE046ACF8F37157F6E322C7FCFC28 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_DEBUG=1",
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Debug;
-		};
 		B6E37899BDDE848D0E5A2BF3B87E6C98 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FE1B4B2767C450B364CE34DD3380B0A9 /* Sane.debug.xcconfig */;
@@ -3145,7 +3151,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3166,7 +3172,7 @@
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = Sane;
 				INFOPLIST_FILE = "Target Support Files/Sane/ResourceBundle-Sane-Translations-Sane-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				PRODUCT_NAME = "Sane-Translations";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -3191,7 +3197,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SYEmailHelper/SYEmailHelper-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SYEmailHelper/SYEmailHelper-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3221,7 +3227,7 @@
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = Sane;
 				INFOPLIST_FILE = "Target Support Files/Sane/ResourceBundle-Sane-Translations-Sane-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				PRODUCT_NAME = "Sane-Translations";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -3246,7 +3252,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SpinKit/SpinKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SpinKit/SpinKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3335,8 +3341,8 @@
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B4EFE046ACF8F37157F6E322C7FCFC28 /* Debug */,
-				903A0004D3E6651EFD5D2E16214D101B /* Release */,
+				2FF1CABA2F393C5AC709D7FB7D5C2319 /* Debug */,
+				12E068767CF35B513130A458C3536CFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3353,8 +3359,8 @@
 		58D7843D763C34F67464CF5BE11016BB /* Build configuration list for PBXNativeTarget "Pods-SaneScanner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B1A8B566F9142F6924709AE3B5A802BD /* Debug */,
-				9F10358465A0C89C9035D7BD5F36E485 /* Release */,
+				64D14106369918784110B7AFD2997D6A /* Debug */,
+				9F8446A55527702164B1055BE2B3E26A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

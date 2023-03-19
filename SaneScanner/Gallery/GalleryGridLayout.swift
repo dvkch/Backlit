@@ -33,11 +33,9 @@ class GalleryGridLayout: UICollectionViewFlowLayout {
         guard let collectionView = self.collectionView else { return .zero }
         
         // determining available size
-        var bounds = collectionView.bounds.inset(by: collectionView.contentInset)
-        
-        if #available(iOS 11.0, *) {
-            bounds = bounds.inset(by: collectionView.safeAreaInsets)
-        }
+        let bounds = collectionView.bounds
+            .inset(by: collectionView.contentInset)
+            .inset(by: collectionView.safeAreaInsets)
         
         let length = scrollDirection == .horizontal ? bounds.height : bounds.width
         
