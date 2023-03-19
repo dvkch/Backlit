@@ -40,6 +40,12 @@ class GalleryNC: UINavigationController {
     // MARK: ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(iOS 13.0, *) {
+            navigationBar.scrollEdgeAppearance = .init()
+            navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
+        }
+        
         addKeyCommand(.close)
         GalleryManager.shared.addDelegate(self)
     }
