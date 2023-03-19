@@ -46,13 +46,13 @@ class PreferencesVC: UIViewController {
         case prefGroup(title: String, keys: [Preferences.Key])
         case about(rows: [AboutRow])
         
-        enum AboutRow {
-            case appVersion, saneVersion, contact
+        enum AboutRow: CaseIterable {
+            case appVersion, saneVersion, contact, acknowledgements
         }
         
         static var allSections: [Section] = {
             let prefs = Preferences.shared.groupedKeys.map { Section.prefGroup(title: $0.0, keys: $0.1) }
-            let about = Section.about(rows: [.appVersion, .saneVersion, .contact])
+            let about = Section.about(rows: AboutRow.allCases)
             return prefs + [about]
         }()
     }
@@ -83,6 +83,7 @@ extension PreferencesVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(OptionCell.self, for: indexPath)
+        cell.accessoryType = .none
         
         switch Section.allSections[indexPath.section] {
         case .prefGroup(_, let keys):
@@ -106,6 +107,12 @@ extension PreferencesVC : UITableViewDataSource {
                     leftText: "PREFERENCES TITLE CONTACT".localized,
                     rightText: PreferencesVC.contactEmailAddress
                 )
+            case .acknowledgements:
+                cell.updateWith(
+                    leftText: "PREFERENCES TITLE ACKNOWLEDGEMENTS".localized,
+                    rightText: ""
+                )
+                cell.accessoryType = .disclosureIndicator
             }
         }
         return cell
@@ -182,6 +189,9 @@ extension PreferencesVC : UITableViewDelegate {
                         }
                         print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
                 }
+                
+            case .acknowledgements:
+                navigationController?.pushViewController(AcknowledgementsVC(), animated: true)
             }
         }
     }

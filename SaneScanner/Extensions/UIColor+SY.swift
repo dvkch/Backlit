@@ -40,6 +40,9 @@ extension UIColor {
     }
     
     static var cellBackground: UIColor {
+        if UIDevice.isCatalyst {
+            return .background
+        }
         if #available(iOS 13.0, *) {
             return .secondarySystemGroupedBackground
         } else {
@@ -48,6 +51,9 @@ extension UIColor {
     }
 
     static var cellBackgroundAlt: UIColor {
+        if UIDevice.isCatalyst {
+            return .background
+        }
         return cellBackground.withAlphaComponent(0.90)
     }
 

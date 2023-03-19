@@ -114,7 +114,7 @@ class OptionCell: TableViewCell {
         let normalTextColor = disabled ? UIColor.disabledText : UIColor.normalText
         let descTextColor   = disabled ? UIColor.disabledText : UIColor.altText
         
-        self.backgroundColor = UIDevice.isCatalyst ? .clear : backgroundColor
+        self.backgroundColor = backgroundColor
 
         titleLabel.textColor = normalTextColor
         valueLabel.textColor = normalTextColor

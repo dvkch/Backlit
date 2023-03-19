@@ -76,6 +76,10 @@
 		97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590122637565800E84198 /* DevicePreviewVC.swift */; };
 		97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D590132637565800E84198 /* DevicePreviewVC.xib */; };
 		97D5902526377CBE00E84198 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5902426377CBE00E84198 /* TooltipView.swift */; };
+		97DEA1AB29C692AA0088AC71 /* Acknowledgement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEA1AA29C692AA0088AC71 /* Acknowledgement.swift */; };
+		97DEA1AD29C74C5F0088AC71 /* AcknowledgementsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEA1AC29C74C5F0088AC71 /* AcknowledgementsVC.swift */; };
+		97DEA1B029C7537C0088AC71 /* AcknowledgementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEA1AE29C7537C0088AC71 /* AcknowledgementCell.swift */; };
+		97DEA1B129C7537C0088AC71 /* AcknowledgementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97DEA1AF29C7537C0088AC71 /* AcknowledgementCell.xib */; };
 		97E8B36C265DB34C00971AF7 /* XCTestCase+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E8B36B265DB34C00971AF7 /* XCTestCase+SY.swift */; };
 		97EAF238220B54A700435DE6 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EAF237220B54A700435DE6 /* PreviewView.swift */; };
 		97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB32B022071F880027CCAE /* PreferencesVC.swift */; };
@@ -211,6 +215,10 @@
 		97D590122637565800E84198 /* DevicePreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePreviewVC.swift; sourceTree = "<group>"; };
 		97D590132637565800E84198 /* DevicePreviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicePreviewVC.xib; sourceTree = "<group>"; };
 		97D5902426377CBE00E84198 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
+		97DEA1AA29C692AA0088AC71 /* Acknowledgement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Acknowledgement.swift; sourceTree = "<group>"; };
+		97DEA1AC29C74C5F0088AC71 /* AcknowledgementsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsVC.swift; sourceTree = "<group>"; };
+		97DEA1AE29C7537C0088AC71 /* AcknowledgementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementCell.swift; sourceTree = "<group>"; };
+		97DEA1AF29C7537C0088AC71 /* AcknowledgementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AcknowledgementCell.xib; sourceTree = "<group>"; };
 		97E8B36B265DB34C00971AF7 /* XCTestCase+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+SY.swift"; sourceTree = "<group>"; };
 		97EAF237220B54A700435DE6 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		97EB32B022071F880027CCAE /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
@@ -339,6 +347,8 @@
 		97CD8489263AC599006DD44B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				97DEA1AE29C7537C0088AC71 /* AcknowledgementCell.swift */,
+				97DEA1AF29C7537C0088AC71 /* AcknowledgementCell.xib */,
 				97D0E03F220607E500AC74D0 /* DeviceCell.swift */,
 				97D0E040220607E500AC74D0 /* DeviceCell.xib */,
 				97EF42242205FF7900D45FC8 /* HostCell.swift */,
@@ -383,6 +393,7 @@
 		97CD848C263AC5DE006DD44B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				97DEA1AA29C692AA0088AC71 /* Acknowledgement.swift */,
 				97FE556E264556D60036357E /* DeviceOptionControllable.swift */,
 				97F2FB54222318D5006BD617 /* GalleryItem.swift */,
 				97D4CE892636EB7800F84150 /* Snapshot.swift */,
@@ -426,6 +437,7 @@
 				97FDF401222C55EE00B71E4C /* DeviceOptionVC.swift */,
 				97EB32B022071F880027CCAE /* PreferencesVC.swift */,
 				97EB32B122071F880027CCAE /* PreferencesVC.xib */,
+				97DEA1AC29C74C5F0088AC71 /* AcknowledgementsVC.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -671,6 +683,7 @@
 				97CC34E42205F48B00304345 /* OptionCell.xib in Resources */,
 				97EB32B322071F880027CCAE /* PreferencesVC.xib in Resources */,
 				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
+				97DEA1B129C7537C0088AC71 /* AcknowledgementCell.xib in Resources */,
 				97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */,
 				971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */,
 			);
@@ -839,9 +852,11 @@
 				97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */,
 				9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */,
 				97EB32B52207BB740027CCAE /* Preferences.swift in Sources */,
+				97DEA1B029C7537C0088AC71 /* AcknowledgementCell.swift in Sources */,
 				97F2FB4B222302DE006BD617 /* GalleryGridVC.swift in Sources */,
 				971584D0222F445200DC46CA /* UIImage+SY.swift in Sources */,
 				9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */,
+				97DEA1AB29C692AA0088AC71 /* Acknowledgement.swift in Sources */,
 				97F2FB5322230A81006BD617 /* GalleryImageVC.swift in Sources */,
 				97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */,
 				97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */,
@@ -868,6 +883,7 @@
 				973066B3220C55000068E8C7 /* GalleryThumbsView.swift in Sources */,
 				97A9FCED264091500027F462 /* CatalystPlugin.swift in Sources */,
 				977712D625CCB376009EC50D /* Context.swift in Sources */,
+				97DEA1AD29C74C5F0088AC71 /* AcknowledgementsVC.swift in Sources */,
 				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,
 				973066C3220C8C740068E8C7 /* FileManager+SY.swift in Sources */,
 				97FDF403222C55EE00B71E4C /* DeviceOptionVC.swift in Sources */,
