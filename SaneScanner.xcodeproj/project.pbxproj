@@ -1029,11 +1029,12 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = "SaneScanner-FileProvider/SaneScanner_FileProvider.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 79RY8264V4;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 79RY8264V4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "SaneScanner-FileProvider/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1047,6 +1048,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.SaneScanner.SaneScanner-FileProvider";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner.SaneScanner-FileProvider AdHoc";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "me.syan.SaneScanner.SaneScanner-FileProvider Development";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1268,7 +1270,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SaneScanner/SaneScanner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 23;
@@ -1286,7 +1288,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner AdHoc";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "me.syan.SaneScanner AppStore";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "me.syan.SaneScanner Development";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "me.syan.SaneScanner DeveloperID";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
