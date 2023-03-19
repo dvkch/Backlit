@@ -147,7 +147,7 @@ extension Sane {
     
     private func stopSane() {
         runOnSaneThread {
-            guard self.saneStarted else { return }
+            guard self.saneStarted && self.openedDevices.isEmpty else { return }
             
             self.clearOpenedDevices()
             self.runningDeviceUpdates = 0
@@ -232,8 +232,6 @@ extension Sane {
                 SaneLogger.i(.sane, "Found \(devices.count) devices")
                 completion(.success(devices))
             })
-            
-            self.stopSane()
         }
     }
     
