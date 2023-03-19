@@ -238,7 +238,7 @@ class DeviceVC: UIViewController {
     
     private func presentReviewPrompt() {
         #if !DEBUG
-        if #available(iOS 14.0, *), let scene = view.window?.windowScene {
+        if #available(iOS 14.0, macCatalyst 14.0, *), let scene = view.window?.windowScene {
             SKStoreReviewController.requestReview(in: scene)
         }
         else {

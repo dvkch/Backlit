@@ -23,7 +23,7 @@ class DevicesVC: UIViewController {
             navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
         }
 
-        // prevent collapsing of nnavigationBar large title when scrolling
+        // prevent collapsing of navigationBar large title when scrolling
         view.addSubview(UIView())
         
         if UIDevice.isCatalyst {

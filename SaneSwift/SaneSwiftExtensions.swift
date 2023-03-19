@@ -147,7 +147,7 @@ internal extension Data {
         let indexes = stride(from: 0, to: unpackedData.count, by: 3)
 
         unpackedData.withUnsafeMutableBytes { (content: UnsafeMutableRawBufferPointer) -> Void in
-            var bytes = content.assumingMemoryBound(to: UInt8.self).baseAddress!
+            let bytes = content.assumingMemoryBound(to: UInt8.self).baseAddress!
             var r: UInt8 = 0
             var g: UInt8 = 0
             var b: UInt8 = 0
