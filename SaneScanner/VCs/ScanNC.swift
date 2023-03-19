@@ -62,7 +62,7 @@ class ScanNC: UINavigationController {
         
         if #available(iOS 13.0, *) {
             let appearance = UIToolbarAppearance()
-            appearance.backgroundColor = showingScanVC ? .tint : .cellBackground
+            appearance.backgroundColor = showingScanVC ? .tint : .backgroundAlt
             toolbar.standardAppearance = appearance
             toolbar.compactAppearance = appearance
             if #available(iOS 15.0, *) {
@@ -71,7 +71,7 @@ class ScanNC: UINavigationController {
             }
         }
         else {
-            toolbar.backgroundColor = showingScanVC ? .tint : .cellBackground
+            toolbar.backgroundColor = showingScanVC ? .tint : .backgroundAlt
         }
     }
     

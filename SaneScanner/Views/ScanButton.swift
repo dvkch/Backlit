@@ -91,7 +91,7 @@ class ScanButton : UIButton {
         setContentCompressionResistancePriority(.required, for: .vertical)
         contentEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
 
-        var background = kind == .preview ? UIColor.cellBackground : .tint
+        var background = kind == .preview ? UIColor.backgroundAlt : UIColor.tint
         if #available(iOS 13.0, *) {
             background = background.resolvedColor(with: traitCollection)
         }
