@@ -17,6 +17,8 @@ FOUNDATION_EXPORT double SaneDoubleFromFixed(SANE_Word value);
 
 FOUNDATION_EXPORT NSOperatingSystemVersion SaneVersionFromInt(SANE_Int version);
 
+FOUNDATION_EXPORT void unpackPixels(UInt8* _Nonnull r, UInt8* _Nonnull g, UInt8* _Nonnull b);
+
 typedef NS_ENUM(NSUInteger, SaneValueScanMode) {
     SaneValueScanModeColor,
     SaneValueScanModeColorLineart,

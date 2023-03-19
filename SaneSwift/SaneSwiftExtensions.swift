@@ -139,55 +139,29 @@ internal extension String {
     }
 }
 
-internal extension UInt8 {
-    var bits: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8) {
-        return (
-            self & 0b10000000 >> 7,
-            self & 0b01000000 >> 6,
-            self & 0b00100000 >> 5,
-            self & 0b00010000 >> 4,
-            self & 0b00001000 >> 3,
-            self & 0b00000100 >> 2,
-            self & 0b00000010 >> 1,
-            self & 0b00000001 >> 0
-        )
-    }
-
-    static func fromBits(b7: UInt8, b6: UInt8, b5: UInt8, b4: UInt8, b3: UInt8, b2: UInt8, b1: UInt8, b0: UInt8) -> UInt8 {
-        // need to split to make Swift compile the expression...
-        var value: UInt8 = (b0 << 0) + (b1 << 1) + (b2 << 2) + (b3 << 3)
-        value +=           (b4 << 4) + (b5 << 5) + (b6 << 6) + (b7 << 7)
-        return value
-    }
-}
-
-internal func unpack1BitPixels(r: UInt8, g: UInt8, b: UInt8) -> (byte0: UInt8, byte1: UInt8, byte2: UInt8) {
-    let rBits = r.bits
-    let gBits = g.bits
-    let bBits = b.bits
-    return (
-        byte0: .fromBits(b7: rBits.0, b6: gBits.0, b5: bBits.0, b4: rBits.1, b3: gBits.1, b2: bBits.1, b1: rBits.2, b0: gBits.2),
-        byte1: .fromBits(b7: bBits.2, b6: rBits.3, b5: gBits.3, b4: bBits.3, b3: rBits.4, b2: gBits.4, b1: bBits.4, b0: rBits.5),
-        byte2: .fromBits(b7: gBits.5, b6: bBits.5, b5: rBits.6, b4: gBits.6, b3: bBits.6, b2: rBits.7, b1: gBits.7, b0: bBits.7)
-    )
-}
-
 internal extension Data {
     // TODO: make it work with 3 pass
     var unpackingSingleBitColorPixels: Data {
-        // super slow in Debug, works quite nicely in Release (0.3s for 28MB on M1 Pro)
-        let d = Date()
+        // bit slow in Debug, works quite nicely in Release (6.5s for 2.5GB on M1 Pro)
         var unpackedData = self + Data(repeating: 0, count: 3 - (count % 3))
-        for i in stride(from: 0, to: unpackedData.count, by: 3) {
-            var r = unpackedData[i]
-            var g = unpackedData[i + 1]
-            var b = unpackedData[i + 2]
-            unpackPixels(&r, &g, &b)
-            unpackedData[i    ] = r
-            unpackedData[i + 1] = g
-            unpackedData[i + 2] = b
+        let indexes = stride(from: 0, to: unpackedData.count, by: 3)
+
+        unpackedData.withUnsafeMutableBytes { (content: UnsafeMutableRawBufferPointer) -> Void in
+            var bytes = content.assumingMemoryBound(to: UInt8.self).baseAddress!
+            var r: UInt8 = 0
+            var g: UInt8 = 0
+            var b: UInt8 = 0
+            for i in indexes {
+                r = bytes.advanced(by: i).pointee
+                g = bytes.advanced(by: i + 1).pointee
+                b = bytes.advanced(by: i + 2).pointee
+                unpackPixels(&r, &g, &b)
+                bytes.advanced(by: i).pointee = r
+                bytes.advanced(by: i + 1).pointee = g
+                bytes.advanced(by: i + 2).pointee = b
+            }
         }
-        print("\(Date().timeIntervalSince(d))s for \(unpackedData.count) bytes")
+
         return unpackedData
     }
 }
