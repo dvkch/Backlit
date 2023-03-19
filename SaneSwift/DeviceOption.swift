@@ -221,7 +221,8 @@ public class DeviceOptionBool: DeviceOptionTyped<Bool> {
         case .auto: return capabilities.contains(.automatic) ? .auto : .value(self.value)
         case .on:   return .value(true)
         case .off:  return .value(false)
-        default:    fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
+        default:
+            fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
         }
     }
 }
@@ -282,8 +283,8 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
     public override var bestPreviewValue: DeviceOptionNewValue<Int> {
         guard let value = SaneStandardOption(saneIdentifier: identifier)?.bestPreviewValue else { return .none }
         switch value {
-        case .auto:
-            return capabilities.contains(.automatic) ? .auto : .value(self.value)
+        case .auto(let fallback):
+            return capabilities.contains(.automatic) ? .auto : .value(fallback?.one ?? self.value)
 
         case .min, .max:
             switch constraint {
@@ -296,7 +297,7 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
                 return .none
             }
 
-        case .value(let specificValue):
+        case .value(.one(let specificValue)):
             switch constraint {
             case .range(let min, let max):
                 return .value(specificValue.clamped(min: min, max: max))
@@ -369,8 +370,8 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
     public override var bestPreviewValue: DeviceOptionNewValue<Double> {
         guard let value = SaneStandardOption(saneIdentifier: identifier)?.bestPreviewValue else { return .none }
         switch value {
-        case .auto:
-            return capabilities.contains(.automatic) ? .auto : .value(self.value)
+        case .auto(let fallback):
+            return capabilities.contains(.automatic) ? .auto : .value(fallback?.one.map(Double.init) ?? self.value)
 
         case .min, .max:
             switch constraint {
@@ -383,7 +384,7 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
                 return .none
             }
             
-        case .value(let specificValue):
+        case .value(.one(let specificValue)):
             switch constraint {
             case .range(let min, let max):
                 return .value(Double(specificValue).clamped(min: min, max: max))
@@ -471,10 +472,12 @@ public class DeviceOptionString: DeviceOptionTyped<String> {
 
     public override var bestPreviewValue: DeviceOptionNewValue<String> {
         guard let value = SaneStandardOption(saneIdentifier: identifier)?.bestPreviewValue else { return .none }
-        if value == .auto {
-            return capabilities.contains(.automatic) ? .auto : .value(self.value)
+        switch value {
+        case .auto(let fallback):
+            return capabilities.contains(.automatic) ? .auto : .value(fallback?.other ?? self.value)
+        default:
+            fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
         }
-        fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
     }
 }
 

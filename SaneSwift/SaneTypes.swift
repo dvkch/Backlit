@@ -126,7 +126,7 @@ public struct SaneInfo: OptionSet {
 public enum SaneStandardOption: CaseIterable {
     case preview, resolution, resolutionX, resolutionY, colorMode, areaTopLeftX, areaTopLeftY, areaBottomRightX, areaBottomRightY, imageIntensity, source
     
-    var saneIdentifier: String {
+    internal var saneIdentifier: String {
         switch self {
         case .preview:          return SANE_NAME_PREVIEW
         case .resolution:       return SANE_NAME_SCAN_RESOLUTION
@@ -142,24 +142,27 @@ public enum SaneStandardOption: CaseIterable {
         }
     }
     
-    init?(saneIdentifier: String?) {
+    internal init?(saneIdentifier: String?) {
         guard let option = SaneStandardOption.allCases.first(where: { $0.saneIdentifier == saneIdentifier }) else { return nil }
         self = option
     }
     
-    static var cropOptions: [SaneStandardOption] {
+    public static var cropOptions: [SaneStandardOption] {
         return [.areaTopLeftX, .areaTopLeftY, .areaBottomRightX, .areaBottomRightY]
     }
     
-    public enum PreviewValue: Equatable {
-        case auto, on, off, min, max, value(Int), none
+    internal enum PreviewValue: Equatable {
+        case auto(fallback: Either<Int, String>?), on, off, min, max, value(Either<Int, String>), none
     }
     
-    var bestPreviewValue: PreviewValue {
+    internal var bestPreviewValue: PreviewValue {
         switch self {
         case .preview:                                  return .on
-        case .colorMode, .imageIntensity:               return .auto
-        case .resolution, .resolutionX, .resolutionY:   return .value(150)
+        case .colorMode:
+            // some backends don't have auto color mode, we provide a fallback value
+            return .auto(fallback: .other(NSStringFromSaneValueScanMode(SaneValueScanMode.color)!))
+        case .imageIntensity:                           return .auto(fallback: nil)
+        case .resolution, .resolutionX, .resolutionY:   return .value(.one(150))
         case .areaTopLeftX, .areaTopLeftY:              return .min
         case .areaBottomRightX, .areaBottomRightY:      return .max
         case .source:                                   return .none
@@ -187,6 +190,26 @@ public enum ScanProgress: Equatable {
     var incompletePreview: UIImage? {
         if case .scanning(_, _, let image, _) = self {
             return image
+        }
+        return nil
+    }
+}
+
+// MARK: Helpers
+internal enum Either<T: Equatable, U: Equatable>: Equatable {
+    case one(T)
+    case other(U)
+    
+    var one: T? {
+        if case .one(let value) = self {
+            return value
+        }
+        return nil
+    }
+    
+    var other: U? {
+        if case .other(let value) = self {
+            return value
         }
         return nil
     }

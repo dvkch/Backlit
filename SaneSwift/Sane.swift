@@ -279,7 +279,7 @@ extension Sane {
     public func closeDevice(_ device: Device) {
         SaneLogger.i(.sane, "Closing device \(device.model)")
         device.currentOperation = nil
-        device.updatePreviewImage(nil, fallbackToExisting: false)
+        device.updatePreviewImage(nil, afterOperation: .preview, fallbackToExisting: false)
 
         runOnSaneThread {
             guard let handle = self.obtainDeviceHandle(device: device) else {
@@ -619,9 +619,6 @@ extension Sane {
             }
             SaneLogger.i(.sane, "Preview: restored options")
 
-            SaneLogger.i(.sane, "Preview: updating preview image")
-            device.updatePreviewImage(result.value, fallbackToExisting: false)
-
             SaneLogger.i(.sane, "Preview: finished")
             Sane.runOn(mainThread: startedOnMainThread) { completion(result!) }
         }
@@ -713,7 +710,7 @@ extension Sane {
             let scans = results.flattened()
             Sane.runOn(mainThread: startedOnMainThread) {
                 if let lastScan = (try? scans.get())?.last {
-                    device.updatePreviewImage(lastScan, fallbackToExisting: true)
+                    device.updatePreviewImage(lastScan, afterOperation: operation, fallbackToExisting: operation == .scan)
                 }
                 fullCompletion(scans)
             }
