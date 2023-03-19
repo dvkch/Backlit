@@ -139,6 +139,59 @@ internal extension String {
     }
 }
 
+internal extension UInt8 {
+    var bits: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8) {
+        return (
+            self & 0b10000000 >> 7,
+            self & 0b01000000 >> 6,
+            self & 0b00100000 >> 5,
+            self & 0b00010000 >> 4,
+            self & 0b00001000 >> 3,
+            self & 0b00000100 >> 2,
+            self & 0b00000010 >> 1,
+            self & 0b00000001 >> 0
+        )
+    }
+
+    static func fromBits(b7: UInt8, b6: UInt8, b5: UInt8, b4: UInt8, b3: UInt8, b2: UInt8, b1: UInt8, b0: UInt8) -> UInt8 {
+        // need to split to make Swift compile the expression...
+        var value: UInt8 = (b0 << 0) + (b1 << 1) + (b2 << 2) + (b3 << 3)
+        value +=           (b4 << 4) + (b5 << 5) + (b6 << 6) + (b7 << 7)
+        return value
+    }
+}
+
+internal func unpack1BitPixels(r: UInt8, g: UInt8, b: UInt8) -> (byte0: UInt8, byte1: UInt8, byte2: UInt8) {
+    let rBits = r.bits
+    let gBits = g.bits
+    let bBits = b.bits
+    return (
+        byte0: .fromBits(b7: rBits.0, b6: gBits.0, b5: bBits.0, b4: rBits.1, b3: gBits.1, b2: bBits.1, b1: rBits.2, b0: gBits.2),
+        byte1: .fromBits(b7: bBits.2, b6: rBits.3, b5: gBits.3, b4: bBits.3, b3: rBits.4, b2: gBits.4, b1: bBits.4, b0: rBits.5),
+        byte2: .fromBits(b7: gBits.5, b6: bBits.5, b5: rBits.6, b4: gBits.6, b3: bBits.6, b2: rBits.7, b1: gBits.7, b0: bBits.7)
+    )
+}
+
+internal extension Data {
+    // TODO: make it work with 3 pass
+    var unpackingSingleBitColorPixels: Data {
+        // super slow in Debug, works quite nicely in Release (0.3s for 28MB on M1 Pro)
+        let d = Date()
+        var unpackedData = self + Data(repeating: 0, count: 3 - (count % 3))
+        for i in stride(from: 0, to: unpackedData.count, by: 3) {
+            var r = unpackedData[i]
+            var g = unpackedData[i + 1]
+            var b = unpackedData[i + 2]
+            unpackPixels(&r, &g, &b)
+            unpackedData[i    ] = r
+            unpackedData[i + 1] = g
+            unpackedData[i + 2] = b
+        }
+        print("\(Date().timeIntervalSince(d))s for \(unpackedData.count) bytes")
+        return unpackedData
+    }
+}
+
 internal extension UIImage {
     // Nota: if the source image is 1 bit Grayscale (monochrome), the method `pngData()` on the output UIImage will
     // produce an invalid file (at least on macOS 13.2.1), but using CGImageDestinationCreateWithData with kUTTypePNG
@@ -146,23 +199,28 @@ internal extension UIImage {
     static func sy_imageFromSane(data: Data, parameters: ScanParameters) throws -> UIImage {
         // TODO: release pool necessary ?
         return try autoreleasepool {
-            guard let provider = CGDataProvider(data: data as CFData) else {
-                throw SaneError.noImageData
-            }
-
             let colorSpace: CGColorSpace
+            let shouldUnpackPixels: Bool
 
             switch parameters.currentlyAcquiredFrame {
             case SANE_FRAME_RGB:
                 colorSpace = CGColorSpaceCreateDeviceRGB()
+                shouldUnpackPixels = parameters.depth == 1
             case SANE_FRAME_GRAY:
                 colorSpace = CGColorSpaceCreateDeviceGray()
+                shouldUnpackPixels = false
             case SANE_FRAME_RED, SANE_FRAME_GREEN, SANE_FRAME_BLUE:
                 colorSpace = CGColorSpaceCreateDeviceRGB()
+                shouldUnpackPixels = parameters.depth == 1
             default:
                 throw SaneError.unsupportedChannels
             }
-            
+
+            let imageData = shouldUnpackPixels ? data.unpackingSingleBitColorPixels : data
+            guard let provider = CGDataProvider(data: imageData as CFData) else {
+                throw SaneError.noImageData
+            }
+
             var bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
             if parameters.depth >= 16 {
                 bitmapInfo.insert(CGBitmapInfo(rawValue: CGImageByteOrderInfo.order16Little.rawValue))
