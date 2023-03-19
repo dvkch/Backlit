@@ -70,7 +70,6 @@ extension UIImage {
     }
     
     func scanData(format: ImageFormat, metadata: [String: Any]) -> Data? {
-        // TODO: check for leaks
         guard let cgImage else {
             return format.systemEncode(image: self, metadata: metadata)
         }

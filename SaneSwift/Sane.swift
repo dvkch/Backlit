@@ -689,6 +689,7 @@ extension Sane {
                     scannedDocsCount: results.filter { $0.value?.parameters.acquiringLastFrame == true }.count,
                     previousFrames: previousFrames
                 ) { p in
+                    device.currentOperation?.progress = p
                     Sane.runOn(mainThread: true) { progress?(p) }
                 }
                 results.append(result)
@@ -769,10 +770,10 @@ extension Sane {
         }
         var bufferActualSize: SANE_Int = 0
         
-        // generate incomplete image preview every 5%
-        // LATER: compute that value dynamically depending on how long it took to generate the previous incomplete image
+        // generate incomplete image preview every 2%; since it's basically free in most cases (CGImage
+        // uses the raw data and doesn't need any specific drawing) this shouldn't be a problem
         var progressForLastIncompletePreview: Float = 0
-        let incompletePreviewStep: Float = 0.05
+        let incompletePreviewStep: Float = 0.02
         
         var acquiredBytesCount = 0
         while !stopScanOperation {
@@ -795,9 +796,6 @@ extension Sane {
                 data.append(buffer, count: Int(bufferActualSize))
             }
             else {
-                // LATER: support 1-bit color. image format dictates they will be interleaved (8 bits of red, then 8 bits
-                // of green, then 8 bits of blue, representing conceptually 8 pixels of 1 bit per color). CGImage does handle this
-                // properly, if we were able to construct that kind of image
                 let bytesPerPixel = max(1, parameters.depth / 8)
                 SaneLogger.d(.sane, "> Interlacing image data")
                 (0..<(Int(bufferActualSize) / bytesPerPixel)).forEach { pixelIndex in
@@ -811,39 +809,22 @@ extension Sane {
             // handle progress reporting
             let percentScanned = Float(acquiredBytesCount) / Float(parameters.fileSize)
             let globalPercentScanned = (percentScanned + Float(previousFrames.count)) / Float(parameters.expectedFramesCount)
-            var imagePreviewData: Data? = nil
-            var reportProgress = true
 
-            if generateIntermediateImages {
-                if percentScanned > progressForLastIncompletePreview + incompletePreviewStep {
-                    progressForLastIncompletePreview = percentScanned
-                    // copy the data before passing it to the main thread, or it might return size == 0 if it
-                    // is being written to in the sane thread at the same time
-                    imagePreviewData = Data(data)
-                }
-                else {
-                    reportProgress = false
-                }
+            if generateIntermediateImages && percentScanned > progressForLastIncompletePreview + incompletePreviewStep {
+                progressForLastIncompletePreview = percentScanned
+                SaneLogger.d(.sane, "> Generating preview: \(percentScanned)")
+                let previewImage = try? UIImage.sy_imageFromIncompleteSane(data: data, parameters: parameters)
+                progress(.scanning(
+                    progress: globalPercentScanned, finishedDocs: scannedDocsCount,
+                    incompletePreview: previewImage, parameters: parameters
+                ))
             }
-            if reportProgress {
-                // image creation needs to be done on main thread
-                Sane.runOn(mainThread: true) {
-                    if imagePreviewData != nil {
-                        SaneLogger.d(.sane, "> Generating preview: \(percentScanned)")
-                    }
-                    else {
-                        SaneLogger.d(.sane, "> Reporting progress: \(percentScanned)")
-                    }
-                    let incompleteImage = imagePreviewData.map {
-                        try? UIImage.sy_imageFromIncompleteSane(data: $0, parameters: parameters)
-                    } ?? nil
-                    let p: ScanProgress = .scanning(
-                        progress: globalPercentScanned, finishedDocs: scannedDocsCount,
-                        incompletePreview: incompleteImage, parameters: parameters
-                    )
-                    device.currentOperation?.progress = p
-                    progress(p)
-                }
+            else if !generateIntermediateImages {
+                SaneLogger.d(.sane, "> Reporting progress: \(percentScanned)")
+                progress(.scanning(
+                    progress: globalPercentScanned, finishedDocs: scannedDocsCount,
+                    incompletePreview: nil, parameters: parameters
+                ))
             }
         }
 

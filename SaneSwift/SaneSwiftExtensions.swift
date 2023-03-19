@@ -171,7 +171,9 @@ internal extension UIImage {
     // produce an invalid file (at least on macOS 13.2.1), but using CGImageDestinationCreateWithData with kUTTypePNG
     // will produce a valid PNG file.
     static func sy_imageFromSane(data: Data, parameters: ScanParameters) throws -> UIImage {
-        // TODO: release pool necessary ?
+        // autorelease pool needed. during preview a lot of intermediary images are created, if we were
+        // to remove the autorelease pool they wouldn't be released until the preview if finished. tested
+        // up until iOS 16.3 using Instruments
         return try autoreleasepool {
             let colorSpace: CGColorSpace
             let shouldUnpackPixels: Bool
@@ -228,8 +230,8 @@ internal extension UIImage {
 }
 
 /*
-// LATER: work on big images
-// to stream lower resolutions :
+// LATER: work on big images by using a file backed buffer and
+// stream lower resolutions :
 // - https://twitter.com/PDucks32/status/1417553099825238028
 // - https://developer.apple.com/documentation/uikit/uiimage/building_high-performance_lists_and_collection_views
 + (void)sy_convertTempImage
