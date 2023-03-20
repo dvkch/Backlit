@@ -178,6 +178,7 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/LRUCache/LRUCache.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYEmailHelper/SYEmailHelper.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYOperationQueue/SYOperationQueue.framework"
@@ -189,6 +190,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/LRUCache/LRUCache.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYEmailHelper/SYEmailHelper.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYOperationQueue/SYOperationQueue.framework"

@@ -1,6 +1,7 @@
 PODS:
   - DirectoryWatcher (2.7.3)
   - KeychainAccess (4.2.2)
+  - LRUCache (1.0.2)
   - Sane (1.2.1)
   - SaneSwift (1.0.0):
     - Sane
@@ -16,6 +17,7 @@ PODS:
 DEPENDENCIES:
   - DirectoryWatcher
   - KeychainAccess
+  - LRUCache
   - Sane (from `./`)
   - SaneSwift (from `./`)
   - SnapKit
@@ -30,6 +32,7 @@ SPEC REPOS:
   trunk:
     - DirectoryWatcher
     - KeychainAccess
+    - LRUCache
     - SnapKit
     - SpinKit
     - SYEmailHelper
@@ -53,6 +56,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   DirectoryWatcher: 43e1ae45c7539d3deeea9db4384ab158bae368e3
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  LRUCache: cab54a0b22dc24539723b7ccb578c638d3a91326
   Sane: 4bea94fbffdabc505cf144fa62df7cc59a791ec5
   SaneSwift: 00a28c6807d816790f274c3fcc5c7019fd05a549
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
@@ -63,6 +67,6 @@ SPEC CHECKSUMS:
   SYPictureMetadata: 2cf07fc671e7ce547aca9eeaf34462dc160411c1
   TelemetryClient: be6b374b0d3843139956426f0ef0725c042d8fa0
 
-PODFILE CHECKSUM: bb56c0cc01b97ca3e2dc6d9d6ea3a5b8f6c47c74
+PODFILE CHECKSUM: 778a4dcaa20a3945467a193321cf83e2b2763703
 
 COCOAPODS: 1.12.0

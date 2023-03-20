@@ -9,6 +9,7 @@ target :'SaneScanner' do
     pod 'SaneSwift', :path => "./", :inhibit_warnings => false
     pod 'DirectoryWatcher'
     pod 'KeychainAccess'
+    pod 'LRUCache'
     pod 'SnapKit'
     pod 'SpinKit'
     pod 'SYEmailHelper'
