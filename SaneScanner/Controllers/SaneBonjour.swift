@@ -20,6 +20,11 @@ class SaneBonjour: NSObject {
     private override init() {
         super.init()
         browser.delegate = self
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(start),
+            name: UIApplication.didBecomeActiveNotification, object: nil
+        )
     }
     
     // MARK: Properties
@@ -44,7 +49,7 @@ class SaneBonjour: NSObject {
     }
     
     // MARK: Actions
-    func start() {
+    @objc func start() {
         guard !isRunning else { return }
         isRunning = true
         browser.searchForServices(ofType: "_sane-port._tcp", inDomain: "")
