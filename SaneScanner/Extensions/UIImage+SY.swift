@@ -36,6 +36,13 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
+    var estimatedMemoryFootprint: Int {
+        if let data = cgImage?.dataProvider?.data {
+            return CFDataGetLength(data)
+        }
+        return Int(size.width) * Int(size.height) * (cgImage?.bitsPerPixel ?? 32) / 8
+    }
+    
     enum ImageFormat {
         case png
         case jpeg(quality: CGFloat)

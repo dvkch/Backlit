@@ -12,6 +12,7 @@ import SYOperationQueue
 import DirectoryWatcher
 import SYPictureMetadata
 import SaneSwift
+import LRUCache
 
 protocol GalleryManagerDelegate: NSObjectProtocol {
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem])
@@ -60,8 +61,6 @@ class GalleryManager: NSObject {
                 self.refreshImageList()
             }
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
     
     // MARK: Private vars
@@ -80,15 +79,8 @@ class GalleryManager: NSObject {
     private var thumbsQueue = SYOperationQueue()
     
     // MARK: Caches
-    // LATER: replace with https://github.com/nicklockwood/LRUCache when dropping iOS 10 support
-    private var thumbnailCache = NSCache<NSURL, UIImage>()
-    private var imageSizeCache = NSCache<NSURL, NSValue>()
-    
-    @objc private func receivedMemoryWarning() {
-        // recreate instead of clearing, because after a memory warning an NSCache instance could be broken
-        thumbnailCache = NSCache<NSURL, UIImage>()
-        imageSizeCache = NSCache<NSURL, NSValue>()
-    }
+    private var thumbnailCache = LRUCache<URL, UIImage>(totalCostLimit: 50_000_000, countLimit: 100)
+    private var imageSizeCache = LRUCache<URL, CGSize>()
     
     // MARK: Delegates
     private class WeakDelegate {
@@ -167,8 +159,6 @@ class GalleryManager: NSObject {
             )
             guard let imageData else { throw SaneError.cannotGenerateImage }
             
-            // TODO: add placeholder image and save file in the background
-            
             try imageData.write(to: fileURL, options: .atomicWrite)
             imageURLs.insert(fileURL.standardizedFileURL, at: 0)
             
@@ -225,8 +215,8 @@ class GalleryManager: NSObject {
             .map { galleryItemForImage(at: $0) }
 
         removedItems.forEach { (item) in
-            thumbnailCache.removeObject(forKey: item.url as NSURL)
-            imageSizeCache.removeObject(forKey: item.url as NSURL)
+            thumbnailCache.removeValue(forKey: item.url)
+            imageSizeCache.removeValue(forKey: item.url)
         }
         
         let items = self.items
@@ -238,12 +228,15 @@ class GalleryManager: NSObject {
     // MARK: Items properties
     func thumbnail(for item: GalleryItem?) -> UIImage? {
         guard let item = item else { return nil }
-        
-        let image = thumbnailCache.object(forKey: item.thumbnailUrl as NSURL) ?? UIImage(contentsOfFile: item.thumbnailUrl.path)
-        if image == nil {
-            generateThumbAsync(for: item, fullImage: nil, tellDelegates: true)
+        if let cached = thumbnailCache.value(forKey: item.thumbnailUrl) {
+            return cached
         }
-        return image
+        if let fromFile = UIImage(contentsOfFile: item.thumbnailUrl.path) {
+            thumbnailCache.setValue(fromFile, forKey: item.thumbnailUrl, cost: fromFile.estimatedMemoryFootprint)
+            return fromFile
+        }
+        generateThumbAsync(for: item, fullImage: nil, tellDelegates: true)
+        return nil
     }
     
     func dateString(for item: GalleryItem) -> String? {
@@ -256,13 +249,13 @@ class GalleryManager: NSObject {
     }
     
     func imageSize(for item: GalleryItem) -> CGSize? {
-        if let size = self.imageSizeCache.object(forKey: item.url as NSURL)?.cgSizeValue {
+        if let size = self.imageSizeCache.value(forKey: item.url) {
             return size
         }
         
         guard let imageSize = UIImage.sizeOfImage(at: item.url) else { return nil }
 
-        imageSizeCache.setObject(NSValue(cgSize: imageSize), forKey: item.url as NSURL)
+        imageSizeCache.setValue(imageSize, forKey: item.url)
         return imageSize
     }
     
@@ -293,7 +286,7 @@ class GalleryManager: NSObject {
                 .jpegData(compressionQuality: 0.6)?
                 .write(to: item.thumbnailUrl, options: .atomicWrite)
             
-            self.thumbnailCache.setObject(thumb!, forKey: item.url as NSURL)
+            self.thumbnailCache.setValue(thumb, forKey: item.url, cost: thumb!.estimatedMemoryFootprint)
             
             dequeue()
             
