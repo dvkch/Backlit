@@ -644,9 +644,15 @@ extension Sane {
             progress?(.warmingUp)
         }
         
-        let fullCompletion = { (scans: SaneResult<[ScanImage]>) in
+        let fullCompletion = { (scans: [ScanImage], error: SaneError?) in
             device.currentOperation = nil
-            completion(scans)
+
+            if let error = error {
+                completion(.failure(error))
+            }
+            else {
+                completion(.success(scans))
+            }
         }
         
         runOnSaneThread {
@@ -663,57 +669,66 @@ extension Sane {
                 crop = device.maxCropArea
             }
             
-            // LATER: this is absolutely not garanteed by SANE, might only work on the test device
-            let currentSource = (device.standardOption(for: .source) as? DeviceOptionTyped<String>)?.value
-            let usingFeeder = currentSource == "Automatic Document Feeder"
+            var lastError: SaneError?
+            var scans = [ScanImage]()
 
-            var results = [SaneResult<ScanImage>]()
-            let previousSaneStatus = { results.last?.error?.saneStatus ?? SANE_STATUS_GOOD }
-            let scannedLastImage = {
-                let errorOrOutOfDocs = previousSaneStatus() != SANE_STATUS_GOOD
-                let lastImageAcquiredInFull = results.last?.value?.parameters.acquiringLastFrame == true
-                let acquiredSingleImageInFull = (!usingFeeder || operation == .preview) && lastImageAcquiredInFull
-                // some drivers (e.g. epsonscan2) report Out of documents even when "Flatbed" source is selected.
-                // some do not (e.g. test), so we resort to assuming if we're using a document feeder or not and check if the
-                // acquired frame is complete or not
-                return errorOrOutOfDocs || acquiredSingleImageInFull
+            // closure to determine if we should continue scanning or not, evaluated after each scan
+            let continueScanning = {
+                // scanning encountered an error, or was cancelled, or is out of documents, let's stop
+                let previousSaneStatus = lastError?.saneStatus ?? SANE_STATUS_GOOD
+                if previousSaneStatus != SANE_STATUS_GOOD {
+                    return false
+                }
+
+                // some drivers (e.g. epsonscan2) report Out of documents even when "Flatbed" source is selected,
+                // some do not (e.g. test), so we resort to doing a single scan if the ADF doesn't seem selected
+                let expectsMultipleDocuments = device.isUsingADFSource && operation != .preview
+                let lastImageAcquiredInFull = scans.last?.parameters.acquiringLastFrame == true
+                return !lastImageAcquiredInFull || expectsMultipleDocuments
             }
 
-            while results.last?.error == nil && !scannedLastImage() {
-                let lastFullFrameIndex = results.lastIndex(where: { (try? $0.get())?.1.acquiringLastFrame == true }) ?? -1
-                let previousFrames = results.enumerated().filter { $0.offset > lastFullFrameIndex }.map(\.element).map { try! $0.get() }
+            // main scan loop, cf: https://sane-project.gitlab.io/standard/api.html#code-flow
+            while continueScanning() {
+                let lastFullFrameIndex = scans.lastIndex(where: { $0.parameters.acquiringLastFrame == true }) ?? -1
+                let previousFrames = scans.enumerated().filter { $0.offset > lastFullFrameIndex }.map(\.element)
 
                 let result = self.internalFrameScan(
                     device: device, handle: handle, crop: crop,
                     generateIntermediateImages: generateIntermediateImages,
-                    scannedDocsCount: results.filter { $0.value?.parameters.acquiringLastFrame == true }.count,
+                    scannedDocsCount: scans.filter { $0.parameters.acquiringLastFrame }.count,
                     previousFrames: previousFrames
                 ) { p in
                     device.currentOperation?.progress = p
                     Sane.runOn(mainThread: true) { progress?(p) }
                 }
-                results.append(result)
+                
+                switch result {
+                case .success(let scan):
+                    scans.append(scan)
+                case .failure(let e):
+                    lastError = e
+                }
             }
             
-            // remove last error if empty ADF
-            if results.count > 1, previousSaneStatus() == SANE_STATUS_NO_DOCS {
-                results.removeLast()
+            // ignore error if empty ADF and scanned at least one doc
+            if scans.count > 1, lastError?.saneStatus == SANE_STATUS_NO_DOCS {
+                lastError = nil
             }
             
-            // remove intermediary frames
-            results = results
-                .filter { $0.value?.parameters.acquiringLastFrame != false }
-                .map { $0.map { scan in (scan.image, scan.parameters.singleFrameEquivalent) } }
+            // remove intermediary frames, update params to appear as a single RGB scan
+            scans = scans
+                .filter { $0.parameters.acquiringLastFrame != false }
+                .map { ($0.image, $0.parameters.singleFrameEquivalent) }
             
             // after a finished scan, we need to call cancel, as per the documentation
             sane_cancel(handle)
 
-            let scans = results.flattened()
+            // final reporting
             Sane.runOn(mainThread: startedOnMainThread) {
-                if let lastScan = (try? scans.get())?.last {
+                if let lastScan = scans.last, lastError == nil {
                     device.updatePreviewImage(lastScan, afterOperation: operation, fallbackToExisting: operation == .scan)
                 }
-                fullCompletion(scans)
+                fullCompletion(scans, lastError)
             }
         }
     }

@@ -182,7 +182,7 @@ extension Device {
                 brY = value
             }
         }
-
+        
         return CGRect(x: tlX, y: tlY, width: brX - tlX, height: brY - tlY)
     }
     
@@ -211,6 +211,13 @@ extension Device {
         if cropArea == .zero {
             cropArea = maxCropArea
         }
+    }
+    
+    public var isUsingADFSource: Bool {
+        // this is absolutely not garanteed by SANE, might only work on the test backend
+        // https://gitlab.com/sane-project/backends/-/issues/662
+        let currentSource = (standardOption(for: .source) as? DeviceOptionTyped<String>)?.value
+        return currentSource == "Automatic Document Feeder"
     }
 }
 

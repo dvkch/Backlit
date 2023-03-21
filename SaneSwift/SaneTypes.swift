@@ -219,14 +219,3 @@ internal enum Either<T: Equatable, U: Equatable>: Equatable {
 public typealias SaneResult<T> = Result<T, SaneError>
 public typealias SaneCompletion<T> = (Result<T, SaneError>) -> ()
 public typealias ScanImage = (image: UIImage, parameters: ScanParameters)
-
-internal extension Array where Element == SaneResult<ScanImage> {
-    func flattened() -> SaneResult<[ScanImage]> {
-        if let error = compactMap(\.error).last {
-            return .failure(error)
-        }
-        else {
-            return .success(map({ try! $0.get() }))
-        }
-    }
-}
