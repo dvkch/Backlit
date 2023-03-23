@@ -228,33 +228,3 @@ internal extension UIImage {
         return try self.sy_imageFromSane(data: completedData, parameters: parameters)
     }
 }
-
-/*
-// LATER: work on big images by using a file backed buffer and
-// stream lower resolutions :
-// - https://twitter.com/PDucks32/status/1417553099825238028
-// - https://developer.apple.com/documentation/uikit/uiimage/building_high-performance_lists_and_collection_views
-+ (void)sy_convertTempImage
-{
-    SYSaneScanParameters *params = [[SYSaneScanParameters alloc] init];
-    params.acquiringLastChannel = YES;
-    params.currentlyAcquiredChannel = SANE_FRAME_RGB;
-    params.width = 10208;
-    params.height = 14032;
-    params.bytesPerLine = params.width * 3;
-    params.depth = 8;
-    
-    
-    NSString *sourceFileName = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.tmp")];
-    NSString *destinationFileName = [[SYTools documentsPath] stringByAppendingPathComponent:$$("scan.jpg")];
-    
-    NSDate *date = [NSDate date];
-    
-    UIImage *img = [self sy_imageFromRGBData:nil orFileURL:[NSURL fileURLWithPath:sourceFileName] saneParameters:params error:NULL];
-    NSData *data = UIImageJPEGRepresentation(img, JPEG_COMP);
-    [data writeToFile:destinationFileName atomically:YES];
-    
-    NSLog($$("-> %@ in %.03lfs"), img, [[NSDate date] timeIntervalSinceDate:date]);
-}
-*/
-

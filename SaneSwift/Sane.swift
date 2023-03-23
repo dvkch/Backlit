@@ -769,8 +769,15 @@ extension Sane {
         assert(parameters.fileSize > 0, "Scan parameters invalid")
         SaneLogger.i(.sane, "> Scan parameters are \(parameters)")
 
-        var data = Data(capacity: parameters.fileSize)
-        if parameters.expectedFramesCount > 1 {
+        // LATER: try to use a file instead, to support bigger images
+        // - could be appended to using [fileHandle writeData:[NSData dataWithBytes:buffer length:bufferActualSize]]
+        // - would need to be seekable and modifiable
+        // - could be opened as a simple mmap'd Data to generate image previews
+        var data: Data
+        if parameters.expectedFramesCount == 1 {
+            data = Data(capacity: parameters.fileSize)
+        }
+        else {
             let prevData = previousFrames.last?.image.cgImage?.dataProvider?.data as Data?
             data = prevData.map { Data($0) } ?? Data(repeating: 0, count: parameters.fileSize * parameters.expectedFramesCount)
         }
@@ -806,7 +813,6 @@ extension Sane {
             
             // append data from the buffer to the total data
             if parameters.expectedFramesCount == 1 {
-                // could buffer to a file instead [fileHandle writeData:[NSData dataWithBytes:buffer length:bufferActualSize]]
                 SaneLogger.d(.sane, "> Appending image data")
                 data.append(buffer, count: Int(bufferActualSize))
             }
