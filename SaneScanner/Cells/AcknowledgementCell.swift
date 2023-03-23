@@ -36,9 +36,8 @@ class AcknowledgementCell: UITableViewCell {
     }
     var showDescription: Bool = false {
         didSet {
-            //licenseTextLabel.sy_isHidden = !showDescription
+            licenseTextLabel.sy_isHidden = !showDescription
             disclosureImageView.image = UIImage(named: showDescription ? "chevron.up" : "chevron.down")
-            setNeedsUpdateConstraints()
         }
     }
     
@@ -47,12 +46,5 @@ class AcknowledgementCell: UITableViewCell {
         libraryNameLabel.text = acknowledgement.title
         licenseNameLabel.text = acknowledgement.licenseName
         licenseTextLabel.text = acknowledgement.licenseText.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    
-    override func updateConstraints() {
-        licenseTextLabel.snp.remakeConstraints { make in
-            if !showDescription { make.height.equalTo(0) }
-        }
-        super.updateConstraints()
     }
 }
