@@ -76,16 +76,21 @@ extension UIImage {
         }
     }
     
+    // images created with CoreGraphics in Gray with 1bit per pixel don't get saved properly by `.pngData()`
+    // so we revert to the proper methods in CoreGraphics to generate our PNG data.
+    // we also use it for JPEG encoding, as using SYMetadata methods would rencode the already encoded UIImage
+    // and we'd end up with 2x the total encoding time just to add the metadata
     func scanData(format: ImageFormat, metadata: [String: Any]) -> Data? {
         guard let cgImage else {
             return format.systemEncode(image: self, metadata: metadata)
         }
         
-        // images created with CoreGraphics in Gray with 1bit per pixel don't get saved properly by `.pngData()`
-        // so we revert to the proper methods in CoreGraphics to generate our PNG data
         let outputData = CFDataCreateMutable(nil, 0)!
         var options = metadata
         options[kCGImageDestinationEmbedThumbnail as String] = kCFBooleanTrue
+        options[kCGImageSourceCreateThumbnailFromImageIfAbsent as String] = kCFBooleanTrue
+        options[kCGImageSourceCreateThumbnailWithTransform as String] = kCFBooleanTrue
+        options[kCGImageSourceThumbnailMaxPixelSize as String] = 256
 
         if case .jpeg(let quality) = format {
             options[kCGImageDestinationLossyCompressionQuality as String] = quality

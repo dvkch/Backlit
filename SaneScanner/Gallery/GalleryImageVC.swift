@@ -58,21 +58,20 @@ class GalleryImageVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // lazy loading only when view will appear for the first time
-        if self.imageView.image == nil {
-            self.imageView.image = UIImage(contentsOfFile: self.item.url.path)
-            self.view.setNeedsUpdateConstraints()
-        }
+        // lazy loading instead of doing it in viewDidLoad
+        self.imageView.imageURL = item.url
+        self.view.setNeedsUpdateConstraints()
     }
     
     // MARK: Properties
     weak var delegate: GalleryImageVCDelegate?
     let item: GalleryItem
     let galleryIndex: Int
+    private var hasAlreadyComputedScaleOnce = false
     
     // MARK: Views
     private let scrollView = UIScrollView()
-    private let imageView = UIImageView()
+    private let imageView = GalleryTiledImageView()
     
     // MARK: Actions
     @objc private func singleTapRecognized(sender: UITapGestureRecognizer) {
@@ -88,10 +87,10 @@ class GalleryImageVC: UIViewController {
                 let size = CGSize(width: 1, height: 1)
                 
                 var point = sender.location(in: self.imageView)
-                point.x = min(max(0, point.x), self.imageView.bounds.width - size.width)
-                point.y = min(max(0, point.y), self.imageView.bounds.height - size.height)
+                point.x = min(max(0, point.x), self.imageView.bounds.width - size.width) * self.scrollView.maximumZoomScale
+                point.y = min(max(0, point.y), self.imageView.bounds.height - size.height) * self.scrollView.maximumZoomScale
 
-                self.scrollView.zoomScale = 1
+                self.scrollView.zoomScale = self.scrollView.maximumZoomScale
                 self.scrollView.scrollRectToVisible(CGRect(origin: point, size: size), animated: false)
             }
             self.updateScrollViewInsets()
@@ -100,11 +99,9 @@ class GalleryImageVC: UIViewController {
     
     // MARK: Layout
     override func updateViewConstraints() {
-        let size = imageView.image?.size ?? GalleryManager.shared.imageSize(for: item) ?? CGSize(width: 0, height: 0)
-        
         imageView.snp.remakeConstraints { (make) in
             make.edges.equalToSuperview()
-            make.size.equalTo(size)
+            make.size.equalTo(imageView.displayedImageSize)
         }
 
         super.updateViewConstraints()
@@ -132,12 +129,10 @@ class GalleryImageVC: UIViewController {
         view.layoutIfNeeded()
         scrollView.layoutIfNeeded()
         
-        let reset = scrollView.minimumZoomScale == 0 && scrollView.maximumZoomScale == 0
-        
-        if imageView.image == nil {
-            scrollView.minimumZoomScale = 0
-            scrollView.maximumZoomScale = 0
-            scrollView.zoomScale = 0
+        if imageView.imageURL == nil {
+            scrollView.minimumZoomScale = 1
+            scrollView.maximumZoomScale = 1
+            scrollView.zoomScale = 1
             return
         }
         
@@ -149,11 +144,15 @@ class GalleryImageVC: UIViewController {
         
         let prevScale = scrollView.zoomScale
         scrollView.minimumZoomScale = fitScale
-        scrollView.maximumZoomScale = max(1, fitScale)
+        scrollView.maximumZoomScale = max(1, fitScale) * imageView.maximumZoomLevelForScrollView
         
-        if reset {
+        if !hasAlreadyComputedScaleOnce {
+            // initial scale after setting image
+            hasAlreadyComputedScaleOnce = true
             scrollView.zoomScale = fitScale
         } else {
+            // scale computation after an event like rotation; try to preserve the existing scale if possible, bound
+            // to the new min.max
             scrollView.zoomScale = min(scrollView.maximumZoomScale, max(scrollView.minimumZoomScale, prevScale))
         }
 
