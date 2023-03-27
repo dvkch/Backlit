@@ -89,9 +89,9 @@ extension FileProviderItem: NSFileProviderItem {
     
     var capabilities: NSFileProviderItemCapabilities {
         if isRoot {
-            return [.allowsContentEnumerating, .allowsReading]
+            return [.allowsContentEnumerating, .allowsReading, .allowsAddingSubItems]
         }
-        return [.allowsContentEnumerating, .allowsReading, .allowsRenaming, .allowsDeleting]
+        return [.allowsContentEnumerating, .allowsReading, .allowsAddingSubItems, .allowsRenaming, .allowsDeleting]
     }
     
     var filename: String {

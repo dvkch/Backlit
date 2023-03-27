@@ -59,6 +59,22 @@ class FileProviderExtension: NSFileProviderExtension {
         completionHandler(item, nil)
     }
     
+    override func importDocument(at fileURL: URL, toParentItemIdentifier parentItemIdentifier: NSFileProviderItemIdentifier, completionHandler: @escaping (NSFileProviderItem?, Error?) -> Void) {
+        guard let parentItem = FileProviderItem(itemIdentifier: parentItemIdentifier) else {
+            completionHandler(nil, NSError.fileProviderErrorForNonExistentItem(withIdentifier: parentItemIdentifier))
+            return
+        }
+
+        do {
+            let newFileURL = parentItem.url.appendingPathComponent(fileURL.lastPathComponent, isDirectory: false)
+            try FileManager.default.moveItem(at: fileURL, to: newFileURL)
+            completionHandler(FileProviderItem(url: newFileURL), nil)
+        }
+        catch {
+            completionHandler(nil, error)
+        }
+    }
+    
     override func renameItem(withIdentifier itemIdentifier: NSFileProviderItemIdentifier, toName itemName: String, completionHandler: @escaping (NSFileProviderItem?, Error?) -> Void) {
         guard let item = FileProviderItem(itemIdentifier: itemIdentifier) else {
             return completionHandler(nil, NSFileProviderError(.noSuchItem))

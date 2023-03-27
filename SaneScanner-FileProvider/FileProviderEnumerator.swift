@@ -44,6 +44,6 @@ class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
     }
     
     func enumerateChanges(for observer: NSFileProviderChangeObserver, from anchor: NSFileProviderSyncAnchor) {
-        // not mandatory and wouldn't how to properly implement it anyway ¯\_(ツ)_/¯
+        // not mandatory and wouldn't know how to properly implement it anyway ¯\_(ツ)_/¯
     }
 }
