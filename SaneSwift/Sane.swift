@@ -254,24 +254,27 @@ extension Sane {
             let s: SANE_Status = Sane.logTime {
                 sane_open(device.name.rawValue.cString(using: .utf8), &h)
             }
-            
-            if s == SANE_STATUS_GOOD {
-                self.markDevice(device: device, openedWith: h)
+            guard s == SANE_STATUS_GOOD else {
+                Sane.runOn(mainThread: startedOnMainThread, block: {
+                    SaneLogger.e(.sane, "Couldn't open device: \(s)")
+                    completion(.failure(SaneError(saneStatus: s)))
+                })
+                return
             }
             
-            if s == SANE_STATUS_GOOD && listOptions {
-                self.listOptions(for: device, completion: nil)
+            self.markDevice(device: device, openedWith: h)
+            self.listOptions(for: device, completion: nil)
+            
+            // some backends, like epsonscan2 for ET-2810, show a the current value for Scan mode as "Color" upon
+            // opening the device, but starting a scan actually scans in monochrome... let's make sure at least
+            // the scan mode is actually set to what it says it is set to
+            if let scanMode = device.standardOption(for: .colorMode) as? DeviceOptionString {
+                self.updateOption(scanMode, with: .value(scanMode.value), completion: nil)
             }
 
             Sane.runOn(mainThread: startedOnMainThread, block: {
-                if s != SANE_STATUS_GOOD {
-                    SaneLogger.e(.sane, "Couldn't open device: \(s)")
-                    completion(.failure(SaneError(saneStatus: s)))
-                }
-                else {
-                    SaneLogger.i(.sane, "Device opened")
-                    completion(.success(()))
-                }
+                SaneLogger.i(.sane, "Device opened")
+                completion(.success(()))
             })
         }
     }
