@@ -9,7 +9,7 @@
 import UIKit
 
 @objcMembers
-public class SYWindow: UIWindow {
+open class SYWindow: UIWindow {
     
     public var alternateAnimationSpeed: Float = 0.05
     public var enableSlowAnimationsOnShake: Bool = false
