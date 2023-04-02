@@ -31,14 +31,25 @@ class GalleryThumbnailCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
-        selectionView.layer.borderColor = UIColor.white.cgColor
-        selectionView.layer.borderWidth = 1
-        selectionView.layer.cornerRadius = 22 / 2
-        selectionView.layer.masksToBounds = true
-        contentView.addSubview(selectionView)
-        selectionView.snp.makeConstraints { (make) in
+        selectionBackgroundView.layer.cornerRadius = 22 / 2
+        selectionBackgroundView.layer.masksToBounds = true
+        contentView.addSubview(selectionBackgroundView)
+        selectionBackgroundView.snp.makeConstraints { make in
             make.size.equalTo(22)
             make.bottom.right.equalTo(-8)
+        }
+        
+        selectionRingView.layer.borderColor = UIColor.white.cgColor
+        selectionRingView.layer.borderWidth = 1
+        selectionRingView.layer.cornerRadius = 22 / 2
+        selectionRingView.layer.masksToBounds = false
+        selectionRingView.layer.shadowColor = UIColor.black.cgColor
+        selectionRingView.layer.shadowOffset = .zero
+        selectionRingView.layer.shadowRadius = 3
+        selectionRingView.layer.shadowOpacity = 0.8
+        contentView.addSubview(selectionRingView)
+        selectionRingView.snp.makeConstraints { (make) in
+            make.edges.equalTo(selectionBackgroundView)
         }
         
         updateSelectionStyle()
@@ -77,7 +88,8 @@ class GalleryThumbnailCell: UICollectionViewCell {
             return UIActivityIndicatorView(style: .white)
         }
     }()
-    private let selectionView = UIView()
+    private let selectionRingView = UIView()
+    private let selectionBackgroundView = UIView()
 
     // MARK: Content
     func update(item: GalleryItem, mode: Mode, spinnerColor: UIColor) {
@@ -94,8 +106,9 @@ class GalleryThumbnailCell: UICollectionViewCell {
     }
     
     private func updateSelectionStyle() {
-        selectionView.alpha = showSelectionIndicator ? 1 : 0
-        selectionView.backgroundColor = isSelected ? .tint : UIColor(white: 1, alpha: 0.7)
+        selectionRingView.alpha = showSelectionIndicator ? 1 : 0
+        selectionBackgroundView.alpha = selectionRingView.alpha
+        selectionBackgroundView.backgroundColor = isSelected ? .tint : UIColor(white: 1, alpha: 0.7)
     }
     
     private func updateStyle() {

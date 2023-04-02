@@ -22,10 +22,14 @@ class GalleryGridVC: UIViewController {
         collectionViewLayout.margin = 2
 
         collectionView.backgroundColor = .background
-        collectionView.allowsMultipleSelection = true // requires holding option on macOS
+        collectionView.allowsSelection = true
+        if #available(iOS 14.0, *) {
+            // allow drag selection on iOS 14+
+            collectionView.allowsMultipleSelectionDuringEditing = true
+        }
         collectionView.collectionViewLayout = collectionViewLayout
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
-        
+
         toolbarItems = [
             UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteButtonTap(sender:))),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
@@ -45,8 +49,8 @@ class GalleryGridVC: UIViewController {
         updateToolbarVisibility(animated: false)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         if isEditing {
             setEditing(false, animated: false)
         }
@@ -65,6 +69,10 @@ class GalleryGridVC: UIViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        if #available(iOS 13.0, *) {
+            // prevent dismissal of this view as a modal when editing
+            isModalInPresentation = editing
+        }
         updateNavBarContent(animated: animated)
         updateToolbarVisibility(animated: animated)
         
@@ -73,6 +81,9 @@ class GalleryGridVC: UIViewController {
         }
         
         collectionView.allowsMultipleSelection = editing
+        if #available(iOS 14.0, *) {
+            collectionView.isEditing = editing
+        }
         
         if !editing {
             collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: false) }
@@ -281,6 +292,14 @@ extension GalleryGridVC : UICollectionViewDelegate {
         return configuration
     }
     #endif
+    
+    func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        setEditing(true, animated: true)
+    }
 }
 
 extension GalleryGridVC : UICollectionViewDragDelegate {
