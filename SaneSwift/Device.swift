@@ -74,8 +74,15 @@ public class Device {
         // update only if we scanned without cropping
         guard scan.parameters.cropArea == maxCropArea else { return }
 
-        // prevent keeping a scan image if resolution is very high. A color A4 300dpi (13.4MB) is used as maximum
-        if afterOperation == .scan && scan.parameters.fileSize > 16_000_000 {
+        // prevent keeping a scan image if resolution is very high
+        #if targetEnvironment(macCatalyst)
+        // 1 page color A4 600dpi (~100MB) is used as maximum for macOS
+        let maximumSize: Int = 110_000_000
+        #else
+        // 1 page color A4 300dpi (~25MB) is used as maximum for iOS
+        let maximumSize: Int = 30_000_000
+        #endif
+        if afterOperation == .scan && scan.parameters.fileSize > maximumSize {
             return
         }
 
