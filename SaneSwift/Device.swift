@@ -19,10 +19,10 @@ public class Device {
     }
     
     init(cDevice: SANE_Device) {
-        self.name   = Name(rawValue: cDevice.name.asString()   ?? "")
-        self.model  = cDevice.model.asString()                 ?? ""
-        self.vendor = cDevice.vendor.asString()                ?? ""
-        self.type   = cDevice.type.asString()?.saneTranslation ?? ""
+        self.name   = Name(rawValue: cDevice.name.asString()        ?? "")
+        self.model  = cDevice.model.asString()?.saneSplit().first   ?? "" // epsonscan2 reports "ET-2810 Series:001:004", let's fix that
+        self.vendor = cDevice.vendor.asString()                     ?? ""
+        self.type   = cDevice.type.asString()?.saneTranslation      ?? ""
     }
     
     // MARK: Device properties
