@@ -59,8 +59,10 @@ class GalleryImageVC: UIViewController {
         super.viewWillAppear(animated)
         
         // lazy loading instead of doing it in viewDidLoad
-        self.imageView.imageURL = item.url
-        self.view.setNeedsUpdateConstraints()
+        if imageView.imageURL == nil {
+            imageView.imageURL = item.url
+        }
+        view.setNeedsUpdateConstraints()
     }
     
     // MARK: Properties
@@ -71,7 +73,7 @@ class GalleryImageVC: UIViewController {
     
     // MARK: Views
     private let scrollView = UIScrollView()
-    private let imageView = GalleryTiledImageView()
+    private let imageView = GalleryImageView()
     
     // MARK: Actions
     @objc private func singleTapRecognized(sender: UITapGestureRecognizer) {
@@ -144,7 +146,7 @@ class GalleryImageVC: UIViewController {
         
         let prevScale = scrollView.zoomScale
         scrollView.minimumZoomScale = fitScale
-        scrollView.maximumZoomScale = max(1, fitScale) * imageView.maximumZoomLevelForScrollView
+        scrollView.maximumZoomScale = max(1, fitScale) * imageView.supplementaryZoom
         
         if !hasAlreadyComputedScaleOnce {
             // initial scale after setting image
