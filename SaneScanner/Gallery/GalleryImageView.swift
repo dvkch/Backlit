@@ -55,6 +55,7 @@ class GalleryImageView: UIView {
                 tiledLayer.image = nil
                 lowResImageLayer.image = nil
                 displayedImageSize = .zero
+                accessibilityLabel = nil
                 return
             }
             
@@ -75,6 +76,7 @@ class GalleryImageView: UIView {
                 lowResImageLayer.image = image.cgImage
                 displayedImageSize = image.size
             }
+            accessibilityLabel = GalleryManager.shared.accessibilityLabel(forItemAt: imageURL)
         }
     }
     

@@ -12,6 +12,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
         
         addTooltip { [weak self] in
             self?.item.flatMap { GalleryManager.shared.dateString(for: $0) }
@@ -96,6 +97,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         spinner.color = spinnerColor
         self.item = item
         self.mode = mode
+        accessibilityLabel = GalleryManager.shared.accessibilityLabel(forItemAt: item.url)
         
         updateThumbnail(nil)
     }

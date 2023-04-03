@@ -226,6 +226,30 @@ class GalleryManager: NSObject {
     }
     
     // MARK: Items properties
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        formatter.locale = .autoupdatingCurrent
+        formatter.timeZone = .autoupdatingCurrent
+        formatter.formattingContext = .standalone
+        return formatter
+    }()
+
+    private let relativeDateFormatter: Formatter? = {
+        if #available(iOS 13.0, *) {
+            let formatter = RelativeDateTimeFormatter()
+            formatter.unitsStyle = .full
+            formatter.locale = .autoupdatingCurrent
+            formatter.calendar = .autoupdatingCurrent
+            formatter.dateTimeStyle = .named
+            formatter.formattingContext = .standalone
+            return formatter
+        } else {
+            return nil
+        }
+    }()
+
     func thumbnail(for item: GalleryItem?) -> UIImage? {
         guard let item = item else { return nil }
         if let cached = thumbnailCache.value(forKey: item.thumbnailUrl) {
@@ -241,11 +265,7 @@ class GalleryManager: NSObject {
     
     func dateString(for item: GalleryItem) -> String? {
         guard let date = item.url.creationDate else { return nil }
-
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
+        return dateFormatter.string(from: date)
     }
     
     func imageSize(for item: GalleryItem) -> CGSize? {
@@ -257,6 +277,30 @@ class GalleryManager: NSObject {
 
         imageSizeCache.setValue(imageSize, forKey: item.url)
         return imageSize
+    }
+    
+    // MARK: Accessibility
+    func accessibilityLabel(forItemAt url: URL) -> String? {
+        guard let creationDate = url.creationDate, let metadata = try? SYMetadata(fileURL: url).metadataTIFF else {
+            accessibilityLabel = nil
+            return nil
+        }
+
+        let dateString: String
+        if #available(iOS 13.0, *), let formatter = relativeDateFormatter as? RelativeDateTimeFormatter, Date().timeIntervalSince(creationDate) < 30 * 24 * 2600 {
+            dateString = formatter.localizedString(for: creationDate, relativeTo: Date())
+        }
+        else {
+            dateString = dateFormatter.string(from: creationDate)
+        }
+
+        let deviceString = [metadata.make, metadata.model].removingNils().joined(separator: " ")
+        
+        return [
+            "GALLERY ITEM".localized,
+            dateString,
+            deviceString
+        ].joined(separator: "; ")
     }
     
     // MARK: Thumb
