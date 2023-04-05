@@ -116,3 +116,8 @@ extension CGRect {
     }
 }
 
+extension CGSize {
+    static func +(lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return .init(width: lhs.width + rhs, height: lhs.height + rhs)
+    }
+}

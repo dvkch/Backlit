@@ -22,6 +22,10 @@ class GalleryItem: NSObject {
     override func isEqual(_ object: Any?) -> Bool {
         (object as? GalleryItem)?.url == url
     }
+    
+    var creationDate: Date {
+        return url.creationDate ?? Date(timeIntervalSince1970: 0)
+    }
 }
 
 extension GalleryItem : NSItemProviderWriting {

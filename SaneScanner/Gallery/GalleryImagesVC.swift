@@ -151,11 +151,11 @@ class GalleryImagesVC: UIViewController {
         titleButton.tintColor = .normalText
         
         toolbarItems = [
-            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteCurrentImage(sender:))),
+            UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareCurrentImage(sender:))),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             titleButton,
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareCurrentImage(sender:))),
+            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteCurrentImage(sender:))),
         ]
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import VisionKit
 
 #if !targetEnvironment(macCatalyst)
 protocol GalleryImageVCDelegate: NSObjectProtocol {
@@ -61,8 +62,21 @@ class GalleryImageVC: UIViewController {
         // lazy loading instead of doing it in viewDidLoad
         if imageView.imageURL == nil {
             imageView.imageURL = item.url
+            if #available(iOS 16.0, *) {
+                startImageAnalysis()
+            }
         }
         view.setNeedsUpdateConstraints()
+    }
+    
+    deinit {
+        if #available(iOS 16.0, *) {
+            // weirdly so there is a crash when mixing CATiledLayer and ImageAnalysisInteraction so when
+            // the controller is closing for good we remove it to prevent the crash (tested on iOS 16.2)
+            // the crash happens in objc_msgSend for -[UITextSelectionView removeFromSuperview].
+            // surprisingly, doing this in GalleryTiledImageView.deinit doesn't solve the crash
+            removeImageInteraction()
+        }
     }
     
     // MARK: Properties
@@ -70,6 +84,7 @@ class GalleryImageVC: UIViewController {
     let item: GalleryItem
     let galleryIndex: Int
     private var hasAlreadyComputedScaleOnce = false
+    private var untypedImageInteraction: AnyObject?
     
     // MARK: Views
     private let scrollView = UIScrollView()
@@ -175,6 +190,50 @@ extension GalleryImageVC : UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateScrollViewInsets()
+    }
+}
+
+// MARK: Live text
+@available(iOS 16.0, *)
+extension GalleryImageVC: ImageAnalysisInteractionDelegate {
+    static let imageAnalyzer = ImageAnalyzer.isSupported ? ImageAnalyzer() : nil
+
+    private var imageInteraction: ImageAnalysisInteraction? {
+        get { return untypedImageInteraction as? ImageAnalysisInteraction }
+        set { untypedImageInteraction = newValue }
+    }
+    
+    private func startImageAnalysis() {
+        guard let image = imageView.imageForTextAnalysis, let analyzer = GalleryImageVC.imageAnalyzer else {
+            self.imageInteraction = nil
+            return
+        }
+
+        let interaction = ImageAnalysisInteraction()
+        interaction.delegate = self
+        interaction.preferredInteractionTypes = []
+        interaction.analysis = nil
+        interaction.supplementaryInterfaceContentInsets.top = 50
+        imageView.addInteraction(interaction)
+        imageInteraction = interaction
+
+        Task {
+            let config = ImageAnalyzer.Configuration([.text, .machineReadableCode])
+            do {
+                let analysis = try await analyzer.analyze(image, configuration: config)
+                interaction.analysis = analysis
+                interaction.preferredInteractionTypes = .automatic
+            }
+            catch {
+                print("Coudln't analyze image properly:", error)
+            }
+        }
+    }
+    
+    private func removeImageInteraction() {
+        if let imageInteraction {
+            imageView.removeInteraction(imageInteraction)
+        }
     }
 }
 
