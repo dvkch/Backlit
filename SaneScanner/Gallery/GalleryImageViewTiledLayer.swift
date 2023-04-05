@@ -28,9 +28,7 @@ class GalleryImageViewTiledLayer: CATiledLayer {
     // MARK: Properties
     var image: CGImage? {
         didSet {
-            tileSize = .init(width: 256 * contentsScale, height: 256 * contentsScale)
             imageSize = CGSize(width: image?.width ?? 0, height: image?.height ?? 0)
-            setNeedsDisplay()
         }
     }
 
@@ -38,7 +36,12 @@ class GalleryImageViewTiledLayer: CATiledLayer {
     weak var tileDelegate: GalleryImageViewTiledLayerDelegate?
     private var imageSize: CGSize = .zero {
         didSet {
-            maximumZoomLevel = [1, Int(imageSize.width / tileSize.width), Int(imageSize.height / tileSize.height)].max()!
+            updateTilingProperties()
+        }
+    }
+    override var contentsScale: CGFloat {
+        didSet {
+            updateTilingProperties()
         }
     }
     private(set) var maximumZoomLevel: Int = 1 {
@@ -53,16 +56,22 @@ class GalleryImageViewTiledLayer: CATiledLayer {
         }
     }
     
+    private func updateTilingProperties() {
+        tileSize = .init(width: 256 * contentsScale, height: 256 * contentsScale)
+        maximumZoomLevel = [1, Int(imageSize.width / tileSize.width), Int(imageSize.height / tileSize.height)].max()!
+        setNeedsDisplay()
+    }
+    
     // MARK: Drawing
     override func draw(in context: CGContext) {
         super.draw(in: context)
         context.interpolationQuality = .default
         
-        // draw tile
+        // obtain parameters
         let rect = context.boundingBoxOfClipPath
         let normalizedScale = context.ctm.a / contentsScale
-        // let currentZoomLevel = Int(log2(CGFloat(max(1, Int(normalizedScale))))) + 1
 
+        // determine if we should draw
         guard let image else { return }
         let shouldDraw = tileDelegate?.galleryImageViewTiledLayer(self, shouldDraw: image, in: rect, scale: normalizedScale) ?? true
         guard shouldDraw else {
@@ -71,6 +80,7 @@ class GalleryImageViewTiledLayer: CATiledLayer {
             return
         }
 
+        // draw tile
         context.saveGState();
         {
             context.concatenate(.init(translationX: rect.origin.x, y: rect.origin.y))

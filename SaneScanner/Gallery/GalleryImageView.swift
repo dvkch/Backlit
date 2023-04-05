@@ -25,14 +25,13 @@ class GalleryImageView: UIView {
     }
     
     private func setup() {
-        // TODO: test again 1px for 1px scale
-
-        // TODO: accessibility label using metadata ?
         accessibilityTraits = .image
         isAccessibilityElement = true
 
+        lowResImageLayer.contentsScale = (window?.screen ?? UIScreen.main).scale
         layer.addSublayer(lowResImageLayer)
         
+        tiledLayer.contentsScale = (window?.screen ?? UIScreen.main).scale
         tiledLayer.tileDelegate = self
         layer.addSublayer(tiledLayer)
     }
@@ -95,7 +94,7 @@ class GalleryImageView: UIView {
     var supplementaryZoom: CGFloat {
         // this will make the scrollView at maximum zoom level be precisely 1px on screen to 1px of the image
         // or precisely fit if the image is smaller than the number of pixels on screen
-        return max(1, CGFloat(tiledLayer.maximumZoomLevel) / layer.contentsScale)
+        return max(1, CGFloat(tiledLayer.maximumZoomLevel) / tiledLayer.contentsScale)
     }
     
     // MARK: Layout
