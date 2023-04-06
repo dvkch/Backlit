@@ -24,7 +24,7 @@ extension UIImage {
         return .screenshottingContext(size: CGSize(width: size, height: size), scale: 1) {
             UIColor.random.setFill()
             UIBezierPath(rect: label.bounds).fill()
-
+            
             label.draw(label.bounds)
         }
     }
@@ -42,7 +42,10 @@ extension UIImage {
         }
         return Int(size.width) * Int(size.height) * (cgImage?.bitsPerPixel ?? 32) / 8
     }
-    
+}
+
+// MARK: Compression methods
+extension UIImage {
     enum ImageFormat {
         case png
         case jpeg(quality: CGFloat)

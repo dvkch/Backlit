@@ -83,7 +83,7 @@ class GalleryManager: NSObject {
     private var imageSizeCache = LRUCache<URL, CGSize>()
     
     // MARK: Delegates
-    private class WeakDelegate {
+    private class WeakDelegate: NSObject {
         typealias T = NSObject & GalleryManagerDelegate
         weak var value: T?
         init(_ value: T) {
@@ -94,6 +94,10 @@ class GalleryManager: NSObject {
                 return value == delegate
             }
             return false
+        }
+        override var description: String {
+            let valueDescription = value.map { "<\(type(of: $0).className): \(Unmanaged.passUnretained($0 as NSObject).toOpaque())>" }
+            return "<WeakDelegate: \(valueDescription ?? "<null>")>"
         }
     }
     
@@ -136,14 +140,14 @@ class GalleryManager: NSObject {
         }
     }
     
-    @discardableResult func saveScans(device: Device, _ scans: [ScanImage]) throws -> [GalleryItem] {
+    func saveScans(device: Device, _ scans: [ScanImage]) throws {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
         let format: UIImage.ImageFormat = Preferences.shared.saveAsPNG ? .png : .jpeg(quality: 0.9)
         
-        return try scans.enumerated().map { index, scan in
+        for (index, scan) in scans.enumerated() {
             var filename = formatter.string(from: Date())
             if scans.count > 1 {
                 filename += String(format: "_%03d", index)
@@ -160,11 +164,16 @@ class GalleryManager: NSObject {
             guard let imageData else { throw SaneError.cannotGenerateImage }
             
             try imageData.write(to: fileURL, options: .atomicWrite)
-            imageURLs.insert(fileURL.standardizedFileURL, at: 0)
-            
             let item = galleryItemForImage(at: fileURL.standardizedFileURL)
-            generateThumbAsync(for: item, fullImage: scan.image, tellDelegates: true)
-            return item
+            generateThumb(for: item, fullImage: scan.image, async: false, tellDelegates: true)
+            
+            // prepare a lowres cached image if needed for when we'll be displaying the image
+            DispatchQueue.global(qos: .background).async {
+                GalleryImageView.generateLowResIfNeeded(forImageAt: fileURL)
+            }
+
+            // do last, as it will trigger the delegates
+            imageURLs.insert(fileURL.standardizedFileURL, at: 0)
         }
     }
     
@@ -206,12 +215,15 @@ class GalleryManager: NSObject {
             return
         }
         
-        let addedItems = newURLs
-            .filter { !oldURLs.contains($0) }
+        let oldURLsSet = Set(oldURLs)
+        let newURLsSet = Set(newURLs)
+
+        let addedItems = newURLsSet
+            .subtracting(oldURLs)
             .map { galleryItemForImage(at: $0) }
         
-        let removedItems = oldURLs
-            .filter { !newURLs.contains($0) }
+        let removedItems = oldURLsSet
+            .subtracting(newURLsSet)
             .map { galleryItemForImage(at: $0) }
 
         removedItems.forEach { (item) in
@@ -259,7 +271,7 @@ class GalleryManager: NSObject {
             thumbnailCache.setValue(fromFile, forKey: item.thumbnailUrl, cost: fromFile.estimatedMemoryFootprint)
             return fromFile
         }
-        generateThumbAsync(for: item, fullImage: nil, tellDelegates: true)
+        generateThumb(for: item, fullImage: nil, async: true, tellDelegates: true)
         return nil
     }
     
@@ -304,46 +316,47 @@ class GalleryManager: NSObject {
     }
     
     // MARK: Thumb
-    private func generateThumbAsync(for item: GalleryItem, fullImage: UIImage?, tellDelegates: Bool) {
+    private func generateThumb(for item: GalleryItem, fullImage: UIImage?, async: Bool, tellDelegates: Bool) {
+        if async {
+            thumbsQueue.addOperation {
+                self.generateThumb(for: item, fullImage: fullImage, async: false, tellDelegates: tellDelegates)
+            }
+            return
+        }
+        
         guard !thumbsBeingCreated.contains(item.url) else { return }
         thumbsBeingCreated.append(item.url)
-        
-        let dequeue = { [weak self] in
-            if let index = self?.thumbsBeingCreated.firstIndex(of: item.url) {
-                self?.thumbsBeingCreated.remove(at: index)
-            }
+
+        let dequeue = { [weak self] () -> () in
+            self?.thumbsBeingCreated.removeAll { $0 == item.url }
         }
 
-        thumbsQueue.addOperation {
-            // this first method is a bit longer to generate images, but uses far less memory on the device
-            var thumb = UIImage.thumbnailForImage(at: item.url, maxEdgeSize: 200)
-            
-            // in case the first method fails we do it the old way
-            if thumb == nil {
-                guard let original = fullImage ?? UIImage(contentsOfFile: item.url.path) else { return dequeue() }
-                thumb = original.resizingLongestEdge(to: 200)
-            }
-            
-            guard thumb != nil else { return dequeue() }
-            
-            try? thumb!
-                .jpegData(compressionQuality: 0.6)?
-                .write(to: item.thumbnailUrl, options: .atomicWrite)
-            
-            self.thumbnailCache.setValue(thumb, forKey: item.url, cost: thumb!.estimatedMemoryFootprint)
-            
-            dequeue()
-            
-            guard tellDelegates else { return }
-            
-            DispatchQueue.main.async {
-                self.delegates.forEach { (weakDelegate) in
-                    weakDelegate.value?.galleryManager(self, didCreate: thumb!, for: item)
-                }
+        // this first method is a bit longer to generate images, but uses far less memory on the device
+        // TODO: seems to generate shitty thumbs - catalyst, ET2810, JPEG, B/W
+        // TODO: keep only one method ?!
+        var thumb = UIImage.thumbnailForImage(at: item.url, maxEdgeSize: 200)
+        
+        // in case the first method fails we do it the old way
+        if thumb == nil {
+            guard let original = fullImage ?? UIImage(contentsOfFile: item.url.path) else { return dequeue() }
+            thumb = original.resizingLongestEdge(to: 200)
+        }
+        
+        guard let thumb else { return dequeue() }
+        try? thumb
+            .jpegData(compressionQuality: 0.6)?
+            .write(to: item.thumbnailUrl, options: .atomicWrite)
+        
+        self.thumbnailCache.setValue(thumb, forKey: item.url, cost: thumb.estimatedMemoryFootprint)
+        dequeue()
+        
+        guard tellDelegates else { return }
+        DispatchQueue.main.async {
+            self.delegates.forEach { (weakDelegate) in
+                weakDelegate.value?.galleryManager(self, didCreate: thumb, for: item)
             }
         }
     }
-    
     
     // MARK: PDF
     func tempPdfFileUrl() -> URL {

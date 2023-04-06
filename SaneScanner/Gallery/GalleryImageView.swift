@@ -61,7 +61,7 @@ class GalleryImageView: UIView {
             // if we have an image that seems big we will automatically generate a low res version of it, who's longest
             // edge will be 3000px, and enable tiling. This will allow a quicker previewing of the most zoomed out viewing
             // of the image while still allowing showing the full resolution when zooming
-            if type(of: self).shouldTile(for: image.size), let lowRes = generateLowResIfNeeded(from: image, at: imageURL) {
+            if type(of: self).shouldTile(for: image.size), let lowRes = type(of: self).generateLowResIfNeeded(forImageAt: imageURL) {
                 tiledLayer.image = image.cgImage
                 lowResImageLayer.image = lowRes.cgImage
                 displayedImageSize = .init(
@@ -109,8 +109,10 @@ class GalleryImageView: UIView {
         tiledLayer.frame = layer.bounds
     }
     
-    private func generateLowResIfNeeded(from image: UIImage, at imageURL: URL, maxEdge: CGFloat = minimumDimensionForTiling) -> UIImage? {
-        guard image.size.width > maxEdge || image.size.height > maxEdge else { return nil }
+    @discardableResult
+    static func generateLowResIfNeeded(forImageAt imageURL: URL, maxEdge: CGFloat = minimumDimensionForTiling) -> UIImage? {
+        let imageSize = UIImage.sizeOfImage(at: imageURL) ?? .zero
+        guard imageSize.width > maxEdge || imageSize.height > maxEdge else { return nil }
         
         let thumbFilename = imageURL.deletingPathExtension().lastPathComponent + "-lowres-\(maxEdge).jpg"
         let thumbURL = FileManager.default.temporaryDirectory.appendingPathComponent(thumbFilename, isDirectory: false)
