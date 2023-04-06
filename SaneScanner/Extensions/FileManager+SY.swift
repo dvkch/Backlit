@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+// MARK: Scans storage
 extension FileManager {
     static var galleryURL: URL {
         #if targetEnvironment(macCatalyst)
@@ -24,20 +26,49 @@ extension FileManager {
     private static var imageDirectoryURL: URL {
         return try! FileManager.default.url(for: .picturesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
-    
-    static var cacheDirectoryURL: URL {
+}
+
+// MARK: Cache storage
+extension FileManager {
+    private static var cacheDirectoryURL: URL {
         return try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
-    
-    static var appSupportDirectoryURL: URL {
-        let url = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("SaneScanner", isDirectory: true)
-        
-        if !FileManager.default.fileExists(atPath: url.path) {
-            try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-        }
-        
+
+    enum CacheDirectory: String, CaseIterable {
+        case thumbnails     = "thumbs"
+        case lowRes         = "lowres"
+        case pdfGeneration  = "PDF"
+    }
+
+    static func cacheDirectory(_ cache: CacheDirectory) -> URL {
+        let url = cacheDirectoryURL.appendingPathComponent(cache.rawValue, isDirectory: true)
+        try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url
+    }
+    
+    func emptyCacheDirectory(_ cache: CacheDirectory) {
+        try? emptyDirectory(at: FileManager.cacheDirectory(cache))
+    }
+    
+    func emptyCacheDirectories() {
+        CacheDirectory.allCases.forEach { dir in
+            emptyCacheDirectory(dir)
+        }
     }
 }
 
+// MARK: Helpers
+extension FileManager {
+    private func emptyDirectory(at url: URL) throws {
+        try contentsOfDirectory(
+            at: url,
+            includingPropertiesForKeys: [URLResourceKey.isDirectoryKey],
+            options: .skipsSubdirectoryDescendants
+        ).forEach { item in
+            if try item.resourceValues(forKeys: Set([.isDirectoryKey])).isDirectory == true {
+                try emptyDirectory(at: item)
+            }
+            try removeItem(at: item)
+        }
+    }
+}

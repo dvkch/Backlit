@@ -44,16 +44,22 @@ class PreferencesVC: UIViewController {
     // MARK: Properties
     private enum Section {
         case prefGroup(title: String, keys: [Preferences.Key])
+        case misc(rows: [MiscRow])
         case about(rows: [AboutRow])
         
+        enum MiscRow: CaseIterable {
+            case cleanCache
+        }
+
         enum AboutRow: CaseIterable {
             case appVersion, saneVersion, contact, acknowledgements
         }
         
         static var allSections: [Section] = {
             let prefs = Preferences.shared.groupedKeys.map { Section.prefGroup(title: $0.0, keys: $0.1) }
+            let misc = Section.misc(rows: MiscRow.allCases)
             let about = Section.about(rows: AboutRow.allCases)
-            return prefs + [about]
+            return prefs + [misc, about]
         }()
     }
     private static let contactEmailAddress = "contact@syan.me"
@@ -76,6 +82,8 @@ extension PreferencesVC : UITableViewDataSource {
         switch Section.allSections[section] {
         case .prefGroup(_, let keys):
             return keys.count
+        case .misc(let rows):
+            return rows.count
         case .about(let rows):
             return rows.count
         }
@@ -90,6 +98,15 @@ extension PreferencesVC : UITableViewDataSource {
             cell.updateWith(prefKey: keys[indexPath.row])
             cell.showDescription = true
 
+        case .misc(let rows):
+            switch rows[indexPath.row] {
+            case .cleanCache:
+                cell.updateWith(
+                    leftText: "PREFERENCES TITLE CLEANUP CACHE".localized,
+                    rightText: ""
+                )
+            }
+            
         case .about(let rows):
             switch rows[indexPath.row] {
             case .appVersion:
@@ -124,6 +141,8 @@ extension PreferencesVC : UITableViewDataSource {
         switch Section.allSections[section] {
         case .prefGroup(let title, _):
             header.text = title
+        case .misc(_):
+            header.text = "PREFERENCES SECTION MISC".localized
         case .about(_):
             header.text = "PREFERENCES SECTION ABOUT APP".localized
         }
@@ -136,7 +155,7 @@ extension PreferencesVC : UITableViewDelegate {
         switch Section.allSections[indexPath.section] {
         case .prefGroup(_, let keys):
             return OptionCell.cellHeight(prefKey: keys[indexPath.row], showDescription: true, width: tableView.bounds.width)
-        case .about(_):
+        case .misc, .about:
             return OptionCell.cellHeight(leftText: "TEST TITLE", rightText: "TEST VALUE", width: tableView.bounds.width)
         }
     }
@@ -163,6 +182,12 @@ extension PreferencesVC : UITableViewDelegate {
             tableView.beginUpdates()
             tableView.reloadRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
+            
+        case .misc(let rows):
+            switch rows[indexPath.row] {
+            case .cleanCache:
+                FileManager.default.emptyCacheDirectories()
+            }
 
         case .about(let rows):
             switch rows[indexPath.row] {

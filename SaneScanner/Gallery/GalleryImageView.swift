@@ -115,7 +115,7 @@ class GalleryImageView: UIView {
         guard imageSize.width > maxEdge || imageSize.height > maxEdge else { return nil }
         
         let thumbFilename = imageURL.deletingPathExtension().lastPathComponent + "-lowres-\(maxEdge).jpg"
-        let thumbURL = FileManager.default.temporaryDirectory.appendingPathComponent(thumbFilename, isDirectory: false)
+        let thumbURL = FileManager.cacheDirectory(.lowRes).appendingPathComponent(thumbFilename, isDirectory: false)
         if let thumb = UIImage(contentsOfFile: thumbURL.path) {
             return thumb
         }

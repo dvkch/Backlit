@@ -19,14 +19,6 @@ protocol GalleryManagerDelegate: NSObjectProtocol {
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem)
 }
 
-private let kImageExtensionPNG  = "png"
-private let kImageExtensionJPG  = "jpg"
-private let kImageThumbsSuffix  = "thumbs.jpg"
-private let kImageThumbsFolder  = "thumbs"
-private let kImagePDFFolder     = "PDF"
-private let kImagePDFPrefix     = "SaneScanner_"
-private let kImageExtensionPDF  = "pdf"
-
 class GalleryManager: NSObject {
     
     // MARK: Init
@@ -35,10 +27,6 @@ class GalleryManager: NSObject {
     private override init() {
         super.init()
         
-        // create folders if needed
-        try? FileManager.default.createDirectory(at: thumbnailsFolderURL, withIntermediateDirectories: true, attributes: nil)
-        try? FileManager.default.createDirectory(at: pdfFolderURL, withIntermediateDirectories: true, attributes: nil)
-
         // clear previous state
         deleteTempPDF()
         
@@ -364,36 +352,32 @@ class GalleryManager: NSObject {
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
-        let filename = kImagePDFPrefix + formatter.string(from: Date())
-        return pdfFolderURL.appendingPathComponent(filename, isDirectory: false).appendingPathExtension(kImageExtensionPDF)
+        let filename = "SaneScanner_\(formatter.string(from: Date())).pdf"
+        return pdfFolderURL.appendingPathComponent(filename, isDirectory: false)
     }
     
     func deleteTempPDF() {
-        // remove pdf files in cache / PDF
-        let tempURLs = try? FileManager.default.contentsOfDirectory(at: pdfFolderURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants)
-        
-        tempURLs?.forEach { (url) in
-            try? FileManager.default.removeItem(at: url)
-        }
+        // TODO: rewrite
+        FileManager.default.emptyCacheDirectory(.pdfGeneration)
     }
 
     // MARK: Paths
     private var thumbnailsFolderURL: URL {
-        return FileManager.cacheDirectoryURL.appendingPathComponent(kImageThumbsFolder, isDirectory: true)
+        return FileManager.cacheDirectory(.thumbnails)
     }
     
     private var pdfFolderURL: URL {
-        return FileManager.cacheDirectoryURL.appendingPathComponent(kImagePDFFolder, isDirectory: true)
+        return FileManager.cacheDirectory(.pdfGeneration)
     }
     
     private func thumbUrl(for imageUrl: URL) -> URL {
-        let filename = imageUrl.deletingPathExtension().appendingPathExtension(kImageThumbsSuffix).lastPathComponent
+        let filename = imageUrl.deletingPathExtension().appendingPathExtension("thumbs.jpg").lastPathComponent
         return thumbnailsFolderURL.appendingPathComponent(filename, isDirectory: false)
     }
 }
 
 private extension URL {
     var isSupportedImageURL: Bool {
-        return [kImageExtensionPNG.lowercased(), kImageExtensionJPG.lowercased()].contains(pathExtension.lowercased())
+        return ["jpg", "png"].contains(pathExtension.lowercased())
     }
 }
