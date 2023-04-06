@@ -225,7 +225,7 @@ extension GalleryImageVC: ImageAnalysisInteractionDelegate {
                 interaction.preferredInteractionTypes = .automatic
             }
             catch {
-                print("Coudln't analyze image properly:", error)
+                Logger.w(.gallery, "Couldn't analyze image properly: \(error)")
             }
         }
     }

@@ -112,9 +112,9 @@ extension Sane {
         let interval = Date().timeIntervalSince(startDate)
         if interval > minReportDuration {
             if let message = message {
-                SaneLogger.w(.sane, "\(function), \(message): \(interval)s")
+                SaneLogger.w("\(function), \(message): \(interval)s")
             } else {
-                SaneLogger.w(.sane, "\(function): \(interval)s")
+                SaneLogger.w("\(function): \(interval)s")
             }
         }
         return returnValue
@@ -141,7 +141,7 @@ extension Sane {
             }
             
             self.saneStarted = (s == SANE_STATUS_GOOD)
-            SaneLogger.i(.sane, "Started: \(self.saneStarted)")
+            SaneLogger.i("Started: \(self.saneStarted)")
         }
     }
     
@@ -154,7 +154,7 @@ extension Sane {
             sane_exit()
             
             self.saneStarted = false
-            SaneLogger.i(.sane, "Stopped")
+            SaneLogger.i("Stopped")
         }
     }
 }
@@ -174,10 +174,10 @@ private func SaneAuthenticationCallback(deviceName: SANE_String_Const?, username
     
     // this method will be called from the SANE thread, let's escape it to call the delegate
     DispatchQueue.main.async {
-        SaneLogger.i(.sane, "Asking auth for \(deviceString ?? "<null>")")
+        SaneLogger.i("Asking auth for \(deviceString ?? "<null>")")
         Sane.shared.delegate?.saneNeedsAuth(Sane.shared, for: deviceString, completion: { (authentication) in
             auth = authentication
-            SaneLogger.i(.sane, "Received auth")
+            SaneLogger.i("Received auth")
             _ = semaphore.signal()
         })
     }
@@ -201,7 +201,7 @@ extension Sane {
         // to the delegate in between
         self.runningDeviceUpdates += 1
 
-        SaneLogger.i(.sane, "Updating devices")
+        SaneLogger.i("Updating devices")
         runOnSaneThread {
             self.startSane()
             defer {
@@ -217,7 +217,7 @@ extension Sane {
             
             guard s == SANE_STATUS_GOOD else {
                 Sane.runOn(mainThread: true, block: {
-                    SaneLogger.e(.sane, "Couldn't update devices: \(s)")
+                    SaneLogger.e("Couldn't update devices: \(s)")
                     completion(.failure(SaneError(saneStatus: s)))
                 })
                 return
@@ -229,19 +229,19 @@ extension Sane {
             }
 
             Sane.runOn(mainThread: true, block: {
-                SaneLogger.i(.sane, "Found \(devices.count) devices")
+                SaneLogger.i("Found \(devices.count) devices")
                 completion(.success(devices))
             })
         }
     }
     
     public func openDevice(_ device: Device, listOptions: Bool = true, completion: @escaping SaneCompletion<()>) {
-        SaneLogger.i(.sane, "Opening \(device.model)")
+        SaneLogger.i("Opening \(device.model)")
         let startedOnMainThread = Thread.isMainThread
         
         runOnSaneThread {
             guard self.isDeviceOpened(device) == false else {
-                SaneLogger.w(.sane, "Device is already opened")
+                SaneLogger.w("Device is already opened")
                 Sane.runOn(mainThread: startedOnMainThread, block: {
                     completion(.success(()))
                 })
@@ -256,7 +256,7 @@ extension Sane {
             }
             guard s == SANE_STATUS_GOOD else {
                 Sane.runOn(mainThread: startedOnMainThread, block: {
-                    SaneLogger.e(.sane, "Couldn't open device: \(s)")
+                    SaneLogger.e("Couldn't open device: \(s)")
                     completion(.failure(SaneError(saneStatus: s)))
                 })
                 return
@@ -273,25 +273,25 @@ extension Sane {
             }
 
             Sane.runOn(mainThread: startedOnMainThread, block: {
-                SaneLogger.i(.sane, "Device opened")
+                SaneLogger.i("Device opened")
                 completion(.success(()))
             })
         }
     }
     
     public func closeDevice(_ device: Device) {
-        SaneLogger.i(.sane, "Closing device \(device.model)")
+        SaneLogger.i("Closing device \(device.model)")
         device.currentOperation = nil
         device.updatePreviewImage(nil, afterOperation: .preview, fallbackToExisting: false)
 
         runOnSaneThread {
             guard let handle = self.obtainDeviceHandle(device: device) else {
-                SaneLogger.w(.sane, "Device doesn't seem opened, skipping")
+                SaneLogger.w("Device doesn't seem opened, skipping")
                 return
             }
             Sane.logTime { sane_close(handle) }
             self.markDevice(device: device, openedWith: nil)
-            SaneLogger.i(.sane, "Device closed")
+            SaneLogger.i("Device closed")
 
             if self.openedDevices.isEmpty {
                 self.stopSane()
@@ -319,11 +319,11 @@ extension Sane {
 extension Sane {
     // MARK: Options
     public func listOptions(for device: Device, completion: SaneCompletion<()>?) {
-        SaneLogger.i(.sane, "Listing options for \(device.model)")
+        SaneLogger.i("Listing options for \(device.model)")
         let startedOnMainThread = Thread.isMainThread
         
         guard let handle = obtainDeviceHandle(device: device) else {
-            SaneLogger.e(.sane, "Device is not opened, skipping")
+            SaneLogger.e("Device is not opened, skipping")
             completion?(.failure(.deviceNotOpened))
             return
         }
@@ -340,12 +340,12 @@ extension Sane {
                 
                 let s = sane_control_option(handle, 0, SANE_ACTION_GET_VALUE, &count, nil)
                 guard s == SANE_STATUS_GOOD else {
-                    SaneLogger.e(.sane, "Couldn't get the number of options, aborting with status \(s)")
+                    SaneLogger.e("Couldn't get the number of options, aborting with status \(s)")
                     Sane.runOn(mainThread: startedOnMainThread) { completion?(.failure(.couldntGetOptions)) }
                     return
                 }
                 
-                SaneLogger.i(.sane, "Found \(count) options")
+                SaneLogger.i("Found \(count) options")
                 for i in 1..<count {
                     descriptor = sane_get_option_descriptor(handle, i)
                     options.append(DeviceOption.typedOption(cOption: descriptor!.pointee, index: Int(i), device: device))
@@ -356,30 +356,30 @@ extension Sane {
             
             device.options = options
             
-            SaneLogger.i(.sane, "Finished listing options")
+            SaneLogger.i("Finished listing options")
             Sane.runOn(mainThread: startedOnMainThread) { completion?(.success(())) }
         }
     }
     
     public func valueForOption<V, T: DeviceOptionTyped<V>>(_ option: T, completion: @escaping SaneCompletion<V>) {
         let optionName = "\(option.device.model) > \(option.localizedTitle)"
-        SaneLogger.d(.sane, "Get value for \(optionName)")
+        SaneLogger.d("Get value for \(optionName)")
         let startedOnMainThread = Thread.isMainThread
         
         guard let handle = obtainDeviceHandle(device: option.device) else {
-            SaneLogger.e(.sane, "> Device is not opened, aborting")
+            SaneLogger.e("> Device is not opened, aborting")
             completion(.failure(SaneError.deviceNotOpened))
             return
         }
         
         guard option.type != SANE_TYPE_GROUP else {
-            SaneLogger.w(.sane, "> Group option, nothing to obtain, aborting")
+            SaneLogger.w("> Group option, nothing to obtain, aborting")
             completion(.failure(SaneError.getValueForGroupType))
             return
         }
         
         guard option.type != SANE_TYPE_BUTTON else {
-            SaneLogger.w(.sane, "> Button option, nothing to obtain, aborting")
+            SaneLogger.w("> Button option, nothing to obtain, aborting")
             completion(.failure(SaneError.getValueForButtonType))
             return
         }
@@ -393,22 +393,22 @@ extension Sane {
 
             // some backends allow reading the value fo a disabled option, so we try anyway, but ignore it if it fails
             guard s == SANE_STATUS_GOOD || !option.capabilities.isActive else {
-                SaneLogger.e(.sane, "> Couldn't obtain value for \(optionName): \(s)")
+                SaneLogger.e("> Couldn't obtain value for \(optionName): \(s)")
                 Sane.runOn(mainThread: startedOnMainThread) { completion(.failure(SaneError(saneStatus: s))) }
                 return
             }
             
-            SaneLogger.d(.sane, "> Obtained value: \(value), constraints: \(option.constraint.description)")
+            SaneLogger.d("> Obtained value: \(value), constraints: \(option.constraint.description)")
             Sane.runOn(mainThread: startedOnMainThread) { completion(.success(value)) }
         }
     }
 
     private func setCropArea(_ cropArea: CGRect, useAuto: Bool, device: Device, completion: SaneCompletion<()>?) {
-        SaneLogger.i(.sane, "Setting crop area to \(useAuto ? "auto" : cropArea.debugDescription) for \(device.model)")
+        SaneLogger.i("Setting crop area to \(useAuto ? "auto" : cropArea.debugDescription) for \(device.model)")
         let startedOnMainThread = Thread.isMainThread
         
         guard isDeviceOpened(device) else {
-            SaneLogger.e(.sane, "Device is not opened")
+            SaneLogger.e("Device is not opened")
             completion?(.failure(SaneError.deviceNotOpened))
             return
         }
@@ -420,7 +420,7 @@ extension Sane {
             let values = [cropArea.minX, cropArea.minY, cropArea.maxX, cropArea.maxY]
             
             for (option, value) in zip(stdOptions, values) {
-                SaneLogger.i(.sane, "Setting \(value) for \(option)")
+                SaneLogger.i("Setting \(value) for \(option)")
                 if let option = device.standardOption(for: option) as? DeviceOptionInt {
                     self.updateOption(option, with: .value(Int(value)), completion: { (result) in
                         finalError = result.error
@@ -437,11 +437,11 @@ extension Sane {
             
             Sane.runOn(mainThread: startedOnMainThread) {
                 if let finalError {
-                    SaneLogger.e(.sane, "Finished setting crop area with error: \(finalError.localizedDescription)")
+                    SaneLogger.e("Finished setting crop area with error: \(finalError.localizedDescription)")
                     completion?(.failure(finalError))
                 }
                 else {
-                    SaneLogger.i(.sane, "Finished setting crop area")
+                    SaneLogger.i("Finished setting crop area")
                     completion?(.success(()))
                 }
             }
@@ -450,16 +450,16 @@ extension Sane {
 
     public func updateOption<V, T: DeviceOptionTyped<V>>(_ option: T, with value: DeviceOptionNewValue<V>, completion: SaneCompletion<SaneInfo>?) {
         let startedOnMainThread = Thread.isMainThread
-        SaneLogger.i(.sane, "Setting value \(value) for option \(option.localizedTitle)")
+        SaneLogger.i("Setting value \(value) for option \(option.localizedTitle)")
 
         guard let handle = obtainDeviceHandle(device: option.device) else {
-            SaneLogger.e(.sane, "> Device is not opened")
+            SaneLogger.e("> Device is not opened")
             completion?(.failure(SaneError.deviceNotOpened))
             return
         }
         
         guard option.type != SANE_TYPE_GROUP else {
-            SaneLogger.e(.sane, "> Cannot set value for a group option")
+            SaneLogger.e("> Cannot set value for a group option")
             completion?(.failure(SaneError.setValueForGroupType))
             return
         }
@@ -496,22 +496,22 @@ extension Sane {
             let result: Result<SaneInfo, SaneError>
             if status == SANE_STATUS_GOOD {
                 if SaneInfo(rawValue: info).contains(.reloadOptions) {
-                    SaneLogger.d(.sane, "> Reloading all options after update")
+                    SaneLogger.d("> Reloading all options after update")
                     // this is absolutely needed, because if the option declares it needs to reload other options, setting any option before
                     // doing so will result in SANE_STATUS_INVAL. So we make sure each changes that needs to reload options *does* reload them
                     self.listOptions(for: option.device, completion: nil)
-                    SaneLogger.d(.sane, "> Reloaded all options after update")
+                    SaneLogger.d("> Reloaded all options after update")
                 }
                 else {
-                    SaneLogger.d(.sane, "> Reloading option to make sure its value is correct")
+                    SaneLogger.d("> Reloading option to make sure its value is correct")
                     // some changes can be accepted but inexact, or we used an auto value and need to figure out the value that is actually used
                     option.refreshValue(nil)
-                    SaneLogger.d(.sane, "> Reloaded option after update")
+                    SaneLogger.d("> Reloaded option after update")
                 }
                 result = .success(SaneInfo(rawValue: info))
             }
             else {
-                SaneLogger.e(.sane, "> Couldn't update option \(option.localizedTitle): \(status)")
+                SaneLogger.e("> Couldn't update option \(option.localizedTitle): \(status)")
                 result = .failure(SaneError(saneStatus: status))
             }
             
@@ -528,21 +528,21 @@ extension Sane {
         let prevValue = option.value
         
         let restoreBlock = {
-            SaneLogger.d(.sane, "Preview: Restoring option \(option.localizedTitle) to \(prevValue)")
+            SaneLogger.d("Preview: Restoring option \(option.localizedTitle) to \(prevValue)")
             Sane.shared.updateOption(option, with: .value(prevValue), completion: nil)
         }
         
         switch option.bestPreviewValue {
         case .auto:
-            SaneLogger.d(.sane, "Preview: Setting option \(option.localizedTitle) to auto")
+            SaneLogger.d("Preview: Setting option \(option.localizedTitle) to auto")
             Sane.shared.updateOption(option, with: .auto, completion: nil)
             return restoreBlock
         case .value(let value):
-            SaneLogger.d(.sane, "Preview: Setting option \(option.localizedTitle) to \(value)")
+            SaneLogger.d("Preview: Setting option \(option.localizedTitle) to \(value)")
             Sane.shared.updateOption(option, with: .value(value), completion: nil)
             return restoreBlock
         case .none:
-            SaneLogger.d(.sane, "Preview: Ignoring option \(option.localizedTitle)")
+            SaneLogger.d("Preview: Ignoring option \(option.localizedTitle)")
             return {}
         }
     }
@@ -552,10 +552,10 @@ extension Sane {
     // MARK: Scan
     public func preview(device: Device, progress: ((ScanProgress) -> ())?, completion: @escaping SaneCompletion<ScanImage>) {
         let startedOnMainThread = Thread.isMainThread
-        SaneLogger.i(.sane, "Starting preview for \(device.model)")
+        SaneLogger.i("Starting preview for \(device.model)")
 
         guard isDeviceOpened(device) else {
-            SaneLogger.e(.sane, "> Device is not opened")
+            SaneLogger.e("> Device is not opened")
             completion(.failure(SaneError.deviceNotOpened))
             return
         }
@@ -563,7 +563,7 @@ extension Sane {
         Sane.runOn(mainThread: true) { progress?(.warmingUp) }
 
         runOnSaneThread {
-            SaneLogger.i(.sane, "Preview: preparing options")
+            SaneLogger.i("Preview: preparing options")
             var restoreBlocks = [(RestoreBlock)]()
             
             if let optionPreview = device.standardOption(for: .preview) as? DeviceOptionBool {
@@ -599,7 +599,7 @@ extension Sane {
                     }
                 }
             }
-            SaneLogger.i(.sane, "Preview: options prepared")
+            SaneLogger.i("Preview: options prepared")
 
             var result: SaneResult<ScanImage>!
 
@@ -607,22 +607,22 @@ extension Sane {
                 result = r.map { $0.last! }
             })
             if let error = result.error {
-                SaneLogger.e(.sane, "Preview: finished scanning with error: \(error)")
+                SaneLogger.e("Preview: finished scanning with error: \(error)")
             }
             else {
-                SaneLogger.i(.sane, "Preview: finished scanning")
+                SaneLogger.i("Preview: finished scanning")
             }
 
-            SaneLogger.i(.sane, "Preview: restoring options")
+            SaneLogger.i("Preview: restoring options")
             if let optionPreview = device.standardOption(for: .preview) as? DeviceOptionBool {
                 self.updateOption(optionPreview, with: .value(false), completion: nil)
             }
             else {
                 restoreBlocks.forEach { $0() }
             }
-            SaneLogger.i(.sane, "Preview: restored options")
+            SaneLogger.i("Preview: restored options")
 
-            SaneLogger.i(.sane, "Preview: finished")
+            SaneLogger.i("Preview: finished")
             Sane.runOn(mainThread: startedOnMainThread) { completion(result!) }
         }
     }
@@ -632,12 +632,12 @@ extension Sane {
     }
 
     private func internalScan(device: Device, operation: ScanOperation, useScanCropArea: Bool, generateIntermediateImages: Bool, progress: ((ScanProgress) -> ())?, completion: @escaping SaneCompletion<[ScanImage]>) {
-        SaneLogger.i(.sane, "Scan: starting scan for \(device.name)")
+        SaneLogger.i("Scan: starting scan for \(device.name)")
 
         let startedOnMainThread = Thread.isMainThread
 
         guard let handle = obtainDeviceHandle(device: device) else {
-            SaneLogger.e(.sane, "> Device is not opened")
+            SaneLogger.e("> Device is not opened")
             Sane.runOn(mainThread: startedOnMainThread) { completion(.failure(SaneError.deviceNotOpened)) }
             return
         }
@@ -663,12 +663,12 @@ extension Sane {
             
             let crop: CGRect
             if device.canCrop && useScanCropArea {
-                SaneLogger.i(.sane, "> Setting crop area")
+                SaneLogger.i("> Setting crop area")
                 self.setCropArea(device.cropArea, useAuto: false, device: device, completion: nil)
                 crop = device.cropArea
             }
             else {
-                SaneLogger.i(.sane, "> Using max crop area")
+                SaneLogger.i("> Using max crop area")
                 crop = device.maxCropArea
             }
             
@@ -739,28 +739,28 @@ extension Sane {
     /// Device should be opened at this point
     private func internalFrameScan(device: Device, handle: SANE_Handle, crop: CGRect, generateIntermediateImages: Bool, scannedDocsCount: Int, previousFrames: [ScanImage], progress: @escaping (ScanProgress) -> ()) -> SaneResult<ScanImage> {
 
-        SaneLogger.i(.sane, "> Starting scan")
+        SaneLogger.i("> Starting scan")
         var status = Sane.logTime { sane_start(handle) }
         
         guard status == SANE_STATUS_GOOD else {
-            SaneLogger.e(.sane, "> Couldn't start scan: \(status)")
+            SaneLogger.e("> Couldn't start scan: \(status)")
             return .failure(SaneError(saneStatus: status))
         }
         
-        SaneLogger.i(.sane, "> Setting blocking IO mode")
+        SaneLogger.i("> Setting blocking IO mode")
         status = sane_set_io_mode(handle, SANE_FALSE) // false = blocking IO mode
         
         guard status == SANE_STATUS_GOOD || status == SANE_STATUS_UNSUPPORTED else {
-            SaneLogger.e(.sane, "> Couldn't set IO mode: \(status)")
+            SaneLogger.e("> Couldn't set IO mode: \(status)")
             return .failure(SaneError(saneStatus: status))
         }
 
-        SaneLogger.i(.sane, "> Obtaining scan parameters")
+        SaneLogger.i("> Obtaining scan parameters")
         var params = SANE_Parameters()
         status = sane_get_parameters(handle, &params)
 
         guard status == SANE_STATUS_GOOD else {
-            SaneLogger.e(.sane, "> Couldn't obtain scan parameters: \(status)")
+            SaneLogger.e("> Couldn't obtain scan parameters: \(status)")
             return .failure(SaneError(saneStatus: status))
         }
 
@@ -770,7 +770,7 @@ extension Sane {
         // IO mode
         let parameters = ScanParameters(cParams: params, cropArea: crop)
         assert(parameters.fileSize > 0, "Scan parameters invalid")
-        SaneLogger.i(.sane, "> Scan parameters are \(parameters)")
+        SaneLogger.i("> Scan parameters are \(parameters)")
 
         // LATER: try to use a file instead, to support bigger images
         // - could be appended to using [fileHandle writeData:[NSData dataWithBytes:buffer length:bufferActualSize]]
@@ -786,11 +786,11 @@ extension Sane {
         }
 
         let bufferMaxSize = max(500 * 1000, parameters.fileSize / 100)
-        SaneLogger.d(.sane, "> Preparing buffer of size \(bufferMaxSize) bytes")
+        SaneLogger.d("> Preparing buffer of size \(bufferMaxSize) bytes")
 
         let buffer = malloc(bufferMaxSize)!.bindMemory(to: UInt8.self, capacity: bufferMaxSize)
         defer {
-            SaneLogger.d(.sane, "> Freeing buffer")
+            SaneLogger.d("> Freeing buffer")
             free(buffer)
         }
         var bufferActualSize: SANE_Int = 0
@@ -805,7 +805,7 @@ extension Sane {
             // read data
             status = sane_read(handle, buffer, SANE_Int(bufferMaxSize), &bufferActualSize)
             guard status == SANE_STATUS_GOOD else { break }
-            SaneLogger.d(.sane, "> Reading next data: requested \(bufferMaxSize), got \(bufferActualSize) bytes")
+            SaneLogger.d("> Reading next data: requested \(bufferMaxSize), got \(bufferActualSize) bytes")
 
             // lineart requires inverting pixel values
             if parameters.depth == 1 && parameters.currentlyAcquiredFrame == SANE_FRAME_GRAY {
@@ -816,12 +816,12 @@ extension Sane {
             
             // append data from the buffer to the total data
             if parameters.expectedFramesCount == 1 {
-                SaneLogger.d(.sane, "> Appending image data")
+                SaneLogger.d("> Appending image data")
                 data.append(buffer, count: Int(bufferActualSize))
             }
             else {
                 let bytesPerPixel = max(1, parameters.depth / 8)
-                SaneLogger.d(.sane, "> Interlacing image data")
+                SaneLogger.d("> Interlacing image data")
                 (0..<(Int(bufferActualSize) / bytesPerPixel)).forEach { pixelIndex in
                     (0..<bytesPerPixel).forEach { byteIndex in
                         data[acquiredBytesCount * 3 + (pixelIndex * 3 + parameters.currentFrameIndex) * bytesPerPixel + byteIndex] = buffer[pixelIndex * bytesPerPixel + byteIndex]
@@ -836,7 +836,7 @@ extension Sane {
 
             if generateIntermediateImages && percentScanned > progressForLastIncompletePreview + incompletePreviewStep {
                 progressForLastIncompletePreview = percentScanned
-                SaneLogger.d(.sane, "> Generating preview: \(percentScanned)")
+                SaneLogger.d("> Generating preview: \(percentScanned)")
                 let previewImage = try? UIImage.sy_imageFromIncompleteSane(data: data, parameters: parameters)
                 progress(.scanning(
                     progress: globalPercentScanned, finishedDocs: scannedDocsCount,
@@ -844,7 +844,7 @@ extension Sane {
                 ))
             }
             else if !generateIntermediateImages {
-                SaneLogger.d(.sane, "> Reporting progress: \(percentScanned)")
+                SaneLogger.d("> Reporting progress: \(percentScanned)")
                 progress(.scanning(
                     progress: globalPercentScanned, finishedDocs: scannedDocsCount,
                     incompletePreview: nil, parameters: parameters
@@ -853,7 +853,7 @@ extension Sane {
         }
 
         if self.stopScanOperation {
-            SaneLogger.i(.sane, "> Scan cancel was required, stopping now")
+            SaneLogger.i("> Scan cancel was required, stopping now")
             self.stopScanOperation = false
             Sane.runOn(mainThread: true) {
                 device.currentOperation?.progress = .cancelling
@@ -864,11 +864,11 @@ extension Sane {
         }
 
         guard status == SANE_STATUS_EOF else {
-            SaneLogger.e(.sane, "> Scan stopped unexpectedly: \(status)")
+            SaneLogger.e("> Scan stopped unexpectedly: \(status)")
             return .failure(SaneError(saneStatus: status))
         }
         
-        SaneLogger.i(.sane, "> Finished scanning \(parameters.currentlyAcquiredFrame) frame with success")
+        SaneLogger.i("> Finished scanning \(parameters.currentlyAcquiredFrame) frame with success")
         let result = Result(catching: {
             try UIImage.sy_imageFromSane(data: data, parameters: parameters)
         })

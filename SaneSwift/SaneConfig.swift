@@ -44,7 +44,7 @@ internal extension SaneConfig {
             try plistData.write(to: saneSwiftConfigPlistURL)
         }
         catch {
-            SaneLogger.e(.sane, "Couldn't save config: \(error)")
+            SaneLogger.e("Couldn't save config: \(error)")
         }
         
         // Step 2: expose the new config to SANE

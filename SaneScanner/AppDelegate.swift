@@ -45,8 +45,11 @@ extension AppDelegate : UIApplicationDelegate {
             Sane.shared.configuration.hosts = [.init(hostname: snapshotHost, displayName: snapshotHost)]
         }
         
+        Logger.level = .info
+        SaneLogger.externalLoggingMethod = { level, message in
+            Logger.logSane(level: level, message: message)
+        }
         SaneSetLogLevel(0)
-        SaneLogger.level = .info
 
         return true
     }
@@ -60,7 +63,7 @@ extension AppDelegate : UIApplicationDelegate {
 
         let requiresBackgroundMode = allContexts.contains(where: { $0.status != .devicesList })
         guard requiresBackgroundMode else {
-            print("No device opened, no need to keep alive in background")
+            Logger.i(.app, "No device opened, no need to keep alive in background")
             return
         }
         
@@ -82,16 +85,16 @@ extension AppDelegate : UIApplicationDelegate {
         })
 
         if backgroundTaskID == .invalid {
-            print("Couldn't start a background task, let's cancel scans and close devices")
+            Logger.w(.app, "Couldn't start a background task, let's cancel scans and close devices")
             stopAllOperations()
         }
         else {
-            print("Keeping app alive for a bit longer")
+            Logger.i(.app, "Keeping app alive for a bit longer")
         }
     }
     
     private func stopAllOperations() {
-        print("Stopping all operations")
+        Logger.i(.app, "Stopping all operations")
 
         // Let's make Sane end gracefully to prevent using a dangling SANE_Handle
         Sane.shared.cancelCurrentScan()

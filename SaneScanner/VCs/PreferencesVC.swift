@@ -184,10 +184,15 @@ extension PreferencesVC : UITableViewDelegate {
                     sender:
                     tableView.cellForRow(at: indexPath))
                 { (launched, service, error) in
-                        if service is PasteboardEmailService {
-                            UIAlertController.show(message: "MAIL COPY PASTEBOARD SUCCESS".localized, in: self)
-                        }
-                        print("Completion:", service?.name ?? "<no service>", launched, error?.localizedDescription ?? "<no error>")
+                    if service is PasteboardEmailService {
+                        UIAlertController.show(message: "MAIL COPY PASTEBOARD SUCCESS".localized, in: self)
+                    }
+                    if let error {
+                        Logger.e(.app, "EmailHelper \(service?.name ?? "<no service>"): \(error)")
+                    }
+                    else {
+                        Logger.e(.app, "EmailHelper \(service?.name ?? "<no service>"): launched=\(launched)")
+                    }
                 }
                 
             case .acknowledgements:

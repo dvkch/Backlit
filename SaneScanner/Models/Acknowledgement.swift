@@ -45,7 +45,7 @@ struct Acknowledgement: Codable {
             return wrapper.acknowledgements.filter { $0.licenseName != nil }
         }
         catch {
-            print("Couldn't parse acknowledgements:", error)
+            Logger.w(.app, "Couldn't parse acknowledgements: \(error)")
             return []
         }
     }()

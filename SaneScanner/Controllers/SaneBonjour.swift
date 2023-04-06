@@ -66,7 +66,7 @@ extension SaneBonjour: NetServiceBrowserDelegate {
     }
 
     func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-        print("Couldn't browse the network: \(errorDict)")
+        Logger.e(.bonjour, "Couldn't browse the network: \(errorDict)")
         isRunning = false
     }
 

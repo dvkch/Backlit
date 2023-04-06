@@ -7,58 +7,51 @@
 //
 
 import Foundation
-import OSLog
 
 public struct SaneLogger {
     private init() {}
 
-    internal enum Tag: String {
-        case sane = "SANE"
+    // MARK: Level
+    public enum Level: CustomStringConvertible {
+        case debug, info, warning, error
         
-        @available(iOS 12.0, *)
-        var asOSLog: OSLog {
-            return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: rawValue)
+        public var description: String {
+            switch self {
+            case .debug:    return "Debug"
+            case .info:     return "Info"
+            case .warning:  return "Warning"
+            case .error:    return "Error"
+            }
+        }
+    }
+
+    // MARK: External logging
+    public static var externalLoggingMethod: ((Level, String) -> ())?
+    
+    // MARK: Internal methods
+    internal static func log(level: Level, _ message: String) {
+        if let externalLoggingMethod {
+            externalLoggingMethod(level, message)
+        }
+        else {
+            print("[SANE/\(level.description)] \(message)")
         }
     }
     
-    public static var level: OSLogType = .info
-    
-    private static func log(level: OSLogType, tag: Tag, _ message: String) {
-        guard level.value >= self.level.value else { return }
-        if #available(iOS 12.0, *) {
-            os_log(level, log: tag.asOSLog, "%@", message)
-        } else {
-            print("[\(level.value)] \(message)")
-        }
-    }
-    
-    internal static func d(_ tag: Tag, _ message: String) {
-        log(level: .debug, tag: tag, message)
+    internal static func d(_ message: String) {
+        log(level: .debug, message)
     }
 
-    internal static func i(_ tag: Tag, _ message: String) {
-        log(level: .info, tag: tag, message)
+    internal static func i(_ message: String) {
+        log(level: .info, message)
     }
     
-    internal static func w(_ tag: Tag, _ message: String) {
-        log(level: .default, tag: tag, message)
+    internal static func w(_ message: String) {
+        log(level: .warning, message)
     }
 
-    internal static func e(_ tag: Tag, _ message: String) {
-        log(level: .error, tag: tag, message)
+    internal static func e(_ message: String) {
+        log(level: .error, message)
     }
 }
 
-private extension OSLogType {
-    var value: Int {
-        switch self {
-        case .debug:    return 0
-        case .info:     return 1
-        case .default:  return 2
-        case .error:    return 3
-        case .fault:    return 4
-        default:
-            return 0
-        }
-    }
-}
