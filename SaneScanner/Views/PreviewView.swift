@@ -106,6 +106,9 @@ class PreviewView: UIView {
             refresh()
         }
     }
+    var cropAreaInViewBounds: CGRect {
+        return convert(cropMask.cropAreaInViewBounds, from: cropMask)
+    }
     
     // MARK: Views
     private let imageView = UIImageView()

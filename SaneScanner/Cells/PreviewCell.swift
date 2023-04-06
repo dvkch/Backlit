@@ -19,7 +19,7 @@ class PreviewCell: UITableViewCell {
     }
 
     // MARK: Views
-    @IBOutlet private var previewView: PreviewView!
+    @IBOutlet private(set) var previewView: PreviewView!
     
     // MARK: Properties
     weak var delegate: PreviewViewDelegate?

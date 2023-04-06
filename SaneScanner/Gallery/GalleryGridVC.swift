@@ -260,7 +260,7 @@ extension GalleryGridVC : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
-        cell.update(item: items[indexPath.row], mode: .gallery, spinnerColor: UIColor.gray)
+        cell.update(item: items[indexPath.row], mode: .gallery, displayedOverTint: false)
         cell.showSelectionIndicator = isEditing
         return cell
     }

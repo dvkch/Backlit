@@ -26,7 +26,18 @@ class Context: NSObject {
     // MARK: Properties
     let window: ContextWindow
     private let splitViewController = SplitVC()
-    
+
+    // MARK: UI properties
+    var currentPreviewView: PreviewView? {
+        if let deviceVC = splitViewController.scanNC.viewControllers.last as? DeviceVC {
+            return deviceVC.previewCell?.previewView
+        }
+        if let previewVC = splitViewController.previewNC.viewControllers.last as? DevicePreviewVC {
+            return previewVC.previewView
+        }
+        return nil
+    }
+
     // MARK: Methods
     private func setup() {
         window.context = self

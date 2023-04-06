@@ -63,7 +63,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
     }
     
     // MARK: Properties
-    private var item: GalleryItem?
+    private(set) var item: GalleryItem?
     private var mode: Mode = .gallery
     var showSelectionIndicator: Bool = false {
         didSet {
@@ -93,8 +93,8 @@ class GalleryThumbnailCell: UICollectionViewCell {
     private let selectionBackgroundView = UIView()
 
     // MARK: Content
-    func update(item: GalleryItem, mode: Mode, spinnerColor: UIColor) {
-        spinner.color = spinnerColor
+    func update(item: GalleryItem, mode: Mode, displayedOverTint: Bool) {
+        spinner.color = displayedOverTint ? .normalTextOnTint : .normalText
         self.item = item
         self.mode = mode
         accessibilityLabel = GalleryManager.shared.accessibilityLabel(forItemAt: item.url)
@@ -120,7 +120,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         }
         else {
             spinner.startAnimating()
-            imageView.backgroundColor = .lightGray
+            imageView.backgroundColor = .backgroundAlt
         }
 
         switch mode {
@@ -131,7 +131,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
                 imageView.backgroundColor = .white
             }
             else {
-                imageView.backgroundColor = .lightGray
+                imageView.backgroundColor = .backgroundAlt
             }
 
         case .toolbar:

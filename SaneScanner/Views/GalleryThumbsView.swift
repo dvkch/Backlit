@@ -40,7 +40,6 @@ class GalleryThumbsView: UIView {
         
         collectionViewLayout.scrollDirection = .horizontal
         
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.clipsToBounds = false
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
@@ -68,8 +67,8 @@ class GalleryThumbsView: UIView {
             setNeedsUpdateConstraints()
         }
     }
-    private let collectionViewLayout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
+    private var collectionViewLayout: UICollectionViewFlowLayout { collectionView.collectionViewLayout as! UICollectionViewFlowLayout }
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var galleryItems = [GalleryItem]()
     private let gradientMask = CAGradientLayer()
     
@@ -82,6 +81,56 @@ class GalleryThumbsView: UIView {
         let nc = GalleryNC(openedAt: index)
         parentViewController?.present(nc, animated: true, completion: nil)
         #endif
+    }
+    
+    // MARK: Insertion animation
+    private var insertedGalleryItem: GalleryItem?
+    private func doInsertionAnimation(newItems: [GalleryItem], removedItems: [GalleryItem], allItems: [GalleryItem]) -> Bool {
+        // make sure there is only one item added, that it's the most recent item, and that it's less than 5s old
+        guard removedItems.isEmpty, newItems.count == 1, let newItem = newItems.first, newItem == allItems[0] else { return false }
+        guard fabs(newItem.creationDate.timeIntervalSinceNow) < 5 else { return false }
+        
+        // ignore the animation if we are not fully visible
+        guard parentViewController?.presentedViewController == nil else { return false }
+        
+        // access the source view
+        guard let window = window as? ContextWindow, let sourceView = window.context?.currentPreviewView else { return false }
+
+        // prepare the animation
+        insertedGalleryItem = newItem
+        defer { insertedGalleryItem = nil }
+
+        // insert the corresponding new cell
+        collectionView.performBatchUpdates({
+            collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
+        }, completion: { _ in
+            self.insertedGalleryItem = nil
+            self.collectionView.visibleCells
+                .compactMap { $0 as? GalleryThumbnailCell }
+                .filter { $0.item == newItem }
+                .forEach { $0.isHidden = false }
+        })
+        
+        // access the final rect of the added cell
+        guard let cellRect = collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0))?.frame else { return false }
+        
+        // perform the animation
+        let imageView = UIImageView(image: UIImage(contentsOfFile: newItem.thumbnailUrl.path))
+        imageView.backgroundColor = .white
+        imageView.isUserInteractionEnabled = false
+        imageView.frame = window.convert(sourceView.cropAreaInViewBounds, from: sourceView)
+        window.addSubview(imageView)
+
+        UIView.animate(withDuration: 0.3, animations: {
+            self.collectionView.contentOffset.x = -self.collectionView.contentInset.left
+            imageView.frame = window.convert(cellRect, from: self.collectionView)
+        }, completion: { _ in
+            imageView.removeFromSuperview()
+            self.insertedGalleryItem = nil
+            self.collectionView.reloadData()
+        })
+        
+        return true
     }
 
     // MARK: Layout
@@ -164,10 +213,14 @@ class GalleryThumbsView: UIView {
 extension GalleryThumbsView: GalleryManagerDelegate {
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
-        UIView.animate(withDuration: 0.3) {
-            self.galleryItems = items
-            self.collectionView?.reloadData()
-            self.setNeedsLayout()
+        self.galleryItems = items
+
+        let ranAnimation = doInsertionAnimation(newItems: newItems, removedItems: removedItems, allItems: items)
+        if !ranAnimation {
+            UIView.animate(withDuration: 0.3) {
+                self.collectionView.reloadData()
+                self.setNeedsLayout()
+            }
         }
     }
 }
@@ -178,34 +231,9 @@ extension GalleryThumbsView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let spinnerColor = tintColor != .white ? UIColor.white : .gray
-        
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
-        
-        cell.update(item: galleryItems[indexPath.item], mode: .toolbar, spinnerColor: spinnerColor)
-        
-        // Interactive dismissal: was planning on implementing it but iOS 13 and its new modal presentation mode made it unecessary. This code sample
-        // dates from when I used MHVideoPhotoGallery, it allowed the interactive dismissal to use the thumbnail corresponding to the currently displayed
-        // image in the gallery as a destination rect. Sure, that would be nice to have, but who has the time?
-        /*
-        cell.update(
-            items: galleryItems,
-            index: indexPath.item,
-            parentController: parentViewController?.navigationController,
-            spinnerColor: spinnerColor)
-        { [weak self] (index) -> UIImageView? in
-            guard let self = self, index < self.galleryItems.count else { return nil }
-            
-            let dismissIndexPath = IndexPath(item: index, section: 0)
-            self.collectionView.scrollToItem(at: dismissIndexPath, at: [.centeredVertically, .centeredHorizontally], animated: false)
-            
-            // needed to be sure the cell is loaded
-            self.collectionView.layoutIfNeeded()
-        
-            let dismissCell = collectionView.cellForItem(at: dismissIndexPath) as? GalleryThumbsCell
-            return dismissCell?.imageView
-        }
-        */
+        cell.update(item: galleryItems[indexPath.item], mode: .toolbar, displayedOverTint: self.tintColor == .tint)
+        cell.isHidden = (cell.item == insertedGalleryItem)
         return cell
     }
 }

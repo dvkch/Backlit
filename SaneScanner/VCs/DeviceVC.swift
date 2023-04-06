@@ -264,8 +264,12 @@ class DeviceVC: UIViewController {
         }
     }
     
+    var previewCell: PreviewCell? {
+        return tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first
+    }
+    
     private func updatePreviewViews() {
-        tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first?.refresh()
+        previewCell?.refresh()
         (splitViewController as? SplitVC)?.previewNC.viewControllers.forEach { ($0 as? DevicePreviewVC)?.refresh() }
     }
     
@@ -360,7 +364,7 @@ extension DeviceVC : UITableViewDataSource {
         return header
     }
     
-    func previewCellHeight(in tableView: UITableView) -> CGFloat {
+    private func previewCellHeight(in tableView: UITableView) -> CGFloat {
         var maxImageHeight = tableView.bounds.height * 2 / 3
         
         if traitCollection.verticalSizeClass == .compact {

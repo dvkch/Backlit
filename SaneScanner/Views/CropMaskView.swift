@@ -104,7 +104,7 @@ class CropMaskView: UIControl {
         return maxCropArea.asPercents(of: maxCropArea).fromPercents(of: bounds)
     }
     
-    private var cropAreaInViewBounds: CGRect {
+    var cropAreaInViewBounds: CGRect {
         return cropArea.asPercents(of: maxCropArea).fromPercents(of: bounds)
     }
     
