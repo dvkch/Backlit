@@ -14,6 +14,10 @@ extension Double {
         formatter.locale = .current
         return formatter.number(from: string)?.doubleValue ?? Double(string)
     }
+    
+    func clamped(min: Double, max: Double) -> Double {
+        return Swift.min(max, Swift.max(min, self))
+    }
 }
 
 extension OperatingSystemVersion {

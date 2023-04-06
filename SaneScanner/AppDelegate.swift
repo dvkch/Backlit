@@ -23,6 +23,10 @@ class AppDelegate: UIResponder {
     // MARK: Properties
     @objc var window: UIWindow?
     private var context: Context?
+    
+    private var allContexts: [Context] {
+        return UIApplication.shared.windows.compactMap({ $0 as? ContextWindow }).compactMap(\.context)
+    }
 }
 
 extension AppDelegate : UIApplicationDelegate {
@@ -48,24 +52,53 @@ extension AppDelegate : UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // TODO: disable on macOS ? count how much time is spent not on the
-        // app and close the current scan if more than 10min when coming back ?
+        startBackgroundTask()
+    }
+    
+    private func startBackgroundTask(retry: Int = 0) {
+        guard UIApplication.shared.applicationState == .background else { return }
 
-        let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: {})
+        let requiresBackgroundMode = allContexts.contains(where: { $0.status != .devicesList })
+        guard requiresBackgroundMode else {
+            print("No device opened, no need to keep alive in background")
+            return
+        }
         
-        // will be restarted by DevicesVC
-        SaneBonjour.shared.stop()
+        var backgroundTaskID: UIBackgroundTaskIdentifier? = nil
+        backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "saneKeepAlive-\(retry + 1)", expirationHandler: {
+            // try to restart a background task, only if need be
+            self.startBackgroundTask(retry: retry + 1)
+
+            // give time to the system to really close the deviceVC if
+            // it's opened, close eventual scan alertView, and dealloc
+            // the VC, which will in turn closing the device and make
+            // sane exit gracefully
+            let gracePeriod = UIApplication.shared.backgroundTimeRemaining.clamped(min: 1, max: 5)
+            DispatchQueue.main.asyncAfter(deadline: .now() + gracePeriod) {
+                if let backgroundTaskID {
+                    UIApplication.shared.endBackgroundTask(backgroundTaskID)
+                }
+            }
+        })
+
+        if backgroundTaskID == .invalid {
+            print("Couldn't start a background task, let's cancel scans and close devices")
+            stopAllOperations()
+        }
+        else {
+            print("Keeping app alive for a bit longer")
+        }
+    }
+    
+    private func stopAllOperations() {
+        print("Stopping all operations")
 
         // Let's make Sane end gracefully to prevent using a dangling SANE_Handle
         Sane.shared.cancelCurrentScan()
-        
-        // give time to the system to really close the deviceVC if
-        // it's opened, close eventual scan alertView, and dealloc
-        // the VC, which will in turn closing the device and make
-        // sane exit gracefully
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            UIApplication.shared.endBackgroundTask(taskID)
-        }
+        allContexts.forEach { $0.stopOperations() }
+
+        // will be restarted by DevicesVC
+        SaneBonjour.shared.stop()
     }
     
     @available(iOS 13.0, *)

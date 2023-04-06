@@ -32,4 +32,10 @@ extension SceneDelegate : UISceneDelegate {
             #endif
         }
     }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        if UIApplication.shared.applicationState == .background {
+            AppDelegate.obtain.applicationDidEnterBackground(UIApplication.shared)
+        }
+    }
 }

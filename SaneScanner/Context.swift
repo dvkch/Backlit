@@ -11,35 +11,30 @@ import SYKit
 
 class Context: NSObject {
     override init() {
-        window = SYWindow.mainWindow(rootViewController: nil)
+        window = ContextWindow.mainWindow(rootViewController: nil)
         super.init()
         setup()
     }
 
     @available(iOS 13.0, *)
     init(windowScene: UIWindowScene) {
-        window = SYWindow.mainWindow(windowScene: windowScene, rootViewController: nil)
+        window = ContextWindow.mainWindow(windowScene: windowScene, rootViewController: nil)
         super.init()
         setup()
     }
     
     // MARK: Properties
-    let window: SYWindow
-    private var splitViewController: SplitVC!
+    let window: ContextWindow
+    private let splitViewController = SplitVC()
     
     // MARK: Methods
     private func setup() {
-        guard splitViewController == nil else { return }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        
+        window.context = self
+
         #if DEBUG
         window.enableSlowAnimationsOnShake = true
         #endif
         window.tintColor = .tint
-
-        // split controller
-        splitViewController = SplitVC()
 
         // auto manage toolbar visibility
         GalleryManager.shared.addDelegate(self)
@@ -48,8 +43,24 @@ class Context: NSObject {
         window.rootViewController = splitViewController
     }
     
+    // MARK: Status
+    enum Status {
+        case devicesList
+        case deviceOpened
+        case scanning
+    }
+    var status: Status {
+        if let deviceVC = splitViewController.scanNC.viewControllers.last as? DeviceVC {
+            if deviceVC.device.isScanning {
+                return .scanning
+            }
+            return .deviceOpened
+        }
+        return .devicesList
+    }
+
     // MARK: Notifications
-    @objc private func didEnterBackgroundNotification() {
+    func stopOperations() {
         splitViewController.scanNC.popToRootViewController(animated: true)
     }
 }
@@ -63,3 +74,6 @@ extension Context : GalleryManagerDelegate {
     }
 }
 
+class ContextWindow: SYWindow {
+    fileprivate(set) var context: Context?
+}
