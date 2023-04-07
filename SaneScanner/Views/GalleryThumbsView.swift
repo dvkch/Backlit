@@ -258,17 +258,32 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     #if !targetEnvironment(macCatalyst)
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let open = UIAction(title: "ACTION OPEN".localized, image: UIImage(systemName: "folder")) { _ in
-                self.openGallery(at: indexPath.item)
+        let configuration = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: {
+                return GalleryImagePreviewVC(item: self.galleryItems[indexPath.item])
+            },
+            actionProvider: { _ in
+                let open = UIAction(title: "ACTION OPEN".localized, image: UIImage(systemName: "folder")) { _ in
+                    self.openGallery(at: indexPath.item)
+                }
+                let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
+                    guard let parentViewController = self.parentViewController else { return }
+                    UIActivityViewController.showForURLs([self.galleryItems[indexPath.item].url], in: parentViewController, sender: collectionView.cellForItem(at: indexPath), completion: nil)
+                }
+                return UIMenu(title: "", children: [open, share])
             }
-            let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                guard let parentViewController = self.parentViewController else { return }
-                UIActivityViewController.showForURLs([self.galleryItems[indexPath.item].url], in: parentViewController, sender: collectionView.cellForItem(at: indexPath), completion: nil)
-            }
-            return UIMenu(title: "", children: [open, share])
-        }
+        )
+        configuration.indexPath = indexPath
         return configuration
+    }
+
+    @available(iOS 13.0, *)
+    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let indexPath = configuration.indexPath else { return }
+        animator.addCompletion {
+            self.openGallery(at: indexPath.item)
+        }
     }
     #endif
 }

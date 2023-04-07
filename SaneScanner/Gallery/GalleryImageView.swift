@@ -29,6 +29,7 @@ class GalleryImageView: UIView {
         isAccessibilityElement = true
 
         lowResImageLayer.contentsScale = (window?.screen ?? UIScreen.main).scale
+        lowResImageLayer.minificationFilter = .trilinear
         layer.addSublayer(lowResImageLayer)
         
         tiledLayer.contentsScale = (window?.screen ?? UIScreen.main).scale
