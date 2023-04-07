@@ -33,7 +33,7 @@ class AcknowledgementsVC: UIViewController {
             make.left.right.equalToSuperview()
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
+        navigationItem.rightBarButtonItem = .close(target: self, action: #selector(self.closeButtonTap))
         addKeyCommand(.close)
 
         tableView.reloadData()

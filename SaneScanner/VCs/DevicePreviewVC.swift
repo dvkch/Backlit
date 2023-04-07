@@ -16,11 +16,7 @@ class DevicePreviewVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         
-        if #available(iOS 13.0, *) {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(openGallery))
-        } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "folder"), style: .plain, target: self, action: #selector(openGallery))
-        }
+        navigationItem.rightBarButtonItem = .openFolder(target: self, action: #selector(openGallery))
 
         emptyStateView.backgroundColor = .background
         emptyStateLabel.adjustsFontForContentSizeCategory = true

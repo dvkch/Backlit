@@ -17,10 +17,10 @@ class DevicesVC: UIViewController {
         view.backgroundColor = .background
         navigationItem.largeTitleDisplayMode = .always
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = .emptyBack
         if !UIDevice.isCatalyst {
             addKeyCommand(.settings)
-            navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
+            navigationItem.rightBarButtonItem = .settings(target: self, action: #selector(self.settingsButtonTap))
         }
 
         // prevent collapsing of navigationBar large title when scrolling

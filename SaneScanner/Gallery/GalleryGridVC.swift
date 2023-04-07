@@ -31,11 +31,11 @@ class GalleryGridVC: UIViewController {
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
 
         toolbarItems = [
-            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteButtonTap(sender:))),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem.delete(target: self, action: #selector(self.deleteButtonTap(sender:))),
+            UIBarButtonItem.flexibleSpace,
             UIBarButtonItem(title: "PDF", style: .plain, target: self, action: #selector(self.pdfButtonTap(sender:))),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareButtonTap(sender:)))
+            UIBarButtonItem.flexibleSpace,
+            UIBarButtonItem.share(target: self, action: #selector(self.shareButtonTap(sender:)))
         ]
         
         GalleryManager.shared.addDelegate(self)
@@ -224,9 +224,7 @@ class GalleryGridVC: UIViewController {
         
         // Left
         if navigationController?.sy_isModal == true && !isEditing {
-            let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.closeButtonTap))
-            closeButton.style = .done
-            navigationItem.setLeftBarButton(closeButton, animated: animated)
+            navigationItem.setLeftBarButton(.done(target: self, action: #selector(self.closeButtonTap)), animated: animated)
         } else {
             #if DEBUG
             let testButton = UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap))
@@ -239,10 +237,9 @@ class GalleryGridVC: UIViewController {
         // Right
         var buttons = [UIBarButtonItem]()
         if isEditing {
-            buttons.append(UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.editButtonTap)))
-            buttons.last?.style = .done
+            buttons.append(.done(target: self, action: #selector(self.editButtonTap)))
         } else {
-            buttons.append(UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonTap)))
+            buttons.append(.edit(target: self, action: #selector(self.editButtonTap)))
         }
         
         navigationItem.setRightBarButtonItems(buttons, animated: animated)

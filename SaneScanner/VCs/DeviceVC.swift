@@ -88,7 +88,7 @@ class DeviceVC: UIViewController {
         
         if !UIDevice.isCatalyst {
             addKeyCommand(.settings)
-            navigationItem.rightBarButtonItem = PreferencesVC.settingsBarButtonItem(target: self, action: #selector(self.settingsButtonTap))
+            navigationItem.rightBarButtonItem = .settings(target: self, action: #selector(self.settingsButtonTap))
         }
         
         addKeyCommand(.refresh)

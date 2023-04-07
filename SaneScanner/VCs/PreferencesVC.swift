@@ -33,12 +33,8 @@ class PreferencesVC: UIViewController {
         tableView.registerHeader(TableViewHeader.self, xib: false)
         tableView.registerCell(OptionCell.self, xib: true)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
+        navigationItem.rightBarButtonItem = .close(target: self, action: #selector(self.closeButtonTap))
         addKeyCommand(.close)
-    }
-
-    static func settingsBarButtonItem(target: Any, action: Selector) -> UIBarButtonItem {
-        return UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: target, action: action)
     }
 
     // MARK: Properties

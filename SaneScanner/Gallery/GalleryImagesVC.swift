@@ -134,8 +134,7 @@ class GalleryImagesVC: UIViewController {
         title = String(format: "GALLERY IMAGE %d OF %d".localized, (currentIndex ?? 0) + 1, items.count)
         
         if navigationController?.sy_isModal == true {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.closeButtonTap))
-            navigationItem.rightBarButtonItem?.style = .done
+            navigationItem.rightBarButtonItem = .done(target: self, action: #selector(self.closeButtonTap))
         } else {
             navigationItem.rightBarButtonItem = nil
         }
@@ -151,11 +150,11 @@ class GalleryImagesVC: UIViewController {
         titleButton.tintColor = .normalText
         
         toolbarItems = [
-            UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.shareCurrentImage(sender:))),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem.share(target: self, action: #selector(self.shareCurrentImage(sender:))),
+            UIBarButtonItem.flexibleSpace,
             titleButton,
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteCurrentImage(sender:))),
+            UIBarButtonItem.flexibleSpace,
+            UIBarButtonItem.delete(target: self, action: #selector(self.deleteCurrentImage(sender:))),
         ]
     }
 }
