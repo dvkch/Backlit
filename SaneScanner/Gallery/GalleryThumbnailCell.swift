@@ -15,7 +15,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         isAccessibilityElement = true
         
         addTooltip { [weak self] in
-            self?.item.flatMap { GalleryManager.shared.dateString(for: $0) }
+            self?.item?.suggestedDescription
         }
         
         imageView.contentMode = .scaleAspectFill
@@ -97,7 +97,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         spinner.color = displayedOverTint ? .normalTextOnTint : .normalText
         self.item = item
         self.mode = mode
-        accessibilityLabel = GalleryManager.shared.accessibilityLabel(forItemAt: item.url)
+        accessibilityLabel = item.suggestedAccessibilityLabel
         
         updateThumbnail(nil)
     }

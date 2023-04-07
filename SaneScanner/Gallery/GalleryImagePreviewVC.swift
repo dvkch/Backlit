@@ -24,7 +24,7 @@ class GalleryImagePreviewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView.imageURL = item.url
+        imageView.item = item
         view.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.width.equalTo(imageView.snp.height).multipliedBy(imageView.displayedImageSize.width / imageView.displayedImageSize.height)

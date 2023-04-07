@@ -276,19 +276,20 @@ extension GalleryGridVC : UICollectionViewDelegate {
 
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let item = items[indexPath.item]
         let configuration = UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: {
-                return GalleryImagePreviewVC(item: self.items[indexPath.item])
+                return GalleryImagePreviewVC(item: item)
             },
             actionProvider: { _ in
                 let open = UIAction(title: "ACTION OPEN".localized, image: UIImage(systemName: "folder")) { _ in
                     self.openGallery(at: indexPath.item)
                 }
                 let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                    UIActivityViewController.showForURLs([self.items[indexPath.item].url], in: self, sender: collectionView.cellForItem(at: indexPath), completion: nil)
+                    UIActivityViewController.showForURLs([item.url], in: self, sender: collectionView.cellForItem(at: indexPath), completion: nil)
                 }
-                return UIMenu(title: "", children: [open, share])
+                return UIMenu(title: item.suggestedDescription ?? "", children: [open, share])
             }
         )
         configuration.indexPath = indexPath

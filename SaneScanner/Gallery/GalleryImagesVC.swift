@@ -146,7 +146,10 @@ class GalleryImagesVC: UIViewController {
             return
         }
         
-        let titleButton = UIBarButtonItem(title: GalleryManager.shared.dateString(for: items[currentIndex]), style: .plain, target: nil, action: nil)
+        let titleButton = UIBarButtonItem(
+            title: items[currentIndex].creationDateString(allowRelative: false),
+            style: .plain, target: nil, action: nil
+        )
         titleButton.tintColor = .normalText
         
         toolbarItems = [

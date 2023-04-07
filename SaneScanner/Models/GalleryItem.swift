@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+import SYPictureMetadata
 
 class GalleryItem: NSObject {
     let url: URL
@@ -28,6 +29,70 @@ class GalleryItem: NSObject {
     }
 }
 
+// MARK: Item properties
+extension GalleryItem {
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        formatter.locale = .autoupdatingCurrent
+        formatter.timeZone = .autoupdatingCurrent
+        formatter.formattingContext = .standalone
+        return formatter
+    }()
+
+    private static let relativeDateFormatter: Formatter? = {
+        if #available(iOS 13.0, *) {
+            let formatter = RelativeDateTimeFormatter()
+            formatter.unitsStyle = .full
+            formatter.locale = .autoupdatingCurrent
+            formatter.calendar = .autoupdatingCurrent
+            formatter.dateTimeStyle = .named
+            formatter.formattingContext = .standalone
+            return formatter
+        } else {
+            return nil
+        }
+    }()
+    
+    func creationDateString(allowRelative: Bool) -> String? {
+        guard let date = url.creationDate else { return nil }
+        
+        if allowRelative, Date().timeIntervalSince(date) < 7 * 24 * 2600,
+           #available(iOS 13.0, *), let formatter = type(of: self).relativeDateFormatter as? RelativeDateTimeFormatter
+        {
+            return formatter.localizedString(for: date, relativeTo: Date())
+        }
+        else {
+            return type(of: self).dateFormatter.string(from: date)
+        }
+    }
+    
+    var deviceInfoString: String? {
+        guard let metadata = try? SYMetadata(fileURL: url).metadataTIFF else {
+            return nil
+        }
+        return [metadata.make, metadata.model].removingNils().joined(separator: " ")
+    }
+    
+    // MARK: Generated labels
+    var suggestedDescription: String? {
+        return [
+            creationDateString(allowRelative: true),
+            deviceInfoString
+        ].removingNils().joined(separator: " – ")
+    }
+
+    var suggestedAccessibilityLabel: String? {
+        return [
+            "GALLERY ITEM".localized,
+            creationDateString(allowRelative: true),
+            deviceInfoString
+        ].removingNils().joined(separator: "; ")
+    }
+}
+
+// MARK: File provider extension
 extension GalleryItem : NSItemProviderWriting {
     static var writableTypeIdentifiersForItemProvider: [String] {
         return [String(kUTTypeImage), String(kUTTypeFileURL), String(kUTTypeURL)]

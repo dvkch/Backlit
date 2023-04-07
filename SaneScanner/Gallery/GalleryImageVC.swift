@@ -60,8 +60,8 @@ class GalleryImageVC: UIViewController {
         super.viewWillAppear(animated)
         
         // lazy loading instead of doing it in viewDidLoad
-        if imageView.imageURL == nil {
-            imageView.imageURL = item.url
+        if imageView.item == nil {
+            imageView.item = item
             if #available(iOS 16.0, *) {
                 startImageAnalysis()
             }
@@ -146,7 +146,7 @@ class GalleryImageVC: UIViewController {
         view.layoutIfNeeded()
         scrollView.layoutIfNeeded()
         
-        if imageView.imageURL == nil {
+        if imageView.item == nil {
             scrollView.minimumZoomScale = 1
             scrollView.maximumZoomScale = 1
             scrollView.zoomScale = 1

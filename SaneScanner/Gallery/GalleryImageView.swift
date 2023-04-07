@@ -48,14 +48,19 @@ class GalleryImageView: UIView {
     }
     
     // MARK: Properties
-    var imageURL: URL? {
+    var item: GalleryItem? {
+        didSet {
+            imageURL = item?.url
+            accessibilityLabel = item?.suggestedAccessibilityLabel
+        }
+    }
+    private var imageURL: URL? {
         didSet {
             guard imageURL != oldValue else { return }
             guard let imageURL, let image = UIImage(contentsOfFile: imageURL.path) else {
                 tiledLayer.image = nil
                 lowResImageLayer.image = nil
                 displayedImageSize = .zero
-                accessibilityLabel = nil
                 return
             }
             
@@ -76,7 +81,6 @@ class GalleryImageView: UIView {
                 lowResImageLayer.image = image.cgImage
                 displayedImageSize = image.size
             }
-            accessibilityLabel = GalleryManager.shared.accessibilityLabel(forItemAt: imageURL)
         }
     }
     
