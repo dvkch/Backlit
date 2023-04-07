@@ -10,9 +10,6 @@ import UIKit
 import ObjectiveC
 
 // MARK: Common items
-
-// TODO: test all with VoiceOver
-// TODO: test all with large content viewer
 extension UIBarButtonItem {
     static var emptyBack: UIBarButtonItem {
         return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -58,11 +55,15 @@ extension UIBarButtonItem {
     }
     
     static func share(target: Any, action: Selector) -> UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .action, target: target, action: action)
+        let button = UIBarButtonItem(barButtonSystemItem: .action, target: target, action: action)
+        button.title = "ACTION SHARE".localized
+        return button
     }
     
     static func delete(target: Any, action: Selector) -> UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .trash, target: target, action: action)
+        let button = UIBarButtonItem(barButtonSystemItem: .trash, target: target, action: action)
+        button.title = "ACTION DELETE".localized
+        return button
     }
 }
 
