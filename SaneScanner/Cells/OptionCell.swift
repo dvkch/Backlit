@@ -134,14 +134,19 @@ class OptionCell: TableViewCell {
         }
         else if let prefKey = self.prefKey {
             titleLabel.text = prefKey.localizedTitle
-            valueLabel.text = Preferences.shared[prefKey] ? "OPTION BOOL ON".localized : "OPTION BOOL OFF".localized
+            valueLabel.text = Preferences.shared[prefKey].description
             descrLabel.text = prefKey.localizedDescription
             
-            let control = UISwitch()
-            control.isOn = Preferences.shared[prefKey]
-            control.isUserInteractionEnabled = false
-            control.onTintColor = UIColor.tint
-            valueControl = control
+            if let boolValue = Preferences.shared[prefKey] as? BoolPreferenceValue {
+                let control = UISwitch()
+                control.isOn = boolValue.rawValue
+                control.isUserInteractionEnabled = false
+                control.onTintColor = UIColor.tint
+                valueControl = control
+            }
+            else {
+                valueControl = nil
+            }
         }
         else {
             valueControl = nil

@@ -133,8 +133,7 @@ class GalleryManager: NSObject {
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
-        let format: UIImage.ImageFormat = Preferences.shared.saveAsPNG ? .png : .jpeg(quality: 0.9)
-        
+        let format = Preferences.shared.imageFormat.correspondingImageFormat
         for (index, scan) in scans.enumerated() {
             var filename = formatter.string(from: Date())
             if scans.count > 1 {
@@ -318,6 +317,6 @@ class GalleryManager: NSObject {
 
 private extension URL {
     var isSupportedImageURL: Bool {
-        return ["jpg", "png"].contains(pathExtension.lowercased())
+        return ["jpg", "png", "heic"].contains(pathExtension.lowercased())
     }
 }

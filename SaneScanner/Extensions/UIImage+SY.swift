@@ -49,11 +49,13 @@ extension UIImage {
     enum ImageFormat {
         case png
         case jpeg(quality: CGFloat)
+        case heic(quality: CGFloat)
         
         var utType: CFString {
             switch self {
             case .png:  return kUTTypePNG as CFString
             case .jpeg: return kUTTypeJPEG as CFString
+            case .heic: return "public.heic" as CFString
             }
         }
         
@@ -61,6 +63,7 @@ extension UIImage {
             switch self {
             case .png:  return "png"
             case .jpeg: return "jpg"
+            case .heic: return "heic"
             }
         }
         
@@ -73,6 +76,7 @@ extension UIImage {
             switch self {
             case .png:                  data = image.pngData()
             case .jpeg(let quality):    data = image.jpegData(compressionQuality: quality)
+            case .heic:                 data = nil
             }
             guard let data else { return nil }
             return (try? SYMetadata.apply(metadata: metadata, to: data)) ?? data
@@ -95,8 +99,11 @@ extension UIImage {
         options[kCGImageSourceCreateThumbnailWithTransform as String] = kCFBooleanTrue
         options[kCGImageSourceThumbnailMaxPixelSize as String] = 256
 
-        if case .jpeg(let quality) = format {
+        switch format {
+        case .jpeg(let quality), .heic(let quality):
             options[kCGImageDestinationLossyCompressionQuality as String] = quality
+        case .png:
+            break
         }
 
         guard let destination = CGImageDestinationCreateWithData(outputData, format.utType, 1, options as NSDictionary) else {

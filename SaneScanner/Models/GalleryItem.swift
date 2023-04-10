@@ -110,6 +110,9 @@ extension GalleryItem : NSItemProviderWriting {
         case "png":
             return [String(kUTTypePNG)] + type(of: self).writableTypeIdentifiersForItemProvider
             
+        case "heic":
+            return ["public.heic"] + type(of: self).writableTypeIdentifiersForItemProvider
+            
         default:
             return type(of: self).writableTypeIdentifiersForItemProvider
         }
