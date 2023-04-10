@@ -125,7 +125,7 @@ class GalleryImageView: UIView {
             return thumb
         }
         
-        guard let thumb = UIImage.thumbnailForImage(at: imageURL, maxEdgeSize: maxEdge) else {
+        guard let thumb = UIImage.thumbnailForImage(at: imageURL, maxEdgeSize: maxEdge, options: .alwaysCreate) else {
             return nil
         }
         

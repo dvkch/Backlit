@@ -153,7 +153,7 @@ class GalleryManager: NSObject {
             
             try imageData.write(to: fileURL, options: .atomicWrite)
             let item = galleryItemForImage(at: fileURL.standardizedFileURL)
-            generateThumb(for: item, fullImage: scan.image, async: false, tellDelegates: true)
+            generateThumb(for: item, async: false, tellDelegates: true)
             
             #if !targetEnvironment(macCatalyst)
             // prepare a lowres cached image if needed for when we'll be displaying the image
@@ -237,7 +237,7 @@ class GalleryManager: NSObject {
             thumbnailCache.setValue(fromFile, forKey: item.thumbnailUrl, cost: fromFile.estimatedMemoryFootprint)
             return fromFile
         }
-        generateThumb(for: item, fullImage: nil, async: true, tellDelegates: true)
+        generateThumb(for: item, async: true, tellDelegates: true)
         return nil
     }
 
@@ -253,10 +253,10 @@ class GalleryManager: NSObject {
     }
 
     // MARK: Thumb
-    private func generateThumb(for item: GalleryItem, fullImage: UIImage?, async: Bool, tellDelegates: Bool) {
+    private func generateThumb(for item: GalleryItem, async: Bool, tellDelegates: Bool) {
         if async {
             thumbsQueue.addOperation {
-                self.generateThumb(for: item, fullImage: fullImage, async: false, tellDelegates: tellDelegates)
+                self.generateThumb(for: item, async: false, tellDelegates: tellDelegates)
             }
             return
         }
@@ -268,18 +268,10 @@ class GalleryManager: NSObject {
             self?.thumbsBeingCreated.removeAll { $0 == item.url }
         }
 
-        // this first method is a bit longer to generate images, but uses far less memory on the device
-        // TODO: seems to generate shitty thumbs - catalyst, ET2810, JPEG, B/W
-        // TODO: keep only one method ?!
-        var thumb = UIImage.thumbnailForImage(at: item.url, maxEdgeSize: 200)
-        
-        // in case the first method fails we do it the old way
-        if thumb == nil {
-            guard let original = fullImage ?? UIImage(contentsOfFile: item.url.path) else { return dequeue() }
-            thumb = original.resizingLongestEdge(to: 200)
-        }
-        
+        // preferred way of doing resizes, as it doesn't use a lot of memory on device
+        let thumb = UIImage.thumbnailForImage(at: item.url, maxEdgeSize: 200, options: .alwaysCreate)
         guard let thumb else { return dequeue() }
+
         try? thumb
             .jpegData(compressionQuality: 0.6)?
             .write(to: item.thumbnailUrl, options: .atomicWrite)

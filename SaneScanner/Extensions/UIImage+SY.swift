@@ -91,7 +91,7 @@ extension UIImage {
         let outputData = CFDataCreateMutable(nil, 0)!
         var options = metadata
         options[kCGImageDestinationEmbedThumbnail as String] = kCFBooleanTrue
-        options[kCGImageSourceCreateThumbnailFromImageIfAbsent as String] = kCFBooleanTrue
+        options[kCGImageSourceCreateThumbnailFromImageAlways as String] = kCFBooleanTrue
         options[kCGImageSourceCreateThumbnailWithTransform as String] = kCFBooleanTrue
         options[kCGImageSourceThumbnailMaxPixelSize as String] = 256
 
