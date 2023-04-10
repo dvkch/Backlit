@@ -11,7 +11,6 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
-// LATER: add support for https://github.com/alexpevzner/sane-airscan
 
 @UIApplicationMain
 class AppDelegate: UIResponder {

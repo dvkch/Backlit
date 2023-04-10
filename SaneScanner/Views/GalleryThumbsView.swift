@@ -259,7 +259,6 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let item = self.galleryItems[indexPath.item]
-        // TODO: afficher un titre avec la date ?
         let configuration = UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: {

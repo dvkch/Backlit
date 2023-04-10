@@ -764,7 +764,6 @@ extension Sane {
             return .failure(SaneError(saneStatus: status))
         }
 
-        // LATER: handle lines == -1 when height isn't known at first
         // read scan parameters as soon as possible. now that the scan has started they should not change. this is
         // helpful since some backends don't give valid ones later on, especially when scanning in non blocking
         // IO mode
@@ -772,10 +771,6 @@ extension Sane {
         assert(parameters.fileSize > 0, "Scan parameters invalid")
         SaneLogger.i("> Scan parameters are \(parameters)")
 
-        // LATER: try to use a file instead, to support bigger images
-        // - could be appended to using [fileHandle writeData:[NSData dataWithBytes:buffer length:bufferActualSize]]
-        // - would need to be seekable and modifiable
-        // - could be opened as a simple mmap'd Data to generate image previews
         var data: Data
         if parameters.expectedFramesCount == 1 {
             data = Data(capacity: parameters.fileSize)

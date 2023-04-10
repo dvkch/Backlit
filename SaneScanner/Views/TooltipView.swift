@@ -8,7 +8,7 @@
 
 import UIKit
 
-// LATER: replace with UIToolTipInteraction when dropping macOS 11.0
+@available(iOS, obsoleted: 15.0, message: "Please use UIToolTipInteraction instead (iOS 15+, macOS 11+)")
 private class TooltipView : UIView {
     
     // MARK: Init

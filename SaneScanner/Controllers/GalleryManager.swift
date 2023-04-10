@@ -304,7 +304,6 @@ class GalleryManager: NSObject {
     }
     
     func deleteTempPDF() {
-        // TODO: rewrite
         FileManager.default.emptyCacheDirectory(.pdfGeneration)
     }
 

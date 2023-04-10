@@ -140,7 +140,10 @@ internal extension String {
 }
 
 internal extension Data {
-    // TODO: make it work with 3 pass
+    // NOTA: this doesn't always work with three-pass. suprisingly two scenarios occur:
+    // - the scanner sends G, G, B frames, and it works properly
+    // - the scanner sends R, G, B frames, and it doesn't work
+    // tested on macOS 13.3, test backend 1.1.1
     var unpackingSingleBitColorPixels: Data {
         // bit slow in Debug, works quite nicely in Release (6.5s for 2.5GB on M1 Pro)
         var unpackedData = self + Data(repeating: 0, count: 3 - (count % 3))
