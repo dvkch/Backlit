@@ -97,15 +97,15 @@ class OptionCell: TableViewCell {
         updateTexts()
     }
     
-    func updateWith(leftText: String, rightText: String) {
+    func updateWith(leftText: String, rightText: String, description: String? = nil) {
         self.option = nil
         self.prefKey = nil
         updateTexts()
         
         titleLabel.text = leftText
         valueLabel.text = rightText
-        descrLabel.text = nil
-        showDescription = false
+        descrLabel.text = description
+        showDescription = description != nil
     }
     
     private func updateTexts() {
@@ -142,6 +142,9 @@ class OptionCell: TableViewCell {
             control.isUserInteractionEnabled = false
             control.onTintColor = UIColor.tint
             valueControl = control
+        }
+        else {
+            valueControl = nil
         }
     }
 

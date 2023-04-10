@@ -8,7 +8,6 @@
 
 import Foundation
 import OSLog
-import SaneSwift
 
 struct Logger {
     private init() {}
@@ -30,7 +29,7 @@ struct Logger {
     public static var level: OSLogType = .info
     
     // MARK: Logging
-    private static func log(level: OSLogType, tag: Tag, _ message: String) {
+    static func log(level: OSLogType, tag: Tag, _ message: String) {
         guard level.value >= self.level.value else { return }
         if #available(iOS 12.0, *) {
             os_log(level, log: tag.asOSLog, "%@", message)
@@ -53,18 +52,6 @@ struct Logger {
     
     static func e(_ tag: Tag, _ message: String) {
         log(level: .error, tag: tag, message)
-    }
-    
-    static func logSane(level: SaneLogger.Level, message: String) {
-        let osLevel: OSLogType
-        switch level {
-        case .debug:    osLevel = .debug
-        case .info:     osLevel = .info
-        case .warning:  osLevel = .default
-        case .error:    osLevel = .error
-        }
-        
-        log(level: osLevel, tag: .sane, message)
     }
 }
 

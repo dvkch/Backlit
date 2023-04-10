@@ -35,6 +35,8 @@ class PreferencesVC: UIViewController {
         
         navigationItem.rightBarButtonItem = .close(target: self, action: #selector(self.closeButtonTap))
         addKeyCommand(.close)
+
+        updateCacheSize()
     }
 
     // MARK: Properties
@@ -59,6 +61,11 @@ class PreferencesVC: UIViewController {
         }()
     }
     private static let contactEmailAddress = "contact@syan.me"
+    private var cacheSize: String? = nil {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     // MARK: Views:
     @IBOutlet private var tableView: UITableView!
@@ -66,6 +73,13 @@ class PreferencesVC: UIViewController {
     // MARK: Actions
     @objc func closeButtonTap() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: Content
+    private func updateCacheSize() {
+        FileManager.default.sizeOfCacheDirectories { [weak self] size in
+            self?.cacheSize = ByteCountFormatter().string(fromByteCount: size)
+        }
     }
 }
 
@@ -99,7 +113,8 @@ extension PreferencesVC : UITableViewDataSource {
             case .cleanCache:
                 cell.updateWith(
                     leftText: "PREFERENCES TITLE CLEANUP CACHE".localized,
-                    rightText: ""
+                    rightText: cacheSize ?? "...",
+                    description: "PREFERENCES MESSAGE CLEANUP CACHE".localized
                 )
             }
             
@@ -183,6 +198,7 @@ extension PreferencesVC : UITableViewDelegate {
             switch rows[indexPath.row] {
             case .cleanCache:
                 FileManager.default.emptyCacheDirectories()
+                updateCacheSize()
             }
 
         case .about(let rows):
