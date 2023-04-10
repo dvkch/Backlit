@@ -123,6 +123,7 @@ class GalleryThumbsView: UIView {
 
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.contentOffset.x = -self.collectionView.contentInset.left
+            self.collectionView.contentOffset.y = -self.collectionView.contentInset.top
             imageView.frame = window.convert(cellRect, from: self.collectionView)
         }, completion: { _ in
             imageView.removeFromSuperview()
