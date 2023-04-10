@@ -40,18 +40,31 @@ import ImageIO
         return nil
     }
 
-    @objc(sy_thumbnailForImageAtURL:maxEdgeSize:)
-    static func thumbnailForImage(at url: URL, maxEdgeSize: CGFloat) -> UIImage? {
+    @objc enum ThumbnailOptions: Int {
+        case alwaysCreate
+        case createIfAbsent
+        case dontCreate
+    }
+    @objc(sy_thumbnailForImageAtURL:maxEdgeSize:options:)
+    static func thumbnailForImage(at url: URL, maxEdgeSize: CGFloat, options: ThumbnailOptions) -> UIImage? {
         // http://stackoverflow.com/a/5860390/1439489
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
-
-        let options = [
-            kCGImageSourceCreateThumbnailFromImageIfAbsent: kCFBooleanTrue,
-            kCGImageSourceCreateThumbnailWithTransform: kCFBooleanTrue,
-            kCGImageSourceThumbnailMaxPixelSize: maxEdgeSize as NSNumber,
-            ] as CFDictionary
         
-        guard let thumb = CGImageSourceCreateThumbnailAtIndex(source, 0, options) else { return nil }
+        var cgOptions: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxEdgeSize as NSNumber,
+        ]
+        
+        switch options {
+        case .alwaysCreate:
+            cgOptions[kCGImageSourceCreateThumbnailFromImageAlways] = true
+        case .createIfAbsent:
+            cgOptions[kCGImageSourceCreateThumbnailFromImageIfAbsent] = true
+        case .dontCreate:
+            cgOptions[kCGImageSourceCreateThumbnailFromImageIfAbsent] = false
+        }
+        
+        guard let thumb = CGImageSourceCreateThumbnailAtIndex(source, 0, cgOptions as CFDictionary) else { return nil }
         return UIImage(cgImage: thumb)
     }
 }

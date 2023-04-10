@@ -6,6 +6,9 @@
 //  Copyright © 2019 Syan. All rights reserved.
 //
 
+import Foundation
+import UIKit
+
 @objc public enum EmailHelperError: Int, Error, CustomNSError, LocalizedError {
     case noServiceAvailable
     case couldnotOpenThirdPartyApp

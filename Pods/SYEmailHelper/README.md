@@ -53,6 +53,42 @@ Example:
             }
         }
 
+How To Install
+============
+
+### Using Cocoapods
+
+1) Add the following to your project Podfile:
+
+```ruby
+pod 'SYEmailHelper', '~>  2.2.0'
+```
+
+2) Open a new terminal
+
+3) `cd` to the root of your project directory
+
+4) run `pod install` from the command line
+
+<br>
+
+### Using Swift Package Manager
+
+1) Open your project and click on the project name in project navigator
+2) Under the “Project” section click your project name, then click “Package Dependecies”
+3) Click the “+” button, and search for `https://github.com/dvkch/SYEmailHelper.git`
+4) Once the package is found, be sure to select “exact version” and enter version number “2.2.0”
+5) Press enter and the package will be downloaded and integrated into your Xcode Project
+<br>
+
+### Import the package (both SPM & Cocoapods)
+
+At the top of any .swift file in your project add:
+
+```swift
+import SYEmailHelper
+```
+<br>
 Don't forget
 ============
 
@@ -71,6 +107,20 @@ Screenshots
 
 ![ActionSheet](https://raw.githubusercontent.com/dvkch/SYEmailHelper/master/screenshots/screenshot_choices.PNG)
 
+Examples
+============
+
+You can open both SPM and Cocoapods example projects, as well as the package itself, by opening the repo workspace.
+
+Simply:
+
+1) Clone this repository
+
+2) Open the repository folder
+
+3) Open the `SYEmailHelper.xcworkspace` with Xcode, which is located in the root directory of this repo
+
+<br>
 
 License
 ===
