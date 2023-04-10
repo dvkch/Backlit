@@ -8,6 +8,7 @@
 
 import UIKit
 
+#if !targetEnvironment(macCatalyst)
 class GalleryImagePreviewVC: UIViewController {
     
     // MARK: Init
@@ -47,3 +48,4 @@ class GalleryImagePreviewVC: UIViewController {
         preferredContentSize = imageView.bounds.size
     }
 }
+#endif

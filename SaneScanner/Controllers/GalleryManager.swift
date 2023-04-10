@@ -155,10 +155,12 @@ class GalleryManager: NSObject {
             let item = galleryItemForImage(at: fileURL.standardizedFileURL)
             generateThumb(for: item, fullImage: scan.image, async: false, tellDelegates: true)
             
+            #if !targetEnvironment(macCatalyst)
             // prepare a lowres cached image if needed for when we'll be displaying the image
             DispatchQueue.global(qos: .background).async {
                 GalleryImageView.generateLowResIfNeeded(forImageAt: fileURL)
             }
+            #endif
 
             // do last, as it will trigger the delegates
             imageURLs.insert(fileURL.standardizedFileURL, at: 0)
