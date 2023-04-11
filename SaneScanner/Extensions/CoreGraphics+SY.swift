@@ -120,4 +120,14 @@ extension CGSize {
     static func +(lhs: CGSize, rhs: CGFloat) -> CGSize {
         return .init(width: lhs.width + rhs, height: lhs.height + rhs)
     }
+    
+    var area: CGFloat {
+        return width * height
+    }
+    
+    init(area: CGFloat, aspectRatio: CGFloat) {
+        // area  = w * h
+        // ratio = w / h
+        self.init(width: sqrt(area * aspectRatio), height: sqrt(area / aspectRatio))
+    }
 }

@@ -53,10 +53,8 @@ class PDFActivity: UIActivity {
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         let readableCount = activityItems
             .compactMap { $0 as? URL }
-            .filter { (url) -> Bool in
-                guard let data = try? Data(contentsOf: url, options: .mappedIfSafe) else { return false }
-                return data.isValidPNGImageData || data.isValidJPEGImageData
-        }.count
+            .filter { ["png", "heic", "jpg"].contains($0.pathExtension.lowercased()) }
+            .count
         
         return activityItems.count == readableCount
     }
@@ -89,7 +87,7 @@ class PDFActivity: UIActivity {
         let tempURL = GalleryManager.shared.tempPdfFileUrl()
         
         do {
-            try PDFGenerator.generatePDF(destination: tempURL, images: self.items, aspectRatio: 210 / 297, jpegQuality: 0.9, fixedPageSize: true)
+            try PDFGenerator.generatePDF(destination: tempURL, images: self.items, pageSize: Preferences.shared.pdfSize)
         }
         catch {
             obtainPresentingViewController {

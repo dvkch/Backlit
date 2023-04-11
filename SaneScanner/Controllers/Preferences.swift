@@ -85,6 +85,27 @@ class Preferences: NSObject {
         set { UserDefaults.standard.set(newValue.rawValue, forKey: userDefaultsKeyImageFormat); postNotification() }
     }
     
+    enum PDFSize: String, PreferenceValue {
+        case imageSize
+        case a4
+        case usLetter
+        
+        var description: String {
+            switch self {
+            case .imageSize: return "PREFERENCES VALUE PDF SIZE IMAGE SIZE".localized
+            case .a4:        return "PREFERENCES VALUE PDF SIZE A4".localized
+            case .usLetter:  return "PREFERENCES VALUE PDF SIZE US LETTER".localized
+            }
+        }
+    }
+    var pdfSize: PDFSize {
+        get {
+            let string = UserDefaults.standard.string(forKey: userDefaultsKeyPdfSize)
+            return PDFSize(rawValue: string ?? "") ?? .imageSize
+        }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: userDefaultsKeyPdfSize); postNotification() }
+    }
+
     var showAdvancedOptions: Bool {
         get { return UserDefaults.standard.bool(forKey: userDefaultsKeyShowAdvancedOptions) }
         set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyShowAdvancedOptions); postNotification() }
@@ -126,6 +147,7 @@ class Preferences: NSObject {
     // MARK: UserDefaults keys
     private let userDefaultsKeyShowAdvancedOptions  = "ShowAdvancedOptions"
     private let userDefaultsKeyImageFormat          = "ImageFormat"
+    private let userDefaultsKeyPdfSize              = "PDFSize"
     private let userDefaultsKeyAskedAnalytics       = "AnalyticsAsked"
     private let userDefaultsKeyEnableAnalytics      = "AnalyticsEnabled"
     private let userDefaultsKeyAnalyticsUserID      = "AnalyticsUserID"
@@ -134,11 +156,12 @@ class Preferences: NSObject {
 // MARK: UI
 extension Preferences {
     enum Key {
-        case imageFormat, showAdvancedOptions, previewWithAutoColorMode, enableAnalytics
+        case imageFormat, pdfSize, showAdvancedOptions, previewWithAutoColorMode, enableAnalytics
         
         var localizedTitle: String {
             switch self {
             case .imageFormat:              return "PREFERENCES TITLE IMAGE FORMAT".localized
+            case .pdfSize:                  return "PREFERENCES TITLE PDF SIZE".localized
             case .showAdvancedOptions:      return "PREFERENCES TITLE SHOW ADVANCED OPTIONS".localized
             case .previewWithAutoColorMode: return "PREFERENCES TITLE PREVIEW DEFAULT COLOR MODE".localized
             case .enableAnalytics:          return "PREFERENCES TITLE ENABLE ANALYTICS".localized
@@ -148,6 +171,7 @@ extension Preferences {
         var localizedDescription: String {
             switch self {
             case .imageFormat:              return "PREFERENCES MESSAGE IMAGE FORMAT".localized
+            case .pdfSize:                  return "PREFERENCES MESSAGE PDF SIZE".localized
             case .showAdvancedOptions:      return "PREFERENCES MESSAGE SHOW ADVANCED OPTIONS".localized
             case .previewWithAutoColorMode: return "PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE".localized
             case .enableAnalytics:          return "PREFERENCES MESSAGE ENABLE ANALYTICS".localized
@@ -157,8 +181,8 @@ extension Preferences {
     
     var groupedKeys: [(String, [Key])] {
         return [
-            ("PREFERENCES SECTION PREVIEW".localized, [.previewWithAutoColorMode, .imageFormat]),
-            ("PREFERENCES SECTION SCAN".localized, [.showAdvancedOptions]),
+            ("PREFERENCES SECTION PREVIEW".localized, [.previewWithAutoColorMode]),
+            ("PREFERENCES SECTION SCAN".localized, [.imageFormat, .pdfSize, .showAdvancedOptions]),
             ("PREFERENCES SECTION ANALYTICS".localized, [.enableAnalytics]),
         ]
     }
@@ -167,6 +191,7 @@ extension Preferences {
         get {
             switch key {
             case .imageFormat:              return self.imageFormat
+            case .pdfSize:                  return self.pdfSize
             case .showAdvancedOptions:      return BoolPreferenceValue(rawValue: self.showAdvancedOptions)
             case .previewWithAutoColorMode: return BoolPreferenceValue(rawValue: self.previewWithAutoColorMode)
             case .enableAnalytics:          return BoolPreferenceValue(rawValue: self.enableAnalytics)
@@ -175,6 +200,7 @@ extension Preferences {
         set {
             switch key {
             case .imageFormat:              self.imageFormat = (newValue as? ImageFormat) ?? .jpeg
+            case .pdfSize:                  self.pdfSize = (newValue as? PDFSize) ?? .imageSize
             case .showAdvancedOptions:      self.showAdvancedOptions = (newValue as? BoolPreferenceValue)?.rawValue == true
             case .previewWithAutoColorMode: self.previewWithAutoColorMode = (newValue as? BoolPreferenceValue)?.rawValue == true
             case .enableAnalytics:          self.enableAnalytics = (newValue as? BoolPreferenceValue)?.rawValue == true

@@ -171,7 +171,7 @@ class GalleryGridVC: UIViewController {
         let tempURL = GalleryManager.shared.tempPdfFileUrl()
         
         do {
-            try PDFGenerator.generatePDF(destination: tempURL, images: selectedURLs(), aspectRatio: 210 / 297, jpegQuality: 0.9, fixedPageSize: true)
+            try PDFGenerator.generatePDF(destination: tempURL, images: selectedURLs(), pageSize: Preferences.shared.pdfSize)
         }
         catch {
             HUDAlertController.dismiss(hud) {
