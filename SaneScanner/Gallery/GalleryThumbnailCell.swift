@@ -15,7 +15,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         isAccessibilityElement = true
         
         addTooltip { [weak self] in
-            self?.item?.suggestedDescription
+            self?.item?.suggestedDescription(separator: "\n")
         }
         
         imageView.contentMode = .scaleAspectFill

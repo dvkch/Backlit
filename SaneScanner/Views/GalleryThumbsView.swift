@@ -276,7 +276,7 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
                     guard let parentViewController = self.parentViewController else { return }
                     UIActivityViewController.showForURLs([item.url], in: parentViewController, sender: collectionView.cellForItem(at: indexPath), completion: nil)
                 }
-                return UIMenu(title: item.suggestedDescription ?? "", children: [open, share])
+                return UIMenu(title: item.suggestedDescription(separator: "\n") ?? "", children: [open, share])
             }
         )
         configuration.indexPath = indexPath

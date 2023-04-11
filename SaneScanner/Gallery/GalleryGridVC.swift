@@ -289,7 +289,7 @@ extension GalleryGridVC : UICollectionViewDelegate {
                 let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
                     UIActivityViewController.showForURLs([item.url], in: self, sender: collectionView.cellForItem(at: indexPath), completion: nil)
                 }
-                return UIMenu(title: item.suggestedDescription ?? "", children: [open, share])
+                return UIMenu(title: item.suggestedDescription(separator: "\n") ?? "", children: [open, share])
             }
         )
         configuration.indexPath = indexPath

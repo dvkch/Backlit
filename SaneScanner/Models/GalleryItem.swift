@@ -76,18 +76,17 @@ extension GalleryItem {
     }
     
     // MARK: Generated labels
-    var suggestedDescription: String? {
+    func suggestedDescription(separator: String) -> String? {
         return [
             creationDateString(allowRelative: true),
             deviceInfoString
-        ].removingNils().joined(separator: " – ")
+        ].removingNils().joined(separator: separator)
     }
 
     var suggestedAccessibilityLabel: String? {
         return [
             "GALLERY ITEM".localized,
-            creationDateString(allowRelative: true),
-            deviceInfoString
+            suggestedDescription(separator: "; ")
         ].removingNils().joined(separator: "; ")
     }
 }
