@@ -38,8 +38,9 @@ class GalleryThumbsView: UIView {
     private func setup() {
         clipsToBounds = true
         
-        collectionViewLayout.scrollDirection = .horizontal
-        
+        collectionViewLayout.scrollDirection = scrollDirection
+        collectionViewLayout.minimumInteritemSpacing = 10
+
         collectionView.clipsToBounds = false
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
@@ -48,8 +49,6 @@ class GalleryThumbsView: UIView {
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
         collectionView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         addSubview(collectionView)
-        
-        collectionViewLayout.scrollDirection = scrollDirection
         
         gradientMask.colors = [UIColor.black.withAlphaComponent(0), .black, .black, .black.withAlphaComponent(0)].map(\.cgColor)
         layer.mask = gradientMask
@@ -191,7 +190,8 @@ class GalleryThumbsView: UIView {
         collectionView.alwaysBounceVertical = scrollDirection == .vertical
 
         if scrollDirection == .horizontal {
-            collectionView.contentInset = .init(top: 0, left: gradientSize, bottom: 0, right: gradientSize)
+            let scrollIndicatorHeight: CGFloat = traitCollection.verticalSizeClass == .compact ? 0 : 12
+            collectionView.contentInset = .init(top: 0, left: gradientSize, bottom: scrollIndicatorHeight, right: gradientSize)
             collectionView.scrollIndicatorInsets = .init(top: 0, left: gradientSize, bottom: 0, right: gradientSize)
         } else {
             collectionView.contentInset = .init(top: gradientSize, left: 20, bottom: gradientSize, right: 20)

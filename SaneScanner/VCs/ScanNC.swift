@@ -46,7 +46,7 @@ class ScanNC: UINavigationController {
     // MARK: Content
     func updateToolbar(animated: Bool) {
         customToolbar?.isTranslucent = false
-        customToolbar?.height = traitCollection.verticalSizeClass == .compact ? 34 : 64
+        customToolbar?.height = traitCollection.verticalSizeClass == .compact ? 50 : 75
         customToolbar?.padding = 0
         
         // fix for iOS 14+ (maybe 13 too?) not showing the toolbar. for realsies, the simple fact of accessing
