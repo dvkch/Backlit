@@ -15,22 +15,32 @@ class SceneDelegate: UIResponder {
 }
 
 @available(iOS 13.0, *)
-extension SceneDelegate : UISceneDelegate {
+extension SceneDelegate : UISceneDelegate, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        context = Context(windowScene: windowScene)
+        window = context?.window
+        windowScene.sizeRestrictions?.minimumSize = .init(width: 800, height: 550)
 
-        guard let _ = (scene as? UIWindowScene) else { return }
-        if let windowScene = scene as? UIWindowScene {
-            context = Context(windowScene: windowScene)
-            window = context?.window
-            windowScene.sizeRestrictions?.minimumSize = .init(width: 800, height: 550)
-
-            #if targetEnvironment(macCatalyst)
-            if let titlebar = windowScene.titlebar {
-                titlebar.titleVisibility = .hidden
-                titlebar.toolbar = nil
-            }
-            #endif
+        #if targetEnvironment(macCatalyst)
+        if let titlebar = windowScene.titlebar {
+            titlebar.titleVisibility = .hidden
+            titlebar.toolbar = nil
         }
+        #endif
+        
+        if let shortcut = connectionOptions.shortcutItem {
+            context?.openShortcut(shortcut, completion: nil)
+        }
+    }
+    
+    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        guard let context = (windowScene.windows.first as? ContextWindow)?.context else {
+            completionHandler(false)
+            return
+        }
+        
+        context.openShortcut(shortcutItem, completion: completionHandler)
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {

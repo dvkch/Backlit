@@ -35,6 +35,7 @@ public class Sane: NSObject {
     // MARK: Properties
     public weak var delegate: SaneDelegate?
     public private(set) var saneInitError: String?
+    public private(set) var devices: [Device] = []
     public var isUpdatingDevices: Bool {
         return runningDeviceUpdates > 0
     }
@@ -230,6 +231,7 @@ extension Sane {
 
             Sane.runOn(mainThread: true, block: {
                 SaneLogger.i("Found \(devices.count) devices")
+                self.devices = devices
                 completion(.success(devices))
             })
         }

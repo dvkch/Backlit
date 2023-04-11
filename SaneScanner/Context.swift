@@ -8,6 +8,7 @@
 
 import UIKit
 import SYKit
+import SaneSwift
 
 class Context: NSObject {
     override init() {
@@ -48,6 +49,56 @@ class Context: NSObject {
 
         // update window
         window.rootViewController = splitViewController
+    }
+    
+    func openShortcut(_ shortcut: UIApplicationShortcutItem, completion: ((Bool) -> ())?) {
+        // let's find the device name we would like to open
+        guard shortcut.type == "device", let deviceName = shortcut.userInfo?["device"] as? String else {
+            completion?(false)
+            return
+        }
+        
+        // if we can already find the device in the already visible devices, let's open it
+        if let device = Sane.shared.devices.first(where: { $0.name.rawValue == deviceName }) {
+            openDevice(device: device)
+            completion?(true)
+            return
+        }
+        
+        // if not, let's try to refresh and find the proper device. we abort if it took more than 5s, to prevent
+        // breaking the user flow
+        let refreshStart = Date()
+        Sane.shared.updateDevices { result in
+            guard Date().timeIntervalSince(refreshStart) < 5 else {
+                completion?(false)
+                return
+            }
+            if let device = Sane.shared.devices.first(where: { $0.name.rawValue == deviceName }) {
+                self.openDevice(device: device)
+                completion?(true)
+            }
+            else {
+                completion?(false)
+            }
+        }
+    }
+    
+    private func openDevice(device: Device) {
+        if let deviceVC = splitViewController.scanNC.viewControllers.last as? DeviceVC {
+            // device is already opened, all good
+            if deviceVC.device == device {
+                return
+            }
+
+            // another device is opened, if it's scanning we don't do anything
+            if deviceVC.device.isScanning {
+                return
+            }
+        }
+        splitViewController.scanNC.popToRootViewController(animated: true)
+
+        guard let devicesVC = splitViewController.scanNC.viewControllers.last as? DevicesVC else { return }
+        devicesVC.openDevice(device)
     }
     
     // MARK: Status

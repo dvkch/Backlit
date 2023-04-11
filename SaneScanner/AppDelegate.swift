@@ -55,6 +55,7 @@ extension AppDelegate : UIApplicationDelegate {
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         startBackgroundTask()
+        updateShortcuts()
     }
     
     private func startBackgroundTask(retry: Int = 0) {
@@ -101,6 +102,22 @@ extension AppDelegate : UIApplicationDelegate {
 
         // will be restarted by DevicesVC
         SaneBonjour.shared.stop()
+    }
+    
+    private func updateShortcuts() {
+        UIApplication.shared.shortcutItems = Sane.shared.devices.map { device in
+            return UIApplicationShortcutItem(
+                type: "device",
+                localizedTitle: device.model,
+                localizedSubtitle: device.host.displayName,
+                icon: UIApplicationShortcutIcon(templateImageName: "scanner"),
+                userInfo: ["device": device.name.rawValue as NSString]
+            )
+        }
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        context?.openShortcut(shortcutItem, completion: completionHandler)
     }
     
     @available(iOS 13.0, *)

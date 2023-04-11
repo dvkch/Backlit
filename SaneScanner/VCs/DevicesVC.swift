@@ -199,11 +199,18 @@ class DevicesVC: UIViewController {
         #endif
     }
     
-    private func openDevice(_ device: Device, indexPath: IndexPath) {
+    func openDevice(_ device: Device) {
+        let index = devices.firstIndex(of: device)
+        openDevice(device, indexPath: index.map { IndexPath(row: $0, section: 1) })
+    }
+    
+    private func openDevice(_ device: Device, indexPath: IndexPath?) {
         guard loadingDevice == nil else { return }
 
         loadingDevice = device
-        (tableView.cellForRow(at: indexPath) as? DeviceCell)?.isLoading = true
+        if let indexPath, let cell = tableView.cellForRow(at: indexPath) as? DeviceCell {
+            cell.isLoading = true
+        }
         
         Sane.shared.openDevice(device) { (result) in
             self.loadingDevice = nil
@@ -213,7 +220,9 @@ class DevicesVC: UIViewController {
                 if error.isSaneAuthDenied, DeviceAuthentication.saved(for: device.name.rawValue) != nil {
                     // this is an auth error, let's forget current auth and restart connexion
                     DeviceAuthentication.forget(for: device.name.rawValue)
-                    self.tableView(self.tableView, didSelectRowAt: indexPath)
+                    if let indexPath {
+                        self.tableView(self.tableView, didSelectRowAt: indexPath)
+                    }
                     return
                 }
                 else {
