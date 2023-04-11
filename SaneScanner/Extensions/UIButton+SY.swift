@@ -10,29 +10,7 @@ import UIKit
 
 import ObjectiveC
 
-private var UIButtonPrimaryActionClosure: UInt8?
-
 extension UIButton {
-    
-    // MARK: Primary action block
-    private var primaryActionClosure: (() -> ())? {
-        get {
-            return objc_getAssociatedObject(self, &UIButtonPrimaryActionClosure) as? () -> ()
-        }
-        set {
-            objc_setAssociatedObject(self, &UIButtonPrimaryActionClosure, newValue, .OBJC_ASSOCIATION_COPY)
-        }
-    }
-    
-    func addPrimaryAction(using closure: @escaping () -> ()) {
-        self.primaryActionClosure = closure
-        self.addTarget(self, action: #selector(blockActionTrigger), for: .primaryActionTriggered)
-    }
-    
-    @objc private func blockActionTrigger() {
-        self.primaryActionClosure?()
-    }
-    
     // MARK: Style
     static func system(prominent: Bool) -> Self {
         let button = Self(type: .roundedRect)

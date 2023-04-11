@@ -16,9 +16,12 @@ extension Notification.Name {
 protocol PreferenceValue: RawRepresentable & CaseIterable & CustomStringConvertible & Equatable {}
 extension RawRepresentable where Self: CaseIterable & Equatable {
     var nextValue: Self {
-        let allCases = Self.allCases as! [Self]
-        let currentIndex = allCases.firstIndex(of: self) ?? -1
-        return allCases[(currentIndex + 1) % allCases.count]
+        let currentIndex = allValues.firstIndex(of: self) ?? -1
+        return allValues[(currentIndex + 1) % allValues.count]
+    }
+    
+    var allValues: [Self] {
+        return Self.allCases as! [Self]
     }
 }
 

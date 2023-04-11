@@ -35,6 +35,8 @@ class PreferencesVC: UIViewController {
         
         navigationItem.rightBarButtonItem = .close(target: self, action: #selector(self.closeButtonTap))
         addKeyCommand(.close)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(prefsChanged), name: .preferencesChanged, object: nil)
 
         updateCacheSize()
     }
@@ -73,6 +75,12 @@ class PreferencesVC: UIViewController {
     // MARK: Actions
     @objc func closeButtonTap() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func prefsChanged() {
+        UIView.performWithoutAnimation {
+            tableView.reloadData()
+        }
     }
     
     // MARK: Content
@@ -186,13 +194,13 @@ extension PreferencesVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        let cell = tableView.cellForRow(at: indexPath) as? OptionCell
+        
         switch Section.allSections[indexPath.section] {
         case .prefGroup(_, let keys):
-            Preferences.shared.toggle(key: keys[indexPath.row])
-            
-            tableView.beginUpdates()
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-            tableView.endUpdates()
+            if cell?.hasControlToUpdateItsValue == false {
+                Preferences.shared.toggle(key: keys[indexPath.row])
+            }
             
         case .misc(let rows):
             switch rows[indexPath.row] {

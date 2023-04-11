@@ -140,9 +140,26 @@ class OptionCell: TableViewCell {
             if let boolValue = Preferences.shared[prefKey] as? BoolPreferenceValue {
                 let control = UISwitch()
                 control.isOn = boolValue.rawValue
-                control.isUserInteractionEnabled = false
                 control.onTintColor = UIColor.tint
+                control.addPrimaryAction {
+                    Preferences.shared[prefKey] = BoolPreferenceValue(rawValue: control.isOn)
+                }
                 valueControl = control
+            }
+            else if #available(iOS 14.0, *) {
+                let button = UIButton.system(prominent: false)
+                // we modify the selected title to be != than the corresponding option title, or on macOS the corresponding
+                // menu option won't be shown
+                button.setTitle(Preferences.shared[prefKey].description + " ", for: .normal)
+                button.showsMenuAsPrimaryAction = true
+                button.menu = UIMenu(children: Preferences.shared[prefKey].allValues.map { value in
+                    let action = UIAction(title: value.description) { action in
+                        Preferences.shared[prefKey] = value
+                    }
+                    action.state = Preferences.shared[prefKey].description == value.description ? .on : .off
+                    return action
+                })
+                valueControl = button
             }
             else {
                 valueControl = nil

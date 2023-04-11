@@ -242,7 +242,9 @@ extension DevicesVC: SaneDelegate {
             sane.configuration.hosts != previousConfig.hosts ||
             sane.configuration.transientdHosts != previousConfig.transientdHosts
         )
-        refresh(silently: !hostsChanged)
+        if hostsChanged {
+            refresh(silently: false)
+        }
     }
 
     func saneDidStartUpdatingDevices(_ sane: Sane) {
