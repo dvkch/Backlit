@@ -93,13 +93,13 @@ class DeviceVC: UIViewController {
         
         addKeyCommand(.refresh)
         refreshView = .init(tableView: tableView, viewController: self) { [weak self] in
-            self?.refresh()
+            self?.refresh(userInitiated: true)
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: .preferencesChanged, object: nil)
         
         updateLayoutStyle()
-        refresh()
+        refresh(userInitiated: false)
     }
     
     deinit {
@@ -246,11 +246,11 @@ class DeviceVC: UIViewController {
     }
     
     // MARK: Content
-    @objc private func refresh() {
+    @objc private func refresh(userInitiated: Bool) {
         guard !isRefreshing else { return }
         isRefreshing = true
         
-        refreshView.startLoading()
+        refreshView.startLoading(discreet: !userInitiated)
         Sane.shared.listOptions(for: device) { [weak self] _ in
             guard let self = self else { return }
             self.tableView.reloadData()
