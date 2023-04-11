@@ -30,9 +30,13 @@ class Context: NSObject {
 
     // MARK: UI properties
     var currentPreviewView: PreviewView? {
-        let previewVC = splitViewController.previewNC.viewControllers.last as? DevicePreviewVC
-        let deviceVC = splitViewController.scanNC.viewControllers.last as? DeviceVC
-        return previewVC?.previewView ?? deviceVC?.previewCell?.previewView
+        if let previewVC = splitViewController.previewNC.viewControllers.last as? DevicePreviewVC, previewVC.isVisible {
+            return previewVC.previewView
+        }
+        if let deviceVC = splitViewController.scanNC.viewControllers.last as? DeviceVC {
+            return deviceVC.previewCell?.previewView
+        }
+        return nil
     }
 
     // MARK: Methods

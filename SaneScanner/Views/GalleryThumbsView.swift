@@ -96,24 +96,28 @@ class GalleryThumbsView: UIView {
         // access the source view
         guard let window = window as? ContextWindow, let sourceView = window.context?.currentPreviewView else { return false }
 
+        // scroll back to the beginning
+        // it is unfortunately not possible to animate the contentOffset during the animation, the cells
+        // will be reused and disappear while scrolling. so we scroll first, then actually do the animation
+        // cf: https://stackoverflow.com/q/49818021/1439489
+        if galleryItems.count > 0 && !collectionView.indexPathsForVisibleItems.contains(IndexPath(item: 0, section: 0)) {
+            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: [.left, .top], animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                _ = self.doInsertionAnimation(newItems: newItems, removedItems: removedItems, allItems: allItems)
+            }
+            return true
+        }
+
         // prepare the animation
         insertedGalleryItem = newItem
-        defer { insertedGalleryItem = nil }
 
-        // insert the corresponding new cell
-        collectionView.performBatchUpdates({
+        // insert the corresponding new cell and obtain its rect
+        self.galleryItems = allItems
+        collectionView.performBatchUpdates {
             collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
-        }, completion: { _ in
-            self.insertedGalleryItem = nil
-            self.collectionView.visibleCells
-                .compactMap { $0 as? GalleryThumbnailCell }
-                .filter { $0.item == newItem }
-                .forEach { $0.isHidden = false }
-        })
-        
-        // access the final rect of the added cell
-        guard let cellRect = collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0))?.frame else { return false }
-        
+        }
+        let cellRect = self.collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0))?.frame ?? .zero
+
         // perform the animation
         let imageView = UIImageView(image: UIImage(contentsOfFile: newItem.thumbnailUrl.path))
         imageView.backgroundColor = .white
@@ -122,13 +126,13 @@ class GalleryThumbsView: UIView {
         window.addSubview(imageView)
 
         UIView.animate(withDuration: 0.3, animations: {
-            self.collectionView.contentOffset.x = -self.collectionView.contentInset.left
-            self.collectionView.contentOffset.y = -self.collectionView.contentInset.top
             imageView.frame = window.convert(cellRect, from: self.collectionView)
         }, completion: { _ in
             imageView.removeFromSuperview()
             self.insertedGalleryItem = nil
-            self.collectionView.reloadData()
+            self.collectionView.performBatchUpdates {
+                self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+            }
         })
         
         return true
@@ -214,11 +218,10 @@ class GalleryThumbsView: UIView {
 extension GalleryThumbsView: GalleryManagerDelegate {
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
-        self.galleryItems = items
-
         let ranAnimation = doInsertionAnimation(newItems: newItems, removedItems: removedItems, allItems: items)
         if !ranAnimation {
             UIView.animate(withDuration: 0.3) {
+                self.galleryItems = items
                 self.collectionView.reloadData()
                 self.setNeedsLayout()
             }
