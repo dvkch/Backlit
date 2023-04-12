@@ -680,8 +680,7 @@ extension Sane {
             // closure to determine if we should continue scanning or not, evaluated after each scan
             let continueScanning = {
                 // scanning encountered an error, or was cancelled, or is out of documents, let's stop
-                let previousSaneStatus = lastError?.saneStatus ?? SANE_STATUS_GOOD
-                if previousSaneStatus != SANE_STATUS_GOOD {
+                if lastError != nil && lastError?.saneStatus != SANE_STATUS_GOOD {
                     return false
                 }
 
@@ -850,14 +849,15 @@ extension Sane {
         }
 
         if self.stopScanOperation {
-            SaneLogger.i("> Scan cancel was required, stopping now")
             self.stopScanOperation = false
+            SaneLogger.i("> Scan cancel was required, stopping now")
+            sane_cancel(handle)
+
             Sane.runOn(mainThread: true) {
                 device.currentOperation?.progress = .cancelling
                 progress(.cancelling)
             }
-            sane_cancel(handle)
-            return .failure(SaneError.cancelled)
+            return .failure(SaneError(saneStatus: SANE_STATUS_CANCELLED))
         }
 
         guard status == SANE_STATUS_EOF else {
