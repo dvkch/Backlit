@@ -240,17 +240,26 @@ class GalleryManager: NSObject {
     }
     
     // MARK: Items properties
-    func thumbnail(for item: GalleryItem?) -> UIImage? {
-        guard let item = item else { return nil }
+    func thumbnail(for item: GalleryItem?, completion: @escaping (UIImage?) -> ()) {
+        guard let item = item else {
+            return completion(nil)
+        }
+
         if let cached = thumbnailCache.value(forKey: item.thumbnailUrl) {
-            return cached
+            return completion(cached)
         }
-        if let fromFile = UIImage(contentsOfFile: item.thumbnailUrl.path) {
-            thumbnailCache.setValue(fromFile, forKey: item.thumbnailUrl, cost: fromFile.estimatedMemoryFootprint)
-            return fromFile
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            if !FileManager.default.fileExists(atPath: item.thumbnailUrl.path) {
+                self.generateThumb(for: item, async: false, tellDelegates: true)
+            }
+            let thumb = UIImage(contentsOfFile: item.thumbnailUrl.path)
+            self.thumbnailCache.setValue(thumb, forKey: item.thumbnailUrl, cost: thumb?.estimatedMemoryFootprint ?? 0)
+
+            DispatchQueue.main.async {
+                completion(thumb)
+            }
         }
-        generateThumb(for: item, async: true, tellDelegates: true)
-        return nil
     }
 
     func imageSize(for item: GalleryItem) -> CGSize? {

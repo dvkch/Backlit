@@ -9,6 +9,7 @@
 import UIKit
 import SYKit
 
+#if !targetEnvironment(macCatalyst)
 class GalleryGridHeader: UICollectionReusableView {
     
     // MARK: Init
@@ -25,7 +26,7 @@ class GalleryGridHeader: UICollectionReusableView {
         addSubview(background)
         background.snp.makeConstraints { make in
             make.top.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(5)
+            make.left.equalToSuperview().offset(8)
             make.bottom.equalToSuperview().offset(40)
         }
         
@@ -59,7 +60,7 @@ class GalleryGridHeader: UICollectionReusableView {
     // MARK: Content
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
+        formatter.dateStyle = .long
         formatter.timeStyle = .none
         formatter.locale = .autoupdatingCurrent
         formatter.timeZone = .autoupdatingCurrent
@@ -96,10 +97,11 @@ class GalleryGridHeader: UICollectionReusableView {
     }
 
     private func updateContent() {
-        label.text = [
-            dateString,
-            "GALLERY ITEMS COUNT %d".localized(quantity: items.count)
-        ].removingNils().joined(separator: ", ")
+        var parts = [dateString]
+        if items.count > 5 && !UIAccessibility.isVoiceOverRunning {
+            parts.append("GALLERY ITEMS COUNT %d".localized(quantity: items.count))
+        }
+        label.text = parts.removingNils().joined(separator: " – ")
     }
     
     // MARK: Sizing
@@ -121,4 +123,4 @@ class GalleryGridHeader: UICollectionReusableView {
         )
     }
 }
-
+#endif

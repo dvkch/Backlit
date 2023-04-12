@@ -59,8 +59,6 @@ class GalleryThumbnailCell: UICollectionViewCell {
         
         updateSelectionStyle()
         setNeedsUpdateConstraints()
-        
-        GalleryManager.shared.addDelegate(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -97,14 +95,21 @@ class GalleryThumbnailCell: UICollectionViewCell {
         self.item = item
         accessibilityLabel = item.suggestedAccessibilityLabel
         spinner.color = displayedOverTint ? .normalTextOnTint : .normalText
-        updateThumbnail(nil)
+        updateThumbnail()
         
         setNeedsUpdateConstraints()
     }
 
-    private func updateThumbnail(_ thumbnail: UIImage?) {
-        imageView.image = thumbnail ?? GalleryManager.shared.thumbnail(for: item)
+    private func updateThumbnail() {
+        imageView.image = nil
         updateStyle()
+
+        let item = self.item
+        GalleryManager.shared.thumbnail(for: item) { [weak self] in
+            guard item == self?.item else { return }
+            self?.imageView.image = $0
+            self?.updateStyle()
+        }
     }
     
     private func updateSelectionStyle() {
@@ -139,14 +144,3 @@ class GalleryThumbnailCell: UICollectionViewCell {
         super.updateConstraints()
     }
 }
-
-extension GalleryThumbnailCell : GalleryManagerDelegate {
-    func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) { }
-    
-    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) {
-        guard item == self.item else { return }
-        updateThumbnail(thumbnail)
-    }
-}
-
-

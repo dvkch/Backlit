@@ -20,12 +20,13 @@ class GalleryGridVC: UIViewController {
         
         collectionViewLayout.maxSize = 320/3
         collectionViewLayout.margin = 6
-        collectionViewLayout.linesHorizontalInset = 15
+        collectionViewLayout.linesHorizontalInset = 16
         collectionViewLayout.cellZIndex = 20 // default header zIndex is 10
         collectionView.contentInset.top = 20
 
         collectionView.backgroundColor = .background
         collectionView.allowsSelection = true
+        collectionView.contentInsetAdjustmentBehavior = .always
         if #available(iOS 14.0, *) {
             // allow drag selection on iOS 14+
             collectionView.allowsMultipleSelectionDuringEditing = true
