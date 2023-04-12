@@ -134,7 +134,7 @@ class GalleryImageVC: UIViewController {
         var bounds = scrollView.frame
         bounds.origin = .zero
         
-        if !sy_isModal {
+        if !isModal {
             // when we're not modal we can't dismiss the nav & tool bars, so we take them into account
             bounds = bounds.inset(by: scrollView.safeAreaInsets)
         }

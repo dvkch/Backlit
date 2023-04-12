@@ -213,17 +213,13 @@ class GalleryGridVC: UIViewController {
         // Title
         if isEditing {
             let selectedCount = collectionView.indexPathsForSelectedItems?.count ?? 0
-            switch selectedCount {
-            case 0:     title = "GALLERY OVERVIEW SELECTED NONE".localized
-            case 1:     title = String(format: "GALLERY OVERVIEW SELECTED SINGULAR %d".localized, selectedCount)
-            default:    title = String(format: "GALLERY OVERVIEW SELECTED PLURAL %d".localized, selectedCount)
-            }
+            title = "GALLERY SELECTED ITEMS COUNT %d".localized(quantity: selectedCount)
         } else {
             title = "GALLERY OVERVIEW TITLE".localized
         }
         
         // Left
-        if navigationController?.sy_isModal == true && !isEditing {
+        if navigationController?.isModal == true && !isEditing {
             navigationItem.setLeftBarButton(.done(target: self, action: #selector(self.closeButtonTap)), animated: animated)
         } else {
             #if DEBUG

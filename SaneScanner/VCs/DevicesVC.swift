@@ -265,7 +265,7 @@ extension DevicesVC: SaneDelegate {
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentAuthInputAlert(
             title: "DIALOG AUTH TITLE".localized,
-            message: String(format: "DIALOG AUTH MESSAGE %@".localized, device),
+            message: "DIALOG AUTH MESSAGE %@".localized(device),
             usernamePlaceholder: "DIALOG AUTH PLACEHOLDER USERNAME".localized,
             passwordPlaceholder: "DIALOG AUTH PLACEHOLDER PASSWORD".localized,
             continue: "ACTION CONTINUE".localized,
@@ -285,7 +285,7 @@ extension DevicesVC: SaneDelegate {
         }
         #else
         let alert = UIAlertController(title: "DIALOG AUTH TITLE".localized, message: nil, preferredStyle: .alert)
-        alert.message = String(format: "DIALOG AUTH MESSAGE %@".localized, device)
+        alert.message = "DIALOG AUTH MESSAGE %@".localized(device)
         alert.addTextField { (field) in
             field.borderStyle = .none
             field.placeholder = "DIALOG AUTH PLACEHOLDER USERNAME".localized

@@ -23,8 +23,10 @@ extension PDFGeneratorError: LocalizedError {
         case .noImages:                         return "ERROR MESSAGE PDF NO IMAGES".localized
         case .pdfCouldntBeGenerated:            return "ERROR MESSAGE PDF COULD NOT BE GENERATED".localized
         case .cannotOpenImages:                 return "ERROR MESSAGE CANNOT OPEN IMAGES".localized
-        case .cannotOpenImage(let url):         return String(format: "ERROR MESSAGE CANNOT OPEN IMAGE %@".localized, url.deletingPathExtension().lastPathComponent)
-        case .invalidImageData(let url):        return String(format: "ERROR MESSAGE INVALID IMAGE DATA %@".localized, url.deletingPathExtension().lastPathComponent)
+        case .cannotOpenImage(let url):
+            return "ERROR MESSAGE CANNOT OPEN IMAGE %@".localized(url.deletingPathExtension().lastPathComponent)
+        case .invalidImageData(let url):
+            return "ERROR MESSAGE INVALID IMAGE DATA %@".localized(url.deletingPathExtension().lastPathComponent)
         }
     }
 }

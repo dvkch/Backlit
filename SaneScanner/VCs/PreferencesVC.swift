@@ -215,7 +215,7 @@ extension PreferencesVC : UITableViewDelegate {
                 break
                 
             case .contact:
-                let subject = String(format: "CONTACT SUBJECT ABOUT APP %@ %@".localized, Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
+                let subject = "CONTACT SUBJECT ABOUT APP %@ %@".localized(Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
                 
                 PasteboardEmailService.name = "MAIL COPY PASTEBOARD NAME".localized
                 EmailHelper.shared.actionSheetTitle = "MAIL ALERT TITLE".localized

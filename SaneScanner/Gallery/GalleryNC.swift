@@ -82,7 +82,7 @@ extension GalleryNC : GalleryManagerDelegate {
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
-        if items.isEmpty && sy_isModal {
+        if items.isEmpty && isModal {
             dismiss(animated: true, completion: nil)
             return
         }

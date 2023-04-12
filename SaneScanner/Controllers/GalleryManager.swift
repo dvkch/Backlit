@@ -84,7 +84,7 @@ class GalleryManager: NSObject {
             return false
         }
         override var description: String {
-            let valueDescription = value.map { "<\(type(of: $0).className): \(Unmanaged.passUnretained($0 as NSObject).toOpaque())>" }
+            let valueDescription = value.map { "<\(type(of: $0).className): \($0.pointerAddressString)>" }
             return "<WeakDelegate: \(valueDescription ?? "<null>")>"
         }
     }

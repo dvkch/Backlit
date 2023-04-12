@@ -95,7 +95,7 @@ class GalleryImagesVC: UIViewController {
         guard let currentIndex = currentIndex else { return }
         let item = items[currentIndex]
 
-        UIActivityViewController.showForURLs([item.url], from: sender, presentingVC: self, completion: nil)
+        UIActivityViewController.showForURLs([item.url], from: sender, presentingVC: self)
     }
 
     // MARK: Content
@@ -119,7 +119,7 @@ class GalleryImagesVC: UIViewController {
             return
         }
         
-        let canHideNavBars = navigationController?.sy_isModal ?? false
+        let canHideNavBars = navigationController?.isModal ?? false
         let hideNavBars = !showNavBars && canHideNavBars
         
         navigationController?.isNavigationBarHidden = hideNavBars
@@ -131,9 +131,9 @@ class GalleryImagesVC: UIViewController {
     }
     
     private func updateNavBarContent() {
-        title = String(format: "GALLERY IMAGE %d OF %d".localized, (currentIndex ?? 0) + 1, items.count)
+        title = "GALLERY ITEM %d OF %d".localized((currentIndex ?? 0) + 1, items.count)
         
-        if navigationController?.sy_isModal == true {
+        if navigationController?.isModal == true {
             navigationItem.rightBarButtonItem = .done(target: self, action: #selector(self.closeButtonTap))
         } else {
             navigationItem.rightBarButtonItem = nil

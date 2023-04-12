@@ -17,7 +17,7 @@ struct RefreshView {
         #else
         self.tableView = tableView
         self.completionBlock = completion
-        tableView.addPullToResfresh { _ in
+        tableView.addPullToRefresh { _ in
             completion()
         }
         #endif
