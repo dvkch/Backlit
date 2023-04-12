@@ -22,11 +22,13 @@ class GalleryGridVC: UIViewController {
         collectionViewLayout.margin = 6
         collectionViewLayout.linesHorizontalInset = 16
         collectionViewLayout.cellZIndex = 20 // default header zIndex is 10
-        collectionView.contentInset.top = 20
 
         collectionView.backgroundColor = .background
         collectionView.allowsSelection = true
-        collectionView.contentInsetAdjustmentBehavior = .always
+        collectionView.contentInsetAdjustmentBehavior = .never
+        if #available(iOS 13.0, *) {
+            collectionView.automaticallyAdjustsScrollIndicatorInsets = false
+        }
         if #available(iOS 14.0, *) {
             // allow drag selection on iOS 14+
             collectionView.allowsMultipleSelectionDuringEditing = true
@@ -51,14 +53,6 @@ class GalleryGridVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateNavBarContent(animated: false)
-        updateToolbarVisibility(animated: false)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // iOS automatically sets the toolbar visible in viewDidAppear, which could happen if we scroll to top quickly
-        // and trigger the dismissal gesture just enough for it to trigger this method. let's make sure the toolbar is
-        // always as visible as we'd like
         updateToolbarVisibility(animated: false)
     }
     
@@ -255,12 +249,25 @@ class GalleryGridVC: UIViewController {
     }
     
     private func updateToolbarVisibility(animated: Bool) {
-        navigationController?.toolbar.alpha = isEditing ? 1 : 0.001
+        navigationController?.setToolbarHidden(!isEditing, animated: animated)
+        view.setNeedsLayout()
     }
     
     // MARK: Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+
+        // we can't directly use `collectionView.contentInsetAdjustmentBehavior = .never`, or the bottom
+        // offset will move around when the toolbar is shown/hidden, which is a problem for a view
+        // who opens by default at the bottom...
+        collectionView.contentInset = .init(
+            top: view.safeAreaInsets.top + 20,
+            left: view.safeAreaInsets.left,
+            bottom: (view.window?.safeAreaInsets.bottom ?? 0) + (navigationController?.toolbar.bounds.height ?? 0),
+            right: view.safeAreaInsets.right
+        )
+        collectionView.scrollIndicatorInsets = collectionView.contentInset
+        collectionView.scrollIndicatorInsets.top -= 20
         collectionView.layoutIfNeeded()
 
         if !hasInitiallyScrolledToBottom, let lastIndexPath = galleryItems.lastIndexPath {
