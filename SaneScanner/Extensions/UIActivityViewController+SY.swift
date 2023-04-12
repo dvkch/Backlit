@@ -11,7 +11,7 @@ import UIKit
 
 extension UIActivityViewController {
 
-    static func showForURLs(_ urls: [URL], from barButtonItem: UIBarButtonItem, presentingVC: UIViewController, completion: (() -> ())?) {
+    static func showForURLs(_ urls: [URL], from barButtonItem: UIBarButtonItem, presentingVC: UIViewController, completion: (() -> ())? = nil) {
         let pdfActivity = PDFActivity()
         
         let vc = UIActivityViewController(activityItems: urls, applicationActivities: [pdfActivity])

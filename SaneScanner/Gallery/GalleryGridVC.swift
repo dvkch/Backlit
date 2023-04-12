@@ -57,10 +57,10 @@ class GalleryGridVC: UIViewController {
     }
     
     // MARK: Properties
-    private var items = [GalleryItem]()
+    private var galleryItems = [[GalleryItem]]()
     
-    private func setItems(_ items: [GalleryItem], reloadCollectionView: Bool = true) {
-        self.items = items
+    private func setGalleryItems(_ items: [GalleryItem], reloadCollectionView: Bool = true) {
+        self.galleryItems = items
         updateEmptyState()
         if reloadCollectionView {
             collectionView.reloadData()
@@ -114,7 +114,7 @@ class GalleryGridVC: UIViewController {
         guard let selectedIndices = collectionView.indexPathsForSelectedItems, !selectedIndices.isEmpty else { return }
         
         // keep a ref to the items, since we'll be deleting one by one and thus indices may become invalid, ending up deleting the wrong files
-        let selectedItems = selectedIndices.map { self.items[$0.item] }
+        let selectedItems = selectedIndices.map { self.galleryItems[$0.item] }
         
         var title = "DIALOG DELETE SCAN TITLE".localized
         var message = "DIALOG DELETE SCAN MESSAGE".localized
@@ -161,7 +161,7 @@ class GalleryGridVC: UIViewController {
         return (collectionView.indexPathsForSelectedItems ?? [])
             .sorted()
             .reversed()
-            .compactMap { self.items[$0.row].url }
+            .compactMap { self.galleryItems[$0.item].url }
     }
     
     private func shareSelectedItemsAsPDF(sender: UIBarButtonItem) {
@@ -205,8 +205,8 @@ class GalleryGridVC: UIViewController {
         text.append("GALLERY EMPTY SUBTITLE".localized, font: .preferredFont(forTextStyle: .subheadline), color: .altText)
         emptyStateLabel.attributedText = text
         
-        emptyStateView.isHidden = !items.isEmpty
-        collectionView.isHidden = items.isEmpty
+        emptyStateView.isHidden = !galleryItems.isEmpty
+        collectionView.isHidden = galleryItems.isEmpty
     }
     
     private func updateNavBarContent(animated: Bool) {
@@ -248,12 +248,12 @@ class GalleryGridVC: UIViewController {
 
 extension GalleryGridVC : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return galleryItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
-        cell.update(item: items[indexPath.row], mode: .gallery, displayedOverTint: false)
+        cell.update(item: galleryItems[indexPath.item], mode: .gallery, displayedOverTint: false)
         cell.showSelectionIndicator = isEditing
         return cell
     }
@@ -272,7 +272,7 @@ extension GalleryGridVC : UICollectionViewDelegate {
 
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let item = items[indexPath.item]
+        let item = galleryItems[indexPath.item]
         let configuration = UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: {
@@ -311,7 +311,7 @@ extension GalleryGridVC : UICollectionViewDelegate {
 
 extension GalleryGridVC : UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let item = items[indexPath.item]
+        let item = galleryItems[indexPath.item]
         return [UIDragItem(itemProvider: NSItemProvider(object: item))]
     }
 }
@@ -341,7 +341,7 @@ extension GalleryGridVC : GalleryManagerDelegate {
             return
         }
         
-        setItems(items)
+        setGalleryItems(items)
     }
 }
 #endif

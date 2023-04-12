@@ -56,7 +56,7 @@ class ScanNC: UINavigationController {
 
         let largeLayout = splitViewController?.traitCollection.horizontalSizeClass != .compact
         let showingScanVC = viewControllers.contains { $0 is DeviceVC }
-        let noImages = GalleryManager.shared.items.isEmpty
+        let noImages = GalleryManager.shared.galleryItems.isEmpty
         let toolbarHidden = largeLayout || noImages
         setToolbarHidden(toolbarHidden, animated: animated)
         

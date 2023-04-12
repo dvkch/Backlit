@@ -120,7 +120,7 @@ extension GalleryItem : NSItemProviderWriting {
     func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
         do {
             switch typeIdentifier {
-            case String(kUTTypeJPEG), String(kUTTypePNG), String(kUTTypeImage):
+            case String(kUTTypeJPEG), String(kUTTypePNG), "public.heic", String(kUTTypeImage):
                 let data = try Data(contentsOf: url, options: .mappedIfSafe)
                 completionHandler(data, nil)
                 

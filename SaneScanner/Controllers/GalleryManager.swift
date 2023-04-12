@@ -30,7 +30,7 @@ class GalleryManager: NSObject {
         // clear previous state
         deleteTempPDF()
         
-        refreshImageList()
+        refreshGalleryItems()
         
         thumbsQueue.maxConcurrentOperationCount = 1
         thumbsQueue.maxSurvivingOperations = 0
@@ -38,15 +38,15 @@ class GalleryManager: NSObject {
         
         watcher = DirectoryWatcher.watch(galleryFolder)
         watcher?.onNewFiles = { (files) in
-            let unknownChangesCount = files.filter { !self.imageURLs.contains($0.standardizedFileURL) }.count
+            let unknownChangesCount = files.filter { !self.galleryItems.map(\.url).contains($0.standardizedFileURL) }.count
             if unknownChangesCount > 0 {
-                self.refreshImageList()
+                self.refreshGalleryItems()
             }
         }
         watcher?.onDeletedFiles = { (files) in
-            let unknownChangesCount = files.filter { self.imageURLs.contains($0.standardizedFileURL) }.count
+            let unknownChangesCount = files.filter { self.galleryItems.map(\.url).contains($0.standardizedFileURL) }.count
             if unknownChangesCount > 0 {
-                self.refreshImageList()
+                self.refreshGalleryItems()
             }
         }
     }
@@ -67,7 +67,7 @@ class GalleryManager: NSObject {
     private var thumbsQueue = SYOperationQueue()
     
     // MARK: Caches
-    private var thumbnailCache = LRUCache<URL, UIImage>(totalCostLimit: 50_000_000, countLimit: 100)
+    private var thumbnailCache = LRUCache<URL, UIImage>(totalCostLimit: 50_000_000, countLimit: 200)
     private var imageSizeCache = LRUCache<URL, CGSize>()
     
     // MARK: Delegates
@@ -93,7 +93,7 @@ class GalleryManager: NSObject {
 
     func addDelegate(_ delegate: NSObject & GalleryManagerDelegate) {
         delegates.append(WeakDelegate(delegate))
-        delegate.galleryManager(self, didUpdate: items, newItems: [], removedItems: [])
+        delegate.galleryManager(self, didUpdate: galleryItems, newItems: [], removedItems: [])
     }
     
     func removeDelegate(_ delegate: NSObject & GalleryManagerDelegate) {
@@ -102,12 +102,6 @@ class GalleryManager: NSObject {
     }
     
     // MARK: Items management
-    private var imageURLs = [URL]() {
-        didSet {
-            handleImageURLsChanges(from: oldValue, to: imageURLs)
-        }
-    }
-    
     private func galleryItemForImage(at url: URL) -> GalleryItem {
         let item = GalleryItem(
             url: url,
@@ -116,8 +110,10 @@ class GalleryManager: NSObject {
         return item
     }
     
-    var items: [GalleryItem] {
-        return imageURLs.map { galleryItemForImage(at: $0) }
+    private(set) var galleryItems: [GalleryItem] = [] {
+       didSet {
+           handleGalleryItemsChanges(from: oldValue, to: galleryItems)
+       }
     }
     
     func createRandomTestImages(count: Int) {
@@ -162,17 +158,14 @@ class GalleryManager: NSObject {
             #endif
 
             // do last, as it will trigger the delegates
-            imageURLs.insert(fileURL.standardizedFileURL, at: 0)
+            galleryItems.append(item)
         }
     }
     
     func deleteItem(_ item: GalleryItem) {
         try? FileManager.default.removeItem(at: item.url)
         try? FileManager.default.removeItem(at: item.thumbnailUrl)
-        
-        if let firstIndex = imageURLs.firstIndex(of: item.url) {
-            imageURLs.remove(at: firstIndex)
-        }
+        galleryItems.remove(item)
     }
 
     private func listImages() -> [URL] {
@@ -190,39 +183,31 @@ class GalleryManager: NSObject {
         return imageURLs
     }
     
-    private func refreshImageList() {
-        imageURLs = listImages()
+    private func refreshGalleryItems() {
+        galleryItems = listImages().map { galleryItemForImage(at: $0) }
     }
     
-    private func handleImageURLsChanges(from oldURLs: [URL], to newURLs: [URL]) {
-        if oldURLs == newURLs { return }
-        
+    private func handleGalleryItemsChanges(from oldItems: [GalleryItem], to newItems: [GalleryItem]) {
+        guard oldItems != newItems else { return }
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
-                self.handleImageURLsChanges(from: oldURLs, to: newURLs)
+                self.handleGalleryItemsChanges(from: oldItems, to: newItems)
             }
             return
         }
         
-        let oldURLsSet = Set(oldURLs)
-        let newURLsSet = Set(newURLs)
+        let oldItemsSet = Set(oldItems)
+        let newItemsSet = Set(newItems)
 
-        let addedItems = newURLsSet
-            .subtracting(oldURLs)
-            .map { galleryItemForImage(at: $0) }
-        
-        let removedItems = oldURLsSet
-            .subtracting(newURLsSet)
-            .map { galleryItemForImage(at: $0) }
-
+        let addedItems = Array(newItemsSet.subtracting(oldItemsSet)).sorted(by: \.creationDate)
+        let removedItems = Array(oldItemsSet.subtracting(newItemsSet)).sorted(by: \.creationDate)
         removedItems.forEach { (item) in
             thumbnailCache.removeValue(forKey: item.url)
             imageSizeCache.removeValue(forKey: item.url)
         }
-        
-        let items = self.items
+
         delegates.forEach { (weakDelegate) in
-            weakDelegate.value?.galleryManager(self, didUpdate: items, newItems: addedItems, removedItems: removedItems)
+            weakDelegate.value?.galleryManager(self, didUpdate: newItems, newItems: addedItems, removedItems: removedItems)
         }
     }
     
