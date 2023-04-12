@@ -18,13 +18,15 @@ class GalleryThumbnailCell: UICollectionViewCell {
             self?.item?.suggestedDescription(separator: "\n")
         }
         
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = false
         imageView.layer.minificationFilter = .trilinear
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        imageView.layer.shadowOffset = .zero
+        imageView.layer.shadowRadius = 2
+        imageView.layer.shouldRasterize = true
+        imageView.layer.rasterizationScale = UIScreen.main.scale
         contentView.addSubview(imageView)
-        imageView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
         
         spinner.hidesWhenStopped = true
         contentView.addSubview(spinner)
@@ -37,7 +39,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         contentView.addSubview(selectionBackgroundView)
         selectionBackgroundView.snp.makeConstraints { make in
             make.size.equalTo(22)
-            make.bottom.right.equalTo(-8)
+            make.bottom.right.equalTo(imageView).offset(-8)
         }
         
         selectionRingView.layer.borderColor = UIColor.white.cgColor
@@ -48,12 +50,15 @@ class GalleryThumbnailCell: UICollectionViewCell {
         selectionRingView.layer.shadowOffset = .zero
         selectionRingView.layer.shadowRadius = 3
         selectionRingView.layer.shadowOpacity = 0.8
+        selectionRingView.layer.shouldRasterize = true
+        selectionRingView.layer.rasterizationScale = UIScreen.main.scale
         contentView.addSubview(selectionRingView)
         selectionRingView.snp.makeConstraints { (make) in
             make.edges.equalTo(selectionBackgroundView)
         }
         
         updateSelectionStyle()
+        setNeedsUpdateConstraints()
         
         GalleryManager.shared.addDelegate(self)
     }
@@ -64,7 +69,6 @@ class GalleryThumbnailCell: UICollectionViewCell {
     
     // MARK: Properties
     private(set) var item: GalleryItem?
-    private var mode: Mode = .gallery
     var showSelectionIndicator: Bool = false {
         didSet {
             updateSelectionStyle()
@@ -74,10 +78,6 @@ class GalleryThumbnailCell: UICollectionViewCell {
         didSet {
             updateSelectionStyle()
         }
-    }
-    
-    enum Mode {
-        case gallery, toolbar
     }
 
     // MARK: Views
@@ -93,13 +93,13 @@ class GalleryThumbnailCell: UICollectionViewCell {
     private let selectionBackgroundView = UIView()
 
     // MARK: Content
-    func update(item: GalleryItem, mode: Mode, displayedOverTint: Bool) {
-        spinner.color = displayedOverTint ? .normalTextOnTint : .normalText
+    func update(item: GalleryItem, displayedOverTint: Bool) {
         self.item = item
-        self.mode = mode
         accessibilityLabel = item.suggestedAccessibilityLabel
-        
+        spinner.color = displayedOverTint ? .normalTextOnTint : .normalText
         updateThumbnail(nil)
+        
+        setNeedsUpdateConstraints()
     }
 
     private func updateThumbnail(_ thumbnail: UIImage?) {
@@ -114,40 +114,29 @@ class GalleryThumbnailCell: UICollectionViewCell {
     }
     
     private func updateStyle() {
-        if imageView.image != nil {
-            spinner.stopAnimating()
-            imageView.backgroundColor = .white
-        }
-        else {
+        if imageView.image == nil {
             spinner.startAnimating()
             imageView.backgroundColor = .backgroundAlt
+            imageView.layer.shadowOpacity = 0
         }
-
-        switch mode {
-        case .gallery:
-            contentView.layer.shadowColor = nil
-            contentView.layer.shouldRasterize = false
-            if imageView.image != nil {
-                imageView.backgroundColor = .white
-            }
-            else {
-                imageView.backgroundColor = .backgroundAlt
-            }
-
-        case .toolbar:
-            contentView.layer.shadowColor = UIColor.black.cgColor
-            contentView.layer.shadowOffset = .zero
-            contentView.layer.shadowRadius = 2
-            contentView.layer.rasterizationScale = UIScreen.main.scale
-            
-            if imageView.image != nil {
-                contentView.layer.shadowOpacity = 0.6
-                contentView.layer.shouldRasterize = true
-            } else {
-                contentView.layer.shadowOpacity = 0
-                contentView.layer.shouldRasterize = false
-            }
+        else {
+            spinner.stopAnimating()
+            imageView.backgroundColor = .clear
+            imageView.layer.shadowOpacity = 0.6
         }
+    }
+    
+    // MARK: Layout
+    override func updateConstraints() {
+        imageView.snp.remakeConstraints { (make) in
+            if let item, let imageSize = GalleryManager.shared.imageSize(for: item) {
+                make.width.equalTo(imageView.snp.height).multipliedBy(imageSize.width / imageSize.height)
+            }
+            make.top.left.equalToSuperview().priority(.high)
+            make.top.left.greaterThanOrEqualToSuperview()
+            make.center.equalToSuperview()
+        }
+        super.updateConstraints()
     }
 }
 

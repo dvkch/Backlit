@@ -239,7 +239,7 @@ extension GalleryThumbsView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
-        cell.update(item: galleryItems[indexPath.item], mode: .toolbar, displayedOverTint: self.tintColor == .tint)
+        cell.update(item: galleryItems[indexPath.item], displayedOverTint: self.tintColor == .tint)
         cell.isHidden = (cell.item == insertedGalleryItem)
         return cell
     }

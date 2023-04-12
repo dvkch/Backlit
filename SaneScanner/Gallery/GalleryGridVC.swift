@@ -19,7 +19,7 @@ class GalleryGridVC: UIViewController {
         emptyStateLabel.adjustsFontForContentSizeCategory = true
         
         collectionViewLayout.maxSize = 320/3
-        collectionViewLayout.margin = 2
+        collectionViewLayout.margin = 6
         collectionViewLayout.linesHorizontalInset = 15
         collectionViewLayout.cellZIndex = 20 // default header zIndex is 10
         collectionView.contentInset.top = 20
@@ -287,7 +287,7 @@ extension GalleryGridVC : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
-        cell.update(item: galleryItems[indexPath], mode: .gallery, displayedOverTint: false)
+        cell.update(item: galleryItems[indexPath], displayedOverTint: false)
         cell.showSelectionIndicator = isEditing
         return cell
     }
