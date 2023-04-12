@@ -323,15 +323,9 @@ class CropMaskView: UIControl {
 }
 
 extension CropMaskView : UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if let pan = gestureRecognizer as? UIPanGestureRecognizer {
-            if cornerPanGestures.values.contains(pan) { return false }
-            if borderPanGestures.values.contains(pan) { return false }
-        }
-        if let pan = otherGestureRecognizer as? UIPanGestureRecognizer {
-            if cornerPanGestures.values.contains(pan) { return false }
-            if borderPanGestures.values.contains(pan) { return false }
-        }
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // make sure the navigationController.interactivePopGestureRecognizer doesn't take over our cropping gestures
+        // and closes the deviceVC while trying to crop an image
         return true
     }
 }
