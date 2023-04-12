@@ -400,6 +400,9 @@ extension GalleryGridVC : GalleryManagerDelegate {
             collectionView.performBatchUpdates({
                 setGalleryItems(groups, reloadCollectionView: false)
                 collectionView.insertItems(at: addedIndexPaths)
+                collectionView.reloadSectionHeaders(for: addedIndexPaths) { (indexPath: IndexPath, header: GalleryGridHeader) in
+                    header.items = groups[indexPath.section]
+                }
             }, completion: nil)
             return
         }
@@ -409,6 +412,9 @@ extension GalleryGridVC : GalleryManagerDelegate {
             collectionView.performBatchUpdates({
                 setGalleryItems(groups, reloadCollectionView: false)
                 collectionView.deleteItems(at: removedIndexPaths)
+                collectionView.reloadSectionHeaders(for: removedIndexPaths) { (indexPath: IndexPath, header: GalleryGridHeader) in
+                    header.items = groups[indexPath.section]
+                }
             }, completion: nil)
             return
         }
