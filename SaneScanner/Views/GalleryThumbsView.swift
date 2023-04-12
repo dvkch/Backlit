@@ -72,12 +72,12 @@ class GalleryThumbsView: UIView {
     private let gradientMask = CAGradientLayer()
     
     // MARK: Actions
-    private func openGallery(at index: Int) {
+    private func openGallery(for item: GalleryItem) {
         #if targetEnvironment(macCatalyst)
         // crashes in debug in Catalyst, but all good in release
-        UIApplication.shared.open(galleryItems[index].url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(item.url, options: [:], completionHandler: nil)
         #else
-        let nc = GalleryNC(openedAt: index)
+        let nc = GalleryNC(openedOn: item)
         parentViewController?.present(nc, animated: true, completion: nil)
         #endif
     }
@@ -86,7 +86,7 @@ class GalleryThumbsView: UIView {
     private var insertedGalleryItem: GalleryItem?
     private func doInsertionAnimation(newItems: [GalleryItem], removedItems: [GalleryItem], allItems: [GalleryItem]) -> Bool {
         // make sure there is only one item added, that it's the most recent item, and that it's less than 5s old
-        guard removedItems.isEmpty, newItems.count == 1, let newItem = newItems.first, newItem == allItems[0] else { return false }
+        guard removedItems.isEmpty, newItems.count == 1, let newItem = newItems.first, newItem == allItems.last else { return false }
         guard fabs(newItem.creationDate.timeIntervalSinceNow) < 5 else { return false }
         
         // ignore the animation if we are not fully visible
@@ -111,7 +111,7 @@ class GalleryThumbsView: UIView {
         insertedGalleryItem = newItem
 
         // insert the corresponding new cell and obtain its rect
-        self.galleryItems = allItems
+        self.galleryItems = allItems.reversed()
         collectionView.performBatchUpdates {
             collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
         }
@@ -221,7 +221,7 @@ extension GalleryThumbsView: GalleryManagerDelegate {
         let ranAnimation = doInsertionAnimation(newItems: newItems, removedItems: removedItems, allItems: items)
         if !ranAnimation {
             UIView.animate(withDuration: 0.3) {
-                self.galleryItems = items
+                self.galleryItems = items.reversed()
                 self.collectionView.reloadData()
                 self.setNeedsLayout()
             }
@@ -256,13 +256,13 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
-        openGallery(at: indexPath.item)
+        openGallery(for: galleryItems[indexPath.item])
     }
     
     #if !targetEnvironment(macCatalyst)
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let item = self.galleryItems[indexPath.item]
+        let item = galleryItems[indexPath.item]
         let configuration = UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: {
@@ -270,7 +270,7 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
             },
             actionProvider: { _ in
                 let open = UIAction(title: "ACTION OPEN".localized, image: UIImage(systemName: "folder")) { _ in
-                    self.openGallery(at: indexPath.item)
+                    self.openGallery(for: item)
                 }
                 let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
                     guard let parentViewController = self.parentViewController else { return }
@@ -287,7 +287,7 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
         guard let indexPath = configuration.indexPath else { return }
         animator.addCompletion {
-            self.openGallery(at: indexPath.item)
+            self.openGallery(for: self.galleryItems[indexPath.item])
         }
     }
     #endif

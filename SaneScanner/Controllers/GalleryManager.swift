@@ -115,6 +115,7 @@ class GalleryManager: NSObject {
            handleGalleryItemsChanges(from: oldValue, to: galleryItems)
        }
     }
+    private(set) var groupedItems: [[GalleryItem]] = []
     
     func createRandomTestImages(count: Int) {
         (0..<count).forEach { (_) in
@@ -178,7 +179,7 @@ class GalleryManager: NSObject {
         let imageURLs = (items ?? [])
             .map { (url: URL) -> URL in url.standardizedFileURL }
             .filter { (url: URL) -> Bool in url.isSupportedImageURL && url.isDirectory == false && url.creationDate != nil }
-            .sorted { $0.creationDate! > $1.creationDate! }
+            .sorted { $0.creationDate! < $1.creationDate! }
 
         return imageURLs
     }
@@ -187,8 +188,35 @@ class GalleryManager: NSObject {
         galleryItems = listImages().map { galleryItemForImage(at: $0) }
     }
     
+    private func refreshGroupedItems() {
+        guard let firstItem = galleryItems.first else {
+            self.groupedItems = []
+            return
+        }
+
+        var groups = [[GalleryItem]]()
+        groups.append([firstItem])
+        
+        let calendar = Calendar.autoupdatingCurrent
+        for item in galleryItems.dropFirst() {
+            let prevItem = groups.last!.last!
+            if calendar.isDate(item.creationDate, inSameDayAs: prevItem.creationDate) ||
+                item.creationDate.timeIntervalSince(prevItem.creationDate) < 3600
+            {
+                groups[groups.count - 1].append(item)
+            }
+            else {
+                groups.append([item])
+            }
+        }
+        
+        self.groupedItems = groups
+    }
+    
     private func handleGalleryItemsChanges(from oldItems: [GalleryItem], to newItems: [GalleryItem]) {
         guard oldItems != newItems else { return }
+        refreshGroupedItems()
+
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
                 self.handleGalleryItemsChanges(from: oldItems, to: newItems)

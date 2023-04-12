@@ -13,10 +13,10 @@ import SYKit
 class GalleryNC: UINavigationController {
 
     // MARK: Init
-    init(openedAt index: Int?) {
+    init(openedOn item: GalleryItem?) {
         super.init(rootViewController: gridVC)
         
-        if let index = index {
+        if let item, let index = GalleryManager.shared.galleryItems.firstIndex(of: item) {
             let imagesVC = GalleryImagesVC()
             imagesVC.initialIndex = index
             self.viewControllers = [gridVC, imagesVC]

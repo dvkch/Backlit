@@ -20,6 +20,9 @@ class GalleryGridVC: UIViewController {
         
         collectionViewLayout.maxSize = 320/3
         collectionViewLayout.margin = 2
+        collectionViewLayout.linesHorizontalInset = 15
+        collectionViewLayout.cellZIndex = 20 // default header zIndex is 10
+        collectionView.contentInset.top = 20
 
         collectionView.backgroundColor = .background
         collectionView.allowsSelection = true
@@ -28,6 +31,7 @@ class GalleryGridVC: UIViewController {
             collectionView.allowsMultipleSelectionDuringEditing = true
         }
         collectionView.collectionViewLayout = collectionViewLayout
+        collectionView.registerSupplementaryView(GalleryGridHeader.self, kind: UICollectionView.elementKindSectionHeader, xib: false)
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
 
         toolbarItems = [
@@ -49,6 +53,14 @@ class GalleryGridVC: UIViewController {
         updateToolbarVisibility(animated: false)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // iOS automatically sets the toolbar visible in viewDidAppear, which could happen if we scroll to top quickly
+        // and trigger the dismissal gesture just enough for it to trigger this method. let's make sure the toolbar is
+        // always as visible as we'd like
+        updateToolbarVisibility(animated: false)
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if isEditing {
@@ -57,9 +69,10 @@ class GalleryGridVC: UIViewController {
     }
     
     // MARK: Properties
+    private var hasInitiallyScrolledToBottom = false
     private var galleryItems = [[GalleryItem]]()
     
-    private func setGalleryItems(_ items: [GalleryItem], reloadCollectionView: Bool = true) {
+    private func setGalleryItems(_ items: [[GalleryItem]], reloadCollectionView: Bool = true) {
         self.galleryItems = items
         updateEmptyState()
         if reloadCollectionView {
@@ -114,7 +127,7 @@ class GalleryGridVC: UIViewController {
         guard let selectedIndices = collectionView.indexPathsForSelectedItems, !selectedIndices.isEmpty else { return }
         
         // keep a ref to the items, since we'll be deleting one by one and thus indices may become invalid, ending up deleting the wrong files
-        let selectedItems = selectedIndices.map { self.galleryItems[$0.item] }
+        let selectedItems = selectedIndices.map { self.galleryItems[$0] }
         
         var title = "DIALOG DELETE SCAN TITLE".localized
         var message = "DIALOG DELETE SCAN MESSAGE".localized
@@ -160,8 +173,7 @@ class GalleryGridVC: UIViewController {
     private func selectedURLs() -> [URL] {
         return (collectionView.indexPathsForSelectedItems ?? [])
             .sorted()
-            .reversed()
-            .compactMap { self.galleryItems[$0.item].url }
+            .compactMap { self.galleryItems[$0].url }
     }
     
     private func shareSelectedItemsAsPDF(sender: UIBarButtonItem) {
@@ -242,24 +254,64 @@ class GalleryGridVC: UIViewController {
     }
     
     private func updateToolbarVisibility(animated: Bool) {
-        navigationController?.setToolbarHidden(!isEditing, animated: animated)
+        navigationController?.toolbar.alpha = isEditing ? 1 : 0.001
+    }
+    
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.layoutIfNeeded()
+
+        if !hasInitiallyScrolledToBottom, let lastIndexPath = galleryItems.lastIndexPath {
+            hasInitiallyScrolledToBottom = true
+            collectionView.scrollToItem(at: lastIndexPath, at: .bottom, animated: false)
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if previousTraitCollection?.preferredContentSizeCategory != traitCollection.preferredContentSizeCategory {
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
     }
 }
 
 extension GalleryGridVC : UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return galleryItems.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return galleryItems[section].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
-        cell.update(item: galleryItems[indexPath.item], mode: .gallery, displayedOverTint: false)
+        cell.update(item: galleryItems[indexPath], mode: .gallery, displayedOverTint: false)
         cell.showSelectionIndicator = isEditing
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueSupplementaryView(GalleryGridHeader.self, kind: UICollectionView.elementKindSectionHeader, for: indexPath)
+        header.items = galleryItems[indexPath.section]
+        return header
+    }
 }
 
-extension GalleryGridVC : UICollectionViewDelegate {
+extension GalleryGridVC : UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let isLast = section == galleryItems.count - 1
+        return UIEdgeInsets(
+            top: 0,                  left:  self.collectionViewLayout.linesHorizontalInset,
+            bottom: isLast ? 0 : 20, right: self.collectionViewLayout.linesHorizontalInset
+        )
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return GalleryGridHeader.size(for: galleryItems[section], in: collectionView)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isEditing {
             updateNavBarContent(animated: false)
@@ -272,7 +324,7 @@ extension GalleryGridVC : UICollectionViewDelegate {
 
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let item = galleryItems[indexPath.item]
+        let item = galleryItems[indexPath]
         let configuration = UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: {
@@ -311,7 +363,7 @@ extension GalleryGridVC : UICollectionViewDelegate {
 
 extension GalleryGridVC : UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let item = galleryItems[indexPath.item]
+        let item = galleryItems[indexPath]
         return [UIDragItem(itemProvider: NSItemProvider(object: item))]
     }
 }
@@ -320,28 +372,40 @@ extension GalleryGridVC : GalleryManagerDelegate {
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
-        let newIndices = newItems.compactMap { items.firstIndex(of: $0) }
-        let removedIndices = removedItems.compactMap { self.items.firstIndex(of: $0) }
+        let groups = manager.groupedItems
+        guard groups.count == galleryItems.count else {
+            // number of groups differs, let's not do any incremental updates
+            setGalleryItems(groups)
+            return
+        }
+        
+        let newIndexedGroups = groups.allItems
+        let oldIndexedGroups = galleryItems.allItems
+
+        let addedIndexPaths: [IndexPath] = newItems
+            .compactMap { newItem in newIndexedGroups.first(where: { $0.1 == newItem })?.0 }
+        let removedIndexPaths: [IndexPath] = removedItems
+            .compactMap { removedItem in oldIndexedGroups.first(where: { $0.1 == removedItem })?.0 }
         
         // if there are only additions, and we can find all items that have been added, then do an animated update
-        if removedItems.isEmpty, !newItems.isEmpty, newIndices.count == newItems.count {
+        if newItems.isNotEmpty && removedItems.isEmpty, addedIndexPaths.count == newItems.count {
             collectionView.performBatchUpdates({
-                setItems(items, reloadCollectionView: false)
-                collectionView.insertItems(at: newIndices.map { IndexPath(item: $0, section: 0) })
+                setGalleryItems(groups, reloadCollectionView: false)
+                collectionView.insertItems(at: addedIndexPaths)
             }, completion: nil)
             return
         }
 
         // if there are only deletions, and we can find all items that have been deleted, then do an animated update
-        if newItems.isEmpty, !removedItems.isEmpty, removedIndices.count == removedItems.count {
+        if removedItems.isNotEmpty && newItems.isEmpty, removedIndexPaths.count == removedItems.count {
             collectionView.performBatchUpdates({
-                setItems(items, reloadCollectionView: false)
-                collectionView.deleteItems(at: removedIndices.map { IndexPath(item: $0, section: 0) })
+                setGalleryItems(groups, reloadCollectionView: false)
+                collectionView.deleteItems(at: removedIndexPaths)
             }, completion: nil)
             return
         }
         
-        setGalleryItems(items)
+        setGalleryItems(groups)
     }
 }
 #endif

@@ -13,19 +13,17 @@ import SYPictureMetadata
 class GalleryItem: NSObject {
     let url: URL
     let thumbnailUrl: URL
-    
+    let creationDate: Date
+
     init(url: URL, thumbnailUrl: URL) {
         self.url = url
         self.thumbnailUrl = thumbnailUrl
+        self.creationDate = url.creationDate ?? Date(timeIntervalSince1970: 0)
         super.init()
     }
     
     override func isEqual(_ object: Any?) -> Bool {
         (object as? GalleryItem)?.url == url
-    }
-    
-    var creationDate: Date {
-        return url.creationDate ?? Date(timeIntervalSince1970: 0)
     }
 }
 
@@ -55,16 +53,14 @@ extension GalleryItem {
         }
     }()
     
-    func creationDateString(allowRelative: Bool) -> String? {
-        guard let date = url.creationDate else { return nil }
-        
-        if allowRelative, Date().timeIntervalSince(date) < 7 * 24 * 2600,
+    func creationDateString(allowRelative: Bool) -> String {
+        if allowRelative, Date().timeIntervalSince(creationDate) < 7 * 24 * 3600,
            #available(iOS 13.0, *), let formatter = type(of: self).relativeDateFormatter as? RelativeDateTimeFormatter
         {
-            return formatter.localizedString(for: date, relativeTo: Date())
+            return formatter.localizedString(for: creationDate, relativeTo: Date())
         }
         else {
-            return type(of: self).dateFormatter.string(from: date)
+            return type(of: self).dateFormatter.string(from: creationDate)
         }
     }
     

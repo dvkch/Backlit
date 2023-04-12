@@ -9,6 +9,8 @@
 import UIKit
 
 class GalleryGridLayout: UICollectionViewFlowLayout {
+    
+    var cellZIndex: Int = 0
 
     var maxSize: CGFloat = 50 {
         didSet {
@@ -20,6 +22,12 @@ class GalleryGridLayout: UICollectionViewFlowLayout {
         didSet {
             minimumInteritemSpacing = margin
             minimumLineSpacing = margin
+            invalidateLayout()
+        }
+    }
+    
+    var linesHorizontalInset: CGFloat = 0 {
+        didSet {
             invalidateLayout()
         }
     }
@@ -36,6 +44,7 @@ class GalleryGridLayout: UICollectionViewFlowLayout {
         let bounds = collectionView.bounds
             .inset(by: collectionView.contentInset)
             .inset(by: collectionView.safeAreaInsets)
+            .inset(by: UIEdgeInsets(leftAndRight: linesHorizontalInset))
         
         let length = scrollDirection == .horizontal ? bounds.height : bounds.width
         
@@ -47,6 +56,16 @@ class GalleryGridLayout: UICollectionViewFlowLayout {
         let cellSize = availableSpace / CGFloat(numberOfItemsPerRow)
         
         return CGSize(width: cellSize, height: cellSize)
+    }
+
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let attrs = super.layoutAttributesForElements(in: rect)
+        attrs?.forEach { attr in
+            if attr.representedElementCategory == .cell {
+                attr.zIndex = cellZIndex
+            }
+        }
+        return attrs
     }
 }
 
