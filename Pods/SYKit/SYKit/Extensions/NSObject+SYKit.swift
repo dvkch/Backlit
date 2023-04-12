@@ -18,5 +18,10 @@ public extension NSObject {
     var className: String {
         return String(describing: type(of: self))
     }
+    
+    @objc(sy_pointerAddressString)
+    var pointerAddressString: String {
+        return Unmanaged.passUnretained(self).toOpaque().debugDescription
+    }
 }
 

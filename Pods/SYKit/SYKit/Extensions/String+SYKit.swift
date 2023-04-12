@@ -13,11 +13,22 @@ public extension StringProtocol {
         return NSLocalizedString(String(self), comment: String(self))
     }
     
-    func localized(_ arguments: [CVarArg]) -> String {
+    func localized(_ arguments: CVarArg...) -> String {
         let format = self.localized
         return String(format: format, arguments: arguments)
     }
-    
+
+    func localized(quantity: Int) -> String {
+        let key: String
+        switch quantity {
+        case 0: key = self + ".zero"
+        case 1: key = self + ".one"
+        default: key = self + ".other"
+        }
+        
+        return String(format: key.localized, quantity)
+    }
+
     func firstLines(_ count: Int) -> String {
         var lines = components(separatedBy: .newlines)
         if lines.count > count {

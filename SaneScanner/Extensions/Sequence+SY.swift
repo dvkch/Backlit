@@ -8,10 +8,3 @@
 
 import Foundation
 
-extension Sequence {
-    func sorted<V: Comparable>(by path: KeyPath<Element, V>) -> [Self.Element] {
-        return self.sorted { e1, e2 in
-            return e1[keyPath: path] < e2[keyPath: path]
-        }
-    }
-}

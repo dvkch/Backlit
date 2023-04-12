@@ -10,7 +10,7 @@ import UIKit
 import SYKit
 
 extension UIScrollView {
-    func addPullToResfresh(_ completion: @escaping ((UIScrollView) -> ())) {
+    func addPullToRefresh(_ completion: @escaping ((UIScrollView) -> ())) {
         let control = DotsRefreshControl(frame: .zero)
         control.tintColor = UIColor.pullToRefresh.withAlphaComponent(0.8)
         control.attributedTitle = nil

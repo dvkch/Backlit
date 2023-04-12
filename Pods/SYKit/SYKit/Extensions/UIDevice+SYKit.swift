@@ -9,6 +9,15 @@
 import UIKit
 
 public extension UIDevice {
+    @objc(sy_isCatalyst)
+    static var isCatalyst: Bool {
+        #if targetEnvironment(macCatalyst)
+        return true
+        #else
+        return false
+        #endif
+    }
+    
     @objc(sy_usedMemory)
     var usedMemory: UInt {
         var info = task_basic_info()
