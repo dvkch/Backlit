@@ -85,6 +85,9 @@ class GalleryThumbsView: UIView {
     // MARK: Insertion animation
     private var insertedGalleryItem: GalleryItem?
     private func doInsertionAnimation(newItems: [GalleryItem], removedItems: [GalleryItem], allItems: [GalleryItem]) -> Bool {
+        // respect the user's choice
+        guard !UIAccessibility.isReduceMotionEnabled else { return false }
+        
         // make sure there is only one item added, that it's the most recent item, and that it's less than 5s old
         guard removedItems.isEmpty, newItems.count == 1, let newItem = newItems.first, newItem == allItems.last else { return false }
         guard fabs(newItem.creationDate.timeIntervalSinceNow) < 5 else { return false }
@@ -124,7 +127,7 @@ class GalleryThumbsView: UIView {
         imageView.frame = window.convert(sourceView.cropAreaInViewBounds, from: sourceView)
         window.addSubview(imageView)
 
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             imageView.frame = window.convert(cellRect, from: self.collectionView)
         }, completion: { _ in
             imageView.removeFromSuperview()

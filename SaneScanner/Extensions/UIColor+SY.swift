@@ -19,8 +19,19 @@ extension UIColor {
     }
 
     static var tint: UIColor {
-        let tintColor = UIColor(red: 112, green: 65, blue: 192)
-        return .accentColor ?? tintColor
+        if let accentColor {
+            return accentColor
+        }
+
+        let lighterTint = UIColor(red: 140, green: 103, blue: 204)
+        let darkerTint = UIColor(red: 112, green: 65, blue: 192)
+        if #available(iOS 13.0, *) {
+            return UIColor { (traits) -> UIColor in
+                return traits.userInterfaceStyle == .light ? darkerTint : lighterTint
+            }
+        } else {
+            return darkerTint
+        }
     }
     
     static var background: UIColor {
