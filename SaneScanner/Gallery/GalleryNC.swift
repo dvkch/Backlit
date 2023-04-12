@@ -27,6 +27,18 @@ class GalleryNC: UINavigationController {
         
         // make sure the back button has the right name when opening at specific index
         gridVC.loadViewIfNeeded()
+        
+        // the bar buttons are not super readable on a dark interface when a white image goes behind a toolbar
+        // and using a lighter color isn't better. let's just make the blur effect less transparent (default
+        // is systemChromeMaterial)
+        if #available(iOS 13.0, *) {
+            navigationBar.scrollEdgeAppearance?.backgroundEffect = UIBlurEffect(style: .systemThickMaterial)
+        }
+        if #available(iOS 15.0, *) {
+            navigationBar.compactScrollEdgeAppearance?.backgroundEffect = UIBlurEffect(style: .systemThickMaterial)
+            toolbar.compactScrollEdgeAppearance?.backgroundEffect = UIBlurEffect(style: .systemThickMaterial)
+            toolbar.scrollEdgeAppearance?.backgroundEffect = UIBlurEffect(style: .systemThickMaterial)
+        }
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
