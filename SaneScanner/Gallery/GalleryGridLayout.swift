@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GalleryGridLayout: UICollectionViewFlowLayout {
+class GalleryGridLayout: BouncyLayout {
     
     var cellZIndex: Int = 0
 
@@ -72,7 +72,8 @@ class GalleryGridLayout: UICollectionViewFlowLayout {
 extension GalleryGridLayout {
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         let prevWidth = collectionView?.bounds.width ?? 0
-        return abs(prevWidth - newBounds.width) > 0.5
+        let sizeChanged = abs(prevWidth - newBounds.width) > 0.5
+        return super.shouldInvalidateLayout(forBoundsChange: newBounds) || sizeChanged
     }
     
     override func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {

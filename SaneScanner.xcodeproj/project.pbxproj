@@ -26,6 +26,7 @@
 		973066C7220C951B0068E8C7 /* UIActivityViewController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066C6220C951B0068E8C7 /* UIActivityViewController+SY.swift */; };
 		9730FD9225CF6365009ABCBC /* SaneSwift+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9730FD9125CF6365009ABCBC /* SaneSwift+SY.swift */; };
 		9731D89122C548CE008D7525 /* TapInsetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9731D89022C548CE008D7525 /* TapInsetsView.swift */; };
+		973646FC29E6DA400089458A /* BouncyLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973646FB29E6DA400089458A /* BouncyLayout.swift */; };
 		9740C16F2638DC8B00CAC543 /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9740C16E2638DC8B00CAC543 /* ScanButton.swift */; };
 		9747AF101E5257080090E6B2 /* test_scan_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9747AF0F1E5257080090E6B2 /* test_scan_image.png */; };
 		97499E5B220862FE006DED20 /* ScanNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5A220862FE006DED20 /* ScanNC.swift */; };
@@ -169,6 +170,7 @@
 		973066C6220C951B0068E8C7 /* UIActivityViewController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityViewController+SY.swift"; sourceTree = "<group>"; };
 		9730FD9125CF6365009ABCBC /* SaneSwift+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaneSwift+SY.swift"; sourceTree = "<group>"; };
 		9731D89022C548CE008D7525 /* TapInsetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapInsetsView.swift; sourceTree = "<group>"; };
+		973646FB29E6DA400089458A /* BouncyLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BouncyLayout.swift; sourceTree = "<group>"; };
 		9740C16E2638DC8B00CAC543 /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
 		9747AF0F1E5257080090E6B2 /* test_scan_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_scan_image.png; sourceTree = "<group>"; };
 		97499E5A220862FE006DED20 /* ScanNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanNC.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 		97CD848A263AC5B4006DD44B /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				973646FB29E6DA400089458A /* BouncyLayout.swift */,
 				97DC2CB129E610E400BAF1AC /* GalleryGridHeader.swift */,
 				973066C0220C898E0068E8C7 /* GalleryGridLayout.swift */,
 				97F2FB4A222302DE006BD617 /* GalleryGridVC.swift */,
@@ -863,6 +866,7 @@
 				975277CA264D5C1A00FFAAF4 /* RefreshView.swift in Sources */,
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
 				973066C1220C898E0068E8C7 /* GalleryGridLayout.swift in Sources */,
+				973646FC29E6DA400089458A /* BouncyLayout.swift in Sources */,
 				97F2FB5122230A6B006BD617 /* GalleryImagesVC.swift in Sources */,
 				977712D225CCB2F1009EC50D /* SceneDelegate.swift in Sources */,
 				97FE556F264556D60036357E /* DeviceOptionControllable.swift in Sources */,
