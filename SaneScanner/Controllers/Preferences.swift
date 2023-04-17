@@ -77,6 +77,7 @@ class Preferences: NSObject {
             return rawValue.uppercased()
         }
     }
+    private let userDefaultsKeyImageFormat = "ImageFormat"
     var imageFormat: ImageFormat {
         get {
             let string = UserDefaults.standard.string(forKey: userDefaultsKeyImageFormat)
@@ -98,6 +99,7 @@ class Preferences: NSObject {
             }
         }
     }
+    private let userDefaultsKeyPdfSize = "PDFSize"
     var pdfSize: PDFSize {
         get {
             let string = UserDefaults.standard.string(forKey: userDefaultsKeyPdfSize)
@@ -106,6 +108,7 @@ class Preferences: NSObject {
         set { UserDefaults.standard.set(newValue.rawValue, forKey: userDefaultsKeyPdfSize); postNotification() }
     }
 
+    private let userDefaultsKeyShowAdvancedOptions = "ShowAdvancedOptions"
     var showAdvancedOptions: Bool {
         get { return UserDefaults.standard.bool(forKey: userDefaultsKeyShowAdvancedOptions) }
         set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyShowAdvancedOptions); postNotification() }
@@ -116,16 +119,19 @@ class Preferences: NSObject {
         set { Sane.shared.configuration.previewWithAutoColorMode = newValue; postNotification() }
     }
     
+    private let userDefaultsKeyAskedAnalytics = "AnalyticsAsked"
     var askedAnalytics: Bool {
         get { return UserDefaults.standard.bool(forKey: userDefaultsKeyAskedAnalytics) }
         set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyAskedAnalytics); postNotification() }
     }
 
+    private let userDefaultsKeyEnableAnalytics = "AnalyticsEnabled"
     var enableAnalytics: Bool {
         get { return UserDefaults.standard.bool(forKey: userDefaultsKeyEnableAnalytics) }
         set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyEnableAnalytics); askedAnalytics = true; postNotification() }
     }
     
+    private let userDefaultsKeyAnalyticsUserID = "AnalyticsUserID"
     var analyticsUserID: String {
         get {
             if let id = UserDefaults.standard.string(forKey: userDefaultsKeyAnalyticsUserID) {
@@ -143,14 +149,6 @@ class Preferences: NSObject {
             NotificationCenter.default.post(name: .preferencesChanged, object: self)
         }
     }
-    
-    // MARK: UserDefaults keys
-    private let userDefaultsKeyShowAdvancedOptions  = "ShowAdvancedOptions"
-    private let userDefaultsKeyImageFormat          = "ImageFormat"
-    private let userDefaultsKeyPdfSize              = "PDFSize"
-    private let userDefaultsKeyAskedAnalytics       = "AnalyticsAsked"
-    private let userDefaultsKeyEnableAnalytics      = "AnalyticsEnabled"
-    private let userDefaultsKeyAnalyticsUserID      = "AnalyticsUserID"
 }
 
 // MARK: UI
