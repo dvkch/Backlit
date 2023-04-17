@@ -71,7 +71,24 @@ class GalleryGridHeader: UICollectionReusableView {
     
     // MARK: Sizing
     private static let sizingItem = GalleryGridHeader(frame: .zero)
+    private struct SizeCacheKey: Hashable {
+        let group: GalleryGroup
+        let width: CGFloat
+        let fontSize: UIContentSizeCategory
+    }
+    private static var sizesCache: [SizeCacheKey: CGSize] = [:]
     static func size(for group: GalleryGroup, in collectionView: UICollectionView) -> CGSize {
+        // this method is called A LOT by BouncyLayout, so caching the result is important to improve animations
+        let availableWidth = collectionView.bounds.inset(by: collectionView.adjustedContentInset).width
+        let cacheKey = SizeCacheKey(
+            group: group,
+            width: availableWidth,
+            fontSize: collectionView.traitCollection.preferredContentSizeCategory
+        )
+        if let size = sizesCache[cacheKey] {
+            return size
+        }
+        
         // it needs to be part of the view hierarchy to inherit and update its `traitCollection.preferredContentSizeCategory`
         sizingItem.isHidden = true
         collectionView.addSubview(sizingItem)
@@ -80,12 +97,13 @@ class GalleryGridHeader: UICollectionReusableView {
         sizingItem.traitCollectionDidChange(sizingItem.traitCollection)
         sizingItem.group = group
 
-        let availableWidth = collectionView.bounds.inset(by: collectionView.adjustedContentInset).width
-        return sizingItem.systemLayoutSizeFitting(
+        let size = sizingItem.systemLayoutSizeFitting(
             CGSize(width: availableWidth, height: UIView.layoutFittingExpandedSize.height),
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
+        sizesCache[cacheKey] = size
+        return size
     }
 }
 #endif

@@ -50,11 +50,19 @@ extension GalleryItem {
         return type(of: self).dateFormatter.string(from: creationDate)
     }
     
+    static var deviceInfoCache: [URL: String?] = [:]
     var deviceInfoString: String? {
+        // this is a wee bit slow, and is computed everytime we display a GalleryThumbnailCell to generate the
+        // accessibility label, so let's keep a small cache of them
+        if let cached = type(of: self).deviceInfoCache[url] {
+            return cached
+        }
         guard let metadata = try? SYMetadata(fileURL: url).metadataTIFF else {
             return nil
         }
-        return [metadata.make, metadata.model].removingNils().joined(separator: " ")
+        let deviceInfo = [metadata.make, metadata.model].removingNils().joined(separator: " ")
+        type(of: self).deviceInfoCache[url] = deviceInfo
+        return deviceInfo
     }
     
     // MARK: Generated labels
