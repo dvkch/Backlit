@@ -42,8 +42,7 @@ class GalleryGridLayout: BouncyLayout {
         
         // determining available size
         let bounds = collectionView.bounds
-            .inset(by: collectionView.contentInset)
-            .inset(by: collectionView.safeAreaInsets)
+            .inset(by: collectionView.adjustedContentInset)
             .inset(by: UIEdgeInsets(leftAndRight: linesHorizontalInset))
         
         let length = scrollDirection == .horizontal ? bounds.height : bounds.width
