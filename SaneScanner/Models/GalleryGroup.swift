@@ -11,12 +11,21 @@ import Foundation
 struct GalleryGroup {
     
     // MARK: Init
+    private init(items: [GalleryItem], date: Date) {
+        self.items = items
+        self.date = date
+    }
+
     init?(items: [GalleryItem]) {
         guard let firstItem = items.first else {
             return nil
         }
         self.items = items
         self.date = Calendar.current.startOfDay(for: firstItem.creationDate)
+    }
+    
+    static func stable() -> GalleryGroup {
+        return GalleryGroup(items: [], date: Date(timeIntervalSince1970: 0))
     }
     
     static func grouping(_ items: [GalleryItem]) -> [GalleryGroup] {

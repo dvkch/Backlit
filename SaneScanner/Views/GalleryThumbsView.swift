@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import SYKit
+import DiffableDataSources
 
 class GalleryThumbsView: UIView {
 
@@ -43,7 +44,7 @@ class GalleryThumbsView: UIView {
 
         collectionView.clipsToBounds = false
         collectionView.backgroundColor = .clear
-        collectionView.dataSource = self
+        collectionView.dataSource = galleryDataSource
         collectionView.delegate = self
         collectionView.dragDelegate = self
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
@@ -68,7 +69,7 @@ class GalleryThumbsView: UIView {
     }
     private var collectionViewLayout: UICollectionViewFlowLayout { collectionView.collectionViewLayout as! UICollectionViewFlowLayout }
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private var galleryItems = [GalleryItem]()
+    private lazy var galleryDataSource = CollectionViewDiffableDataSource<GalleryGroup, GalleryItem>(collectionView: collectionView, viewsProvider: self)
     private let gradientMask = CAGradientLayer()
     
     // MARK: Actions
@@ -82,42 +83,62 @@ class GalleryThumbsView: UIView {
         #endif
     }
     
+    private func updateGalleryItems(using items: [GalleryItem], animated: Bool) {
+        // TODO: do scan animation
+        var snapshot = DiffableDataSourceSnapshot<GalleryGroup, GalleryItem>()
+        snapshot.appendSections([GalleryGroup.stable()])
+        snapshot.appendItems(items.reversed())
+        galleryDataSource.apply(snapshot, animatingDifferences: animated)
+    }
+    
     // MARK: Insertion animation
     private var insertedGalleryItem: GalleryItem?
-    private func doInsertionAnimation(newItems: [GalleryItem], removedItems: [GalleryItem], allItems: [GalleryItem]) -> Bool {
+    private func doInsertionAnimation(newItems: [GalleryItem], removedItems: [GalleryItem], allItems: [GalleryItem], reloadData: @escaping () -> ()) {
         // respect the user's choice
-        guard !UIAccessibility.isReduceMotionEnabled else { return false }
+        guard !UIAccessibility.isReduceMotionEnabled else {
+            return reloadData()
+        }
         
         // make sure there is only one item added, that it's the most recent item, and that it's less than 5s old
-        guard removedItems.isEmpty, newItems.count == 1, let newItem = newItems.first, newItem == allItems.last else { return false }
-        guard fabs(newItem.creationDate.timeIntervalSinceNow) < 5 else { return false }
+        guard removedItems.isEmpty, newItems.count == 1, let newItem = newItems.first, newItem == allItems.last else {
+            return reloadData()
+        }
+        guard fabs(newItem.creationDate.timeIntervalSinceNow) < 5 else {
+            return reloadData()
+        }
         
         // ignore the animation if we are not fully visible
-        guard parentViewController?.presentedViewController == nil else { return false }
+        guard parentViewController?.presentedViewController == nil else {
+            return reloadData()
+        }
         
         // access the source view
-        guard let window = window as? ContextWindow, let sourceView = window.context?.currentPreviewView else { return false }
+        guard let window = window as? ContextWindow, let sourceView = window.context?.currentPreviewView else {
+            return reloadData()
+        }
 
         // scroll back to the beginning
         // it is unfortunately not possible to animate the contentOffset during the animation, the cells
         // will be reused and disappear while scrolling. so we scroll first, then actually do the animation
         // cf: https://stackoverflow.com/q/49818021/1439489
-        if galleryItems.count > 0 && !collectionView.indexPathsForVisibleItems.contains(IndexPath(item: 0, section: 0)) {
+        if galleryDataSource.totalCount > 0 && !collectionView.indexPathsForVisibleItems.contains(IndexPath(item: 0, section: 0)) {
             collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: [.left, .top], animated: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                _ = self.doInsertionAnimation(newItems: newItems, removedItems: removedItems, allItems: allItems)
+                self.doInsertionAnimation(
+                    newItems: newItems, removedItems: removedItems, allItems: allItems, reloadData: reloadData
+                )
             }
-            return true
+            return
         }
 
-        // prepare the animation
+        // prepare the animation; this is done BEFORE the collectionView snapshot is applied, so that the cell is hidden
+        // wehn it appears
         insertedGalleryItem = newItem
 
-        // insert the corresponding new cell and obtain its rect
-        self.galleryItems = allItems.reversed()
-        collectionView.performBatchUpdates {
-            collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
-        }
+        // let's wait for the reload to be done, so we can get the proper cellRect
+        reloadData()
+
+        // obtain the newly inserted cell rect
         let cellRect = self.collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: 0))?.frame ?? .zero
 
         // perform the animation
@@ -136,8 +157,6 @@ class GalleryThumbsView: UIView {
                 self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
             }
         })
-        
-        return true
     }
 
     // MARK: Layout
@@ -221,34 +240,33 @@ class GalleryThumbsView: UIView {
 extension GalleryThumbsView: GalleryManagerDelegate {
     func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
-        let ranAnimation = doInsertionAnimation(newItems: newItems, removedItems: removedItems, allItems: items)
-        if !ranAnimation {
-            UIView.animate(withDuration: 0.3) {
-                self.galleryItems = items.reversed()
-                self.collectionView.reloadData()
-                self.setNeedsLayout()
-            }
+        doInsertionAnimation(newItems: newItems, removedItems: removedItems, allItems: items) {
+            self.updateGalleryItems(using: items, animated: true)
         }
     }
 }
 
-extension GalleryThumbsView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return galleryItems.count
+extension GalleryThumbsView: CollectionViewDiffableDataSourceViewsProvider {
+    typealias SectionIdentifier = GalleryGroup
+    typealias ItemIdentifier = GalleryItem
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItem item: GalleryItem, at indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
+        cell.update(item: item, displayedOverTint: self.tintColor == .tint)
+        cell.isHidden = (item == insertedGalleryItem)
+        return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
-        cell.update(item: galleryItems[indexPath.item], displayedOverTint: self.tintColor == .tint)
-        cell.isHidden = (cell.item == insertedGalleryItem)
-        return cell
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        return UICollectionReusableView()
     }
 }
 
 extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let item = galleryDataSource.itemIdentifier(for: indexPath) else { return .zero }
         let bounds = collectionView.bounds.inset(by: collectionView.contentInset)
-        let imageSize = GalleryManager.shared.imageSize(for: galleryItems[indexPath.item]) ?? CGSize(width: 100, height: 100)
+        let imageSize = GalleryManager.shared.imageSize(for: item) ?? CGSize(width: 100, height: 100)
 
         if scrollDirection == .horizontal {
             return CGSize(width: imageSize.width * bounds.height / imageSize.height, height: bounds.height)
@@ -259,13 +277,15 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
-        openGallery(for: galleryItems[indexPath.item])
+        if let item = galleryDataSource.itemIdentifier(for: indexPath) {
+            openGallery(for: item)
+        }
     }
     
     #if !targetEnvironment(macCatalyst)
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        let item = galleryItems[indexPath.item]
+        guard let item = galleryDataSource.itemIdentifier(for: indexPath) else { return nil }
         let configuration = UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: {
@@ -288,9 +308,9 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
 
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-        guard let indexPath = configuration.indexPath else { return }
+        guard let indexPath = configuration.indexPath, let item = galleryDataSource.itemIdentifier(for: indexPath) else { return }
         animator.addCompletion {
-            self.openGallery(for: self.galleryItems[indexPath.item])
+            self.openGallery(for: item)
         }
     }
     #endif
@@ -298,7 +318,7 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
 
 extension GalleryThumbsView: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let item = galleryItems[indexPath.item]
+        guard let item = galleryDataSource.itemIdentifier(for: indexPath) else { return [] }
         return [UIDragItem(itemProvider: NSItemProvider(object: item))]
     }
 }
