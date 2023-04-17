@@ -69,7 +69,6 @@
 		97C1117D265C5C8600794994 /* FileProviderEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1117C265C5C8600794994 /* FileProviderEnumerator.swift */; };
 		97C11182265C5C8600794994 /* SaneScanner-FileProvider.appex in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 97C11176265C5C8500794994 /* SaneScanner-FileProvider.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		97C11189265C5E1600794994 /* FileManager+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066C2220C8C740068E8C7 /* FileManager+SY.swift */; };
-		97C3FA3D29A923C800C30D8B /* Sequence+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C3FA3C29A923C800C30D8B /* Sequence+SY.swift */; };
 		97C5B2B929DA4D1300C82735 /* GalleryImageViewTiledLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B2B829DA4D1300C82735 /* GalleryImageViewTiledLayer.swift */; };
 		97C5B2BB29DB0E9000C82735 /* GalleryImageViewImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B2BA29DB0E9000C82735 /* GalleryImageViewImageLayer.swift */; };
 		97CC34E32205F48B00304345 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC34E12205F48B00304345 /* OptionCell.swift */; };
@@ -106,6 +105,8 @@
 		97F2FB55222318D5006BD617 /* GalleryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F2FB54222318D5006BD617 /* GalleryItem.swift */; };
 		97FDF403222C55EE00B71E4C /* DeviceOptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FDF401222C55EE00B71E4C /* DeviceOptionVC.swift */; };
 		97FE556F264556D60036357E /* DeviceOptionControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE556E264556D60036357E /* DeviceOptionControllable.swift */; };
+		97FF2A9129EC9CD30096ACFC /* DiffableDataSources+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FF2A9029EC9CD30096ACFC /* DiffableDataSources+SY.swift */; };
+		97FF2A9329EC9F0B0096ACFC /* GalleryGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FF2A9229EC9F0B0096ACFC /* GalleryGroup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -215,7 +216,6 @@
 		97C1117C265C5C8600794994 /* FileProviderEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderEnumerator.swift; sourceTree = "<group>"; };
 		97C1117E265C5C8600794994 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C1117F265C5C8600794994 /* SaneScanner_FileProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaneScanner_FileProvider.entitlements; sourceTree = "<group>"; };
-		97C3FA3C29A923C800C30D8B /* Sequence+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+SY.swift"; sourceTree = "<group>"; };
 		97C5B2B829DA4D1300C82735 /* GalleryImageViewTiledLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageViewTiledLayer.swift; sourceTree = "<group>"; };
 		97C5B2BA29DB0E9000C82735 /* GalleryImageViewImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageViewImageLayer.swift; sourceTree = "<group>"; };
 		97CC34E02205F48B00304345 /* SaneScanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SaneScanner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -254,6 +254,8 @@
 		97F2FB54222318D5006BD617 /* GalleryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryItem.swift; sourceTree = "<group>"; };
 		97FDF401222C55EE00B71E4C /* DeviceOptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceOptionVC.swift; sourceTree = "<group>"; };
 		97FE556E264556D60036357E /* DeviceOptionControllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceOptionControllable.swift; sourceTree = "<group>"; };
+		97FF2A9029EC9CD30096ACFC /* DiffableDataSources+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffableDataSources+SY.swift"; sourceTree = "<group>"; };
+		97FF2A9229EC9F0B0096ACFC /* GalleryGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryGroup.swift; sourceTree = "<group>"; };
 		E4150E772CE5FCDA9956F3BE /* Pods-SaneScanner.macos.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SaneScanner.macos.xcconfig"; path = "Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner.macos.xcconfig"; sourceTree = "<group>"; };
 		F8CBD20D1AF9A58C00B4C221 /* SaneScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaneScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8CBD2111AF9A58C00B4C221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				97DEA1AA29C692AA0088AC71 /* Acknowledgement.swift */,
 				97FE556E264556D60036357E /* DeviceOptionControllable.swift */,
 				97F2FB54222318D5006BD617 /* GalleryItem.swift */,
+				97FF2A9229EC9F0B0096ACFC /* GalleryGroup.swift */,
 				97D4CE892636EB7800F84150 /* Snapshot.swift */,
 			);
 			path = Models;
@@ -430,10 +433,10 @@
 			isa = PBXGroup;
 			children = (
 				973066B6220C73D40068E8C7 /* CoreGraphics+SY.swift */,
+				97FF2A9029EC9CD30096ACFC /* DiffableDataSources+SY.swift */,
 				973066C2220C8C740068E8C7 /* FileManager+SY.swift */,
 				97AC9DBA29A908D800D5C271 /* NetService+SY.swift */,
 				9730FD9125CF6365009ABCBC /* SaneSwift+SY.swift */,
-				97C3FA3C29A923C800C30D8B /* Sequence+SY.swift */,
 				971584CD222F36C100DC46CA /* SYPictureMetdata+SY.swift */,
 				973066C6220C951B0068E8C7 /* UIActivityViewController+SY.swift */,
 				977C4F6426484F1500856E0E /* UIAlertController+SY.swift */,
@@ -867,6 +870,7 @@
 				97D5902526377CBE00E84198 /* TooltipView.swift in Sources */,
 				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
+				97FF2A9129EC9CD30096ACFC /* DiffableDataSources+SY.swift in Sources */,
 				9730FD9225CF6365009ABCBC /* SaneSwift+SY.swift in Sources */,
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */,
@@ -881,6 +885,7 @@
 				977C4F5B264739AF00856E0E /* Slider.swift in Sources */,
 				973066C7220C951B0068E8C7 /* UIActivityViewController+SY.swift in Sources */,
 				972B584729A8F302003A9403 /* SaneBonjour.swift in Sources */,
+				97FF2A9329EC9F0B0096ACFC /* GalleryGroup.swift in Sources */,
 				97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */,
 				9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */,
 				97EB32B52207BB740027CCAE /* Preferences.swift in Sources */,
@@ -906,7 +911,6 @@
 				97F2FB55222318D5006BD617 /* GalleryItem.swift in Sources */,
 				971B894229C8793C0005785A /* GalleryImageView.swift in Sources */,
 				9740C16F2638DC8B00CAC543 /* ScanButton.swift in Sources */,
-				97C3FA3D29A923C800C30D8B /* Sequence+SY.swift in Sources */,
 				978263CB221E253D0095E6ED /* DotsRefreshControl.swift in Sources */,
 				973066B7220C73D40068E8C7 /* CoreGraphics+SY.swift in Sources */,
 				97F2FB4F2223084B006BD617 /* GalleryNC.swift in Sources */,

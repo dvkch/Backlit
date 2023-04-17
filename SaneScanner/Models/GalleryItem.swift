@@ -14,7 +14,7 @@ class GalleryItem: NSObject {
     let url: URL
     let thumbnailUrl: URL
     let creationDate: Date
-
+    
     init(url: URL, thumbnailUrl: URL) {
         self.url = url
         self.thumbnailUrl = thumbnailUrl
@@ -24,6 +24,10 @@ class GalleryItem: NSObject {
     
     override func isEqual(_ object: Any?) -> Bool {
         (object as? GalleryItem)?.url == url
+    }
+    
+    override var hash: Int {
+        url.hashValue
     }
 }
 
@@ -35,33 +39,15 @@ extension GalleryItem {
         formatter.timeStyle = .short
         formatter.locale = .autoupdatingCurrent
         formatter.timeZone = .autoupdatingCurrent
-        formatter.formattingContext = .standalone
+        formatter.formattingContext = .beginningOfSentence
+        formatter.doesRelativeDateFormatting = true
         return formatter
     }()
-
-    private static let relativeDateFormatter: Formatter? = {
-        if #available(iOS 13.0, *) {
-            let formatter = RelativeDateTimeFormatter()
-            formatter.unitsStyle = .full
-            formatter.locale = .autoupdatingCurrent
-            formatter.calendar = .autoupdatingCurrent
-            formatter.dateTimeStyle = .named
-            formatter.formattingContext = .standalone
-            return formatter
-        } else {
-            return nil
-        }
-    }()
     
-    func creationDateString(allowRelative: Bool) -> String {
-        if allowRelative, Date().timeIntervalSince(creationDate) < 7 * 24 * 3600,
-           #available(iOS 13.0, *), let formatter = type(of: self).relativeDateFormatter as? RelativeDateTimeFormatter
-        {
-            return formatter.localizedString(for: creationDate, relativeTo: Date())
-        }
-        else {
-            return type(of: self).dateFormatter.string(from: creationDate)
-        }
+    func creationDateString(includingTime: Bool, allowRelative: Bool) -> String {
+        type(of: self).dateFormatter.timeStyle = includingTime ? .short : .none
+        type(of: self).dateFormatter.doesRelativeDateFormatting = allowRelative
+        return type(of: self).dateFormatter.string(from: creationDate)
     }
     
     var deviceInfoString: String? {
@@ -74,7 +60,7 @@ extension GalleryItem {
     // MARK: Generated labels
     func suggestedDescription(separator: String) -> String? {
         return [
-            creationDateString(allowRelative: true),
+            creationDateString(includingTime: true, allowRelative: true),
             deviceInfoString
         ].removingNils().joined(separator: separator)
     }

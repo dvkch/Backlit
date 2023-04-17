@@ -9,9 +9,9 @@
 import UIKit
 
 extension UICollectionView {
-    func reloadSectionHeaders<T>(for cellsIndexPaths: [IndexPath], block: (IndexPath, T) -> ()) {
-        let sections = Set(cellsIndexPaths.map(\.section)).map { IndexPath(item: 0, section: $0) }
-        reloadSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: sections, block: block)
+    func reloadVisibleSectionHeaders<T>(block: (IndexPath, T) -> ()) {
+        let indexPaths = self.indexPathsForVisibleSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader)
+        reloadSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: indexPaths, block: block)
     }
     
     func reloadSupplementaryView<T>(ofKind kind: String, at indexPaths: [IndexPath], block: (IndexPath, T) -> ()) {

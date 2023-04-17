@@ -147,7 +147,7 @@ class GalleryImagesVC: UIViewController {
         }
         
         let titleButton = UIBarButtonItem(
-            title: items[currentIndex].creationDateString(allowRelative: false),
+            title: items[currentIndex].creationDateString(includingTime: true, allowRelative: true),
             style: .plain, target: nil, action: nil
         )
         titleButton.tintColor = .normalText

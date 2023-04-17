@@ -115,7 +115,7 @@ class GalleryManager: NSObject {
            handleGalleryItemsChanges(from: oldValue, to: galleryItems)
        }
     }
-    private(set) var groupedItems: [[GalleryItem]] = []
+    private(set) var galleryGroups: [GalleryGroup] = []
     
     func createRandomTestImages(count: Int) {
         (0..<count).forEach { (_) in
@@ -188,34 +188,9 @@ class GalleryManager: NSObject {
         galleryItems = listImages().map { galleryItemForImage(at: $0) }
     }
     
-    private func refreshGroupedItems() {
-        guard let firstItem = galleryItems.first else {
-            self.groupedItems = []
-            return
-        }
-
-        var groups = [[GalleryItem]]()
-        groups.append([firstItem])
-        
-        let calendar = Calendar.autoupdatingCurrent
-        for item in galleryItems.dropFirst() {
-            let prevItem = groups.last!.last!
-            if calendar.isDate(item.creationDate, inSameDayAs: prevItem.creationDate) ||
-                item.creationDate.timeIntervalSince(prevItem.creationDate) < 3600
-            {
-                groups[groups.count - 1].append(item)
-            }
-            else {
-                groups.append([item])
-            }
-        }
-        
-        self.groupedItems = groups
-    }
-    
     private func handleGalleryItemsChanges(from oldItems: [GalleryItem], to newItems: [GalleryItem]) {
         guard oldItems != newItems else { return }
-        refreshGroupedItems()
+        galleryGroups = GalleryGroup.grouping(galleryItems)
 
         guard Thread.isMainThread else {
             DispatchQueue.main.async {

@@ -47,7 +47,7 @@ class GalleryGridHeader: UICollectionReusableView {
     }
     
     // MARK: Properties
-    var items: [GalleryItem] = [] {
+    var group: GalleryGroup? {
         didSet {
             updateContent()
         }
@@ -58,62 +58,27 @@ class GalleryGridHeader: UICollectionReusableView {
     private let label = UILabel()
     
     // MARK: Content
-    private static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        formatter.locale = .autoupdatingCurrent
-        formatter.timeZone = .autoupdatingCurrent
-        formatter.formattingContext = .beginningOfSentence
-        return formatter
-    }()
-
-    private static let relativeDateFormatter: Formatter? = {
-        if #available(iOS 13.0, *) {
-            let formatter = RelativeDateTimeFormatter()
-            formatter.unitsStyle = .full
-            formatter.locale = .autoupdatingCurrent
-            formatter.calendar = .autoupdatingCurrent
-            formatter.dateTimeStyle = .named
-            formatter.formattingContext = .beginningOfSentence
-            return formatter
-        } else {
-            return nil
-        }
-    }()
-    
-    private var dateString: String? {
-        guard let date = items.first?.creationDate else { return nil }
-
-        if Date().timeIntervalSince(date) < 7 * 24 * 3600,
-           #available(iOS 13.0, *), let formatter = type(of: self).relativeDateFormatter as? RelativeDateTimeFormatter
-        {
-            let components = Calendar.current.dateComponents(Set([Calendar.Component.day]), from: Date(), to: date)
-            return formatter.localizedString(from: components)
-        }
-        else {
-            return type(of: self).dateFormatter.string(from: date)
-        }
-    }
-
     private func updateContent() {
-        var parts = [dateString]
-        if items.count > 5 && !UIAccessibility.isVoiceOverRunning {
-            parts.append("GALLERY ITEMS COUNT %d".localized(quantity: items.count))
+        guard let group, let firstItem = group.items.first else { return }
+        var parts = [
+            firstItem.creationDateString(includingTime: false, allowRelative: true)
+        ]
+        if group.items.count > 5 && !UIAccessibility.isVoiceOverRunning {
+            parts.append("GALLERY ITEMS COUNT %d".localized(quantity: group.items.count))
         }
-        label.text = parts.removingNils().joined(separator: " – ")
+        label.text = parts.joined(separator: " – ")
     }
     
     // MARK: Sizing
     private static let sizingItem = GalleryGridHeader(frame: .zero)
-    static func size(for items: [GalleryItem], in collectionView: UICollectionView) -> CGSize {
+    static func size(for group: GalleryGroup, in collectionView: UICollectionView) -> CGSize {
         // it needs to be part of the view hierarchy to inherit and update its `traitCollection.preferredContentSizeCategory`
         sizingItem.isHidden = true
         collectionView.addSubview(sizingItem)
         defer { sizingItem.removeFromSuperview() }
 
         sizingItem.traitCollectionDidChange(sizingItem.traitCollection)
-        sizingItem.items = items
+        sizingItem.group = group
 
         let availableWidth = collectionView.bounds.inset(by: collectionView.adjustedContentInset).width
         return sizingItem.systemLayoutSizeFitting(
