@@ -7,6 +7,7 @@ use_frameworks!
 target :'SaneScanner' do
     pod 'Sane', :path => "./", :inhibit_warnings => false
     pod 'SaneSwift', :path => "./", :inhibit_warnings => false
+    pod 'DiffableDataSources'
     pod 'DirectoryWatcher'
     pod 'KeychainAccess'
     pod 'LRUCache'
