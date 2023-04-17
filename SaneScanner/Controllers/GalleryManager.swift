@@ -38,13 +38,26 @@ class GalleryManager: NSObject {
         
         watcher = DirectoryWatcher.watch(galleryFolder)
         watcher?.onNewFiles = { (files) in
-            let unknownChangesCount = files.filter { !self.galleryItems.map(\.url).contains($0.standardizedFileURL) }.count
+            let unknownChangesCount = files
+                .map { $0.resolvingSymlinksInPath() }
+                .filter { !self.galleryItems.map(\.url).contains($0) }
+                .count
+
             if unknownChangesCount > 0 {
                 self.refreshGalleryItems()
             }
         }
         watcher?.onDeletedFiles = { (files) in
-            let unknownChangesCount = files.filter { self.galleryItems.map(\.url).contains($0.standardizedFileURL) }.count
+            // need to make sure the deleted file path starts with galleryFolder, before checking if it is indeed missing from
+            // our list of items in memory; when deleting from the Files app, the deleted item path will contain symlinks, but
+            // resolving them doesn't work since the file doesn't exist anymore, so we won't match the corresponding item in
+            // our list of files. considering the change "unknown" if the URL either isn't resolved, or the item still is
+            // in out list of files, makes sure we refresh when needed
+            let unknownChangesCount = files
+                .map { $0.resolvingSymlinksInPath() }
+                .filter { !$0.path.hasPrefix(self.galleryFolder.path) || self.galleryItems.map(\.url).contains($0) }
+                .count
+            
             if unknownChangesCount > 0 {
                 self.refreshGalleryItems()
             }

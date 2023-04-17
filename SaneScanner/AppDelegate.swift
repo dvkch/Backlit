@@ -11,7 +11,6 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder {
 
