@@ -96,6 +96,9 @@ class Context: NSObject {
 
             // another device is opened, if it's scanning we don't do anything
             if deviceVC.device.isScanning {
+                deviceVC.close {
+                    self.openDevice(device: device)
+                }
                 return
             }
         }

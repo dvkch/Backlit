@@ -131,6 +131,20 @@ class DeviceVC: UIViewController {
     private var refreshView: RefreshView!
     
     // MARK: Actions
+    func close(force: Bool = false, completion: (() -> ())? = nil) {
+        guard !device.isScanning || force else  {
+            showDismissalConfirmation {
+                self.cancelOperation()
+                self.close(force: true, completion: completion)
+            }
+            return
+        }
+
+        navigationController?.popViewController(animated: true) {
+            completion?()
+        }
+    }
+    
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(scan) || action == #selector(preview) {
             return !device.isScanning
@@ -160,6 +174,7 @@ class DeviceVC: UIViewController {
             guard let self = self else { return }
             self.scanButton.progress = progress
             self.updatePreviewViews()
+            self.updateBackGestures()
         }
         
         // block that will be called to handle completion
@@ -167,6 +182,7 @@ class DeviceVC: UIViewController {
             guard let self = self else { return }
             self.scanButton.progress = nil
             self.updatePreviewViews()
+            self.updateBackGestures()
 
             switch results {
             case .success(let scans):
@@ -273,6 +289,10 @@ class DeviceVC: UIViewController {
         (splitViewController as? SplitVC)?.previewNC.viewControllers.forEach { ($0 as? DevicePreviewVC)?.refresh() }
     }
     
+    private func updateBackGestures() {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = !device.isScanning
+    }
+    
     func optionGroups() -> [DeviceOptionGroup] {
         return device.optionGroups(includeAdvanced: Preferences.shared.showAdvancedOptions)
     }
@@ -317,6 +337,23 @@ extension DeviceVC {
     }
 }
 
+// MARK: Dismissal
+extension DeviceVC : ConditionallyDismissible {
+    var isDismissible: Bool {
+        return !device.isScanning
+    }
+    
+    var dismissalConfirmationTexts: DismissalTexts {
+        return .init(
+            title: "CLOSE DEVICE CONFIRMATION TITLE".localized,
+            message: "CLOSE DEVICE CONFIRMATION MESSAGE".localized,
+            dismissButton: "ACTION STOP SCANNING".localized,
+            cancelButton: "ACTION CANCEL".localized
+        )
+    }
+}
+
+// MARK: Scan options
 extension DeviceVC : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         if device.options.isEmpty {

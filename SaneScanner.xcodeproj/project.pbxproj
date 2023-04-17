@@ -28,6 +28,8 @@
 		9731D89122C548CE008D7525 /* TapInsetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9731D89022C548CE008D7525 /* TapInsetsView.swift */; };
 		973646FC29E6DA400089458A /* BouncyLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973646FB29E6DA400089458A /* BouncyLayout.swift */; };
 		9736470329E73B430089458A /* UICollectionView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9736470229E73B430089458A /* UICollectionView+SY.swift */; };
+		9736470529E743700089458A /* ConditionallyDismissible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9736470429E743700089458A /* ConditionallyDismissible.swift */; };
+		9736470729E747D90089458A /* UINavigationController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9736470629E747D90089458A /* UINavigationController+SY.swift */; };
 		9740C16F2638DC8B00CAC543 /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9740C16E2638DC8B00CAC543 /* ScanButton.swift */; };
 		9747AF101E5257080090E6B2 /* test_scan_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9747AF0F1E5257080090E6B2 /* test_scan_image.png */; };
 		97499E5B220862FE006DED20 /* ScanNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5A220862FE006DED20 /* ScanNC.swift */; };
@@ -174,6 +176,8 @@
 		9731D89022C548CE008D7525 /* TapInsetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapInsetsView.swift; sourceTree = "<group>"; };
 		973646FB29E6DA400089458A /* BouncyLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BouncyLayout.swift; sourceTree = "<group>"; };
 		9736470229E73B430089458A /* UICollectionView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SY.swift"; sourceTree = "<group>"; };
+		9736470429E743700089458A /* ConditionallyDismissible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionallyDismissible.swift; sourceTree = "<group>"; };
+		9736470629E747D90089458A /* UINavigationController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+SY.swift"; sourceTree = "<group>"; };
 		9740C16E2638DC8B00CAC543 /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
 		9747AF0F1E5257080090E6B2 /* test_scan_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_scan_image.png; sourceTree = "<group>"; };
 		97499E5A220862FE006DED20 /* ScanNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanNC.swift; sourceTree = "<group>"; };
@@ -421,6 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				97DEA1AA29C692AA0088AC71 /* Acknowledgement.swift */,
+				9736470429E743700089458A /* ConditionallyDismissible.swift */,
 				97FE556E264556D60036357E /* DeviceOptionControllable.swift */,
 				97F2FB54222318D5006BD617 /* GalleryItem.swift */,
 				97FF2A9229EC9F0B0096ACFC /* GalleryGroup.swift */,
@@ -448,6 +453,7 @@
 				97DC2CAF29E5DAF700BAF1AC /* UIControl+SY.swift */,
 				971584CF222F445200DC46CA /* UIImage+SY.swift */,
 				97CCA361264F14BD0042F790 /* UIKeyCommand+SY.swift */,
+				9736470629E747D90089458A /* UINavigationController+SY.swift */,
 				97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */,
 			);
 			path = Extensions;
@@ -871,6 +877,7 @@
 				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
 				97FF2A9129EC9CD30096ACFC /* DiffableDataSources+SY.swift in Sources */,
+				9736470529E743700089458A /* ConditionallyDismissible.swift in Sources */,
 				9730FD9225CF6365009ABCBC /* SaneSwift+SY.swift in Sources */,
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */,
@@ -878,6 +885,7 @@
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
 				973066C1220C898E0068E8C7 /* GalleryGridLayout.swift in Sources */,
 				973646FC29E6DA400089458A /* BouncyLayout.swift in Sources */,
+				9736470729E747D90089458A /* UINavigationController+SY.swift in Sources */,
 				97F2FB5122230A6B006BD617 /* GalleryImagesVC.swift in Sources */,
 				977712D225CCB2F1009EC50D /* SceneDelegate.swift in Sources */,
 				97FE556F264556D60036357E /* DeviceOptionControllable.swift in Sources */,

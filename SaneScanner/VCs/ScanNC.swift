@@ -88,3 +88,15 @@ extension ScanNC: GalleryManagerDelegate {
         updateToolbar(animated: true)
     }
 }
+
+extension ScanNC: UINavigationBarDelegate {
+    func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
+        guard let dismissibleVC = topViewController as? ConditionallyDismissible else { return true }
+        if dismissibleVC.isDismissible { return true }
+        
+        dismissibleVC.showDismissalConfirmation {
+            self.popViewController(animated: true)
+        }
+        return false
+    }
+}
