@@ -25,6 +25,7 @@ class BouncyLayout: UICollectionViewFlowLayout {
     // MARK: Properties
     private lazy var animator = UIDynamicAnimator(collectionViewLayout: self)
     private var visibleIdentifiers: [BouncyIdentifier: CGRect] = [:]
+    var applyEffectPerLine: Bool = true
     
     // MARK: Animation
     private func updateVisibleIdentifiers() {
@@ -80,9 +81,13 @@ class BouncyLayout: UICollectionViewFlowLayout {
             return
         }
         
+        let applyOnX = scrollDirection == .horizontal || !applyEffectPerLine
+        let applyOnY = scrollDirection == .vertical || !applyEffectPerLine
+
         behaviors.forEach { behavior in
-            let yDistanceFromTouch = abs(touchLocation.y - behavior.anchorPoint.y)
-            let xDistanceFromTouch = abs(touchLocation.x - behavior.anchorPoint.x)
+            let xDistanceFromTouch = applyOnX ? abs(touchLocation.x - behavior.anchorPoint.x) : 0
+            let yDistanceFromTouch = applyOnY ? abs(touchLocation.y - behavior.anchorPoint.y) : 0
+
             let scrollResistance = (yDistanceFromTouch + xDistanceFromTouch) / 1500
             
             var center = behavior.item.center
@@ -176,8 +181,8 @@ fileprivate class BouncyBehavior: UIDynamicBehavior {
         super.init()
         
         behavior.length = 0.0
-        behavior.damping = 0.8
-        behavior.frequency = 1.0
+        behavior.damping = 1.2
+        behavior.frequency = 2.0
         behavior.action = { [weak self] in
             switch onlyInDirection {
             case .vertical:
