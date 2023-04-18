@@ -46,6 +46,7 @@ class CropMaskView: UIControl {
             }
             
             let panGesture = UIPanGestureRecognizer()
+            panGesture.isEnabled = true
             panGesture.addTarget(self, action: #selector(self.borderPanGestureTouch(gesture:)))
             panGesture.delegate = self
             view.addGestureRecognizer(panGesture)
@@ -72,6 +73,9 @@ class CropMaskView: UIControl {
             let panGesture = UIPanGestureRecognizer()
             panGesture.addTarget(self, action: #selector(self.cornerPanGestureTouch(gesture:)))
             panGesture.delegate = self
+            borderPanGestures.values.forEach { borderGesture in
+                panGesture.shouldBeRequiredToFail(by: borderGesture)
+            }
             view.addGestureRecognizer(panGesture)
             
             cornerPanGestures[corner] = panGesture
@@ -88,6 +92,16 @@ class CropMaskView: UIControl {
     private var borderViews = [CGRectSide:   UIView]()
     private var cornerPanGestures = [CGRectCorner: UIPanGestureRecognizer]()
     private var borderPanGestures = [CGRectSide:   UIPanGestureRecognizer]()
+    
+    // MARK: Gestures
+    private func prioritizeGesturesOver(_ gesture: UIGestureRecognizer) {
+        cornerPanGestures.values.forEach { g in
+            gesture.require(toFail: g)
+        }
+        borderPanGestures.values.forEach { g in
+            gesture.require(toFail: g)
+        }
+    }
 
     // MARK: Properties
     private(set) var maxCropArea: CGRect = .zero
@@ -323,10 +337,19 @@ class CropMaskView: UIControl {
 }
 
 extension CropMaskView : UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         // make sure the navigationController.interactivePopGestureRecognizer doesn't take over our cropping gestures
-        // and closes the deviceVC while trying to crop an image
-        return true
+        // and closes the deviceVC while trying to crop an image. surprisingly implementing
+        // gestureRecognizer(_:, shouldBeRequiredToFailBy:) doesn't always gets called with the popGesture, but this
+        // method does. So we make sure to catch the gesture here, cancel it, then prioritize our own
+        if let interactivePopGestureRecognizer = otherGestureRecognizer as? UIScreenEdgePanGestureRecognizer {
+            otherGestureRecognizer.cancelPendingTouches()
+            prioritizeGesturesOver(interactivePopGestureRecognizer)
+            // needed to immediately allow our pan gestures to continue
+            return true
+        }
+        // prevent UIScrollView scrolling while changing the crop
+        return false
     }
 }
 
