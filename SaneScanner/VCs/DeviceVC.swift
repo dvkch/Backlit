@@ -218,10 +218,12 @@ class DeviceVC: UIViewController {
         Sane.shared.preview(device: device, progress: { [weak self] (p) in
             self?.scanButton.isEnabled = false
             self?.updatePreviewViews()
+            self?.updateBackGestures()
         }, completion: { [weak self] (result) in
             guard let self = self else { return }
             self.scanButton.isEnabled = true
             self.updatePreviewViews()
+            self.updateBackGestures()
             if case let .failure(error) = result {
                 if case .cancelled = error {
                     Analytics.shared.send(event: .previewCancelled(device: self.device))
@@ -348,7 +350,7 @@ extension DeviceVC : ConditionallyDismissible {
             title: "CLOSE DEVICE CONFIRMATION TITLE".localized,
             message: "CLOSE DEVICE CONFIRMATION MESSAGE".localized,
             dismissButton: "ACTION STOP SCANNING".localized,
-            cancelButton: "ACTION CANCEL".localized
+            cancelButton: "ACTION CONTINUE".localized
         )
     }
 }
