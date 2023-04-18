@@ -136,8 +136,24 @@ class GalleryManager: NSObject {
             try? image?.jpegData(compressionQuality: 0.9)?.write(to: url, options: .atomicWrite)
         }
     }
-    
-    func saveScans(device: Device, _ scans: [ScanImage]) throws {
+
+    func saveScans(device: Device, _ scans: [ScanImage], completion: @escaping (Result<(), Error>) -> ()) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try self.saveScansSync(device: device, scans)
+                DispatchQueue.main.async {
+                    completion(.success(()))
+                }
+            }
+            catch {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
+    private func saveScansSync(device: Device, _ scans: [ScanImage]) throws {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")

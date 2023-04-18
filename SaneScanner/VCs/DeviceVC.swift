@@ -170,33 +170,32 @@ class DeviceVC: UIViewController {
         Analytics.shared.send(event: .scanStarted(device: device))
 
         // block that will be called to show progress
-        let progressBlock = { [weak self] (progress: ScanProgress) in
-            guard let self = self else { return }
-            self.scanButton.progress = progress
-            self.updatePreviewViews()
-            self.updateBackGestures()
+        let progressBlock = { [weak self] (progress: ScanProgress) -> () in
+            self?.updateAfterScanStatusChange(operation: .scan, progress: progress)
         }
         
         // block that will be called to handle completion
         let completionBlock = { [weak self] (results: SaneResult<[ScanImage]>) in
             guard let self = self else { return }
-            self.scanButton.progress = nil
-            self.updatePreviewViews()
-            self.updateBackGestures()
 
             switch results {
             case .success(let scans):
                 Analytics.shared.send(event: .scanEnded(device: self.device, imagesCount: scans.count))
-                do {
-                    try GalleryManager.shared.saveScans(device: self.device, scans)
-                    Analytics.shared.askPermission(from: self)
-                    self.presentReviewPrompt()
-                }
-                catch {
-                    UIAlertController.show(for: error, in: self)
+                GalleryManager.shared.saveScans(device: device, scans) { saveResult in
+                    self.updateAfterScanStatusChange(operation: .scan, progress: nil)
+
+                    switch saveResult {
+                    case .success:
+                        Analytics.shared.askPermission(from: self)
+                        self.presentReviewPrompt()
+
+                    case .failure(let error):
+                        UIAlertController.show(for: error, in: self)
+                    }
                 }
 
             case .failure(let error):
+                self.updateAfterScanStatusChange(operation: .scan, progress: nil)
                 if case .cancelled = error {
                     Analytics.shared.send(event: .scanCancelled(device: self.device))
                 } else {
@@ -216,14 +215,10 @@ class DeviceVC: UIViewController {
         Analytics.shared.send(event: .previewStarted(device: device))
 
         Sane.shared.preview(device: device, progress: { [weak self] (p) in
-            self?.scanButton.isEnabled = false
-            self?.updatePreviewViews()
-            self?.updateBackGestures()
+            self?.updateAfterScanStatusChange(operation: .preview, progress: p)
         }, completion: { [weak self] (result) in
             guard let self = self else { return }
-            self.scanButton.isEnabled = true
-            self.updatePreviewViews()
-            self.updateBackGestures()
+            self.updateAfterScanStatusChange(operation: .preview, progress: nil)
             if case let .failure(error) = result {
                 if case .cancelled = error {
                     Analytics.shared.send(event: .previewCancelled(device: self.device))
@@ -286,12 +281,15 @@ class DeviceVC: UIViewController {
         return tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first
     }
     
-    private func updatePreviewViews() {
+    private func updateAfterScanStatusChange(operation: ScanOperation, progress: ScanProgress?) {
+        switch operation {
+        case .scan:
+            self.scanButton.progress = progress
+        case .preview:
+            self.scanButton.isEnabled = progress == nil
+        }
         previewCell?.refresh()
         (splitViewController as? SplitVC)?.previewNC.viewControllers.forEach { ($0 as? DevicePreviewVC)?.refresh() }
-    }
-    
-    private func updateBackGestures() {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = !device.isScanning
     }
     
