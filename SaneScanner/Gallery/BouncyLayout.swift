@@ -183,7 +183,7 @@ fileprivate class BouncyBehavior: UIDynamicBehavior {
         
         behavior.length = 0.0
         behavior.damping = 1.2
-        behavior.frequency = 2.0
+        behavior.frequency = 1.0
         behavior.action = { [weak self] in
             switch onlyInDirection {
             case .vertical:

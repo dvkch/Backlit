@@ -20,12 +20,11 @@ class GalleryThumbnailCell: UICollectionViewCell {
         
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = false
-        imageView.layer.minificationFilter = .trilinear
+        imageView.layer.minificationFilter = .linear
+        imageView.layer.magnificationFilter = .trilinear
         imageView.layer.shadowColor = UIColor.black.cgColor
         imageView.layer.shadowOffset = .zero
         imageView.layer.shadowRadius = 2
-        imageView.layer.shouldRasterize = true
-        imageView.layer.rasterizationScale = UIScreen.main.scale
         contentView.addSubview(imageView)
         
         spinner.hidesWhenStopped = true
@@ -105,6 +104,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         updateStyle()
 
         let item = self.item
+        // TODO: doesn't always work
         GalleryManager.shared.thumbnail(for: item) { [weak self] in
             guard item == self?.item else { return }
             self?.imageView.image = $0
@@ -142,5 +142,14 @@ class GalleryThumbnailCell: UICollectionViewCell {
             make.center.equalToSuperview()
         }
         super.updateConstraints()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        imageView.layer.shadowPath = UIBezierPath(rect: imageView.bounds).cgPath
+        selectionRingView.layer.shadowPath = UIBezierPath(
+            roundedRect: selectionRingView.bounds,
+            cornerRadius: selectionRingView.bounds.height / 2
+        ).cgPath
     }
 }
