@@ -75,10 +75,14 @@ class HUDAlertController: UIAlertController {
 
     // MARK: Layout
     override func updateViewConstraints() {
-        let contentViewWidth = contentView.constraints.constantAttribute(.width).first ?? contentView.widthAnchor.constraint(equalToConstant: 0)
-        contentViewWidth.priority = .defaultLow
+        let contentViewWidth = contentView.constraints.constantAttribute(.width).first ?? {
+            // can't modidy a priority once installed on iOS 12-
+            let constraint = contentView.widthAnchor.constraint(equalToConstant: 0)
+            constraint.priority = .defaultLow
+            constraint.isActive = true
+            return constraint
+        }()
         contentViewWidth.constant = preferredSize.width
-        contentViewWidth.isActive = true
         
         let viewWidth = view.constraints.constantAttribute(.width).first ?? view.widthAnchor.constraint(equalToConstant: 0)
         viewWidth.constant = preferredSize.width

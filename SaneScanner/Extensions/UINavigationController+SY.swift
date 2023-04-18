@@ -13,6 +13,7 @@ extension UINavigationController {
     func popViewController(animated: Bool, completion: @escaping () -> ()) {
         guard animated else {
             self.popViewController(animated: false)
+            completion()
             return
         }
         

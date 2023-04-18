@@ -38,7 +38,7 @@ extension UIColor {
         if #available(iOS 13.0, *) {
             return .secondarySystemGroupedBackground
         } else {
-            return .lightGray
+            return .white
         }
     }
     

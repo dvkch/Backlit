@@ -145,10 +145,15 @@ class GalleryThumbnailCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.layoutIfNeeded()
         imageView.layer.shadowPath = UIBezierPath(rect: imageView.bounds).cgPath
-        selectionRingView.layer.shadowPath = UIBezierPath(
-            roundedRect: selectionRingView.bounds,
-            cornerRadius: selectionRingView.bounds.height / 2
-        ).cgPath
+    }
+    
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+
+        // required for iOS 12, maybe lower versions as well (tested on iOS 12.4.1)
+        // https://stackoverflow.com/a/57249637/1439489
+        layer.zPosition = CGFloat(layoutAttributes.zIndex)
     }
 }

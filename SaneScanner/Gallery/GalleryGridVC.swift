@@ -268,10 +268,11 @@ class GalleryGridVC: UIViewController {
         // we can't directly use `collectionView.contentInsetAdjustmentBehavior = .never`, or the bottom
         // offset will move around when the toolbar is shown/hidden, which is a problem for a view
         // who opens by default at the bottom...
+        let bottomInsets = collectionViewLayout.linesHorizontalInset
         collectionView.contentInset = .init(
             top: view.safeAreaInsets.top + 20,
             left: view.safeAreaInsets.left,
-            bottom: (view.window?.safeAreaInsets.bottom ?? 0) + (navigationController?.toolbar.bounds.height ?? 0),
+            bottom: (view.window?.safeAreaInsets.bottom ?? 0) + (navigationController?.toolbar.bounds.height ?? 0) + bottomInsets,
             right: view.safeAreaInsets.right
         )
         collectionView.scrollIndicatorInsets = collectionView.contentInset

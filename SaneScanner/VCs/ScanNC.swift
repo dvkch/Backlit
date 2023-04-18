@@ -62,7 +62,7 @@ class ScanNC: UINavigationController {
         
         if #available(iOS 13.0, *) {
             let appearance = UIToolbarAppearance()
-            appearance.backgroundColor = showingScanVC ? .tint : .backgroundAlt
+            appearance.backgroundColor = showingScanVC ? .tint : .cellBackground
             toolbar.standardAppearance = appearance
             toolbar.compactAppearance = appearance
             if #available(iOS 15.0, *) {
@@ -71,7 +71,8 @@ class ScanNC: UINavigationController {
             }
         }
         else {
-            toolbar.backgroundColor = showingScanVC ? .tint : .backgroundAlt
+            let color: UIColor = showingScanVC ? .tint : .cellBackground
+            toolbar.setBackgroundImage(UIImage(color: color), forToolbarPosition: .any, barMetrics: .default)
         }
     }
     
@@ -90,9 +91,13 @@ extension ScanNC: GalleryManagerDelegate {
 
 extension ScanNC: UINavigationBarDelegate {
     func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
-        guard let dismissibleVC = topViewController as? ConditionallyDismissible else { return true }
-        if dismissibleVC.isDismissible { return true }
-        
+        guard let dismissibleVC = topViewController as? ConditionallyDismissible, !dismissibleVC.isDismissible else {
+            if #available(iOS 13.0, *) {} else {
+                // surprisingly on iOS 12, maybe even lower, returning true doesn't pop back the VC, so let's do it manually
+                self.popViewController(animated: true)
+            }
+            return true
+        }
         dismissibleVC.showDismissalConfirmation {
             self.popViewController(animated: true)
         }

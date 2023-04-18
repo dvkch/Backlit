@@ -76,6 +76,7 @@ class GalleryManager: NSObject {
     }()
     private var watcher: DirectoryWatcher?
     private var thumbsBeingCreated = [URL: [(UIImage?) -> ()]]()
+    private var thumbsBeingCreatedLock = NSLock()
     private var thumbsQueue = SYOperationQueue()
     
     // MARK: Caches
@@ -197,7 +198,7 @@ class GalleryManager: NSObject {
         galleryItems.remove(item)
     }
 
-    private func listImages() -> [URL] {
+    private func listImages() -> [GalleryItem] {
         let items = try? FileManager.default.contentsOfDirectory(
             at: galleryFolder,
             includingPropertiesForKeys: [.isDirectoryKey, .creationDateKey],
@@ -206,14 +207,15 @@ class GalleryManager: NSObject {
         
         let imageURLs = (items ?? [])
             .map { (url: URL) -> URL in url.standardizedFileURL }
-            .filter { (url: URL) -> Bool in url.isSupportedImageURL && url.isDirectory == false && url.creationDate != nil }
-            .sorted { $0.creationDate! < $1.creationDate! }
+            .filter { (url: URL) -> Bool in url.isSupportedImageURL && url.isDirectory == false }
+            .map { galleryItemForImage(at: $0) }
+            .sorted(by: \.creationDate)
 
-        return imageURLs
+        return Array(imageURLs)
     }
     
     private func refreshGalleryItems() {
-        galleryItems = listImages().map { galleryItemForImage(at: $0) }
+        galleryItems = listImages()
     }
     
     private func handleGalleryItemsChanges(from oldItems: [GalleryItem], to newItems: [GalleryItem]) {
@@ -282,13 +284,16 @@ class GalleryManager: NSObject {
         }
 
         // if we are already creating the thumb, we add our callback to the list
+        thumbsBeingCreatedLock.lock()
         if let pendingCallbacks = thumbsBeingCreated[item.url] {
             thumbsBeingCreated[item.url] = pendingCallbacks + [completion].removingNils()
+            thumbsBeingCreatedLock.unlock()
             return
         }
         
         // start the task
         thumbsBeingCreated[item.url] = [completion].removingNils()
+        thumbsBeingCreatedLock.unlock()
 
         // preferred way of doing resizes, as it doesn't use a lot of memory on device
         let thumb = UIImage.thumbnailForImage(at: item.url, maxEdgeSize: 200, options: .alwaysCreate)
@@ -296,11 +301,16 @@ class GalleryManager: NSObject {
             .jpegData(compressionQuality: 0.6)?
             .write(to: item.thumbnailUrl, options: .atomicWrite)
         
+        // cache
         thumbnailCache.setValue(thumb, forKey: item.url, cost: thumb?.estimatedMemoryFootprint ?? 0)
-        DispatchQueue.main.async {
-            let callbacks = self.thumbsBeingCreated[item.url] ?? []
-            self.thumbsBeingCreated[item.url] = nil
 
+        // send callbacks
+        thumbsBeingCreatedLock.lock()
+        let callbacks = self.thumbsBeingCreated[item.url] ?? []
+        self.thumbsBeingCreated[item.url] = nil
+        thumbsBeingCreatedLock.unlock()
+
+        DispatchQueue.main.async {
             callbacks.forEach { $0(thumb) }
         }
     }
