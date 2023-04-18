@@ -39,6 +39,7 @@ class GalleryThumbsView: UIView {
     private func setup() {
         clipsToBounds = true
         
+        collectionViewLayout.bounciness = 2
         collectionViewLayout.scrollDirection = scrollDirection
         collectionViewLayout.minimumInteritemSpacing = 10
 
@@ -67,8 +68,8 @@ class GalleryThumbsView: UIView {
             setNeedsUpdateConstraints()
         }
     }
-    private var collectionViewLayout: UICollectionViewFlowLayout { collectionView.collectionViewLayout as! UICollectionViewFlowLayout }
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var collectionViewLayout: BouncyLayout { collectionView.collectionViewLayout as! BouncyLayout }
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: BouncyLayout())
     private lazy var galleryDataSource = CollectionViewDiffableDataSource<GalleryGroup, GalleryItem>(collectionView: collectionView, viewsProvider: self)
     private let gradientMask = CAGradientLayer()
     
@@ -84,7 +85,6 @@ class GalleryThumbsView: UIView {
     }
     
     private func updateGalleryItems(using items: [GalleryItem], animated: Bool) {
-        // TODO: do scan animation
         var snapshot = DiffableDataSourceSnapshot<GalleryGroup, GalleryItem>()
         snapshot.appendSections([GalleryGroup.stable()])
         snapshot.appendItems(items.reversed())

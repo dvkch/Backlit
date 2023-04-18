@@ -23,6 +23,7 @@ class BouncyLayout: UICollectionViewFlowLayout {
     }
     
     // MARK: Properties
+    var bounciness: CGFloat = 1
     private lazy var animator = UIDynamicAnimator(collectionViewLayout: self)
     private var visibleIdentifiers: [BouncyIdentifier: CGRect] = [:]
     var applyEffectPerLine: Bool = true
@@ -88,7 +89,7 @@ class BouncyLayout: UICollectionViewFlowLayout {
             let xDistanceFromTouch = applyOnX ? abs(touchLocation.x - behavior.anchorPoint.x) : 0
             let yDistanceFromTouch = applyOnY ? abs(touchLocation.y - behavior.anchorPoint.y) : 0
 
-            let scrollResistance = (yDistanceFromTouch + xDistanceFromTouch) / 1500
+            let scrollResistance = (yDistanceFromTouch + xDistanceFromTouch) / 1500 * bounciness
             
             var center = behavior.item.center
             switch scrollDirection {
