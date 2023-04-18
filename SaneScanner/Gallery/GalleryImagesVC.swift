@@ -189,7 +189,6 @@ extension GalleryImagesVC : GalleryImageVCDelegate {
 }
 
 extension GalleryImagesVC : GalleryManagerDelegate {
-    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
         let prevItems = self.items
         self.items = items

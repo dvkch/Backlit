@@ -16,7 +16,6 @@ import LRUCache
 
 protocol GalleryManagerDelegate: NSObjectProtocol {
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem])
-    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem)
 }
 
 class GalleryManager: NSObject {
@@ -76,7 +75,7 @@ class GalleryManager: NSObject {
         return url
     }()
     private var watcher: DirectoryWatcher?
-    private var thumbsBeingCreated = [URL]()
+    private var thumbsBeingCreated = [URL: [(UIImage?) -> ()]]()
     private var thumbsQueue = SYOperationQueue()
     
     // MARK: Caches
@@ -162,7 +161,7 @@ class GalleryManager: NSObject {
             
             try imageData.write(to: fileURL, options: .atomicWrite)
             let item = galleryItemForImage(at: fileURL.standardizedFileURL)
-            generateThumb(for: item, async: false, tellDelegates: true)
+            generateThumb(for: item)
             
             #if !targetEnvironment(macCatalyst)
             // prepare a lowres cached image if needed for when we'll be displaying the image
@@ -238,14 +237,11 @@ class GalleryManager: NSObject {
         }
         
         DispatchQueue.global(qos: .userInitiated).async {
-            if !FileManager.default.fileExists(atPath: item.thumbnailUrl.path) {
-                self.generateThumb(for: item, async: false, tellDelegates: true)
-            }
-            let thumb = UIImage(contentsOfFile: item.thumbnailUrl.path)
-            self.thumbnailCache.setValue(thumb, forKey: item.thumbnailUrl, cost: thumb?.estimatedMemoryFootprint ?? 0)
-
-            DispatchQueue.main.async {
-                completion(thumb)
+            self.generateThumb(for: item) { thumb in
+                self.thumbnailCache.setValue(thumb, forKey: item.thumbnailUrl, cost: thumb?.estimatedMemoryFootprint ?? 0)
+                DispatchQueue.main.async {
+                    completion(thumb)
+                }
             }
         }
     }
@@ -262,37 +258,34 @@ class GalleryManager: NSObject {
     }
 
     // MARK: Thumb
-    private func generateThumb(for item: GalleryItem, async: Bool, tellDelegates: Bool) {
-        if async {
-            thumbsQueue.addOperation {
-                self.generateThumb(for: item, async: false, tellDelegates: tellDelegates)
-            }
+    private func generateThumb(for item: GalleryItem, completion: ((UIImage?) -> ())? = nil) {
+        // if thumb already exists, we return it
+        guard !FileManager.default.fileExists(atPath: item.thumbnailUrl.path) else {
+            completion?(UIImage(contentsOfFile: item.thumbnailUrl.path))
+            return
+        }
+
+        // if we are already creating the thumb, we add our callback to the list
+        if let pendingCallbacks = thumbsBeingCreated[item.url] {
+            thumbsBeingCreated[item.url] = pendingCallbacks + [completion].removingNils()
             return
         }
         
-        guard !thumbsBeingCreated.contains(item.url) else { return }
-        thumbsBeingCreated.append(item.url)
-
-        let dequeue = { [weak self] () -> () in
-            self?.thumbsBeingCreated.removeAll { $0 == item.url }
-        }
+        // start the task
+        thumbsBeingCreated[item.url] = [completion].removingNils()
 
         // preferred way of doing resizes, as it doesn't use a lot of memory on device
         let thumb = UIImage.thumbnailForImage(at: item.url, maxEdgeSize: 200, options: .alwaysCreate)
-        guard let thumb else { return dequeue() }
-
-        try? thumb
+        try? thumb?
             .jpegData(compressionQuality: 0.6)?
             .write(to: item.thumbnailUrl, options: .atomicWrite)
         
-        self.thumbnailCache.setValue(thumb, forKey: item.url, cost: thumb.estimatedMemoryFootprint)
-        dequeue()
-        
-        guard tellDelegates else { return }
+        thumbnailCache.setValue(thumb, forKey: item.url, cost: thumb?.estimatedMemoryFootprint ?? 0)
         DispatchQueue.main.async {
-            self.delegates.forEach { (weakDelegate) in
-                weakDelegate.value?.galleryManager(self, didCreate: thumb, for: item)
-            }
+            let callbacks = self.thumbsBeingCreated[item.url] ?? []
+            self.thumbsBeingCreated[item.url] = nil
+
+            callbacks.forEach { $0(thumb) }
         }
     }
     

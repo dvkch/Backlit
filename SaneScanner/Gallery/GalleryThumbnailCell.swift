@@ -104,7 +104,6 @@ class GalleryThumbnailCell: UICollectionViewCell {
         updateStyle()
 
         let item = self.item
-        // TODO: doesn't always work
         GalleryManager.shared.thumbnail(for: item) { [weak self] in
             guard item == self?.item else { return }
             self?.imageView.image = $0

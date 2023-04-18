@@ -83,7 +83,6 @@ class ScanNC: UINavigationController {
 }
 
 extension ScanNC: GalleryManagerDelegate {
-    func galleryManager(_ manager: GalleryManager, didCreate thumbnail: UIImage, for item: GalleryItem) { }
     func galleryManager(_ manager: GalleryManager, didUpdate items: [GalleryItem], newItems: [GalleryItem], removedItems: [GalleryItem]) {
         updateToolbar(animated: true)
     }
