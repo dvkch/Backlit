@@ -340,7 +340,7 @@ extension OptionCell: DeviceOptionControllable {
         button.setTitle((initialTitle ?? "") + " ", for: .normal)
         button.isEnabled = !option.disabledOrReadOnly
         button.showsMenuAsPrimaryAction = true
-        button.menu = UIMenu(children: dropdownOptions.enumerated().map { i, option in
+        button.menu = UIMenu(title: option.localizedDescr, children: dropdownOptions.enumerated().map { i, option in
             let action = UIAction(title: option.0) { action in
                 valueChangedClosure(i)
             }
