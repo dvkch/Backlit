@@ -53,9 +53,10 @@ class Preferences: NSObject {
     
     private override init() {
         super.init()
-        UserDefaults.standard.register(defaults: [userDefaultsKeyImageFormat: ImageFormat.jpeg.rawValue])
-        UserDefaults.standard.register(defaults: [userDefaultsKeyShowAdvancedOptions: false])
-        UserDefaults.standard.register(defaults: [userDefaultsKeyEnableAnalytics: false])
+        UserDefaults.standard.register(defaults: [Preferences.Key.imageFormat.rawValue: ImageFormat.jpeg.rawValue])
+        UserDefaults.standard.register(defaults: [Preferences.Key.pdfSize.rawValue: PDFSize.imageSize.rawValue])
+        UserDefaults.standard.register(defaults: [Preferences.Key.showAdvancedOptions.rawValue: false])
+        UserDefaults.standard.register(defaults: [Preferences.Key.enableAnalytics.rawValue: false])
         UserDefaults.standard.register(defaults: [userDefaultsKeyAskedAnalytics: false])
     }
     
@@ -77,13 +78,12 @@ class Preferences: NSObject {
             return rawValue.uppercased()
         }
     }
-    private let userDefaultsKeyImageFormat = "ImageFormat"
     var imageFormat: ImageFormat {
         get {
-            let string = UserDefaults.standard.string(forKey: userDefaultsKeyImageFormat)
+            let string = UserDefaults.standard.string(forKey: Preferences.Key.imageFormat.rawValue)
             return ImageFormat(rawValue: string ?? "") ?? .jpeg
         }
-        set { UserDefaults.standard.set(newValue.rawValue, forKey: userDefaultsKeyImageFormat); postNotification() }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: Preferences.Key.imageFormat.rawValue); postNotification() }
     }
     
     enum PDFSize: String, PreferenceValue {
@@ -99,19 +99,17 @@ class Preferences: NSObject {
             }
         }
     }
-    private let userDefaultsKeyPdfSize = "PDFSize"
     var pdfSize: PDFSize {
         get {
-            let string = UserDefaults.standard.string(forKey: userDefaultsKeyPdfSize)
+            let string = UserDefaults.standard.string(forKey: Preferences.Key.pdfSize.rawValue)
             return PDFSize(rawValue: string ?? "") ?? .imageSize
         }
-        set { UserDefaults.standard.set(newValue.rawValue, forKey: userDefaultsKeyPdfSize); postNotification() }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: Preferences.Key.pdfSize.rawValue); postNotification() }
     }
 
-    private let userDefaultsKeyShowAdvancedOptions = "ShowAdvancedOptions"
     var showAdvancedOptions: Bool {
-        get { return UserDefaults.standard.bool(forKey: userDefaultsKeyShowAdvancedOptions) }
-        set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyShowAdvancedOptions); postNotification() }
+        get { return UserDefaults.standard.bool(forKey: Preferences.Key.showAdvancedOptions.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Preferences.Key.showAdvancedOptions.rawValue); postNotification() }
     }
     
     var previewWithAutoColorMode: Bool {
@@ -125,10 +123,9 @@ class Preferences: NSObject {
         set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyAskedAnalytics); postNotification() }
     }
 
-    private let userDefaultsKeyEnableAnalytics = "AnalyticsEnabled"
     var enableAnalytics: Bool {
-        get { return UserDefaults.standard.bool(forKey: userDefaultsKeyEnableAnalytics) }
-        set { UserDefaults.standard.set(newValue, forKey: userDefaultsKeyEnableAnalytics); askedAnalytics = true; postNotification() }
+        get { return UserDefaults.standard.bool(forKey: Preferences.Key.enableAnalytics.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Preferences.Key.enableAnalytics.rawValue); askedAnalytics = true; postNotification() }
     }
     
     private let userDefaultsKeyAnalyticsUserID = "AnalyticsUserID"
@@ -153,8 +150,12 @@ class Preferences: NSObject {
 
 // MARK: UI
 extension Preferences {
-    enum Key {
-        case imageFormat, pdfSize, showAdvancedOptions, previewWithAutoColorMode, enableAnalytics
+    enum Key: String {
+        case imageFormat = "ImageFormat"
+        case pdfSize = "PDFSize"
+        case showAdvancedOptions = "ShowAdvancedOptions"
+        case previewWithAutoColorMode = "sane-previewWithAutoColorMode"
+        case enableAnalytics = "AnalyticsEnabled"
         
         var localizedTitle: String {
             switch self {
