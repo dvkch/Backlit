@@ -15,7 +15,7 @@ public class DeviceOption {
     init(cOption: SANE_Option_Descriptor, index: Int, device: Device) {
         self.index          = index
         self.device         = device
-        self.identifier     = cOption.name?.asString()
+        self.identifier     = cOption.name?.asString() ?? "option-\(index)"
         self.localizedTitle = cOption.title?.asString()?.saneTranslation ?? ""
         self.localizedDescr = cOption.desc?.asString()?.saneTranslation  ?? ""
         self.capabilities   = SaneCapabilities(rawValue: cOption.cap)
@@ -27,7 +27,7 @@ public class DeviceOption {
     // MARK: Properties
     public let index: Int
     public let device: Device
-    public let identifier: String?
+    public let identifier: String
     public var localizedTitle: String
     public var localizedDescr: String
     public var capabilities: SaneCapabilities
@@ -222,7 +222,7 @@ public class DeviceOptionBool: DeviceOptionTyped<Bool> {
         case .on:   return .value(true)
         case .off:  return .value(false)
         default:
-            fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
+            fatalError("Unsupported preview value \(value) for option \(identifier)")
         }
     }
 }
@@ -309,7 +309,7 @@ public class DeviceOptionInt: DeviceOptionTyped<Int> {
             }
 
         default:
-            fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
+            fatalError("Unsupported preview value \(value) for option \(identifier)")
         }
     }
 }
@@ -396,7 +396,7 @@ public class DeviceOptionFixed: DeviceOptionTyped<Double> {
             }
 
         default:
-            fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
+            fatalError("Unsupported preview value \(value) for option \(identifier)")
         }
     }
 }
@@ -476,7 +476,7 @@ public class DeviceOptionString: DeviceOptionTyped<String> {
         case .auto(let fallback):
             return capabilities.contains(.automatic) ? .auto : .value(fallback?.other ?? self.value)
         default:
-            fatalError("Unsupported preview value \(value) for option \(identifier ?? "<nil>")")
+            fatalError("Unsupported preview value \(value) for option \(identifier)")
         }
     }
 }
@@ -542,7 +542,7 @@ public class DeviceOptionGroup: DeviceOption {
         
         if device.canCrop {
             let cropOptionsIDs = SaneStandardOption.cropOptions.map { $0.saneIdentifier }
-            filteredOptions.removeAll(where: { $0.identifier != nil && cropOptionsIDs.contains($0.identifier!) })
+            filteredOptions.removeAll(where: { cropOptionsIDs.contains($0.identifier) })
         }
         
         if !includeAdvanced {
