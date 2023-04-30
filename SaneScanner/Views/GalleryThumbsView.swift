@@ -285,21 +285,11 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let item = galleryDataSource.itemIdentifier(for: indexPath) else { return nil }
-        let configuration = UIContextMenuConfiguration(
-            identifier: nil,
-            previewProvider: {
-                return GalleryImagePreviewVC(item: item)
-            },
-            actionProvider: { _ in
-                let open = UIAction(title: "ACTION OPEN".localized, image: UIImage(systemName: "folder")) { _ in
-                    self.openGallery(for: item)
-                }
-                let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                    guard let parentViewController = self.parentViewController else { return }
-                    UIActivityViewController.showForURLs([item.url], in: parentViewController, sender: collectionView.cellForItem(at: indexPath), completion: nil)
-                }
-                return UIMenu(title: item.suggestedDescription(separator: "\n") ?? "", children: [open, share])
-            }
+        guard let cell = collectionView.cellForItem(at: indexPath), let parentViewController else { return nil }
+        let configuration = item.contextMenuConfiguration(
+            for: parentViewController,
+            sender: cell,
+            openGallery: { self.openGallery(for: item) }
         )
         configuration.indexPath = indexPath
         return configuration

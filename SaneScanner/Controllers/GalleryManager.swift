@@ -196,7 +196,40 @@ class GalleryManager: NSObject {
         try? FileManager.default.removeItem(at: item.thumbnailUrl)
         galleryItems.remove(item)
     }
+    
+    private class CompletionBox<T, E: Error> {
+        init(completion: @escaping (Result<T, E>) -> ()) {
+            self.completion = completion
+        }
+        var completion: (Result<T, E>) -> ()
+        
+        static func from(_ context: UnsafeRawPointer) -> CompletionBox<T, E> {
+            return Unmanaged<CompletionBox<T, E>>
+                    .fromOpaque(context)
+                    .takeUnretainedValue()
+        }
+        var asContext: UnsafeMutableRawPointer {
+            return Unmanaged.passRetained(self).toOpaque()
+        }
+    }
+    func saveItemToCamraRoll(_ item: GalleryItem, completion: @escaping (Result<(), Error>) -> ()) {
+        guard let image = UIImage(contentsOfFile: item.url.path) else {
+            return completion(.failure(SaneError.noImageData))
+        }
+        
+        UIImageWriteToSavedPhotosAlbum(
+            image,
+            self, #selector(self.itemSavedToCameraRoll(_:didFinishSavingWithError:contextInfo:)),
+            CompletionBox(completion: completion).asContext
+        )
+    }
 
+    @objc private func itemSavedToCameraRoll(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        let result: Result<(), Error> = error == nil ? .success(()) : .failure(error!)
+        CompletionBox<(), Error>.from(contextInfo).completion(result)
+    }
+
+    // MARK: Listing
     private func listImages() -> [GalleryItem] {
         let items = try? FileManager.default.contentsOfDirectory(
             at: galleryFolder,

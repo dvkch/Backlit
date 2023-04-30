@@ -112,7 +112,6 @@ class GalleryGridVC: UIViewController {
     @IBOutlet private var emptyStateLabel: UILabel!
     private let collectionViewLayout = GalleryGridLayout()
     @IBOutlet private var collectionView: UICollectionView!
-    private weak var hud: HUDAlertController?
     
     // MARK: Actions
     #if DEBUG
@@ -130,39 +129,22 @@ class GalleryGridVC: UIViewController {
     @objc private func deleteButtonTap(sender: UIBarButtonItem) {
         guard let selectedIndices = collectionView.indexPathsForSelectedItems, !selectedIndices.isEmpty else { return }
         
-        // keep a ref to the items, since we'll be deleting one by one and thus indices may become invalid, ending up deleting the wrong files
+        // keep a ref to the items, since we'll be deleting one by one and thus indices
+        // may become invalid, ending up deleting the wrong files
         let selectedItems = selectedIndices.compactMap { self.galleryDataSource.itemIdentifier(for: $0) }
-        
-        var title = "DIALOG DELETE SCAN TITLE".localized
-        var message = "DIALOG DELETE SCAN MESSAGE".localized
-        
-        if selectedItems.count > 1 {
-            title   = "DIALOG DELETE SCANS TITLE".localized
-            message = String(format: "DIALOG DELETE SCANS MESSAGE %d".localized, selectedItems.count)
-        }
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "ACTION DELETE".localized, style: .destructive, handler: { (_) in
-            self.hud = HUDAlertController.show(in: self)
-            selectedItems.forEach { (item) in
-                GalleryManager.shared.deleteItem(item)
-            }
-            self.hud?.dismiss(animated: true, completion: nil)
+        deleteGalleryItems(selectedItems, sender: sender) {
             self.setEditing(false, animated: true)
-        }))
-        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
-        alert.popoverPresentationController?.barButtonItem = sender
-        present(alert, animated: true, completion: nil)
+        }
     }
     
     @objc private func pdfButtonTap(sender: UIBarButtonItem) {
         guard let selected = collectionView.indexPathsForSelectedItems, !selected.isEmpty else { return }
         
-        hud = HUDAlertController.show(in: self)
+        let hud = HUDAlertController.show(in: self)
         
         // needed to let HUD appear, even if PDF is generated on main thread
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.shareSelectedItemsAsPDF(sender: sender)
+            self.shareSelectedItemsAsPDF(sender: sender, hud: hud)
         }
     }
     
@@ -180,7 +162,7 @@ class GalleryGridVC: UIViewController {
             .compactMap { self.galleryDataSource.itemIdentifier(for: $0)?.url }
     }
     
-    private func shareSelectedItemsAsPDF(sender: UIBarButtonItem) {
+    private func shareSelectedItemsAsPDF(sender: UIBarButtonItem, hud: HUDAlertController?) {
         let urls = self.selectedURLs()
         guard !urls.isEmpty else { return }
         
@@ -337,21 +319,10 @@ extension GalleryGridVC : UICollectionViewDelegateFlowLayout {
     @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let item = galleryDataSource.itemIdentifier(for: indexPath) else { return nil }
-        let configuration = UIContextMenuConfiguration(
-            identifier: nil,
-            previewProvider: {
-                return GalleryImagePreviewVC(item: item)
-            },
-            actionProvider: { _ in
-                let open = UIAction(title: "ACTION OPEN".localized, image: UIImage(systemName: "folder")) { _ in
-                    self.openGallery(on: item)
-                }
-                let share = UIAction(title: "ACTION SHARE".localized, image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                    UIActivityViewController.showForURLs([item.url], in: self, sender: collectionView.cellForItem(at: indexPath), completion: nil)
-                }
-                return UIMenu(title: item.suggestedDescription(separator: "\n") ?? "", children: [open, share])
-            }
-        )
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
+        let configuration = item.contextMenuConfiguration(for: self, sender: cell, openGallery: {
+            self.openGallery(on: item)
+        })
         configuration.indexPath = indexPath
         return configuration
     }

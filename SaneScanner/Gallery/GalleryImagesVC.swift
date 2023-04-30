@@ -78,17 +78,7 @@ class GalleryImagesVC: UIViewController {
         guard let currentIndex = currentIndex else { return }
         let item = items[currentIndex]
         
-        let alert = UIAlertController(title: "DIALOG DELETE SCAN TITLE".localized, message: "DIALOG DELETE SCAN MESSAGE".localized, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "ACTION DELETE".localized, style: .destructive, handler: { (_) in
-            if self.items.count == 1 {
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            GalleryManager.shared.deleteItem(item)
-        }))
-        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
-        alert.popoverPresentationController?.barButtonItem = sender
-        present(alert, animated: true, completion: nil)
+        deleteGalleryItems([item], sender: sender)
     }
     
     @objc private func shareCurrentImage(sender: UIBarButtonItem) {

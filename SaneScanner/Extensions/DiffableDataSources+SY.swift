@@ -18,7 +18,9 @@ protocol CollectionViewDiffableDataSourceViewsProvider<SectionIdentifier, ItemId
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
 }
 
+#if !targetEnvironment(macCatalyst)
 @available(iOS, obsoleted: 13.0, message: "Please use UICollectionViewDiffableDataSource instead (iOS 13+)")
+#endif
 extension CollectionViewDiffableDataSource {
     
     // MARK: Init

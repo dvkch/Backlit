@@ -58,6 +58,7 @@
 		97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97865080220B69AC00F52DE6 /* GalleryManager.swift */; };
 		9787F2411E49FBCF00C8E93A /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */; };
 		9787F2421E4A094A00C8E93A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9785C5681E3D247A006CD4F1 /* Localizable.strings */; };
+		9796632229F991FF00E28486 /* GalleryItem+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9796632129F991FF00E28486 /* GalleryItem+UI.swift */; };
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
 		97A3AC2429A7F4CB00F31207 /* UIButton+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3AC2329A7F4CB00F31207 /* UIButton+SY.swift */; };
 		97A9FCEA2640906F0027F462 /* CatalystPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCE92640906F0027F462 /* CatalystPlugin.swift */; };
@@ -209,6 +210,7 @@
 		9786507E220B645500F52DE6 /* PDFActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFActivity.swift; sourceTree = "<group>"; };
 		97865080220B69AC00F52DE6 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
 		9787F2401E49FBCF00C8E93A /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		9796632129F991FF00E28486 /* GalleryItem+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GalleryItem+UI.swift"; sourceTree = "<group>"; };
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		97A3AC2329A7F4CB00F31207 /* UIButton+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+SY.swift"; sourceTree = "<group>"; };
 		97A9FCE3264090500027F462 /* SaneScanner-CatalystPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SaneScanner-CatalystPlugin.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,6 +437,7 @@
 				97FE556E264556D60036357E /* DeviceOptionControllable.swift */,
 				97FF2A9229EC9F0B0096ACFC /* GalleryGroup.swift */,
 				97F2FB54222318D5006BD617 /* GalleryItem.swift */,
+				9796632129F991FF00E28486 /* GalleryItem+UI.swift */,
 				97D4CE892636EB7800F84150 /* Snapshot.swift */,
 			);
 			path = Models;
@@ -948,6 +951,7 @@
 				97FDF403222C55EE00B71E4C /* DeviceOptionVC.swift in Sources */,
 				97C5B2B929DA4D1300C82735 /* GalleryImageViewTiledLayer.swift in Sources */,
 				977EA2D929E0331500CBD092 /* UIContextMenuConfiguration+SY.swift in Sources */,
+				9796632229F991FF00E28486 /* GalleryItem+UI.swift in Sources */,
 				97DC2CB029E5DAF700BAF1AC /* UIControl+SY.swift in Sources */,
 				97C5B2BB29DB0E9000C82735 /* GalleryImageViewImageLayer.swift in Sources */,
 				977EA2D029DEEF6100CBD092 /* Logger.swift in Sources */,

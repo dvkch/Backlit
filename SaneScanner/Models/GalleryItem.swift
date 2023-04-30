@@ -33,23 +33,6 @@ class GalleryItem: NSObject {
 
 // MARK: Item properties
 extension GalleryItem {
-    private static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .short
-        formatter.locale = .autoupdatingCurrent
-        formatter.timeZone = .autoupdatingCurrent
-        formatter.formattingContext = .beginningOfSentence
-        formatter.doesRelativeDateFormatting = true
-        return formatter
-    }()
-    
-    func creationDateString(includingTime: Bool, allowRelative: Bool) -> String {
-        type(of: self).dateFormatter.timeStyle = includingTime ? .short : .none
-        type(of: self).dateFormatter.doesRelativeDateFormatting = allowRelative
-        return type(of: self).dateFormatter.string(from: creationDate)
-    }
-    
     static var deviceInfoCache: [URL: String?] = [:]
     var deviceInfoString: String? {
         // this is a wee bit slow, and is computed everytime we display a GalleryThumbnailCell to generate the
@@ -63,21 +46,6 @@ extension GalleryItem {
         let deviceInfo = [metadata.make, metadata.model].removingNils().joined(separator: " ")
         type(of: self).deviceInfoCache[url] = deviceInfo
         return deviceInfo
-    }
-    
-    // MARK: Generated labels
-    func suggestedDescription(separator: String) -> String? {
-        return [
-            creationDateString(includingTime: true, allowRelative: true),
-            deviceInfoString
-        ].removingNils().joined(separator: separator)
-    }
-
-    var suggestedAccessibilityLabel: String? {
-        return [
-            "GALLERY ITEM".localized,
-            suggestedDescription(separator: "; ")
-        ].removingNils().joined(separator: "; ")
     }
 }
 
