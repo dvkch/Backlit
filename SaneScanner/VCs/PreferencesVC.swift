@@ -22,6 +22,8 @@ class PreferencesVC: UIViewController {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
         navigationItem.largeTitleDisplayMode = .always
+        navigationItem.backBarButtonItem = .back(title: "PREFERENCES TITLE".localized)
+        navigationController?.navigationBar.setBackButtonImage(.icon(.left))
 
         title = "PREFERENCES TITLE".localized
         view.backgroundColor = .background
@@ -110,6 +112,7 @@ extension PreferencesVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(OptionCell.self, for: indexPath)
         cell.accessoryType = .none
+        cell.accessoryView = nil
         
         switch Section.allSections[indexPath.section] {
         case .prefGroup(_, let keys):
@@ -148,7 +151,7 @@ extension PreferencesVC : UITableViewDataSource {
                     leftText: "PREFERENCES TITLE ACKNOWLEDGEMENTS".localized,
                     rightText: ""
                 )
-                cell.accessoryType = .disclosureIndicator
+                cell.showDisclosureIndicator(index: 0)
             }
         }
         return cell

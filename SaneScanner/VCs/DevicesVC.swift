@@ -17,7 +17,9 @@ class DevicesVC: UIViewController {
         view.backgroundColor = .background
         navigationItem.largeTitleDisplayMode = .always
         
-        navigationItem.backBarButtonItem = .emptyBack
+        navigationItem.backBarButtonItem = .back()
+        navigationController?.navigationBar.setBackButtonImage(.icon(.left))
+
         if !UIDevice.isCatalyst {
             addKeyCommand(.settings)
             navigationItem.rightBarButtonItem = .settings(target: self, action: #selector(self.settingsButtonTap))
@@ -341,6 +343,7 @@ extension DevicesVC : UITableViewDataSource {
         
         let cell = tableView.dequeueCell(DeviceCell.self, for: indexPath)
         cell.device = devices[indexPath.row]
+        cell.index = indexPath.row
         cell.isLoading = cell.device == loadingDevice
         return cell
     }
@@ -368,10 +371,10 @@ extension DevicesVC : UITableViewDelegate {
         guard case .saneHost(let host) = hosts[indexPath.row] else { return nil }
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
-            let editAction = UIAction(title: "ACTION EDIT".localized, image: UIImage(systemName: "pencil"), attributes: []) { [weak self] (_) in
+            let editAction = UIAction(title: "ACTION EDIT".localized, image: .icon(.edit)) { [weak self] (_) in
                 self?.showHostForm(.edit(host: host))
             }
-            let deleteAction = UIAction(title: "ACTION REMOVE".localized, image: UIImage(systemName: "trash.fill"), attributes: .destructive) { (_) in
+            let deleteAction = UIAction(title: "ACTION REMOVE".localized, image: .icon(.delete), attributes: .destructive) { (_) in
                 Sane.shared.configuration.hosts.remove(host)
             }
 
@@ -379,21 +382,24 @@ extension DevicesVC : UITableViewDelegate {
         }
     }
 
-    #if !targetEnvironment(macCatalyst)
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard indexPath.section == 0 else { return nil }
         guard case .saneHost(let host) = hosts[indexPath.row] else { return nil }
 
-        let editAction = UITableViewRowAction(style: .default, title: "ACTION EDIT".localized) { [weak self] (_, _) in
+        let editAction = UIContextualAction(style: .normal, title: "ACTION EDIT".localized) { [weak self] (_, _, complete) in
             self?.showHostForm(.edit(host: host))
+            complete(true)
         }
+        editAction.image = .icon(.edit)
         editAction.backgroundColor = .tint
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "ACTION REMOVE".localized) { (_, _) in
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "ACTION REMOVE".localized) { (_, _, complete) in
             Sane.shared.configuration.hosts.remove(host)
+            complete(true)
         }
-        return [editAction, deleteAction]
+        deleteAction.image = .icon(.delete)
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }
-    #endif
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

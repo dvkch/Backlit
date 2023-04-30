@@ -38,7 +38,7 @@ class GalleryThumbnailCell: UICollectionViewCell {
         contentView.addSubview(selectionBackgroundView)
         selectionBackgroundView.snp.makeConstraints { make in
             make.size.equalTo(22)
-            make.bottom.right.equalTo(imageView).offset(-8)
+            make.bottom.right.equalTo(imageView).offset(-6)
         }
         
         selectionRingView.layer.borderColor = UIColor.white.cgColor

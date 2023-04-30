@@ -418,8 +418,12 @@ extension OptionCell: DeviceOptionControllable {
         // shows the image on a clear background, no matter what I tried... I ain't happy
         // about it either
         let saveButton = UIButton.system(prominent: true)
-        let saveIcon = UIImage(systemName: "checkmark")?.withTintColor(.label)
-        saveButton.setAttributedTitle(NSAttributedString(image: saveIcon, offset: .init(x: 0, y: -2)), for: .normal)
+        let saveIcon = NSAttributedString(
+            image: UIImage.icon(.checkmark)?.withTintColor(.label),
+            offset: .init(x: 0, y: -2),
+            size: CGSize(width: 14, height: 13)
+        )
+        saveButton.setAttributedTitle(saveIcon, for: .normal)
         saveButton.addTooltip { "ACTION SAVE".localized }
         saveButton.accessibilityLabel = "ACTION SAVE".localized
         saveButton.addPrimaryAction { [weak self] in
@@ -427,8 +431,12 @@ extension OptionCell: DeviceOptionControllable {
         }
         
         let autoButton = UIButton.system(prominent: true)
-        let autoIcon = UIImage(systemName: "wand.and.stars.inverse")?.withTintColor(.label)
-        autoButton.setAttributedTitle(NSAttributedString(image: autoIcon, offset: .init(x: 0, y: -3)), for: .normal)
+        let autoIcon = NSAttributedString(
+            image: UIImage.icon(.auto)?.withTintColor(.label),
+            offset: .init(x: 0, y: -3),
+            size: CGSize(width: 16, height: 15)
+        )
+        autoButton.setAttributedTitle(autoIcon, for: .normal)
         autoButton.addTooltip { "OPTION VALUE AUTO".localized }
         autoButton.accessibilityLabel = "OPTION VALUE AUTO".localized
         autoButton.addPrimaryAction { [weak self] in

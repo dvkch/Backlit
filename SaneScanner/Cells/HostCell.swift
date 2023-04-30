@@ -47,19 +47,20 @@ class HostCell: TableViewCell {
         case .bonjourHost(let host):
             nameLabel.text = host.displayName
             hostLabel.text = host.hostname
-            indicator = UIImage(named: "network")
+            indicator = .icon(.network)
 
         case .add:
             nameLabel.text = "DEVICES ROW ADD HOST".localized
             hostLabel.text = nil
-            indicator = UIImage(named: "scanner")
+            indicator = .icon(.scanner)
         }
         
         if let indicator {
             let imageView = UIImageView(image: indicator)
             imageView.tintColor = nameLabel.textColor
-            imageView.frame.size = .init(width: 20, height: 20)
             imageView.contentMode = .scaleAspectFit
+            let size = UIFontMetrics.default.scaledValue(for: 20)
+            imageView.frame.size = .init(width: size, height: size)
             accessoryView = imageView
         }
         else {

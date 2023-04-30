@@ -43,7 +43,7 @@ class PDFActivity: UIActivity {
     }
     
     override var activityImage: UIImage? {
-        return UIImage(named: "make_pdf_activity")
+        return .icon(.pdf)
     }
     
     override class var activityCategory: UIActivity.Category {

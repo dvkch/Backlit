@@ -11,59 +11,66 @@ import ObjectiveC
 
 // MARK: Common items
 extension UIBarButtonItem {
-    static var emptyBack: UIBarButtonItem {
-        return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    @available(iOS, obsoleted: 14.0, message: "Use navigationItem.backButtonDisplayMode = .minimal")
+    static func back(title: String = "") -> UIBarButtonItem {
+        return UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
     }
     
     static func edit(target: Any, action: Selector) -> UIBarButtonItem {
         return UIBarButtonItem(barButtonSystemItem: .edit, target: target, action: action)
     }
-
+    
     static func done(target: Any, action: Selector) -> UIBarButtonItem {
-        let button = UIBarButtonItem(barButtonSystemItem: .done, target: target, action: action)
-        button.style = .done
+        return UIBarButtonItem(barButtonSystemItem: .done, target: target, action: action)
+    }
+    
+    static func refresh(block: @escaping () -> ()) -> UIBarButtonItem {
+        let button = UIBarButtonItem(image: .icon(.refresh), style: .plain, target: nil, action: nil)
+        button.accessibilityLabel = "ACTION REFRESH".localized
+        button.tapBlock = block
         return button
     }
-
+    
     static func close(target: Any, action: Selector) -> UIBarButtonItem {
-        if #available(iOS 13.0, *) {
-            return UIBarButtonItem(barButtonSystemItem: .close, target: target, action: action)
-        } else {
-            return UIBarButtonItem(barButtonSystemItem: .stop, target: target, action: action)
-        }
+        let button = UIButton(type: .system)
+        button.accessibilityLabel = "ACTION CLOSE".localized
+        button.backgroundColor = .normalText.withAlphaComponent(0.1)
+        button.setImage(.icon(.close, variant: nil), for: .normal)
+        button.tintColor = .altText
+        button.adjustsImageSizeForAccessibilityContentSizeCategory = true
+        button.widthAnchor.constraint(equalTo: button.heightAnchor, multiplier: 1).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        button.layer.cornerRadius = 15
+        button.addTarget(target, action: action, for: .primaryActionTriggered)
+        return UIBarButtonItem(customView: button)
     }
-
+    
     static func settings(target: Any, action: Selector) -> UIBarButtonItem {
-        let button = UIBarButtonItem(
-            image: UIImage(named: "settings"), style: .plain,
-            target: target, action: action
-        )
+        let button = UIBarButtonItem(image: .icon(.settings), style: .plain, target: target, action: action)
         button.title = "PREFERENCES TITLE".localized
         return button
     }
     
     static func openFolder(target: Any, action: Selector) -> UIBarButtonItem {
-        if #available(iOS 13.0, *) {
-            return UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: target, action: action)
-        } else {
-            return UIBarButtonItem(image: UIImage(named: "folder"), style: .plain, target: target, action: action)
-        }
-    }
-    
-    static var flexibleSpace: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let button = UIBarButtonItem(image: .icon(.open), style: .plain, target: target, action: action)
+        button.title = "MENU OPEN GALLERY".localized
+        return button
     }
     
     static func share(target: Any, action: Selector) -> UIBarButtonItem {
-        let button = UIBarButtonItem(barButtonSystemItem: .action, target: target, action: action)
+        let button = UIBarButtonItem(image: .icon(.share), style: .plain, target: target, action: action)
         button.title = "ACTION SHARE".localized
         return button
     }
     
     static func delete(target: Any, action: Selector) -> UIBarButtonItem {
-        let button = UIBarButtonItem(barButtonSystemItem: .trash, target: target, action: action)
+        let button = UIBarButtonItem(image: .icon(.delete), style: .plain, target: target, action: action)
         button.title = "ACTION DELETE".localized
         return button
+    }
+    
+    static var flexibleSpace: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     }
 }
 

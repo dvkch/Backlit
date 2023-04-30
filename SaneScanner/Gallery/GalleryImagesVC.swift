@@ -134,7 +134,7 @@ class GalleryImagesVC: UIViewController {
         title = "GALLERY ITEM %d OF %d".localized((currentIndex ?? 0) + 1, items.count)
         
         if navigationController?.isModal == true {
-            navigationItem.rightBarButtonItem = .done(target: self, action: #selector(self.closeButtonTap))
+            navigationItem.rightBarButtonItem = .close(target: self, action: #selector(self.closeButtonTap))
         } else {
             navigationItem.rightBarButtonItem = nil
         }

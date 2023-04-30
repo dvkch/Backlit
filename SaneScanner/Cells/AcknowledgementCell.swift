@@ -20,6 +20,8 @@ class AcknowledgementCell: UITableViewCell {
         licenseTextLabel.adjustsFontForContentSizeCategory = true
         licenseTextLabel.textColor = .altText
         disclosureImageView.tintColor = .altText
+        disclosureImageView.adjustsImageSizeForAccessibilityContentSizeCategory = true
+        disclosureImageView.transform = .init(scaleX: 0.7, y: 0.7)
     }
     
     // MARK: Views
@@ -29,15 +31,25 @@ class AcknowledgementCell: UITableViewCell {
     @IBOutlet private var disclosureImageView: UIImageView!
 
     // MARK: Properties
+    var index: Int = 0 {
+        didSet {
+            updateDisclosureIndicator()
+        }
+    }
     var acknowledgement: Acknowledgement? {
         didSet {
             updateTexts()
         }
     }
+    func update(using acknowledgement: Acknowledgement, index: Int) {
+        self.acknowledgement = acknowledgement
+        self.index = index
+    }
+
     var showDescription: Bool = false {
         didSet {
             licenseTextLabel.sy_isHidden = !showDescription
-            disclosureImageView.image = UIImage(named: showDescription ? "chevron.up" : "chevron.down")
+            updateDisclosureIndicator()
         }
     }
     
@@ -46,5 +58,9 @@ class AcknowledgementCell: UITableViewCell {
         libraryNameLabel.text = acknowledgement.title
         licenseNameLabel.text = acknowledgement.licenseName
         licenseTextLabel.text = acknowledgement.licenseText.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    private func updateDisclosureIndicator() {
+        disclosureImageView.image = .icon(showDescription ? .up : .down, variant: index)
     }
 }

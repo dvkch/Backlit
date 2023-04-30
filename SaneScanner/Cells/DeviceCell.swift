@@ -30,6 +30,8 @@ class DeviceCell: TableViewCell {
             updateTexts()
         }
     }
+    var index: Int = 0
+
     var isLoading: Bool = false {
         didSet {
             if isLoading {
@@ -46,8 +48,7 @@ class DeviceCell: TableViewCell {
                 accessibilityIdentifier = "loading_device"
             }
             else {
-                accessoryView = nil
-                accessoryType = .disclosureIndicator
+                showDisclosureIndicator(index: index)
                 accessibilityIdentifier = nil
             }
         }

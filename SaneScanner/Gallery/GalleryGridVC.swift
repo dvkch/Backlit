@@ -15,6 +15,7 @@ class GalleryGridVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
+        navigationController?.navigationBar.setBackButtonImage(.icon(.left))
 
         emptyStateView.backgroundColor = .background
         emptyStateLabel.adjustsFontForContentSizeCategory = true
@@ -235,25 +236,22 @@ class GalleryGridVC: UIViewController {
         
         // Left
         if navigationController?.isModal == true && !isEditing {
-            navigationItem.setLeftBarButton(.done(target: self, action: #selector(self.closeButtonTap)), animated: animated)
+            navigationItem.setLeftBarButton(.edit(target: self, action: #selector(self.editButtonTap)), animated: animated)
         } else {
-            #if DEBUG
-            let testButton = UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap))
-            navigationItem.setLeftBarButton(testButton, animated: animated)
-            #else
-            navigationItem.setLeftBarButton(nil, animated: animated)
-            #endif
+            navigationItem.setLeftBarButton(.done(target: self, action: #selector(self.editButtonTap)), animated: animated)
         }
         
         // Right
-        var buttons = [UIBarButtonItem]()
-        if isEditing {
-            buttons.append(.done(target: self, action: #selector(self.editButtonTap)))
+        if !isEditing {
+            navigationItem.setRightBarButton(.close(target: self, action: #selector(self.closeButtonTap)), animated: animated)
         } else {
-            buttons.append(.edit(target: self, action: #selector(self.editButtonTap)))
+            navigationItem.setRightBarButton(nil, animated: animated)
+
+            #if DEBUG && !targetEnvironment(simulator)
+            let testButton = UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap))
+            navigationItem.setRightBarButton(testButton, animated: animated)
+            #endif
         }
-        
-        navigationItem.setRightBarButtonItems(buttons, animated: animated)
     }
     
     private func updateToolbarVisibility(animated: Bool) {

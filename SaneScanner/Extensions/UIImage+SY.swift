@@ -11,6 +11,60 @@ import MobileCoreServices
 import SYPictureMetadata
 
 extension UIImage {
+    enum Icon: String {
+        case open       = "folder"                  // 23x17
+        case share      = "square.and.arrow.up"     // 19x21
+        case save       = "square.and.arrow.down"   // 19x20
+        case checkmark  = "checkmark"               // 18x16
+        case auto       = "wand.and.stars.inverse"  // 21x19
+        case edit       = "pencil"                  // 17x15
+        case copy       = "doc.on.doc"              // 21x23
+        case delete     = "trash"                   // 19x21
+        case close      = "xmark"                   // 17x15
+        case settings   = "gear"                    // 22x21
+        case pdf        = "pdf"                     // 19x19 (home made)
+        case network    = "network"                 // 20x19
+        case scanner    = "scanner"                 // 24x17
+        case scannerSmall = "scanner-shortcut"
+        case up         = "chevron.up"              // 19x10
+        case down       = "chevron.down"            // 19x10
+        case left       = "chevron.left"            // 13x17
+        case right      = "chevron.right"           // 13x17
+        case refresh    = "arrow.clockwise"         // 18x20
+
+        var availableVariantsCount: Int {
+            switch self {
+            case .right, .down: return 12
+            case .close:        return  4
+            default:            return  1
+            }
+        }
+        
+        func assetName(variant: Int?) -> String {
+            guard availableVariantsCount > 1 else { return rawValue }
+            let boundedVariant: Int
+            if let variant {
+                boundedVariant = variant % availableVariantsCount
+            }
+            else {
+                boundedVariant = Int.random(in: 0..<availableVariantsCount)
+            }
+            return "\(rawValue).\(boundedVariant)"
+        }
+    }
+
+    static func icon(_ icon: Icon, variant: Int? = 0, useSystem: Bool = false) -> UIImage? {
+        if useSystem, #available(iOS 13.0, *) {
+            return UIImage(systemName: icon.rawValue)
+        }
+
+        // could try using:
+        // let config = UIImage.SymbolConfiguration(font: UIFontMetrics.default.scaledFont(for: .systemFont(ofSize: 10)))
+        return UIImage(named: icon.assetName(variant: variant))
+    }
+}
+
+extension UIImage {
     static func testImage(size: CGFloat) -> UIImage? {
         let letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement() ?? "A"
         let label = UILabel()

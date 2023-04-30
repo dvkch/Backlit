@@ -52,7 +52,7 @@ struct RefreshView {
     
     func stopLoading() {
         #if targetEnvironment(macCatalyst)
-        viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, block: completionBlock)
+        viewController?.navigationItem.rightBarButtonItem = .refresh(block: completionBlock)
         #else
         tableView?.endPullToRefresh()
         #endif

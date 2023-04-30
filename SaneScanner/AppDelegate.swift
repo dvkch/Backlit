@@ -109,7 +109,7 @@ extension AppDelegate : UIApplicationDelegate {
                 type: "device",
                 localizedTitle: device.model,
                 localizedSubtitle: device.host.displayName,
-                icon: UIApplicationShortcutIcon(templateImageName: "scanner"),
+                icon: UIApplicationShortcutIcon(templateImageName: UIImage.Icon.scannerSmall.rawValue),
                 userInfo: ["device": device.name.rawValue as NSString]
             )
         }

@@ -70,6 +70,7 @@ extension AcknowledgementsVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(AcknowledgementCell.self, for: indexPath)
+        cell.index = indexPath.row
         cell.acknowledgement = acknowledgements[indexPath.row]
         cell.showDescription = indexPath.row == deployedIndex
         return cell

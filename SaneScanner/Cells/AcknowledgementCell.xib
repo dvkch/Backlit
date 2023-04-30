@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,16 +24,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="328" height="40.333333333333336"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="tUT-tF-ZmK">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="40.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="276.66666666666669" height="40.333333333333336"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Library name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hk1-Nk-9pB">
-                                                <rect key="frame" x="0.0" y="0.0" width="314" height="20.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="276.66666666666669" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="License name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sg-G3-FWg">
-                                                <rect key="frame" x="0.0" y="22.333333333333336" width="314" height="18"/>
+                                                <rect key="frame" x="0.0" y="22.333333333333336" width="276.66666666666669" height="18"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -41,10 +41,7 @@
                                         </subviews>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.up" translatesAutoresizingMaskIntoConstraints="NO" id="45o-fd-FMi">
-                                        <rect key="frame" x="314" y="0.0" width="14" height="40.333333333333336"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="14" id="uBq-oX-Rkq"/>
-                                        </constraints>
+                                        <rect key="frame" x="276.66666666666669" y="0.0" width="51.333333333333314" height="40.333333333333336"/>
                                     </imageView>
                                 </subviews>
                             </stackView>
@@ -75,6 +72,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="chevron.up" width="20" height="12"/>
+        <image name="chevron.up" width="51.333332061767578" height="31.666666030883789"/>
     </resources>
 </document>
