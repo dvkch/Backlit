@@ -10,6 +10,9 @@
 import UIKit
 import DiffableDataSources
 
+// TODO: when selectionning multiple items by sliding on multiple lines, some of them
+// are unselected...
+
 class GalleryGridVC: UIViewController {
 
     override func viewDidLoad() {

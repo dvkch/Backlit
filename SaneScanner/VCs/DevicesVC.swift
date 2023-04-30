@@ -141,7 +141,9 @@ class DevicesVC: UIViewController {
 
         
         let completion = { (hostname: String, displayName: String) in
-            let newHost = SaneHost(hostname: hostname, displayName: displayName)
+            guard let hostname = hostname.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty else { return }
+
+            let newHost = SaneHost(hostname: hostname, displayName: displayName.trimmingCharacters(in: .whitespacesAndNewlines))
             switch kind {
             case .add(let suggestion):
                 Sane.shared.configuration.hosts.append(newHost)
