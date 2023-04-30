@@ -30,12 +30,12 @@ public extension NSAttributedString {
         self.init(string: string, attributes: styles)
     }
     
-    @objc(sy_initWithImage:offset:)
-    convenience init?(image: UIImage?, offset: CGPoint = .zero) {
+    @objc(sy_initWithImage:offset:size:)
+    convenience init?(image: UIImage?, offset: CGPoint = .zero, size: CGSize = .zero) {
         guard let image = image else { return nil }
         let attachment = NSTextAttachment()
         attachment.image = image
-        attachment.bounds = CGRect(origin: offset, size: image.size)
+        attachment.bounds = CGRect(origin: offset, size: size == .zero ? image.size : size)
         self.init(attachment: attachment)
     }
 }

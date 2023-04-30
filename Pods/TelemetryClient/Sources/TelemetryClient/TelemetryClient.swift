@@ -10,8 +10,7 @@ import Foundation
     import TVUIKit
 #endif
 
-
-let TelemetryClientVersion = "SwiftClient 1.1.5"
+let TelemetryClientVersion = "SwiftClient 1.4.1"
 
 public typealias TelemetrySignalType = String
 
@@ -27,6 +26,15 @@ public final class TelemetryManagerConfiguration {
     /// The domain to send signals to. Defaults to the default Telemetry API server.
     /// (Don't change this unless you know exactly what you're doing)
     public let apiBaseURL: URL
+
+    /// This string will be appended to to all user identifiers before hashing them.
+    ///
+    /// Set the salt to a random string of 64 letters, integers and special characters to prevent the unlikely
+    /// possibility of uncovering the original user identifiers through calculation.
+    ///
+    /// Note: Once you set the salt, it should not change. If you change the salt, every single one of your
+    /// user identifers wll be different, so even existing users will look like new users to TelemetryDeck.
+    public let salt: String
 
     /// Instead of specifying a user identifier with each `send` call, you can set your user's name/email/identifier here and
     /// it will be sent with every signal from now on.
@@ -51,8 +59,7 @@ public final class TelemetryManagerConfiguration {
 
     @available(*, deprecated, message: "Please use the testMode property instead")
     public var sendSignalsInDebugConfiguration: Bool = false
-    
-    
+
     /// If `true` any signals sent will be marked as *Testing* signals.
     ///
     /// Testing signals are only shown when your Telemetry Viewer App is in Testing mode. In live mode, they are ignored.
@@ -62,22 +69,64 @@ public final class TelemetryManagerConfiguration {
     public var testMode: Bool {
         get {
             if let testMode = _testMode { return testMode }
-            
+
             #if DEBUG
-            return true
+                return true
             #else
-            return false
+                return false
             #endif
         }
-        
+
         set { _testMode = newValue }
     }
+
     private var _testMode: Bool?
 
+    /// If `true` no signals will be sent.
+    ///
+    /// SwiftUI previews are built by Xcode automatically and events sent during this mode are not considered actual user-initiated usage.
+    ///
+    /// By default, this checks for the `XCODE_RUNNING_FOR_PREVIEWS` environment variable as described in this StackOverflow answer:
+    /// https://stackoverflow.com/a/61741858/3451975
+    public var swiftUIPreviewMode: Bool {
+        get {
+            if let swiftUIPreviewMode = _swiftUIPreviewMode { return swiftUIPreviewMode }
+
+            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+                return true
+            } else {
+                return false
+            }
+        }
+
+        set { _swiftUIPreviewMode = newValue }
+    }
+
+    private var _swiftUIPreviewMode: Bool?
+
+    /// If `true` no signals will be sent.
+    ///
+    /// Can be used to manually opt out users of tracking.
+    ///
+    /// Works together with `swiftUIPreviewMode` if either of those values is `true` no analytics events are sent.
+    /// However it won't interfere with SwiftUI Previews, when explicitly settings this value to `false`.
+    public var analyticsDisabled: Bool = false
+
     /// Log the current status to the signal cache to the console.
+    @available(*, deprecated, message: "Please use the logHandler property instead")
     public var showDebugLogs: Bool = false
 
-    public init(appID: String, baseURL: URL? = nil) {
+    /// A strategy for handling logs.
+    ///
+    /// Defaults to `print` with info/errror messages - debug messages are not outputted. Set to `nil` to disable all logging from TelemetryDeck SDK.
+    public var logHandler: LogHandler? = LogHandler.stdout(.info)
+
+    /// An array of signal metadata enrichers: a system for adding dynamic metadata to signals as they are recorded.
+    ///
+    /// Defaults to an empty array.
+    public var metadataEnrichers: [SignalEnricher] = []
+
+    public init(appID: String, salt: String? = nil, baseURL: URL? = nil) {
         telemetryAppID = appID
 
         if let baseURL = baseURL {
@@ -86,16 +135,22 @@ public final class TelemetryManagerConfiguration {
             apiBaseURL = URL(string: "https://nom.telemetrydeck.com")!
         }
 
+        if let salt = salt {
+            self.salt = salt
+        } else {
+            self.salt = ""
+        }
+
         #if os(iOS)
             NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         #elseif os(watchOS)
-        if #available(watchOS 7.0, *) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterForeground), name: WKExtension.applicationWillEnterForegroundNotification, object: nil)
+            if #available(watchOS 7.0, *) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterForeground), name: WKExtension.applicationWillEnterForegroundNotification, object: nil)
+                }
+            } else {
+                // Pre watchOS 7.0, this library will not use multiple sessions after backgrounding since there are no notifications we can observe.
             }
-        } else {
-            // Pre watchOS 7.0, this library will not use multiple sessions after backgrounding since there are no notifications we can observe.
-        }
         #elseif os(tvOS)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -125,11 +180,14 @@ public class TelemetryManager {
     public static var isInitialized: Bool {
         initializedTelemetryManager != nil
     }
-    
+
     public static func initialize(with configuration: TelemetryManagerConfiguration) {
         initializedTelemetryManager = TelemetryManager(configuration: configuration)
     }
-    
+
+    internal static func initialize(with configuration: TelemetryManagerConfiguration, signalManager: SignalManageable) {
+        initializedTelemetryManager = TelemetryManager(configuration: configuration, signalManager: signalManager)
+    }
     /// Shuts down the SDK and deinitializes the current `TelemetryManager`.
     ///
     /// Once called, you must call `TelemetryManager.initialize(with:)` again before using the manager.
@@ -137,16 +195,21 @@ public class TelemetryManager {
         initializedTelemetryManager = nil
     }
 
-    public static func send(_ signalType: TelemetrySignalType, for clientUser: String? = nil, with additionalPayload: [String: String] = [:]) {
-        TelemetryManager.shared.send(signalType, for: clientUser, with: additionalPayload)
+    public static func send(_ signalType: TelemetrySignalType, for clientUser: String? = nil, floatValue: Double? = nil, with additionalPayload: [String: String] = [:]) {
+        TelemetryManager.shared.send(signalType, for: clientUser, floatValue: floatValue, with: additionalPayload)
     }
 
     public static var shared: TelemetryManager {
-        guard let telemetryManager = initializedTelemetryManager else {
+        if let telemetryManager = initializedTelemetryManager {
+           return telemetryManager
+        } else if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+            // Xcode is building and running the app for SwiftUI Previews, this is not a real launch of the app, therefore mock data is used
+            self.initializedTelemetryManager = .init(configuration: .init(appID: ""))
+            return self.initializedTelemetryManager!
+        } else {
             fatalError("Please call TelemetryManager.initialize(...) before accessing the shared telemetryManager instance.")
         }
 
-        return telemetryManager
     }
 
     /// Change the default user identifier sent with each signal.
@@ -180,8 +243,11 @@ public class TelemetryManager {
     /// If you specify a user identifier here, it will take precedence over the default user identifier specified in the `TelemetryManagerConfiguration`.
     ///
     /// If you specify a payload, it will be sent in addition to the default payload which includes OS Version, App Version, and more.
-    public func send(_ signalType: TelemetrySignalType, for clientUser: String? = nil, with additionalPayload: [String: String] = [:]) {
-        signalManager.processSignal(signalType, for: clientUser, with: additionalPayload, configuration: configuration)
+    public func send(_ signalType: TelemetrySignalType, for clientUser: String? = nil, floatValue: Double? = nil, with additionalPayload: [String: String] = [:]) {
+        // make sure to not send any signals when run by Xcode via SwiftUI previews
+        guard !self.configuration.swiftUIPreviewMode, !self.configuration.analyticsDisabled else { return }
+
+        signalManager.processSignal(signalType, for: clientUser, floatValue: floatValue, with: additionalPayload, configuration: configuration)
     }
 
     private init(configuration: TelemetryManagerConfiguration) {
@@ -189,9 +255,96 @@ public class TelemetryManager {
         signalManager = SignalManager(configuration: configuration)
     }
 
+    private init(configuration: TelemetryManagerConfiguration, signalManager: SignalManageable) {
+        self.configuration = configuration
+        self.signalManager = signalManager
+    }
+
     private static var initializedTelemetryManager: TelemetryManager?
 
     private let configuration: TelemetryManagerConfiguration
 
-    private let signalManager: SignalManager
+    private let signalManager: SignalManageable
+}
+
+@objc(TelemetryManagerConfiguration)
+public final class TelemetryManagerConfigurationObjCProxy: NSObject {
+    fileprivate var telemetryManagerConfiguration: TelemetryManagerConfiguration
+
+    @objc public init(appID: String, salt: String, baseURL: URL) {
+        self.telemetryManagerConfiguration = TelemetryManagerConfiguration(appID: appID, salt: salt, baseURL: baseURL)
+    }
+
+    @objc public init(appID: String, baseURL: URL) {
+        self.telemetryManagerConfiguration = TelemetryManagerConfiguration(appID: appID, baseURL: baseURL)
+    }
+
+    @objc public init(appID: String, salt: String) {
+        self.telemetryManagerConfiguration = TelemetryManagerConfiguration(appID: appID, salt: salt)
+    }
+
+    @objc public init(appID: String) {
+        self.telemetryManagerConfiguration = TelemetryManagerConfiguration(appID: appID)
+    }
+
+    @objc public var sendNewSessionBeganSignal: Bool {
+        get {
+            telemetryManagerConfiguration.sendNewSessionBeganSignal
+        }
+
+        set {
+            telemetryManagerConfiguration.sendNewSessionBeganSignal = newValue
+        }
+    }
+
+    @objc public var testMode: Bool {
+        get {
+            telemetryManagerConfiguration.testMode
+        }
+
+        set {
+            telemetryManagerConfiguration.testMode = newValue
+        }
+    }
+
+    @objc public var analyticsDisabled: Bool {
+        get {
+            telemetryManagerConfiguration.analyticsDisabled
+        }
+
+        set {
+            telemetryManagerConfiguration.analyticsDisabled = newValue
+        }
+    }
+}
+
+@objc(TelemetryManager)
+public final class TelemetryManagerObjCProxy: NSObject {
+    @objc public static func initialize(with configuration: TelemetryManagerConfigurationObjCProxy) {
+        TelemetryManager.initialize(with: configuration.telemetryManagerConfiguration)
+    }
+
+    @objc public static func terminate() {
+        TelemetryManager.terminate()
+    }
+
+    @objc public static func send(_ signalType: TelemetrySignalType, for clientUser: String? = nil, with additionalPayload: [String: String] = [:]) {
+        TelemetryManager.send(signalType, for: clientUser, with: additionalPayload)
+    }
+
+    @objc public static func send(_ signalType: TelemetrySignalType, with additionalPayload: [String: String] = [:]) {
+        TelemetryManager.send(signalType, with: additionalPayload)
+    }
+
+    @objc public static func send(_ signalType: TelemetrySignalType) {
+        TelemetryManager.send(signalType)
+    }
+
+    @objc public static func updateDefaultUser(to newDefaultUser: String?) {
+        TelemetryManager.updateDefaultUser(to: newDefaultUser)
+    }
+
+    @objc public static func generateNewSession() {
+        TelemetryManager.generateNewSession()
+    }
 }
