@@ -597,7 +597,7 @@ extension Sane {
                         restoreBlocks.append(self.updateOptionForPreview(option))
                     }
                     else {
-                        fatalError("Unsupported configuration: option type for \(option.identifier ?? "<no id>") is not supported")
+                        fatalError("Unsupported configuration: option type for \(option.identifier) is not supported")
                     }
                 }
             }
@@ -833,7 +833,7 @@ extension Sane {
             if generateIntermediateImages && percentScanned > progressForLastIncompletePreview + incompletePreviewStep {
                 progressForLastIncompletePreview = percentScanned
                 SaneLogger.d("> Generating preview: \(percentScanned)")
-                let previewImage = try? UIImage.sy_imageFromIncompleteSane(data: data, parameters: parameters)
+                let previewImage = try? UIImage.imageFromIncompleteSane(data: data, parameters: parameters)
                 progress(.scanning(
                     progress: globalPercentScanned, finishedDocs: scannedDocsCount,
                     incompletePreview: previewImage, parameters: parameters
@@ -867,7 +867,7 @@ extension Sane {
         
         SaneLogger.i("> Finished scanning \(parameters.currentlyAcquiredFrame) frame with success")
         let result = Result(catching: {
-            try UIImage.sy_imageFromSane(data: data, parameters: parameters)
+            try UIImage.imageFromSane(data: data, parameters: parameters)
         })
         return result.map { ($0, parameters) }.mapError { $0 as! SaneError }
     }

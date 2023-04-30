@@ -9,6 +9,7 @@
 import UIKit
 import ImageIO
 import CommonCrypto
+import MobileCoreServices
 
 @propertyWrapper
 internal struct SaneLocked<Value> {
@@ -173,7 +174,7 @@ internal extension UIImage {
     // Nota: if the source image is 1 bit Grayscale (monochrome), the method `pngData()` on the output UIImage will
     // produce an invalid file (at least on macOS 13.2.1), but using CGImageDestinationCreateWithData with kUTTypePNG
     // will produce a valid PNG file.
-    static func sy_imageFromSane(data: Data, parameters: ScanParameters) throws -> UIImage {
+    static func imageFromSane(data: Data, parameters: ScanParameters) throws -> UIImage {
         // autorelease pool needed. during preview a lot of intermediary images are created, if we were
         // to remove the autorelease pool they wouldn't be released until the preview if finished. tested
         // up until iOS 16.3 using Instruments
@@ -225,9 +226,67 @@ internal extension UIImage {
         }
     }
 
-    static func sy_imageFromIncompleteSane(data: Data, parameters: ScanParameters) throws -> UIImage {
+    static func imageFromIncompleteSane(data: Data, parameters: ScanParameters) throws -> UIImage {
         let size = (parameters.fileSize * parameters.expectedFramesCount) - data.count
         let completedData = data + Data(repeating: UInt8.max, count: max(0, size))
-        return try self.sy_imageFromSane(data: completedData, parameters: parameters)
+        return try self.imageFromSane(data: completedData, parameters: parameters)
+    }
+}
+
+// MARK: Compression methods
+public extension UIImage {
+    enum ImageFormat {
+        case png
+        case jpeg(quality: CGFloat)
+        case heic(quality: CGFloat)
+        
+        public var utType: CFString {
+            switch self {
+            case .png:  return kUTTypePNG as CFString
+            case .jpeg: return kUTTypeJPEG as CFString
+            case .heic: return "public.heic" as CFString
+            }
+        }
+        
+        public var fileExtension: String {
+            switch self {
+            case .png:  return "png"
+            case .jpeg: return "jpg"
+            case .heic: return "heic"
+            }
+        }
+    }
+    
+    // images created with CoreGraphics in Gray with 1bit per pixel don't get saved properly by `.pngData()`
+    // so we revert to the proper methods in CoreGraphics to generate our PNG data.
+    // we also use it for JPEG encoding, as using SYMetadata methods would rencode the already encoded UIImage
+    // and we'd end up with 2x the total encoding time just to add the metadata
+    func scanData(format: ImageFormat, metadata: [String: Any] = [:]) throws -> Data {
+        guard let cgImage else { throw SaneError.cannotGenerateImage }
+        
+        let outputData = CFDataCreateMutable(nil, 0)!
+        var options = metadata
+        options[kCGImageDestinationEmbedThumbnail as String] = kCFBooleanTrue
+        options[kCGImageSourceCreateThumbnailFromImageAlways as String] = kCFBooleanTrue
+        options[kCGImageSourceCreateThumbnailWithTransform as String] = kCFBooleanTrue
+        options[kCGImageSourceThumbnailMaxPixelSize as String] = 256
+
+        switch format {
+        case .jpeg(let quality), .heic(let quality):
+            options[kCGImageDestinationLossyCompressionQuality as String] = quality
+        case .png:
+            break
+        }
+
+        guard let destination = CGImageDestinationCreateWithData(outputData, format.utType, 1, options as NSDictionary) else {
+            throw SaneError.cannotGenerateImage
+        }
+
+        CGImageDestinationSetProperties(destination, options as CFDictionary)
+        CGImageDestinationAddImage(destination, cgImage, options as CFDictionary)
+        guard CGImageDestinationFinalize(destination) else {
+            throw SaneError.cannotGenerateImage
+        }
+        return outputData as Data
     }
 }

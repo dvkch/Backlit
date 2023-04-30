@@ -170,11 +170,10 @@ class GalleryManager: NSObject {
                 .appendingPathExtension(format.fileExtension)
             
             let metadata = SYMetadata.init(device: device, scanParameters: scan.parameters)
-            let imageData = scan.image.scanData(
+            let imageData = try scan.image.scanData(
                 format: format,
                 metadata: metadata.currentDictionary
             )
-            guard let imageData else { throw SaneError.cannotGenerateImage }
             
             try imageData.write(to: fileURL, options: .atomicWrite)
             let item = galleryItemForImage(at: fileURL.standardizedFileURL)
