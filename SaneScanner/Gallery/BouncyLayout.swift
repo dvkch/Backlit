@@ -129,7 +129,15 @@ class BouncyLayout: UICollectionViewFlowLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return (animator.items(in: rect) as! [UICollectionViewLayoutAttributes])
+        // weirdly, returning all items from animator doesn't work super well when the collectionView
+        // is in editing mode and we drag the finger to select multiple items. the animator
+        // will often return more items than what the original layout would have, which
+        // results in items blinking in and out of selection. this is a hack, it might make
+        // animations a bit weird and will definitely not work with all kind of animated behaviors
+        // but it works for this use case. tested on iOS 16.4
+        let visibleIndexPaths = super.layoutAttributesForElements(in: rect)?.map(\.indexPath) ?? []
+        let animatedItemsInRect = animator.items(in: rect) as! [UICollectionViewLayoutAttributes]
+        return animatedItemsInRect.filter({ visibleIndexPaths.contains($0.indexPath) })
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -209,7 +217,7 @@ fileprivate class BouncyBehavior: UIDynamicBehavior {
     }
 }
 
-struct BouncyIdentifier: Equatable, Hashable, CustomStringConvertible {
+fileprivate struct BouncyIdentifier: Equatable, Hashable, CustomStringConvertible {
     let category: UICollectionView.ElementCategory
     let kind: String?
     let indexPath: IndexPath
@@ -228,7 +236,7 @@ struct BouncyIdentifier: Equatable, Hashable, CustomStringConvertible {
     }
 }
 
-extension UICollectionViewLayoutAttributes {
+fileprivate extension UICollectionViewLayoutAttributes {
     var bouncyIdentifier: BouncyIdentifier {
         return .init(category: representedElementCategory, kind: representedElementKind, indexPath: indexPath)
     }
