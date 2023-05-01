@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_0" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,23 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="mM3-BF-NaT">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIconNoBackground" translatesAutoresizingMaskIntoConstraints="NO" id="GRI-Y4-T81">
-                                <rect key="frame" x="89" y="222.5" width="142" height="123"/>
+                                <rect key="frame" x="60" y="184" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="GRI-Y4-T81" secondAttribute="height" multiplier="1:1" id="Xrc-dn-cXR"/>
+                                    <constraint firstAttribute="width" constant="200" id="d6g-az-Rnm"/>
+                                </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="U3s-QK-NhV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="mM3-BF-NaT" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="8VK-HW-mBu"/>
-                            <constraint firstItem="mM3-BF-NaT" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="GPg-j3-q3F"/>
                             <constraint firstItem="GRI-Y4-T81" firstAttribute="centerX" secondItem="U3s-QK-NhV" secondAttribute="centerX" id="I2W-VE-hr5"/>
                             <constraint firstItem="GRI-Y4-T81" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="WaT-f3-CYu"/>
-                            <constraint firstAttribute="trailing" secondItem="mM3-BF-NaT" secondAttribute="trailing" id="boE-Wa-ySG"/>
-                            <constraint firstAttribute="bottom" secondItem="mM3-BF-NaT" secondAttribute="bottom" id="myR-2A-pac"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="U3s-QK-NhV"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -43,7 +39,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppIconNoBackground" width="142" height="123"/>
-        <image name="Background" width="180" height="180"/>
+        <image name="AppIconNoBackground" width="300" height="300"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
