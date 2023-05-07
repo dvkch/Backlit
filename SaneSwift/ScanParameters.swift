@@ -18,14 +18,30 @@ public struct ScanParameters: Equatable {
     public private(set) var depth: Int
     public private(set) var cropArea: CGRect
     
-    public init(cParams: SANE_Parameters, cropArea: CGRect) {
-        currentlyAcquiredFrame  = cParams.format
-        acquiringLastFrame      = cParams.last_frame == SANE_TRUE
-        bytesPerLine            = Int(cParams.bytes_per_line)
-        depth                   = Int(cParams.depth)
-        width                   = Int(cParams.pixels_per_line)
-        height                  = Int(cParams.lines)
-        self.cropArea           = cropArea
+    public init(
+        currentlyAcquiredFrame: SANE_Frame, acquiringLastFrame: Bool,
+        bytesPerLine: Int, width: Int, height: Int, depth: Int,
+        cropArea: CGRect
+    ) {
+        self.currentlyAcquiredFrame = currentlyAcquiredFrame
+        self.acquiringLastFrame = acquiringLastFrame
+        self.bytesPerLine = bytesPerLine
+        self.width = width
+        self.height = height
+        self.depth = depth
+        self.cropArea = cropArea
+    }
+    
+    init(cParams: SANE_Parameters, cropArea: CGRect) {
+        self.init(
+            currentlyAcquiredFrame: cParams.format,
+            acquiringLastFrame:     cParams.last_frame == SANE_TRUE,
+            bytesPerLine:           Int(cParams.bytes_per_line),
+            width:                  Int(cParams.pixels_per_line),
+            height:                 Int(cParams.lines),
+            depth:                  Int(cParams.depth),
+            cropArea:               cropArea
+        )
     }
     
     var singleFrameEquivalent: ScanParameters {
