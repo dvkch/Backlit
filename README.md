@@ -1,8 +1,10 @@
+<img src="Resources/README-AppIcon.png" width=64 />
+
 # SaneScanner
 
 ## What is it?
 
-An iOS app connecting to your [SANE](http://www.sane-project.org/) server, using the appropriate `net` backend, to scan documents from your iOS device!
+An iOS app connecting to your [SANE](http://www.sane-project.org/) server, using the appropriate `net` backend, to scan documents from your iOS or macOS device!
 
 To make it work:
 
