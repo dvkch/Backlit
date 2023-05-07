@@ -95,7 +95,7 @@ class Context: NSObject {
             }
 
             // another device is opened, if it's scanning we don't do anything
-            if deviceVC.device.isScanning {
+            if deviceVC.isScanning {
                 deviceVC.close {
                     self.openDevice(device: device)
                 }
@@ -116,7 +116,7 @@ class Context: NSObject {
     }
     var status: Status {
         if let deviceVC = splitViewController.scanNC.viewControllers.last as? DeviceVC {
-            if deviceVC.device.isScanning {
+            if deviceVC.isScanning {
                 return .scanning
             }
             return .deviceOpened

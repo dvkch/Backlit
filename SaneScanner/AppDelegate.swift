@@ -96,7 +96,7 @@ extension AppDelegate : UIApplicationDelegate {
         Logger.i(.app, "Stopping all operations")
 
         // Let's make Sane end gracefully to prevent using a dangling SANE_Handle
-        Sane.shared.cancelCurrentScan()
+        SaneMockable.shared.cancelCurrentScan()
         allContexts.forEach { $0.stopOperations() }
 
         // will be restarted by DevicesVC

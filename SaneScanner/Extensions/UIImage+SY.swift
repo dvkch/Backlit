@@ -62,6 +62,16 @@ extension UIImage {
     }
 }
 
+extension CGImage {
+    var grayscale: CGImage? {
+        guard let filter = CIFilter(name: "CIPhotoEffectNoir") else { return nil }
+        filter.setValue(CIImage(cgImage: self), forKey: kCIInputImageKey)
+
+        guard let output = filter.outputImage else { return nil }
+        return CIContext(options: nil).createCGImage(output, from: output.extent)
+    }
+}
+
 extension UIImage {
     static func testImage(size: CGFloat) -> UIImage? {
         let letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement() ?? "A"

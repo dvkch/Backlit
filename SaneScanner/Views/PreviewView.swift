@@ -106,9 +106,12 @@ class PreviewView: UIView {
             refresh()
         }
     }
+    
+    // MARK: Internal properties
     var cropAreaInViewBounds: CGRect {
         return convert(cropMask.cropAreaInViewBounds, from: cropMask)
     }
+    private var scanStatus: (operation: ScanOperation, progress: ScanProgress)?
     
     // MARK: Views
     private let imageView = UIImageView()
@@ -124,12 +127,12 @@ class PreviewView: UIView {
     @objc private func buttonTap(_ sender: UIButton) {
         guard let device = device else { return }
         
-        if case .cancelling = device.currentOperation?.progress {
+        if case .cancelling = scanStatus?.progress {
             // do nothing
             return
         }
 
-        if device.currentOperation?.progress != nil {
+        if scanStatus?.progress != nil {
             delegate?.previewView(self, canceledScan: device)
             return
         }
@@ -140,15 +143,17 @@ class PreviewView: UIView {
     
     // MARK: Content
     func refresh() {
+        scanStatus = device.map { SaneMockable.shared.scanSatus(for: $0) } ?? nil
+
         lineView.sy_isHidden = showScanButton
 
-        scanButton.progress = device?.currentOperation?.operation == .scan ? device?.currentOperation?.progress : nil
-        scanButton.isEnabled = device?.currentOperation?.operation != .preview
+        scanButton.progress = scanStatus?.operation == .scan ? scanStatus?.progress : nil
+        scanButton.isEnabled = scanStatus?.operation != .preview
         scanButton.style = showScanButton ? .rounded : .cell
         scanButton.sy_isHidden = !showScanButton
 
-        previewButton.progress = device?.currentOperation?.operation == .preview ? device?.currentOperation?.progress : nil
-        previewButton.isEnabled = device?.currentOperation?.operation != .scan
+        previewButton.progress = scanStatus?.operation == .preview ? scanStatus?.progress : nil
+        previewButton.isEnabled = scanStatus?.operation != .scan
         previewButton.style = showScanButton ? .rounded : .cell
         
         updateImageAndCrop()
@@ -167,19 +172,19 @@ class PreviewView: UIView {
         }
         
         cropMask.sy_isHidden = !device.canCrop
-        cropMask.isEnabled = device.canCrop && device.currentOperation == nil
+        cropMask.isEnabled = device.canCrop && scanStatus == nil
         cropMask.setCropArea(device.cropArea, maxCropArea: device.maxCropArea)
 
-        if device.currentOperation?.operation == .preview, let progress = device.currentOperation?.progress, case .scanning(_, _, let image, _) = progress, image != nil {
+        if scanStatus?.operation == .preview, let progress = scanStatus?.progress, case .scanning(_, _, let image, _) = progress, image != nil {
             imageView.image = image
         }
         else {
-            imageView.image = device.lastPreviewImage
+            imageView.image = SaneMockable.shared.previewImage(for: device)
         }
     }
     
     private func updateProgressMask() {
-        guard let device = device, device.currentOperation?.operation == .scan, case let .scanning(progress, _, _, parameters) = device.currentOperation?.progress else {
+        guard let device = device, scanStatus?.operation == .scan, case let .scanning(progress, _, _, parameters) = scanStatus?.progress else {
             progressMask.cropAreaPercent = nil
             progressMask.progress = nil
             return

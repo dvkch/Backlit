@@ -111,8 +111,8 @@ class DeviceVC: UIViewController {
     }
     
     deinit {
-        if device.isScanning {
-            Sane.shared.cancelCurrentScan()
+        if isScanning {
+            SaneMockable.shared.cancelCurrentScan()
         }
 
         Sane.shared.closeDevice(device)
@@ -122,6 +122,9 @@ class DeviceVC: UIViewController {
     // MARK: Properties
     weak var delegate: DeviceVCDelegate?
     let device: Device
+    var isScanning: Bool {
+        SaneMockable.shared.scanSatus(for: device).isScanning
+    }
     var useLargeLayout: Bool = false {
         didSet {
             guard useLargeLayout != oldValue else { return }
@@ -141,7 +144,7 @@ class DeviceVC: UIViewController {
     
     // MARK: Actions
     func close(force: Bool = false, completion: (() -> ())? = nil) {
-        guard !device.isScanning || force else  {
+        guard !isScanning || force else  {
             showDismissalConfirmation {
                 self.cancelOperation()
                 self.close(force: true, completion: completion)
@@ -156,17 +159,17 @@ class DeviceVC: UIViewController {
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(scan) || action == #selector(preview) {
-            return !device.isScanning
+            return !isScanning
         }
         if action == #selector(cancelOperation) {
-            return device.isScanning
+            return isScanning
         }
         return super.canPerformAction(action, withSender: sender)
     }
     
     @objc private func scanButtonTap() {
-        if device.isScanning {
-            Sane.shared.cancelCurrentScan()
+        if isScanning {
+            SaneMockable.shared.cancelCurrentScan()
         }
         else {
             scan()
@@ -174,13 +177,13 @@ class DeviceVC: UIViewController {
     }
 
     @objc func scan() {
-        guard !device.isScanning else { return }
+        guard !isScanning else { return }
 
         Analytics.shared.send(event: .scanStarted(device: device))
 
         // block that will be called to show progress
-        let progressBlock = { [weak self] (progress: ScanProgress) -> () in
-            self?.updateAfterScanStatusChange(operation: .scan, progress: progress)
+        let progressBlock = { [weak self] (status: Device.Status) -> () in
+            self?.updateAfterScanStatusChange(status)
         }
         
         // block that will be called to handle completion
@@ -191,7 +194,7 @@ class DeviceVC: UIViewController {
             case .success(let scans):
                 Analytics.shared.send(event: .scanEnded(device: self.device, imagesCount: scans.count))
                 GalleryManager.shared.saveScans(device: device, scans) { saveResult in
-                    self.updateAfterScanStatusChange(operation: .scan, progress: nil)
+                    self.updateAfterScanStatusChange(nil)
 
                     switch saveResult {
                     case .success:
@@ -204,7 +207,7 @@ class DeviceVC: UIViewController {
                 }
 
             case .failure(let error):
-                self.updateAfterScanStatusChange(operation: .scan, progress: nil)
+                self.updateAfterScanStatusChange(nil)
                 if case .cancelled = error {
                     Analytics.shared.send(event: .scanCancelled(device: self.device))
                 } else {
@@ -215,19 +218,19 @@ class DeviceVC: UIViewController {
         }
 
         // start scan
-        Sane.shared.scan(device: device, progress: progressBlock, completion: completionBlock)
+        SaneMockable.shared.scan(device: device, progress: progressBlock, completion: completionBlock)
     }
 
     @objc func preview() {
-        guard !device.isScanning else { return }
+        guard !isScanning else { return }
 
         Analytics.shared.send(event: .previewStarted(device: device))
 
-        Sane.shared.preview(device: device, progress: { [weak self] (p) in
-            self?.updateAfterScanStatusChange(operation: .preview, progress: p)
+        SaneMockable.shared.preview(device: device, progress: { [weak self] (p) in
+            self?.updateAfterScanStatusChange(p)
         }, completion: { [weak self] (result) in
             guard let self = self else { return }
-            self.updateAfterScanStatusChange(operation: .preview, progress: nil)
+            self.updateAfterScanStatusChange(nil)
             if case let .failure(error) = result {
                 if case .cancelled = error {
                     Analytics.shared.send(event: .previewCancelled(device: self.device))
@@ -243,7 +246,7 @@ class DeviceVC: UIViewController {
     }
     
     @objc func cancelOperation() {
-        Sane.shared.cancelCurrentScan()
+        SaneMockable.shared.cancelCurrentScan()
     }
 
     @objc private func settingsButtonTap() {
@@ -290,16 +293,19 @@ class DeviceVC: UIViewController {
         return tableView.visibleCells.compactMap({ $0 as? PreviewCell }).first
     }
     
-    private func updateAfterScanStatusChange(operation: ScanOperation, progress: ScanProgress?) {
-        switch operation {
+    private func updateAfterScanStatusChange(_ status: Device.Status) {
+        switch status?.operation {
         case .scan:
-            self.scanButton.progress = progress
+            self.scanButton.progress = status?.progress
         case .preview:
-            self.scanButton.isEnabled = progress == nil
+            self.scanButton.isEnabled = status?.progress == nil
+        case .none:
+            self.scanButton.isEnabled = true
+            self.scanButton.progress = nil
         }
         previewCell?.refresh()
         (splitViewController as? SplitVC)?.previewNC.viewControllers.forEach { ($0 as? DevicePreviewVC)?.refresh() }
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = !device.isScanning
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = !isScanning
     }
     
     func optionGroups() -> [DeviceOptionGroup] {
@@ -350,7 +356,7 @@ extension DeviceVC {
 // MARK: Dismissal
 extension DeviceVC : ConditionallyDismissible {
     var isDismissible: Bool {
-        return !device.isScanning
+        return !isScanning
     }
     
     var dismissalConfirmationTexts: DismissalTexts {
@@ -473,7 +479,7 @@ extension DeviceVC : UITableViewDelegate {
 
 extension DeviceVC : PreviewViewDelegate {
     func previewView(_ previewView: PreviewView, device: Device, tapped action: ScanOperation) {
-        guard !device.isScanning else { return }
+        guard !isScanning else { return }
         
         if action == .preview {
             preview()
@@ -484,7 +490,7 @@ extension DeviceVC : PreviewViewDelegate {
     }
     
     func previewView(_ previewView: PreviewView, canceledScan device: Device) {
-        Sane.shared.cancelCurrentScan()
+        SaneMockable.shared.cancelCurrentScan()
     }
 }
 
