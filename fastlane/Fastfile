@@ -11,9 +11,9 @@ platform :ios do
         ext = "me.syan.SaneScanner.SaneScanner-FileProvider"
 
         cert(team_id: "79RY8264V4", development: true)
-        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios",      development: true)
-        sigh(team_id: "79RY8264V4", app_identifier: ext, platform: "ios",      development: true)
-        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "catalyst", development: true)
+        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "ios",      development: true, force: true)
+        sigh(team_id: "79RY8264V4", app_identifier: ext, platform: "ios",      development: true, force: true)
+        sigh(team_id: "79RY8264V4", app_identifier: app, platform: "catalyst", development: true, force: true)
 
         cert(team_id: "79RY8264V4")
         cert(team_id: "79RY8264V4", type: "mac_installer_distribution")

@@ -1,14 +1,23 @@
 devices([
-    "iPhone SE (1st generation)",
-    "iPhone 8",
-    "iPhone 8 Plus",
-    "iPhone 13 Pro",
-    "iPhone 13 Pro Max",
-    "iPad Pro (12.9-inch) (5th generation)",
-    "iPad Pro (11-inch) (2nd generation)",
-    "iPad Pro (12.9-inch) (2nd generation)",
-    "iPad Pro (10.5-inch)",
-    "iPad Pro (9.7-inch)",
+    # iPhone without home button
+    "iPhone 14 Pro Max",                       # 6.7"
+    "iPhone 11 Pro Max",                       # 6.5"
+    "iPhone 14 Pro",                           # 6.1"
+    "iPhone X",                                # 5.8"
+
+    # iPhone with home button
+    "iPhone 8 Plus",                           # 5.5"
+    "iPhone 8",                                # 4.7"
+    "iPhone SE (1st generation)",              # 4"
+
+    # iPad without home button
+    "iPad Pro (12.9-inch) (6th generation)",   # 12.9"
+    "iPad Pro (11-inch) (4th generation)",     # 11"
+
+    # iPad with home button
+    "iPad Pro (12.9-inch) (2nd generation)",   # 12.9"
+    "iPad Pro (10.5-inch)",                    # 10.5"
+    "iPad Pro (9.7-inch)",                     # 9.7"
 ])
 
 languages([
@@ -27,8 +36,10 @@ stop_after_first_error true
 
 workspace "./SaneScanner.xcworkspace"
 
-reinstall_app true
+reinstall_app false
 app_identifier "me.syan.SaneScanner"
+override_status_bar true
+override_status_bar_arguments "--time 13:12 --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode active --operatorName '' --batteryState charged --batteryLevel 100"
 
 concurrent_simulators false
 localize_simulator true
