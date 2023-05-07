@@ -11,13 +11,6 @@ import UIKit
 public class Device {
 
     // MARK: Initializers
-    init(name: String, type: String, vendor: String, model: String) {
-        self.name = Name(rawValue: name)
-        self.type = type
-        self.vendor = vendor
-        self.model = model
-    }
-    
     init(cDevice: SANE_Device) {
         self.name   = Name(rawValue: cDevice.name.asString()        ?? "")
         self.model  = cDevice.model.asString()?.saneSplit().first   ?? "" // epsonscan2 reports "ET-2810 Series:001:004", let's fix that
@@ -50,16 +43,8 @@ public class Device {
     
     // MARK: SaneSwift properties
     public var cropArea: CGRect = .zero
+    internal var currentStatus: Status = nil
 
-    public internal(set) var currentOperation: (operation: ScanOperation, progress: ScanProgress)?
-
-    public var isScanning: Bool {
-        switch currentOperation?.1 {
-        case .warmingUp, .scanning: return true
-        case .none, .cancelling: return false
-        }
-    }
-    
     // MARK: Cache properties
     public private(set) var lastPreviewImage: UIImage?
 
@@ -100,9 +85,12 @@ public class Device {
 }
 
 // MARK: Equatable
-extension Device: Equatable {
+extension Device: Hashable {
     public static func == (lhs: Device, rhs: Device) -> Bool {
         return lhs.name == rhs.name
+    }
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name.rawValue)
     }
 }
 
@@ -116,6 +104,19 @@ extension Device {
         
         public var description: String {
             return rawValue
+        }
+    }
+}
+
+// MARK: Status
+extension Device {
+    public typealias Status = (operation: ScanOperation, progress: ScanProgress)?
+}
+extension Device.Status {
+    public var isScanning: Bool {
+        switch self?.1 {
+        case .warmingUp, .scanning: return true
+        case .none, .cancelling: return false
         }
     }
 }

@@ -283,7 +283,7 @@ extension Sane {
     
     public func closeDevice(_ device: Device) {
         SaneLogger.i("Closing device \(device.model)")
-        device.currentOperation = nil
+        device.currentStatus = nil
         device.updatePreviewImage(nil, afterOperation: .preview, fallbackToExisting: false)
 
         runOnSaneThread {
@@ -552,7 +552,18 @@ extension Sane {
 
 extension Sane {
     // MARK: Scan
-    public func preview(device: Device, progress: ((ScanProgress) -> ())?, completion: @escaping SaneCompletion<ScanImage>) {
+    public func scanSatus(for device: Device) -> Device.Status {
+        return device.currentStatus
+    }
+    
+    internal func updateStatus(_ status: Device.Status, for device: Device, informing closure: ((Device.Status) -> ())?) {
+        Sane.runOn(mainThread: true) {
+            device.currentStatus = status
+            closure?(status)
+        }
+    }
+
+    public func preview(device: Device, progress: ((Device.Status) -> ())?, completion: @escaping SaneCompletion<ScanImage>) {
         let startedOnMainThread = Thread.isMainThread
         SaneLogger.i("Starting preview for \(device.model)")
 
@@ -562,7 +573,7 @@ extension Sane {
             return
         }
         
-        Sane.runOn(mainThread: true) { progress?(.warmingUp) }
+        updateStatus((.preview, .warmingUp), for: device, informing: progress)
 
         runOnSaneThread {
             SaneLogger.i("Preview: preparing options")
@@ -629,11 +640,11 @@ extension Sane {
         }
     }
 
-    public func scan(device: Device, useScanCropArea: Bool = true, progress: ((ScanProgress) -> ())?, completion: @escaping SaneCompletion<[ScanImage]>) {
-        internalScan(device: device, operation: .scan, useScanCropArea: useScanCropArea, generateIntermediateImages: false, progress: progress, completion: completion)
+    public func scan(device: Device, progress: ((Device.Status) -> ())?, completion: @escaping SaneCompletion<[ScanImage]>) {
+        internalScan(device: device, operation: .scan, useScanCropArea: true, generateIntermediateImages: false, progress: progress, completion: completion)
     }
 
-    private func internalScan(device: Device, operation: ScanOperation, useScanCropArea: Bool, generateIntermediateImages: Bool, progress: ((ScanProgress) -> ())?, completion: @escaping SaneCompletion<[ScanImage]>) {
+    private func internalScan(device: Device, operation: ScanOperation, useScanCropArea: Bool, generateIntermediateImages: Bool, progress: ((Device.Status) -> ())?, completion: @escaping SaneCompletion<[ScanImage]>) {
         SaneLogger.i("Scan: starting scan for \(device.name)")
 
         let startedOnMainThread = Thread.isMainThread
@@ -644,13 +655,10 @@ extension Sane {
             return
         }
         
-        Sane.runOn(mainThread: true) {
-            device.currentOperation = (operation, .warmingUp)
-            progress?(.warmingUp)
-        }
+        updateStatus((operation, .warmingUp), for: device, informing: progress)
         
         let fullCompletion = { (scans: [ScanImage], error: SaneError?) in
-            device.currentOperation = nil
+            device.currentStatus = nil
 
             if let error = error {
                 completion(.failure(error))
@@ -702,8 +710,7 @@ extension Sane {
                     scannedDocsCount: scans.filter { $0.parameters.acquiringLastFrame }.count,
                     previousFrames: previousFrames
                 ) { p in
-                    device.currentOperation?.progress = p
-                    Sane.runOn(mainThread: true) { progress?(p) }
+                    self.updateStatus((operation, p), for: device, informing: progress)
                 }
                 
                 switch result {
@@ -854,7 +861,6 @@ extension Sane {
             sane_cancel(handle)
 
             Sane.runOn(mainThread: true) {
-                device.currentOperation?.progress = .cancelling
                 progress(.cancelling)
             }
             return .failure(SaneError(saneStatus: SANE_STATUS_CANCELLED))
