@@ -583,9 +583,7 @@ extension Sane {
                 self.updateOption(optionPreview, with: .value(true), completion: nil)
             }
             else {
-                var stdOptions = [SaneStandardOption.resolution, .resolutionX, .resolutionY,
-                                  .areaTopLeftX, .areaTopLeftY,
-                                  .areaBottomRightX, .areaBottomRightY]
+                var stdOptions = [SaneStandardOption.resolution, .resolutionX, .resolutionY]
                 
                 if self.configuration.previewWithAutoColorMode {
                     stdOptions.append(.colorMode)
@@ -616,7 +614,10 @@ extension Sane {
 
             var result: SaneResult<ScanImage>!
 
-            self.internalScan(device: device, operation: .preview, useScanCropArea: false, generateIntermediateImages: true, progress: progress, completion: { r in
+            self.internalScan(
+                device: device, operation: .preview,
+                cropArea: device.maxCropArea, generateIntermediateImages: true,
+                progress: progress, completion: { r in
                 result = r.map { $0.last! }
             })
             if let error = result.error {
@@ -641,10 +642,14 @@ extension Sane {
     }
 
     public func scan(device: Device, progress: ((Device.Status) -> ())?, completion: @escaping SaneCompletion<[ScanImage]>) {
-        internalScan(device: device, operation: .scan, useScanCropArea: true, generateIntermediateImages: false, progress: progress, completion: completion)
+        internalScan(
+            device: device, operation: .scan,
+            cropArea: device.cropArea, generateIntermediateImages: false,
+            progress: progress, completion: completion
+        )
     }
 
-    private func internalScan(device: Device, operation: ScanOperation, useScanCropArea: Bool, generateIntermediateImages: Bool, progress: ((Device.Status) -> ())?, completion: @escaping SaneCompletion<[ScanImage]>) {
+    private func internalScan(device: Device, operation: ScanOperation, cropArea: CGRect, generateIntermediateImages: Bool, progress: ((Device.Status) -> ())?, completion: @escaping SaneCompletion<[ScanImage]>) {
         SaneLogger.i("Scan: starting scan for \(device.name)")
 
         let startedOnMainThread = Thread.isMainThread
@@ -672,10 +677,10 @@ extension Sane {
             self.stopScanOperation = false
             
             let crop: CGRect
-            if device.canCrop && useScanCropArea {
+            if device.canCrop {
                 SaneLogger.i("> Setting crop area")
-                self.setCropArea(device.cropArea, useAuto: false, device: device, completion: nil)
-                crop = device.cropArea
+                self.setCropArea(cropArea, useAuto: false, device: device, completion: nil)
+                crop = cropArea
             }
             else {
                 SaneLogger.i("> Using max crop area")
