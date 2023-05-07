@@ -28,13 +28,8 @@ class AppDelegate: UIResponder {
 }
 
 extension AppDelegate : UIApplicationDelegate {
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        // create UI on iOS < 13
-        if #available(iOS 13.0, *) {} else {
-            context = Context()
-            window = context?.window
-        }
-        
         // Analytics
         Analytics.shared.send(event: .appLaunch)
         
@@ -43,11 +38,18 @@ extension AppDelegate : UIApplicationDelegate {
             Sane.shared.configuration.hosts = [.init(hostname: snapshotHost, displayName: snapshotHost)]
         }
         
+        // Logging
         Logger.level = .info
         SaneLogger.externalLoggingMethod = { level, message in
             Logger.logSane(level: level, message: message)
         }
         SaneSetLogLevel(0)
+
+        // create UI on iOS < 13
+        if #available(iOS 13.0, *) {} else {
+            context = Context()
+            window = context?.window
+        }
 
         return true
     }
