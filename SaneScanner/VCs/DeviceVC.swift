@@ -47,13 +47,13 @@ class DeviceVC: UIViewController {
         if #available(macCatalyst 15.0, iOS 15.0, *) {
             tableView.isPrefetchingEnabled = false
         }
+        tableView.contentInsetAdjustmentBehavior = .scrollableAxes
         tableView.registerHeader(TableViewHeader.self, xib: false)
         tableView.registerCell(PreviewCell.self, xib: true)
         tableView.registerCell(OptionCell.self, xib: true)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(view.layoutMarginsGuide)
-            make.left.right.equalToSuperview()
+            make.edges.equalToSuperview()
         }
 
         scanButtonStackView.distribution = .fill
@@ -71,7 +71,6 @@ class DeviceVC: UIViewController {
         scanButton.addTarget(self, action: #selector(scanButtonTap), for: .primaryActionTriggered)
         scanButtonStackView.addArrangedSubview(scanButton)
 
-        let belowScanButtonBackgroundView = UIView()
         belowScanButtonBackgroundView.backgroundColor = .tint
         view.addSubview(belowScanButtonBackgroundView)
         belowScanButtonBackgroundView.snp.makeConstraints { make in
@@ -99,6 +98,15 @@ class DeviceVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: .preferencesChanged, object: nil)
         
         updateLayoutStyle()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // launching the refresh before the view has appeared could cause tv.reloadData while navBar animations are going
+        // and show a very visible glitch. let's reload the data once the view has appeared instead. it's completely fine
+        // too since the device will have been opened right before showing this view, which fills its options at the same
+        // time
         refresh(userInitiated: false)
     }
     
@@ -127,6 +135,7 @@ class DeviceVC: UIViewController {
     private var thumbsView: GalleryThumbsView!
     private let tableView = TableView(frame: CGRect(x: 0, y: 0, width: 320, height: 600), style: .grouped)
     private let scanButtonStackView = UIStackView()
+    private let belowScanButtonBackgroundView = UIView()
     private let scanButton = ScanButton(type: .custom)
     private var refreshView: RefreshView!
     
@@ -309,6 +318,7 @@ class DeviceVC: UIViewController {
     // MARK: Layout
     private func updateLayoutStyle() {
         scanButton.sy_isHidden = useLargeLayout
+        belowScanButtonBackgroundView.sy_isHidden = useLargeLayout
         tableView.reloadData()
     }
     
@@ -402,7 +412,7 @@ extension DeviceVC : UITableViewDataSource {
     }
     
     private func previewCellHeight(in tableView: UITableView) -> CGFloat {
-        var maxImageHeight = tableView.bounds.height * 2 / 3
+        var maxImageHeight = tableView.bounds.inset(by: tableView.adjustedContentInset).height * 2 / 3
         
         if traitCollection.verticalSizeClass == .compact {
             maxImageHeight = 400
