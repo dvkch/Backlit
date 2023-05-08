@@ -350,15 +350,24 @@ extension DevicesVC : UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueHeader(TableViewHeader.self)
+    private func headerText(in section: Int) -> String {
         if section == 0 {
-            header.text = "DEVICES SECTION HOSTS".localized
+            return "DEVICES SECTION HOSTS".localized
         }
         else {
-            header.text = "DEVICES SECTION DEVICES".localized
+            return "DEVICES SECTION DEVICES".localized
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueHeader(TableViewHeader.self)
+        header.text = headerText(in: section)
         return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let text = headerText(in: section)
+        return TableViewHeader.height(for: text, topMargin: section == 0 ? 17 : 0, at: section, in: tableView)
     }
 }
 

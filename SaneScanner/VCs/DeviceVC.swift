@@ -98,15 +98,6 @@ class DeviceVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.prefsChangedNotification), name: .preferencesChanged, object: nil)
         
         updateLayoutStyle()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // launching the refresh before the view has appeared could cause tv.reloadData while navBar animations are going
-        // and show a very visible glitch. let's reload the data once the view has appeared instead. it's completely fine
-        // too since the device will have been opened right before showing this view, which fills its options at the same
-        // time
         refresh(userInitiated: false)
     }
     
@@ -402,23 +393,29 @@ extension DeviceVC : UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    private func headerText(in section: Int) -> String? {
         if section == 0 && useLargeLayout {
             return nil
         }
 
-        let header = tableView.dequeueHeader(TableViewHeader.self)
         if section == 0 {
-            header.text = "DEVICE SECTION PREVIEW".localized
+            return "DEVICE SECTION PREVIEW".localized
         }
         else {
-            header.text = optionGroup(tableViewSection: section)?.localizedTitle
+            return optionGroup(tableViewSection: section)?.localizedTitle
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let text = headerText(in: section) else { return nil }
+
+        let header = tableView.dequeueHeader(TableViewHeader.self)
+        header.text = text
         return header
     }
     
     private func previewCellHeight(in tableView: UITableView) -> CGFloat {
-        var maxImageHeight = tableView.bounds.inset(by: tableView.adjustedContentInset).height * 2 / 3
+        var maxImageHeight = tableView.bounds.height / 2
         
         if traitCollection.verticalSizeClass == .compact {
             maxImageHeight = 400
@@ -449,10 +446,13 @@ extension DeviceVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 && useLargeLayout {
+        guard let text = headerText(in: section) else {
             return 1 // returning 0 doesn't work for a grouped table view
         }
-        return UITableView.automaticDimension
+
+        // UITableView.automaticDimension causes jumps in the first reloadData after opening the VC, seems
+        // linked to largeTitle in navBar (enabled in prev VC, disabled in this one)
+        return TableViewHeader.height(for: text, topMargin: section == 0 ? 17 : 0, at: section, in: tableView)
     }
 }
 

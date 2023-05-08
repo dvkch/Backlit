@@ -76,6 +76,7 @@ class ScanButton : UIButton {
         }
     }
     
+    private static let maximumSize: UIContentSizeCategory = .accessibilityMedium
     private var heightConstraint: NSLayoutConstraint?
     
     // MARK: Content
@@ -84,8 +85,17 @@ class ScanButton : UIButton {
         layer.cornerRadius = style == .rounded ? 10 : 0
         setTitleColor(kind == .preview ? .normalText : .normalTextOnTint, for: .normal)
         setTitleColor(kind == .preview ? .altText : .altTextOnTint, for: .disabled)
-        titleLabel?.font = .preferredFont(forTextStyle: .body)
+        var traits = traitCollection
+        if traits.preferredContentSizeCategory > type(of: self).maximumSize {
+            // need to manually constraint the initial size to the max size, or it will appear to big... but when
+            // changing the font size under the max, then scaling up, it will be ok. tested on iOS 16.4
+            traits = UITraitCollection(traitsFrom: [traits, .init(preferredContentSizeCategory: type(of: self).maximumSize)])
+        }
+        titleLabel?.font = .preferredFont(forTextStyle: .body, compatibleWith: traits)
         titleLabel?.adjustsFontForContentSizeCategory = true
+        if #available(iOS 15.0, *) {
+            maximumContentSizeCategory = type(of: self).maximumSize
+        }
         titleLabel?.numberOfLines = 2
         setContentHuggingPriority(.required, for: .vertical)
         setContentCompressionResistancePriority(.required, for: .vertical)
@@ -153,6 +163,13 @@ class ScanButton : UIButton {
     }
     
     static var preferredHeight: CGFloat {
-        return NSAttributedString(string: "X", font: .preferredFont(forTextStyle: .body)).size().height * 2.5
+        let prefFont = UIFont.preferredFont(forTextStyle: .body)
+        let prefHeight = NSAttributedString(string: "X", font: prefFont).size().height
+
+        let maxTrait = UITraitCollection(preferredContentSizeCategory: maximumSize)
+        let maxFont = UIFont.preferredFont(forTextStyle: .body, compatibleWith: maxTrait)
+        let maxHeight = NSAttributedString(string: "X", font: maxFont).size().height
+
+        return prefHeight.clamped(min: 0, max: maxHeight) * 2.5
     }
 }
