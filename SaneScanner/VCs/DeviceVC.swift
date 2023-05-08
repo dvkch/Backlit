@@ -354,17 +354,24 @@ class DeviceVC: UIViewController {
 // MARK: Snapshots
 extension DeviceVC {
     private func prepareForSnapshotting() {
-        guard Snapshot.isSnapshotting else { return }
-    
-        if Snapshot.kind == .deviceOptions || Snapshot.kind == .deviceOptionPopup {
-            let firstOption = IndexPath(row: 0, section: 1)
-            tableView.scrollToRow(at: firstOption, at: .top, animated: false)
+        #if DEBUG
+        Snapshot.setup { config in
+            if config.kind == .deviceOptions || config.kind == .deviceOptionPopup {
+                let firstOption = IndexPath(row: 0, section: 1)
+                tableView.scrollToRow(at: firstOption, at: .top, animated: false)
+            }
+        
+            if config.kind == .deviceOptionPopup {
+                let firstOption = IndexPath(row: 0, section: 1)
+                if let cell = tableView.cellForRow(at: firstOption) as? OptionCell, cell.hasControlToUpdateItsValue {
+                    cell.triggerValueControl()
+                }
+                else {
+                    self.tableView(tableView, didSelectRowAt: firstOption)
+                }
+            }
         }
-    
-        if Snapshot.kind == .deviceOptionPopup {
-            let firstOption = IndexPath(row: 0, section: 1)
-            self.tableView(tableView, didSelectRowAt: firstOption)
-        }
+        #endif
     }
 }
 

@@ -25,7 +25,9 @@ class CropMaskView: UIControl {
     
     private func setup() {
         backgroundColor = .clear
-        
+        accessibilityIdentifier = "crop-view"
+        isAccessibilityElement = true
+
         maskingView.shapeLayer.fillRule = .evenOdd
         addSubview(maskingView)
         
@@ -36,6 +38,9 @@ class CropMaskView: UIControl {
         for side in [CGRectSide.top, .left, .right, .bottom] {
             let view = TapInsetsView()
             view.backgroundColor = .tint
+            view.accessibilityIdentifier = "crop-side-\(side.description)"
+            view.accessibilityTraits = .adjustable
+            view.isAccessibilityElement = true
             view.layer.isOpaque = true
             addSubview(view)
             
@@ -59,6 +64,9 @@ class CropMaskView: UIControl {
             let view = TapInsetsView()
             view.tapInsets = .init(value: -5)
             view.backgroundColor = .tint
+            view.accessibilityIdentifier = "crop-corner-\(corner.description)"
+            view.accessibilityTraits = .adjustable
+            view.isAccessibilityElement = true
             view.layer.borderColor = UIColor.white.cgColor
             view.layer.borderWidth = 2
             view.layer.cornerRadius = cornerViewSize / 2

@@ -105,7 +105,11 @@ class DevicesVC: UIViewController {
             guard let self = self else { return }
             switch result {
             case .success(let devices):
-                self.devices = devices
+                var filteredDevices = devices
+                Snapshot.setup { _ in
+                    filteredDevices = filteredDevices.filter { $0.model != "frontend-tester" }
+                }
+                self.devices = filteredDevices
                 self.tableView.reloadData()
             case .failure(let error):
                 self.devices = []

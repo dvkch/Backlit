@@ -159,9 +159,7 @@ class PreviewView: UIView {
         updateImageAndCrop()
         updateProgressMask()
 
-        #if targetEnvironment(simulator)
         prepareForSnapshotting()
-        #endif
     }
     
     private func updateImageAndCrop() {
@@ -224,19 +222,17 @@ class PreviewView: UIView {
 
 extension PreviewView {
     private func prepareForSnapshotting() {
+        #if DEBUG
         guard let device = device else { return }
 
-        if Snapshot.isSnapshotting, let testImagePath = Snapshot.snapshotTestScanImagePath {
-            imageView.image = UIImage(contentsOfFile: testImagePath)
-
-            let cropAreaPercent = CGRect(x: 0.1, y: 0.2, width: 0.8, height: 0.6)
-            var cropArea = CGRect()
-            cropArea.origin.x = device.maxCropArea.origin.x + device.maxCropArea.width * cropAreaPercent.origin.x
-            cropArea.origin.y = device.maxCropArea.origin.y + device.maxCropArea.height * cropAreaPercent.origin.y
-            cropArea.size.width = device.maxCropArea.width * cropAreaPercent.width
-            cropArea.size.height = device.maxCropArea.height * cropAreaPercent.height
-
-            cropMask.setCropArea(device.maxCropArea.intersection(cropArea), maxCropArea: device.maxCropArea)
+        Snapshot.setup { config in
+            guard config.kind != .other, let previewImage = config.previewImage else { return }
+            imageView.image = previewImage
+            cropMask.setCropArea(
+                config.previewCrop.fromPercents(of: device.maxCropArea),
+                maxCropArea: device.maxCropArea
+            )
         }
+        #endif
     }
 }

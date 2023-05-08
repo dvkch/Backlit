@@ -61,6 +61,13 @@ class GalleryManager: NSObject {
                 self.refreshGalleryItems()
             }
         }
+        
+        DispatchQueue.main.async {
+            Snapshot.setup { config in
+                config.setupGallery()
+                self.refreshGalleryItems()
+            }
+        }
     }
     
     // MARK: Private vars

@@ -253,6 +253,7 @@ extension GalleryThumbsView: CollectionViewDiffableDataSourceViewsProvider {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
         cell.update(item: item, displayedOverTint: self.tintColor == .tint)
         cell.isHidden = (item == insertedGalleryItem)
+        cell.accessibilityIdentifier = "gallery-item-\(indexPath.item)"
         return cell
     }
     

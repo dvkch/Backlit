@@ -17,6 +17,17 @@ enum CGRectSide {
     }
 }
 
+extension CGRectSide: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .top:      return "top"
+        case .left:     return "left"
+        case .right:    return "right"
+        case .bottom:   return "bottom"
+        }
+    }
+}
+
 enum CGRectCorner {
     case topLeft, topRight, bottomLeft, bottomRight
     
@@ -26,6 +37,17 @@ enum CGRectCorner {
     
     var verticalSide: CGRectSide {
         return (self == .topLeft || self == .bottomLeft) ? .left : .right
+    }
+}
+
+extension CGRectCorner: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .topLeft:      return "topLeft"
+        case .topRight:     return "topRight"
+        case .bottomLeft:   return "bottomLeft"
+        case .bottomRight:  return "bottomRight"
+        }
     }
 }
 

@@ -35,7 +35,7 @@ class OptionCell: TableViewCell {
     // MARK: Views
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var valueLabel: UILabel!
-    private var valueControl: UIView? {
+    private var valueControl: UIControl? {
         didSet {
             oldValue?.removeFromSuperview()
             if let valueControl = valueControl {
@@ -84,6 +84,18 @@ class OptionCell: TableViewCell {
         super.pressesEnded(presses, with: event)
     }
     
+    #if DEBUG
+    func triggerValueControl() {
+        if #available(iOS 14.0, *), let button = valueControl as? UIButton, let interaction = button.contextMenuInteraction {
+            // _presentMenuAtLocation:
+            interaction.perform(Selector("_presentMe" + ":noitacoLtAun".reversed()), with: CGPoint.zero)
+        }
+        else {
+            valueControl?.sendActions(for: .primaryActionTriggered)
+        }
+    }
+    #endif
+    
     // MARK: Content
     func updateWith(option: DeviceOption) {
         self.option = option
@@ -124,6 +136,7 @@ class OptionCell: TableViewCell {
             titleLabel.text = option.localizedTitle
             valueLabel.text = option.localizedValue
             descrLabel.text = option.localizedDescr
+            accessibilityIdentifier = option.identifier
 
             #if targetEnvironment(macCatalyst)
             useMacOSLayout = true
@@ -136,7 +149,8 @@ class OptionCell: TableViewCell {
             titleLabel.text = prefKey.localizedTitle
             valueLabel.text = Preferences.shared[prefKey].description
             descrLabel.text = prefKey.localizedDescription
-            
+            accessibilityIdentifier = prefKey.rawValue
+
             if let boolValue = Preferences.shared[prefKey] as? BoolPreferenceValue {
                 let control = UISwitch()
                 control.isOn = boolValue.rawValue
@@ -167,6 +181,7 @@ class OptionCell: TableViewCell {
         }
         else {
             valueControl = nil
+            accessibilityIdentifier = nil
         }
     }
 
@@ -340,10 +355,11 @@ extension OptionCell: DeviceOptionControllable {
         button.setTitle((initialTitle ?? "") + " ", for: .normal)
         button.isEnabled = !option.disabledOrReadOnly
         button.showsMenuAsPrimaryAction = true
-        button.menu = UIMenu(title: option.localizedDescr, children: dropdownOptions.enumerated().map { i, option in
-            let action = UIAction(title: option.0) { action in
+        button.menu = UIMenu(title: option.localizedDescr, children: dropdownOptions.enumerated().map { i, value in
+            let action = UIAction(title: value.0) { action in
                 valueChangedClosure(i)
             }
+            action.accessibilityIdentifier = "\(option.identifier)-\(i)"
             action.state = i == initialIndex ? .on : .off
             return action
         })

@@ -229,9 +229,13 @@ class GalleryGridVC: UIViewController {
         } else {
             navigationItem.setRightBarButton(nil, animated: animated)
 
-            #if DEBUG && !targetEnvironment(simulator)
+            #if DEBUG
             let testButton = UIBarButtonItem(title: "Add test images", style: .plain, target: self, action: #selector(self.addTestImagesButtonTap))
             navigationItem.setRightBarButton(testButton, animated: animated)
+
+            Snapshot.setup { _ in
+                navigationItem.setRightBarButton(nil, animated: animated)
+            }
             #endif
         }
     }
@@ -281,6 +285,7 @@ extension GalleryGridVC : CollectionViewDiffableDataSourceViewsProvider {
         let cell = collectionView.dequeueCell(GalleryThumbnailCell.self, for: indexPath)
         cell.update(item: item, displayedOverTint: false)
         cell.showSelectionIndicator = isEditing
+        cell.accessibilityIdentifier = "gallery-grid-\(indexPath.section)-\(indexPath.item)"
         return cell
     }
     

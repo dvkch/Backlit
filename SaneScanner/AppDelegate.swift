@@ -34,8 +34,17 @@ extension AppDelegate : UIApplicationDelegate {
         Analytics.shared.send(event: .appLaunch)
         
         // Snapshots
-        if Snapshot.isSnapshotting, let snapshotHost = Snapshot.snapshotHost {
-            Sane.shared.configuration.hosts = [.init(hostname: snapshotHost, displayName: snapshotHost)]
+        Snapshot.setup { config in
+            Preferences.shared.previewWithAutoColorMode = false
+            Preferences.shared.imageFormat = .heic
+            Preferences.shared.pdfSize = .imageSize
+            Preferences.shared.askedAnalytics = true
+            Preferences.shared.enableAnalytics = false
+
+            SaneMockable.shared.isMockingEnabled = config.mockScan
+            SaneMockable.shared.mockedScanImage = config.mockScanImage
+
+            config.setupHost()
         }
         
         // Logging

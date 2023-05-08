@@ -61,7 +61,12 @@ extension XCTestCase {
     }
     
     func waitForTableViewRefreshControl() {
-        wait(for: XCUIApplication().staticTexts[localizedString(key: "LOADING")], to: .exist, timeout: 5, thenSwitch: true, switchTimeout: 30)
+        #if targetEnvironment(macCatalyst)
+        let refreshControl = XCUIApplication().navigationBars.activityIndicators.firstMatch
+        #else
+        let refreshControl = XCUIApplication().staticTexts[localizedString(key: "LOADING")]
+        #endif
+        wait(for: refreshControl, to: .notExist, timeout: 10)
     }
     
     func waitForDeviceOpening() {
