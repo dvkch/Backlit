@@ -139,3 +139,150 @@ class SaneScannerUITests_OptionPopup : SaneScannerUITests {
         Snapshot.snapshot("04-DeviceWithOptionPopup")
     }
 }
+
+class SaneScannerUITests_Video : SaneScannerUITests {
+    func testDeviceWithVideo() {
+        let recordingVideos = app.launchArguments.contains("--VIDEO_SNAPSHOTS")
+        guard recordingVideos else { return }
+        
+        waitForTableViewRefreshControl()
+        
+        showcaseScan()
+        #if !targetEnvironment(macCatalyst)
+        showcaseGallery()
+        #endif
+        showcaseSettings()
+
+        wait(for: 4)
+    }
+    
+    private func showcaseScan() {
+        // open device
+        app.tables.staticTexts[device].go()
+        waitForDeviceOpening()
+
+        // preview
+        let previewButton = app.buttons[localizedString(key: "DEVICE BUTTON UPDATE PREVIEW")]
+        previewButton.go(duration: 0.1)
+        wait(for: previewButton, to: .notExist, timeout: 5, thenSwitch: true, switchTimeout: 60)
+
+        // select preview area
+        let cropView = app.otherElements["crop-view"]
+        let cropTopLeftDestination = cropView.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.47))
+        let cropTop = app.otherElements["crop-side-top"]
+        let cropLeft = app.otherElements["crop-side-left"]
+        
+        cropTop.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            .press(forDuration: 0.5, thenDragTo: cropTopLeftDestination)
+        wait(for: 0.5)
+
+        cropLeft.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            .press(forDuration: 0.5, thenDragTo: cropTopLeftDestination)
+        wait(for: 1)
+
+        // select color mode
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            let navBarBottom = app.navigationBars[device]
+                .coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 1))
+                .screenPoint
+            
+            let scanModeHeaderTop = app.cells["mode"]
+                .coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0))
+                .withOffset(CGVector(dx: 0, dy: -32))
+                .screenPoint
+            
+            let previewButtonStartPosition = previewButton
+                .coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 1.1))
+            let previewButtonEndPosition = previewButtonStartPosition
+                .withOffset(CGVector(dx: 0, dy: navBarBottom.y - scanModeHeaderTop.y))
+
+            previewButtonStartPosition
+                .press(forDuration: 0.1, thenDragTo: previewButtonEndPosition)
+        }
+        app.cells["mode"].buttons.firstMatch.go()
+        wait(for: 0.5)
+        selectMenuItem(identifier: "mode-0", at: 0)
+        wait(for: 1) // wait for options to refresh
+
+        // select resolution
+        app.cells["resolution"].buttons.firstMatch.go()
+        wait(for: 0.5)
+        selectMenuItem(identifier: "resolution-5", at: 5)
+        wait(for: 1) // wait for options to refresh
+
+        // scan
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            app.tables.firstMatch.swipeDown()
+        }
+        let scanButton = app.buttons[localizedString(key: "ACTION SCAN")]
+        scanButton.go()
+        wait(for: scanButton, to: .notExist, timeout: 5, thenSwitch: true, switchTimeout: 60)
+        wait(for: 1)
+    }
+    
+    private func showcaseGallery() {
+        // preview last scan
+        app.cells["gallery-item-0"].firstMatch.go(duration: 1)
+        wait(for: 1)
+        
+        // open last scan
+        app.buttons[localizedString(key: "ACTION OPEN")].go()
+        wait(for: 1)
+        
+        // back to gallery
+        app.navigationBars.buttons[localizedString(key: "GALLERY OVERVIEW TITLE")].go()
+        wait(for: 1)
+
+        // make a pdf
+        app.navigationBars.buttons[localizedString(key: "ACTION EDIT")].go()
+        app.cells["gallery-grid-6-0"].tap()
+        app.cells["gallery-grid-6-1"].tap()
+        app.buttons["PDF"].go()
+        
+        // (almost) print pdf
+        let print = deviceLanguage.hasPrefix("fr") ? "Imprimer" : "Print"
+        if #available(iOS 16, *) {
+            app.otherElements["ActivityListView"].cells[print].go() // found using `po app` in debugger
+        }
+        else {
+            app.otherElements["ActivityListView"].buttons[print].go() // found using `po app` in debugger
+        }
+        wait(for: 2)
+        app.navigationBars.buttons[localizedString(key: "ACTION CANCEL")].go()
+
+        // close gallery
+        let done = deviceLanguage.hasPrefix("fr") ? "OK" : "Done"
+        app.navigationBars.buttons[done].tap() // stop editing
+        wait(for: 1)
+        app.navigationBars.buttons[localizedString(key: "ACTION CLOSE")].go() // close
+    }
+    
+    private func showcaseSettings() {
+        #if targetEnvironment(macCatalyst)
+        app.windows.firstMatch.typeKey(",", modifierFlags: .command)
+        #else
+        app.navigationBars.buttons[localizedString(key: "PREFERENCES TITLE")].go()
+        #endif
+        wait(for: 1)
+
+        app.cells["ImageFormat"].buttons.firstMatch.go()
+        selectMenuItem(identifier: "PNG", at: 1)
+        wait(for: 1)
+
+        app.navigationBars.buttons[localizedString(key: "ACTION CLOSE")].go() // close
+        wait(for: 1)
+        
+        app.navigationBars.buttons["SaneScanner"].go()
+    }
+    
+    private func selectMenuItem(identifier: String, at index: Int) {
+        #if targetEnvironment(macCatalyst)
+        for _ in 0...index {
+            app.typeKey(XCUIKeyboardKey.downArrow.rawValue, modifierFlags: [])
+        }
+        app.typeKey(XCUIKeyboardKey.enter.rawValue, modifierFlags: [])
+        #else
+        app.buttons[identifier].go(duration: 0.5) // "color"
+        #endif
+    }
+}
