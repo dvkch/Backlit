@@ -37,8 +37,6 @@
 	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>To find your scanners</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>readdle-spark</string>
@@ -48,8 +46,16 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_sane-port._tcp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>To find your scanners</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>We will only send push to alert you when a scan is done</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to save scanned documents to your camera roll</string>
+	<string>Required to save scanned documents to your camera roll</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -75,10 +81,6 @@
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
-	<key>NSBonjourServices</key>
-	<array>
-		<string>_sane-port._tcp</string>
-	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

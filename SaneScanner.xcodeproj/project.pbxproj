@@ -14,6 +14,7 @@
 		971584D0222F445200DC46CA /* UIImage+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971584CF222F445200DC46CA /* UIImage+SY.swift */; };
 		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
 		971B894229C8793C0005785A /* GalleryImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971B894129C8793C0005785A /* GalleryImageView.swift */; };
+		9724378E2A0AF2C8002C5F6B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 972437902A0AF2C8002C5F6B /* InfoPlist.strings */; };
 		972B584729A8F302003A9403 /* SaneBonjour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B584629A8F302003A9403 /* SaneBonjour.swift */; };
 		972B78BF29E417A7004FA923 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977EA2CF29DEEF6100CBD092 /* Logger.swift */; };
 		972B78C129E417C9004FA923 /* Logger+Sane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B78C029E417C9004FA923 /* Logger+Sane.swift */; };
@@ -168,6 +169,8 @@
 		971584CF222F445200DC46CA /* UIImage+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SY.swift"; sourceTree = "<group>"; };
 		971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SYLaunchScreen.storyboard; sourceTree = "<group>"; };
 		971B894129C8793C0005785A /* GalleryImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageView.swift; sourceTree = "<group>"; };
+		9724378F2A0AF2C8002C5F6B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		972437912A0AF2C9002C5F6B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		972B584629A8F302003A9403 /* SaneBonjour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaneBonjour.swift; sourceTree = "<group>"; };
 		972B78C029E417C9004FA923 /* Logger+Sane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Sane.swift"; sourceTree = "<group>"; };
 		973066B2220C55000068E8C7 /* GalleryThumbsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryThumbsView.swift; sourceTree = "<group>"; };
@@ -590,6 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				F8CBD2111AF9A58C00B4C221 /* Info.plist */,
+				972437902A0AF2C8002C5F6B /* InfoPlist.strings */,
 				979D4BA31E4A797C00F90EFB /* Settings.bundle */,
 			);
 			name = "Supporting Files";
@@ -760,6 +764,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */,
+				9724378E2A0AF2C8002C5F6B /* InfoPlist.strings in Resources */,
 				9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */,
 				97EF42272205FF7900D45FC8 /* HostCell.xib in Resources */,
 				97D0E04622060C5700AC74D0 /* PreviewCell.xib in Resources */,
@@ -1028,6 +1033,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		972437902A0AF2C8002C5F6B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9724378F2A0AF2C8002C5F6B /* en */,
+				972437912A0AF2C9002C5F6B /* fr */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		9785C5681E3D247A006CD4F1 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

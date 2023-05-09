@@ -138,12 +138,12 @@ class GalleryManager: NSObject {
         }
     }
 
-    func saveScans(device: Device, _ scans: [ScanImage], completion: @escaping (Result<(), Error>) -> ()) {
+    func saveScans(device: Device, _ scans: [ScanImage], completion: @escaping (Result<[GalleryItem], Error>) -> ()) {
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                try self.saveScansSync(device: device, scans)
+                let items = try self.saveScansSync(device: device, scans)
                 DispatchQueue.main.async {
-                    completion(.success(()))
+                    completion(.success(items))
                 }
             }
             catch {
@@ -154,12 +154,14 @@ class GalleryManager: NSObject {
         }
     }
 
-    private func saveScansSync(device: Device, _ scans: [ScanImage]) throws {
+    private func saveScansSync(device: Device, _ scans: [ScanImage]) throws -> [GalleryItem] {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
         let format = Preferences.shared.imageFormat.correspondingImageFormat
+        var addedItems = [GalleryItem]()
+
         for (index, scan) in scans.enumerated() {
             var filename = formatter.string(from: Date())
             if scans.count > 1 {
@@ -188,7 +190,9 @@ class GalleryManager: NSObject {
 
             // do last, as it will trigger the delegates
             galleryItems.append(item)
+            addedItems.append(item)
         }
+        return addedItems
     }
     
     func deleteItem(_ item: GalleryItem) {

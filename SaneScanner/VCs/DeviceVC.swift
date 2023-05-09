@@ -169,6 +169,8 @@ class DeviceVC: UIViewController {
 
     @objc func scan() {
         guard !isScanning else { return }
+        
+        askForLocalNotificationsPermission()
 
         Analytics.shared.send(event: .scanStarted(device: device))
 
@@ -188,9 +190,10 @@ class DeviceVC: UIViewController {
                     self.updateAfterScanStatusChange(nil)
 
                     switch saveResult {
-                    case .success:
+                    case .success(let items):
                         Analytics.shared.askPermission(from: self)
                         self.presentReviewPrompt()
+                        self.presentFinishedScanNotification(items: items)
 
                     case .failure(let error):
                         UIAlertController.show(for: error, in: self)
@@ -259,6 +262,27 @@ class DeviceVC: UIViewController {
             SKStoreReviewController.requestReview()
         }
         #endif
+    }
+    
+    private func askForLocalNotificationsPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in () }
+    }
+
+    private func presentFinishedScanNotification(items: [GalleryItem]) {
+        guard UIApplication.shared.applicationState == .background else { return }
+
+        let content = UNMutableNotificationContent()
+        content.title = "SCAN FINISHED NOTIFICATION TITLE".localized
+        content.body = "SCAN FINISHED NOTIFICATION MESSAGE %d".localized(quantity: items.count)
+        content.sound = .default
+        content.attachments = items.compactMap { try? UNNotificationAttachment(identifier: $0.url.path, url: $0.thumbnailUrl) }
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: "scan-done", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error {
+                Logger.e(.app, "Couldn't show local notification for finished scan: \(error)")
+            }
+        }
     }
     
     // MARK: Content
