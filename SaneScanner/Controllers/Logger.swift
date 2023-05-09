@@ -15,6 +15,7 @@ struct Logger {
     // MARK: Types
     enum Tag: String {
         case app = "App"
+        case background = "Background"
         case bonjour = "Bonjour"
         case gallery = "Gallery"
         case prefs = "Prefs"

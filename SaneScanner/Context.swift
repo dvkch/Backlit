@@ -109,7 +109,7 @@ class Context: NSObject {
     }
     
     // MARK: Status
-    enum Status {
+    enum Status: Int {
         case devicesList
         case deviceOpened
         case scanning

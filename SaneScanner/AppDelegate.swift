@@ -54,48 +54,48 @@ extension AppDelegate : UIApplicationDelegate {
         return true
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        Logger.i(.background, "App became active again, stopping keep alive")
+        BackgroundKeepAlive.shared.keepAlive = false
+    }
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
-        startBackgroundTask()
+        startBackgroundTask(startTime: Date())
         updateShortcuts()
     }
     
-    private func startBackgroundTask(retry: Int = 0) {
-        guard UIApplication.shared.applicationState == .background else { return }
+    private func startBackgroundTask(startTime: Date) {
+        guard UIApplication.shared.applicationState == .background else {
+            Logger.i(.background, "Not in background, no need to keep alive in background")
+            BackgroundKeepAlive.shared.keepAlive = false
+            return
+        }
 
-        let requiresBackgroundMode = allContexts.contains(where: { $0.status != .devicesList })
-        guard requiresBackgroundMode else {
-            Logger.i(.app, "No device opened, no need to keep alive in background")
+        let highestLevelTask = allContexts.map(\.status).sorted(by: \.rawValue).last ?? .devicesList
+        if highestLevelTask == .devicesList {
+            Logger.i(.background, "No device opened, no need to keep alive in background")
+            BackgroundKeepAlive.shared.keepAlive = false
             return
         }
         
-        var backgroundTaskID: UIBackgroundTaskIdentifier? = nil
-        backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "saneKeepAlive-\(retry + 1)", expirationHandler: {
-            // try to restart a background task, only if need be
-            self.startBackgroundTask(retry: retry + 1)
-
-            // give time to the system to really close the deviceVC if
-            // it's opened, close eventual scan alertView, and dealloc
-            // the VC, which will in turn closing the device and make
-            // sane exit gracefully
-            let gracePeriod = UIApplication.shared.backgroundTimeRemaining.clamped(min: 1, max: 5)
-            DispatchQueue.main.asyncAfter(deadline: .now() + gracePeriod) {
-                if let backgroundTaskID {
-                    UIApplication.shared.endBackgroundTask(backgroundTaskID)
-                }
-            }
-        })
-
-        if backgroundTaskID == .invalid {
-            Logger.w(.app, "Couldn't start a background task, let's cancel scans and close devices")
+        if highestLevelTask == .deviceOpened && Date().timeIntervalSince(startTime) > 5 * 60 {
+            Logger.i(.background, "Device opened for more than 5min, aborting background keep alive")
+            BackgroundKeepAlive.shared.keepAlive = false
             stopAllOperations()
+            return
         }
-        else {
-            Logger.i(.app, "Keeping app alive for a bit longer")
+        
+        Logger.i(.background, "Keeping app alive for a bit longer")
+        BackgroundKeepAlive.shared.keepAlive = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+            // try to restart a background task, only if need be
+            self.startBackgroundTask(startTime: startTime)
         }
     }
     
     private func stopAllOperations() {
-        Logger.i(.app, "Stopping all operations")
+        Logger.i(.background, "Stopping all operations")
 
         // Let's make Sane end gracefully to prevent using a dangling SANE_Handle
         SaneMockable.shared.cancelCurrentScan()

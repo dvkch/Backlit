@@ -15,6 +15,7 @@
 		971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */; };
 		971B894229C8793C0005785A /* GalleryImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971B894129C8793C0005785A /* GalleryImageView.swift */; };
 		9724378E2A0AF2C8002C5F6B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 972437902A0AF2C8002C5F6B /* InfoPlist.strings */; };
+		972437952A0AF830002C5F6B /* silent.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 972437942A0AF830002C5F6B /* silent.mp3 */; };
 		972B584729A8F302003A9403 /* SaneBonjour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B584629A8F302003A9403 /* SaneBonjour.swift */; };
 		972B78BF29E417A7004FA923 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977EA2CF29DEEF6100CBD092 /* Logger.swift */; };
 		972B78C129E417C9004FA923 /* Logger+Sane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B78C029E417C9004FA923 /* Logger+Sane.swift */; };
@@ -31,6 +32,7 @@
 		9736470329E73B430089458A /* UICollectionView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9736470229E73B430089458A /* UICollectionView+SY.swift */; };
 		9736470529E743700089458A /* ConditionallyDismissible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9736470429E743700089458A /* ConditionallyDismissible.swift */; };
 		9736470729E747D90089458A /* UINavigationController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9736470629E747D90089458A /* UINavigationController+SY.swift */; };
+		97367D6F2A0ADA2F009670AB /* BackgroundKeepAlive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97367D6E2A0ADA2F009670AB /* BackgroundKeepAlive.swift */; };
 		9740C16F2638DC8B00CAC543 /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9740C16E2638DC8B00CAC543 /* ScanButton.swift */; };
 		9747AF101E5257080090E6B2 /* test_scan_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9747AF0F1E5257080090E6B2 /* test_scan_image.png */; };
 		97499E5B220862FE006DED20 /* ScanNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5A220862FE006DED20 /* ScanNC.swift */; };
@@ -171,6 +173,7 @@
 		971B894129C8793C0005785A /* GalleryImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageView.swift; sourceTree = "<group>"; };
 		9724378F2A0AF2C8002C5F6B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		972437912A0AF2C9002C5F6B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		972437942A0AF830002C5F6B /* silent.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silent.mp3; sourceTree = "<group>"; };
 		972B584629A8F302003A9403 /* SaneBonjour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaneBonjour.swift; sourceTree = "<group>"; };
 		972B78C029E417C9004FA923 /* Logger+Sane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Sane.swift"; sourceTree = "<group>"; };
 		973066B2220C55000068E8C7 /* GalleryThumbsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryThumbsView.swift; sourceTree = "<group>"; };
@@ -186,6 +189,7 @@
 		9736470229E73B430089458A /* UICollectionView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SY.swift"; sourceTree = "<group>"; };
 		9736470429E743700089458A /* ConditionallyDismissible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionallyDismissible.swift; sourceTree = "<group>"; };
 		9736470629E747D90089458A /* UINavigationController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+SY.swift"; sourceTree = "<group>"; };
+		97367D6E2A0ADA2F009670AB /* BackgroundKeepAlive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundKeepAlive.swift; sourceTree = "<group>"; };
 		9740C16E2638DC8B00CAC543 /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
 		9747AF0F1E5257080090E6B2 /* test_scan_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_scan_image.png; sourceTree = "<group>"; };
 		97499E5A220862FE006DED20 /* ScanNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanNC.swift; sourceTree = "<group>"; };
@@ -337,6 +341,7 @@
 			children = (
 				F8CBD21D1AF9A58C00B4C221 /* Assets.xcassets */,
 				9785C5681E3D247A006CD4F1 /* Localizable.strings */,
+				972437942A0AF830002C5F6B /* silent.mp3 */,
 				971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -460,6 +465,7 @@
 			isa = PBXGroup;
 			children = (
 				97C11148265C497900794994 /* Analytics.swift */,
+				97367D6E2A0ADA2F009670AB /* BackgroundKeepAlive.swift */,
 				97865080220B69AC00F52DE6 /* GalleryManager.swift */,
 				977EA2CF29DEEF6100CBD092 /* Logger.swift */,
 				972B78C029E417C9004FA923 /* Logger+Sane.swift */,
@@ -764,6 +770,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */,
+				972437952A0AF830002C5F6B /* silent.mp3 in Resources */,
 				9724378E2A0AF2C8002C5F6B /* InfoPlist.strings in Resources */,
 				9785C5661E3D247A006CD4F1 /* Localizable.strings in Resources */,
 				97EF42272205FF7900D45FC8 /* HostCell.xib in Resources */,
@@ -956,6 +963,7 @@
 				97F2FB4B222302DE006BD617 /* GalleryGridVC.swift in Sources */,
 				971584D0222F445200DC46CA /* UIImage+SY.swift in Sources */,
 				9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */,
+				97367D6F2A0ADA2F009670AB /* BackgroundKeepAlive.swift in Sources */,
 				97DEA1AB29C692AA0088AC71 /* Acknowledgement.swift in Sources */,
 				97F2FB5322230A81006BD617 /* GalleryImageVC.swift in Sources */,
 				97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */,
