@@ -35,17 +35,7 @@ public extension UIView {
 
     @objc(sy_safeAreaBounds)
     var safeAreaBounds: CGRect {
-        var value = bounds
-        #if os(iOS)
-        if #available(iOS 11.0, *) {
-            value = value.inset(by: safeAreaInsets)
-        }
-        #elseif os(tvOS)
-        if #available(tvOS 11.0, *) {
-            value = value.inset(by: safeAreaInsets)
-        }
-        #endif
-        return value
+        return bounds.inset(by: safeAreaInsets)
     }
 
     // hiding an item in a UIStackView that is already hidden while animating has a bug in UIKit and prevents us to ever make this item visible again

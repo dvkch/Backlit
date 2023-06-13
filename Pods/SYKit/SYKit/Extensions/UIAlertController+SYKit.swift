@@ -8,9 +8,7 @@
 
 import UIKit
 
-@available(iOS 8.0, tvOS 9.0, *)
 extension UIAlertController {
-    
     @discardableResult
     @objc(sy_addActionWithTitle:image:style:handler:)
     public func addAction(title: String?, image: UIImage? = nil, style: UIAlertAction.Style, handler: ((UIAlertAction) -> ())?) -> UIAlertAction {
@@ -43,7 +41,6 @@ extension UIAlertController {
     }
 }
 
-@available(iOS 8.0, tvOS 9.0, *)
 extension UIAlertAction {
     @objc(sy_updateTitle:)
     public func updateTitle(_ title: String) {
@@ -88,5 +85,100 @@ fileprivate class SYImageViewController : UIViewController {
         leftConstraint?.constant = imageViewMargins.left
         rightConstraint?.constant = -imageViewMargins.right
         bottomConstraint?.constant = -imageViewMargins.bottom
+    }
+}
+
+extension UIAlertController {
+    @objc(sy_showForError:title:closeButtonText:inViewController:)
+    public static func show(for error: Error, title: String? = nil, close: String, in viewController: UIViewController) {
+        let alert = self.init(title: title, message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(title: close, style: .cancel, handler: nil)
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc(sy_showWithTitle:message:closeButtonText:inViewController:)
+    public static func show(title: String? = nil, message: String? = nil, close: String, in viewController: UIViewController) {
+        let alert = self.init(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(title: close, style: .cancel, handler: nil)
+        viewController.present(alert, animated: true, completion: nil)
+    }
+}
+
+public class HUDAlertController: UIAlertController {
+
+    // MARK: Convenience
+    public static func show(in viewController: UIViewController, animated: Bool = true) -> Self {
+        let alert = self.init(title: nil, message: "", preferredStyle: .alert)
+        viewController.present(alert, animated: false, completion: nil)
+        return alert
+    }
+    
+    public static func dismiss(_ hud: HUDAlertController?, animated: Bool = true, completion: (() -> ())? = nil) {
+        if let hud = hud {
+            hud.dismiss(animated: animated, completion: completion)
+        }
+        else {
+            completion?()
+        }
+    }
+    
+    // MARK: Init
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.addSubview(loader)
+        loader.startAnimating()
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loader.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    // MARK: Properties
+    let preferredSize = CGSize(width: 100, height: 100)
+    
+    // MARK: Views
+    private lazy var loader: UIActivityIndicatorView = {
+        let loader: UIActivityIndicatorView
+        if #available(iOS 13.0, tvOS 13.0, *) {
+            loader = UIActivityIndicatorView(style: .large)
+            loader.color = .label
+        } else {
+            loader = UIActivityIndicatorView(style: .whiteLarge)
+            loader.color = .black
+        }
+        return loader
+    }()
+    private var contentView: UIView {
+        return view.subviews.first!
+    }
+
+    // MARK: Layout
+    public override func updateViewConstraints() {
+        let contentViewWidth = contentView.constraints.constantAttribute(.width).first ?? {
+            // can't modidy a priority once installed on iOS 12-
+            let constraint = contentView.widthAnchor.constraint(equalToConstant: 0)
+            constraint.priority = .defaultLow
+            constraint.isActive = true
+            return constraint
+        }()
+        contentViewWidth.constant = preferredSize.width
+        
+        let viewWidth = view.constraints.constantAttribute(.width).first ?? view.widthAnchor.constraint(equalToConstant: 0)
+        viewWidth.constant = preferredSize.width
+        viewWidth.isActive = true
+        
+        let viewHeight = view.constraints.constantAttribute(.height).first ?? view.heightAnchor.constraint(equalToConstant: 0)
+        viewHeight.constant = preferredSize.width
+        viewHeight.isActive = true
+
+        super.updateViewConstraints()
+    }
+}
+
+fileprivate extension Array where Element == NSLayoutConstraint {
+    func constantAttribute(_ attribute: NSLayoutConstraint.Attribute, relation: NSLayoutConstraint.Relation = .equal) -> [Element] {
+        return filter { $0.firstAttribute == attribute && $0.relation == relation && $0.secondItem == nil && $0.secondAnchor == nil }
     }
 }

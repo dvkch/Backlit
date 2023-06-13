@@ -27,26 +27,6 @@ public extension UIScrollView {
         }
     }
     
-    var sy_refreshControl: UIRefreshControl? {
-        get {
-            if #available(iOS 10.0, *) {
-                return refreshControl
-            } else {
-                return subviews.compactMap { $0 as? UIRefreshControl }.first
-            }
-        }
-        set {
-            if #available(iOS 10.0, *) {
-                self.refreshControl = newValue
-            } else {
-                sy_refreshControl?.removeFromSuperview()
-                if let newValue = newValue {
-                    self.addSubview(newValue)
-                }
-            }
-        }
-    }
-    
     @objc(sy_addPullToRefreshWithColor:action:)
     func addPullToRefresh(color: UIColor?, action: @escaping SYKitUIScrollViewRefreshAction) {
         let control = UIRefreshControl()
@@ -60,12 +40,12 @@ public extension UIScrollView {
     func addPullToRefresh(_ control: UIRefreshControl, action: @escaping SYKitUIScrollViewRefreshAction) {
         self.refreshControlAction = action
         
-        sy_refreshControl?.removeFromSuperview()
-        sy_refreshControl = nil
+        refreshControl?.removeFromSuperview()
+        refreshControl = nil
         
         control.addTarget(self, action: #selector(sy_refreshControlValueChanged), for: .valueChanged)
         
-        sy_refreshControl = control
+        refreshControl = control
     }
     
     @objc private func sy_refreshControlValueChanged() {
@@ -75,9 +55,9 @@ public extension UIScrollView {
     
     @objc(sy_showPullToRefresh)
     func showPullToRefresh() {
-        guard let sy_refreshControl = sy_refreshControl else { return }
+        guard let refreshControl else { return }
         
-        sy_refreshControl.beginRefreshing()
+        refreshControl.beginRefreshing()
         // 60 is the average height for the refreshControl. we can't use UIRefreshControl.frame.size.height because
         // when it is closed its height is 0.5px...
         setContentOffset(CGPoint(x: 0, y: -60), animated: true)
@@ -85,7 +65,7 @@ public extension UIScrollView {
     
     @objc(sy_endPullToRefresh)
     func endPullToRefresh() {
-        sy_refreshControl?.endRefreshing()
+        refreshControl?.endRefreshing()
     }
 }
 

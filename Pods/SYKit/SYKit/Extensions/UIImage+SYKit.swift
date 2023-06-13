@@ -220,7 +220,23 @@ import ImageIO
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
-    @objc(UIImageGreyscaleFilter)
+    @objc(sy_applyingGreyscaleFilter:)
+    func greyscale(using filter: CIImage.GreyscaleFilter) -> UIImage? {
+        guard let ciImage = CIImage(image: self)?.greyscale(using: filter) else { return nil }
+        guard let cgImage = CIContext(options: nil).createCGImage(ciImage, from: ciImage.extent) else { return nil }
+        return UIImage(cgImage: cgImage)
+    }
+}
+
+public extension CGImage {
+    func greyscale(using filter: CIImage.GreyscaleFilter) -> CGImage? {
+        guard let ciImage = CIImage(cgImage: self).greyscale(using: filter) else { return nil }
+        return CIContext(options: nil).createCGImage(ciImage, from: ciImage.extent)
+    }
+}
+
+public extension CIImage {
+    @objc(CIImageGreyscaleFilter)
     enum GreyscaleFilter: Int {
         case noir, mono, tonal
         public var filterName: String {
@@ -232,16 +248,9 @@ import ImageIO
         }
     }
     
-    @objc(sy_applyingGreyscaleFilter:)
-    func greyscale(using filter: GreyscaleFilter) -> UIImage? {
+    func greyscale(using filter: GreyscaleFilter) -> CIImage? {
         guard let filter = CIFilter(name: filter.filterName) else { return nil }
-        filter.setValue(CIImage(image: self), forKey: kCIInputImageKey)
-        
-        guard let output = filter.outputImage else { return nil }
-        
-        let context = CIContext(options: nil)
-        guard let cgImage = context.createCGImage(output, from: output.extent) else { return nil }
-        return UIImage(cgImage: cgImage)
+        filter.setValue(self, forKey: kCIInputImageKey)
+        return filter.outputImage
     }
-
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct SYArchiverBox<T: NSObject>: Codable {
+public struct SYArchiverBox<T: NSObject & NSCoding>: Codable {
     public let value: T
     
     public init(_ value: T) {
@@ -19,18 +19,32 @@ public struct SYArchiverBox<T: NSObject>: Codable {
         let container = try decoder.singleValueContainer()
         let data = try container.decode(Data.self)
         
-        guard let objectValue = NSKeyedUnarchiver.unarchiveObject(with: data) else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Couldn't unarchive object")
+        if #available(iOS 13.1, tvOS 13.1, *) {
+            guard let objectValue = try NSKeyedUnarchiver.unarchivedObject(ofClass: T.self, from: data) else {
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Couldn't unarchive object")
+            }
+            self.value = objectValue
         }
-        guard let castedValue = objectValue as? T else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Couldn't cast object to type \(T.self)")
+        else {
+            guard let objectValue = NSKeyedUnarchiver.unarchiveObject(with: data) else {
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Couldn't unarchive object")
+            }
+            guard let castedValue = objectValue as? T else {
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Couldn't cast object to type \(T.self)")
+            }
+            self.value = castedValue
         }
-        self.value = castedValue
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        let data = NSKeyedArchiver.archivedData(withRootObject: value)
+        let data: Data
+        if #available(iOS 13.1, tvOS 13.1, *) {
+            data = try NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: false)
+        }
+        else {
+            data = NSKeyedArchiver.archivedData(withRootObject: value)
+        }
         try container.encode(data)
     }
 }
