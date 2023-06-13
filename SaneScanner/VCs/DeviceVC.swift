@@ -117,6 +117,7 @@ class DeviceVC: UIViewController {
     var isScanning: Bool {
         SaneMockable.shared.scanSatus(for: device).isScanning
     }
+    private(set) var isSavingScan: Bool = false
     var useLargeLayout: Bool = false {
         didSet {
             guard useLargeLayout != oldValue else { return }
@@ -186,9 +187,11 @@ class DeviceVC: UIViewController {
 
             switch results {
             case .success(let scans):
+                self.isSavingScan = true
                 Analytics.shared.send(event: .scanEnded(device: self.device, imagesCount: scans.count))
                 GalleryManager.shared.saveScans(device: device, scans) { saveResult in
                     self.updateAfterScanStatusChange(nil)
+                    self.isSavingScan = false
 
                     switch saveResult {
                     case .success(let items):

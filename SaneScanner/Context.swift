@@ -122,7 +122,7 @@ class Context: NSObject {
     }
     var status: Status {
         if let deviceVC = splitViewController.scanNC.viewControllers.last as? DeviceVC {
-            if deviceVC.isScanning {
+            if deviceVC.isScanning || deviceVC.isSavingScan {
                 return .scanning
             }
             return .deviceOpened
