@@ -189,10 +189,9 @@ class GalleryManager: NSObject {
             generateThumb(for: item)
             
             #if !targetEnvironment(macCatalyst)
-            // prepare a lowres cached image if needed for when we'll be displaying the image
-            DispatchQueue.global(qos: .background).async {
-                GalleryImageView.generateLowResIfNeeded(forImageAt: fileURL)
-            }
+            // prepare a lowres cached image if needed for when we'll be displaying the image. we do
+            // it directly, to be sure it is available for the local notification
+            GalleryImageView.generateLowResIfNeeded(forImageAt: fileURL)
             #endif
 
             // do last, as it will trigger the delegates

@@ -11,6 +11,7 @@ import SaneSwift
 import SYKit
 import SYPictureMetadata
 import StoreKit
+import AVFAudio
 
 protocol DeviceVCDelegate: NSObjectProtocol {
     func deviceVC(_ deviceVC: DeviceVC, didRefreshDevice device: Device)
@@ -267,17 +268,26 @@ class DeviceVC: UIViewController {
     private func askForLocalNotificationsPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in () }
     }
-
+    
     private func presentFinishedScanNotification(items: [GalleryItem]) {
-        guard UIApplication.shared.applicationState == .background else { return }
+        guard UIApplication.shared.applicationState == .background, let firstItem = items.first else {
+            let notifSound = Bundle.main.url(forResource: "scanner", withExtension: "caf")!
+            let player = try! AVAudioPlayer(contentsOf: notifSound)
+            player.play()
+            DispatchQueue.main.asyncAfter(deadline: .now() + player.duration) {
+                player.stop()
+            }
+            return
+        }
 
         let content = UNMutableNotificationContent()
         content.title = "SCAN FINISHED NOTIFICATION TITLE".localized
         content.body = "SCAN FINISHED NOTIFICATION MESSAGE %d".localized(quantity: items.count)
-        content.sound = .default
-        content.attachments = items.compactMap { try? UNNotificationAttachment(identifier: $0.url.path, url: $0.thumbnailUrl) }
+        content.sound = .init(named: .init(rawValue: "scanner.caf"))
+        content.attachments = items.compactMap { try? UNNotificationAttachment(identifier: $0.url.path, url: $0.lowResURL ?? $0.url) }
+        content.userInfo = ["galleryItemPath": firstItem.url.path]
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let request = UNNotificationRequest(identifier: "scan-done", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: "scan-\(firstItem.hash)", content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request) { error in
             if let error {
                 Logger.e(.app, "Couldn't show local notification for finished scan: \(error)")

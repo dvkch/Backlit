@@ -114,14 +114,19 @@ class GalleryImageView: UIView {
         tiledLayer.frame = layer.bounds
     }
     
-    @discardableResult
-    static func generateLowResIfNeeded(forImageAt imageURL: URL, maxEdge: CGFloat = minimumDimensionForTiling) -> UIImage? {
+    static func lowResURLIfNeeded(forImageAt imageURL: URL, maxEdge: CGFloat = minimumDimensionForTiling) -> URL? {
         let imageSize = UIImage.sizeOfImage(at: imageURL) ?? .zero
         guard imageSize.width > maxEdge || imageSize.height > maxEdge else { return nil }
         
         let thumbFilename = imageURL.deletingPathExtension().lastPathComponent + "-lowres-\(maxEdge).jpg"
-        let thumbURL = FileManager.cacheDirectory(.lowRes).appendingPathComponent(thumbFilename, isDirectory: false)
-        if let thumb = UIImage(contentsOfFile: thumbURL.path) {
+        return FileManager.cacheDirectory(.lowRes).appendingPathComponent(thumbFilename, isDirectory: false)
+    }
+    
+    @discardableResult
+    static func generateLowResIfNeeded(forImageAt imageURL: URL, maxEdge: CGFloat = minimumDimensionForTiling) -> UIImage? {
+        guard let lowResURL = lowResURLIfNeeded(forImageAt: imageURL, maxEdge: maxEdge) else { return nil }
+
+        if let thumb = UIImage(contentsOfFile: lowResURL.path) {
             return thumb
         }
         
@@ -129,7 +134,7 @@ class GalleryImageView: UIView {
             return nil
         }
         
-        try? thumb.jpegData(compressionQuality: 0.9)?.write(to: thumbURL)
+        try? thumb.jpegData(compressionQuality: 0.9)?.write(to: lowResURL)
         return thumb
     }
 }

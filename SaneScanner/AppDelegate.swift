@@ -54,6 +54,9 @@ extension AppDelegate : UIApplicationDelegate {
         }
         SaneSetLogLevel(0)
 
+        // Local notifications
+        UNUserNotificationCenter.current().delegate = self
+        
         // create UI on iOS < 13
         if #available(iOS 13.0, *) {} else {
             context = Context()
@@ -140,5 +143,17 @@ extension AppDelegate : UIApplicationDelegate {
         builder.insertChild([UIKeyCommand.addHost].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.hosts")), atStartOfMenu: .file)
         builder.insertChild([UIKeyCommand.refresh].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.refresh")), atStartOfMenu: .view)
         builder.insertChild([UIKeyCommand.settings].asMenu(identifier: UIMenu.Identifier("me.syan.SaneScanner.preferences")), atStartOfMenu: .help)
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if response.actionIdentifier == UNNotificationDefaultActionIdentifier,
+           let path = response.notification.request.content.userInfo["galleryItemPath"] as? String,
+           let item = GalleryManager.shared.galleryItems.reversed().first(where: { $0.url.path == path })
+        {
+            allContexts.first?.openGallery(on: item)
+        }
+        completionHandler()
     }
 }

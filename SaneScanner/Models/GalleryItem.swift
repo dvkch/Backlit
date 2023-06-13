@@ -11,10 +11,13 @@ import MobileCoreServices
 import SYPictureMetadata
 
 class GalleryItem: NSObject {
+    
+    // MARK: Properties
     let url: URL
     let thumbnailUrl: URL
     let creationDate: Date
     
+    // MARK: Init
     init(url: URL, thumbnailUrl: URL) {
         self.url = url
         self.thumbnailUrl = thumbnailUrl
@@ -22,6 +25,7 @@ class GalleryItem: NSObject {
         super.init()
     }
     
+    // MARK: Equatable, Hashable
     override func isEqual(_ object: Any?) -> Bool {
         (object as? GalleryItem)?.url == url
     }
@@ -33,6 +37,10 @@ class GalleryItem: NSObject {
 
 // MARK: Item properties
 extension GalleryItem {
+    var lowResURL: URL? {
+        GalleryImageView.lowResURLIfNeeded(forImageAt: url)
+    }
+    
     static var deviceInfoCache: [URL: String?] = [:]
     var deviceInfoString: String? {
         // this is a wee bit slow, and is computed everytime we display a GalleryThumbnailCell to generate the

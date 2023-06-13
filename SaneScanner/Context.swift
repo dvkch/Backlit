@@ -108,6 +108,12 @@ class Context: NSObject {
         devicesVC.openDevice(device)
     }
     
+    func openGallery(on item: GalleryItem) {
+        let topVC = splitViewController.presentedViewController ?? splitViewController
+        let nc = GalleryNC(openedOn: GalleryManager.shared.galleryItems.last)
+        topVC.present(nc, animated: true, completion: nil)
+    }
+    
     // MARK: Status
     enum Status: Int {
         case devicesList
