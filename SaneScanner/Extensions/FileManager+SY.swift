@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 // MARK: Scans storage
 extension FileManager {
     static var galleryURL: URL {

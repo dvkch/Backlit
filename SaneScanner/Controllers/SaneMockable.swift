@@ -8,6 +8,7 @@
 
 import UIKit
 import SaneSwift
+import SYKit
 import AVFoundation
 
 protocol SaneController {
@@ -120,7 +121,7 @@ extension SaneMockable: SaneController {
         let imageCroppedInCurrentScanArea = imageCroppedInScanMaxArea.cropping(to: cropArea)
 
         let isRGB = device.standardOption(for: .colorMode)?.localizedValue == "Color".saneTranslation
-        return isRGB ? imageCroppedInCurrentScanArea : imageCroppedInCurrentScanArea?.grayscale
+        return isRGB ? imageCroppedInCurrentScanArea : imageCroppedInCurrentScanArea?.greyscale(using: .noir)
     }
     
     private func mockedScanParameters(for device: Device, cropArea: CGRect, image: CGImage) -> ScanParameters {

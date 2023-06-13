@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SYKit
 
 // MARK: Generated labels
 extension GalleryItem {

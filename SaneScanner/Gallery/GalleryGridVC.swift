@@ -9,6 +9,7 @@
 #if !targetEnvironment(macCatalyst)
 import UIKit
 import DiffableDataSources
+import SYKit
 
 class GalleryGridVC: UIViewController {
 

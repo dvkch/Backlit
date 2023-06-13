@@ -84,9 +84,13 @@ extension SaneBonjour: NetServiceBrowserDelegate {
 
 extension SaneBonjour: NetServiceDelegate {
     func netServiceDidResolveAddress(_ sender: NetService) {
-        addresses[sender] = sender.parsedAddresses(types: [.ip4])?.map({ (host, port) in
-            SaneHost(hostname: host, displayName: sender.hostName?.replacingOccurrences(of: ".local.", with: "") ?? host)
-        })
+        addresses[sender] = sender
+            .netAddresses(resolvingHost: false)?
+            .filter { $0.family == .ip4 }
+            .map({ address in
+                let displayName = address.host?.replacingOccurrences(of: ".local.", with: "") ?? address.ip
+                return SaneHost(hostname: address.ip, displayName: displayName)
+            })
     }
 
     func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
