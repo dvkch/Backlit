@@ -16,10 +16,7 @@ Scanned documents can be shared as a multi-page PDF or as individual images via 
 
 ## Screenshots
 
-<img src="fastlane/screenshots/en-US/iPhone SE (1st generation)-01-Devices.png?raw=true" alt="Devices" width="240" /> <img src="fastlane/screenshots/en-US/iPhone SE (1st generation)-02-DeviceWithPreview.png?raw=true" alt="Devices" width="240" />
-<img src="fastlane/screenshots/en-US/iPhone SE (1st generation)-03-DeviceWithOptions.png?raw=true" alt="Devices" width="240" />
-<img src="fastlane/screenshots/en-US/iPhone SE (1st generation)-04-DeviceWithOptionPopup.png?raw=true" alt="Devices" width="240" />
-<img src="fastlane/screenshots/en-US/iPhone SE (1st generation)-05-Settings.png?raw=true" alt="Devices" width="240" />
+<img class="screenshot" src="Resources/README-01.png?raw=true" alt="Devices" width="240" />&nbsp;&nbsp;<img src="Resources/README-02.png?raw=true" alt="Preview" width="240" />&nbsp;&nbsp;<img src="Resources/README-03.png?raw=true" alt="Options" width="240" />&nbsp;&nbsp;<img src="Resources/README-04.png?raw=true" alt="Option popup" width="240" />&nbsp;&nbsp;<img src="Resources/README-05.png?raw=true" alt="Gallery" width="240" />&nbsp;&nbsp;<img src="Resources/README-06.png?raw=true" alt="Settings" width="240" />
 
 ## Useful links
 
