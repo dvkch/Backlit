@@ -141,19 +141,31 @@ class GalleryGridVC: UIViewController {
     @objc private func pdfButtonTap(sender: UIBarButtonItem) {
         guard let selected = collectionView.indexPathsForSelectedItems, !selected.isEmpty else { return }
         
-        let hud = HUDAlertController.show(in: self)
-        
-        // needed to let HUD appear, even if PDF is generated on main thread
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.shareSelectedItemsAsPDF(sender: sender, hud: hud)
+        let completion = { (interleaved: Bool) in
+            let hud = HUDAlertController.show(in: self)
+            
+            // needed to let HUD appear, even if PDF is generated on main thread
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.shareSelectedItemsAsPDF(interleaved: interleaved, sender: sender, hud: hud)
+            }
         }
+
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertVC.addAction(title: "SHARE AS PDF".localized, image: .icon(.pdf), style: .default) { _ in
+            completion(false)
+        }
+        alertVC.addAction(title: "SHARE AS PDF INTERLEAVED".localized, image: .icon(.pdf), style: .default) { _ in
+            completion(true)
+        }
+        alertVC.popoverPresentationController?.barButtonItem = sender
+        present(alertVC, animated: true)
     }
     
     @objc private func shareButtonTap(sender: UIBarButtonItem) {
         let urls = self.selectedURLs()
         guard !urls.isEmpty else { return }
         
-        UIActivityViewController.showForURLs(urls, from: sender, presentingVC: self, completion: nil)
+        UIActivityViewController.showForURLs(urls, from: .barButtonItem(sender), presentingVC: self, completion: nil)
     }
     
     // MARK: Sharing
@@ -163,14 +175,14 @@ class GalleryGridVC: UIViewController {
             .compactMap { self.galleryDataSource.itemIdentifier(for: $0)?.url }
     }
     
-    private func shareSelectedItemsAsPDF(sender: UIBarButtonItem, hud: HUDAlertController?) {
+    private func shareSelectedItemsAsPDF(interleaved: Bool, sender: UIBarButtonItem, hud: HUDAlertController?) {
         let urls = self.selectedURLs()
         guard !urls.isEmpty else { return }
-        
+
         let tempURL = GalleryManager.shared.tempPdfFileUrl()
         
         do {
-            try PDFGenerator.generatePDF(destination: tempURL, images: selectedURLs(), pageSize: Preferences.shared.pdfSize)
+            try PDFGenerator.generatePDF(destination: tempURL, images: selectedURLs(), pageSize: Preferences.shared.pdfSize, interleaved: interleaved)
         }
         catch {
             HUDAlertController.dismiss(hud) {
@@ -180,7 +192,7 @@ class GalleryGridVC: UIViewController {
         }
         
         HUDAlertController.dismiss(hud) {
-            UIActivityViewController.showForURLs([tempURL], from: sender, presentingVC: self) {
+            UIActivityViewController.showForURLs([tempURL], from: .barButtonItem(sender), presentingVC: self) {
                 // is called when the interaction with the PDF is done. It's either been copied, imported,
                 // displayed, shared or printed, but we can dispose of it
                 GalleryManager.shared.deleteTempPDF()

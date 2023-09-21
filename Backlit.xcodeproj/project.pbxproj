@@ -83,6 +83,7 @@
 		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
 		97A3AC2429A7F4CB00F31207 /* UIButton+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3AC2329A7F4CB00F31207 /* UIButton+SY.swift */; };
 		97A602762ABCE25E000B1F1B /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A602752ABCE25E000B1F1B /* Switch.swift */; };
+		97A602782ABCE562000B1F1B /* Collection+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A602772ABCE562000B1F1B /* Collection+SY.swift */; };
 		97A9FCEA2640906F0027F462 /* CatalystPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCE92640906F0027F462 /* CatalystPlugin.swift */; };
 		97A9FCEC264090960027F462 /* CatalystPluginImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */; };
 		97A9FCED264091500027F462 /* CatalystPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCE92640906F0027F462 /* CatalystPlugin.swift */; };
@@ -252,6 +253,7 @@
 		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		97A3AC2329A7F4CB00F31207 /* UIButton+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+SY.swift"; sourceTree = "<group>"; };
 		97A602752ABCE25E000B1F1B /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
+		97A602772ABCE562000B1F1B /* Collection+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SY.swift"; sourceTree = "<group>"; };
 		97A9FCE3264090500027F462 /* BacklitCatalystPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BacklitCatalystPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		97A9FCE5264090500027F462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97A9FCE92640906F0027F462 /* CatalystPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystPlugin.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 		97CD848D263AC5ED006DD44B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				97A602772ABCE562000B1F1B /* Collection+SY.swift */,
 				97FF2A9029EC9CD30096ACFC /* DiffableDataSources+SY.swift */,
 				973066C2220C8C740068E8C7 /* FileManager+SY.swift */,
 				9730FD9125CF6365009ABCBC /* SaneSwift+SY.swift */,
@@ -1023,6 +1026,7 @@
 				975277C8264D48AB00FFAAF4 /* ProgressMaskView.swift in Sources */,
 				97EB32B222071F880027CCAE /* PreferencesVC.swift in Sources */,
 				973066BB220C82110068E8C7 /* GalleryThumbnailCell.swift in Sources */,
+				97A602782ABCE562000B1F1B /* Collection+SY.swift in Sources */,
 				972B78C129E417C9004FA923 /* Logger+Sane.swift in Sources */,
 				97F2FB55222318D5006BD617 /* GalleryItem.swift in Sources */,
 				971B894229C8793C0005785A /* GalleryImageView.swift in Sources */,

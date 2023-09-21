@@ -12,7 +12,6 @@ import SaneSwift
 import SYPictureMetadata
 
 // TODO: scanning in the background doesn't seem to properly save images, or at least doesn't refresh then propagate the list of images ? but also opening them is black ? idk. weird. => peut etre parce que l'animation foire ?
-// TODO: allow scanning a bunch of documents, then a bunch of other ones, then interleaving them to make a pdf
 
 @UIApplicationMain
 class AppDelegate: UIResponder {

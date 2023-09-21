@@ -59,7 +59,7 @@ extension GalleryItem {
                     openGallery()
                 })
                 actions.append(UIAction(title: "ACTION SHARE".localized, image: .icon(.share)) { _ in
-                    UIActivityViewController.showForURLs([self.url], in: viewController, sender: sender, completion: nil)
+                    UIActivityViewController.showForURLs([self.url], from: .view(sender), presentingVC: viewController)
                 })
                 actions.append(UIAction(title: "ACTION SAVE TO PHOTOS".localized, image: .icon(.save)) { _ in
                     let hud = HUDAlertController.show(in: viewController)

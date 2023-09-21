@@ -32,12 +32,17 @@ extension PDFGeneratorError: LocalizedError {
 }
 
 class PDFGenerator: NSObject {
-    static func generatePDF(destination pdfURL: URL, images imagesURLs: [URL], pageSize: Preferences.PDFSize) throws {
+    static func generatePDF(destination pdfURL: URL, images imagesURLs: [URL], pageSize: Preferences.PDFSize, interleaved: Bool) throws {
         guard !imagesURLs.isEmpty else {
             throw PDFGeneratorError.noImages
         }
         
-        var maxWidth = imagesURLs.compactMap { UIImage.sizeOfImage(at: $0)?.width }.max() ?? 0
+        var orderedImageURLs = imagesURLs
+        if interleaved {
+            orderedImageURLs = imagesURLs.interleaved
+        }
+        
+        var maxWidth = orderedImageURLs.compactMap { UIImage.sizeOfImage(at: $0)?.width }.max() ?? 0
         maxWidth = max(500, maxWidth)
 
         // autoreleasepool might not be required, but it allows using defer { ... } to make sure even an exception
@@ -46,7 +51,7 @@ class PDFGenerator: NSObject {
             UIGraphicsBeginPDFContextToFile(pdfURL.path, .zero, nil)
             defer { UIGraphicsEndPDFContext() }
             
-            for imageURL in imagesURLs {
+            for imageURL in orderedImageURLs {
                 guard let image = UIImage(contentsOfFile: imageURL.path) else {
                     throw PDFGeneratorError.cannotOpenImage(url: imageURL)
                 }

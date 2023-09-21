@@ -12,7 +12,12 @@ import SYKit
 
 class PDFActivity: UIActivity {
     
+    init(interleaved: Bool) {
+        self.interleaved = interleaved
+    }
+    
     // MARK: Properties
+    var interleaved: Bool
     weak var presentingViewController: UIViewController?
     private weak var hud: HUDAlertController?
     
@@ -34,11 +39,18 @@ class PDFActivity: UIActivity {
 
     // MARK: UIActivity
     override var activityType: UIActivity.ActivityType? {
-        let id = Bundle.main.bundleIdentifier!.appending(".pdfActivity")
+        if interleaved {
+            let id = Bundle.main.bundleIdentifier!.appending(".pdfActivity.interleaved")
+            return UIActivity.ActivityType(id)
+        }
+        let id = Bundle.main.bundleIdentifier!.appending(".pdfActivity.regular")
         return UIActivity.ActivityType(id)
     }
     
     override var activityTitle: String? {
+        if interleaved {
+            return "SHARE AS PDF INTERLEAVED".localized
+        }
         return "SHARE AS PDF".localized
     }
     
@@ -90,7 +102,12 @@ class PDFActivity: UIActivity {
         let tempURL = GalleryManager.shared.tempPdfFileUrl()
         
         do {
-            try PDFGenerator.generatePDF(destination: tempURL, images: self.items, pageSize: Preferences.shared.pdfSize)
+            try PDFGenerator.generatePDF(
+                destination: tempURL,
+                images: self.items,
+                pageSize: Preferences.shared.pdfSize,
+                interleaved: interleaved
+            )
         }
         catch {
             obtainPresentingViewController {
