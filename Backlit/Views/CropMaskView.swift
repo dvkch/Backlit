@@ -10,7 +10,6 @@ import UIKit
 import SYKit
 import SnapKit
 
-// TODO: better hover when using pencil
 class CropMaskView: UIControl {
 
     // MARK: Init

@@ -152,7 +152,7 @@ class OptionCell: TableViewCell {
             accessibilityIdentifier = prefKey.rawValue
 
             if let boolValue = Preferences.shared[prefKey] as? BoolPreferenceValue {
-                let control = UISwitch()
+                let control = Switch()
                 control.isOn = boolValue.rawValue
                 control.onTintColor = UIColor.tint
                 control.addPrimaryAction {
@@ -291,7 +291,7 @@ class OptionCell: TableViewCell {
                 make.top.right.equalTo(contentView.layoutMarginsGuide)
                 make.width.lessThanOrEqualToSuperview().multipliedBy(0.5)
                 
-                if valueControl is UISwitch {
+                if valueControl is Switch {
                     make.centerY.equalTo(titleLabel)
                 }
                 else {

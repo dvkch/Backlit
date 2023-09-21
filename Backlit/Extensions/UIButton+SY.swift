@@ -14,7 +14,10 @@ extension UIButton {
     // MARK: Style
     static func system(prominent: Bool) -> Self {
         let button = Self(type: .roundedRect)
-        
+        if #available(iOS 13.4, *) {
+            button.isPointerInteractionEnabled = true
+        }
+
         #if targetEnvironment(macCatalyst)
         // by default macOS counts 20px for the intrinsicContentSize.height of the button, but
         // it is actually 21px. to prevent the button from being cut, let's try to improve this

@@ -1,15 +1,14 @@
 //
-//  TapInsetsView.swift
+//  Switch.swift
 //  Backlit
 //
-//  Created by Stanislas Chevallier on 27/06/2019.
-//  Copyright © 2019 Syan. All rights reserved.
+//  Created by syan on 21/09/2023.
+//  Copyright © 2023 Syan. All rights reserved.
 //
 
 import UIKit
 
-class TapInsetsView: UIView {
-    
+class Switch: UISwitch {
     // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,29 +24,17 @@ class TapInsetsView: UIView {
         if #available(iOS 13.4, *) {
             addInteraction(UIPointerInteraction(delegate: self))
         }
-     }
-   
-    // MARK: Tap insets
-    var tapInsets: UIEdgeInsets = .zero
-    
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if tapInsets != .zero {
-            if isHidden || alpha == 0 {
-                return false
-            }
-            return bounds.inset(by: tapInsets).contains(point)
-        }
-        return super.point(inside: point, with: event)
     }
 }
 
 @available(iOS 13.4, *)
-extension TapInsetsView: UIPointerInteractionDelegate {
+extension Switch: UIPointerInteractionDelegate {
     func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
         if let interactionView = interaction.view {
             let targetedPreview = UITargetedPreview(view: interactionView)
-            return .init(effect: .automatic(targetedPreview))
+            return .init(effect: .lift(targetedPreview))
         }
         return nil
     }
 }
+
