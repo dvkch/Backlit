@@ -101,7 +101,6 @@ extension AppDelegate : UIApplicationDelegate {
         
         Logger.i(.background, "Keeping app alive for a bit longer")
         BackgroundKeepAlive.shared.keepAlive = true
-        // TODO: doesn't seem to work on iOS 12
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
             // try to restart a background task, only if need be

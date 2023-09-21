@@ -9,6 +9,8 @@
 import UIKit
 import AVFoundation
 
+// Nota: on older iOS version, this doesn't appear to work while debugging. After carefull testing without being attached
+// to the debugger, it does indeed work. Tested on iOS 13.7
 class BackgroundKeepAlive: NSObject {
     
     // MARK: Init
@@ -46,48 +48,3 @@ class BackgroundKeepAlive: NSObject {
         player.play()
     }
 }
-
-
-/*
- class BackgroundKeepAlive: NSObject {
-    
-    // MARK: Init
-    static let shared = BackgroundKeepAlive()
-    private override init() {
-        super.init()
-    }
-    
-    // MARK: Properties
-    var keepAlive: Bool = false {
-        didSet {
-            guard keepAlive != oldValue else { return }
-            Logger.i(.background, keepAlive ? "Enabling keepAlive" : "Disabling keepAlive")
-            updateStatus()
-        }
-    }
-
-    // MARK: Inner workings
-    private var identifier: UIBackgroundTaskIdentifier = .invalid
-    private func updateStatus() {
-        guard keepAlive else {
-            Logger.i(.background, "Ending background task")
-            UIApplication.shared.endBackgroundTask(identifier)
-            return
-        }
-
-        identifier = UIApplication.shared.beginBackgroundTask(withName: "scan") {
-            Logger.i(.background, "Ending background task")
-            UIApplication.shared.endBackgroundTask(self.identifier)
-            
-            self.updateStatus()
-        }
-        
-        if identifier == .invalid {
-            Logger.e(.background, "Couldn't create background task")
-        }
-        else {
-            Logger.i(.background, "Started background task")
-        }
-    }
-}
-*/
