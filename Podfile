@@ -1,6 +1,6 @@
 inhibit_all_warnings!
 
-platform :ios, '11.1'
+platform :ios, '12.0'
 
 use_frameworks!
 
@@ -28,7 +28,7 @@ post_install do |installer|
         is_bundle = target.respond_to?(:product_type) && target.product_type == "com.apple.product-type.bundle"
 
         target.build_configurations.each do |config|
-            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.1'
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
             config.build_settings['ENABLE_BITCODE'] = 'NO'
 
             # Fix bundle targets' 'Signing Certificate' to 'Sign to Run Locally'

@@ -16,7 +16,7 @@ import Foundation
     func presentAuthInputAlert(title: String, message: String, usernamePlaceholder: String, passwordPlaceholder: String, continue: String, remember: String, cancel: String, completion: (_ username: String?, _ password: String?, _ remember: Bool) -> ())
 }
 
-@available(macCatalyst 10.0, *)
+@available(macCatalyst 11.0, *)
 @available(iOS, unavailable)
 func obtainCatalystPlugin() -> CatalystPlugin {
     let bundleFileName = "SaneScanner-CatalystPlugin.bundle"
