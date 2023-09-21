@@ -4,7 +4,7 @@ platform :ios, '12.0'
 
 use_frameworks!
 
-target :'SaneScanner' do
+target :Backlit do
     pod 'Sane', :path => "./", :inhibit_warnings => false
     pod 'SaneSwift', :path => "./", :inhibit_warnings => false
     pod 'DiffableDataSources'
@@ -17,12 +17,12 @@ target :'SaneScanner' do
     pod 'SYKit', '>= 0.1.17'
     pod 'SYOperationQueue'
     pod 'SYPictureMetadata', '~> 2.0'
-    pod 'TelemetryClient', :podspec => "https://raw.githubusercontent.com/dvkch/SYPods/master/TelemetryClient.podspec"
+    pod 'TelemetryClient', :podspec => "https://raw.githubusercontent.com/TelemetryDeck/SwiftClient/main/TelemetryClient.podspec"
 end
 
 post_install do |installer|
     require 'fileutils'
-    FileUtils.cp_r('Pods/Target Support Files/Pods-SaneScanner/Pods-SaneScanner-acknowledgements.plist', 'SaneScanner/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+    FileUtils.cp_r('Pods/Target Support Files/Pods-Backlit/Pods-Backlit-acknowledgements.plist', 'Backlit/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
 
     installer.pods_project.targets.each do |target|
         is_bundle = target.respond_to?(:product_type) && target.product_type == "com.apple.product-type.bundle"

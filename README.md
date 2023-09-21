@@ -1,6 +1,6 @@
 <img src="Resources/README-AppIcon.png" width=64 />
 
-# SaneScanner
+# Backlit
 
 ## What is it?
 

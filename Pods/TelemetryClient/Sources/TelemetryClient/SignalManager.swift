@@ -25,7 +25,7 @@ internal class SignalManager: SignalManageable {
         self.configuration = configuration
 
         // We automatically load any old signals from disk on initialisation
-        signalCache = SignalCache(logHandler: configuration.logHandler)
+        signalCache = SignalCache(showDebugLogs: configuration.showDebugLogs)
 
         // Before the app terminates, we want to save any pending signals to disk
         // We need to monitor different notifications for different devices.
@@ -70,13 +70,7 @@ internal class SignalManager: SignalManageable {
     /// Adds a signal to the process queue
     func processSignal(_ signalType: TelemetrySignalType, for clientUser: String? = nil, floatValue: Double? = nil, with additionalPayload: [String: String] = [:], configuration: TelemetryManagerConfiguration) {
         DispatchQueue.global(qos: .utility).async {
-            let enrichedMetadata: [String: String] = configuration.metadataEnrichers
-                .map { $0.enrich(signalType: signalType, for: clientUser, floatValue: floatValue) }
-                .reduce([String: String](), { $0.applying($1) })
-
-            let payload = DefaultSignalPayload().toDictionary()
-                .applying(enrichedMetadata)
-                .applying(additionalPayload)
+            let payLoad = SignalPayload(additionalPayload: additionalPayload)
 
             let signalPostBody = SignalPostBody(
                 receivedAt: Date(),
@@ -85,11 +79,13 @@ internal class SignalManager: SignalManageable {
                 sessionID: configuration.sessionID.uuidString,
                 type: "\(signalType)",
                 floatValue: floatValue,
-                payload: payload.toMultiValueDimension(),
+                payload: payLoad.toMultiValueDimension(),
                 isTestMode: configuration.testMode ? "true" : "false"
             )
 
-            configuration.logHandler?.log(.debug, message: "Process signal: \(signalPostBody)")
+            if configuration.showDebugLogs {
+                print("Process signal: \(signalPostBody)")
+            }
 
             self.signalCache.push(signalPostBody)
         }
@@ -99,17 +95,21 @@ internal class SignalManager: SignalManageable {
     /// If any fail to send, we put them back into the cache to send later.
     @objc
     private func checkForSignalsAndSend() {
-        configuration.logHandler?.log(.debug, message: "Current signal cache count: \(signalCache.count())")
+        if configuration.showDebugLogs {
+            print("Current signal cache count: \(signalCache.count())")
+        }
 
         let queuedSignals: [SignalPostBody] = signalCache.pop()
         if !queuedSignals.isEmpty {
-            configuration.logHandler?.log(message: "Sending \(queuedSignals.count) signals leaving a cache of \(signalCache.count()) signals")
-
+            if configuration.showDebugLogs {
+                print("Sending \(queuedSignals.count) signals leaving a cache of \(signalCache.count()) signals")
+            }
             send(queuedSignals) { [configuration, signalCache] data, response, error in
 
                 if let error = error {
-                    configuration.logHandler?.log(.error, message: "\(error)")
-
+                    if configuration.showDebugLogs {
+                        print(error)
+                    }
                     // The send failed, put the signal back into the queue
                     signalCache.push(queuedSignals)
                     return
@@ -118,14 +118,18 @@ internal class SignalManager: SignalManageable {
                 // Check for valid status code response
                 guard response?.statusCodeError() == nil else {
                     let statusError = response!.statusCodeError()!
-                    configuration.logHandler?.log(.error, message: "\(statusError)")
+                    if configuration.showDebugLogs {
+                        print(statusError)
+                    }
                     // The send failed, put the signal back into the queue
                     signalCache.push(queuedSignals)
                     return
                 }
 
                 if let data = data {
-                    configuration.logHandler?.log(.debug, message: String(data: data, encoding: .utf8)!)
+                    if configuration.showDebugLogs {
+                        print(String(data: data, encoding: .utf8)!)
+                    }
                 }
             }
         }
@@ -136,7 +140,10 @@ internal class SignalManager: SignalManageable {
 
 private extension SignalManager {
     @objc func appWillTerminate() {
-        configuration.logHandler?.log(.debug, message: #function)
+        if configuration.showDebugLogs {
+            print(#function)
+        }
+
         signalCache.backupCache()
     }
 
@@ -146,18 +153,24 @@ private extension SignalManager {
     /// so we merge them into the new cache.
     #if os(watchOS) || os(tvOS) || os(iOS)
     @objc func didEnterForeground() {
-        configuration.logHandler?.log(.debug, message: #function)
+        if configuration.showDebugLogs {
+            print(#function)
+        }
 
         let currentCache = signalCache.pop()
-        configuration.logHandler?.log(.debug, message: "current cache is \(currentCache.count) signals")
-        signalCache = SignalCache(logHandler: configuration.logHandler)
+        if configuration.showDebugLogs {
+            print("current cache is \(currentCache.count) signals")
+        }
+        signalCache = SignalCache(showDebugLogs: configuration.showDebugLogs)
         signalCache.push(currentCache)
 
         startTimer()
     }
 
     @objc func didEnterBackground() {
-        configuration.logHandler?.log(.debug, message: #function)
+        if configuration.showDebugLogs {
+            print(#function)
+        }
 
         sendTimer?.invalidate()
         sendTimer = nil
@@ -180,8 +193,9 @@ private extension SignalManager {
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
             urlRequest.httpBody = try! JSONEncoder.telemetryEncoder.encode(signalPostBodies)
-            self.configuration.logHandler?.log(.debug, message: String(data: urlRequest.httpBody!, encoding: .utf8)!)
-
+            if self.configuration.showDebugLogs {
+                print(String(data: urlRequest.httpBody!, encoding: .utf8)!)
+            }
             /// Wait for connectivity
             let config = URLSessionConfiguration.default
             config.waitsForConnectivity = true
@@ -208,12 +222,12 @@ private extension SignalManager {
         guard configuration.defaultUser == nil else { return configuration.defaultUser! }
 
         #if os(iOS) || os(tvOS)
-            return UIDevice.current.identifierForVendor?.uuidString ?? "unknown user \(DefaultSignalPayload.systemVersion) \(DefaultSignalPayload.buildNumber)"
+            return UIDevice.current.identifierForVendor?.uuidString ?? "unknown user \(SignalPayload.systemVersion) \(SignalPayload.buildNumber)"
         #elseif os(watchOS)
             if #available(watchOS 6.2, *) {
-                return WKInterfaceDevice.current().identifierForVendor?.uuidString ?? "unknown user \(DefaultSignalPayload.systemVersion) \(DefaultSignalPayload.buildNumber)"
+                return WKInterfaceDevice.current().identifierForVendor?.uuidString ?? "unknown user \(SignalPayload.systemVersion) \(SignalPayload.buildNumber)"
             } else {
-                return "unknown user \(DefaultSignalPayload.platform) \(DefaultSignalPayload.systemVersion) \(DefaultSignalPayload.buildNumber)"
+                return "unknown user \(SignalPayload.platform) \(SignalPayload.systemVersion) \(SignalPayload.buildNumber)"
             }
         #elseif os(macOS)
             if let customDefaults = self.customDefaults, let defaultUserIdentifier = customDefaults.string(forKey: "defaultUserIdentifier") {
@@ -225,9 +239,9 @@ private extension SignalManager {
             }
         #else
             #if DEBUG
-                configuration.logHandler?.log(message: "[Telemetry] On this platform, Telemetry can't generate a unique user identifier. It is recommended you supply one yourself. More info: https://telemetrydeck.com/pages/signal-reference.html")
+                print("[Telemetry] On this platform, Telemetry can't generate a unique user identifier. It is recommended you supply one yourself. More info: https://telemetrydeck.com/pages/signal-reference.html")
             #endif
-            return "unknown user \(DefaultSignalPayload.platform) \(DefaultSignalPayload.systemVersion) \(DefaultSignalPayload.buildNumber)"
+            return "unknown user \(SignalPayload.platform) \(SignalPayload.systemVersion) \(SignalPayload.buildNumber)"
         #endif
     }
 }

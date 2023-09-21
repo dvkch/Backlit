@@ -1,6 +1,6 @@
 //
 //  SaneConfig.swift
-//  SaneScanner
+//  Backlit
 //
 //  Created by Stanislas Chevallier on 30/01/19.
 //  Copyright (c) 2019 Syan. All rights reserved.
@@ -67,7 +67,7 @@ internal extension SaneConfig {
         guard let baseURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
             fatalError("Should have access to config directory")
         }
-        let saneConfigDirURL = baseURL.appendingPathComponent("SaneScanner", isDirectory: true)
+        let saneConfigDirURL = baseURL.appendingPathComponent("SaneSwift", isDirectory: true)
         
         if !FileManager.default.fileExists(atPath: saneConfigDirURL.path) {
             try? FileManager.default.createDirectory(at: saneConfigDirURL, withIntermediateDirectories: true, attributes: nil)

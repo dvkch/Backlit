@@ -8,7 +8,7 @@ import Foundation
 ///
 /// Currently the cache is only in-memory. This will probably change in the near future.
 internal class SignalCache<T> where T: Codable {
-    internal var logHandler: LogHandler?
+    public var showDebugLogs: Bool = false
 
     private var cachedSignals: [T] = []
     private let maximumNumberOfSignalsToPopAtOnce = 100
@@ -69,32 +69,37 @@ internal class SignalCache<T> where T: Codable {
             if let data = try? JSONEncoder().encode(self.cachedSignals) {
                 do {
                     try data.write(to: fileURL())
-                    logHandler?.log(message: "Saved Telemetry cache \(data) of \(self.cachedSignals.count) signals")
+                    if showDebugLogs {
+                        print("Saved Telemetry cache \(data) of \(self.cachedSignals.count) signals")
+                    }
                     // After saving the cache, we need to clear our local cache otherwise
                     // it could get merged with the cache read back from disk later if
                     // it's still in memory
                     self.cachedSignals = []
                 } catch {
-                    logHandler?.log(.error, message: "Error saving Telemetry cache")
+                    print("Error saving Telemetry cache")
                 }
             }
         }
     }
 
     /// Loads any previous signal cache from disk
-    init(logHandler: LogHandler?) {
-        self.logHandler = logHandler
+    init(showDebugLogs: Bool) {
+        self.showDebugLogs = showDebugLogs
 
         queue.sync {
-            logHandler?.log(message: "Loading Telemetry cache from: \(fileURL())")
-
+            if showDebugLogs {
+                print("Loading Telemetry cache from: \(fileURL())")
+            }
             if let data = try? Data(contentsOf: fileURL()) {
                 // Loaded cache file, now delete it to stop it being loaded multiple times
                 try? FileManager.default.removeItem(at: fileURL())
 
                 // Decode the data into a new cache
                 if let signals = try? JSONDecoder().decode([T].self, from: data) {
-                    logHandler?.log(message: "Loaded \(signals.count) signals")
+                    if showDebugLogs {
+                        print("Loaded \(signals.count) signals")
+                    }
                     self.cachedSignals = signals
                 }
             }

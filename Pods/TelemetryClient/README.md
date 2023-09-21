@@ -44,9 +44,9 @@ TelemetryManager.send("appLaunchedRegularly")
 
 ## Debug -> Test Mode
 
-If your app's build configuration is set to "Debug", all signals sent will be marked as testing signals. In the Telemetry Viewer app, activate **Test Mode** to see those.
+If your app's build configuration is set to "Debug", all signals sent will be marked as testing signals. In the Telemetry Viewer app, actvivate **Test Mode** to see those.
 
-If you want to manually control whether test mode is active, you can set the `configuration.testMode` property.
+If you want to manually control wether test mode is active, you can set the `configuration.testMode` property.
 
 ## User Identifiers
 
@@ -105,12 +105,6 @@ A very small subset of our customers will want to use a custom signal ingestion 
 ```swift
 let configuration = TelemetryManagerConfiguration(appID: "<YOUR-APP-ID>", baseURL: "https://nom.telemetrydeck.com")
 ```
-
-## Custom Logging Strategy
-
-By default, some logs helpful for monitoring TelemetryDeck are printed out to the console. This behaviour can be customised by overriding `configuration.logHandler`. This struct accepts a minimum allows log level (any log with the same or higher log level will be accepted) and a closure.
-
-This allows for compatibility with other logging solutions, such as [swift-log](https://github.com/apple/swift-log), by providing your own closure.
 
 ## Developing this SDK
 
