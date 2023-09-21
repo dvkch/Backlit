@@ -11,6 +11,9 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
+// TODO: scanning in the background doesn't seem to properly save images, or at least doesn't refresh then propagate the list of images ? but also opening them is black ? idk. weird. => peut etre parce que l'animation foire ?
+// TODO: allow scanning a bunch of documents, then a bunch of other ones, then interleaving them to make a pdf
+
 @UIApplicationMain
 class AppDelegate: UIResponder {
 
@@ -99,6 +102,7 @@ extension AppDelegate : UIApplicationDelegate {
         
         Logger.i(.background, "Keeping app alive for a bit longer")
         BackgroundKeepAlive.shared.keepAlive = true
+        // TODO: doesn't seem to work on iOS 12
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
             // try to restart a background task, only if need be

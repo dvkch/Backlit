@@ -10,7 +10,7 @@ import UIKit
 
 extension UIColor {
     
-    static var accentColor: UIColor? {
+    private static var accentColor: UIColor? {
         #if targetEnvironment(macCatalyst)
         return UIColor.value(forKey: "controlAccentColor") as? UIColor
         #else
