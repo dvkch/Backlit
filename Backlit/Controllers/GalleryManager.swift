@@ -37,6 +37,8 @@ class GalleryManager: NSObject {
         
         watcher = DirectoryWatcher.watch(galleryFolder)
         watcher?.onNewFiles = { (files) in
+            Logger.d(.gallery, "Watcher: Added \(files)")
+
             let unknownChangesCount = files
                 .map { $0.resolvingSymlinksInPath() }
                 .filter { !self.galleryItems.map(\.url).contains($0) }
@@ -47,6 +49,8 @@ class GalleryManager: NSObject {
             }
         }
         watcher?.onDeletedFiles = { (files) in
+            Logger.d(.gallery, "Watcher: removed \(files)")
+
             // need to make sure the deleted file path starts with galleryFolder, before checking if it is indeed missing from
             // our list of items in memory; when deleting from the Files app, the deleted item path will contain symlinks, but
             // resolving them doesn't work since the file doesn't exist anymore, so we won't match the corresponding item in
@@ -162,6 +166,7 @@ class GalleryManager: NSObject {
     }
 
     private func saveScansSync(device: Device, _ scans: [ScanImage]) throws -> [GalleryItem] {
+        Logger.d(.gallery, "Adding \(scans.count) scans...")
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -170,6 +175,7 @@ class GalleryManager: NSObject {
         var addedItems = [GalleryItem]()
 
         for (index, scan) in scans.enumerated() {
+            Logger.d(.gallery, "Adding scan #\(index)")
             var filename = formatter.string(from: Date())
             if scans.count > 1 {
                 filename += String(format: "_%03d", index)
@@ -177,6 +183,7 @@ class GalleryManager: NSObject {
             let fileURL = galleryFolder
                 .appendingPathComponent(filename, isDirectory: false)
                 .appendingPathExtension(format.fileExtension)
+                .standardizedFileURL
             
             let metadata = SYMetadata.init(device: device, scanParameters: scan.parameters)
             let imageData = try scan.image.scanData(
@@ -185,23 +192,48 @@ class GalleryManager: NSObject {
             )
             
             try imageData.write(to: fileURL, options: .atomicWrite)
-            let item = galleryItemForImage(at: fileURL.standardizedFileURL)
-            generateThumb(for: item)
+            let item = galleryItemForImage(at: fileURL)
+            Logger.d(.gallery, "Saved image for scan #\(index) at \(fileURL)")
             
+            generateThumb(for: item)
+            Logger.d(.gallery, "Generated thumb for scan #\(index) at \(item.thumbnailUrl)")
+
             #if !targetEnvironment(macCatalyst)
             // prepare a lowres cached image if needed for when we'll be displaying the image. we do
             // it directly, to be sure it is available for the local notification
             GalleryImageView.generateLowResIfNeeded(forImageAt: fileURL)
+            Logger.d(.gallery, "Generated low res for scan #\(index)")
             #endif
 
             // do last, as it will trigger the delegates
             galleryItems.append(item)
             addedItems.append(item)
+            Logger.i(.gallery, "Finished scan #\(index)")
+
+            ensureSaved(item: item, data: imageData)
         }
         return addedItems
     }
     
+    private func ensureSaved(item: GalleryItem, data: Data, tries: Int = 10) {
+        // Not gonna lie, this is a weird one... when we save a scan while the app is in the background, the file
+        // is saved, yet disappears as soon as we return from `saveScansSync`. So we make sure it still exists
+        // a bit after, and save the data again if it doesn't
+        guard tries > 0 else { return }
+
+        let exists = FileManager.default.fileExists(atPath: item.url.path)
+        if !exists {
+            Logger.w(.gallery, "Saving again \(item.url)...")
+            try! data.write(to: item.url, options: .atomicWrite)
+        }
+
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
+            self.ensureSaved(item: item, data: data, tries: tries - 1)
+        }
+    }
+    
     func deleteItem(_ item: GalleryItem) {
+        Logger.i(.gallery, "Removed gallery item at #\(item.url)")
         try? FileManager.default.removeItem(at: item.url)
         try? FileManager.default.removeItem(at: item.thumbnailUrl)
         galleryItems.remove(item)
