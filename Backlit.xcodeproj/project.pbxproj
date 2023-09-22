@@ -19,6 +19,7 @@
 		972B584729A8F302003A9403 /* SaneBonjour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B584629A8F302003A9403 /* SaneBonjour.swift */; };
 		972B78BF29E417A7004FA923 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977EA2CF29DEEF6100CBD092 /* Logger.swift */; };
 		972B78C129E417C9004FA923 /* Logger+Sane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B78C029E417C9004FA923 /* Logger+Sane.swift */; };
+		972DD21B2ABDAB440029E916 /* URL+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972DD21A2ABDAB440029E916 /* URL+SY.swift */; };
 		973066B3220C55000068E8C7 /* GalleryThumbsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066B2220C55000068E8C7 /* GalleryThumbsView.swift */; };
 		973066B5220C5CD90068E8C7 /* CropMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066B4220C5CD90068E8C7 /* CropMaskView.swift */; };
 		973066BB220C82110068E8C7 /* GalleryThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973066BA220C82110068E8C7 /* GalleryThumbnailCell.swift */; };
@@ -190,6 +191,7 @@
 		972437942A0AF830002C5F6B /* silent.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silent.mp3; sourceTree = "<group>"; };
 		972B584629A8F302003A9403 /* SaneBonjour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaneBonjour.swift; sourceTree = "<group>"; };
 		972B78C029E417C9004FA923 /* Logger+Sane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Sane.swift"; sourceTree = "<group>"; };
+		972DD21A2ABDAB440029E916 /* URL+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+SY.swift"; sourceTree = "<group>"; };
 		973066B2220C55000068E8C7 /* GalleryThumbsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryThumbsView.swift; sourceTree = "<group>"; };
 		973066B4220C5CD90068E8C7 /* CropMaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropMaskView.swift; sourceTree = "<group>"; };
 		973066BA220C82110068E8C7 /* GalleryThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryThumbnailCell.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				97CCA361264F14BD0042F790 /* UIKeyCommand+SY.swift */,
 				97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */,
 				977F42122A07FE28008D039C /* UITableViewCell+SY.swift */,
+				972DD21A2ABDAB440029E916 /* URL+SY.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1059,6 +1062,7 @@
 				97D4CE8A2636EB7800F84150 /* Snapshot.swift in Sources */,
 				97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */,
 				977F42132A07FE28008D039C /* UITableViewCell+SY.swift in Sources */,
+				972DD21B2ABDAB440029E916 /* URL+SY.swift in Sources */,
 				97EAF238220B54A700435DE6 /* PreviewView.swift in Sources */,
 				97499E5D220872F5006DED20 /* Toolbar.swift in Sources */,
 			);
@@ -1202,6 +1206,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner.SaneScanner-FileProvider Development";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1239,6 +1246,9 @@
 				PROVISIONING_PROFILE_SPECIFIER = "me.syan.SaneScanner.SaneScanner-FileProvider AdHoc";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "me.syan.SaneScanner.SaneScanner-FileProvider Development";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1260,8 +1270,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScannerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Backlit;
 			};
 			name = Debug;
@@ -1281,8 +1295,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.SaneScannerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Backlit;
 			};
 			name = Release;

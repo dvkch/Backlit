@@ -209,27 +209,8 @@ class GalleryManager: NSObject {
             galleryItems.append(item)
             addedItems.append(item)
             Logger.i(.gallery, "Finished scan #\(index)")
-
-            ensureSaved(item: item, data: imageData)
         }
         return addedItems
-    }
-    
-    private func ensureSaved(item: GalleryItem, data: Data, tries: Int = 10) {
-        // Not gonna lie, this is a weird one... when we save a scan while the app is in the background, the file
-        // is saved, yet disappears as soon as we return from `saveScansSync`. So we make sure it still exists
-        // a bit after, and save the data again if it doesn't
-        guard tries > 0 else { return }
-
-        let exists = FileManager.default.fileExists(atPath: item.url.path)
-        if !exists {
-            Logger.w(.gallery, "Saving again \(item.url)...")
-            try! data.write(to: item.url, options: .atomicWrite)
-        }
-
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.5) {
-            self.ensureSaved(item: item, data: data, tries: tries - 1)
-        }
     }
     
     func deleteItem(_ item: GalleryItem) {

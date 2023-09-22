@@ -287,7 +287,13 @@ class DeviceVC: UIViewController {
         content.title = "SCAN FINISHED NOTIFICATION TITLE".localized
         content.body = "SCAN FINISHED NOTIFICATION MESSAGE %d".localized(quantity: items.count)
         content.sound = .init(named: .init(rawValue: "scanner.caf"))
-        content.attachments = items.compactMap { try? UNNotificationAttachment(identifier: $0.url.path, url: $0.lowResURL ?? $0.url) }
+        content.attachments = items.compactMap {
+            // https://stackoverflow.com/a/77157008/1439489
+            if let url = try? ($0.lowResURL ?? $0.url).temporaryCopy() {
+                return try? UNNotificationAttachment(identifier: $0.url.path, url: url)
+            }
+            return nil
+        }
         content.userInfo = ["galleryItemPath": firstItem.url.path]
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: "scan-\(firstItem.hash)", content: content, trigger: trigger)

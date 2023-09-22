@@ -11,7 +11,6 @@ import SYKit
 import SaneSwift
 import SYPictureMetadata
 
-// TODO: scanning in the background doesn't seem to properly save images, or at least doesn't refresh then propagate the list of images ? but also opening them is black ? idk. weird. => peut etre parce que l'animation foire ?
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
