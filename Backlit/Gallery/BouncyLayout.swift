@@ -134,10 +134,17 @@ class BouncyLayout: UICollectionViewFlowLayout {
         // will often return more items than what the original layout would have, which
         // results in items blinking in and out of selection. this is a hack, it might make
         // animations a bit weird and will definitely not work with all kind of animated behaviors
-        // but it works for this use case. tested on iOS 16.4
-        let visibleIndexPaths = super.layoutAttributesForElements(in: rect)?.map(\.indexPath) ?? []
-        let animatedItemsInRect = animator.items(in: rect) as! [UICollectionViewLayoutAttributes]
-        return animatedItemsInRect.filter({ visibleIndexPaths.contains($0.indexPath) })
+        // but it works for this use case. Reproducible from iOS 13.7 to 17.0
+        let visibleItems = super.layoutAttributesForElements(in: rect) ?? []
+        let visibleIndexPaths = visibleItems.map(\.indexPath)
+
+        let animatedItems = animator.items(in: rect) as! [UICollectionViewLayoutAttributes]
+        let animatedIndexPaths = animatedItems.map(\.indexPath)
+        
+        return (
+            animatedItems.filter {  visibleIndexPaths.contains($0.indexPath) } +
+            visibleItems.filter { !animatedIndexPaths.contains($0.indexPath) }
+        )
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
