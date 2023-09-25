@@ -25,7 +25,9 @@ languages([
     "fr-FR",
 ])
 
-scheme "SaneScanner"
+ios_version "16.4"
+
+scheme "Backlit"
 
 output_directory "./fastlane/screenshots"
 
@@ -34,12 +36,16 @@ skip_open_summary true
 clean false
 stop_after_first_error true
 
-workspace "./SaneScanner.xcworkspace"
+workspace "./Backlit.xcworkspace"
 
 reinstall_app false
 app_identifier "me.syan.SaneScanner"
+
+# in case the status bar override doesn't work, see https://github.com/fastlane/fastlane/issues/21255
 override_status_bar true
 override_status_bar_arguments "--time 13:12 --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode active --operatorName '' --batteryState charged --batteryLevel 100"
 
 concurrent_simulators false
 localize_simulator true
+
+

@@ -2,7 +2,7 @@ default_platform(:ios)
 
 platform :ios do
     before_all do |lane, options|
-      xcversion(version: "~> 14.0")
+      xcversion(version: "~> 15.0")
     end
 
     desc "Create signing certs and provisioning profiles if needed"
@@ -37,8 +37,8 @@ platform :ios do
     def build(catalyst:)
         profile_suffix = catalyst ? " macOS" : ""
         build_app(
-            workspace: "SaneScanner.xcworkspace", 
-            scheme: "SaneScanner",
+            workspace: "Backlit.xcworkspace", 
+            scheme: "Backlit",
             output_directory: "./build",
             catalyst_platform: catalyst ? 'macos' : 'ios',
             skip_profile_detection: true,
