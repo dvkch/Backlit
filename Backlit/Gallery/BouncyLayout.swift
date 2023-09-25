@@ -23,6 +23,7 @@ class BouncyLayout: UICollectionViewFlowLayout {
     }
     
     // MARK: Properties
+    var isBouncingEnabled: Bool = true
     var bounciness: CGFloat = 1
     private lazy var animator = UIDynamicAnimator(collectionViewLayout: self)
     private var visibleIdentifiers: [BouncyIdentifier: CGRect] = [:]
@@ -77,7 +78,7 @@ class BouncyLayout: UICollectionViewFlowLayout {
         let touchLocation = collectionView?.panGestureRecognizer.location(in: collectionView) ?? .zero
         guard touchLocation != .zero else { return }
 
-        guard userStartedScrolling && !UIAccessibility.isReduceMotionEnabled else {
+        guard isBouncingEnabled && userStartedScrolling && !UIAccessibility.isReduceMotionEnabled else {
             behaviors.forEach { animator.updateItem(usingCurrentState: $0.item) }
             return
         }
@@ -136,10 +137,10 @@ class BouncyLayout: UICollectionViewFlowLayout {
         // animations a bit weird and will definitely not work with all kind of animated behaviors
         // but it works for this use case. Reproducible from iOS 13.7 to 17.0
         let visibleItems = super.layoutAttributesForElements(in: rect) ?? []
-        let visibleIndexPaths = visibleItems.map(\.indexPath)
+        let visibleIndexPaths = Set(visibleItems.map(\.indexPath))
 
         let animatedItems = animator.items(in: rect) as! [UICollectionViewLayoutAttributes]
-        let animatedIndexPaths = animatedItems.map(\.indexPath)
+        let animatedIndexPaths = Set(animatedItems.map(\.indexPath))
         
         return (
             animatedItems.filter {  visibleIndexPaths.contains($0.indexPath) } +

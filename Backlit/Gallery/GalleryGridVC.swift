@@ -94,6 +94,7 @@ class GalleryGridVC: UIViewController {
         updateNavBarContent(animated: animated)
         updateToolbarVisibility(animated: animated)
         
+        collectionViewLayout.isBouncingEnabled = !isEditing
         collectionView.visibleCells.forEach {
             ($0 as? GalleryThumbnailCell)?.showSelectionIndicator = editing
         }
@@ -331,6 +332,12 @@ extension GalleryGridVC : UICollectionViewDelegateFlowLayout {
             if let item = galleryDataSource.itemIdentifier(for: indexPath) {
                 openGallery(on: item)
             }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if isEditing {
+            updateNavBarContent(animated: false)
         }
     }
 
