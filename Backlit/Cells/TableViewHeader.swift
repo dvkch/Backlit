@@ -54,8 +54,8 @@ class TableViewHeader: UITableViewHeaderFooterView {
         contentView.addSubview(container)
         container.snp.makeConstraints { make in
             topMarginConstraint = make.top.equalTo(contentView.layoutMarginsGuide).constraint.layoutConstraints.first
-            make.left.equalTo(contentView.layoutMarginsGuide)
-            make.right.bottom.lessThanOrEqualTo(contentView.layoutMarginsGuide)
+            make.left.bottom.equalTo(contentView.layoutMarginsGuide)
+            make.right.lessThanOrEqualTo(contentView.layoutMarginsGuide)
         }
         
         label.textColor = .background

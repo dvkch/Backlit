@@ -38,7 +38,11 @@ class GalleryItem: NSObject {
 // MARK: Item properties
 extension GalleryItem {
     var lowResURL: URL? {
+        #if !targetEnvironment(macCatalyst)
         GalleryImageView.lowResURLIfNeeded(forImageAt: url)
+        #else
+        nil
+        #endif
     }
     
     static var deviceInfoCache: [URL: String?] = [:]

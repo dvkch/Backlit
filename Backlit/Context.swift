@@ -109,9 +109,14 @@ class Context: NSObject {
     }
     
     func openGallery(on item: GalleryItem) {
+        #if targetEnvironment(macCatalyst)
+        // crashes in debug in Catalyst, but all good in release
+        UIApplication.shared.open(GalleryManager.shared.galleryFolder, options: [:], completionHandler: nil)
+        #else
         let topVC = splitViewController.presentedViewController ?? splitViewController
         let nc = GalleryNC(openedOn: GalleryManager.shared.galleryItems.last)
         topVC.present(nc, animated: true, completion: nil)
+        #endif
     }
     
     // MARK: Status

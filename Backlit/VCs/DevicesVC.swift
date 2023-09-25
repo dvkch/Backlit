@@ -366,6 +366,7 @@ extension DevicesVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueHeader(TableViewHeader.self)
         header.text = headerText(in: section)
+        header.topMargin = section == 0 ? 17 : 0
         return header
     }
     
