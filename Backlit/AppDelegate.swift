@@ -42,8 +42,10 @@ extension AppDelegate : UIApplicationDelegate {
             Preferences.shared.askedAnalytics = true
             Preferences.shared.enableAnalytics = false
 
+            #if DEBUG
             SaneMockable.shared.isMockingEnabled = config.mockScan
             SaneMockable.shared.mockedScanImage = config.mockScanImage
+            #endif
 
             config.setupHost()
         }
