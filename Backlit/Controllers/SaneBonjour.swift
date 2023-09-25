@@ -88,8 +88,9 @@ extension SaneBonjour: NetServiceDelegate {
             .netAddresses(resolvingHost: false)?
             .filter { $0.family == .ip4 }
             .map({ address in
-                let displayName = address.host?.replacingOccurrences(of: ".local.", with: "") ?? address.ip
-                return SaneHost(hostname: address.ip, displayName: displayName)
+                var displayName = address.host?.nilIfEmpty ?? sender.hostName
+                displayName = displayName?.replacingOccurrences(of: ".local.", with: "")
+                return SaneHost(hostname: address.ip, displayName: displayName ?? address.ip)
             })
     }
 
