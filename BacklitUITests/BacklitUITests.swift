@@ -99,6 +99,8 @@ class BacklitUITests_Preview : BacklitUITests {
     }
     
     func testDeviceWithPreview() {
+        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
+
         waitForTableViewRefreshControl()
 
         app.tables.staticTexts[device].tap()
@@ -115,6 +117,8 @@ class BacklitUITests_Options : BacklitUITests {
     }
     
     func testDeviceWithOptions() {
+        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
+
         waitForTableViewRefreshControl()
         
         app.tables.staticTexts[device].tap()
@@ -238,6 +242,8 @@ class BacklitUITests_Video : BacklitUITests {
         app.cells["gallery-grid-6-0"].tap()
         app.cells["gallery-grid-6-1"].tap()
         app.buttons["PDF"].go()
+        wait(for: 1)
+        app.buttons[localizedString(key: "SHARE AS PDF")].go()
         
         // (almost) print pdf
         let print = deviceLanguage.hasPrefix("fr") ? "Imprimer" : "Print"

@@ -269,7 +269,9 @@ class DeviceVC: UIViewController {
     }
     
     private func askForLocalNotificationsPermission() {
+        #if !targetEnvironment(simulator)
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in () }
+        #endif
     }
     
     private func presentFinishedScanNotification(items: [GalleryItem]) {
