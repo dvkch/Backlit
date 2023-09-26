@@ -1,6 +1,6 @@
 //
 //  CatalystPlugin.swift
-//  Backlit-CatalystPlugin
+//  BacklitCatalystPlugin
 //
 //  Created by Stanislas Chevallier on 03/05/2021.
 //  Copyright © 2021 Syan. All rights reserved.
@@ -19,13 +19,13 @@ import Foundation
 @available(macCatalyst 11.0, *)
 @available(iOS, unavailable)
 func obtainCatalystPlugin() -> CatalystPlugin {
-    let bundleFileName = "Backlit-CatalystPlugin.bundle"
+    let bundleFileName = "BacklitCatalystPlugin.bundle"
     guard let bundleURL = Bundle.main.builtInPlugInsURL?.appendingPathComponent(bundleFileName), let bundle = Bundle(url: bundleURL) else {
         fatalError("Couldn't find CatalystPlugin")
     }
     bundle.load()
     
-    let className = "Backlit_CatalystPlugin.CatalystPluginImplementation"
+    let className = "BacklitCatalystPlugin.CatalystPluginImplementation"
     guard let pluginClass = bundle.classNamed(className) as? CatalystPlugin.Type else {
         fatalError("Couldn't find CatalystPlugin")
     }

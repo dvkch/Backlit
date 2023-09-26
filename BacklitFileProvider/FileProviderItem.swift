@@ -1,6 +1,6 @@
 //
 //  FileProviderItem.swift
-//  Backlit-FileProvider
+//  BacklitFileProvider
 //
 //  Created by Stanislas Chevallier on 25/05/2021.
 //  Copyright © 2021 Syan. All rights reserved.
