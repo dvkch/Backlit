@@ -10,32 +10,7 @@ import XCTest
 
 class BacklitUITests: XCTestCase {
     let device = "LiDE 220"
-    var config: SnapshotConfig = {
-        var config = SnapshotConfig()
-        config.kind = .other
-        config.hostName = "Roost"
-        config.hostAddress = "192.168.69.42"
-        config.previewImagePath = Bundle(for: BacklitUITests.self).path(forResource: "preview_image.jpg", ofType: nil)!
-        config.previewCrop = CGRect(x: 0.45, y: 0.45, width: 0.55, height: 0.55)
-        config.mockScan = true
-        config.mockScanImagePath = config.previewImagePath
-        config.galleryImagesPaths = [
-            ["A1", "A2", "A3"],
-            ["B1", "B2", "B3"],
-            ["C1"],
-            ["D1", "D2"],
-            ["E1"],
-            ["F1", "F2"],
-            ["G1", "G2"],
-            ["H1", "H2"],
-            ["I1", "I2", "I3"]
-        ].map { names in
-            names.compactMap {
-                Bundle(for: BacklitUITests.self).url(forResource: "gallery-\($0).jpg", withExtension: nil)
-            }
-        }
-        return config
-    }()
+    var config: SnapshotConfig = .testConfig(bundle: Bundle(for: BacklitUITests.self))
     
     var app = XCUIApplication()
     

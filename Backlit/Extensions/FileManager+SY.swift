@@ -12,9 +12,14 @@ import UIKit
 extension FileManager {
     static var galleryURL: URL {
         #if targetEnvironment(macCatalyst)
-        FileManager.imageDirectoryURL.appendingPathComponent("Backlit", isDirectory: true)
+        if Snapshot.isSnapshotting {
+            return FileManager.imageDirectoryURL.appendingPathComponent("Backlit-test", isDirectory: true)
+        }
+        else {
+            return FileManager.imageDirectoryURL.appendingPathComponent("Backlit", isDirectory: true)
+        }
         #else
-        FileManager.sharedGroupDirectoryURL.appendingPathComponent("Scans", isDirectory: true)
+        return FileManager.sharedGroupDirectoryURL.appendingPathComponent("Scans", isDirectory: true)
         #endif
     }
     

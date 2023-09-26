@@ -11,7 +11,7 @@ import SaneSwift
 
 struct Snapshot {
     // MARK: Decoding
-    private static var isSnapshotting: Bool {
+    static var isSnapshotting: Bool {
         ProcessInfo.processInfo.arguments.contains("DOING_SNAPSHOT")
     }
 
