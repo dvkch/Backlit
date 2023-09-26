@@ -54,8 +54,9 @@ class TableViewHeader: UITableViewHeaderFooterView {
         contentView.addSubview(container)
         container.snp.makeConstraints { make in
             topMarginConstraint = make.top.equalTo(contentView.layoutMarginsGuide).constraint.layoutConstraints.first
-            make.left.bottom.equalTo(contentView.layoutMarginsGuide)
-            make.right.lessThanOrEqualTo(contentView.layoutMarginsGuide)
+            make.left.equalTo(contentView.layoutMarginsGuide)
+            make.right.lessThanOrEqualTo(contentView.layoutMarginsGuide).priority(.high)
+            make.bottom.equalTo(contentView.layoutMarginsGuide).priority(.high)
         }
         
         label.textColor = .background
@@ -90,7 +91,7 @@ class TableViewHeader: UITableViewHeaderFooterView {
     #endif
     
     // MARK: Sizing
-    private static let sizingItem = TableViewHeader(frame: .zero)
+    private static let sizingItem = TableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     static func height(for text: String, topMargin: CGFloat, at section: Int, in tableView: UITableView) -> CGFloat {
         let availableWidth = tableView.bounds.inset(by: tableView.adjustedContentInset).width
 
