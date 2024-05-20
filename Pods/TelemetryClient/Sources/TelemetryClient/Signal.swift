@@ -38,54 +38,40 @@ internal struct SignalPostBody: Codable, Equatable {
     let isTestMode: String
 }
 
-internal struct SignalPayload: Codable {
-    var platform: String = Self.platform
-    var systemVersion: String = Self.systemVersion
-    var majorSystemVersion: String = Self.majorSystemVersion
-    var majorMinorSystemVersion: String = Self.majorMinorSystemVersion
-    var appVersion: String = Self.appVersion
-    var buildNumber: String = Self.buildNumber
-    var isSimulator: String = "\(Self.isSimulator)"
-    var isDebug: String = "\(Self.isDebug)"
-    var isTestFlight: String = "\(Self.isTestFlight)"
-    var isAppStore: String = "\(Self.isAppStore)"
-    var modelName: String = Self.modelName
-    var architecture: String = Self.architecture
-    var operatingSystem: String = Self.operatingSystem
-    var targetEnvironment: String = Self.targetEnvironment
-    var locale: String = Self.locale
-    var telemetryClientVersion: String = TelemetryClientVersion
+internal struct DefaultSignalPayload: Encodable {
+    let platform = Self.platform
+    let systemVersion = Self.systemVersion
+    let majorSystemVersion = Self.majorSystemVersion
+    let majorMinorSystemVersion = Self.majorMinorSystemVersion
+    let appVersion = Self.appVersion
+    let buildNumber = Self.buildNumber
+    let isSimulator = "\(Self.isSimulator)"
+    let isDebug = "\(Self.isDebug)"
+    let isTestFlight = "\(Self.isTestFlight)"
+    let isAppStore = "\(Self.isAppStore)"
+    let modelName = Self.modelName
+    let architecture = Self.architecture
+    let operatingSystem = Self.operatingSystem
+    let targetEnvironment = Self.targetEnvironment
+    let locale = Self.locale
+    var extensionIdentifier: String? = Self.extensionIdentifier
+    let telemetryClientVersion = TelemetryClientVersion
 
-    let additionalPayload: [String: String]
-}
-
-extension SignalPayload {
-    /// Converts the `additionalPayload` to a `[String: String]` dictionary
     func toDictionary() -> [String: String] {
-        // We need to convert the additionalPayload into new key/value pairs
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
         do {
-            // Create a Dictionary
-            let jsonData = try encoder.encode(self)
-            var dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-            // Remove the additionalPayload sub dictionary
-            dict?.removeValue(forKey: "additionalPayload")
-            // Add the additionalPayload as new key/value pairs
-            return dict?.merging(additionalPayload, uniquingKeysWith: { _, last in last }) as? [String: String] ?? [:]
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(self)
+            let dict = try JSONSerialization.jsonObject(with: data) as? [String: String]
+            return dict ?? [:]
         } catch {
             return [:]
         }
-    }
-
-    func toMultiValueDimension() -> [String] {
-        return toDictionary().map { key, value in key.replacingOccurrences(of: ":", with: "_") + ":" + value }
     }
 }
 
 // MARK: - Helpers
 
-extension SignalPayload {
+extension DefaultSignalPayload {
     static var isSimulatorOrTestFlight: Bool {
         isSimulator || isTestFlight
     }
@@ -116,24 +102,21 @@ extension SignalPayload {
     static var isAppStore: Bool {
         #if DEBUG
             return false
-        #endif
-
-        #if TARGET_OS_OSX || TARGET_OS_MACCATALYST
+        #elseif TARGET_OS_OSX || TARGET_OS_MACCATALYST
             return false
-        #endif
-
-        #if targetEnvironment(simulator)
+        #elseif targetEnvironment(simulator)
             return false
         #else
-            // During development, this line will show a warning "Code after 'return' will never be executed"
-            // However, you should ignore that warning.
             return !isSimulatorOrTestFlight
         #endif
     }
 
     /// The operating system and its version
     static var systemVersion: String {
-        return "\(platform) \(ProcessInfo.processInfo.operatingSystemVersion.majorVersion).\(ProcessInfo.processInfo.operatingSystemVersion.minorVersion).\(ProcessInfo.processInfo.operatingSystemVersion.patchVersion)"
+        let majorVersion = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
+        let minorVersion = ProcessInfo.processInfo.operatingSystemVersion.minorVersion
+        let patchVersion = ProcessInfo.processInfo.operatingSystemVersion.patchVersion
+        return "\(platform) \(majorVersion).\(minorVersion).\(patchVersion)"
     }
 
     /// The major system version, i.e. iOS 15
@@ -143,7 +126,9 @@ extension SignalPayload {
 
     /// The major system version, i.e. iOS 15
     static var majorMinorSystemVersion: String {
-        return "\(platform) \(ProcessInfo.processInfo.operatingSystemVersion.majorVersion).\(ProcessInfo.processInfo.operatingSystemVersion.minorVersion)"
+        let majorVersion = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
+        let minorVersion = ProcessInfo.processInfo.operatingSystemVersion.minorVersion
+        return "\(platform) \(majorVersion).\(minorVersion)"
     }
 
     /// The Bundle Short Version String, as described in Info.plist
@@ -156,6 +141,14 @@ extension SignalPayload {
     static var buildNumber: String {
         let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         return buildNumber ?? "0"
+    }
+
+    /// The extension identifer for the active resource, if available.
+    ///
+    /// This provides a value such as `com.apple.widgetkit-extension` when TelemetryDeck is run from a widget.
+    static var extensionIdentifier: String? {
+        let container = Bundle.main.infoDictionary?["NSExtension"] as? [String: Any]
+        return container?["NSExtensionPointIdentifier"] as? String
     }
 
     /// The modelname as reported by systemInfo.machine
@@ -226,6 +219,8 @@ extension SignalPayload {
     static var operatingSystem: String {
         #if os(macOS)
             return "macOS"
+        #elseif os(xrOS)
+            return "visionOS"
         #elseif os(iOS)
             return "iOS"
         #elseif os(watchOS)
@@ -242,6 +237,8 @@ extension SignalPayload {
     static var platform: String {
         #if os(macOS)
             return "macOS"
+        #elseif os(xrOS)
+            return "visionOS"
         #elseif os(iOS)
             #if targetEnvironment(macCatalyst)
                 return "macCatalyst"

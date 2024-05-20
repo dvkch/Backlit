@@ -1,6 +1,6 @@
 import Foundation
 
-#if os(iOS)
+#if os(iOS) || os(xrOS)
 import UIKit
 #elseif os(macOS)
 import AppKit
@@ -25,7 +25,7 @@ internal class SignalManager: SignalManageable {
         self.configuration = configuration
 
         // We automatically load any old signals from disk on initialisation
-        signalCache = SignalCache(showDebugLogs: configuration.showDebugLogs)
+        signalCache = SignalCache(logHandler: configuration.logHandler)
 
         // Before the app terminates, we want to save any pending signals to disk
         // We need to monitor different notifications for different devices.
@@ -68,9 +68,21 @@ internal class SignalManager: SignalManageable {
     }
 
     /// Adds a signal to the process queue
-    func processSignal(_ signalType: TelemetrySignalType, for clientUser: String? = nil, floatValue: Double? = nil, with additionalPayload: [String: String] = [:], configuration: TelemetryManagerConfiguration) {
+    func processSignal(
+        _ signalType: TelemetrySignalType,
+        for clientUser: String? = nil,
+        floatValue: Double? = nil,
+        with additionalPayload: [String: String] = [:],
+        configuration: TelemetryManagerConfiguration
+    ) {
         DispatchQueue.global(qos: .utility).async {
-            let payLoad = SignalPayload(additionalPayload: additionalPayload)
+            let enrichedMetadata: [String: String] = configuration.metadataEnrichers
+                .map { $0.enrich(signalType: signalType, for: clientUser, floatValue: floatValue) }
+                .reduce([String: String](), { $0.applying($1) })
+
+            let payload = DefaultSignalPayload().toDictionary()
+                .applying(enrichedMetadata)
+                .applying(additionalPayload)
 
             let signalPostBody = SignalPostBody(
                 receivedAt: Date(),
@@ -79,13 +91,11 @@ internal class SignalManager: SignalManageable {
                 sessionID: configuration.sessionID.uuidString,
                 type: "\(signalType)",
                 floatValue: floatValue,
-                payload: payLoad.toMultiValueDimension(),
+                payload: payload.toMultiValueDimension(),
                 isTestMode: configuration.testMode ? "true" : "false"
             )
 
-            if configuration.showDebugLogs {
-                print("Process signal: \(signalPostBody)")
-            }
+            configuration.logHandler?.log(.debug, message: "Process signal: \(signalPostBody)")
 
             self.signalCache.push(signalPostBody)
         }
@@ -95,21 +105,17 @@ internal class SignalManager: SignalManageable {
     /// If any fail to send, we put them back into the cache to send later.
     @objc
     private func checkForSignalsAndSend() {
-        if configuration.showDebugLogs {
-            print("Current signal cache count: \(signalCache.count())")
-        }
+        configuration.logHandler?.log(.debug, message: "Current signal cache count: \(signalCache.count())")
 
         let queuedSignals: [SignalPostBody] = signalCache.pop()
         if !queuedSignals.isEmpty {
-            if configuration.showDebugLogs {
-                print("Sending \(queuedSignals.count) signals leaving a cache of \(signalCache.count()) signals")
-            }
+            configuration.logHandler?.log(message: "Sending \(queuedSignals.count) signals leaving a cache of \(signalCache.count()) signals")
+
             send(queuedSignals) { [configuration, signalCache] data, response, error in
 
                 if let error = error {
-                    if configuration.showDebugLogs {
-                        print(error)
-                    }
+                    configuration.logHandler?.log(.error, message: "\(error)")
+
                     // The send failed, put the signal back into the queue
                     signalCache.push(queuedSignals)
                     return
@@ -118,18 +124,14 @@ internal class SignalManager: SignalManageable {
                 // Check for valid status code response
                 guard response?.statusCodeError() == nil else {
                     let statusError = response!.statusCodeError()!
-                    if configuration.showDebugLogs {
-                        print(statusError)
-                    }
+                    configuration.logHandler?.log(.error, message: "\(statusError)")
                     // The send failed, put the signal back into the queue
                     signalCache.push(queuedSignals)
                     return
                 }
 
                 if let data = data {
-                    if configuration.showDebugLogs {
-                        print(String(data: data, encoding: .utf8)!)
-                    }
+                    configuration.logHandler?.log(.debug, message: String(data: data, encoding: .utf8)!)
                 }
             }
         }
@@ -140,10 +142,7 @@ internal class SignalManager: SignalManageable {
 
 private extension SignalManager {
     @objc func appWillTerminate() {
-        if configuration.showDebugLogs {
-            print(#function)
-        }
-
+        configuration.logHandler?.log(.debug, message: #function)
         signalCache.backupCache()
     }
 
@@ -153,24 +152,18 @@ private extension SignalManager {
     /// so we merge them into the new cache.
     #if os(watchOS) || os(tvOS) || os(iOS)
     @objc func didEnterForeground() {
-        if configuration.showDebugLogs {
-            print(#function)
-        }
+        configuration.logHandler?.log(.debug, message: #function)
 
         let currentCache = signalCache.pop()
-        if configuration.showDebugLogs {
-            print("current cache is \(currentCache.count) signals")
-        }
-        signalCache = SignalCache(showDebugLogs: configuration.showDebugLogs)
+        configuration.logHandler?.log(.debug, message: "current cache is \(currentCache.count) signals")
+        signalCache = SignalCache(logHandler: configuration.logHandler)
         signalCache.push(currentCache)
 
         startTimer()
     }
 
     @objc func didEnterBackground() {
-        if configuration.showDebugLogs {
-            print(#function)
-        }
+        configuration.logHandler?.log(.debug, message: #function)
 
         sendTimer?.invalidate()
         sendTimer = nil
@@ -192,15 +185,14 @@ private extension SignalManager {
             urlRequest.httpMethod = "POST"
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-            urlRequest.httpBody = try! JSONEncoder.telemetryEncoder.encode(signalPostBodies)
-            if self.configuration.showDebugLogs {
-                print(String(data: urlRequest.httpBody!, encoding: .utf8)!)
+            guard let body = try? JSONEncoder.telemetryEncoder.encode(signalPostBodies) else {
+                return
             }
-            /// Wait for connectivity
-            let config = URLSessionConfiguration.default
-            config.waitsForConnectivity = true
-            let session = URLSession(configuration: config)
-            let task = session.dataTask(with: urlRequest, completionHandler: completionHandler)
+
+            urlRequest.httpBody = body
+            self.configuration.logHandler?.log(.debug, message: String(data: urlRequest.httpBody!, encoding: .utf8)!)
+
+            let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: completionHandler)
             task.resume()
         }
     }
@@ -221,13 +213,13 @@ private extension SignalManager {
     var defaultUserIdentifier: String {
         guard configuration.defaultUser == nil else { return configuration.defaultUser! }
 
-        #if os(iOS) || os(tvOS)
-            return UIDevice.current.identifierForVendor?.uuidString ?? "unknown user \(SignalPayload.systemVersion) \(SignalPayload.buildNumber)"
+        #if os(iOS) || os(tvOS) || os(xrOS)
+            return UIDevice.current.identifierForVendor?.uuidString ?? "unknown user \(DefaultSignalPayload.systemVersion) \(DefaultSignalPayload.buildNumber)"
         #elseif os(watchOS)
             if #available(watchOS 6.2, *) {
-                return WKInterfaceDevice.current().identifierForVendor?.uuidString ?? "unknown user \(SignalPayload.systemVersion) \(SignalPayload.buildNumber)"
+                return WKInterfaceDevice.current().identifierForVendor?.uuidString ?? "unknown user \(DefaultSignalPayload.systemVersion) \(DefaultSignalPayload.buildNumber)"
             } else {
-                return "unknown user \(SignalPayload.platform) \(SignalPayload.systemVersion) \(SignalPayload.buildNumber)"
+                return "unknown user \(DefaultSignalPayload.platform) \(DefaultSignalPayload.systemVersion) \(DefaultSignalPayload.buildNumber)"
             }
         #elseif os(macOS)
             if let customDefaults = self.customDefaults, let defaultUserIdentifier = customDefaults.string(forKey: "defaultUserIdentifier") {
@@ -239,9 +231,11 @@ private extension SignalManager {
             }
         #else
             #if DEBUG
-                print("[Telemetry] On this platform, Telemetry can't generate a unique user identifier. It is recommended you supply one yourself. More info: https://telemetrydeck.com/pages/signal-reference.html")
+                let line1 = "[Telemetry] On this platform, Telemetry can't generate a unique user identifier."
+                let line2 = "It is recommended you supply one yourself. More info: https://telemetrydeck.com/pages/signal-reference.html"
+                configuration.logHandler?.log(message: "\(line1) \(line2)")
             #endif
-            return "unknown user \(SignalPayload.platform) \(SignalPayload.systemVersion) \(SignalPayload.buildNumber)"
+            return "unknown user \(DefaultSignalPayload.platform) \(DefaultSignalPayload.systemVersion) \(DefaultSignalPayload.buildNumber)"
         #endif
     }
 }

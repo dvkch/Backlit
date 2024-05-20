@@ -17,7 +17,7 @@ target :Backlit do
     pod 'SYKit', '>= 0.1.17'
     pod 'SYOperationQueue'
     pod 'SYPictureMetadata', '~> 2.0'
-    pod 'TelemetryClient', :podspec => "https://raw.githubusercontent.com/TelemetryDeck/SwiftClient/main/TelemetryClient.podspec"
+    pod 'TelemetryClient', git: 'https://github.com/TelemetryDeck/SwiftClient.git'
 end
 
 post_install do |installer|

@@ -33,7 +33,7 @@ DEPENDENCIES:
   - SYKit (>= 0.1.17)
   - SYOperationQueue
   - SYPictureMetadata (~> 2.0)
-  - TelemetryClient (from `https://raw.githubusercontent.com/TelemetryDeck/SwiftClient/main/TelemetryClient.podspec`)
+  - TelemetryClient (from `https://github.com/TelemetryDeck/SwiftClient.git`)
 
 SPEC REPOS:
   trunk:
@@ -55,11 +55,11 @@ EXTERNAL SOURCES:
   SaneSwift:
     :path: "./"
   TelemetryClient:
-    :podspec: https://raw.githubusercontent.com/TelemetryDeck/SwiftClient/main/TelemetryClient.podspec
+    :git: https://github.com/TelemetryDeck/SwiftClient.git
 
 CHECKOUT OPTIONS:
   TelemetryClient:
-    :commit: 2efe11d74f8c0318ee860831dd44ffb08196b3d5
+    :commit: 98500be378267abaa072ed08c2caf7da6493489e
     :git: https://github.com/TelemetryDeck/SwiftClient.git
 
 SPEC CHECKSUMS:
@@ -78,6 +78,6 @@ SPEC CHECKSUMS:
   SYPictureMetadata: b48022e03b30583875696f58f91dab8ded673bf7
   TelemetryClient: 91f72ca7263a9550be04ce8a18e68bba6197ffc6
 
-PODFILE CHECKSUM: 092317b002a42a27ebb47f7cdcc1fb648461870c
+PODFILE CHECKSUM: 072e6ebbef4959ccc509fc113f309507ad33ba7a
 
 COCOAPODS: 1.13.0

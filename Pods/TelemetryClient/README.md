@@ -2,6 +2,12 @@
 
 This package allows you to send signals to [TelemetryDeck](https://telemetrydeck.com) from your Swift code. Sign up for a free account at telemetrydeck.com
 
+## Installation
+
+The easiest way to install TelemetryDeck is using [Swift Package Manager](https://www.swift.org/package-manager/), Apple's solution which is built into Xcode. In Xcode, press _File > Add Packages..._, then in the resulting window enter `https://github.com/TelemetryDeck/SwiftClient` into the search field. Set the _Dependency Rule_ field to _Up to Next Major Version_, then press the _Add Package_ button. Xcode will download it, then you can choose which target of your app to add it to.
+
+See our [detailed setup guide](https://telemetrydeck.com/docs/guides/swift-setup/?source=github) for more information.
+
 ## Initialization
 
 Init the Telemetry Manager at app startup, so it knows your App ID (you can retrieve the App ID from your [TelemetryDeck Dashboard](https://dashboard.telemetrydeck.com/) under Set Up App)
@@ -44,9 +50,9 @@ TelemetryManager.send("appLaunchedRegularly")
 
 ## Debug -> Test Mode
 
-If your app's build configuration is set to "Debug", all signals sent will be marked as testing signals. In the Telemetry Viewer app, actvivate **Test Mode** to see those.
+If your app's build configuration is set to "Debug", all signals sent will be marked as testing signals. In the Telemetry Viewer app, activate **Test Mode** to see those.
 
-If you want to manually control wether test mode is active, you can set the `configuration.testMode` property.
+If you want to manually control whether test mode is active, you can set the `configuration.testMode` property.
 
 ## User Identifiers
 
@@ -105,6 +111,12 @@ A very small subset of our customers will want to use a custom signal ingestion 
 ```swift
 let configuration = TelemetryManagerConfiguration(appID: "<YOUR-APP-ID>", baseURL: "https://nom.telemetrydeck.com")
 ```
+
+## Custom Logging Strategy
+
+By default, some logs helpful for monitoring TelemetryDeck are printed out to the console. This behaviour can be customised by overriding `configuration.logHandler`. This struct accepts a minimum allows log level (any log with the same or higher log level will be accepted) and a closure.
+
+This allows for compatibility with other logging solutions, such as [swift-log](https://github.com/apple/swift-log), by providing your own closure.
 
 ## Developing this SDK
 

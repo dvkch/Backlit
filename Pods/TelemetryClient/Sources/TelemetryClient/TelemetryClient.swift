@@ -10,7 +10,7 @@ import Foundation
     import TVUIKit
 #endif
 
-let TelemetryClientVersion = "SwiftClient 1.4.1"
+let TelemetryClientVersion = "SwiftClient 1.5.0"
 
 public typealias TelemetrySignalType = String
 
@@ -110,11 +110,21 @@ public final class TelemetryManagerConfiguration {
     ///
     /// Works together with `swiftUIPreviewMode` if either of those values is `true` no analytics events are sent.
     /// However it won't interfere with SwiftUI Previews, when explicitly settings this value to `false`.
-
     public var analyticsDisabled: Bool = false
 
     /// Log the current status to the signal cache to the console.
+    @available(*, deprecated, message: "Please use the logHandler property instead")
     public var showDebugLogs: Bool = false
+
+    /// A strategy for handling logs.
+    ///
+    /// Defaults to `print` with info/errror messages - debug messages are not outputted. Set to `nil` to disable all logging from TelemetryDeck SDK.
+    public var logHandler: LogHandler? = LogHandler.stdout(.info)
+
+    /// An array of signal metadata enrichers: a system for adding dynamic metadata to signals as they are recorded.
+    ///
+    /// Defaults to an empty array.
+    public var metadataEnrichers: [SignalEnricher] = []
 
     public init(appID: String, salt: String? = nil, baseURL: URL? = nil) {
         telemetryAppID = appID
