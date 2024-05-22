@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		971B894229C8793C0005785A /* GalleryImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971B894129C8793C0005785A /* GalleryImageView.swift */; };
 		9724378E2A0AF2C8002C5F6B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 972437902A0AF2C8002C5F6B /* InfoPlist.strings */; };
 		972437952A0AF830002C5F6B /* silent.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 972437942A0AF830002C5F6B /* silent.mp3 */; };
+		972968992BFD560600908671 /* SYPictureMetadata in Frameworks */ = {isa = PBXBuildFile; productRef = 972968982BFD560600908671 /* SYPictureMetadata */; };
 		972B584729A8F302003A9403 /* SaneBonjour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B584629A8F302003A9403 /* SaneBonjour.swift */; };
 		972B78BF29E417A7004FA923 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977EA2CF29DEEF6100CBD092 /* Logger.swift */; };
 		972B78C129E417C9004FA923 /* Logger+Sane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B78C029E417C9004FA923 /* Logger+Sane.swift */; };
@@ -40,6 +41,16 @@
 		975277CA264D5C1A00FFAAF4 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C9264D5C1A00FFAAF4 /* RefreshView.swift */; };
 		975277CC264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277CB264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift */; };
 		9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9757FCEF2207112D00AB59F1 /* DevicesVC.swift */; };
+		975F49FF2BFAD737001D4CD7 /* DiffableDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 975F49FE2BFAD737001D4CD7 /* DiffableDataSources */; };
+		975F4A022BFAD74F001D4CD7 /* DirectoryWatcher in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A012BFAD74F001D4CD7 /* DirectoryWatcher */; };
+		975F4A052BFAD769001D4CD7 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A042BFAD769001D4CD7 /* KeychainAccess */; };
+		975F4A082BFAD78A001D4CD7 /* LRUCache in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A072BFAD78A001D4CD7 /* LRUCache */; };
+		975F4A0B2BFAD79C001D4CD7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A0A2BFAD79C001D4CD7 /* SnapKit */; };
+		975F4A0E2BFAD7DC001D4CD7 /* SYEmailHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A0D2BFAD7DC001D4CD7 /* SYEmailHelper */; };
+		975F4A112BFAD7EA001D4CD7 /* SYKit in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A102BFAD7EA001D4CD7 /* SYKit */; };
+		975F4A142BFAD80B001D4CD7 /* TelemetryClient in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A132BFAD80B001D4CD7 /* TelemetryClient */; };
+		975F4A172BFAD827001D4CD7 /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A162BFAD827001D4CD7 /* LicenseList */; };
+		976E794E2BFAE6E900336C5C /* SYOperationQueue in Frameworks */ = {isa = PBXBuildFile; productRef = 976E794D2BFAE6E900336C5C /* SYOperationQueue */; };
 		9771598129C0812C00F61EA9 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771598029C0812C00F61EA9 /* TableView.swift */; };
 		977712D225CCB2F1009EC50D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977712D125CCB2F1009EC50D /* SceneDelegate.swift */; };
 		977712D625CCB376009EC50D /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977712D525CCB376009EC50D /* Context.swift */; };
@@ -57,7 +68,6 @@
 		9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507E220B645500F52DE6 /* PDFActivity.swift */; };
 		97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97865080220B69AC00F52DE6 /* GalleryManager.swift */; };
 		9796632229F991FF00E28486 /* GalleryItem+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9796632129F991FF00E28486 /* GalleryItem+UI.swift */; };
-		979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 979D4BA31E4A797C00F90EFB /* Settings.bundle */; };
 		97A3AC2429A7F4CB00F31207 /* UIButton+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3AC2329A7F4CB00F31207 /* UIButton+SY.swift */; };
 		97A602762ABCE25E000B1F1B /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A602752ABCE25E000B1F1B /* Switch.swift */; };
 		97A602782ABCE562000B1F1B /* Collection+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A602772ABCE562000B1F1B /* Collection+SY.swift */; };
@@ -92,6 +102,9 @@
 		97A9FCEC264090960027F462 /* CatalystPluginImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */; };
 		97A9FCED264091500027F462 /* CatalystPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FCE92640906F0027F462 /* CatalystPlugin.swift */; };
 		97A9FCF0264093920027F462 /* BacklitCatalystPlugin.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 97A9FCE3264090500027F462 /* BacklitCatalystPlugin.bundle */; platformFilter = maccatalyst; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		97BCA4112BFDF936001036A1 /* Sane in Frameworks */ = {isa = PBXBuildFile; productRef = 97BCA4102BFDF936001036A1 /* Sane */; };
+		97BCA4132BFDFA46001036A1 /* ChasingDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCA4122BFDFA46001036A1 /* ChasingDotsView.swift */; };
+		97BCA4162BFDFFDB001036A1 /* Disco in Frameworks */ = {isa = PBXBuildFile; productRef = 97BCA4152BFDFFDB001036A1 /* Disco */; };
 		97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */; };
 		97BE12A1220BC493006A2AE8 /* UIScrollView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */; };
 		97C11149265C497900794994 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C11148265C497900794994 /* Analytics.swift */; };
@@ -136,7 +149,6 @@
 		97FE556F264556D60036357E /* DeviceOptionControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE556E264556D60036357E /* DeviceOptionControllable.swift */; };
 		97FF2A9129EC9CD30096ACFC /* DiffableDataSources+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FF2A9029EC9CD30096ACFC /* DiffableDataSources+SY.swift */; };
 		97FF2A9329EC9F0B0096ACFC /* GalleryGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FF2A9229EC9F0B0096ACFC /* GalleryGroup.swift */; };
-		A82C63C2DD51AD9BF284086A /* Pods_Backlit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F9FBF5D177FED3EF5258BB /* Pods_Backlit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,8 +191,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		83F9FBF5D177FED3EF5258BB /* Pods_Backlit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Backlit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C055B2580BBAA99264E93A6 /* Pods-Backlit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Backlit.release.xcconfig"; path = "Target Support Files/Pods-Backlit/Pods-Backlit.release.xcconfig"; sourceTree = "<group>"; };
 		97044901220875D300E13C6A /* DeviceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVC.swift; sourceTree = "<group>"; };
 		9704490B2208900700E13C6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		970A587F1E41665C0033A116 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -233,7 +243,6 @@
 		9786507E220B645500F52DE6 /* PDFActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFActivity.swift; sourceTree = "<group>"; };
 		97865080220B69AC00F52DE6 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
 		9796632129F991FF00E28486 /* GalleryItem+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GalleryItem+UI.swift"; sourceTree = "<group>"; };
-		979D4BA31E4A797C00F90EFB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		97A3AC2329A7F4CB00F31207 /* UIButton+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+SY.swift"; sourceTree = "<group>"; };
 		97A602752ABCE25E000B1F1B /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		97A602772ABCE562000B1F1B /* Collection+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SY.swift"; sourceTree = "<group>"; };
@@ -267,6 +276,7 @@
 		97A9FCE5264090500027F462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97A9FCE92640906F0027F462 /* CatalystPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystPlugin.swift; sourceTree = "<group>"; };
 		97A9FCEB264090960027F462 /* CatalystPluginImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystPluginImplementation.swift; sourceTree = "<group>"; };
+		97BCA4122BFDFA46001036A1 /* ChasingDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChasingDotsView.swift; sourceTree = "<group>"; };
 		97BE129A220BC0AC006A2AE8 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
 		97BE12A0220BC493006A2AE8 /* UIScrollView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SY.swift"; sourceTree = "<group>"; };
 		97C11148265C497900794994 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
@@ -312,7 +322,6 @@
 		97FE556E264556D60036357E /* DeviceOptionControllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceOptionControllable.swift; sourceTree = "<group>"; };
 		97FF2A9029EC9CD30096ACFC /* DiffableDataSources+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffableDataSources+SY.swift"; sourceTree = "<group>"; };
 		97FF2A9229EC9F0B0096ACFC /* GalleryGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryGroup.swift; sourceTree = "<group>"; };
-		D517A84372CDD37AC1E6D5BD /* Pods-Backlit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Backlit.debug.xcconfig"; path = "Target Support Files/Pods-Backlit/Pods-Backlit.debug.xcconfig"; sourceTree = "<group>"; };
 		F8CBD20D1AF9A58C00B4C221 /* Backlit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Backlit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8CBD2111AF9A58C00B4C221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8CBD21D1AF9A58C00B4C221 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -344,21 +353,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A82C63C2DD51AD9BF284086A /* Pods_Backlit.framework in Frameworks */,
+				972968992BFD560600908671 /* SYPictureMetadata in Frameworks */,
+				976E794E2BFAE6E900336C5C /* SYOperationQueue in Frameworks */,
+				975F49FF2BFAD737001D4CD7 /* DiffableDataSources in Frameworks */,
+				975F4A142BFAD80B001D4CD7 /* TelemetryClient in Frameworks */,
+				975F4A022BFAD74F001D4CD7 /* DirectoryWatcher in Frameworks */,
+				975F4A052BFAD769001D4CD7 /* KeychainAccess in Frameworks */,
+				975F4A112BFAD7EA001D4CD7 /* SYKit in Frameworks */,
+				97BCA4112BFDF936001036A1 /* Sane in Frameworks */,
+				975F4A172BFAD827001D4CD7 /* LicenseList in Frameworks */,
+				975F4A082BFAD78A001D4CD7 /* LRUCache in Frameworks */,
+				975F4A0B2BFAD79C001D4CD7 /* SnapKit in Frameworks */,
+				975F4A0E2BFAD7DC001D4CD7 /* SYEmailHelper in Frameworks */,
+				97BCA4162BFDFFDB001036A1 /* Disco in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4B2FEBCC61DA763130F7883B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				83F9FBF5D177FED3EF5258BB /* Pods_Backlit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		972437962A0AFA54002C5F6B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,6 +441,13 @@
 			path = BacklitShared;
 			sourceTree = "<group>";
 		};
+		97BCA40F2BFDF936001036A1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		97C11177265C5C8600794994 /* BacklitFileProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,6 +476,7 @@
 				9731D89022C548CE008D7525 /* TapInsetsView.swift */,
 				97499E5C220872F5006DED20 /* Toolbar.swift */,
 				97D5902426377CBE00E84198 /* TooltipView.swift */,
+				97BCA4122BFDFA46001036A1 /* ChasingDotsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -580,8 +601,7 @@
 				97C11177265C5C8600794994 /* BacklitFileProvider */,
 				97A6608B2AC2F20C0062A79D /* BacklitUITests */,
 				F8CBD20E1AF9A58C00B4C221 /* Products */,
-				FAEBABDA90387CC5C84B4AA3 /* Pods */,
-				4B2FEBCC61DA763130F7883B /* Frameworks */,
+				97BCA40F2BFDF936001036A1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -622,18 +642,8 @@
 			children = (
 				F8CBD2111AF9A58C00B4C221 /* Info.plist */,
 				972437902A0AF2C8002C5F6B /* InfoPlist.strings */,
-				979D4BA31E4A797C00F90EFB /* Settings.bundle */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		FAEBABDA90387CC5C84B4AA3 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D517A84372CDD37AC1E6D5BD /* Pods-Backlit.debug.xcconfig */,
-				8C055B2580BBAA99264E93A6 /* Pods-Backlit.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -695,15 +705,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8CBD2301AF9A58C00B4C221 /* Build configuration list for PBXNativeTarget "Backlit" */;
 			buildPhases = (
-				96AE0F9FA96BA65CE29FA0D6 /* [CP] Check Pods Manifest.lock */,
 				97DF1B511E3BA42A00AD8A92 /* TODOs etc */,
 				976E5BAC1E3BA4630057B599 /* TRANSLATE */,
 				F8CBD2091AF9A58C00B4C221 /* Sources */,
 				F8CBD20A1AF9A58C00B4C221 /* Frameworks */,
 				F8CBD20B1AF9A58C00B4C221 /* Resources */,
 				97A9FCF3264093920027F462 /* Embed PlugIns */,
-				0CC6C4053412002472A7F1FB /* [CP] Embed Pods Frameworks */,
-				B832791A4E4D5DD89AB18A23 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -712,6 +719,21 @@
 				97C11181265C5C8600794994 /* PBXTargetDependency */,
 			);
 			name = Backlit;
+			packageProductDependencies = (
+				975F49FE2BFAD737001D4CD7 /* DiffableDataSources */,
+				975F4A012BFAD74F001D4CD7 /* DirectoryWatcher */,
+				975F4A042BFAD769001D4CD7 /* KeychainAccess */,
+				975F4A072BFAD78A001D4CD7 /* LRUCache */,
+				975F4A0A2BFAD79C001D4CD7 /* SnapKit */,
+				975F4A0D2BFAD7DC001D4CD7 /* SYEmailHelper */,
+				975F4A102BFAD7EA001D4CD7 /* SYKit */,
+				975F4A132BFAD80B001D4CD7 /* TelemetryClient */,
+				975F4A162BFAD827001D4CD7 /* LicenseList */,
+				976E794D2BFAE6E900336C5C /* SYOperationQueue */,
+				972968982BFD560600908671 /* SYPictureMetadata */,
+				97BCA4102BFDF936001036A1 /* Sane */,
+				97BCA4152BFDFFDB001036A1 /* Disco */,
+			);
 			productName = Backlit;
 			productReference = F8CBD20D1AF9A58C00B4C221 /* Backlit.app */;
 			productType = "com.apple.product-type.application";
@@ -725,7 +747,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = SY;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					97A660892AC2F20C0062A79D = {
@@ -757,6 +779,21 @@
 				Base,
 			);
 			mainGroup = F8CBD2041AF9A58C00B4C221;
+			packageReferences = (
+				975F49FD2BFAD737001D4CD7 /* XCRemoteSwiftPackageReference "DiffableDataSources" */,
+				975F4A002BFAD74F001D4CD7 /* XCRemoteSwiftPackageReference "DirectoryWatcher" */,
+				975F4A032BFAD769001D4CD7 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				975F4A062BFAD78A001D4CD7 /* XCRemoteSwiftPackageReference "LRUCache" */,
+				975F4A092BFAD79C001D4CD7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				975F4A0C2BFAD7DC001D4CD7 /* XCRemoteSwiftPackageReference "SYEmailHelper" */,
+				975F4A0F2BFAD7EA001D4CD7 /* XCRemoteSwiftPackageReference "SYKit" */,
+				975F4A122BFAD80B001D4CD7 /* XCRemoteSwiftPackageReference "SwiftClient" */,
+				975F4A152BFAD827001D4CD7 /* XCRemoteSwiftPackageReference "LicenseList" */,
+				976E794C2BFAE6E900336C5C /* XCRemoteSwiftPackageReference "SYOperationQueue" */,
+				972968972BFD560600908671 /* XCRemoteSwiftPackageReference "SYPictureMetadata" */,
+				9729689A2BFD564800908671 /* XCLocalSwiftPackageReference "../SaneSwift" */,
+				97BCA4142BFDFFDB001036A1 /* XCRemoteSwiftPackageReference "Disco" */,
+			);
 			productRefGroup = F8CBD20E1AF9A58C00B4C221 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -828,7 +865,6 @@
 				97F2FB4D22230325006BD617 /* GalleryGridVC.xib in Resources */,
 				97CC34E42205F48B00304345 /* OptionCell.xib in Resources */,
 				97EB32B322071F880027CCAE /* PreferencesVC.xib in Resources */,
-				979D4BA41E4A797C00F90EFB /* Settings.bundle in Resources */,
 				97DEA1B129C7537C0088AC71 /* AcknowledgementCell.xib in Resources */,
 				97D0E042220607E500AC74D0 /* DeviceCell.xib in Resources */,
 				971ABFDF1CCFA0150086F600 /* SYLaunchScreen.storyboard in Resources */,
@@ -838,45 +874,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0CC6C4053412002472A7F1FB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Backlit/Pods-Backlit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Backlit/Pods-Backlit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Backlit/Pods-Backlit-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		96AE0F9FA96BA65CE29FA0D6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Backlit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		976E5BAC1E3BA4630057B599 /* TRANSLATE */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -906,23 +903,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"LATER:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/Backlit\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/BacklitCatalystPlugin\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/BacklitFileProvider\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/SaneSwift\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
-		};
-		B832791A4E4D5DD89AB18A23 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Backlit/Pods-Backlit-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Backlit/Pods-Backlit-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Backlit/Pods-Backlit-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1025,6 +1005,7 @@
 				97DEA1AD29C74C5F0088AC71 /* AcknowledgementsVC.swift in Sources */,
 				97BE129B220BC0AC006A2AE8 /* UIColor+SY.swift in Sources */,
 				973066C3220C8C740068E8C7 /* FileManager+SY.swift in Sources */,
+				97BCA4132BFDFA46001036A1 /* ChasingDotsView.swift in Sources */,
 				97FDF403222C55EE00B71E4C /* DeviceOptionVC.swift in Sources */,
 				97C5B2B929DA4D1300C82735 /* GalleryImageViewTiledLayer.swift in Sources */,
 				97F90D952A05C7AD00578F06 /* SaneMockable.swift in Sources */,
@@ -1423,7 +1404,6 @@
 		};
 		F8CBD2311AF9A58C00B4C221 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D517A84372CDD37AC1E6D5BD /* Pods-Backlit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1458,7 +1438,6 @@
 		};
 		F8CBD2321AF9A58C00B4C221 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C055B2580BBAA99264E93A6 /* Pods-Backlit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1540,6 +1519,180 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		9729689A2BFD564800908671 /* XCLocalSwiftPackageReference "../SaneSwift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../SaneSwift;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		972968972BFD560600908671 /* XCRemoteSwiftPackageReference "SYPictureMetadata" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dvkch/SYPictureMetadata/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+		975F49FD2BFAD737001D4CD7 /* XCRemoteSwiftPackageReference "DiffableDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ra1028/DiffableDataSources";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.0;
+			};
+		};
+		975F4A002BFAD74F001D4CD7 /* XCRemoteSwiftPackageReference "DirectoryWatcher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/GianniCarlo/DirectoryWatcher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.3;
+			};
+		};
+		975F4A032BFAD769001D4CD7 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		975F4A062BFAD78A001D4CD7 /* XCRemoteSwiftPackageReference "LRUCache" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/LRUCache.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.7;
+			};
+		};
+		975F4A092BFAD79C001D4CD7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		975F4A0C2BFAD7DC001D4CD7 /* XCRemoteSwiftPackageReference "SYEmailHelper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dvkch/SYEmailHelper.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+		975F4A0F2BFAD7EA001D4CD7 /* XCRemoteSwiftPackageReference "SYKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dvkch/SYKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.30;
+			};
+		};
+		975F4A122BFAD80B001D4CD7 /* XCRemoteSwiftPackageReference "SwiftClient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TelemetryDeck/SwiftClient";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
+		975F4A152BFAD827001D4CD7 /* XCRemoteSwiftPackageReference "LicenseList" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cybozu/LicenseList";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
+		976E794C2BFAE6E900336C5C /* XCRemoteSwiftPackageReference "SYOperationQueue" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dvkch/SYOperationQueue";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		97BCA4142BFDFFDB001036A1 /* XCRemoteSwiftPackageReference "Disco" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dvkch/Disco.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		972968982BFD560600908671 /* SYPictureMetadata */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 972968972BFD560600908671 /* XCRemoteSwiftPackageReference "SYPictureMetadata" */;
+			productName = SYPictureMetadata;
+		};
+		975F49FE2BFAD737001D4CD7 /* DiffableDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F49FD2BFAD737001D4CD7 /* XCRemoteSwiftPackageReference "DiffableDataSources" */;
+			productName = DiffableDataSources;
+		};
+		975F4A012BFAD74F001D4CD7 /* DirectoryWatcher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F4A002BFAD74F001D4CD7 /* XCRemoteSwiftPackageReference "DirectoryWatcher" */;
+			productName = DirectoryWatcher;
+		};
+		975F4A042BFAD769001D4CD7 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F4A032BFAD769001D4CD7 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		975F4A072BFAD78A001D4CD7 /* LRUCache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F4A062BFAD78A001D4CD7 /* XCRemoteSwiftPackageReference "LRUCache" */;
+			productName = LRUCache;
+		};
+		975F4A0A2BFAD79C001D4CD7 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F4A092BFAD79C001D4CD7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		975F4A0D2BFAD7DC001D4CD7 /* SYEmailHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F4A0C2BFAD7DC001D4CD7 /* XCRemoteSwiftPackageReference "SYEmailHelper" */;
+			productName = SYEmailHelper;
+		};
+		975F4A102BFAD7EA001D4CD7 /* SYKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F4A0F2BFAD7EA001D4CD7 /* XCRemoteSwiftPackageReference "SYKit" */;
+			productName = SYKit;
+		};
+		975F4A132BFAD80B001D4CD7 /* TelemetryClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F4A122BFAD80B001D4CD7 /* XCRemoteSwiftPackageReference "SwiftClient" */;
+			productName = TelemetryClient;
+		};
+		975F4A162BFAD827001D4CD7 /* LicenseList */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 975F4A152BFAD827001D4CD7 /* XCRemoteSwiftPackageReference "LicenseList" */;
+			productName = LicenseList;
+		};
+		976E794D2BFAE6E900336C5C /* SYOperationQueue */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 976E794C2BFAE6E900336C5C /* XCRemoteSwiftPackageReference "SYOperationQueue" */;
+			productName = SYOperationQueue;
+		};
+		97BCA4102BFDF936001036A1 /* Sane */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9729689A2BFD564800908671 /* XCLocalSwiftPackageReference "../SaneSwift" */;
+			productName = Sane;
+		};
+		97BCA4152BFDFFDB001036A1 /* Disco */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 97BCA4142BFDFFDB001036A1 /* XCRemoteSwiftPackageReference "Disco" */;
+			productName = Disco;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F8CBD2051AF9A58C00B4C221 /* Project object */;
 }

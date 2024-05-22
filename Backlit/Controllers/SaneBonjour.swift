@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import UIKit
 import SaneSwift
+import Disco
 
 protocol SaneBonjourDelegate: NSObjectProtocol {
     func saneBonjour(_ bonjour: SaneBonjour, updatedHosts: [SaneHost])

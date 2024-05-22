@@ -6,6 +6,7 @@
 //  Copyright © 2021 Syan. All rights reserved.
 //
 
+import Foundation
 import SaneSwift
 import KeychainAccess
 

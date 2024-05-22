@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import SaneSwift
 import SYKit
 import SnapKit
+import SaneSwift
 
 class OptionCell: TableViewCell {
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import SaneSwift
+import SaneSwiftC
 import SYKit
 import AVFoundation
 

@@ -33,7 +33,7 @@ class GalleryManager: NSObject {
         
         thumbsQueue.maxConcurrentOperationCount = 1
         thumbsQueue.maxSurvivingOperations = 0
-        thumbsQueue.mode = .LIFO
+        thumbsQueue.mode = .lifo
         
         watcher = DirectoryWatcher.watch(galleryFolder)
         watcher?.onNewFiles = { (files) in
@@ -309,7 +309,7 @@ class GalleryManager: NSObject {
             return completion(cached)
         }
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .background).async {
             self.generateThumb(for: item) { thumb in
                 self.thumbnailCache.setValue(thumb, forKey: item.thumbnailUrl, cost: thumb?.estimatedMemoryFootprint ?? 0)
                 DispatchQueue.main.async {

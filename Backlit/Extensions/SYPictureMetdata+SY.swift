@@ -6,6 +6,7 @@
 //  Copyright © 2019 Syan. All rights reserved.
 //
 
+import Foundation
 import SaneSwift
 import SYPictureMetadata
 

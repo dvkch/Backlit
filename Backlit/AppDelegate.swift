@@ -9,8 +9,10 @@
 import UIKit
 import SYKit
 import SaneSwift
+import SaneSwiftC
 import SYPictureMetadata
 
+// TODO: use LicenseList
 // TODO: trial notifications (cf https://nilcoalescing.com/blog/TrialNotificationsWithProvisionalAuthorizationOnIOS/ )
 // TODO: crash quand on supprime des scans depuis la gallerie grid
 // TODO: liste des devices : utiliser un diffable data source ?
@@ -36,6 +38,8 @@ extension AppDelegate : UIApplicationDelegate {
         // Analytics
         Analytics.shared.send(event: .appLaunch)
         
+        print(SaneError.cancelled.errorDescription)
+
         // Snapshots
         Snapshot.setup { config in
             Preferences.shared.previewWithAutoColorMode = false
