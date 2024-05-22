@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: replace by LicenseList, or go tap into its sources at list
 class AcknowledgementsVC: UIViewController {
     
     override func viewDidLoad() {

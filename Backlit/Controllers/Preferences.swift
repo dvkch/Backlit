@@ -41,8 +41,8 @@ enum BoolPreferenceValue: PreferenceValue {
     
     var description: String {
         switch self {
-        case .on:  return "OPTION BOOL ON".localized
-        case .off: return "OPTION BOOL OFF".localized
+        case .on:  return L10n.optionBoolOn
+        case .off: return L10n.optionBoolOff
         }
     }
 }
@@ -93,9 +93,9 @@ class Preferences: NSObject {
         
         var description: String {
             switch self {
-            case .imageSize: return "PREFERENCES VALUE PDF SIZE IMAGE SIZE".localized
-            case .a4:        return "PREFERENCES VALUE PDF SIZE A4".localized
-            case .usLetter:  return "PREFERENCES VALUE PDF SIZE US LETTER".localized
+            case .imageSize: return L10n.preferencesValuePdfSizeImageSize
+            case .a4:        return L10n.preferencesValuePdfSizeA4
+            case .usLetter:  return L10n.preferencesValuePdfSizeUsLetter
             }
         }
     }
@@ -159,30 +159,30 @@ extension Preferences {
         
         var localizedTitle: String {
             switch self {
-            case .imageFormat:              return "PREFERENCES TITLE IMAGE FORMAT".localized
-            case .pdfSize:                  return "PREFERENCES TITLE PDF SIZE".localized
-            case .showAdvancedOptions:      return "PREFERENCES TITLE SHOW ADVANCED OPTIONS".localized
-            case .previewWithAutoColorMode: return "PREFERENCES TITLE PREVIEW DEFAULT COLOR MODE".localized
-            case .enableAnalytics:          return "PREFERENCES TITLE ENABLE ANALYTICS".localized
+            case .imageFormat:              return L10n.preferencesTitleImageFormat
+            case .pdfSize:                  return L10n.preferencesTitlePdfSize
+            case .showAdvancedOptions:      return L10n.preferencesTitleShowAdvancedOptions
+            case .previewWithAutoColorMode: return L10n.preferencesTitlePreviewDefaultColorMode
+            case .enableAnalytics:          return L10n.preferencesTitleEnableAnalytics
             }
         }
         
         var localizedDescription: String {
             switch self {
-            case .imageFormat:              return "PREFERENCES MESSAGE IMAGE FORMAT".localized
-            case .pdfSize:                  return "PREFERENCES MESSAGE PDF SIZE".localized
-            case .showAdvancedOptions:      return "PREFERENCES MESSAGE SHOW ADVANCED OPTIONS".localized
-            case .previewWithAutoColorMode: return "PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE".localized
-            case .enableAnalytics:          return "PREFERENCES MESSAGE ENABLE ANALYTICS".localized
+            case .imageFormat:              return L10n.preferencesMessageImageFormat
+            case .pdfSize:                  return L10n.preferencesMessagePdfSize
+            case .showAdvancedOptions:      return L10n.preferencesMessageShowAdvancedOptions
+            case .previewWithAutoColorMode: return L10n.preferencesMessagePreviewDefaultColorMode
+            case .enableAnalytics:          return L10n.preferencesMessageEnableAnalytics
             }
         }
     }
     
     var groupedKeys: [(String, [Key])] {
         return [
-            ("PREFERENCES SECTION PREVIEW".localized, [.previewWithAutoColorMode]),
-            ("PREFERENCES SECTION SCAN".localized, [.imageFormat, .pdfSize, .showAdvancedOptions]),
-            ("PREFERENCES SECTION ANALYTICS".localized, [.enableAnalytics]),
+            (L10n.preferencesSectionPreview, [.previewWithAutoColorMode]),
+            (L10n.preferencesSectionScan, [.imageFormat, .pdfSize, .showAdvancedOptions]),
+            (L10n.preferencesSectionAnalytics, [.enableAnalytics]),
         ]
     }
     

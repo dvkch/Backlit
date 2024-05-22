@@ -41,7 +41,7 @@ struct RefreshView {
         }
         loader.color = .tint
         loader.startAnimating()
-        loader.accessibilityLabel = "LOADING".localized
+        loader.accessibilityLabel = L10n.loading
         viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loader)
         #else
         if !discreet {

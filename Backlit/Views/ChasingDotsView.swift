@@ -41,7 +41,7 @@ class ChasingDotsView: UIView {
             invalidateIntrinsicContentSize()
         }
     }
-    var isAnimating: Bool = false
+    private(set) var isAnimating: Bool = false
     
     // MARK: Style
     private func updateSublayersColor(_ layer: CALayer) {
@@ -66,6 +66,16 @@ class ChasingDotsView: UIView {
             isHidden = true
         }
         pauseLayers()
+    }
+    
+    // MARK: Layout
+    private var prevSize: CGSize = .zero
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if prevSize != layer.bounds.size {
+            prevSize = layer.bounds.size
+            setupChasingDotsAnimation()
+        }
     }
     
     // MARK: Animation
@@ -104,7 +114,7 @@ class ChasingDotsView: UIView {
         spinnerAnim.repeatCount = .greatestFiniteMagnitude
         spinnerAnim.duration = 2.0
         spinnerAnim.beginTime = beginTime
-        spinnerAnim.keyTimes = [0.0, 0.25, 0.5, 0.75, 1.0]
+        spinnerAnim.keyTimes = [0.0 as NSNumber, 0.25, 0.5, 0.75, 1.0]
         spinnerAnim.timingFunctions = [
             CAMediaTimingFunction(name: .linear),
             CAMediaTimingFunction(name: .linear),
@@ -135,7 +145,7 @@ class ChasingDotsView: UIView {
             anim.repeatCount = .greatestFiniteMagnitude
             anim.duration = 2.0
             anim.beginTime = beginTime - (1.0 * Double(i))
-            anim.keyTimes = [0.0, 0.5, 1.0]
+            anim.keyTimes = [0.0 as NSNumber, 0.5, 1.0]
             anim.timingFunctions = [
                 CAMediaTimingFunction(name: .easeInEaseOut),
                 CAMediaTimingFunction(name: .easeInEaseOut),

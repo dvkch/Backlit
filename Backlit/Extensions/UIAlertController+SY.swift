@@ -14,10 +14,10 @@ extension UIAlertController {
         if case .cancelled = error as? SaneError {
             return
         }
-        self.show(for: error, title: title, close: "ACTION CLOSE".localized, in: viewController)
+        self.show(for: error, title: title, close: L10n.actionClose, in: viewController)
     }
     
     static func show(title: String? = nil, message: String? = nil, in viewController: UIViewController) {
-        self.show(title: title, message: message, close: "ACTION CLOSE".localized, in: viewController)
+        self.show(title: title, message: message, close: L10n.actionClose, in: viewController)
     }
 }

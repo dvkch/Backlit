@@ -26,7 +26,7 @@ class DeviceOptionVC : UIAlertController {
         
         updateContent()
         
-        let closeAction = addAction(title: "ACTION CLOSE".localized, style: .cancel, handler: nil)
+        let closeAction = addAction(title: L10n.actionClose, style: .cancel, handler: nil)
         self.preferredAction = closeAction
     }
     
@@ -83,7 +83,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
         }
         setContentViewController(sliderVC)
         
-        addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
+        addAction(title: L10n.actionSetValue, style: .default) { (_) in
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
             if let optionInt = optionInt {
                 Sane.shared.updateOption(optionInt, with: .value(Int(sliderVC.sliderValue)), completion: self.optionUpdateCompletion(_:))
@@ -97,7 +97,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
     }
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
-        addAction(title: "ACTION PRESS".localized, style: .default) { (_) in
+        addAction(title: L10n.actionPress, style: .default) { (_) in
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
             option.press(self.optionUpdateCompletion(_:))
         }
@@ -108,7 +108,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
         let textFieldVC: SYTextInputViewController = .init(current: current.description, kind: kind)
         setContentViewController(textFieldVC)
 
-        addAction(title: "ACTION SET VALUE".localized, style: .default) { (_) in
+        addAction(title: L10n.actionSetValue, style: .default) { (_) in
             self.delegate?.deviceOptionControllable(self, willUpdate: option)
 
             switch kind {
@@ -126,7 +126,7 @@ extension DeviceOptionVC: DeviceOptionControllable {
     
     private func addAutoButton<V, T: DeviceOptionTyped<V>>(for option: T) {
         if option.capabilities.contains(.automatic) {
-            addAction(title: "OPTION VALUE AUTO".localized, style: .default) { (_) in
+            addAction(title: L10n.optionValueAuto, style: .default) { (_) in
                 self.delegate?.deviceOptionControllable(self, willUpdate: option)
                 Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
             }

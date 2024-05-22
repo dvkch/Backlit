@@ -286,8 +286,8 @@ class DeviceVC: UIViewController {
         }
 
         let content = UNMutableNotificationContent()
-        content.title = "SCAN FINISHED NOTIFICATION TITLE".localized
-        content.body = "SCAN FINISHED NOTIFICATION MESSAGE %d".localized(quantity: items.count)
+        content.title = L10n.scanFinishedNotificationTitle
+        content.body = L10n.ScanFinishedNotificationMessage.quantity(items.count)
         content.sound = .init(named: .init(rawValue: "scanner.caf"))
         content.attachments = items.compactMap {
             // https://stackoverflow.com/a/77157008/1439489
@@ -404,10 +404,10 @@ extension DeviceVC : ConditionallyDismissible {
     
     var dismissalConfirmationTexts: DismissalTexts {
         return .init(
-            title: "CLOSE DEVICE CONFIRMATION TITLE".localized,
-            message: "CLOSE DEVICE CONFIRMATION MESSAGE".localized,
-            dismissButton: "ACTION STOP SCANNING".localized,
-            cancelButton: "ACTION CONTINUE".localized
+            title: L10n.closeDeviceConfirmationTitle,
+            message: L10n.closeDeviceConfirmationMessage,
+            dismissButton: L10n.actionStopScanning,
+            cancelButton: L10n.actionContinue
         )
     }
 }
@@ -451,7 +451,7 @@ extension DeviceVC : UITableViewDataSource {
         }
 
         if section == 0 {
-            return "DEVICE SECTION PREVIEW".localized
+            return L10n.deviceSectionPreview
         }
         else {
             return optionGroup(tableViewSection: section)?.localizedTitle

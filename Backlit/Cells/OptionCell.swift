@@ -332,7 +332,7 @@ extension OptionCell: DeviceOptionControllable {
         }
         
         if option.capabilities.contains(.automatic) {
-            dropdownOptions.append(("OPTION VALUE AUTO".localized, nil))
+            dropdownOptions.append((L10n.optionValueAuto, nil))
         }
 
         let optionTitles: [String] = dropdownOptions.map(\.0)
@@ -440,8 +440,8 @@ extension OptionCell: DeviceOptionControllable {
             size: CGSize(width: 14, height: 13)
         )
         saveButton.setAttributedTitle(saveIcon, for: .normal)
-        saveButton.addTooltip { "ACTION SAVE".localized }
-        saveButton.accessibilityLabel = "ACTION SAVE".localized
+        saveButton.addTooltip { L10n.actionSave }
+        saveButton.accessibilityLabel = L10n.actionSave
         saveButton.addPrimaryAction { [weak self] in
             self?.deviceOptionTextFieldValueChanged(field)
         }
@@ -453,8 +453,8 @@ extension OptionCell: DeviceOptionControllable {
             size: CGSize(width: 16, height: 15)
         )
         autoButton.setAttributedTitle(autoIcon, for: .normal)
-        autoButton.addTooltip { "OPTION VALUE AUTO".localized }
-        autoButton.accessibilityLabel = "OPTION VALUE AUTO".localized
+        autoButton.addTooltip { L10n.optionValueAuto }
+        autoButton.accessibilityLabel = L10n.optionValueAuto
         autoButton.addPrimaryAction { [weak self] in
             guard let self else { return }
             Sane.shared.updateOption(option, with: .auto, completion: self.optionUpdateCompletion(_:))
@@ -494,7 +494,7 @@ extension OptionCell: DeviceOptionControllable {
     
     func updateDeviceOptionControlForButton(option: DeviceOptionButton) {
         let button = UIButton.system(prominent: true)
-        button.setTitle("ACTION PRESS".localized, for: .normal)
+        button.setTitle(L10n.actionPress, for: .normal)
         button.isEnabled = !option.disabledOrReadOnly
         button.addPrimaryAction { [weak self] in
             guard let self = self else { return }

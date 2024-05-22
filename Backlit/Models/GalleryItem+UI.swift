@@ -37,7 +37,7 @@ extension GalleryItem {
 
     var suggestedAccessibilityLabel: String? {
         return [
-            "GALLERY ITEM".localized,
+            L10n.galleryItem,
             suggestedDescription(separator: "; ")
         ].removingNils().joined(separator: "; ")
     }
@@ -55,13 +55,13 @@ extension GalleryItem {
             },
             actionProvider: { _ in
                 var actions = [UIAction]()
-                actions.append(UIAction(title: "ACTION OPEN".localized, image: .icon(.open)) { _ in
+                actions.append(UIAction(title: L10n.actionOpen, image: .icon(.open)) { _ in
                     openGallery()
                 })
-                actions.append(UIAction(title: "ACTION SHARE".localized, image: .icon(.share)) { _ in
+                actions.append(UIAction(title: L10n.actionShare, image: .icon(.share)) { _ in
                     UIActivityViewController.showForURLs([self.url], from: .view(sender), presentingVC: viewController)
                 })
-                actions.append(UIAction(title: "ACTION SAVE TO PHOTOS".localized, image: .icon(.save)) { _ in
+                actions.append(UIAction(title: L10n.actionSaveToPhotos, image: .icon(.save)) { _ in
                     let hud = HUDAlertController.show(in: viewController)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         GalleryManager.shared.saveItemToCamraRoll(self, completion: { result in
@@ -73,11 +73,11 @@ extension GalleryItem {
                         })
                     }
                 })
-                actions.append(UIAction(title: "ACTION COPY".localized, image: .icon(.copy)) { _ in
+                actions.append(UIAction(title: L10n.actionCopy, image: .icon(.copy)) { _ in
                     guard let data = try? Data(contentsOf: self.url, options: .mappedIfSafe) else { return }
                     UIPasteboard.general.setValue(data, forPasteboardType: self.writableTypeIdentifiersForItemProvider.first!)
                 })
-                actions.append(UIAction(title: "ACTION DELETE".localized, image: .icon(.delete), attributes: .destructive) { _ in
+                actions.append(UIAction(title: L10n.actionDelete, image: .icon(.delete), attributes: .destructive) { _ in
                     viewController.deleteGalleryItems([self], sender: sender)
                 })
                 return UIMenu(title: self.suggestedDescription(separator: "\n") ?? "", children: actions)
@@ -90,11 +90,11 @@ extension GalleryItem {
 extension UIViewController {
     func deleteGalleryItems(_ items: [GalleryItem], sender: NSObject, completion: (() -> ())? = nil) {
         let alert = UIAlertController(
-            title: "DIALOG DELETE SCANS TITLE".localized,
-            message: "DIALOG DELETE SCANS MESSAGE %d".localized(quantity: items.count),
+            title: L10n.dialogDeleteScansTitle,
+            message: L10n.DialogDeleteScansMessage.quantity(items.count),
             preferredStyle: .actionSheet
         )
-        alert.addAction(UIAlertAction(title: "ACTION DELETE".localized, style: .destructive, handler: { (_) in
+        alert.addAction(UIAlertAction(title: L10n.actionDelete, style: .destructive, handler: { (_) in
             let hud = HUDAlertController.show(in: self)
             items.forEach { (item) in
                 GalleryManager.shared.deleteItem(item)
@@ -102,7 +102,7 @@ extension UIViewController {
             hud.dismiss(animated: true, completion: nil)
             completion?()
         }))
-        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: L10n.actionCancel, style: .cancel, handler: nil))
         alert.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
         alert.popoverPresentationController?.sourceView = sender as? UIView
         alert.popoverPresentationController?.sourceRect = (sender as? UIView)?.bounds ?? .zero

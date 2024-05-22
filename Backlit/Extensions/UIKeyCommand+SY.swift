@@ -17,35 +17,35 @@ extension UIKeyCommand {
     }
 
     static var preview: UIKeyCommand {
-        return .init(title: "MENU PREVIEW".localized, action: #selector(DeviceVC.preview), input: "P", modifierFlags: .command)
+        return .init(title: L10n.menuPreview, action: #selector(DeviceVC.preview), input: "P", modifierFlags: .command)
     }
 
     static var scan: UIKeyCommand {
-        return .init(title: "MENU SCAN".localized, action: #selector(DeviceVC.scan), input: "S", modifierFlags: .command)
+        return .init(title: L10n.menuScan, action: #selector(DeviceVC.scan), input: "S", modifierFlags: .command)
     }
 
     static var abort: UIKeyCommand {
-        return .init(title: "MENU ABORT".localized, action: #selector(DeviceVC.cancelOperation), input: UIKeyCommand.inputEscape, modifierFlags: .command)
+        return .init(title: L10n.menuAbort, action: #selector(DeviceVC.cancelOperation), input: UIKeyCommand.inputEscape, modifierFlags: .command)
     }
 
     static var openGallery: UIKeyCommand {
-        return .init(title: "MENU OPEN GALLERY".localized, action: #selector(SplitVC.openGallery), input: "O", modifierFlags: .command)
+        return .init(title: L10n.menuOpenGallery, action: #selector(SplitVC.openGallery), input: "O", modifierFlags: .command)
     }
 
     static var addHost: UIKeyCommand {
-        return .init(title: "MENU ADD HOST".localized, action: #selector(DevicesVC.addHostButtonTap), input: "N", modifierFlags: .command)
+        return .init(title: L10n.menuAddHost, action: #selector(DevicesVC.addHostButtonTap), input: "N", modifierFlags: .command)
     }
 
     static var refresh: UIKeyCommand {
-        return .init(title: "MENU REFRESH".localized, action: #selector(DevicesVC.refresh), input: "R", modifierFlags: .command)
+        return .init(title: L10n.menuRefresh, action: #selector(DevicesVC.refresh), input: "R", modifierFlags: .command)
     }
 
     static var settings: UIKeyCommand {
-        return .init(title: "MENU PREFERENCES".localized, action: #selector(DevicesVC.settingsButtonTap), input: ",", modifierFlags: .command)
+        return .init(title: L10n.menuPreferences, action: #selector(DevicesVC.settingsButtonTap), input: ",", modifierFlags: .command)
     }
     
     static var close: UIKeyCommand {
-        return .init(title: "ACTION CLOSE".localized, action: #selector(PreferencesVC.closeButtonTap), input: UIKeyCommand.inputEscape, modifierFlags: .init())
+        return .init(title: L10n.actionClose, action: #selector(PreferencesVC.closeButtonTap), input: UIKeyCommand.inputEscape, modifierFlags: .init())
     }
 }
 

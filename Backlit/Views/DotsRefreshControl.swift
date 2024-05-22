@@ -8,9 +8,6 @@
 
 import UIKit
 
-// TODO: Switch to localized strings swift gen
-// TODO: cleanup code now that we vendored the animation FW
-
 class DotsRefreshControl : UIRefreshControl {
     
     override init(frame: CGRect) {
@@ -25,7 +22,7 @@ class DotsRefreshControl : UIRefreshControl {
     
     private func setup() {
         isAccessibilityElement = true
-        accessibilityLabel = "LOADING".localized
+        accessibilityLabel =  L10n.loading
         accessibilityTraits = .staticText
 
         addSubview(dotsView)

@@ -26,14 +26,14 @@ extension UIBarButtonItem {
     
     static func refresh(block: @escaping () -> ()) -> UIBarButtonItem {
         let button = UIBarButtonItem(image: .icon(.refresh), style: .plain, target: nil, action: nil)
-        button.accessibilityLabel = "ACTION REFRESH".localized
+        button.accessibilityLabel = L10n.actionRefresh
         button.tapBlock = block
         return button
     }
     
     static func close(target: Any, action: Selector) -> UIBarButtonItem {
         let button = UIButton(type: .system)
-        button.accessibilityLabel = "ACTION CLOSE".localized
+        button.accessibilityLabel = L10n.actionClose
         button.backgroundColor = .normalText.withAlphaComponent(0.1)
         button.setImage(.icon(.close, variant: nil), for: .normal)
         button.tintColor = .altText
@@ -47,25 +47,25 @@ extension UIBarButtonItem {
     
     static func settings(target: Any, action: Selector) -> UIBarButtonItem {
         let button = UIBarButtonItem(image: .icon(.settings), style: .plain, target: target, action: action)
-        button.title = "PREFERENCES TITLE".localized
+        button.title = L10n.preferencesTitle
         return button
     }
     
     static func openFolder(target: Any, action: Selector) -> UIBarButtonItem {
         let button = UIBarButtonItem(image: .icon(.open), style: .plain, target: target, action: action)
-        button.title = "MENU OPEN GALLERY".localized
+        button.title = L10n.menuOpenGallery
         return button
     }
     
     static func share(target: Any, action: Selector) -> UIBarButtonItem {
         let button = UIBarButtonItem(image: .icon(.share), style: .plain, target: target, action: action)
-        button.title = "ACTION SHARE".localized
+        button.title = L10n.actionShare
         return button
     }
     
     static func delete(target: Any, action: Selector) -> UIBarButtonItem {
         let button = UIBarButtonItem(image: .icon(.delete), style: .plain, target: target, action: action)
-        button.title = "ACTION DELETE".localized
+        button.title = L10n.actionDelete
         return button
     }
     

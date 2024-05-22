@@ -42,7 +42,7 @@ class DeviceCell: TableViewCell {
                     spinner = UIActivityIndicatorView(style: .white)
                 }
                 spinner.color = .normalText
-                spinner.accessibilityLabel = "LOADING".localized
+                spinner.accessibilityLabel = L10n.loading
                 accessoryView = spinner
                 spinner.startAnimating()
                 accessibilityIdentifier = "loading_device"

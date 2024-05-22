@@ -67,6 +67,9 @@
 		9786507D220B5E6400F52DE6 /* PDFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507C220B5E6400F52DE6 /* PDFGenerator.swift */; };
 		9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9786507E220B645500F52DE6 /* PDFActivity.swift */; };
 		97865081220B69AC00F52DE6 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97865080220B69AC00F52DE6 /* GalleryManager.swift */; };
+		978CA6692BFE2A7300970606 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978CA6682BFE2A7300970606 /* Strings.swift */; };
+		978CA66A2BFE2A7E00970606 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978CA6682BFE2A7300970606 /* Strings.swift */; };
+		978CA66C2BFE30E600970606 /* Strings+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978CA66B2BFE30E600970606 /* Strings+SY.swift */; };
 		9796632229F991FF00E28486 /* GalleryItem+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9796632129F991FF00E28486 /* GalleryItem+UI.swift */; };
 		97A3AC2429A7F4CB00F31207 /* UIButton+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A3AC2329A7F4CB00F31207 /* UIButton+SY.swift */; };
 		97A602762ABCE25E000B1F1B /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A602752ABCE25E000B1F1B /* Switch.swift */; };
@@ -242,6 +245,8 @@
 		9786507C220B5E6400F52DE6 /* PDFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFGenerator.swift; sourceTree = "<group>"; };
 		9786507E220B645500F52DE6 /* PDFActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFActivity.swift; sourceTree = "<group>"; };
 		97865080220B69AC00F52DE6 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
+		978CA6682BFE2A7300970606 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		978CA66B2BFE30E600970606 /* Strings+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strings+SY.swift"; sourceTree = "<group>"; };
 		9796632129F991FF00E28486 /* GalleryItem+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GalleryItem+UI.swift"; sourceTree = "<group>"; };
 		97A3AC2329A7F4CB00F31207 /* UIButton+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+SY.swift"; sourceTree = "<group>"; };
 		97A602752ABCE25E000B1F1B /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
@@ -379,6 +384,8 @@
 				9785C5681E3D247A006CD4F1 /* Localizable.strings */,
 				974E0D5E2A3906C00080D563 /* scanner.caf */,
 				972437942A0AF830002C5F6B /* silent.mp3 */,
+				978CA6682BFE2A7300970606 /* Strings.swift */,
+				978CA66B2BFE30E600970606 /* Strings+SY.swift */,
 				971ABFDE1CCFA0150086F600 /* SYLaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -706,6 +713,7 @@
 			buildConfigurationList = F8CBD2301AF9A58C00B4C221 /* Build configuration list for PBXNativeTarget "Backlit" */;
 			buildPhases = (
 				97DF1B511E3BA42A00AD8A92 /* TODOs etc */,
+				978CA6672BFE2A3900970606 /* Strings */,
 				976E5BAC1E3BA4630057B599 /* TRANSLATE */,
 				F8CBD2091AF9A58C00B4C221 /* Sources */,
 				F8CBD20A1AF9A58C00B4C221 /* Frameworks */,
@@ -889,6 +897,26 @@
 			shellPath = /usr/bin/ruby;
 			shellScript = "# characters in the list will prevent the @ sign from being considered as a string literal start\ncharacters_to_ignore_before_at = \"%\"\n\n# list all .m and .h files in directory\nDir.glob(\"#{ENV['SRCROOT']}/#{ENV['PROJECT_NAME']}/**/{*.h,*.m}\") do |file|\n\n# iterate through all lines of the given file\nFile.foreach(file).with_index do |line, line_num|\n\n# iterate through all occurences of @\", and check if it represents the beginning of a string literal\nindex = -1\nwhile index = line.index('@\"', index+1)\n\n# if we haven't found the beginning of a literal we go to the next occurence\nnext if index > 0 && characters_to_ignore_before_at.index(line[index-1])\n\n# we find the end of the literal\nindex_end = index + 1\nwhile index_end = line.index('\"', index_end+1)\n# the double-quote character doesn't denote an end if it's escaped\nbreak if line[index_end-1] != '\\\\'\nend\n\n# in case the literal is sprend into multiple lines and we don't find its end on this line\nif index_end == nil\nindex_end = -1\nend\n\n# string literal content\nstring_to_translate = line[index..index_end]\n\n# xcode warning\nputs \"#{file}:#{line_num+1}:#{index+1}: warning: TRANSLATE: #{string_to_translate}\"\nend\nend\nend\n\n";
 		};
+		978CA6672BFE2A3900970606 /* Strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Backlit/Resources/en.lproj/Localizable.strings",
+			);
+			name = Strings;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Subbie/Resources/Strings.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/opt/homebrew/bin/swiftgen\n";
+		};
 		97DF1B511E3BA42A00AD8A92 /* TODOs etc */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -936,6 +964,7 @@
 				97C11189265C5E1600794994 /* FileManager+SY.swift in Sources */,
 				97C11179265C5C8600794994 /* FileProviderExtension.swift in Sources */,
 				97C1117B265C5C8600794994 /* FileProviderItem.swift in Sources */,
+				978CA66A2BFE2A7E00970606 /* Strings.swift in Sources */,
 				97C1117D265C5C8600794994 /* FileProviderEnumerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -946,6 +975,7 @@
 			files = (
 				97D5902526377CBE00E84198 /* TooltipView.swift in Sources */,
 				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
+				978CA6692BFE2A7300970606 /* Strings.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
 				97FF2A9129EC9CD30096ACFC /* DiffableDataSources+SY.swift in Sources */,
 				9736470529E743700089458A /* ConditionallyDismissible.swift in Sources */,
@@ -953,6 +983,7 @@
 				97044903220875D300E13C6A /* DeviceVC.swift in Sources */,
 				971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */,
 				975277CA264D5C1A00FFAAF4 /* RefreshView.swift in Sources */,
+				978CA66C2BFE30E600970606 /* Strings+SY.swift in Sources */,
 				9704490C2208900700E13C6A /* AppDelegate.swift in Sources */,
 				973066C1220C898E0068E8C7 /* GalleryGridLayout.swift in Sources */,
 				973646FC29E6DA400089458A /* BouncyLayout.swift in Sources */,

@@ -152,10 +152,10 @@ class GalleryGridVC: UIViewController {
         }
 
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alertVC.addAction(title: "SHARE AS PDF".localized, image: .icon(.pdf), style: .default) { _ in
+        alertVC.addAction(title: L10n.shareAsPdf, image: .icon(.pdf), style: .default) { _ in
             completion(false)
         }
-        alertVC.addAction(title: "SHARE AS PDF INTERLEAVED".localized, image: .icon(.pdf), style: .default) { _ in
+        alertVC.addAction(title: L10n.shareAsPdfInterleaved, image: .icon(.pdf), style: .default) { _ in
             completion(true)
         }
         alertVC.popoverPresentationController?.barButtonItem = sender
@@ -212,9 +212,9 @@ class GalleryGridVC: UIViewController {
     // MARK: Content
     private func updateEmptyState() {
         let text = NSMutableAttributedString()
-        text.append("GALLERY EMPTY TITLE".localized, font: .preferredFont(forTextStyle: .body), color: .normalText)
+        text.append(L10n.galleryEmptyTitle, font: .preferredFont(forTextStyle: .body), color: .normalText)
         text.append("\n\n", font: .preferredFont(forTextStyle: .subheadline), color: .normalText)
-        text.append("GALLERY EMPTY SUBTITLE".localized, font: .preferredFont(forTextStyle: .subheadline), color: .altText)
+        text.append(L10n.galleryEmptySubtitle, font: .preferredFont(forTextStyle: .subheadline), color: .altText)
         emptyStateLabel.attributedText = text
         
         emptyStateView.isHidden = galleryDataSource.totalCount > 0
@@ -225,9 +225,9 @@ class GalleryGridVC: UIViewController {
         // Title
         if isEditing {
             let selectedCount = collectionView.indexPathsForSelectedItems?.count ?? 0
-            title = "GALLERY SELECTED ITEMS COUNT %d".localized(quantity: selectedCount)
+            title = L10n.GallerySelectedItemsCount.quantity(selectedCount)
         } else {
-            title = "GALLERY OVERVIEW TITLE".localized
+            title = L10n.galleryOverviewTitle
         }
         
         // Left

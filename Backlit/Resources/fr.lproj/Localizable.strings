@@ -29,21 +29,21 @@
 "ACTION COPY"               = "Copier";
 "ACTION REFRESH"            = "Rafraichir";
 
-"LOADING"           = "Chargement...";
-"SCANNING"          = "Acquisition...";
-"SCANNING %f"       = "Acquisition... (%.f%%)";
-"SCANNING %f %d"    = "Acquisition... (%.f%%, %d documents finis)";
-"PREVIEWING"        = "Aperçu en cours...";
-"PREVIEWING %f"     = "Aperçu en cours... (%.f%%)";
-"CANCELLING"        = "Annulation...";
-"WARMING UP"        = "Préchauffe";
+"LOADING"                   = "Chargement...";
+"SCANNING"                  = "Acquisition...";
+"SCANNING PROGRESS"         = "Acquisition... (%d%%)";
+"SCANNING PROGRESS COUNT"   = "Acquisition... (%d%%, %d documents finis)";
+"PREVIEWING"                = "Aperçu en cours...";
+"PREVIEWING PROGRESS"       = "Aperçu en cours... (%d%%)";
+"CANCELLING"                = "Annulation...";
+"WARMING UP"                = "Préchauffe";
 
 // PDF Errors
 "ERROR MESSAGE PDF NO IMAGES"               = "Aucune image sélectionnée";
 "ERROR MESSAGE PDF COULD NOT BE GENERATED"  = "PDF file couldn't be generated";
 "ERROR MESSAGE CANNOT OPEN IMAGES"          = "Impossible d'ouvrir les images";
-"ERROR MESSAGE CANNOT OPEN IMAGE %@"        = "Impossible d'ouvrir l'image %@";
-"ERROR MESSAGE INVALID IMAGE DATA %@"       = "Données images invalides dans le fichier %@";
+"ERROR MESSAGE CANNOT OPEN IMAGE"           = "Impossible d'ouvrir l'image %@";
+"ERROR MESSAGE INVALID IMAGE DATA"          = "Données images invalides dans le fichier %@";
 
 // Devices list screen
 "DEVICES SECTION HOSTS"     = "Serveurs";
@@ -80,7 +80,7 @@
 
 "PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE"    = "Utiliser le mode de couleur et l'intensité par défaut lors d'un aperçu, si ces options sont disponibles et supportent un réglage automatique.. Ceci permet d'avoir des aperçus cohérents quelles que soient les options que vous définissez, mais peut augmenter le temps d'acquisition. Ceci peut créer des images noires en scannant après un aperçu sur certains pilotes SANE (ex: Pixma 1.0.24)";
 "PREFERENCES MESSAGE SHOW ADVANCED OPTIONS"         = "Certains appareils ont des options avancées, utilisez ce réglage pour y accéder.";
-"PREFERENCES MESSAGE IMAGE FORMAT"                  = "Par défaut les documents scannés sont sauvegardés en JPEG avec un facteur de qualité de 90%. Changez ce paramètre pour enregistrer en PNG sans perte de qualité ou en HEIC avec une qualité à 90%";
+"PREFERENCES MESSAGE IMAGE FORMAT"                  = "Par défaut les documents scannés sont sauvegardés en JPEG avec un facteur de qualité de 90%%. Changez ce paramètre pour enregistrer en PNG sans perte de qualité ou en HEIC avec une qualité à 90%%";
 "PREFERENCES MESSAGE PDF SIZE"                      = "Lors de l'assemblage d'images en PDF, les pages peuvent être à la taille de chaque image scannée, au format A4 ou lettre US";
 "PREFERENCES MESSAGE ENABLE ANALYTICS"              = "Chaque événement est envoyé avec vottre version iOS, modèle d'appareil, et version de l'application. Les données spécifiques aux événements envoyés sont le nombre d'hôtes configurés, le modèle de votre scanner et les erreurs que vous pouvez rencontrer. ";
 "PREFERENCES MESSAGE CLEANUP CACHE"                 = "Appuyez pour vider le cache";
@@ -89,29 +89,30 @@
 "PREFERENCES VALUE PDF SIZE A4"         = "A4";
 "PREFERENCES VALUE PDF SIZE US LETTER"  = "Lettre US";
 
-"ANALYTICS ALERT TITLE"             = "Voulez-vous autoriser l'envoi de statistiques anonymes ?";
+"ANALYTICS ALERT TITLE"         = "Voulez-vous autoriser l'envoi de statistiques anonymes ?";
 
-"MAIL COPY PASTEBOARD NAME"         = "Copier l'adresse email";
-"MAIL COPY PASTEBOARD SUCCESS"      = "Copié dans le presse papier";
-"MAIL ALERT TITLE"                  = "Envoyer un email";
-"MAIL ALERT MESSAGE"                = "Choisissez votre service préféré";
-"MAIL ALERT CANCEL"                 = "Cancel";
-"CONTACT SUBJECT ABOUT APP %@ %@"   = "À props de %@ %@";
+"MAIL COPY PASTEBOARD NAME"     = "Copier l'adresse email";
+"MAIL COPY PASTEBOARD SUCCESS"  = "Copié dans le presse papier";
+"MAIL ALERT TITLE"              = "Envoyer un email";
+"MAIL ALERT MESSAGE"            = "Choisissez votre service préféré";
+"MAIL ALERT CANCEL"             = "Cancel";
+"CONTACT ADDRESS"               = "contact@syan.me";
+"CONTACT SUBJECT ABOUT APP"     = "À props de %@ %@";
 
 // Gallery
 "GALLERY EMPTY TITLE"       = "Pas de documents";
 "GALLERY EMPTY SUBTITLE"    = "Scannez un document en utilisant un des appareils sur la gauche et il apparaitra ici";
 
 // Gallery overview
-"GALLERY OVERVIEW TITLE"    = "Documents";
+"GALLERY OVERVIEW TITLE"                = "Documents";
 "GALLERY ITEM"                          = "Document";
-"GALLERY ITEM %d OF %d"                 = "%d sur %d";
-"GALLERY SELECTED ITEMS COUNT %d.zero"  = "Aucun document sélectionné";
-"GALLERY SELECTED ITEMS COUNT %d.one"   = "%d document sélectionné";
-"GALLERY SELECTED ITEMS COUNT %d.other" = "%d documents sélectionnés";
-"GALLERY ITEMS COUNT %d.zero"           = "Aucun document";
-"GALLERY ITEMS COUNT %d.one"            = "1 document";
-"GALLERY ITEMS COUNT %d.other"          = "%d documents";
+"GALLERY ITEM N OF N"                   = "%d sur %d";
+"GALLERY SELECTED ITEMS COUNT.zero"     = "Aucun document sélectionné";
+"GALLERY SELECTED ITEMS COUNT.one"      = "Un document sélectionné";
+"GALLERY SELECTED ITEMS COUNT.other"    = "%d documents sélectionnés";
+"GALLERY ITEMS COUNT.zero"              = "Aucun document";
+"GALLERY ITEMS COUNT.one"               = "1 document";
+"GALLERY ITEMS COUNT.other"             = "%d documents";
 
 // Dialogs
 "DIALOG ADD HOST TITLE"             = "Ajouter un hôte";
@@ -126,10 +127,10 @@
 "DIALOG AUTH PLACEHOLDER USERNAME"  = "Utilisateur";
 "DIALOG AUTH PLACEHOLDER PASSWORD"  = "Mot de passe";
 
-"DIALOG DELETE SCANS TITLE"             = "Confirmation";
-"DIALOG DELETE SCANS MESSAGE %d.zero"   = "Etes vous sûr de vouloir supprimer ces documents ?";
-"DIALOG DELETE SCANS MESSAGE %d.one"    = "Etes vous sûr de vouloir supprimer ce document ?";
-"DIALOG DELETE SCANS MESSAGE %d.other"  = "Etes vous sûr de vouloir supprimer %d documents ?";
+"DIALOG DELETE SCANS TITLE"         = "Confirmation";
+"DIALOG DELETE SCANS MESSAGE.zero"  = "Etes vous sûr de vouloir supprimer ces documents ?";
+"DIALOG DELETE SCANS MESSAGE.one"   = "Etes vous sûr de vouloir supprimer ce document ?";
+"DIALOG DELETE SCANS MESSAGE.other" = "Etes vous sûr de vouloir supprimer %d documents ?";
 
 "DIALOG COULDNT OPEN DEVICE TITLE"  = "Accès à l'appareil échoué";
 
@@ -155,7 +156,7 @@
 "CLOSE DEVICE CONFIRMATION MESSAGE" = "L'acquisition en cours sera annulée";
 
 // Notifications
-"SCAN FINISHED NOTIFICATION TITLE"              = "Acquisition finie !";
-"SCAN FINISHED NOTIFICATION MESSAGE %d.zero"    = "Aucun document sauvegardé";
-"SCAN FINISHED NOTIFICATION MESSAGE %d.one"     = "1 document sauvegardé";
-"SCAN FINISHED NOTIFICATION MESSAGE %d.other"   = "%d documents sauvegardés";
+"SCAN FINISHED NOTIFICATION TITLE"          = "Acquisition finie !";
+"SCAN FINISHED NOTIFICATION MESSAGE.zero"   = "Aucun document sauvegardé";
+"SCAN FINISHED NOTIFICATION MESSAGE.one"    = "1 document sauvegardé";
+"SCAN FINISHED NOTIFICATION MESSAGE.other"  = "%d documents sauvegardés";

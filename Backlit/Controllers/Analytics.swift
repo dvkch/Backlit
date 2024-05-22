@@ -24,11 +24,11 @@ class Analytics {
         guard !Preferences.shared.askedAnalytics else { return }
         Preferences.shared.askedAnalytics = true
 
-        let alert = UIAlertController(title: "ANALYTICS ALERT TITLE".localized, message: Preferences.Key.enableAnalytics.localizedDescription, preferredStyle: .alert)
-        alert.addAction(title: "ACTION ANALYTICS YES".localized, style: .default) { _IOFBF in
+        let alert = UIAlertController(title: L10n.analyticsAlertTitle, message: Preferences.Key.enableAnalytics.localizedDescription, preferredStyle: .alert)
+        alert.addAction(title: L10n.actionAnalyticsYes, style: .default) { _IOFBF in
             Preferences.shared.enableAnalytics = true
         }
-        alert.addAction(title: "ACTION ANALYTICS NO".localized, style: .cancel, handler: nil)
+        alert.addAction(title: L10n.actionAnalyticsNo, style: .cancel, handler: nil)
         from.present(alert, animated: true, completion: nil)
     }
     

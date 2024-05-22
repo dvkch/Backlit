@@ -70,9 +70,9 @@ class DevicePreviewVC: UIViewController {
         guard isViewLoaded else { return }
 
         let text = NSMutableAttributedString()
-        text.append("PREVIEW VC NO DEVICE TITLE".localized, font: .preferredFont(forTextStyle: .body), color: .normalText)
+        text.append(L10n.previewVcNoDeviceTitle, font: .preferredFont(forTextStyle: .body), color: .normalText)
         text.append("\n\n", font: .preferredFont(forTextStyle: .subheadline), color: .normalText)
-        text.append("PREVIEW VC NO DEVICE SUBTITLE".localized, font: .preferredFont(forTextStyle: .subheadline), color: .altText)
+        text.append(L10n.previewVcNoDeviceSubtitle, font: .preferredFont(forTextStyle: .subheadline), color: .altText)
         emptyStateLabel.attributedText = text
         
         emptyStateView.isHidden = device != nil

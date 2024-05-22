@@ -50,7 +50,7 @@ class HostCell: TableViewCell {
             indicator = .icon(.network)
 
         case .add:
-            nameLabel.text = "DEVICES ROW ADD HOST".localized
+            nameLabel.text = L10n.devicesRowAddHost
             hostLabel.text = nil
             indicator = .icon(.scanner)
         }

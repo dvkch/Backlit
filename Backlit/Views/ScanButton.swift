@@ -126,26 +126,25 @@ class ScanButton : UIButton {
 
         switch progress {
         case .none:
-            title = kind == .preview ? "DEVICE BUTTON UPDATE PREVIEW".localized : "ACTION SCAN".localized
+            title = kind == .preview ? L10n.deviceButtonUpdatePreview : L10n.actionScan
             subtitle = nil
 
         case .warmingUp:
-            title = kind == .preview ? "PREVIEWING".localized : "SCANNING".localized
-            subtitle = "WARMING UP".localized
+            title = kind == .preview ? L10n.previewing : L10n.scanning
+            subtitle = L10n.warmingUp
 
         case .scanning(let progress, let finishedDocs, _, _):
-            let titleFormat: String
+            let p = Int(progress * 100)
             switch kind {
             case .scan:
-                titleFormat = finishedDocs > 0 ? "SCANNING %f %d" : "SCANNING %f"
+                title = finishedDocs > 0 ? L10n.scanningProgressCount(p, finishedDocs) : L10n.scanningProgress(p)
             case .preview:
-                titleFormat = "PREVIEWING %f"
+                title = L10n.previewingProgress(p)
             }
-            title = String(format: titleFormat.localized, progress * 100, finishedDocs)
-            subtitle = "ACTION HINT TAP TO CANCEL".localized
+            subtitle =  L10n.actionHintTapToCancel
 
         case .cancelling:
-            title = "CANCELLING".localized
+            title = L10n.cancelling
             subtitle = nil
         }
 

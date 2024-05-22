@@ -121,7 +121,7 @@ class GalleryImagesVC: UIViewController {
     }
     
     private func updateNavBarContent() {
-        title = "GALLERY ITEM %d OF %d".localized((currentIndex ?? 0) + 1, items.count)
+        title = L10n.galleryItemNOfN((currentIndex ?? 0) + 1, items.count)
         
         if navigationController?.isModal == true {
             navigationItem.rightBarButtonItem = .close(target: self, action: #selector(self.closeButtonTap))

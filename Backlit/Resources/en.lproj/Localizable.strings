@@ -29,21 +29,21 @@
 "ACTION COPY"               = "Copy";
 "ACTION REFRESH"            = "Refresh";
 
-"LOADING"           = "Loading...";
-"SCANNING"          = "Scanning...";
-"SCANNING %f"       = "Scanning... (%.f%%)";
-"SCANNING %f %d"    = "Scanning... (%.f%%, finished %d documents)";
-"PREVIEWING"        = "Generating preview...";
-"PREVIEWING %f"     = "Generating preview... (%.f%%)";
-"CANCELLING"        = "Cancelling...";
-"WARMING UP"        = "Warming up";
+"LOADING"                   = "Loading...";
+"SCANNING"                  = "Scanning...";
+"SCANNING PROGRESS"         = "Scanning... (%d%%)";
+"SCANNING PROGRESS COUNT"   = "Scanning... (%d%%, finished %d documents)";
+"PREVIEWING"                = "Generating preview...";
+"PREVIEWING PROGRESS"       = "Generating preview... (%d%%)";
+"CANCELLING"                = "Cancelling...";
+"WARMING UP"                = "Warming up";
 
 // PDF Errors
 "ERROR MESSAGE PDF NO IMAGES"               = "No images selected";
 "ERROR MESSAGE PDF COULD NOT BE GENERATED"  = "PDF file couldn't be generated";
 "ERROR MESSAGE CANNOT OPEN IMAGES"          = "Cannot open images";
-"ERROR MESSAGE CANNOT OPEN IMAGE %@"        = "Cannot open image file %@";
-"ERROR MESSAGE INVALID IMAGE DATA %@"       = "Invalid image data for file %@";
+"ERROR MESSAGE CANNOT OPEN IMAGE"           = "Cannot open image file %@";
+"ERROR MESSAGE INVALID IMAGE DATA"          = "Invalid image data for file %@";
 
 // Devices list screen
 "DEVICES SECTION HOSTS"     = "Hosts";
@@ -80,7 +80,7 @@
 
 "PREFERENCES MESSAGE PREVIEW DEFAULT COLOR MODE"    = "Will use the default color mode and image intensity, if those options are found and support using an automatic value. Allows for more consistent render accross previews, whatever the option you set, but can reduce preview speed and reset other options depending on the device. This can result in black images when scanning after a preview on some SANE backends (e.g. Pixma 1.0.24).";
 "PREFERENCES MESSAGE SHOW ADVANCED OPTIONS"         = "Some devices have advanced options, toggling this setting ON will allow you to access them.";
-"PREFERENCES MESSAGE IMAGE FORMAT"                  = "By default scanned documents will be saved as JPEG images with a 90% quality factor. Toggle this setting to save as a lossless PNG file or a 90% quality HEIC file";
+"PREFERENCES MESSAGE IMAGE FORMAT"                  = "By default scanned documents will be saved as JPEG images with a 90%% quality factor. Toggle this setting to save as a lossless PNG file or a 90%% quality HEIC file";
 "PREFERENCES MESSAGE PDF SIZE"                      = "When creating a PDF from scanned images, the pages size can be either the size of each individual scan, set to A4 page size, or US letter";
 "PREFERENCES MESSAGE ENABLE ANALYTICS"              = "Each event will be sent along with your iOS version, device model and app version. Event-specific data are the number of hosts you have configured, the make of your scanner and possible errors you encountered.";
 "PREFERENCES MESSAGE CLEANUP CACHE"                 = "Tap to delete all cached data";
@@ -91,27 +91,28 @@
 
 "ANALYTICS ALERT TITLE"             = "Do you want to enable anonymous app analytics?";
 
-"MAIL COPY PASTEBOARD NAME"         = "Copy email to pasteboard";
-"MAIL COPY PASTEBOARD SUCCESS"      = "Copied to your pasteboard";
-"MAIL ALERT TITLE"                  = "Send an email";
-"MAIL ALERT MESSAGE"                = "Choose your preferred service";
-"MAIL ALERT CANCEL"                 = "Cancel";
-"CONTACT SUBJECT ABOUT APP %@ %@"   = "About %@ %@";
+"MAIL COPY PASTEBOARD NAME"     = "Copy email to pasteboard";
+"MAIL COPY PASTEBOARD SUCCESS"  = "Copied to your pasteboard";
+"MAIL ALERT TITLE"              = "Send an email";
+"MAIL ALERT MESSAGE"            = "Choose your preferred service";
+"MAIL ALERT CANCEL"             = "Cancel";
+"CONTACT ADDRESS"               = "contact@syan.me";
+"CONTACT SUBJECT ABOUT APP"     = "About %@ %@";
 
 // Gallery
-"GALLERY EMPTY TITLE"       = "No images yet";
-"GALLERY EMPTY SUBTITLE"    = "Scan a document with one of the devices on the left and it will appear here";
+"GALLERY EMPTY TITLE"           = "No images yet";
+"GALLERY EMPTY SUBTITLE"        = "Scan a document with one of the devices on the left and it will appear here";
 
 // Gallery overview
-"GALLERY OVERVIEW TITLE"    = "All scans";
-"GALLERY ITEM"                          = "Scan";
-"GALLERY ITEM %d OF %d"                 = "%d of %d";
-"GALLERY SELECTED ITEMS COUNT %d.zero"  = "No scan selected";
-"GALLERY SELECTED ITEMS COUNT %d.one"   = "%d scan selected";
-"GALLERY SELECTED ITEMS COUNT %d.other" = "%d scans selected";
-"GALLERY ITEMS COUNT %d.zero"           = "No scans";
-"GALLERY ITEMS COUNT %d.one"            = "1 scan";
-"GALLERY ITEMS COUNT %d.other"          = "%d scans";
+"GALLERY OVERVIEW TITLE"             = "All scans";
+"GALLERY ITEM"                       = "Scan";
+"GALLERY ITEM N OF N"                = "%d of %d";
+"GALLERY SELECTED ITEMS COUNT.zero"  = "No scan selected";
+"GALLERY SELECTED ITEMS COUNT.one"   = "One scan selected";
+"GALLERY SELECTED ITEMS COUNT.other" = "%d scans selected";
+"GALLERY ITEMS COUNT.zero"           = "No scans";
+"GALLERY ITEMS COUNT.one"            = "1 scan";
+"GALLERY ITEMS COUNT.other"          = "%d scans";
 
 // Dialogs
 "DIALOG ADD HOST TITLE"             = "Add a host";
@@ -123,13 +124,13 @@
 
 "DIALOG AUTH TITLE"                 = "Authentication needed";
 "DIALOG AUTH MESSAGE %@"            = "Please enter the username and password for %@";
-"DIALOG AUTH PLACEHOLDER HOST"      = "Username";
-"DIALOG AUTH PLACEHOLDER NAME"      = "Password";
+"DIALOG AUTH PLACEHOLDER USERNAME"  = "Username";
+"DIALOG AUTH PLACEHOLDER PASSWORD"  = "Password";
 
-"DIALOG DELETE SCANS TITLE"             = "Confirmation";
-"DIALOG DELETE SCANS MESSAGE %d.zero"   = "Are you sure you want to delete these scans?";
-"DIALOG DELETE SCANS MESSAGE %d.one"    = "Are you sure you want to delete this scan?";
-"DIALOG DELETE SCANS MESSAGE %d.other"  = "Are you sure you want to delete %d scans?";
+"DIALOG DELETE SCANS TITLE"         = "Confirmation";
+"DIALOG DELETE SCANS MESSAGE.zero"  = "Are you sure you want to delete these scans?";
+"DIALOG DELETE SCANS MESSAGE.one"   = "Are you sure you want to delete this scan?";
+"DIALOG DELETE SCANS MESSAGE.other" = "Are you sure you want to delete %d scans?";
 
 "DIALOG COULDNT OPEN DEVICE TITLE"  = "Couldn't open device";
 
@@ -155,7 +156,7 @@
 "CLOSE DEVICE CONFIRMATION MESSAGE" = "The current scan will be canceled";
 
 // Notifications
-"SCAN FINISHED NOTIFICATION TITLE"              = "Done scanning!";
-"SCAN FINISHED NOTIFICATION MESSAGE %d.zero"    = "0 documents saved";
-"SCAN FINISHED NOTIFICATION MESSAGE %d.one"     = "1 document saved";
-"SCAN FINISHED NOTIFICATION MESSAGE %d.other"   = "%d documents saved";
+"SCAN FINISHED NOTIFICATION TITLE"          = "Done scanning!";
+"SCAN FINISHED NOTIFICATION MESSAGE.zero"   = "0 documents saved";
+"SCAN FINISHED NOTIFICATION MESSAGE.one"    = "1 document saved";
+"SCAN FINISHED NOTIFICATION MESSAGE.other"  = "%d documents saved";

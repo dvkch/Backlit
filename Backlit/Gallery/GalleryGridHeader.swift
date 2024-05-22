@@ -64,7 +64,7 @@ class GalleryGridHeader: UICollectionReusableView {
             firstItem.creationDateString(includingTime: false, allowRelative: true)
         ]
         if group.items.count > 5 && !UIAccessibility.isVoiceOverRunning {
-            parts.append("GALLERY ITEMS COUNT %d".localized(quantity: group.items.count))
+            parts.append(L10n.GalleryItemsCount.quantity(group.items.count))
         }
         label.text = parts.joined(separator: " – ")
     }

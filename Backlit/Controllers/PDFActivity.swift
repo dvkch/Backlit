@@ -49,9 +49,9 @@ class PDFActivity: UIActivity {
     
     override var activityTitle: String? {
         if interleaved {
-            return "SHARE AS PDF INTERLEAVED".localized
+            return L10n.shareAsPdfInterleaved
         }
-        return "SHARE AS PDF".localized
+        return L10n.shareAsPdf
     }
     
     override var activityImage: UIImage? {

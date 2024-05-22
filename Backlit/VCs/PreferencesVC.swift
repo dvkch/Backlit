@@ -22,10 +22,10 @@ class PreferencesVC: UIViewController {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
         navigationItem.largeTitleDisplayMode = .always
-        navigationItem.backBarButtonItem = .back(title: "PREFERENCES TITLE".localized)
+        navigationItem.backBarButtonItem = .back(title: L10n.preferencesTitle)
         navigationController?.navigationBar.setBackButtonImage(.icon(.left))
 
-        title = "PREFERENCES TITLE".localized
+        title = L10n.preferencesTitle
         view.backgroundColor = .background
         
         if UIDevice.isCatalyst {
@@ -64,7 +64,6 @@ class PreferencesVC: UIViewController {
             return prefs + [misc, about]
         }()
     }
-    private static let contactEmailAddress = "contact@syan.me"
     private var cacheSize: String? = nil {
         didSet {
             tableView.reloadData()
@@ -123,9 +122,9 @@ extension PreferencesVC : UITableViewDataSource {
             switch rows[indexPath.row] {
             case .cleanCache:
                 cell.updateWith(
-                    leftText: "PREFERENCES TITLE CLEANUP CACHE".localized,
+                    leftText: L10n.preferencesTitleCleanupCache,
                     rightText: cacheSize ?? "...",
-                    description: "PREFERENCES MESSAGE CLEANUP CACHE".localized
+                    description: L10n.preferencesMessageCleanupCache
                 )
             }
             
@@ -133,22 +132,22 @@ extension PreferencesVC : UITableViewDataSource {
             switch rows[indexPath.row] {
             case .appVersion:
                 cell.updateWith(    
-                    leftText: "PREFERENCES TITLE APP VERSION".localized,
+                    leftText: L10n.preferencesTitleAppVersion,
                     rightText: Bundle.main.fullVersion
                 )
             case .saneVersion:
                 cell.updateWith(
-                    leftText: "PREFERENCES TITLE SANE VERSION".localized,
+                    leftText: L10n.preferencesTitleSaneVersion,
                     rightText: Sane.shared.saneVersion.stringVersion
                 )
             case .contact:
                 cell.updateWith(
-                    leftText: "PREFERENCES TITLE CONTACT".localized,
-                    rightText: PreferencesVC.contactEmailAddress
+                    leftText: L10n.preferencesTitleContact,
+                    rightText: L10n.contactAddress
                 )
             case .acknowledgements:
                 cell.updateWith(
-                    leftText: "PREFERENCES TITLE ACKNOWLEDGEMENTS".localized,
+                    leftText: L10n.preferencesTitleAcknowledgements,
                     rightText: ""
                 )
                 cell.showDisclosureIndicator(index: 0)
@@ -164,9 +163,9 @@ extension PreferencesVC : UITableViewDataSource {
         case .prefGroup(let title, _):
             header.text = title
         case .misc(_):
-            header.text = "PREFERENCES SECTION MISC".localized
+            header.text = L10n.preferencesSectionMisc
         case .about(_):
-            header.text = "PREFERENCES SECTION ABOUT APP".localized
+            header.text = L10n.preferencesSectionAboutApp
         }
         return header
     }
@@ -218,14 +217,14 @@ extension PreferencesVC : UITableViewDelegate {
                 break
                 
             case .contact:
-                let subject = "CONTACT SUBJECT ABOUT APP %@ %@".localized(Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
+                let subject = L10n.contactSubjectAboutApp(Bundle.main.localizedName ?? "", Bundle.main.fullVersion)
                 
-                PasteboardEmailService.name = "MAIL COPY PASTEBOARD NAME".localized
-                EmailHelper.shared.actionSheetTitle = "MAIL ALERT TITLE".localized
-                EmailHelper.shared.actionSheetMessage = "MAIL ALERT MESSAGE".localized
-                EmailHelper.shared.actionSheetCancelButtonText = "MAIL ALERT CANCEL".localized
+                PasteboardEmailService.name = L10n.mailCopyPasteboardName
+                EmailHelper.shared.actionSheetTitle = L10n.mailAlertTitle
+                EmailHelper.shared.actionSheetMessage = L10n.mailAlertMessage
+                EmailHelper.shared.actionSheetCancelButtonText = L10n.mailAlertCancel
                 EmailHelper.shared.presentActionSheet(
-                    address: PreferencesVC.contactEmailAddress,
+                    address: L10n.contactAddress,
                     subject: subject,
                     body: nil,
                     presentingViewController: self,
@@ -233,7 +232,7 @@ extension PreferencesVC : UITableViewDelegate {
                     tableView.cellForRow(at: indexPath))
                 { (launched, service, error) in
                     if service is PasteboardEmailService {
-                        UIAlertController.show(message: "MAIL COPY PASTEBOARD SUCCESS".localized, in: self)
+                        UIAlertController.show(message: L10n.mailCopyPasteboardSuccess, in: self)
                     }
                     if let error {
                         Logger.e(.app, "EmailHelper \(service?.name ?? "<no service>"): \(error)")

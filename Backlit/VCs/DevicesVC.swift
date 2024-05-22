@@ -138,9 +138,9 @@ class DevicesVC: UIViewController {
         
         let title: String
         switch kind {
-        case .add(.none): title = "DIALOG ADD HOST TITLE".localized
-        case .add(.some): title = "DIALOG PERSIST HOST TITLE".localized
-        case .edit:       title = "DIALOG EDIT HOST TITLE".localized
+        case .add(.none): title = L10n.dialogAddHostTitle
+        case .add(.some): title = L10n.dialogPersistHostTitle
+        case .edit:       title = L10n.dialogEditHostTitle
         }
 
         
@@ -167,19 +167,19 @@ class DevicesVC: UIViewController {
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentHostInputAlert(
             title: title,
-            message: "DIALOG ADD HOST MESSAGE".localized,
-            hostPlaceholder: "DIALOG ADD HOST PLACEHOLDER HOST".localized,
-            namePlaceholder: "DIALOG ADD HOST PLACEHOLDER NAME".localized,
+            message: L10n.dialogAddHostMessage,
+            hostPlaceholder: L10n.dialogAddHostPlaceholderHost,
+            namePlaceholder: L10n.dialogAddHostPlaceholderName,
             suggestedHost: initialHost?.hostname ?? "",
             suggestedName: initialHost?.displayName ?? "",
-            add: "ACTION ADD".localized,
-            cancel: "ACTION CANCEL".localized,
+            add: L10n.actionAdd,
+            cancel: L10n.actionCancel,
             completion: completion
         )
         #else
         let alert = UIAlertController(
             title: title,
-            message: "DIALOG ADD HOST MESSAGE".localized,
+            message: L10n.dialogAddHostMessage,
             preferredStyle: .alert
         )
         alert.addTextField { (field) in
@@ -188,21 +188,21 @@ class DevicesVC: UIViewController {
             field.autocapitalizationType = .none
             field.keyboardType = .URL
             field.text = initialHost?.hostname
-            field.placeholder = "DIALOG ADD HOST PLACEHOLDER HOST".localized
+            field.placeholder = L10n.dialogAddHostPlaceholderHost
         }
         alert.addTextField { (field) in
             field.borderStyle = .none
             field.autocorrectionType = .default
             field.autocapitalizationType = .words
             field.text = initialHost?.displayName
-            field.placeholder = "DIALOG ADD HOST PLACEHOLDER NAME".localized
+            field.placeholder = L10n.dialogAddHostPlaceholderName
         }
-        alert.addAction(UIAlertAction(title: "ACTION ADD".localized, style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: L10n.actionAdd, style: .default, handler: { (_) in
             let host = alert.textFields?.first?.text ?? ""
             let name = alert.textFields?.last?.text ?? ""
             completion(host, name)
         }))
-        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: L10n.actionCancel, style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
         #endif
     }
@@ -234,7 +234,7 @@ class DevicesVC: UIViewController {
                     return
                 }
                 else {
-                    UIAlertController.show(for: error, title: "DIALOG COULDNT OPEN DEVICE TITLE".localized, in: self)
+                    UIAlertController.show(for: error, title: L10n.dialogCouldntOpenDeviceTitle, in: self)
                     return
                 }
             }
@@ -272,13 +272,13 @@ extension DevicesVC: SaneDelegate {
 
         #if targetEnvironment(macCatalyst)
         obtainCatalystPlugin().presentAuthInputAlert(
-            title: "DIALOG AUTH TITLE".localized,
-            message: "DIALOG AUTH MESSAGE %@".localized(device),
-            usernamePlaceholder: "DIALOG AUTH PLACEHOLDER USERNAME".localized,
-            passwordPlaceholder: "DIALOG AUTH PLACEHOLDER PASSWORD".localized,
-            continue: "ACTION CONTINUE".localized,
-            remember: "ACTION CONTINUE REMEMBER".localized,
-            cancel: "ACTION CANCEL".localized
+            title: L10n.dialogAuthTitle,
+            message: L10n.dialogAuthMessage(device),
+            usernamePlaceholder: L10n.dialogAuthPlaceholderUsername,
+            passwordPlaceholder: L10n.dialogAuthPlaceholderPassword,
+            continue: L10n.actionContinue,
+            remember: L10n.actionContinueRemember,
+            cancel: L10n.actionCancel
         ) { (username, password, remember) in
             if let username = username, let password = password {
                 let auth = DeviceAuthentication(username: username, password: password)
@@ -292,32 +292,32 @@ extension DevicesVC: SaneDelegate {
             }
         }
         #else
-        let alert = UIAlertController(title: "DIALOG AUTH TITLE".localized, message: nil, preferredStyle: .alert)
-        alert.message = "DIALOG AUTH MESSAGE %@".localized(device)
+        let alert = UIAlertController(title: L10n.dialogAuthTitle, message: nil, preferredStyle: .alert)
+        alert.message = L10n.dialogAuthMessage(device)
         alert.addTextField { (field) in
             field.borderStyle = .none
-            field.placeholder = "DIALOG AUTH PLACEHOLDER USERNAME".localized
+            field.placeholder = L10n.dialogAuthPlaceholderUsername
             field.autocorrectionType = .no
         }
         alert.addTextField { (field) in
             field.borderStyle = .none
-            field.placeholder = "DIALOG AUTH PLACEHOLDER PASSWORD".localized
+            field.placeholder = L10n.dialogAuthPlaceholderPassword
             field.isSecureTextEntry = true
             field.autocorrectionType = .no
         }
-        alert.addAction(UIAlertAction(title: "ACTION CONTINUE".localized, style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: L10n.actionContinue, style: .default, handler: { (_) in
             let username = alert.textFields?.first?.text
             let password = alert.textFields?.last?.text
             completion(DeviceAuthentication(username: username, password: password))
         }))
-        alert.addAction(UIAlertAction(title: "ACTION CONTINUE REMEMBER".localized, style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: L10n.actionContinueRemember, style: .default, handler: { (_) in
             let username = alert.textFields?.first?.text
             let password = alert.textFields?.last?.text
             let auth = DeviceAuthentication(username: username, password: password)
             auth.save(for: device)
             completion(auth)
         }))
-        alert.addAction(UIAlertAction(title: "ACTION CANCEL".localized, style: .cancel, handler: { (_) in
+        alert.addAction(UIAlertAction(title: L10n.actionCancel, style: .cancel, handler: { (_) in
             completion(nil)
         }))
         present(alert, animated: true, completion: nil)
@@ -356,10 +356,10 @@ extension DevicesVC : UITableViewDataSource {
     
     private func headerText(in section: Int) -> String {
         if section == 0 {
-            return "DEVICES SECTION HOSTS".localized
+            return L10n.devicesSectionHosts
         }
         else {
-            return "DEVICES SECTION DEVICES".localized
+            return L10n.devicesSectionDevices
         }
     }
     
@@ -387,10 +387,10 @@ extension DevicesVC : UITableViewDelegate {
         guard case .saneHost(let host) = hosts[indexPath.row] else { return nil }
 
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
-            let editAction = UIAction(title: "ACTION EDIT".localized, image: .icon(.edit)) { [weak self] (_) in
+            let editAction = UIAction(title: L10n.actionEdit, image: .icon(.edit)) { [weak self] (_) in
                 self?.showHostForm(.edit(host: host))
             }
-            let deleteAction = UIAction(title: "ACTION REMOVE".localized, image: .icon(.delete), attributes: .destructive) { (_) in
+            let deleteAction = UIAction(title: L10n.actionRemove, image: .icon(.delete), attributes: .destructive) { (_) in
                 Sane.shared.configuration.hosts.remove(host)
             }
 
@@ -402,14 +402,14 @@ extension DevicesVC : UITableViewDelegate {
         guard indexPath.section == 0 else { return nil }
         guard case .saneHost(let host) = hosts[indexPath.row] else { return nil }
 
-        let editAction = UIContextualAction(style: .normal, title: "ACTION EDIT".localized) { [weak self] (_, _, complete) in
+        let editAction = UIContextualAction(style: .normal, title: L10n.actionEdit) { [weak self] (_, _, complete) in
             self?.showHostForm(.edit(host: host))
             complete(true)
         }
         editAction.image = .icon(.edit)
         editAction.backgroundColor = .tint
 
-        let deleteAction = UIContextualAction(style: .destructive, title: "ACTION REMOVE".localized) { (_, _, complete) in
+        let deleteAction = UIContextualAction(style: .destructive, title: L10n.actionRemove) { (_, _, complete) in
             Sane.shared.configuration.hosts.remove(host)
             complete(true)
         }
