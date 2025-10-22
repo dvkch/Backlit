@@ -19,7 +19,7 @@ internal enum L10n {
   /// Localizable.strings
   ///   Backlit
   /// 
-  ///   Created by Stanislas Chevallier on 28/01/2017.
+  ///   Created by syan on 28/01/2017.
   ///   Copyright © 2017 Syan. All rights reserved.
   internal static let actionCancel = L10n.tr("Localizable", "ACTION CANCEL", fallback: "Cancel")
   /// Close

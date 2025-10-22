@@ -2,7 +2,7 @@
 //  SYPictureMetdata+SY.swift
 //  Backlit
 //
-//  Created by Stanislas Chevallier on 05/03/2019.
+//  Created by syan on 05/03/2019.
 //  Copyright © 2019 Syan. All rights reserved.
 //
 

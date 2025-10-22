@@ -2,7 +2,7 @@
 //  FileProviderExtension.swift
 //  BacklitFileProvider
 //
-//  Created by Stanislas Chevallier on 25/05/2021.
+//  Created by syan on 25/05/2021.
 //  Copyright © 2021 Syan. All rights reserved.
 //
 

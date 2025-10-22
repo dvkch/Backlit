@@ -2,7 +2,7 @@
 //  GalleryThumbnailCell.swift
 //  Backlit
 //
-//  Created by Stanislas Chevallier on 07/02/2019.
+//  Created by syan on 07/02/2019.
 //  Copyright © 2019 Syan. All rights reserved.
 //
 

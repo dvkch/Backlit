@@ -2,7 +2,7 @@
 //  DeviceAuthentication.swift
 //  Backlit
 //
-//  Created by Stanislas Chevallier on 07/02/2021.
+//  Created by syan on 07/02/2021.
 //  Copyright © 2021 Syan. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  SplitVC.swift
 //  Backlit
 //
-//  Created by Stanislas Chevallier on 04/02/2019.
+//  Created by syan on 04/02/2019.
 //  Copyright © 2019 Syan. All rights reserved.
 //
 

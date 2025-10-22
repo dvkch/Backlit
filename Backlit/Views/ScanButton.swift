@@ -2,7 +2,7 @@
 //  ScanButton.swift
 //  Backlit
 //
-//  Created by Stanislas Chevallier on 28/04/2021.
+//  Created by syan on 28/04/2021.
 //  Copyright © 2021 Syan. All rights reserved.
 //
 

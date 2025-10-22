@@ -2,7 +2,7 @@
 //  BacklitUITests.swift
 //  BacklitUITests
 //
-//  Created by Stanislas Chevallier on 06/02/2017.
+//  Created by syan on 06/02/2017.
 //  Copyright © 2017 Syan. All rights reserved.
 //
 

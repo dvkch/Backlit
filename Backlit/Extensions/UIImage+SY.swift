@@ -2,7 +2,7 @@
 //  UIImage+SY.swift
 //  Backlit
 //
-//  Created by Stanislas Chevallier on 06/03/2019.
+//  Created by syan on 06/03/2019.
 //  Copyright © 2019 Syan. All rights reserved.
 //
 
