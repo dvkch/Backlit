@@ -1,10 +1,6 @@
 default_platform(:ios)
 
 platform :ios do
-    before_all do |lane, options|
-      xcodes(version: "15.0")
-    end
-
     desc "Create signing certs and provisioning profiles if needed"
     lane :signing do
         app = "me.syan.SaneScanner"
@@ -37,7 +33,7 @@ platform :ios do
     def build(catalyst:)
         profile_suffix = catalyst ? " macOS" : ""
         build_app(
-            workspace: "Backlit.xcworkspace", 
+            project: "Backlit.xcodeproj",
             scheme: "Backlit",
             output_directory: "./build",
             catalyst_platform: catalyst ? 'macos' : 'ios',
@@ -45,7 +41,7 @@ platform :ios do
             export_method: "app-store",
             export_options: {
                 method: "app-store",
-                signingCertificate: "Apple Distribution",
+                signingCertificate: "Apple Distribution: Stanislas Chevallier (79RY8264V4)",
                 installerSigningCertificate: "Mac Installer Distribution",
                 provisioningProfiles: {
                     "me.syan.SaneScanner" => "me.syan.SaneScanner AppStore" + profile_suffix,
