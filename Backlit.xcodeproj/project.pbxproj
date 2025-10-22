@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		970088362D6A1E5A001F81F8 /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 970088352D6A1E5A001F81F8 /* LicenseList */; };
 		97044903220875D300E13C6A /* DeviceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97044901220875D300E13C6A /* DeviceVC.swift */; };
 		9704490C2208900700E13C6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704490B2208900700E13C6A /* AppDelegate.swift */; };
 		971584CE222F36C100DC46CA /* SYPictureMetdata+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971584CD222F36C100DC46CA /* SYPictureMetdata+SY.swift */; };
@@ -36,6 +37,7 @@
 		97499E5B220862FE006DED20 /* ScanNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5A220862FE006DED20 /* ScanNC.swift */; };
 		97499E5D220872F5006DED20 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5C220872F5006DED20 /* Toolbar.swift */; };
 		97499E5F220874B3006DED20 /* SplitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97499E5E220874B3006DED20 /* SplitVC.swift */; };
+		974DCDDF2D6A15020000F3D9 /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 974DCDDE2D6A15020000F3D9 /* LicenseList */; };
 		974E0D5F2A3906C00080D563 /* scanner.caf in Resources */ = {isa = PBXBuildFile; fileRef = 974E0D5E2A3906C00080D563 /* scanner.caf */; };
 		975277C8264D48AB00FFAAF4 /* ProgressMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C7264D48AB00FFAAF4 /* ProgressMaskView.swift */; };
 		975277CA264D5C1A00FFAAF4 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C9264D5C1A00FFAAF4 /* RefreshView.swift */; };
@@ -49,7 +51,6 @@
 		975F4A0E2BFAD7DC001D4CD7 /* SYEmailHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A0D2BFAD7DC001D4CD7 /* SYEmailHelper */; };
 		975F4A112BFAD7EA001D4CD7 /* SYKit in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A102BFAD7EA001D4CD7 /* SYKit */; };
 		975F4A142BFAD80B001D4CD7 /* TelemetryClient in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A132BFAD80B001D4CD7 /* TelemetryClient */; };
-		975F4A172BFAD827001D4CD7 /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A162BFAD827001D4CD7 /* LicenseList */; };
 		976E794E2BFAE6E900336C5C /* SYOperationQueue in Frameworks */ = {isa = PBXBuildFile; productRef = 976E794D2BFAE6E900336C5C /* SYOperationQueue */; };
 		9771598129C0812C00F61EA9 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771598029C0812C00F61EA9 /* TableView.swift */; };
 		977712D225CCB2F1009EC50D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977712D125CCB2F1009EC50D /* SceneDelegate.swift */; };
@@ -358,6 +359,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				970088362D6A1E5A001F81F8 /* LicenseList in Frameworks */,
 				972968992BFD560600908671 /* SYPictureMetadata in Frameworks */,
 				976E794E2BFAE6E900336C5C /* SYOperationQueue in Frameworks */,
 				975F49FF2BFAD737001D4CD7 /* DiffableDataSources in Frameworks */,
@@ -366,9 +368,9 @@
 				975F4A052BFAD769001D4CD7 /* KeychainAccess in Frameworks */,
 				975F4A112BFAD7EA001D4CD7 /* SYKit in Frameworks */,
 				97BCA4112BFDF936001036A1 /* Sane in Frameworks */,
-				975F4A172BFAD827001D4CD7 /* LicenseList in Frameworks */,
 				975F4A082BFAD78A001D4CD7 /* LRUCache in Frameworks */,
 				975F4A0B2BFAD79C001D4CD7 /* SnapKit in Frameworks */,
+				974DCDDF2D6A15020000F3D9 /* LicenseList in Frameworks */,
 				975F4A0E2BFAD7DC001D4CD7 /* SYEmailHelper in Frameworks */,
 				97BCA4162BFDFFDB001036A1 /* Disco in Frameworks */,
 			);
@@ -736,11 +738,12 @@
 				975F4A0D2BFAD7DC001D4CD7 /* SYEmailHelper */,
 				975F4A102BFAD7EA001D4CD7 /* SYKit */,
 				975F4A132BFAD80B001D4CD7 /* TelemetryClient */,
-				975F4A162BFAD827001D4CD7 /* LicenseList */,
 				976E794D2BFAE6E900336C5C /* SYOperationQueue */,
 				972968982BFD560600908671 /* SYPictureMetadata */,
 				97BCA4102BFDF936001036A1 /* Sane */,
 				97BCA4152BFDFFDB001036A1 /* Disco */,
+				974DCDDE2D6A15020000F3D9 /* LicenseList */,
+				970088352D6A1E5A001F81F8 /* LicenseList */,
 			);
 			productName = Backlit;
 			productReference = F8CBD20D1AF9A58C00B4C221 /* Backlit.app */;
@@ -755,7 +758,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = SY;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 2600;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					97A660892AC2F20C0062A79D = {
@@ -796,11 +799,11 @@
 				975F4A0C2BFAD7DC001D4CD7 /* XCRemoteSwiftPackageReference "SYEmailHelper" */,
 				975F4A0F2BFAD7EA001D4CD7 /* XCRemoteSwiftPackageReference "SYKit" */,
 				975F4A122BFAD80B001D4CD7 /* XCRemoteSwiftPackageReference "SwiftClient" */,
-				975F4A152BFAD827001D4CD7 /* XCRemoteSwiftPackageReference "LicenseList" */,
 				976E794C2BFAE6E900336C5C /* XCRemoteSwiftPackageReference "SYOperationQueue" */,
 				972968972BFD560600908671 /* XCRemoteSwiftPackageReference "SYPictureMetadata" */,
 				9729689A2BFD564800908671 /* XCLocalSwiftPackageReference "../SaneSwift" */,
 				97BCA4142BFDFFDB001036A1 /* XCRemoteSwiftPackageReference "Disco" */,
+				970088342D6A1E5A001F81F8 /* XCRemoteSwiftPackageReference "LicenseList" */,
 			);
 			productRefGroup = F8CBD20E1AF9A58C00B4C221 /* Products */;
 			projectDirPath = "";
@@ -1113,7 +1116,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 25;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 79RY8264V4;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1146,7 +1148,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 79RY8264V4;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1178,7 +1179,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 79RY8264V4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = BacklitCatalystPlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -1211,7 +1211,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 79RY8264V4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = BacklitCatalystPlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -1245,7 +1244,6 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 25;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 79RY8264V4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = BacklitFileProvider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1284,7 +1282,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 79RY8264V4;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 79RY8264V4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = BacklitFileProvider/Info.plist;
@@ -1342,6 +1339,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 25;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 79RY8264V4;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1407,6 +1405,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 25;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 79RY8264V4;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1444,7 +1443,9 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 79RY8264V4;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_FILE_ACCESS_PICTURE_FOLDER = readwrite;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				INFOPLIST_FILE = Backlit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1478,8 +1479,10 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 79RY8264V4;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 79RY8264V4;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_FILE_ACCESS_PICTURE_FOLDER = readwrite;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				INFOPLIST_FILE = Backlit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1559,20 +1562,20 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		970088342D6A1E5A001F81F8 /* XCRemoteSwiftPackageReference "LicenseList" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cybozu/LicenseList.git";
+			requirement = {
+				kind = exactVersion;
+				version = 2.0.3;
+			};
+		};
 		972968972BFD560600908671 /* XCRemoteSwiftPackageReference "SYPictureMetadata" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dvkch/SYPictureMetadata/";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.2.0;
-			};
-		};
-		975F49FD2BFAD737001D4CD7 /* XCRemoteSwiftPackageReference "DiffableDataSources" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ra1028/DiffableDataSources";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.0;
 			};
 		};
 		975F4A002BFAD74F001D4CD7 /* XCRemoteSwiftPackageReference "DirectoryWatcher" */ = {
@@ -1628,15 +1631,7 @@
 			repositoryURL = "https://github.com/TelemetryDeck/SwiftClient";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.1;
-			};
-		};
-		975F4A152BFAD827001D4CD7 /* XCRemoteSwiftPackageReference "LicenseList" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/cybozu/LicenseList";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.7.0;
+				minimumVersion = 2.9.4;
 			};
 		};
 		976E794C2BFAE6E900336C5C /* XCRemoteSwiftPackageReference "SYOperationQueue" */ = {
@@ -1658,15 +1653,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		970088352D6A1E5A001F81F8 /* LicenseList */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 970088342D6A1E5A001F81F8 /* XCRemoteSwiftPackageReference "LicenseList" */;
+			productName = LicenseList;
+		};
 		972968982BFD560600908671 /* SYPictureMetadata */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 972968972BFD560600908671 /* XCRemoteSwiftPackageReference "SYPictureMetadata" */;
 			productName = SYPictureMetadata;
 		};
-		975F49FE2BFAD737001D4CD7 /* DiffableDataSources */ = {
+		974DCDDE2D6A15020000F3D9 /* LicenseList */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 975F49FD2BFAD737001D4CD7 /* XCRemoteSwiftPackageReference "DiffableDataSources" */;
-			productName = DiffableDataSources;
+			productName = LicenseList;
 		};
 		975F4A012BFAD74F001D4CD7 /* DirectoryWatcher */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1702,11 +1701,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 975F4A122BFAD80B001D4CD7 /* XCRemoteSwiftPackageReference "SwiftClient" */;
 			productName = TelemetryClient;
-		};
-		975F4A162BFAD827001D4CD7 /* LicenseList */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 975F4A152BFAD827001D4CD7 /* XCRemoteSwiftPackageReference "LicenseList" */;
-			productName = LicenseList;
 		};
 		976E794D2BFAE6E900336C5C /* SYOperationQueue */ = {
 			isa = XCSwiftPackageProductDependency;
