@@ -260,9 +260,6 @@ class DeviceVC: UIViewController {
         if let scene = view.window?.windowScene {
             SKStoreReviewController.requestReview(in: scene)
         }
-        else {
-            SKStoreReviewController.requestReview()
-        }
         #endif
     }
     
