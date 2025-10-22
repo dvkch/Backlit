@@ -80,9 +80,6 @@ class ChasingDotsView: UIView {
         setupChasingDotsAnimation()
     }
     
-    // TODO: cleanup layout methods
-    // TODO: fix DeviceCell on tap, currently not showing loader
-    
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         return intrinsicContentSize
     }
@@ -128,6 +125,7 @@ class ChasingDotsView: UIView {
         spinnerLayer.transform = CATransform3DIdentity
         spinnerLayer.shouldRasterize = true
         spinnerLayer.rasterizationScale = UIScreen.main.scale
+        spinnerLayer.timeOffset = CACurrentMediaTime()
         layer.addSublayer(spinnerLayer)
         
         let spinnerAnim = CAKeyframeAnimation(keyPath: "transform")
