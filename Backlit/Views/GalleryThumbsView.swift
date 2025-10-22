@@ -152,9 +152,10 @@ class GalleryThumbsView: UIView {
         }, completion: { _ in
             imageView.removeFromSuperview()
             self.insertedGalleryItem = nil
-            self.collectionView.performBatchUpdates {
-                self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-            }
+
+            var snapshot = self.galleryDataSource.snapshot()
+            snapshot.reloadItems([newItem])
+            self.galleryDataSource.apply(snapshot)
         })
     }
 

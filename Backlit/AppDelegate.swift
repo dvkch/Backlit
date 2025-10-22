@@ -13,7 +13,6 @@ import SaneSwiftC
 import SYPictureMetadata
 
 // TODO: trial notifications (cf https://nilcoalescing.com/blog/TrialNotificationsWithProvisionalAuthorizationOnIOS/ )
-// TODO: crash quand on supprime des scans depuis la gallerie grid
 // TODO: liste des devices : utiliser un diffable data source ?
 @UIApplicationMain
 class AppDelegate: UIResponder {
