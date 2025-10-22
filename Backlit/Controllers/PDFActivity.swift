@@ -77,11 +77,8 @@ class PDFActivity: UIActivity {
             .compactMap { $0 as? URL }
             .sorted { $0.lastPathComponent > $1.lastPathComponent }
         
-        if #available(iOS 13.0, *) {
-            // apparently after doing that on iOS 12 perform never gets called (something most be dealloced somewhere...)
-            obtainPresentingViewController {
-                self.hud = HUDAlertController.show(in: $0, animated: false)
-            }
+        obtainPresentingViewController {
+            self.hud = HUDAlertController.show(in: $0, animated: false)
         }
     }
     

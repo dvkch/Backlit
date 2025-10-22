@@ -6,6 +6,22 @@
 	objectVersion = 60;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		9784F75A2EA92BFF009FF7E7 /* LicenseList Fix */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 9784F75D2EA92BFF009FF7E7 /* Build configuration list for PBXAggregateTarget "LicenseList Fix" */;
+			buildPhases = (
+				9784F75E2EA92C0C009FF7E7 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "LicenseList Fix";
+			packageProductDependencies = (
+			);
+			productName = "LicenseList Fix";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		970088362D6A1E5A001F81F8 /* LicenseList in Frameworks */ = {isa = PBXBuildFile; productRef = 970088352D6A1E5A001F81F8 /* LicenseList */; };
 		97044903220875D300E13C6A /* DeviceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97044901220875D300E13C6A /* DeviceVC.swift */; };
@@ -43,7 +59,6 @@
 		975277CA264D5C1A00FFAAF4 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277C9264D5C1A00FFAAF4 /* RefreshView.swift */; };
 		975277CC264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975277CB264D5D4400FFAAF4 /* UIBarButtonItem+SY.swift */; };
 		9757FCF12207112D00AB59F1 /* DevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9757FCEF2207112D00AB59F1 /* DevicesVC.swift */; };
-		975F49FF2BFAD737001D4CD7 /* DiffableDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 975F49FE2BFAD737001D4CD7 /* DiffableDataSources */; };
 		975F4A022BFAD74F001D4CD7 /* DirectoryWatcher in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A012BFAD74F001D4CD7 /* DirectoryWatcher */; };
 		975F4A052BFAD769001D4CD7 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A042BFAD769001D4CD7 /* KeychainAccess */; };
 		975F4A082BFAD78A001D4CD7 /* LRUCache in Frameworks */ = {isa = PBXBuildFile; productRef = 975F4A072BFAD78A001D4CD7 /* LRUCache */; };
@@ -129,9 +144,7 @@
 		97D4CE8A2636EB7800F84150 /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D4CE892636EB7800F84150 /* Snapshot.swift */; };
 		97D590142637565800E84198 /* DevicePreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D590122637565800E84198 /* DevicePreviewVC.swift */; };
 		97D590152637565800E84198 /* DevicePreviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D590132637565800E84198 /* DevicePreviewVC.xib */; };
-		97D5902526377CBE00E84198 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D5902426377CBE00E84198 /* TooltipView.swift */; };
 		97DC2CB229E610E400BAF1AC /* GalleryGridHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DC2CB129E610E400BAF1AC /* GalleryGridHeader.swift */; };
-		97DEA1AB29C692AA0088AC71 /* Acknowledgement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEA1AA29C692AA0088AC71 /* Acknowledgement.swift */; };
 		97DEA1AD29C74C5F0088AC71 /* AcknowledgementsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEA1AC29C74C5F0088AC71 /* AcknowledgementsVC.swift */; };
 		97DEA1B029C7537C0088AC71 /* AcknowledgementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEA1AE29C7537C0088AC71 /* AcknowledgementCell.swift */; };
 		97DEA1B129C7537C0088AC71 /* AcknowledgementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97DEA1AF29C7537C0088AC71 /* AcknowledgementCell.xib */; };
@@ -156,6 +169,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9784F75F2EA92C2F009FF7E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9784F75A2EA92BFF009FF7E7;
+			remoteInfo = "LicenseList Fix";
+		};
 		97A660902AC2F20C0062A79D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F8CBD2051AF9A58C00B4C221 /* Project object */;
@@ -305,9 +325,7 @@
 		97D4CE892636EB7800F84150 /* Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
 		97D590122637565800E84198 /* DevicePreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePreviewVC.swift; sourceTree = "<group>"; };
 		97D590132637565800E84198 /* DevicePreviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DevicePreviewVC.xib; sourceTree = "<group>"; };
-		97D5902426377CBE00E84198 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
 		97DC2CB129E610E400BAF1AC /* GalleryGridHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryGridHeader.swift; sourceTree = "<group>"; };
-		97DEA1AA29C692AA0088AC71 /* Acknowledgement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Acknowledgement.swift; sourceTree = "<group>"; };
 		97DEA1AC29C74C5F0088AC71 /* AcknowledgementsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsVC.swift; sourceTree = "<group>"; };
 		97DEA1AE29C7537C0088AC71 /* AcknowledgementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementCell.swift; sourceTree = "<group>"; };
 		97DEA1AF29C7537C0088AC71 /* AcknowledgementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AcknowledgementCell.xib; sourceTree = "<group>"; };
@@ -362,7 +380,6 @@
 				970088362D6A1E5A001F81F8 /* LicenseList in Frameworks */,
 				972968992BFD560600908671 /* SYPictureMetadata in Frameworks */,
 				976E794E2BFAE6E900336C5C /* SYOperationQueue in Frameworks */,
-				975F49FF2BFAD737001D4CD7 /* DiffableDataSources in Frameworks */,
 				975F4A142BFAD80B001D4CD7 /* TelemetryClient in Frameworks */,
 				975F4A022BFAD74F001D4CD7 /* DirectoryWatcher in Frameworks */,
 				975F4A052BFAD769001D4CD7 /* KeychainAccess in Frameworks */,
@@ -472,6 +489,7 @@
 		97CD8488263AC581006DD44B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				97BCA4122BFDFA46001036A1 /* ChasingDotsView.swift */,
 				973066B4220C5CD90068E8C7 /* CropMaskView.swift */,
 				978263CA221E253D0095E6ED /* DotsRefreshControl.swift */,
 				973066B2220C55000068E8C7 /* GalleryThumbsView.swift */,
@@ -484,8 +502,6 @@
 				9771598029C0812C00F61EA9 /* TableView.swift */,
 				9731D89022C548CE008D7525 /* TapInsetsView.swift */,
 				97499E5C220872F5006DED20 /* Toolbar.swift */,
-				97D5902426377CBE00E84198 /* TooltipView.swift */,
-				97BCA4122BFDFA46001036A1 /* ChasingDotsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -549,7 +565,6 @@
 		97CD848C263AC5DE006DD44B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				97DEA1AA29C692AA0088AC71 /* Acknowledgement.swift */,
 				9736470429E743700089458A /* ConditionallyDismissible.swift */,
 				97FE556E264556D60036357E /* DeviceOptionControllable.swift */,
 				97FF2A9229EC9F0B0096ACFC /* GalleryGroup.swift */,
@@ -725,12 +740,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				9784F7602EA92C2F009FF7E7 /* PBXTargetDependency */,
 				97A9FCF2264093920027F462 /* PBXTargetDependency */,
 				97C11181265C5C8600794994 /* PBXTargetDependency */,
 			);
 			name = Backlit;
 			packageProductDependencies = (
-				975F49FE2BFAD737001D4CD7 /* DiffableDataSources */,
 				975F4A012BFAD74F001D4CD7 /* DirectoryWatcher */,
 				975F4A042BFAD769001D4CD7 /* KeychainAccess */,
 				975F4A072BFAD78A001D4CD7 /* LRUCache */,
@@ -761,6 +776,9 @@
 				LastUpgradeCheck = 2600;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
+					9784F75A2EA92BFF009FF7E7 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
 					97A660892AC2F20C0062A79D = {
 						CreatedOnToolsVersion = 15.0;
 						TestTargetID = F8CBD20C1AF9A58C00B4C221;
@@ -791,7 +809,6 @@
 			);
 			mainGroup = F8CBD2041AF9A58C00B4C221;
 			packageReferences = (
-				975F49FD2BFAD737001D4CD7 /* XCRemoteSwiftPackageReference "DiffableDataSources" */,
 				975F4A002BFAD74F001D4CD7 /* XCRemoteSwiftPackageReference "DirectoryWatcher" */,
 				975F4A032BFAD769001D4CD7 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				975F4A062BFAD78A001D4CD7 /* XCRemoteSwiftPackageReference "LRUCache" */,
@@ -813,6 +830,7 @@
 				97A9FCE2264090500027F462 /* BacklitCatalystPlugin */,
 				97C11175265C5C8500794994 /* BacklitFileProvider */,
 				97A660892AC2F20C0062A79D /* BacklitUITests */,
+				9784F75A2EA92BFF009FF7E7 /* LicenseList Fix */,
 			);
 		};
 /* End PBXProject section */
@@ -900,6 +918,26 @@
 			shellPath = /usr/bin/ruby;
 			shellScript = "# characters in the list will prevent the @ sign from being considered as a string literal start\ncharacters_to_ignore_before_at = \"%\"\n\n# list all .m and .h files in directory\nDir.glob(\"#{ENV['SRCROOT']}/#{ENV['PROJECT_NAME']}/**/{*.h,*.m}\") do |file|\n\n# iterate through all lines of the given file\nFile.foreach(file).with_index do |line, line_num|\n\n# iterate through all occurences of @\", and check if it represents the beginning of a string literal\nindex = -1\nwhile index = line.index('@\"', index+1)\n\n# if we haven't found the beginning of a literal we go to the next occurence\nnext if index > 0 && characters_to_ignore_before_at.index(line[index-1])\n\n# we find the end of the literal\nindex_end = index + 1\nwhile index_end = line.index('\"', index_end+1)\n# the double-quote character doesn't denote an end if it's escaped\nbreak if line[index_end-1] != '\\\\'\nend\n\n# in case the literal is sprend into multiple lines and we don't find its end on this line\nif index_end == nil\nindex_end = -1\nend\n\n# string literal content\nstring_to_translate = line[index..index_end]\n\n# xcode warning\nputs \"#{file}:#{line_num+1}:#{index+1}: warning: TRANSLATE: #{string_to_translate}\"\nend\nend\nend\n\n";
 		};
+		9784F75E2EA92C0C009FF7E7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/../Release/spp",
+				"$(BUILT_PRODUCTS_DIR)/../Debug/spp",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# See https://github.com/cybozu/LicenseList/issues/34\nBUILT_PRODUCTS_DIR_IOS=\"${BUILT_PRODUCTS_DIR%-maccatalyst}\"\nif [[ \"$BUILT_PRODUCTS_DIR\" != \"$BUILT_PRODUCTS_DIR_IOS\" ]]; then\n    [ -d \"$BUILT_PRODUCTS_DIR_IOS\" ] && rm -r \"$BUILT_PRODUCTS_DIR_IOS\" \n    ln -s \"$BUILT_PRODUCTS_DIR\" \"$BUILT_PRODUCTS_DIR_IOS\"\nfi\n";
+		};
 		978CA6672BFE2A3900970606 /* Strings */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -976,7 +1014,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97D5902526377CBE00E84198 /* TooltipView.swift in Sources */,
 				97EF42262205FF7900D45FC8 /* HostCell.swift in Sources */,
 				978CA6692BFE2A7300970606 /* Strings.swift in Sources */,
 				97CC34E32205F48B00304345 /* OptionCell.swift in Sources */,
@@ -1006,7 +1043,6 @@
 				971584D0222F445200DC46CA /* UIImage+SY.swift in Sources */,
 				9786507F220B645500F52DE6 /* PDFActivity.swift in Sources */,
 				97367D6F2A0ADA2F009670AB /* BackgroundKeepAlive.swift in Sources */,
-				97DEA1AB29C692AA0088AC71 /* Acknowledgement.swift in Sources */,
 				97F2FB5322230A81006BD617 /* GalleryImageVC.swift in Sources */,
 				97D0E041220607E500AC74D0 /* DeviceCell.swift in Sources */,
 				97D0E04522060C5700AC74D0 /* PreviewCell.swift in Sources */,
@@ -1063,6 +1099,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9784F7602EA92C2F009FF7E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = maccatalyst;
+			target = 9784F75A2EA92BFF009FF7E7 /* LicenseList Fix */;
+			targetProxy = 9784F75F2EA92C2F009FF7E7 /* PBXContainerItemProxy */;
+		};
 		97A660912AC2F20C0062A79D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8CBD20C1AF9A58C00B4C221 /* Backlit */;
@@ -1104,6 +1146,24 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9784F75B2EA92BFF009FF7E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9784F75C2EA92BFF009FF7E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 79RY8264V4;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		97A660932AC2F20C0062A79D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1359,8 +1419,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1418,8 +1478,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 2.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -1507,6 +1567,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9784F75D2EA92BFF009FF7E7 /* Build configuration list for PBXAggregateTarget "LicenseList Fix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9784F75B2EA92BFF009FF7E7 /* Debug */,
+				9784F75C2EA92BFF009FF7E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		97A660922AC2F20C0062A79D /* Build configuration list for PBXNativeTarget "BacklitUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1566,8 +1635,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cybozu/LicenseList.git";
 			requirement = {
-				kind = exactVersion;
-				version = 2.0.3;
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.0.3;
 			};
 		};
 		972968972BFD560600908671 /* XCRemoteSwiftPackageReference "SYPictureMetadata" */ = {

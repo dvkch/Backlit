@@ -16,13 +16,10 @@ class OptionCell: TableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel.isUserInteractionEnabled = true
-        titleLabel.addTooltip { [weak self] in
-            if self?.valueControl != nil {
-                return self?.option?.localizedDescr
-            } else {
-                return nil
-            }
+        titleTooltip.accessibilityElementsHidden = true
+        titleLabel.addSubview(titleTooltip)
+        titleTooltip.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
 
         titleLabel.adjustsFontForContentSizeCategory = true
@@ -33,6 +30,7 @@ class OptionCell: TableViewCell {
     }
     
     // MARK: Views
+    private let titleTooltip = UIControl()
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var valueLabel: UILabel!
     private var valueControl: UIControl? {
@@ -86,7 +84,7 @@ class OptionCell: TableViewCell {
     
     #if DEBUG
     func triggerValueControl() {
-        if #available(iOS 14.0, *), let button = valueControl as? UIButton, let interaction = button.contextMenuInteraction {
+        if let button = valueControl as? UIButton, let interaction = button.contextMenuInteraction {
             // _presentMenuAtLocation:
             interaction.perform(Selector("_presentMe" + ":noitacoLtAun".reversed()), with: CGPoint.zero)
         }
@@ -160,7 +158,7 @@ class OptionCell: TableViewCell {
                 }
                 valueControl = control
             }
-            else if #available(iOS 14.0, *) {
+            else {
                 let button = UIButton.system(prominent: false)
                 // we modify the selected title to be != than the corresponding option title, or on macOS the corresponding
                 // menu option won't be shown
@@ -175,13 +173,18 @@ class OptionCell: TableViewCell {
                 })
                 valueControl = button
             }
-            else {
-                valueControl = nil
-            }
         }
         else {
             valueControl = nil
             accessibilityIdentifier = nil
+        }
+        
+        titleLabel.isUserInteractionEnabled = true
+
+        if valueControl != nil {
+            titleTooltip.toolTip = option?.localizedDescr
+        } else {
+            titleTooltip.toolTip = nil
         }
     }
 
@@ -324,7 +327,6 @@ extension OptionCell: DeviceOptionControllable {
     
     func updateDeviceOptionControlForList<T>(option: DeviceOptionTyped<T>, current: T, values: [T], supportsAuto: Bool) where T : CustomStringConvertible, T : Equatable {
         guard !isSizingCell else { return }
-        guard #available(iOS 14.0, *) else { return }
 
         var dropdownOptions: [(String, T?)] = values.map {
             let title = option.stringForValue($0, userFacing: true)
@@ -440,7 +442,7 @@ extension OptionCell: DeviceOptionControllable {
             size: CGSize(width: 14, height: 13)
         )
         saveButton.setAttributedTitle(saveIcon, for: .normal)
-        saveButton.addTooltip { L10n.actionSave }
+        saveButton.toolTip = L10n.actionSave
         saveButton.accessibilityLabel = L10n.actionSave
         saveButton.addPrimaryAction { [weak self] in
             self?.deviceOptionTextFieldValueChanged(field)
@@ -453,7 +455,7 @@ extension OptionCell: DeviceOptionControllable {
             size: CGSize(width: 16, height: 15)
         )
         autoButton.setAttributedTitle(autoIcon, for: .normal)
-        autoButton.addTooltip { L10n.optionValueAuto }
+        saveButton.toolTip = L10n.optionValueAuto
         autoButton.accessibilityLabel = L10n.optionValueAuto
         autoButton.addPrimaryAction { [weak self] in
             guard let self else { return }

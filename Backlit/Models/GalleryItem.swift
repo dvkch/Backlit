@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import SYPictureMetadata
+import UniformTypeIdentifiers
 
 class GalleryItem: NSObject {
     
@@ -64,7 +65,7 @@ extension GalleryItem {
 // MARK: File provider extension
 extension GalleryItem : NSItemProviderWriting {
     static var writableTypeIdentifiersForItemProvider: [String] {
-        return [String(kUTTypeImage), String(kUTTypeFileURL), String(kUTTypeURL)]
+        return [UTType.image, .fileURL, .url].map(\.identifier)
     }
     
     var writableTypeIdentifiersForItemProvider: [String] {
@@ -74,13 +75,13 @@ extension GalleryItem : NSItemProviderWriting {
 
         switch url.pathExtension.lowercased() {
         case "jpeg", "jpg":
-            return [String(kUTTypeJPEG)] + type(of: self).writableTypeIdentifiersForItemProvider
+            return [UTType.jpeg.identifier] + type(of: self).writableTypeIdentifiersForItemProvider
 
         case "png":
-            return [String(kUTTypePNG)] + type(of: self).writableTypeIdentifiersForItemProvider
+            return [UTType.png.identifier] + type(of: self).writableTypeIdentifiersForItemProvider
             
         case "heic":
-            return ["public.heic"] + type(of: self).writableTypeIdentifiersForItemProvider
+            return [UTType.heic.identifier] + type(of: self).writableTypeIdentifiersForItemProvider
             
         default:
             return type(of: self).writableTypeIdentifiersForItemProvider
@@ -90,7 +91,7 @@ extension GalleryItem : NSItemProviderWriting {
     func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
         do {
             switch typeIdentifier {
-            case String(kUTTypeJPEG), String(kUTTypePNG), "public.heic", String(kUTTypeImage):
+            case UTType.jpeg.identifier, UTType.png.identifier, UTType.heic.identifier, UTType.image.identifier:
                 let data = try Data(contentsOf: url, options: .mappedIfSafe)
                 completionHandler(data, nil)
                 

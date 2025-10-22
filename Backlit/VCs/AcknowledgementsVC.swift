@@ -7,8 +7,8 @@
 //
 
 import UIKit
+import LicenseList
 
-// TODO: replace by LicenseList, or go tap into its sources at list
 class AcknowledgementsVC: UIViewController {
     
     override func viewDidLoad() {
@@ -41,7 +41,7 @@ class AcknowledgementsVC: UIViewController {
     }
     
     // MARK: Properties
-    private let acknowledgements = Acknowledgement.parsed
+    private let acknowledgements = LicenseList.Library.libraries
     private var deployedIndex: Int? {
         didSet {
             tableView.beginUpdates()

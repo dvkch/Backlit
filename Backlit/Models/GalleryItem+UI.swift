@@ -46,7 +46,6 @@ extension GalleryItem {
 // MARK: Actions
 #if !targetEnvironment(macCatalyst)
 extension GalleryItem {
-    @available(iOS 13.0, *)
     func contextMenuConfiguration(for viewController: UIViewController, sender: UIView, openGallery: @escaping (() -> ())) -> UIContextMenuConfiguration {
         return UIContextMenuConfiguration(
             identifier: nil,

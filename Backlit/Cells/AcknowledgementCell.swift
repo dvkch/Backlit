@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LicenseList
 
 class AcknowledgementCell: UITableViewCell {
     
@@ -36,12 +37,12 @@ class AcknowledgementCell: UITableViewCell {
             updateDisclosureIndicator()
         }
     }
-    var acknowledgement: Acknowledgement? {
+    var acknowledgement: LicenseList.Library? {
         didSet {
             updateTexts()
         }
     }
-    func update(using acknowledgement: Acknowledgement, index: Int) {
+    func update(using acknowledgement: LicenseList.Library, index: Int) {
         self.acknowledgement = acknowledgement
         self.index = index
     }
@@ -55,9 +56,9 @@ class AcknowledgementCell: UITableViewCell {
     
     private func updateTexts() {
         guard let acknowledgement else { return }
-        libraryNameLabel.text = acknowledgement.title
-        licenseNameLabel.text = acknowledgement.licenseName
-        licenseTextLabel.text = acknowledgement.licenseText.trimmingCharacters(in: .whitespacesAndNewlines)
+        libraryNameLabel.text = acknowledgement.name
+        licenseNameLabel.text = acknowledgement.url?.absoluteString
+        licenseTextLabel.text = acknowledgement.licenseBody.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     private func updateDisclosureIndicator() {

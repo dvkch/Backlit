@@ -25,25 +25,23 @@ class DotsRefreshControl : UIRefreshControl {
         accessibilityLabel =  L10n.loading
         accessibilityTraits = .staticText
 
+        dotsView.color = tintColor ?? .gray
+        dotsView.hidesWhenStopped = false
+        dotsView.spinnerSize = 50
         addSubview(dotsView)
         dotsView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
+            make.size.equalTo(dotsView.spinnerSize)
         }
-        updateDotsView()
     }
     
     // MARK: Properties
     private let dotsView = ChasingDotsView()
-    var spinnerSize = CGFloat(50) {
-        didSet {
-            updateDotsView()
-        }
-    }
 
     // MARK: Subclassing
     override var tintColor: UIColor! {
         didSet {
-            updateDotsView()
+            dotsView.color = tintColor ?? .gray
         }
     }
     
@@ -65,13 +63,6 @@ class DotsRefreshControl : UIRefreshControl {
     override func endRefreshing() {
         super.endRefreshing()
         dotsView.stopAnimating()
-    }
-    
-    // MARK: Property changes
-    private func updateDotsView() {
-        dotsView.color = tintColor ?? .gray
-        dotsView.spinnerSize = 50
-        dotsView.hidesWhenStopped = false
     }
 }
 

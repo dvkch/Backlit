@@ -17,7 +17,7 @@ class Analytics {
     static let shared = Analytics()
     private init() {
         let config = TelemetryManagerConfiguration(appID: "9CF71A71-190A-4B84-AB6B-2E0DE0A44F12")
-        TelemetryManager.initialize(with: config)
+        TelemetryDeck.initialize(config: config)
     }
     
     func askPermission(from: UIViewController) {
@@ -84,6 +84,8 @@ class Analytics {
     
     func send(event: Event) {
         guard Preferences.shared.enableAnalytics else { return }
-        TelemetryManager.send(event.name, for: Preferences.shared.analyticsUserID, with: event.data)
+        TelemetryDeck.signal(
+            event.name, parameters: event.data, customUserID: Preferences.shared.analyticsUserID
+        )
     }
 }

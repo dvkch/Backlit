@@ -14,7 +14,6 @@ class SceneDelegate: UIResponder {
     private var context: Context?
 }
 
-@available(iOS 13.0, *)
 extension SceneDelegate : UISceneDelegate, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }

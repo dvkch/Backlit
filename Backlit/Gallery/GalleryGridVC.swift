@@ -8,7 +8,6 @@
 
 #if !targetEnvironment(macCatalyst)
 import UIKit
-import DiffableDataSources
 import SYKit
 
 class GalleryGridVC: UIViewController {
@@ -30,13 +29,8 @@ class GalleryGridVC: UIViewController {
         collectionView.backgroundColor = .background
         collectionView.allowsSelection = true
         collectionView.contentInsetAdjustmentBehavior = .never
-        if #available(iOS 13.0, *) {
-            collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        }
-        if #available(iOS 14.0, *) {
-            // allow drag selection on iOS 14+
-            collectionView.allowsMultipleSelectionDuringEditing = true
-        }
+        collectionView.automaticallyAdjustsScrollIndicatorInsets = false
+        collectionView.allowsMultipleSelectionDuringEditing = true
         collectionView.collectionViewLayout = collectionViewLayout
         collectionView.registerSupplementaryView(GalleryGridHeader.self, kind: UICollectionView.elementKindSectionHeader, xib: false)
         collectionView.registerCell(GalleryThumbnailCell.self, xib: false)
@@ -69,10 +63,10 @@ class GalleryGridVC: UIViewController {
     
     // MARK: Properties
     private var hasInitiallyScrolledToBottom = false
-    private lazy var galleryDataSource = CollectionViewDiffableDataSource<GalleryGroup, GalleryItem>(collectionView: collectionView, viewsProvider: self)
+    private lazy var galleryDataSource = UICollectionViewDiffableDataSource<GalleryGroup, GalleryItem>(collectionView: collectionView, viewsProvider: self)
     
     private func updateDataSource(using groups: [GalleryGroup], animated: Bool) {
-        var snapshot = DiffableDataSourceSnapshot<GalleryGroup, GalleryItem>()
+        var snapshot = NSDiffableDataSourceSnapshot<GalleryGroup, GalleryItem>()
         groups.forEach { group in
             snapshot.appendSections([group])
             snapshot.appendItems(group.items, toSection: group)
@@ -87,10 +81,7 @@ class GalleryGridVC: UIViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        if #available(iOS 13.0, *) {
-            // prevent dismissal of this view as a modal when editing
-            isModalInPresentation = editing
-        }
+        isModalInPresentation = editing
         updateNavBarContent(animated: animated)
         updateToolbarVisibility(animated: animated)
         
@@ -100,9 +91,7 @@ class GalleryGridVC: UIViewController {
         }
         
         collectionView.allowsMultipleSelection = editing
-        if #available(iOS 14.0, *) {
-            collectionView.isEditing = editing
-        }
+        collectionView.isEditing = editing
         
         if !editing {
             collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: false) }
@@ -274,7 +263,7 @@ class GalleryGridVC: UIViewController {
             right: view.safeAreaInsets.right
         )
         collectionView.scrollIndicatorInsets = collectionView.contentInset
-        collectionView.scrollIndicatorInsets.top -= 20
+        collectionView.verticalScrollIndicatorInsets.top -= 20
         collectionView.layoutIfNeeded()
 
         if !hasInitiallyScrolledToBottom, let lastIndexPath = galleryDataSource.lastIndexPath {
@@ -341,7 +330,6 @@ extension GalleryGridVC : UICollectionViewDelegateFlowLayout {
         }
     }
 
-    @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let item = galleryDataSource.itemIdentifier(for: indexPath) else { return nil }
         guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
@@ -352,7 +340,6 @@ extension GalleryGridVC : UICollectionViewDelegateFlowLayout {
         return configuration
     }
 
-    @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
         guard let indexPath = configuration.indexPath, let item = galleryDataSource.itemIdentifier(for: indexPath) else { return }
         animator.addCompletion {

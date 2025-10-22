@@ -27,30 +27,18 @@ extension UIColor {
     }
     
     static var background: UIColor {
-        if #available(iOS 13.0, *) {
-            return .systemGroupedBackground
-        } else {
-            return .groupTableViewBackground
-        }
+        return .systemGroupedBackground
     }
 
     static var backgroundAlt: UIColor {
-        if #available(iOS 13.0, *) {
-            return .secondarySystemGroupedBackground
-        } else {
-            return .white
-        }
+        return .secondarySystemGroupedBackground
     }
     
     static var cellBackground: UIColor {
         if UIDevice.isCatalyst {
             return .background
         }
-        if #available(iOS 13.0, *) {
-            return .secondarySystemGroupedBackground
-        } else {
-            return .white
-        }
+        return .secondarySystemGroupedBackground
     }
 
     static var cellBackgroundAlt: UIColor {
@@ -63,19 +51,13 @@ extension UIColor {
     static var splitSeparator: UIColor {
         if UIDevice.isCatalyst {
             return UIColor.black
-        } else if #available(iOS 13.0, *) {
-            return UIColor.opaqueSeparator
         } else {
-            return UIColor.darkGray
+            return UIColor.opaqueSeparator
         }
     }
 
     static var normalText: UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor.label
-        } else {
-            return UIColor.darkText
-        }
+        return UIColor.label
     }
     
     static var normalTextOnTint: UIColor {
@@ -83,11 +65,7 @@ extension UIColor {
     }
 
     static var altText: UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor.secondaryLabel
-        } else {
-            return UIColor.darkGray
-        }
+        return UIColor.secondaryLabel
     }
 
     static var altTextOnTint: UIColor {
@@ -95,21 +73,13 @@ extension UIColor {
     }
 
     static var disabledText: UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor.placeholderText
-        } else {
-            return UIColor.lightGray
-        }
+        return UIColor.placeholderText
     }
 
     static var pullToRefresh: UIColor {
         let lightColor = UIColor.gray
-        if #available(iOS 13.0, *) {
-            return UIColor { (traits) -> UIColor in
-                return traits.userInterfaceStyle == .light ? lightColor : .tertiarySystemGroupedBackground
-            }
-        } else {
-            return lightColor
+        return UIColor { (traits) -> UIColor in
+            return traits.userInterfaceStyle == .light ? lightColor : .tertiarySystemGroupedBackground
         }
     }
 }

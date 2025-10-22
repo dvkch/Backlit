@@ -33,12 +33,8 @@ struct RefreshView {
     
     func startLoading(discreet: Bool = false) {
         #if targetEnvironment(macCatalyst)
-        let loader: UIActivityIndicatorView
-        if #available(iOS 13.0, *) {
-            loader = UIActivityIndicatorView(style: .medium)
-        } else {
-            loader = UIActivityIndicatorView(style: .white)
-        }
+        let loader = ChasingDotsView()
+        loader.spinnerSize = 20
         loader.color = .tint
         loader.startAnimating()
         loader.accessibilityLabel = L10n.loading

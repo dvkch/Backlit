@@ -11,13 +11,6 @@ import SYKit
 import SaneSwift
 
 class Context: NSObject {
-    override init() {
-        window = ContextWindow.mainWindow(rootViewController: nil)
-        super.init()
-        setup()
-    }
-
-    @available(iOS 13.0, *)
     init(windowScene: UIWindowScene) {
         window = ContextWindow.mainWindow(windowScene: windowScene, rootViewController: nil)
         super.init()

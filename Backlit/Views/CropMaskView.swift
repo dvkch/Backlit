@@ -220,9 +220,7 @@ class CropMaskView: UIControl {
         let commands = keys.map { key in
             modifiers.map { modifier -> UIKeyCommand in
                 let command = UIKeyCommand(input: key, modifierFlags: modifier, action: #selector(pressedArrow(_:)))
-                if #available(macCatalyst 15.0, iOS 15.0, *) {
-                    command.wantsPriorityOverSystemBehavior = true
-                }
+                command.wantsPriorityOverSystemBehavior = true
                 return command
             }
         }.reduce([], +)

@@ -21,7 +21,6 @@ struct Logger {
         case prefs = "Prefs"
         case sane = "SANE"
         
-        @available(iOS 12.0, *)
         var asOSLog: OSLog {
             return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: rawValue)
         }
@@ -32,11 +31,7 @@ struct Logger {
     // MARK: Logging
     static func log(level: OSLogType, tag: Tag, _ message: String) {
         guard level.value >= self.level.value else { return }
-        if #available(iOS 12.0, *) {
-            os_log(level, log: tag.asOSLog, "%@", message)
-        } else {
-            print("[\(tag.rawValue)] [\(level.value)] \(message)")
-        }
+        os_log(level, log: tag.asOSLog, "[%@] %@", tag.rawValue, message)
     }
     
     static func d(_ tag: Tag, _ message: String) {

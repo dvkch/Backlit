@@ -14,10 +14,6 @@ class GalleryThumbnailCell: UICollectionViewCell {
         super.init(frame: frame)
         isAccessibilityElement = true
         
-        addTooltip { [weak self] in
-            self?.item?.suggestedDescription(separator: "\n")
-        }
-        
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = false
         imageView.layer.minificationFilter = .linear
@@ -26,11 +22,15 @@ class GalleryThumbnailCell: UICollectionViewCell {
         imageView.layer.shadowOffset = .zero
         imageView.layer.shadowRadius = 2
         contentView.addSubview(imageView)
-        
+
+        tooltip.delegate = self
+        imageView.addInteraction(tooltip)
+
+        spinner.spinnerSize = 20
         spinner.hidesWhenStopped = true
         contentView.addSubview(spinner)
         spinner.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.center.equalToSuperview()
         }
         
         selectionBackgroundView.layer.cornerRadius = 22 / 2
@@ -79,13 +79,8 @@ class GalleryThumbnailCell: UICollectionViewCell {
 
     // MARK: Views
     private let imageView = UIImageView()
-    private let spinner: UIActivityIndicatorView = {
-        if #available(iOS 13.0, *) {
-            return UIActivityIndicatorView(style: .medium)
-        } else {
-            return UIActivityIndicatorView(style: .white)
-        }
-    }()
+    private let tooltip = UIToolTipInteraction()
+    private let spinner = ChasingDotsView()
     private let selectionRingView = UIView()
     private let selectionBackgroundView = UIView()
 
@@ -155,5 +150,12 @@ class GalleryThumbnailCell: UICollectionViewCell {
         // required for iOS 12, maybe lower versions as well (tested on iOS 12.4.1)
         // https://stackoverflow.com/a/57249637/1439489
         layer.zPosition = CGFloat(layoutAttributes.zIndex)
+    }
+}
+
+extension GalleryThumbnailCell: UIToolTipInteractionDelegate {
+    func toolTipInteraction(_ interaction: UIToolTipInteraction, configurationAt point: CGPoint) -> UIToolTipConfiguration? {
+        guard let title = item?.suggestedDescription(separator: "\n") else { return nil }
+        return .init(toolTip: title)
     }
 }

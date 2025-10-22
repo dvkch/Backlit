@@ -79,6 +79,11 @@ class ScanButton : UIButton {
     private static let maximumSize: UIContentSizeCategory = .accessibilityMedium
     private var heightConstraint: NSLayoutConstraint?
     
+    private var nonDeprecatedContentEdgeInsets: UIEdgeInsets {
+        get { (value(forKey: "contentEdgeInsets") as! NSValue).uiEdgeInsetsValue }
+        set { setValue(newValue, forKey: "contentEdgeInsets") }
+    }
+    
     // MARK: Content
     private func updateStyle() {
         layer.masksToBounds = true
@@ -93,18 +98,14 @@ class ScanButton : UIButton {
         }
         titleLabel?.font = .preferredFont(forTextStyle: .body, compatibleWith: traits)
         titleLabel?.adjustsFontForContentSizeCategory = true
-        if #available(iOS 15.0, *) {
-            maximumContentSizeCategory = type(of: self).maximumSize
-        }
+        maximumContentSizeCategory = type(of: self).maximumSize
         titleLabel?.numberOfLines = 2
         setContentHuggingPriority(.required, for: .vertical)
         setContentCompressionResistancePriority(.required, for: .vertical)
-        contentEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
+        nonDeprecatedContentEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
 
         var background = kind == .preview ? UIColor.backgroundAlt : UIColor.tint
-        if #available(iOS 13.0, *) {
-            background = background.resolvedColor(with: traitCollection)
-        }
+        background = background.resolvedColor(with: traitCollection)
         setBackgroundColor(background, for: .normal)
         setBackgroundColor(background.withAlphaComponent(style == .rounded ? 0.7 : 1), for: .disabled)
 

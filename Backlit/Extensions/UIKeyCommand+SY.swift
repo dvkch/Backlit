@@ -11,9 +11,7 @@ import UIKit
 extension UIKeyCommand {
     convenience init(title: String, action: Selector, input: String, modifierFlags: UIKeyModifierFlags) {
         self.init(input: input, modifierFlags: modifierFlags, action: action)
-        if #available(iOS 13.0, *) {
-            self.title = title
-        }
+        self.title = title
     }
 
     static var preview: UIKeyCommand {
@@ -49,7 +47,6 @@ extension UIKeyCommand {
     }
 }
 
-@available(iOS 13.0, *)
 extension Array where Element: UIMenuElement {
     func asMenu(identifier: UIMenu.Identifier? = nil) -> UIMenu {
         return UIMenu(title: "", image: nil, identifier: identifier, options: .displayInline, children: self)

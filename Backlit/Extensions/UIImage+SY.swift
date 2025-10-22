@@ -52,7 +52,7 @@ extension UIImage {
     }
 
     static func icon(_ icon: Icon, variant: Int? = 0, useSystem: Bool = false) -> UIImage? {
-        if useSystem, #available(iOS 13.0, *) {
+        if useSystem {
             return UIImage(systemName: icon.rawValue)
         }
 

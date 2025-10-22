@@ -22,9 +22,7 @@ class TapInsetsView: UIView {
     }
     
     private func setup() {
-        if #available(iOS 13.4, *) {
-            addInteraction(UIPointerInteraction(delegate: self))
-        }
+        addInteraction(UIPointerInteraction(delegate: self))
      }
    
     // MARK: Tap insets
@@ -41,7 +39,6 @@ class TapInsetsView: UIView {
     }
 }
 
-@available(iOS 13.4, *)
 extension TapInsetsView: UIPointerInteractionDelegate {
     func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
         if let interactionView = interaction.view {

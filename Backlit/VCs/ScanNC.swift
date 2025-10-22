@@ -31,10 +31,8 @@ class ScanNC: UINavigationController {
         super.viewDidLoad()
         navigationBar.prefersLargeTitles = true
         navigationBar.isTranslucent = true
-        if #available(iOS 13.0, *) {
-            navigationBar.scrollEdgeAppearance = UINavigationBarAppearance()
-            navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
-        }
+        navigationBar.scrollEdgeAppearance = UINavigationBarAppearance()
+        navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
         updateToolbar(animated: false)
    }
     
@@ -60,20 +58,12 @@ class ScanNC: UINavigationController {
         let toolbarHidden = largeLayout || noImages
         setToolbarHidden(toolbarHidden, animated: animated)
         
-        if #available(iOS 13.0, *) {
-            let appearance = UIToolbarAppearance()
-            appearance.backgroundColor = showingScanVC ? .tint : .cellBackground
-            toolbar.standardAppearance = appearance
-            toolbar.compactAppearance = appearance
-            if #available(iOS 15.0, *) {
-                toolbar.scrollEdgeAppearance = appearance
-                toolbar.compactScrollEdgeAppearance = appearance
-            }
-        }
-        else {
-            let color: UIColor = showingScanVC ? .tint : .cellBackground
-            toolbar.setBackgroundImage(UIImage(color: color), forToolbarPosition: .any, barMetrics: .default)
-        }
+        let appearance = UIToolbarAppearance()
+        appearance.backgroundColor = showingScanVC ? .tint : .cellBackground
+        toolbar.standardAppearance = appearance
+        toolbar.compactAppearance = appearance
+        toolbar.scrollEdgeAppearance = appearance
+        toolbar.compactScrollEdgeAppearance = appearance
     }
     
     // MARK: Layout
@@ -92,10 +82,6 @@ extension ScanNC: GalleryManagerDelegate {
 extension ScanNC: UINavigationBarDelegate {
     func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
         guard let dismissibleVC = topViewController as? ConditionallyDismissible, !dismissibleVC.isDismissible else {
-            if #available(iOS 13.0, *) {} else {
-                // surprisingly on iOS 12, maybe even lower, returning true doesn't pop back the VC, so let's do it manually
-                self.popViewController(animated: true)
-            }
             return true
         }
         dismissibleVC.showDismissalConfirmation {

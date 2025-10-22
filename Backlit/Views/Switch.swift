@@ -21,13 +21,10 @@ class Switch: UISwitch {
     }
     
     private func setup() {
-        if #available(iOS 13.4, *) {
-            addInteraction(UIPointerInteraction(delegate: self))
-        }
+        addInteraction(UIPointerInteraction(delegate: self))
     }
 }
 
-@available(iOS 13.4, *)
 extension Switch: UIPointerInteractionDelegate {
     func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
         if let interactionView = interaction.view {

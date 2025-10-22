@@ -8,6 +8,7 @@
 
 import FileProvider
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 extension URL {
     func path(relativeTo otherURL: URL) -> String? {
@@ -119,8 +120,8 @@ extension FileProviderItem: NSFileProviderItem {
     }
     
     var typeIdentifier: String {
-        guard !isDirectory else { return kUTTypeFolder as String }
-        return (try? url.resourceValues(forKeys: Set([.typeIdentifierKey])).typeIdentifier) ?? (kUTTypeItem as String)
+        guard !isDirectory else { return UTType.folder.identifier }
+        return (try? url.resourceValues(forKeys: Set([.typeIdentifierKey])).typeIdentifier) ?? UTType.item.identifier
     }
     
     var tagData: Data? {

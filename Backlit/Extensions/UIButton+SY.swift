@@ -14,9 +14,7 @@ extension UIButton {
     // MARK: Style
     static func system(prominent: Bool) -> Self {
         let button = Self(type: .roundedRect)
-        if #available(iOS 13.4, *) {
-            button.isPointerInteractionEnabled = true
-        }
+        button.isPointerInteractionEnabled = true
 
         #if targetEnvironment(macCatalyst)
         // by default macOS counts 20px for the intrinsicContentSize.height of the button, but
@@ -25,32 +23,14 @@ extension UIButton {
         button.heightAnchor.constraint(greaterThanOrEqualToConstant: 22).isActive = true
         #else
         
-        if #available(iOS 15.0, *) {
-            if prominent {
-                button.configuration = .filled()
-            }
-            else {
-                button.configuration = .borderedTinted()
-                button.setTitleColor(.tint.adjustBrightness(by: 0.2), for: .normal)
-            }
-            button.configuration?.contentInsets = .init(top: 5, leading: 10, bottom: 5, trailing: 10)
+        if prominent {
+            button.configuration = .filled()
         }
         else {
-            button.clipsToBounds = true
-            button.layer.cornerRadius = 5
-            button.contentEdgeInsets = .init(top: 5, left: 10, bottom: 5, right: 10)
-            if prominent {
-                button.setBackgroundColor(.tint, for: .normal)
-                button.setBackgroundColor(.altText, for: .disabled)
-                button.setTitleColor(.normalText, for: .normal)
-            }
-            else {
-                button.setBackgroundColor(.tint.withAlphaComponent(0.2), for: .normal)
-                button.setBackgroundColor(.altText.withAlphaComponent(0.1), for: .disabled)
-                button.setTitleColor(.tint.adjustBrightness(by: 0.2), for: .normal)
-                button.setTitleColor(.altText.withAlphaComponent(0.5), for: .disabled)
-            }
+            button.configuration = .borderedTinted()
+            button.setTitleColor(.tint.adjustBrightness(by: 0.2), for: .normal)
         }
+        button.configuration?.contentInsets = .init(top: 5, leading: 10, bottom: 5, trailing: 10)
         #endif
 
         return button

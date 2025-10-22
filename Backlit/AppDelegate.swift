@@ -27,7 +27,11 @@ class AppDelegate: UIResponder {
     private var context: Context?
     
     private var allContexts: [Context] {
-        return UIApplication.shared.windows.compactMap({ $0 as? ContextWindow }).compactMap(\.context)
+        return UIApplication.shared.connectedScenes
+            .compactMap { s in s as? UIWindowScene }
+            .compactMap { s in s.windows.compactMap { $0 as? ContextWindow } }
+            .reduce([], +)
+            .compactMap(\.context)
     }
 }
 
@@ -63,12 +67,6 @@ extension AppDelegate : UIApplicationDelegate {
         // Local notifications
         UNUserNotificationCenter.current().delegate = self
         
-        // create UI on iOS < 13
-        if #available(iOS 13.0, *) {} else {
-            context = Context()
-            window = context?.window
-        }
-
         return true
     }
     
@@ -139,7 +137,6 @@ extension AppDelegate : UIApplicationDelegate {
         context?.openShortcut(shortcutItem, completion: completionHandler)
     }
     
-    @available(iOS 13.0, *)
     override func buildMenu(with builder: UIMenuBuilder) {
         super.buildMenu(with: builder)
 

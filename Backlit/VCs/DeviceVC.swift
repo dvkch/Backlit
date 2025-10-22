@@ -45,9 +45,7 @@ class DeviceVC: UIViewController {
         tableView.alwaysBounceVertical = true
         tableView.dataSource = self
         tableView.delegate = self
-        if #available(macCatalyst 15.0, iOS 15.0, *) {
-            tableView.isPrefetchingEnabled = false
-        }
+        tableView.isPrefetchingEnabled = false
         tableView.contentInsetAdjustmentBehavior = .scrollableAxes
         tableView.registerHeader(TableViewHeader.self, xib: false)
         tableView.registerCell(PreviewCell.self, xib: true)
@@ -259,7 +257,7 @@ class DeviceVC: UIViewController {
     
     private func presentReviewPrompt() {
         #if !DEBUG
-        if #available(iOS 14.0, macCatalyst 14.0, *), let scene = view.window?.windowScene {
+        if let scene = view.window?.windowScene {
             SKStoreReviewController.requestReview(in: scene)
         }
         else {

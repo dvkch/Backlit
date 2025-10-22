@@ -11,7 +11,6 @@ import ObjectiveC
 
 // MARK: Common items
 extension UIBarButtonItem {
-    @available(iOS, obsoleted: 14.0, message: "Use navigationItem.backButtonDisplayMode = .minimal")
     static func back(title: String = "") -> UIBarButtonItem {
         return UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
     }

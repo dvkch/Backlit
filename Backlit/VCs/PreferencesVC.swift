@@ -16,11 +16,9 @@ class PreferencesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if #available(iOS 13.0, *) {
-            navigationController?.navigationBar.scrollEdgeAppearance = .init()
-            navigationController?.navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
-            navigationController?.navigationBar.prefersLargeTitles = true
-        }
+        navigationController?.navigationBar.scrollEdgeAppearance = .init()
+        navigationController?.navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.backBarButtonItem = .back(title: L10n.preferencesTitle)
         navigationController?.navigationBar.setBackButtonImage(.icon(.left))

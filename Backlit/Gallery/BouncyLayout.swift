@@ -24,7 +24,7 @@ class BouncyLayout: UICollectionViewFlowLayout {
     
     // MARK: Properties
     var isBouncingEnabled: Bool = true
-    var bounciness: CGFloat = 1
+    var bounciness: CGFloat = 0.5
     private lazy var animator = UIDynamicAnimator(collectionViewLayout: self)
     private var visibleIdentifiers: [BouncyIdentifier: CGRect] = [:]
     var applyEffectPerLine: Bool = true

@@ -29,7 +29,7 @@ class SplitVC: UISplitViewController {
         minimumPrimaryColumnWidth = 350
         preferredDisplayMode = .oneBesideSecondary
         #else
-        preferredDisplayMode = .allVisible
+        preferredDisplayMode = .oneBesideSecondary
         #endif
         scanNC.delegate = self
         addKeyCommand(.openGallery)

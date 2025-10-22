@@ -16,8 +16,7 @@ class DevicesVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         navigationItem.largeTitleDisplayMode = .always
-        
-        navigationItem.backBarButtonItem = .back()
+        navigationItem.backButtonDisplayMode = .minimal
         navigationController?.navigationBar.setBackButtonImage(.icon(.left))
 
         if !UIDevice.isCatalyst {
@@ -381,7 +380,6 @@ extension DevicesVC : UITableViewDelegate {
         return UITableView.automaticDimension
     }
     
-    @available(iOS 13.0, *)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard indexPath.section == 0 else { return nil }
         guard case .saneHost(let host) = hosts[indexPath.row] else { return nil }

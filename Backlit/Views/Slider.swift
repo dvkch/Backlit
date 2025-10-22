@@ -24,13 +24,9 @@ class Slider: UIControl {
     
     private func setup() {
         #if targetEnvironment(macCatalyst)
-        if #available(macCatalyst 15.0, iOS 15.0, *) {
-            // prevents crash when modifying thumb
-            slider.preferredBehavioralStyle = .pad
-            // can only be enabled on macOS 12+, the mac catalyst idiom doesn't allow changing the thumb style, and
-            // we can't switch to .pad idiom on macOS 11.x
-            useMacOSThumb = UIDevice.isCatalyst
-        }
+        // prevents crash when modifying thumb
+        slider.preferredBehavioralStyle = .pad
+        useMacOSThumb = UIDevice.isCatalyst
         #endif
 
         container.axis = .horizontal
@@ -151,10 +147,8 @@ class Slider: UIControl {
     override var keyCommands: [UIKeyCommand]? {
         let leftCommand = UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:)))
         let rightCommand = UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: .init(), action: #selector(pressedArrow(_:)))
-        if #available(macCatalyst 15.0, iOS 15.0, *) {
-            leftCommand.wantsPriorityOverSystemBehavior = true
-            rightCommand.wantsPriorityOverSystemBehavior = true
-        }
+        leftCommand.wantsPriorityOverSystemBehavior = true
+        rightCommand.wantsPriorityOverSystemBehavior = true
         return [leftCommand, rightCommand]
     }
     

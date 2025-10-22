@@ -9,7 +9,6 @@
 import UIKit
 import SnapKit
 import SYKit
-import DiffableDataSources
 
 class GalleryThumbsView: UIView {
 
@@ -70,7 +69,7 @@ class GalleryThumbsView: UIView {
     }
     private var collectionViewLayout: BouncyLayout { collectionView.collectionViewLayout as! BouncyLayout }
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: BouncyLayout())
-    private lazy var galleryDataSource = CollectionViewDiffableDataSource<GalleryGroup, GalleryItem>(collectionView: collectionView, viewsProvider: self)
+    private lazy var galleryDataSource = UICollectionViewDiffableDataSource<GalleryGroup, GalleryItem>(collectionView: collectionView, viewsProvider: self)
     private let gradientMask = CAGradientLayer()
     
     // MARK: Actions
@@ -85,7 +84,7 @@ class GalleryThumbsView: UIView {
     }
     
     private func updateGalleryItems(using items: [GalleryItem], animated: Bool) {
-        var snapshot = DiffableDataSourceSnapshot<GalleryGroup, GalleryItem>()
+        var snapshot = NSDiffableDataSourceSnapshot<GalleryGroup, GalleryItem>()
         snapshot.appendSections([GalleryGroup.stable()])
         snapshot.appendItems(items.reversed())
         galleryDataSource.apply(snapshot, animatingDifferences: animated)
@@ -283,7 +282,6 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
     }
     
     #if !targetEnvironment(macCatalyst)
-    @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let item = galleryDataSource.itemIdentifier(for: indexPath) else { return nil }
         guard let cell = collectionView.cellForItem(at: indexPath), let parentViewController else { return nil }
@@ -296,7 +294,6 @@ extension GalleryThumbsView: UICollectionViewDelegateFlowLayout {
         return configuration
     }
 
-    @available(iOS 13.0, *)
     func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
         guard let indexPath = configuration.indexPath, let item = galleryDataSource.itemIdentifier(for: indexPath) else { return }
         animator.addCompletion {
