@@ -14,6 +14,8 @@ To make it work:
 
 Scanned documents can be shared as a multi-page PDF or as individual images via the iOS share dialog.
 
+[Read about it @ syan.me](https://syan.me/en/products/backlit)
+
 ## Screenshots
 
 <img class="screenshot" src="Resources/README-01.png?raw=true" alt="Devices" width="240" />&nbsp;&nbsp;<img src="Resources/README-02.png?raw=true" alt="Preview" width="240" />&nbsp;&nbsp;<img src="Resources/README-03.png?raw=true" alt="Options" width="240" />&nbsp;&nbsp;<img src="Resources/README-04.png?raw=true" alt="Option popup" width="240" />&nbsp;&nbsp;<img src="Resources/README-05.png?raw=true" alt="Gallery" width="240" />&nbsp;&nbsp;<img src="Resources/README-06.png?raw=true" alt="Settings" width="240" />
@@ -38,4 +40,3 @@ The following links have helped me a great deal in the making of this app, if yo
 
 - <https://github.com/chrspeich/SaneNetScanner>
 - <https://hackaday.io/project/172440-simple-saned-front-end-for-osx>
-
