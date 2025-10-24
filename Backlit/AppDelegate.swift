@@ -12,6 +12,7 @@ import SaneSwift
 import SaneSwiftC
 import SYPictureMetadata
 
+// TODO: find another way than silent sound to keep the app in the background while scanning, App review complained about it on October 2025
 // TODO: trial notifications (cf https://nilcoalescing.com/blog/TrialNotificationsWithProvisionalAuthorizationOnIOS/ )
 // TODO: liste des devices : utiliser un diffable data source ?
 @UIApplicationMain
